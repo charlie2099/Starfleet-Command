@@ -3,7 +3,7 @@ project(Starfleet_Command)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp SceneManagement/SceneManager.cpp SceneManagement/SceneManager.hpp SceneManagement/Scene.hpp SceneManagement/Scenes/MenuScene.cpp SceneManagement/Scenes/MenuScene.hpp)
+add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp SceneManagement/SceneManager.cpp SceneManagement/SceneManager.hpp SceneManagement/Scene.hpp SceneManagement/Scenes/MenuScene.cpp SceneManagement/Scenes/MenuScene.hpp Utility/Constants.hpp SceneManagement/Scene.cpp GameUI/Panel.cpp GameUI/Panel.hpp)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR "C:/Libraries/SFML/lib/cmake/SFML")

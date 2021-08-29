@@ -152,6 +152,54 @@ Game/Game.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.s
 .PHONY : Game/Game.cpp.s
 
+GameUI/Panel.obj: GameUI/Panel.cpp.obj
+.PHONY : GameUI/Panel.obj
+
+# target to build an object file
+GameUI/Panel.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/Panel.cpp.obj
+.PHONY : GameUI/Panel.cpp.obj
+
+GameUI/Panel.i: GameUI/Panel.cpp.i
+.PHONY : GameUI/Panel.i
+
+# target to preprocess a source file
+GameUI/Panel.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/Panel.cpp.i
+.PHONY : GameUI/Panel.cpp.i
+
+GameUI/Panel.s: GameUI/Panel.cpp.s
+.PHONY : GameUI/Panel.s
+
+# target to generate assembly for a file
+GameUI/Panel.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/Panel.cpp.s
+.PHONY : GameUI/Panel.cpp.s
+
+SceneManagement/Scene.obj: SceneManagement/Scene.cpp.obj
+.PHONY : SceneManagement/Scene.obj
+
+# target to build an object file
+SceneManagement/Scene.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scene.cpp.obj
+.PHONY : SceneManagement/Scene.cpp.obj
+
+SceneManagement/Scene.i: SceneManagement/Scene.cpp.i
+.PHONY : SceneManagement/Scene.i
+
+# target to preprocess a source file
+SceneManagement/Scene.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scene.cpp.i
+.PHONY : SceneManagement/Scene.cpp.i
+
+SceneManagement/Scene.s: SceneManagement/Scene.cpp.s
+.PHONY : SceneManagement/Scene.s
+
+# target to generate assembly for a file
+SceneManagement/Scene.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scene.cpp.s
+.PHONY : SceneManagement/Scene.cpp.s
+
 SceneManagement/SceneManager.obj: SceneManagement/SceneManager.cpp.obj
 .PHONY : SceneManagement/SceneManager.obj
 
@@ -236,6 +284,12 @@ help:
 	@echo ... Game/Game.obj
 	@echo ... Game/Game.i
 	@echo ... Game/Game.s
+	@echo ... GameUI/Panel.obj
+	@echo ... GameUI/Panel.i
+	@echo ... GameUI/Panel.s
+	@echo ... SceneManagement/Scene.obj
+	@echo ... SceneManagement/Scene.i
+	@echo ... SceneManagement/Scene.s
 	@echo ... SceneManagement/SceneManager.obj
 	@echo ... SceneManagement/SceneManager.i
 	@echo ... SceneManagement/SceneManager.s
