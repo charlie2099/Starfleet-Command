@@ -4,6 +4,8 @@
 A 2D space combat game made with the SFML library
 
 ## Compilation
+- In the Cmakelists.txt ensure to set the SFML_DIR path to wherever your SFML directory is located. 
+- MinGW 7.3.0 compiler version required.
 
 ## Game UI
 
