@@ -7,3 +7,7 @@
 - Create button class
 - Create menu options
 - Animated background in menu i.e. Two teams of ships firing at each other, flying past screen, lasers etc. Credit finn.
+
+GOALS
+- Destroy opponents command ship to win
+- To damage the command ship, the opponent's battleships need to be destroyed first
