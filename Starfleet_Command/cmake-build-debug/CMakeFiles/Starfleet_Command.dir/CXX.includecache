@@ -676,9 +676,43 @@ SFML/Config.hpp
 
 C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp
 
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.cpp
+Game.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.hpp
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.hpp
+iostream
+-
+../SceneManagement/Scenes/MenuScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.hpp
+../SceneManagement/SceneManager.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/SceneManager.hpp
+SFML/Window.hpp
+-
+SFML/Graphics.hpp
+-
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.cpp
+Panel.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
+SFML/Graphics.hpp
+-
+
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
 SFML/Graphics.hpp
 -
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/SceneManager.cpp
+SceneManager.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/SceneManager.hpp
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/SceneManager.hpp
+Scene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
+../SceneManagement/Scenes/MenuScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.hpp
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.cpp
 iostream
@@ -691,6 +725,12 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
 ../../Utility/Constants.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constants.hpp
+../../GameUI/Panel.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constants.hpp
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/main.cpp
+Game/Game.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.hpp
 

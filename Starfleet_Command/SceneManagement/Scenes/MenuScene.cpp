@@ -27,6 +27,7 @@ void MenuScene::render(sf::RenderWindow& window)
     window.draw(panel);
     window.draw(menu_title_img_sprite);
     window.draw(menu_title);
+    panel1.render(window);
 }
 
 /// OTHER
@@ -63,13 +64,15 @@ bool MenuScene::initMenuTitle()
     panel.setSize({menu_title.getGlobalBounds().width + panel_offset*2, menu_title.getGlobalBounds().height*5});
     panel.setPosition(menu_title.getPosition().x - panel_offset, (menu_title.getGlobalBounds().top + menu_title.getGlobalBounds().height/2) - panel.getGlobalBounds().height/2);
 
-    if (!menu_title_img_texture.loadFromFile("images/starfleet_ship.png"))
+    if (!menu_title_img_texture.loadFromFile("images/starfleet_ship_fighter.png"))
     {
         return false;
     }
     menu_title_img_sprite.setTexture(menu_title_img_texture);
-    menu_title_img_sprite.setScale(1.70F, 1.70F);
-    menu_title_img_sprite.setPosition(menu_title.getPosition().x - 45, menu_title.getPosition().y - 65);
+    menu_title_img_sprite.setColor(sf::Color(0, 255, 255, 100));
+    menu_title_img_sprite.setScale(0.75F, 0.75F);
+    menu_title_img_sprite.setRotation(-8);
+    menu_title_img_sprite.setPosition(menu_title.getPosition().x - 60, menu_title.getPosition().y - 62);
 
     /// Create panel class and convert this over with a instance of the panel class
 

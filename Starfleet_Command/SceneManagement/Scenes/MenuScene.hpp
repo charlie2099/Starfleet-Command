@@ -2,6 +2,7 @@
 #define STARFLEET_COMMAND_MENUSCENE_HPP
 #include "../Scene.hpp"
 #include "../../Utility/Constants.hpp"
+#include "../../GameUI/Panel.hpp"
 
 class MenuScene : public Scene
 {
@@ -19,6 +20,7 @@ class MenuScene : public Scene
     bool initMenuTitle();
 
     Constants utility;
+    Panel panel1;
 
     sf::Texture background_texture;
     sf::Sprite background_sprite;
