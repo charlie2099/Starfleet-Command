@@ -6,19 +6,71 @@ bool MenuScene::init()
     initBackground();
     initMenuTitle();
 
+    panel1.setText("PLAY");
+    panel1.setPosition(500, 500);
+    panel1.setPadding(50);
+
     return true;
 }
 
-void MenuScene::eventHandler(sf::RenderWindow& /*window*/, sf::Event& /*event*/)
+void MenuScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
 {
-    //auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    //auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
+    panel1.eventHandler(window, event);
+
+    if(panel1.isClicked())
+    {
+        std::cout << "hello" << std::endl;
+    }
+    /*if(panel1.is_hovered_over())
+    {
+        panel1.setPanelColour(sf::Color::Cyan);
+    }
+
+    if(panel1.isPressed())
+    {
+        // CHANGE SCENE
+    }*/
+
+    /*auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
+    auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
+    const int PLAY = 0;
+    const int OPTIONS = 1;
+    const int EXIT = 2;
+
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    {
+        if(panel1.pressed)
+        {
+            setScene(Scene::ID::MODE_SELECT);
+        }
+    }*/
 }
 
-void MenuScene::update(sf::RenderWindow& /*window*/, sf::Time /*deltaTime*/)
+void MenuScene::update(sf::RenderWindow& window, sf::Time deltaTime)
 {
+    panel1.update(window, deltaTime);
+
+    if(panel1.isHoveredOver())
+    {
+        panel1.setPanelColour(sf::Color::Blue);
+    }
+
+    if(!panel1.isHoveredOver())
+    {
+        panel1.setPanelColour(sf::Color::White);
+    }
     //auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     //auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
+
+    /*if(panel1.isHoveredOver())
+    {
+        panel1.setPanelColour(sf::Color::Blue);
+    }
+
+    if(!panel1.isHoveredOver())
+    {
+        panel1.setPanelColour(sf::Color::White);
+    }*/
 }
 
 void MenuScene::render(sf::RenderWindow& window)

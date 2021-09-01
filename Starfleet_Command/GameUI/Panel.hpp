@@ -11,25 +11,39 @@ class Panel
     Panel();  /// Create the panel in the constructor;
     ~Panel() = default;
 
+    void eventHandler(sf::RenderWindow& window, sf::Event& event);
+    void update(sf::RenderWindow& window, sf::Time deltaTime);
     void render(sf::RenderWindow& window);
 
     // Panel
     void setPanelColour(sf::Color color);
-    void setPadding(float width, float height);
+    void setPadding(float padding);
     void setPosition(float x, float y);
 
     // Text
-    void setText(sf::Text text);
-    void setText(sf::Text text, sf::Color colour);
+    void setText(const std::string& text_str);
+    void setText(const std::string& text_str, sf::Color colour);
 
- private:
+    // Button adaptation
+    void setIsClicked(bool clicked);
+    bool isClicked() const;
+    void setIsHoveredOver(bool hovered_over);
+    bool isHoveredOver() const;
+
+private:
     bool loadTextures();
     bool loadFonts();
+    void alignPanelToText();
+
     sf::RectangleShape panel;
     sf::Texture panel_texture;
     sf::Text text;
     sf::Font font_regular;
     sf::Font font_bold;
+
+    float panel_offset = 50.0F;
+    bool is_clicked = false;
+    bool is_hovered_over = false;
 };
 
 #endif //STARFLEET_COMMAND_PANEL_HPP
