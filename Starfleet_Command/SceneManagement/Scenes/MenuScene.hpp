@@ -20,16 +20,20 @@ class MenuScene : public Scene
     bool initMenuTitle();
 
     Constants utility;
-    Panel panel1;
+    std::array<Panel, 4> panels;
 
     sf::Texture background_texture;
     sf::Sprite background_sprite;
 
-    sf::Texture panel_texture;
-    sf::RectangleShape panel;
+    sf::Texture title_box_texture;
+    sf::RectangleShape title_box;
 
     sf::Texture menu_title_img_texture;
     sf::Sprite menu_title_img_sprite;
     sf::Text menu_title;
+
+    std::array<std::string, 3> button_text;
+    static const int BUTTONS = 3;
+    static const int LEADERBOARD = 4;
 };
 #endif //STARFLEET_COMMAND_MENUSCENE_HPP

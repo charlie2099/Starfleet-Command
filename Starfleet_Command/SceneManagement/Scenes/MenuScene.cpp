@@ -6,80 +6,83 @@ bool MenuScene::init()
     initBackground();
     initMenuTitle();
 
-    panel1.setText("PLAY");
-    panel1.setPosition(500, 500);
-    panel1.setPadding(50);
+    button_text.at(0).append("PLAY");
+    button_text.at(1).append("OPTIONS");
+    button_text.at(2).append("EXIT");
+
+    for (int i = 0; i < BUTTONS; ++i)
+    {
+        panels[i].setText(button_text[i]);
+        //panels.setTextOffset(Panel::TextAlign::OFFSET, 40);
+        panels[i].setPosition(utility.WINDOW_WIDTH * 0.2F, (utility.WINDOW_HEIGHT * 0.55F) + static_cast<float>(i * 100));
+        panels[i].setPadding(50);
+        panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
+    }
+
+    for (int i = BUTTONS; i < LEADERBOARD; ++i)
+    {
+        panels[i].setText("LEADERBOARD");
+        panels[i].setTextOffset(Panel::TextAlign::OFFSET, 40);
+        panels[i].setSize(80, 250);
+        panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
+        panels[i].setPosition(utility.WINDOW_WIDTH * 0.51F, utility.WINDOW_HEIGHT * 0.59F);
+    }
 
     return true;
 }
 
 void MenuScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
 {
-    panel1.eventHandler(window, event);
-
-    if(panel1.isClicked())
+    for (int i = 0; i < BUTTONS; ++i)
     {
-        std::cout << "hello" << std::endl;
+        panels[i].eventHandler(window, event);
     }
-    /*if(panel1.is_hovered_over())
-    {
-        panel1.setPanelColour(sf::Color::Cyan);
-    }
-
-    if(panel1.isPressed())
-    {
-        // CHANGE SCENE
-    }*/
-
-    /*auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
-    const int PLAY = 0;
-    const int OPTIONS = 1;
-    const int EXIT = 2;
 
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
-        if(panel1.pressed)
+        if(panels[0].isClicked())
         {
-            setScene(Scene::ID::MODE_SELECT);
+            //setScene(Scene::ID::GAME);
         }
-    }*/
+        else if(panels[2].isClicked())
+        {
+            window.close();
+        }
+    }
+
+    for (int i = 0; i < BUTTONS; ++i)
+    {
+        if(panels[i].isHoveredOver())
+        {
+            panels[i].setPanelColour(sf::Color(153, 210, 242, 60));
+            panels[i].setText(button_text[i], sf::Color::Cyan);
+        }
+        else if(!panels[i].isHoveredOver())
+        {
+            panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
+            panels[i].setText(button_text[i], sf::Color::White);
+        }
+    }
 }
 
 void MenuScene::update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    panel1.update(window, deltaTime);
-
-    if(panel1.isHoveredOver())
+    for (int i = 0; i < BUTTONS; ++i)
     {
-        panel1.setPanelColour(sf::Color::Blue);
+        panels[i].update(window, deltaTime);
     }
-
-    if(!panel1.isHoveredOver())
-    {
-        panel1.setPanelColour(sf::Color::White);
-    }
-    //auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    //auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
-
-    /*if(panel1.isHoveredOver())
-    {
-        panel1.setPanelColour(sf::Color::Blue);
-    }
-
-    if(!panel1.isHoveredOver())
-    {
-        panel1.setPanelColour(sf::Color::White);
-    }*/
 }
 
 void MenuScene::render(sf::RenderWindow& window)
 {
     window.draw(background_sprite);
-    window.draw(panel);
+    window.draw(title_box);
     window.draw(menu_title_img_sprite);
     window.draw(menu_title);
-    panel1.render(window);
+    for (auto & panel : panels)
+    {
+        panel.render(window);
+    }
 }
 
 /// OTHER
@@ -97,11 +100,11 @@ bool MenuScene::initBackground()
 
 bool MenuScene::initMenuTitle()
 {
-    if (!panel_texture.loadFromFile("images/panel_image.png"))
+    if (!title_box_texture.loadFromFile("images/panel_image.png"))
     {
         return false;
     }
-    panel.setTexture(&panel_texture);
+    title_box.setTexture(&title_box_texture);
 
     menu_title.setString("Starfleet Command");
     menu_title.setFont(getBoldFont());
@@ -113,8 +116,8 @@ bool MenuScene::initMenuTitle()
     menu_title.setPosition(menu_title_xpos, menu_title_ypos);
 
     auto panel_offset = 75.0F;
-    panel.setSize({menu_title.getGlobalBounds().width + panel_offset*2, menu_title.getGlobalBounds().height*5});
-    panel.setPosition(menu_title.getPosition().x - panel_offset, (menu_title.getGlobalBounds().top + menu_title.getGlobalBounds().height/2) - panel.getGlobalBounds().height/2);
+    title_box.setSize({menu_title.getGlobalBounds().width + panel_offset*2, menu_title.getGlobalBounds().height*5});
+    title_box.setPosition(menu_title.getPosition().x - panel_offset, (menu_title.getGlobalBounds().top + menu_title.getGlobalBounds().height/2) - title_box.getGlobalBounds().height/2);
 
     if (!menu_title_img_texture.loadFromFile("images/starfleet_ship_fighter.png"))
     {
@@ -125,8 +128,6 @@ bool MenuScene::initMenuTitle()
     menu_title_img_sprite.setScale(0.75F, 0.75F);
     menu_title_img_sprite.setRotation(-8);
     menu_title_img_sprite.setPosition(menu_title.getPosition().x - 60, menu_title.getPosition().y - 62);
-
-    /// Create panel class and convert this over with a instance of the panel class
 
     return true;
 }
