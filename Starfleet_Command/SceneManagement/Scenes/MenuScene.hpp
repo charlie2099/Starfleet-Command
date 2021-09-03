@@ -25,16 +25,16 @@ class MenuScene : public Scene
 
     Constants utility;
     std::array<Panel, 5> panels;
+    std::array<sf::Sprite, 5> ship_sprites;
+    std::array<std::string, 3> button_text;
 
     sf::Texture background_texture;
-    sf::Sprite background_sprite;
-
     sf::Texture menu_title_img_texture;
-    sf::Sprite menu_title_img_sprite;
-
     sf::Texture ship_texture;
-    std::array<sf::Sprite, 5> ship_sprites;
+    sf::Texture crosshairs_texture;
 
-    std::array<std::string, 3> button_text;
+    sf::Sprite background_sprite;
+    sf::Sprite menu_title_img_sprite;
+    sf::Sprite crosshairs_sprite;
 };
 #endif //STARFLEET_COMMAND_MENUSCENE_HPP

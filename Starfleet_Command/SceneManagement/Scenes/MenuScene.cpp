@@ -13,7 +13,7 @@ bool MenuScene::init()
     {
         panels[i].setText(button_text[i]);
         panels[i].setTextSize(35);
-        panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
+        panels[i].setPanelColour(sf::Color(178, 178, 178, 120));
         panels[i].setPosition(utility.WINDOW_WIDTH * 0.185F, (utility.WINDOW_HEIGHT * 0.57F) + static_cast<float>(i * 100));
     }
 
@@ -24,7 +24,7 @@ bool MenuScene::init()
         panels[i].setTextSize(35);
         panels[i].setTextOffset(Panel::TextAlign::OFFSET, 40);
         panels[i].setSize(120, 250);
-        panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
+        panels[i].setPanelColour(sf::Color(178, 178, 178, 120));
         panels[i].setPosition(utility.WINDOW_WIDTH * 0.52F, utility.WINDOW_HEIGHT * 0.6F);
     }
 
@@ -58,6 +58,14 @@ bool MenuScene::init()
     ship_sprites[2].setPosition(-100, ship_sprites[2].getPosition().y);
     ship_sprites[3].setPosition(120, ship_sprites[3].getPosition().y);
     ship_sprites[4].setPosition(0, ship_sprites[4].getPosition().y);
+
+    if (!crosshairs_texture.loadFromFile("images/starfleet_selection_crosshairs.png"))
+    {
+        return false;
+    }
+    crosshairs_sprite.setTexture(crosshairs_texture);
+    crosshairs_sprite.setColor(sf::Color::Transparent);
+    crosshairs_sprite.setScale(0.35F, 0.35F);
 
     return true;
 }
@@ -120,9 +128,35 @@ void MenuScene::update(sf::RenderWindow& window, sf::Time deltaTime)
 
     sf::Vector2f movement(0.f, 0.f);
     movement.x += 100.0F;
+    for (auto & ship_sprite : ship_sprites)
+    {
+        ship_sprite.move(movement * deltaTime.asSeconds());
+        if(ship_sprite.getPosition().x >= utility.WINDOW_WIDTH)
+        {
+            ship_sprite.setPosition(0, ship_sprite.getPosition().y);
+        }
+    }
+
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
+    auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
+
+    crosshairs_sprite.setColor(sf::Color::Transparent);
+
     for (int i = 0; i < ship_sprites.size(); ++i)
     {
-        ship_sprites[i].move(movement * deltaTime.asSeconds());
+        if(ship_sprites[i].getGlobalBounds().contains(translated_pos))
+        {
+            //ship_sprites[i].setColor(sf::Color::Yellow);
+            crosshairs_sprite.setColor(sf::Color::Cyan);
+            auto crosshairs_xpos = ship_sprites[i].getPosition().x + ship_sprites[i].getGlobalBounds().width/2 - crosshairs_sprite.getGlobalBounds().width/2;
+            auto crosshairs_ypos = ship_sprites[i].getPosition().y + ship_sprites[i].getGlobalBounds().height/2 - crosshairs_sprite.getGlobalBounds().height/2;
+            crosshairs_sprite.setPosition(crosshairs_xpos, crosshairs_ypos);
+        }
+        /*else if(!ship_sprites[i].getGlobalBounds().contains(translated_pos))
+        {
+            crosshairs_sprite.setColor(sf::Color::Red);
+            //ship_sprites[i].setColor(sf::Color::Cyan);
+        }*/
     }
 }
 
@@ -138,6 +172,7 @@ void MenuScene::render(sf::RenderWindow& window)
     {
         panel.render(window);
     }
+    window.draw(crosshairs_sprite);
 }
 
 /// OTHER
@@ -163,7 +198,7 @@ bool MenuScene::initMenuTitleIcon()
     menu_title_img_sprite.setColor(sf::Color(0, 255, 255, 100));
     menu_title_img_sprite.setScale(0.75F, 0.75F);
     menu_title_img_sprite.setRotation(-8);
-    menu_title_img_sprite.setPosition(panels[4].getPosition().x - 60, panels[4].getPosition().y - 69);
+    menu_title_img_sprite.setPosition(panels[4].getPosition().x - 60, panels[4].getPosition().y - 50);
 
     return true;
 }
