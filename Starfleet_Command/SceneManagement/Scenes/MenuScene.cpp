@@ -8,6 +8,7 @@ bool MenuScene::init()
     button_text.at(1).append("OPTIONS");
     button_text.at(2).append("EXIT");
 
+    // Button panels
     for (int i = 0; i < BUTTONS; ++i)
     {
         panels[i].setText(button_text[i]);
@@ -16,6 +17,7 @@ bool MenuScene::init()
         panels[i].setPosition(utility.WINDOW_WIDTH * 0.185F, (utility.WINDOW_HEIGHT * 0.57F) + static_cast<float>(i * 100));
     }
 
+    // Leaderboard panel
     for (int i = BUTTONS; i < LEADERBOARD; ++i)
     {
         panels[i].setText("LEADERBOARD");
@@ -26,6 +28,7 @@ bool MenuScene::init()
         panels[i].setPosition(utility.WINDOW_WIDTH * 0.52F, utility.WINDOW_HEIGHT * 0.6F);
     }
 
+    // Title panel
     for (int i = LEADERBOARD; i < TITLE_PANEL; ++i)
     {
         panels[i].setText("Starfleet Command", sf::Color::Cyan);
@@ -36,6 +39,25 @@ bool MenuScene::init()
     }
 
     initMenuTitleIcon();
+
+    if (!ship_texture.loadFromFile("images/starfleet_ship_fighter.png"))
+    {
+        return false;
+    }
+
+    for (int i = 0; i < ship_sprites.size(); ++i)
+    {
+        ship_sprites[i].setTexture(ship_texture);
+        ship_sprites[i].setColor(sf::Color::Cyan);
+        ship_sprites[i].setScale(0.10F, 0.10F);
+        ship_sprites[i].setRotation(0);
+        ship_sprites[i].setPosition(50, static_cast<float >(i * 80) + 300);
+    }
+    ship_sprites[0].setPosition(20, ship_sprites[0].getPosition().y);
+    ship_sprites[1].setPosition(180, ship_sprites[1].getPosition().y);
+    ship_sprites[2].setPosition(-100, ship_sprites[2].getPosition().y);
+    ship_sprites[3].setPosition(120, ship_sprites[3].getPosition().y);
+    ship_sprites[4].setPosition(0, ship_sprites[4].getPosition().y);
 
     return true;
 }
@@ -95,12 +117,23 @@ void MenuScene::update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         panels[i].update(window, deltaTime);
     }
+
+    sf::Vector2f movement(0.f, 0.f);
+    movement.x += 100.0F;
+    for (int i = 0; i < ship_sprites.size(); ++i)
+    {
+        ship_sprites[i].move(movement * deltaTime.asSeconds());
+    }
 }
 
 void MenuScene::render(sf::RenderWindow& window)
 {
     window.draw(background_sprite);
     window.draw(menu_title_img_sprite);
+    for (const auto & ship_sprite : ship_sprites)
+    {
+        window.draw(ship_sprite);
+    }
     for (auto & panel : panels)
     {
         panel.render(window);

@@ -32,6 +32,9 @@ class MenuScene : public Scene
     sf::Texture menu_title_img_texture;
     sf::Sprite menu_title_img_sprite;
 
+    sf::Texture ship_texture;
+    std::array<sf::Sprite, 5> ship_sprites;
+
     std::array<std::string, 3> button_text;
 };
 #endif //STARFLEET_COMMAND_MENUSCENE_HPP
