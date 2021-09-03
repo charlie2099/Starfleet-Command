@@ -1,5 +1,6 @@
 #ifndef STARFLEET_COMMAND_CONSTANTS_HPP
 #define STARFLEET_COMMAND_CONSTANTS_HPP
+#include <iostream>
 
 struct Constants
 {

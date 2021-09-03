@@ -19,13 +19,19 @@ class Panel
     void setPanelColour(sf::Color color);
     void setPadding(float padding);
     void setSize(float width, float height);
+    sf::FloatRect getSize();
     void setPosition(float x, float y);
+    sf::Vector2f getPosition();
+
 
     // Text
     void setText(const std::string& text_str);
     void setText(const std::string& text_str, sf::Color colour);
+    void setTextSize(int text_size);
     enum class TextAlign { CENTRE, OFFSET };
     void setTextOffset(TextAlign alignment, float offset);
+    enum class TextFont { REGULAR, BOLD };
+    void setFont(TextFont text_font);
 
     // Button adaptation
     void setIsClicked(bool clicked);
@@ -37,7 +43,6 @@ private:
     bool loadTextures();
     bool loadFonts();
     void centreAlignPanelToText();
-    void offsetAlignTextToPanel();
 
     sf::RectangleShape panel;
     sf::Texture panel_texture;
@@ -45,8 +50,10 @@ private:
     sf::Font font_regular;
     sf::Font font_bold;
     TextAlign textAlign = TextAlign::CENTRE;
+    TextFont textFont = TextFont::REGULAR;
 
-    float panel_offset = 50.0F;
+    float panel_w = 50.0F;
+    float panel_h = 50.0F;
     float text_offset = 0.0F;
     bool is_clicked = false;
     bool is_hovered_over = false;

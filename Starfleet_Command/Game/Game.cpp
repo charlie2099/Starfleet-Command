@@ -58,7 +58,7 @@ void Game::initWindow()
 {
     window.create(sf::VideoMode(1280, 720), "Starfleet Command");
     window.setTitle("Starfleet Command");
-    window.setPosition(sf::Vector2i(300, 150));
+    window.setPosition(sf::Vector2i(500, 200));
 
     auto image = sf::Image{};
     if (!image.loadFromFile("images/starfleet_ship.png"))
