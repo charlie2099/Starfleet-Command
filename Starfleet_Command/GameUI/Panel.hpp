@@ -19,10 +19,9 @@ class Panel
     void setPanelColour(sf::Color color);
     void setPadding(float padding);
     void setSize(float width, float height);
-    sf::FloatRect getSize();
     void setPosition(float x, float y);
-    sf::Vector2f getPosition();
-
+    sf::FloatRect getPanelSize();
+    sf::Vector2f getPanelPosition();
 
     // Text
     void setText(const std::string& text_str);
@@ -32,6 +31,8 @@ class Panel
     void setTextOffset(TextAlign alignment, float offset);
     enum class TextFont { REGULAR, BOLD };
     void setFont(TextFont text_font);
+    sf::FloatRect getTextSize();
+    sf::Vector2f getTextPosition();
 
     // Button adaptation
     void setIsClicked(bool clicked);

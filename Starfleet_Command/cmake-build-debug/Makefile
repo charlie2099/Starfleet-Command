@@ -224,6 +224,30 @@ SceneManagement/SceneManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/SceneManager.cpp.s
 .PHONY : SceneManagement/SceneManager.cpp.s
 
+SceneManagement/Scenes/GameScene.obj: SceneManagement/Scenes/GameScene.cpp.obj
+.PHONY : SceneManagement/Scenes/GameScene.obj
+
+# target to build an object file
+SceneManagement/Scenes/GameScene.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/GameScene.cpp.obj
+.PHONY : SceneManagement/Scenes/GameScene.cpp.obj
+
+SceneManagement/Scenes/GameScene.i: SceneManagement/Scenes/GameScene.cpp.i
+.PHONY : SceneManagement/Scenes/GameScene.i
+
+# target to preprocess a source file
+SceneManagement/Scenes/GameScene.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/GameScene.cpp.i
+.PHONY : SceneManagement/Scenes/GameScene.cpp.i
+
+SceneManagement/Scenes/GameScene.s: SceneManagement/Scenes/GameScene.cpp.s
+.PHONY : SceneManagement/Scenes/GameScene.s
+
+# target to generate assembly for a file
+SceneManagement/Scenes/GameScene.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/GameScene.cpp.s
+.PHONY : SceneManagement/Scenes/GameScene.cpp.s
+
 SceneManagement/Scenes/MenuScene.obj: SceneManagement/Scenes/MenuScene.cpp.obj
 .PHONY : SceneManagement/Scenes/MenuScene.obj
 
@@ -247,6 +271,30 @@ SceneManagement/Scenes/MenuScene.s: SceneManagement/Scenes/MenuScene.cpp.s
 SceneManagement/Scenes/MenuScene.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/MenuScene.cpp.s
 .PHONY : SceneManagement/Scenes/MenuScene.cpp.s
+
+SceneManagement/Scenes/ShipyardScene.obj: SceneManagement/Scenes/ShipyardScene.cpp.obj
+.PHONY : SceneManagement/Scenes/ShipyardScene.obj
+
+# target to build an object file
+SceneManagement/Scenes/ShipyardScene.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.obj
+.PHONY : SceneManagement/Scenes/ShipyardScene.cpp.obj
+
+SceneManagement/Scenes/ShipyardScene.i: SceneManagement/Scenes/ShipyardScene.cpp.i
+.PHONY : SceneManagement/Scenes/ShipyardScene.i
+
+# target to preprocess a source file
+SceneManagement/Scenes/ShipyardScene.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.i
+.PHONY : SceneManagement/Scenes/ShipyardScene.cpp.i
+
+SceneManagement/Scenes/ShipyardScene.s: SceneManagement/Scenes/ShipyardScene.cpp.s
+.PHONY : SceneManagement/Scenes/ShipyardScene.s
+
+# target to generate assembly for a file
+SceneManagement/Scenes/ShipyardScene.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.s
+.PHONY : SceneManagement/Scenes/ShipyardScene.cpp.s
 
 main.obj: main.cpp.obj
 .PHONY : main.obj
@@ -293,9 +341,15 @@ help:
 	@echo ... SceneManagement/SceneManager.obj
 	@echo ... SceneManagement/SceneManager.i
 	@echo ... SceneManagement/SceneManager.s
+	@echo ... SceneManagement/Scenes/GameScene.obj
+	@echo ... SceneManagement/Scenes/GameScene.i
+	@echo ... SceneManagement/Scenes/GameScene.s
 	@echo ... SceneManagement/Scenes/MenuScene.obj
 	@echo ... SceneManagement/Scenes/MenuScene.i
 	@echo ... SceneManagement/Scenes/MenuScene.s
+	@echo ... SceneManagement/Scenes/ShipyardScene.obj
+	@echo ... SceneManagement/Scenes/ShipyardScene.i
+	@echo ... SceneManagement/Scenes/ShipyardScene.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

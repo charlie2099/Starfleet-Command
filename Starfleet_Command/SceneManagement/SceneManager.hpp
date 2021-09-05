@@ -2,6 +2,8 @@
 #define STARFLEET_COMMAND_SCENEMANAGER_HPP
 #include "Scene.hpp"
 #include "../SceneManagement/Scenes/MenuScene.hpp"
+#include "../SceneManagement/Scenes/GameScene.hpp"
+#include "../SceneManagement/Scenes/ShipyardScene.hpp"
 
 class SceneManager
         {

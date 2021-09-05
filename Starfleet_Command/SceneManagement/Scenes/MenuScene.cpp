@@ -35,7 +35,7 @@ bool MenuScene::init()
         panels[i].setTextSize(85);
         panels[i].setFont(Panel::TextFont::BOLD);
         panels[i].setPanelColour(sf::Color(178, 178, 178, 0));
-        panels[i].setPosition(utility.WINDOW_WIDTH * 0.5F - panels[i].getSize().width/2, utility.WINDOW_HEIGHT * 0.22F);
+        panels[i].setPosition(utility.WINDOW_WIDTH * 0.5F - panels[i].getTextSize().width / 2, utility.WINDOW_HEIGHT * 0.22F);
     }
 
     initMenuTitleIcon();
@@ -49,7 +49,7 @@ bool MenuScene::init()
     {
         ship_sprites[i].setTexture(ship_texture);
         ship_sprites[i].setColor(sf::Color::Cyan);
-        ship_sprites[i].setScale(0.10F, 0.10F);
+        ship_sprites[i].setScale(0.05F, 0.05F);
         ship_sprites[i].setRotation(0);
         ship_sprites[i].setPosition(50, static_cast<float >(i * 80) + 300);
     }
@@ -81,8 +81,7 @@ void MenuScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
     {
         if(panels[0].isClicked())
         {
-            std::cout << "play" << std::endl;
-            //setScene(Scene::ID::GAME);
+            setScene(Scene::ID::SHIPYARD);
         }
         else if(panels[1].isClicked())
         {
@@ -131,6 +130,7 @@ void MenuScene::update(sf::RenderWindow& window, sf::Time deltaTime)
     for (auto & ship_sprite : ship_sprites)
     {
         ship_sprite.move(movement * deltaTime.asSeconds());
+
         if(ship_sprite.getPosition().x >= utility.WINDOW_WIDTH)
         {
             ship_sprite.setPosition(0, ship_sprite.getPosition().y);
@@ -144,19 +144,18 @@ void MenuScene::update(sf::RenderWindow& window, sf::Time deltaTime)
 
     for (int i = 0; i < ship_sprites.size(); ++i)
     {
-        if(ship_sprites[i].getGlobalBounds().contains(translated_pos))
+        if(comfortableBoundsCheck(translated_pos, ship_sprites[i].getGlobalBounds()))
         {
-            //ship_sprites[i].setColor(sf::Color::Yellow);
+            ship_sprites[i].setColor(sf::Color::White);
             crosshairs_sprite.setColor(sf::Color::Cyan);
             auto crosshairs_xpos = ship_sprites[i].getPosition().x + ship_sprites[i].getGlobalBounds().width/2 - crosshairs_sprite.getGlobalBounds().width/2;
             auto crosshairs_ypos = ship_sprites[i].getPosition().y + ship_sprites[i].getGlobalBounds().height/2 - crosshairs_sprite.getGlobalBounds().height/2;
             crosshairs_sprite.setPosition(crosshairs_xpos, crosshairs_ypos);
         }
-        /*else if(!ship_sprites[i].getGlobalBounds().contains(translated_pos))
+        else if(!comfortableBoundsCheck(translated_pos, ship_sprites[i].getGlobalBounds()))
         {
-            crosshairs_sprite.setColor(sf::Color::Red);
-            //ship_sprites[i].setColor(sf::Color::Cyan);
-        }*/
+            ship_sprites[i].setColor(sf::Color::Cyan);
+        }
     }
 }
 
@@ -198,7 +197,16 @@ bool MenuScene::initMenuTitleIcon()
     menu_title_img_sprite.setColor(sf::Color(0, 255, 255, 100));
     menu_title_img_sprite.setScale(0.75F, 0.75F);
     menu_title_img_sprite.setRotation(-8);
-    menu_title_img_sprite.setPosition(panels[4].getPosition().x - 60, panels[4].getPosition().y - 50);
+    menu_title_img_sprite.setPosition(panels[4].getTextPosition().x - 60, panels[4].getTextPosition().y - 50);
 
     return true;
+}
+
+bool MenuScene::comfortableBoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect sprite_bounds)
+{
+    auto offset = 20.0F;
+    return (mouse_vec.x > sprite_bounds.left - offset &&
+    mouse_vec.y > sprite_bounds.top - offset &&
+    mouse_vec.x < sprite_bounds.left + sprite_bounds.width + offset &&
+    mouse_vec.y < sprite_bounds.top + sprite_bounds.height + offset);
 }

@@ -1,12 +1,19 @@
 // TODO List
 
+// COMPLETE
 - Create Constants class [DONE]
 - Move fonts to Scene class [DONE]
 - Create menu game title [DONE]
-- Create panel class
-- Create button class
-- Create menu options
-- Animated background in menu i.e. Two teams of ships firing at each other, flying past screen, lasers etc. Credit finn.
+- Create panel class [DONE]
+- Create button class [NOT NEEDED?]
+- Create menu options [DONE]
+
+// TO DO
+- Animated background menu [STARTED]
+- Ship base class, deriving classes: LightFighter, Repair, Battleship, Destroyer, CommandShip
+- std::vector<LightFighter> light_fighter; Vector size determined at hipyard scene.
+- light_fighter.shoot(), light_fighter.shields()
+- GameData class to pass data between scene classes easily?
 
 GOALS
 - Destroy opponents command ship to win

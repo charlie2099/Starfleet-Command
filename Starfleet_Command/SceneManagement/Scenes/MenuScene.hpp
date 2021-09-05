@@ -1,8 +1,6 @@
 #ifndef STARFLEET_COMMAND_MENUSCENE_HPP
 #define STARFLEET_COMMAND_MENUSCENE_HPP
 #include "../Scene.hpp"
-#include "../../Utility/Constants.hpp"
-#include "../../GameUI/Panel.hpp"
 
 class MenuScene : public Scene
 {
@@ -18,6 +16,7 @@ class MenuScene : public Scene
  private:
     bool initBackground();
     bool initMenuTitleIcon();
+    bool comfortableBoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect sprite_bounds);
 
     static const int BUTTONS = 3;
     static const int LEADERBOARD = 4;

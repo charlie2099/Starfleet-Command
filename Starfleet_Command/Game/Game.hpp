@@ -2,6 +2,8 @@
 #define STARFLEET_COMMAND_GAME_HPP
 #include <iostream>
 #include "../SceneManagement/Scenes/MenuScene.hpp"
+#include "../SceneManagement/Scenes/GameScene.hpp"
+#include "../SceneManagement/Scenes/ShipyardScene.hpp"
 #include "../SceneManagement/SceneManager.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>

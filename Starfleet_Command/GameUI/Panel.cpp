@@ -189,16 +189,28 @@ bool Panel::isClicked() const
     return is_clicked;
 }
 
-sf::FloatRect Panel::getSize()
+sf::FloatRect Panel::getTextSize()
 {
     /// Panels adjust to accommodate text
     return text.getGlobalBounds();
 }
 
-sf::Vector2f Panel::getPosition()
+sf::Vector2f Panel::getTextPosition()
 {
     /// Panels follow text position
     return text.getPosition();
+}
+
+sf::FloatRect Panel::getPanelSize()
+{
+    /// Panels adjust to accommodate text
+    return panel.getGlobalBounds();
+}
+
+sf::Vector2f Panel::getPanelPosition()
+{
+    /// Panels follow text position
+    return panel.getPosition();
 }
 
 
