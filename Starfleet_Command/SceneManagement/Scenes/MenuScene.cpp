@@ -13,7 +13,7 @@ bool MenuScene::init()
     {
         panels[i].setText(button_text[i]);
         panels[i].setTextSize(35);
-        panels[i].setPanelColour(sf::Color(178, 178, 178, 120));
+        panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
         panels[i].setPosition(utility.WINDOW_WIDTH * 0.185F, (utility.WINDOW_HEIGHT * 0.57F) + static_cast<float>(i * 100));
     }
 
@@ -24,7 +24,7 @@ bool MenuScene::init()
         panels[i].setTextSize(35);
         panels[i].setTextOffset(Panel::TextAlign::OFFSET, 40);
         panels[i].setSize(120, 250);
-        panels[i].setPanelColour(sf::Color(178, 178, 178, 120));
+        panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
         panels[i].setPosition(utility.WINDOW_WIDTH * 0.52F, utility.WINDOW_HEIGHT * 0.6F);
     }
 
@@ -86,7 +86,6 @@ void MenuScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
         else if(panels[1].isClicked())
         {
             std::cout << "options" << std::endl;
-            //setScene(Scene::ID::GAME);
         }
         else if(panels[2].isClicked())
         {
@@ -96,7 +95,7 @@ void MenuScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
 
     for (int i = 0; i < BUTTONS; ++i)
     {
-        if(i < 2)
+        if(i < 2) // PLAY and OPTIONS button
         {
             if(panels[i].isHoveredOver())
             {
@@ -104,7 +103,7 @@ void MenuScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
                 panels[i].setText(button_text[i], sf::Color::Cyan);
             }
         }
-        else
+        else // EXIT button
         {
             panels[i].setPanelColour(sf::Color(242, 22, 22, 60));
             panels[i].setText(button_text[i], sf::Color::Red);
@@ -112,7 +111,7 @@ void MenuScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
 
         if(!panels[i].isHoveredOver())
         {
-            panels[i].setPanelColour(sf::Color(178, 178, 178, 120));
+            panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
             panels[i].setText(button_text[i], sf::Color::White);
         }
     }

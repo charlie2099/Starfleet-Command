@@ -24,14 +24,14 @@ void Panel::eventHandler(sf::RenderWindow &window, sf::Event &event)
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
 
-    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    if (event.type == sf::Event::MouseButtonPressed/* && event.mouseButton.button == sf::Mouse::Left*/)
     {
         if(panel.getGlobalBounds().contains(translated_pos))
         {
             setIsClicked(true);
         }
     }
-    else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+    else if (event.type == sf::Event::MouseButtonReleased/* && event.mouseButton.button == sf::Mouse::Left*/)
     {
         setIsClicked(false);
     }

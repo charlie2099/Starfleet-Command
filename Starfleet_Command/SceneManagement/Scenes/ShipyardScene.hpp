@@ -16,7 +16,8 @@ class ShipyardScene : public Scene
  private:
     bool initBackground();
     bool initMenuTitleIcon();
-    bool comfortableBoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect sprite_bounds);
+    void initTitleText();
+    void initPanels();
 
     static const int SHIP_CARDS = 4;
     static const int PLAY_BUTTON = 5;
@@ -24,8 +25,7 @@ class ShipyardScene : public Scene
     Constants utility;
     std::array<Panel, 5> panels;
     std::array<std::string, 4> button_text;
-    //std::array<sf::Color, 4> card_colour;
-    //std::array<sf::Color, 4> card_colour2;
+    std::array<int, 4> ship_count;
 
     sf::Texture background_texture;
     sf::Texture ship_img_texture;
