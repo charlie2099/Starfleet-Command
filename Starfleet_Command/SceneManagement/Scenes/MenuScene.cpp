@@ -20,12 +20,12 @@ bool MenuScene::init()
     // Leaderboard panel
     for (int i = BUTTONS; i < LEADERBOARD; ++i)
     {
-        panels[i].setText("LEADERBOARD");
+        panels[i].setText("HIGHSCORES");
         panels[i].setTextSize(35);
         panels[i].setTextOffset(Panel::TextAlign::OFFSET, 40);
         panels[i].setSize(120, 250);
         panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
-        panels[i].setPosition(utility.WINDOW_WIDTH * 0.52F, utility.WINDOW_HEIGHT * 0.6F);
+        panels[i].setPosition(utility.WINDOW_WIDTH * 0.56F, utility.WINDOW_HEIGHT * 0.6F);
     }
 
     // Title panel

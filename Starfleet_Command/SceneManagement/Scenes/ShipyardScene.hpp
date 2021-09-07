@@ -1,6 +1,7 @@
 #ifndef STARFLEET_COMMAND_SHIPYARDSCENE_HPP
 #define STARFLEET_COMMAND_SHIPYARDSCENE_HPP
 #include "../Scene.hpp"
+#include "../../GameUI/ShipCard.hpp"
 
 class ShipyardScene : public Scene
 {
@@ -15,17 +16,23 @@ class ShipyardScene : public Scene
 
  private:
     bool initBackground();
-    bool initMenuTitleIcon();
     void initTitleText();
     void initPanels();
-
-    static const int SHIP_CARDS = 4;
-    static const int PLAY_BUTTON = 5;
+    bool initMenuTitleIcon();
+    void initShipCards();
+    void playButtonActive(int i);
+    void playButtonInactive(int i);
+    void shipCardsActive(int i);
+    void shipCardsInactive(int i);
+    void shipCardsLeftClicked(int i);
+    void shipCardsRightClicked(int i);
 
     Constants utility;
-    std::array<Panel, 5> panels;
+
+    std::array<Panel, 1> panels;
+    std::array<ShipCard, 4> ship_cards;
     std::array<std::string, 4> button_text;
-    std::array<int, 4> ship_count;
+    std::array<int, 4> ship_count{};
 
     sf::Texture background_texture;
     sf::Texture ship_img_texture;

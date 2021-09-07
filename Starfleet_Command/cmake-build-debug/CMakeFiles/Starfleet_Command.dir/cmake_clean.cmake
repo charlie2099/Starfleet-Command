@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/GameUI/Panel.cpp.obj"
+  "CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scene.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/SceneManager.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/GameScene.cpp.obj"

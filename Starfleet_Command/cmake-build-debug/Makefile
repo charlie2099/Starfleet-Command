@@ -176,6 +176,30 @@ GameUI/Panel.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/Panel.cpp.s
 .PHONY : GameUI/Panel.cpp.s
 
+GameUI/ShipCard.obj: GameUI/ShipCard.cpp.obj
+.PHONY : GameUI/ShipCard.obj
+
+# target to build an object file
+GameUI/ShipCard.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.obj
+.PHONY : GameUI/ShipCard.cpp.obj
+
+GameUI/ShipCard.i: GameUI/ShipCard.cpp.i
+.PHONY : GameUI/ShipCard.i
+
+# target to preprocess a source file
+GameUI/ShipCard.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.i
+.PHONY : GameUI/ShipCard.cpp.i
+
+GameUI/ShipCard.s: GameUI/ShipCard.cpp.s
+.PHONY : GameUI/ShipCard.s
+
+# target to generate assembly for a file
+GameUI/ShipCard.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.s
+.PHONY : GameUI/ShipCard.cpp.s
+
 SceneManagement/Scene.obj: SceneManagement/Scene.cpp.obj
 .PHONY : SceneManagement/Scene.obj
 
@@ -335,6 +359,9 @@ help:
 	@echo ... GameUI/Panel.obj
 	@echo ... GameUI/Panel.i
 	@echo ... GameUI/Panel.s
+	@echo ... GameUI/ShipCard.obj
+	@echo ... GameUI/ShipCard.i
+	@echo ... GameUI/ShipCard.s
 	@echo ... SceneManagement/Scene.obj
 	@echo ... SceneManagement/Scene.i
 	@echo ... SceneManagement/Scene.s
