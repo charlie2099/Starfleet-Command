@@ -200,6 +200,54 @@ GameUI/ShipCard.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.s
 .PHONY : GameUI/ShipCard.cpp.s
 
+Player/Fleet.obj: Player/Fleet.cpp.obj
+.PHONY : Player/Fleet.obj
+
+# target to build an object file
+Player/Fleet.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.obj
+.PHONY : Player/Fleet.cpp.obj
+
+Player/Fleet.i: Player/Fleet.cpp.i
+.PHONY : Player/Fleet.i
+
+# target to preprocess a source file
+Player/Fleet.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.i
+.PHONY : Player/Fleet.cpp.i
+
+Player/Fleet.s: Player/Fleet.cpp.s
+.PHONY : Player/Fleet.s
+
+# target to generate assembly for a file
+Player/Fleet.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.s
+.PHONY : Player/Fleet.cpp.s
+
+Player/PlayerStats.obj: Player/PlayerStats.cpp.obj
+.PHONY : Player/PlayerStats.obj
+
+# target to build an object file
+Player/PlayerStats.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.obj
+.PHONY : Player/PlayerStats.cpp.obj
+
+Player/PlayerStats.i: Player/PlayerStats.cpp.i
+.PHONY : Player/PlayerStats.i
+
+# target to preprocess a source file
+Player/PlayerStats.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.i
+.PHONY : Player/PlayerStats.cpp.i
+
+Player/PlayerStats.s: Player/PlayerStats.cpp.s
+.PHONY : Player/PlayerStats.s
+
+# target to generate assembly for a file
+Player/PlayerStats.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.s
+.PHONY : Player/PlayerStats.cpp.s
+
 SceneManagement/Scene.obj: SceneManagement/Scene.cpp.obj
 .PHONY : SceneManagement/Scene.obj
 
@@ -362,6 +410,12 @@ help:
 	@echo ... GameUI/ShipCard.obj
 	@echo ... GameUI/ShipCard.i
 	@echo ... GameUI/ShipCard.s
+	@echo ... Player/Fleet.obj
+	@echo ... Player/Fleet.i
+	@echo ... Player/Fleet.s
+	@echo ... Player/PlayerStats.obj
+	@echo ... Player/PlayerStats.i
+	@echo ... Player/PlayerStats.s
 	@echo ... SceneManagement/Scene.obj
 	@echo ... SceneManagement/Scene.i
 	@echo ... SceneManagement/Scene.s

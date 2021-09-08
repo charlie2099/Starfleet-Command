@@ -19,7 +19,7 @@ void ShipyardScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
     }
 
     // Play button
-    for (int i = 0; i < panels.size(); ++i)
+    for (int i = 0; i < PLAY_BUTTON; ++i)
     {
         if(panels[i].isHoveredOver())
         {
@@ -36,6 +36,31 @@ void ShipyardScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
         }
     }
 
+    // Fleet Colour Panel
+    for (int i = PLAY_BUTTON; i < FLEET_COLOUR; ++i)
+    {
+        if (event.type == sf::Event::MouseButtonPressed)
+        {
+            if(panels[i].isClicked())
+            {
+                if(event.mouseButton.button == sf::Mouse::Left)
+                {
+                    if(active_colour < 3)
+                    {
+                        active_colour+= 1;
+                    }
+                }
+
+                else if(event.mouseButton.button == sf::Mouse::Right)
+                {
+                    if(active_colour > 0)
+                    {
+                        active_colour-= 1;
+                    }
+                }
+            }
+        }
+    }
 
     // Ship Cards
     for (int i = 0; i < ship_cards.size(); ++i)
@@ -81,6 +106,20 @@ void ShipyardScene::update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         ship_card.getPanel().update(window, deltaTime);
     }
+
+    // Fleet Colour Panel
+    for (int i = PLAY_BUTTON; i < FLEET_COLOUR; ++i)
+    {
+        panels[i].setText("Fleet Colour: " + colours_text[active_colour]);
+        panels[i].setPanelColour(colours_sf_light[active_colour]);
+    }
+
+    // Fleet Size Panel
+    for (int i = FLEET_COLOUR; i < FLEET_SIZE; ++i)
+    {
+        panels[i].setText("Fleet Size: " + std::to_string(fleet_size));
+        panels[i].setPosition(panels[1].getTextPosition().x + panels[1].getPanelSize().width + 10, panels[1].getTextPosition().y);
+    }
 }
 
 void ShipyardScene::render(sf::RenderWindow& window)
@@ -124,7 +163,7 @@ void ShipyardScene::initTitleText()
 void ShipyardScene::initPanels()
 {
     // Play Button panel
-    for (int i = 0; i < panels.size(); ++i)
+    for (int i = 0; i < PLAY_BUTTON; ++i)
     {
         panels[i].setText("PLAY");
         panels[i].setTextSize(35);
@@ -132,6 +171,40 @@ void ShipyardScene::initPanels()
         panels[i].setPanelColour(sf::Color(178, 178, 178, 0));
         panels[i].setPadding(20);
         panels[i].setPosition(utility.WINDOW_WIDTH * 0.9F - panels[i].getTextSize().width / 2, utility.WINDOW_HEIGHT * 0.85F - panels[i].getTextSize().height / 2);
+    }
+
+    // Fleet Colour Panel
+    for (int i = PLAY_BUTTON; i < FLEET_COLOUR; ++i)
+    {
+        colours_text.at(0) = ("CYAN");
+        colours_text.at(1) = ("RED");
+        colours_text.at(2) = ("GREEN");
+        colours_text.at(3) = ("YELLOW");
+
+        colours_sf.at(0) = sf::Color(20, 210, 242, 255); // cyan
+        colours_sf.at(1) = sf::Color(255, 0, 0, 255); // red
+        colours_sf.at(2) = sf::Color(0, 255, 0, 255); // green
+        colours_sf.at(3) = sf::Color(255, 255, 0, 255); // yellow
+
+        colours_sf_light.at(0) = sf::Color(20, 210, 242, 120); // cyan
+        colours_sf_light.at(1) = sf::Color(255, 0, 0, 120); // red
+        colours_sf_light.at(2) = sf::Color(0, 255, 0, 120); // green
+        colours_sf_light.at(3) = sf::Color(255, 255, 0, 120); // yellow
+
+        panels[i].setText("Fleet Colour: " + colours_text[active_colour]);
+        panels[i].setFont(Panel::TextFont::BOLD);
+        panels[i].setTextSize(18);
+        panels[i].setPosition(utility.WINDOW_WIDTH * 0.5F - panels[i].getPanelSize().width/2, utility.WINDOW_HEIGHT * 0.745F - panels[i].getPanelSize().height/2);
+    }
+
+    // Fleet Size Panel
+    for (int i = FLEET_COLOUR; i < FLEET_SIZE; ++i)
+    {
+        panels[i].setText("Fleet Size: " + std::to_string(0));
+        panels[i].setFont(Panel::TextFont::BOLD);
+        panels[i].setTextSize(18);
+        panels[i].setPanelColour(sf::Color(20, 210, 242, 80));
+        panels[i].setPosition(panels[1].getTextPosition().x + panels[1].getPanelSize().width + 10, panels[1].getTextPosition().y);
     }
 }
 
@@ -202,7 +275,7 @@ void ShipyardScene::shipCardsActive(int i)
     ship_cards[i].getPanel().setText(button_text[i], sf::Color::Cyan);
     ship_cards[i].getPanel().setPanelColour(sf::Color(20, 210, 242, 120));
     ship_cards[i].getCounterText().setFillColor(sf::Color::Cyan);
-    ship_cards[i].getImage().setColor(sf::Color::Cyan);
+    ship_cards[i].getImage().setColor(colours_sf[active_colour]);
 }
 
 void ShipyardScene::shipCardsInactive(int i)
@@ -218,6 +291,13 @@ void ShipyardScene::shipCardsLeftClicked(int i)
     if(ship_count[i] < 5)
     {
         ship_count[i] +=1;
+
+        int sum = 0;
+        for (int elements : ship_count)
+        {
+            sum += elements;
+        }
+        fleet_size = sum;
     }
     ship_cards[i].setCounterText(ship_count[i]);
     ship_cards[i].getPanel().setPanelColour(sf::Color(255, 255, 255, 120));
@@ -228,8 +308,16 @@ void ShipyardScene::shipCardsRightClicked(int i)
     if(ship_count[i] > 0)
     {
         ship_count[i] -=1;
+
+        int sum = 0;
+        for (int elements : ship_count)
+        {
+            sum += elements;
+        }
+        fleet_size = sum;
     }
     ship_cards[i].setCounterText(ship_count[i]);
     ship_cards[i].getPanel().setPanelColour(sf::Color(255, 0, 0, 80));
 }
+
 

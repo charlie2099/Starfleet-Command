@@ -241,6 +241,12 @@ CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.obj
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.cpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.hpp
+CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.obj
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.cpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
+CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.obj
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/PlayerStats.cpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/PlayerStats.hpp
 CMakeFiles/Starfleet_Command.dir/SceneManagement/Scene.cpp.obj
  C:/Libraries/SFML/include/SFML/Config.hpp
  C:/Libraries/SFML/include/SFML/Graphics.hpp

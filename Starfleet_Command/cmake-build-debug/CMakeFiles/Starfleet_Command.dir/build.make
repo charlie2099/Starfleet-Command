@@ -191,6 +191,34 @@ CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.s"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\GameUI\ShipCard.cpp -o CMakeFiles\Starfleet_Command.dir\GameUI\ShipCard.cpp.s
 
+CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
+CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
+CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.obj: ../Player/PlayerStats.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.obj"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Player\PlayerStats.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Player\PlayerStats.cpp
+
+CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Player\PlayerStats.cpp > CMakeFiles\Starfleet_Command.dir\Player\PlayerStats.cpp.i
+
+CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Player\PlayerStats.cpp -o CMakeFiles\Starfleet_Command.dir\Player\PlayerStats.cpp.s
+
+CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
+CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
+CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.obj: ../Player/Fleet.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.obj"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Player\Fleet.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Player\Fleet.cpp
+
+CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Player\Fleet.cpp > CMakeFiles\Starfleet_Command.dir\Player\Fleet.cpp.i
+
+CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Player\Fleet.cpp -o CMakeFiles\Starfleet_Command.dir\Player\Fleet.cpp.s
+
 # Object files for target Starfleet_Command
 Starfleet_Command_OBJECTS = \
 "CMakeFiles/Starfleet_Command.dir/main.cpp.obj" \
@@ -201,7 +229,9 @@ Starfleet_Command_OBJECTS = \
 "CMakeFiles/Starfleet_Command.dir/GameUI/Panel.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/GameScene.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.obj" \
-"CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.obj"
+"CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.obj" \
+"CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.obj" \
+"CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.obj"
 
 # External object files for target Starfleet_Command
 Starfleet_Command_EXTERNAL_OBJECTS =
@@ -215,6 +245,8 @@ Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/GameUI/Panel.cpp.obj
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/GameScene.cpp.obj
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.obj
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.obj
+Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.obj
+Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.obj
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/build.make
 Starfleet_Command.exe: C:/Libraries/SFML/lib/libsfml-graphics-s-d.a
 Starfleet_Command.exe: C:/Libraries/SFML/lib/libsfml-window-s-d.a
@@ -223,7 +255,7 @@ Starfleet_Command.exe: C:/Libraries/SFML/lib/libfreetype.a
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/linklibs.rsp
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/objects1.rsp
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable Starfleet_Command.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable Starfleet_Command.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Starfleet_Command.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

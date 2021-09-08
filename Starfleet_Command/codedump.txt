@@ -14,6 +14,8 @@
 - std::vector<LightFighter> light_fighter; Vector size determined at hipyard scene.
 - light_fighter.shoot(), light_fighter.shields()
 - GameData class to pass data between scene classes easily?
+- Fleet Size shown visually on Shipyard scene
+- Fleet colour option on Shipyard scene
 
 GOALS
 - Destroy opponents command ship to win
