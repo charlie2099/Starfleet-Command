@@ -18,21 +18,30 @@ class ShipCard
         BATTLESHIP
     };
     void setShipType(ShipType shipType);
+    void setShipCost(int cost);
     void setCounterText(int count);
     void setPosition(float x, float y);
     Panel &getPanel();
     sf::Sprite &getImage();
+    int &getShipCost();
     sf::Text &getCounterText();
 
  private:
     bool loadFont();
 
-    Panel panel;
-    sf::Texture ship_texture;
-    sf::Sprite ship_sprite;
-    sf::Font font_regular;
-    sf::Text counter_text;
     int ship_count = 0;
+    int ship_cost = 0;
+
+    Panel panel;
+
+    sf::Texture ship_texture;
+
+    sf::Sprite ship_sprite;
+
+    sf::Font font_regular;
+
+    sf::Text cost_text;
+    sf::Text counter_text;
 };
 
 #endif //STARFLEET_COMMAND_SHIPCARD_HPP

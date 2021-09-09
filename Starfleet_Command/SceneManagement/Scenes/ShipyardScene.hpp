@@ -16,10 +16,12 @@ class ShipyardScene : public Scene
 
  private:
     bool initBackground();
+    void initCreditsText();
     void initTitleText();
     void initPanels();
     bool initMenuTitleIcon();
     void initShipCards();
+
     void playButtonActive(int i);
     void playButtonInactive(int i);
     void shipCardsActive(int i);
@@ -31,12 +33,16 @@ class ShipyardScene : public Scene
     static const int FLEET_COLOUR = 2;
     static const int FLEET_SIZE = 3;
 
+    int active_colour = 0;
+    int fleet_size = 0;
+    int credits = 150;
+
     Constants utility;
 
     std::array<Panel, 3> panels;
     std::array<ShipCard, 4> ship_cards;
-    std::array<std::string, 4> button_text;
     std::array<int, 4> ship_count{};
+    std::array<std::string, 4> button_text;
     std::array<std::string, 4> colours_text{};
     std::array<sf::Color, 4> colours_sf{};
     std::array<sf::Color, 4> colours_sf_light{};
@@ -48,9 +54,7 @@ class ShipyardScene : public Scene
     sf::Sprite ship_img_sprite;
 
     sf::Text shipyard_title;
-
-    int active_colour = 0;
-    int fleet_size = 0;
+    sf::Text credits_text;
 };
 
 #endif //STARFLEET_COMMAND_SHIPYARDSCENE_HPP

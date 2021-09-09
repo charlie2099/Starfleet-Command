@@ -11,12 +11,20 @@ ShipCard::ShipCard()
 
     loadFont();
 
+    cost_text.setString(std::to_string(ship_cost));
+    cost_text.setFont(font_regular);
+    cost_text.setFillColor(sf::Color(153, 210, 242));
+    cost_text.setCharacterSize(20);
+    /*auto cost_text_x = panel.getPanelPosition().x * 0.75F;
+    auto cost_text_y = panel.getPanelPosition().y + panel.getPanelSize().height * 0.8F;
+    cost_text.setPosition(cost_text_x, cost_text_y);*/
+
     counter_text.setString("x" + std::to_string(ship_count));
     counter_text.setFont(font_regular);
     counter_text.setCharacterSize(20);
-    auto counter_text_x = panel.getPanelPosition().x + panel.getPanelSize().width * 0.75F;
+    /*auto counter_text_x = panel.getPanelPosition().x + panel.getPanelSize().width * 0.75F;
     auto counter_text_y = panel.getPanelPosition().y + panel.getPanelSize().height * 0.8F;
-    counter_text.setPosition(counter_text_x, counter_text_y);
+    counter_text.setPosition(counter_text_x, counter_text_y);*/
 
     //setShipType(ShipType::FIGHTER);
     //ship_sprite.setTexture(ship_texture);
@@ -27,8 +35,15 @@ ShipCard::ShipCard()
 void ShipCard::render(sf::RenderWindow& window)
 {
     panel.render(window);
+    window.draw(cost_text);
     window.draw(counter_text);
     window.draw(ship_sprite);
+}
+
+void ShipCard::setShipCost(int cost)
+{
+    ship_cost = cost;
+    cost_text.setString(std::to_string(ship_cost));
 }
 
 void ShipCard::setCounterText(int count)
@@ -40,6 +55,10 @@ void ShipCard::setCounterText(int count)
 void ShipCard::setPosition(float x, float y)
 {
     panel.setPosition(x, y);
+
+    auto cost_text_x = panel.getPanelPosition().x + 30.0F;
+    auto cost_text_y = panel.getPanelPosition().y + panel.getPanelSize().height * 0.8F;
+    cost_text.setPosition(cost_text_x, cost_text_y);
 
     auto counter_text_x = panel.getPanelPosition().x + panel.getPanelSize().width * 0.75F;
     auto counter_text_y = panel.getPanelPosition().y + panel.getPanelSize().height * 0.8F;
@@ -89,6 +108,11 @@ void ShipCard::setShipType(ShipCard::ShipType shipType)
 sf::Sprite &ShipCard::getImage()
 {
     return ship_sprite;
+}
+
+int &ShipCard::getShipCost()
+{
+    return ship_cost;
 }
 
 sf::Text &ShipCard::getCounterText()
