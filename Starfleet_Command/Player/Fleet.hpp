@@ -8,27 +8,18 @@ class Fleet
     Fleet() = default;
     ~Fleet() = default;
 
-    void setFleetSize(int size){}; // static?
-    int getFleetSize() const { return fleet_size; };
+    void setFleetSize(int size); // static?
+    int getFleetSize() const;
 
     enum class ShipType {FIGHTER, REPAIR, DESTROYER, BATTLESHIP};
-    void setNumOfShips(int count, ShipType shipType){};
+    void setNumOfShips(int count, ShipType shipType);
+    const std::array<int, 4> &getNumOfShips() const;
 
-    /*void setFighterCount(int count){};
-    void setRepairShipCount(int count){};
-    void setDestroyerCount(int count){};
-    void setBattleshipCount(int count){};*/
-
- private:
-    int fleet_size = 0;
-
+private:
+    // Ship ship
     static const int SHIP_CLASSES = 4;
-    std::array<int, SHIP_CLASSES> ship_count{};
-
-    /*int fighter_count = 0;
-    int repair_count = 0;
-    int destroyer_count = 0;
-    int battleship_count = 0;*/
+    std::array<int, SHIP_CLASSES> ship_class{};
+    int fleet_size = 0;
 };
 
 #endif //STARFLEET_COMMAND_FLEET_HPP

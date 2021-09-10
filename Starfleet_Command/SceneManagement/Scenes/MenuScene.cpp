@@ -145,7 +145,7 @@ void MenuScene::update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         if(comfortableBoundsCheck(translated_pos, ship_sprites[i].getGlobalBounds()))
         {
-            ship_sprites[i].setColor(sf::Color::White);
+            //ship_sprites[i].setColor(sf::Color::White);
             crosshairs_sprite.setColor(sf::Color::Cyan);
             auto crosshairs_xpos = ship_sprites[i].getPosition().x + ship_sprites[i].getGlobalBounds().width/2 - crosshairs_sprite.getGlobalBounds().width/2;
             auto crosshairs_ypos = ship_sprites[i].getPosition().y + ship_sprites[i].getGlobalBounds().height/2 - crosshairs_sprite.getGlobalBounds().height/2;

@@ -80,6 +80,8 @@ CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/SceneManager.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp
@@ -244,6 +246,9 @@ CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.obj
 CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.obj
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.cpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
+CMakeFiles/Starfleet_Command.dir/Player/Player.cpp.obj
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.cpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.hpp
 CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.obj
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/PlayerStats.cpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/PlayerStats.hpp
@@ -403,6 +408,8 @@ CMakeFiles/Starfleet_Command.dir/SceneManagement/SceneManager.cpp.obj
  C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/SceneManager.cpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/SceneManager.hpp
@@ -647,6 +654,8 @@ CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.obj
  C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.cpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.hpp
@@ -729,6 +738,8 @@ CMakeFiles/Starfleet_Command.dir/main.cpp.obj
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/SceneManager.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp

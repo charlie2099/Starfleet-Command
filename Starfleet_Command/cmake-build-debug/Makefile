@@ -224,6 +224,30 @@ Player/Fleet.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.s
 .PHONY : Player/Fleet.cpp.s
 
+Player/Player.obj: Player/Player.cpp.obj
+.PHONY : Player/Player.obj
+
+# target to build an object file
+Player/Player.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Player.cpp.obj
+.PHONY : Player/Player.cpp.obj
+
+Player/Player.i: Player/Player.cpp.i
+.PHONY : Player/Player.i
+
+# target to preprocess a source file
+Player/Player.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Player.cpp.i
+.PHONY : Player/Player.cpp.i
+
+Player/Player.s: Player/Player.cpp.s
+.PHONY : Player/Player.s
+
+# target to generate assembly for a file
+Player/Player.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Player.cpp.s
+.PHONY : Player/Player.cpp.s
+
 Player/PlayerStats.obj: Player/PlayerStats.cpp.obj
 .PHONY : Player/PlayerStats.obj
 
@@ -413,6 +437,9 @@ help:
 	@echo ... Player/Fleet.obj
 	@echo ... Player/Fleet.i
 	@echo ... Player/Fleet.s
+	@echo ... Player/Player.obj
+	@echo ... Player/Player.i
+	@echo ... Player/Player.s
 	@echo ... Player/PlayerStats.obj
 	@echo ... Player/PlayerStats.i
 	@echo ... Player/PlayerStats.s

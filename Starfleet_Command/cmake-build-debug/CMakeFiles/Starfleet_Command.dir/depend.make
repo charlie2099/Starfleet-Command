@@ -80,6 +80,8 @@ CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj: \
  ../Game/Game.hpp \
  ../GameUI/Panel.hpp \
  ../GameUI/ShipCard.hpp \
+ ../Player/Fleet.hpp \
+ ../Player/Player.hpp \
  ../SceneManagement/Scene.hpp \
  ../SceneManagement/SceneManager.hpp \
  ../SceneManagement/Scenes/GameScene.hpp \
@@ -244,6 +246,9 @@ CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.obj: \
 CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.obj: \
  ../Player/Fleet.cpp \
  ../Player/Fleet.hpp
+CMakeFiles/Starfleet_Command.dir/Player/Player.cpp.obj: \
+ ../Player/Player.cpp \
+ ../Player/Player.hpp
 CMakeFiles/Starfleet_Command.dir/Player/PlayerStats.cpp.obj: \
  ../Player/PlayerStats.cpp \
  ../Player/PlayerStats.hpp
@@ -403,6 +408,8 @@ CMakeFiles/Starfleet_Command.dir/SceneManagement/SceneManager.cpp.obj: \
  C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp \
  ../GameUI/Panel.hpp \
  ../GameUI/ShipCard.hpp \
+ ../Player/Fleet.hpp \
+ ../Player/Player.hpp \
  ../SceneManagement/Scene.hpp \
  ../SceneManagement/SceneManager.cpp \
  ../SceneManagement/SceneManager.hpp \
@@ -647,6 +654,8 @@ CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.obj: \
  C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp \
  ../GameUI/Panel.hpp \
  ../GameUI/ShipCard.hpp \
+ ../Player/Fleet.hpp \
+ ../Player/Player.hpp \
  ../SceneManagement/Scene.hpp \
  ../SceneManagement/Scenes/ShipyardScene.cpp \
  ../SceneManagement/Scenes/ShipyardScene.hpp \
@@ -729,6 +738,8 @@ CMakeFiles/Starfleet_Command.dir/main.cpp.obj: \
  ../Game/Game.hpp \
  ../GameUI/Panel.hpp \
  ../GameUI/ShipCard.hpp \
+ ../Player/Fleet.hpp \
+ ../Player/Player.hpp \
  ../SceneManagement/Scene.hpp \
  ../SceneManagement/SceneManager.hpp \
  ../SceneManagement/Scenes/GameScene.hpp \

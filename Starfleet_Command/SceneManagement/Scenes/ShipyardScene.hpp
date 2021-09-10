@@ -2,6 +2,8 @@
 #define STARFLEET_COMMAND_SHIPYARDSCENE_HPP
 #include "../Scene.hpp"
 #include "../../GameUI/ShipCard.hpp"
+#include "../../Player/Player.hpp"
+#include "../../Player/Fleet.hpp"
 
 class ShipyardScene : public Scene
 {
@@ -16,8 +18,9 @@ class ShipyardScene : public Scene
 
  private:
     bool initBackground();
-    void initCreditsText();
     void initTitleText();
+    void initCreditsText();
+    void initNotificationText();
     void initPanels();
     bool initMenuTitleIcon();
     void initShipCards();
@@ -34,15 +37,14 @@ class ShipyardScene : public Scene
     static const int FLEET_SIZE = 3;
 
     int active_colour = 0;
-    int fleet_size = 0;
-    int credits = 150;
 
     Constants utility;
-
+    Player player;
+    Fleet player_fleet;
     std::array<Panel, 3> panels;
     std::array<ShipCard, 4> ship_cards;
-    std::array<int, 4> ship_count{};
-    std::array<std::string, 4> button_text;
+
+    std::array<std::string, 4> ship_names;
     std::array<std::string, 4> colours_text{};
     std::array<sf::Color, 4> colours_sf{};
     std::array<sf::Color, 4> colours_sf_light{};
@@ -53,8 +55,9 @@ class ShipyardScene : public Scene
     sf::Sprite background_sprite;
     sf::Sprite ship_img_sprite;
 
-    sf::Text shipyard_title;
+    sf::Text shipyard_title_text;
     sf::Text credits_text;
+    sf::Text notification_text;
 };
 
 #endif //STARFLEET_COMMAND_SHIPYARDSCENE_HPP

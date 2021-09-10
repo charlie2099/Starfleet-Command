@@ -18,7 +18,7 @@ class ShipCard
         BATTLESHIP
     };
     void setShipType(ShipType shipType);
-    void setShipCost(int cost);
+    void setShipCost(int cost); // Move to fleet class?
     void setCounterText(int count);
     void setPosition(float x, float y);
     Panel &getPanel();

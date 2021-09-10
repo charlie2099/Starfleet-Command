@@ -7,16 +7,22 @@
 - Create panel class [DONE]
 - Create button class [NOT NEEDED?]
 - Create menu options [DONE]
+- Fleet Size shown visually on Shipyard scene [DONE]
+- Fleet colour option on Shipyard scene [DONE]
 
 // TO DO
 - Animated background menu [STARTED]
 - Ship base class, deriving classes: LightFighter, Repair, Battleship, Destroyer, CommandShip
-- std::vector<LightFighter> light_fighter; Vector size determined at hipyard scene.
+- std::vector<LightFighter> light_fighter; Vector size determined in shipyard.
 - light_fighter.shoot(), light_fighter.shields()
 - GameData class to pass data between scene classes easily?
-- Fleet Size shown visually on Shipyard scene
-- Fleet colour option on Shipyard scene
 
 GOALS
 - Destroy opponents command ship to win
 - To damage the command ship, the opponent's battleships need to be destroyed first
+
+
+player_fleet.setNumOfShips(5, FIGHTER);
+
+std::vector<Ship> ships.
+ships.create(5, FIGHTER);
