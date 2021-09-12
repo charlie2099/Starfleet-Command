@@ -150,6 +150,36 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Battleship.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Battleship.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Destroyer.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Destroyer.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/LightFighter.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/LightFighter.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/RepairShip.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/RepairShip.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SpriteComponent.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>

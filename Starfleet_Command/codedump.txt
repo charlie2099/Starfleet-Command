@@ -80,13 +80,13 @@ GameScene::init()
     - Actions actions = Actions::NONE;
 
     Starship Class : public SpriteComponent
-    - Projectile projectile
+    - Projectile projectile;
     - CommandActions actions - actions.setCommand(ATTACK);
     - setHealth(float health);
     - setDamage(float damage);
     - setSpeed(float speed);
-    - setVelocity()
-    - setAcceleration()
+    - setVelocity();
+    - setAcceleration();
 
     Mothership class : public Starship
     - Player player

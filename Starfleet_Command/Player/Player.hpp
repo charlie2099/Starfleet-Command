@@ -11,7 +11,7 @@ class Player
     int getCredits() const;
 
  private:
-    int player_credits = 250;
+    int player_credits = 2500;
 };
 
 #endif //STARFLEET_COMMAND_PLAYER_HPP

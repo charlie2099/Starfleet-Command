@@ -4,13 +4,36 @@ bool GameScene::init()
 {
     initBackground();
 
-    std::cout << "Fleet size: " << Fleet::getFleetSize() << std::endl;
+    static const int LIGHTFIGHTERS = 0;
+    static const int REPAIR_SHIPS = 1;
+    static const int DESTROYERS = 2;
+    static const int BATTLESHIPS = 3;
 
-    spriteComponent.loadSprite("images/starfleet_ship.png");
-    spriteComponent2.loadSprite("images/starfleet_ship_repair.png");
+    for (int i = 0; i < Fleet::getNumOfShips()[LIGHTFIGHTERS]; ++i)
+    {
+        light_fighter.emplace_back(std::make_unique<LightFighter>());
+        light_fighter[i]->getSpriteComp().setPos({100, static_cast<float>(i * 100) + 100});
+        //light_fighter[i]->getSpriteComp().getSprite().setColor(Fleet::getFleetColour());
+        light_fighter[i]->getSpriteComp().getSprite().setColor(sf::Color::Yellow);
+    }
 
-    spriteComponent.setPos(sf::Vector2<float>{500,0});
-    spriteComponent2.setPos(sf::Vector2<float>{200,0});
+    for (int i = 0; i < Fleet::getNumOfShips()[REPAIR_SHIPS]; ++i)
+    {
+        repair_ship.emplace_back(std::make_unique<RepairShip>());
+        repair_ship[i]->getSpriteComp().setPos({200, static_cast<float>(i * 100) + 100});
+    }
+
+    for (int i = 0; i < Fleet::getNumOfShips()[DESTROYERS]; ++i)
+    {
+        destroyer_ship.emplace_back(std::make_unique<Destroyer>());
+        destroyer_ship[i]->getSpriteComp().setPos({300, static_cast<float>(i * 100) + 100});
+    }
+
+    for (int i = 0; i < Fleet::getNumOfShips()[BATTLESHIPS]; ++i)
+    {
+        battleship_ship.emplace_back(std::make_unique<Battleship>());
+        battleship_ship[i]->getSpriteComp().setPos({400, static_cast<float>(i * 100) + 100});
+    }
 
     return true;
 }
@@ -28,8 +51,22 @@ void GameScene::update(sf::RenderWindow& /*window*/, sf::Time /*deltaTime*/)
 void GameScene::render(sf::RenderWindow& window)
 {
     window.draw(background_sprite);
-    spriteComponent.render(window);
-    spriteComponent2.render(window);
+    for (auto & fighter : light_fighter)
+    {
+        fighter->render(window);
+    }
+    for (auto & repair : repair_ship)
+    {
+        repair->render(window);
+    }
+    for (auto & destroyer : destroyer_ship)
+    {
+        destroyer->render(window);
+    }
+    for (auto & battleship : battleship_ship)
+    {
+        battleship->render(window);
+    }
 }
 
 /// OTHER
