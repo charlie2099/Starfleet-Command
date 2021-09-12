@@ -10,6 +10,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/GameScene.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/MenuScene.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.obj"
+  "CMakeFiles/Starfleet_Command.dir/SpriteComponent.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/main.cpp.obj"
   "Starfleet_Command.exe"
   "Starfleet_Command.exe.manifest"

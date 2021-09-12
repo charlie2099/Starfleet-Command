@@ -392,6 +392,30 @@ SceneManagement/Scenes/ShipyardScene.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.s
 .PHONY : SceneManagement/Scenes/ShipyardScene.cpp.s
 
+SpriteComponent.obj: SpriteComponent.cpp.obj
+.PHONY : SpriteComponent.obj
+
+# target to build an object file
+SpriteComponent.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SpriteComponent.cpp.obj
+.PHONY : SpriteComponent.cpp.obj
+
+SpriteComponent.i: SpriteComponent.cpp.i
+.PHONY : SpriteComponent.i
+
+# target to preprocess a source file
+SpriteComponent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SpriteComponent.cpp.i
+.PHONY : SpriteComponent.cpp.i
+
+SpriteComponent.s: SpriteComponent.cpp.s
+.PHONY : SpriteComponent.s
+
+# target to generate assembly for a file
+SpriteComponent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SpriteComponent.cpp.s
+.PHONY : SpriteComponent.cpp.s
+
 main.obj: main.cpp.obj
 .PHONY : main.obj
 
@@ -458,6 +482,9 @@ help:
 	@echo ... SceneManagement/Scenes/ShipyardScene.obj
 	@echo ... SceneManagement/Scenes/ShipyardScene.i
 	@echo ... SceneManagement/Scenes/ShipyardScene.s
+	@echo ... SpriteComponent.obj
+	@echo ... SpriteComponent.i
+	@echo ... SpriteComponent.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

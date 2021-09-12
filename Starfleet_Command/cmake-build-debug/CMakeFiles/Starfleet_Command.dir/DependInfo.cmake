@@ -19,6 +19,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/GameScene.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/MenuScene.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.obj"
+  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SpriteComponent.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/SpriteComponent.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/main.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

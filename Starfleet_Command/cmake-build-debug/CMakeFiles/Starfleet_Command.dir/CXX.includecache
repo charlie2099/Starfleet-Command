@@ -680,6 +680,12 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
 SFML/Graphics.hpp
 -
 
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
+array
+-
+iostream
+-
+
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
 SFML/Graphics.hpp
 -
@@ -688,13 +694,21 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constant
 ../GameUI/Panel.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.cpp
-MenuScene.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.cpp
+GameScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp
 ../Scene.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
+../../Player/Fleet.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
+../../SpriteComponent.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SpriteComponent.hpp
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SpriteComponent.hpp
+SFML/Graphics.hpp
+-
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constants.hpp
 iostream

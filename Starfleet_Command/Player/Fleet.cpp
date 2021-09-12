@@ -1,5 +1,13 @@
 #include "Fleet.hpp"
 
+int Fleet::fleet_size = 0;
+
+Fleet::Fleet()
+{
+    //fleet_size = 0;
+    std::cout << fleet_size << std::endl;
+}
+
 void Fleet::setNumOfShips(int count, Fleet::ShipType shipType)
 {
     for (int i = 0; i < SHIP_CLASSES; ++i)
@@ -18,7 +26,7 @@ void Fleet::setFleetSize(int size)
     fleet_size = size;
 }
 
-int Fleet::getFleetSize() const
+int Fleet::getFleetSize()
 {
     return fleet_size;
 }

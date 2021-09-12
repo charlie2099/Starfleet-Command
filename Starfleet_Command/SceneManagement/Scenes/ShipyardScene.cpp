@@ -34,7 +34,7 @@ void ShipyardScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
 
         if(panels[i].isClicked())
         {
-            if(player_fleet.getFleetSize() > 0)
+            if(Fleet::getFleetSize() > 0)
             {
                 setScene(Scene::ID::GAME);
             }
@@ -127,7 +127,7 @@ void ShipyardScene::update(sf::RenderWindow& window, sf::Time deltaTime)
     // Fleet Size Panel
     for (int i = FLEET_COLOUR; i < FLEET_SIZE; ++i)
     {
-        panels[i].setText("Fleet Size: " + std::to_string(player_fleet.getFleetSize()));
+        panels[i].setText("Fleet Size: " + std::to_string(Fleet::getFleetSize()));
         panels[i].setPosition(panels[1].getTextPosition().x + panels[1].getPanelSize().width + 10, panels[1].getTextPosition().y);
     }
 }
@@ -329,7 +329,7 @@ void ShipyardScene::shipCardsLeftClicked(int i)
         {
             sum += elements;
         }
-        player_fleet.setFleetSize(sum);
+        Fleet::setFleetSize(sum);
 
         player.setCredits(player.getCredits() - ship_cards[i].getShipCost());
         credits_text.setString("Credits: " + std::to_string(player.getCredits()));
@@ -337,7 +337,6 @@ void ShipyardScene::shipCardsLeftClicked(int i)
         ship_cards[i].setCounterText(player_fleet.getNumOfShips()[i]);
     }
     ship_cards[i].getPanel().setPanelColour(sf::Color(255, 255, 255, 120));
-
 }
 
 void ShipyardScene::shipCardsRightClicked(int i)
@@ -351,7 +350,7 @@ void ShipyardScene::shipCardsRightClicked(int i)
         {
             sum += elements;
         }
-        player_fleet.setFleetSize(sum);
+        Fleet::setFleetSize(sum);
 
         player.setCredits(player.getCredits() + ship_cards[i].getShipCost());
         credits_text.setString("Credits: " + std::to_string(player.getCredits()));

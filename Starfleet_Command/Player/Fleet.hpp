@@ -1,25 +1,30 @@
 #ifndef STARFLEET_COMMAND_FLEET_HPP
 #define STARFLEET_COMMAND_FLEET_HPP
 #include <array>
+#include <iostream>
 
 class Fleet
 {
  public:
-    Fleet() = default;
+    Fleet();
     ~Fleet() = default;
 
-    void setFleetSize(int size); // static?
-    int getFleetSize() const;
+    static void setFleetSize(int size); // static?
+    static int getFleetSize() ;
 
     enum class ShipType {FIGHTER, REPAIR, DESTROYER, BATTLESHIP};
+
+    /// Mutator Functions
     void setNumOfShips(int count, ShipType shipType);
+
+    /// Accessor Functions
     const std::array<int, 4> &getNumOfShips() const;
 
 private:
-    // Ship ship
     static const int SHIP_CLASSES = 4;
     std::array<int, SHIP_CLASSES> ship_class{};
-    int fleet_size = 0;
+
+    static int fleet_size;
 };
 
 #endif //STARFLEET_COMMAND_FLEET_HPP

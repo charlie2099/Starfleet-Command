@@ -150,6 +150,12 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SpriteComponent.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SpriteComponent.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constants.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
