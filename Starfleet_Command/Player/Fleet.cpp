@@ -2,13 +2,7 @@
 
 int Fleet::fleet_size = 0;
 std::array<int, 4> Fleet::ship_class {};
-//sf::Color Fleet::fleet_colour{};
-
-Fleet::Fleet()
-{
-    //fleet_size = 0;
-    std::cout << fleet_size << std::endl;
-}
+Fleet::Colour Fleet::fleet_colour {};
 
 void Fleet::setFleetSize(int size)
 {
@@ -20,15 +14,18 @@ int &Fleet::getFleetSize()
     return fleet_size;
 }
 
-/*void Fleet::setFleetColour(sf::Color& colour)
+void Fleet::setFleetColourRGB(int r, int g, int b)
 {
-    fleet_colour = colour;
+    fleet_colour.rgb_r = r;
+    fleet_colour.rgb_g = g;
+    fleet_colour.rgb_b = b;
 }
 
-sf::Color &Fleet::getFleetColour()
+Fleet::Colour &Fleet::getFleetColourRGB()
 {
     return fleet_colour;
-}*/
+}
+
 
 void Fleet::setNumOfShips(int count, Fleet::ShipType shipType)
 {

@@ -11,6 +11,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/MenuScene.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Ships/Battleship.cpp.obj"
+  "CMakeFiles/Starfleet_Command.dir/Ships/CommandShip.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Ships/Destroyer.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Ships/LightFighter.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Ships/RepairShip.cpp.obj"

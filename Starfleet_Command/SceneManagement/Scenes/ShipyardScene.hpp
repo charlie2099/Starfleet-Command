@@ -38,7 +38,6 @@ class ShipyardScene : public Scene
 
     int active_colour = 0;
 
-    Constants utility;
     Player player;
     Fleet player_fleet;
     std::array<Panel, 3> panels;

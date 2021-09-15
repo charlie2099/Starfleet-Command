@@ -151,3 +151,217 @@ GameScene::init()
             starship.defend(NEAREST_TARGET);
         }
     }
+
+
+
+    Fleet
+    {
+      public:
+        Fleet(int reserve_spaces)
+        {
+            fleet.reserve(reserve_spaces);
+        };
+        add(const Starship& starship)
+        {
+            fleet.emplace_back(starship);
+        };
+      private:
+        std::vector<Starship> fleet;
+    }
+
+   main
+   {
+        Fleet fleet(Fleet::getFleetSize());
+        LightFighter fighter;
+
+        for(int i = 0; i < 5; i++)
+        {
+            fleet.add(Starship(Starship::Type::FIGHTER));
+        }
+   }
+
+
+
+   Entity
+   {
+    public:
+        setVelocity();
+        setAcceleration();
+        setVector();
+
+        getVelocity();
+        getAcceleration();
+        getVector();
+    private:
+        SpriteComponent sprite?
+   }
+
+
+   Starship
+   {
+    public:
+
+    private:
+        Projectiles projectile;
+        StarshipCommands actions;
+        int health = 0;
+        int shields = 0;
+        int damage = 0;
+   }
+
+   StarshipCommands
+   {
+    public:
+        enum class Actions {ATTACK, DEFEND, REPOSITION};
+    private:
+   }
+
+   Fleet
+   {
+    public:
+        setSize();
+        setAction(std::vector<Starship>& ship, StarshipCommands action);
+    private:
+        std::vector<Starship> fleet_;
+        StarshipCommands actions;
+        static int fleet_size;
+   }
+
+   SpawnPoint
+   {
+        setSpawn();
+   }
+
+   Font
+   {
+
+   }
+
+   Mouse
+   {
+
+   }
+
+   Crosshair
+   {
+
+   }
+
+   Game::Init()
+   {
+        fleet.add(Starship(Starship::Class::FIGHTER));
+
+        fleet.getStarshipCommands().Attack(Starship& starship);
+        fleet.getStarshipCommands().Defend();
+        fleet.getStarshipCommands().Reposition(sf::Vector2f<float>{0,0});
+
+        Projectile laser(Projectile::Type::Laser);
+        Projectile missile(Projectile::Type::Missile);
+
+        starship[SELECTED].getCommands().Attack(Starship& starship, missile);
+        starship[SELECTED].getCommands().Defend(Starship& starship); // OR Protect()
+        starship[SELECTED].getCommands().Protect(Starship& starship);
+        starship[SELECTED].getCommands().Shields(int duration, int strength);
+        starship[SELECTED].getCommands().Reposition(sf::Vector2f<float>{});
+        starship[SELECTED].getCommands().Follow(Starship& starship);
+
+        Crosshair crosshair;
+        if(crosshair.HoveredOver(starship))
+        {
+
+        }
+
+        if(mouse.HoveredOver(starship))
+        {
+            crosshair.setPos();
+        }
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

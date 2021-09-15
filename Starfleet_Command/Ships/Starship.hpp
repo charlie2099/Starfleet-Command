@@ -8,24 +8,34 @@ class Starship
     Starship() = default;
     ~Starship() = default;
 
+    enum class Type
+    {
+        FIGHTER,
+        REPAIR,
+        DESTROYER,
+        BATTLESHIP,
+    };
+    explicit Starship(Type type);
+
     /// General
     virtual void render(sf::RenderWindow& window);
 
     /// Mutators
     void setHealth(float health);
     void setDamage(float damage);
-    void setSpeed(float speed);
+    void setSpeed(float speed); // Entity class?
     void setAcceleration(float acceleration);
 
     /// Accessors
+    SpriteComponent &getSpriteCompo();
     float getHealth() const;
     float getDamage() const;
     float getSpeed() const;
     float getAcceleration() const;
 
  private:
-    //SpriteComponent spriteComponent;
-
+    SpriteComponent spriteComponent;
+    Type ship_type{};
     float health_ = 0.0F;
     float damage_ = 0.0F;
     float speed_ = 0.0F;

@@ -1,6 +1,6 @@
 #include "LightFighter.hpp"
 
-LightFighter::LightFighter()
+LightFighter::LightFighter(int health) : health_test_(health)
 {
     spriteComponent.loadSprite("images/starfleet_ship_fighter.png");
     spriteComponent.getSprite().scale(sf::Vector2<float>{0.1F,0.1F});

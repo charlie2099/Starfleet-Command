@@ -1,13 +1,32 @@
 #include "Starship.hpp"
 
-/*Starship::Starship()
+Starship::Starship(Type type) : ship_type(type)
 {
-    spriteComponent.loadSprite("images/starfleet_ship.png");
-}*/
+    switch(type)
+    {
+        case Type::FIGHTER:
+            spriteComponent.loadSprite("images/starfleet_ship_fighter.png");
+            break;
+        case Type::REPAIR:
+            spriteComponent.loadSprite("images/starfleet_ship_repair.png");
+            break;
+        case Type::DESTROYER:
+            spriteComponent.loadSprite("images/starfleet_ship_destroyer.png");
+            break;
+        case Type::BATTLESHIP:
+            spriteComponent.loadSprite("images/starfleet_ship_battleship.png");
+            break;
+        /*case Type::FLAGSHIP:
+            spriteComponent.loadSprite("images/starfleet_ship_command.png");
+            spriteComponent.getSprite().scale({0.1F, 0.1F});
+            break;*/
+    }
+    spriteComponent.getSprite().scale({0.05F, 0.05F});
+}
 
-void Starship::render(sf::RenderWindow &/*window*/)
+void Starship::render(sf::RenderWindow &window)
 {
-    //window.draw(spriteComponent.getSprite());
+    window.draw(spriteComponent.getSprite());
 }
 
 void Starship::setHealth(float health)
@@ -48,6 +67,11 @@ float Starship::getSpeed() const
 float Starship::getAcceleration() const
 {
     return acceleration_;
+}
+
+SpriteComponent &Starship::getSpriteCompo()
+{
+    return spriteComponent;
 }
 
 

@@ -7,28 +7,33 @@
 class Fleet
 {
  public:
-    Fleet();
+    Fleet() = default;
     ~Fleet() = default;
 
+    struct Colour
+    {
+        int rgb_r;
+        int rgb_g;
+        int rgb_b;
+    };
+
     enum class ShipType {FIGHTER, REPAIR, DESTROYER, BATTLESHIP};
-    //enum class Colour {CYAN, RED, GREEN, YELLOW};
 
     /// Mutator Functions
     static void setFleetSize(int size);
-    //static void setFleetColour(sf::Color& colour);
+    static void setFleetColourRGB(int r, int g, int b);
     static void setNumOfShips(int count, ShipType shipType);
 
     /// Accessor Functions
     static int &getFleetSize();
-    //static sf::Color &getFleetColour();
+    static Colour &getFleetColourRGB();
     static std::array<int, 4> &getNumOfShips();
 
 private:
     static const int SHIP_CLASSES = 4;
     static std::array<int, SHIP_CLASSES> ship_class;
     static int fleet_size;
-    //static Colour ship_colour;
-    //static sf::Color fleet_colour;
+    static Colour fleet_colour;
 };
 
 #endif //STARFLEET_COMMAND_FLEET_HPP

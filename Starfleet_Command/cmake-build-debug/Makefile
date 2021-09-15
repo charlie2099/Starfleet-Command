@@ -416,6 +416,30 @@ Ships/Battleship.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Battleship.cpp.s
 .PHONY : Ships/Battleship.cpp.s
 
+Ships/CommandShip.obj: Ships/CommandShip.cpp.obj
+.PHONY : Ships/CommandShip.obj
+
+# target to build an object file
+Ships/CommandShip.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/CommandShip.cpp.obj
+.PHONY : Ships/CommandShip.cpp.obj
+
+Ships/CommandShip.i: Ships/CommandShip.cpp.i
+.PHONY : Ships/CommandShip.i
+
+# target to preprocess a source file
+Ships/CommandShip.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/CommandShip.cpp.i
+.PHONY : Ships/CommandShip.cpp.i
+
+Ships/CommandShip.s: Ships/CommandShip.cpp.s
+.PHONY : Ships/CommandShip.s
+
+# target to generate assembly for a file
+Ships/CommandShip.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/CommandShip.cpp.s
+.PHONY : Ships/CommandShip.cpp.s
+
 Ships/Destroyer.obj: Ships/Destroyer.cpp.obj
 .PHONY : Ships/Destroyer.obj
 
@@ -605,6 +629,9 @@ help:
 	@echo ... Ships/Battleship.obj
 	@echo ... Ships/Battleship.i
 	@echo ... Ships/Battleship.s
+	@echo ... Ships/CommandShip.obj
+	@echo ... Ships/CommandShip.i
+	@echo ... Ships/CommandShip.s
 	@echo ... Ships/Destroyer.obj
 	@echo ... Ships/Destroyer.i
 	@echo ... Ships/Destroyer.s

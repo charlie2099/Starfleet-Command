@@ -14,7 +14,7 @@ bool MenuScene::init()
         panels[i].setText(button_text[i]);
         panels[i].setTextSize(35);
         panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
-        panels[i].setPosition(utility.WINDOW_WIDTH * 0.185F, (utility.WINDOW_HEIGHT * 0.57F) + static_cast<float>(i * 100));
+        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.185F, (Constants::WINDOW_HEIGHT * 0.57F) + static_cast<float>(i * 100));
     }
 
     // Leaderboard panel
@@ -25,7 +25,7 @@ bool MenuScene::init()
         panels[i].setTextOffset(Panel::TextAlign::OFFSET, 40);
         panels[i].setSize(120, 250);
         panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
-        panels[i].setPosition(utility.WINDOW_WIDTH * 0.56F, utility.WINDOW_HEIGHT * 0.6F);
+        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.56F, Constants::WINDOW_HEIGHT * 0.6F);
     }
 
     // Title panel
@@ -35,29 +35,21 @@ bool MenuScene::init()
         panels[i].setTextSize(85);
         panels[i].setFont(Panel::TextFont::BOLD);
         panels[i].setPanelColour(sf::Color(178, 178, 178, 0));
-        panels[i].setPosition(utility.WINDOW_WIDTH * 0.5F - panels[i].getTextSize().width / 2, utility.WINDOW_HEIGHT * 0.22F);
+        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.5F - panels[i].getTextSize().width / 2, Constants::WINDOW_HEIGHT * 0.22F);
     }
 
     initMenuTitleIcon();
 
-    if (!ship_texture.loadFromFile("images/starfleet_ship_fighter.png"))
+    for (int i = 0; i < 5; ++i)
     {
-        return false;
+        starship.emplace_back(std::make_unique<Starship>(Starship::Type::FIGHTER));
+        starship[i]->getSpriteCompo().setPos({0, static_cast<float >(i * 80) + 300});
     }
-
-    for (int i = 0; i < ship_sprites.size(); ++i)
-    {
-        ship_sprites[i].setTexture(ship_texture);
-        ship_sprites[i].setColor(sf::Color::Cyan);
-        ship_sprites[i].setScale(0.05F, 0.05F);
-        ship_sprites[i].setRotation(0);
-        ship_sprites[i].setPosition(50, static_cast<float >(i * 80) + 300);
-    }
-    ship_sprites[0].setPosition(20, ship_sprites[0].getPosition().y);
-    ship_sprites[1].setPosition(180, ship_sprites[1].getPosition().y);
-    ship_sprites[2].setPosition(-100, ship_sprites[2].getPosition().y);
-    ship_sprites[3].setPosition(120, ship_sprites[3].getPosition().y);
-    ship_sprites[4].setPosition(0, ship_sprites[4].getPosition().y);
+    starship[0]->getSpriteCompo().setPos({20, starship[0]->getSpriteCompo().getPos().y});
+    starship[1]->getSpriteCompo().setPos({180, starship[1]->getSpriteCompo().getPos().y});
+    starship[2]->getSpriteCompo().setPos({-100, starship[2]->getSpriteCompo().getPos().y});
+    starship[3]->getSpriteCompo().setPos({120, starship[3]->getSpriteCompo().getPos().y});
+    starship[4]->getSpriteCompo().setPos({0, starship[4]->getSpriteCompo().getPos().y});
 
     if (!crosshairs_texture.loadFromFile("images/starfleet_selection_crosshairs.png"))
     {
@@ -96,13 +88,13 @@ void MenuScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
     for (int i = 0; i < BUTTONS; ++i)
     {
         if(i < 2) // PLAY and OPTIONS button
-        {
+            {
             if(panels[i].isHoveredOver())
             {
                 panels[i].setPanelColour(sf::Color(20, 210, 242, 60));
                 panels[i].setText(button_text[i], sf::Color::Cyan);
             }
-        }
+            }
         else // EXIT button
         {
             panels[i].setPanelColour(sf::Color(242, 22, 22, 60));
@@ -126,13 +118,14 @@ void MenuScene::update(sf::RenderWindow& window, sf::Time deltaTime)
 
     sf::Vector2f movement(0.f, 0.f);
     movement.x += 100.0F;
-    for (auto & ship_sprite : ship_sprites)
-    {
-        ship_sprite.move(movement * deltaTime.asSeconds());
 
-        if(ship_sprite.getPosition().x >= utility.WINDOW_WIDTH)
+    for (auto & i : starship)
+    {
+        i->getSpriteCompo().getSprite().move(movement * deltaTime.asSeconds());
+
+        if(i->getSpriteCompo().getPos().x >= Constants::WINDOW_WIDTH)
         {
-            ship_sprite.setPosition(0, ship_sprite.getPosition().y);
+            i->getSpriteCompo().setPos({0, i->getSpriteCompo().getPos().y});
         }
     }
 
@@ -141,19 +134,16 @@ void MenuScene::update(sf::RenderWindow& window, sf::Time deltaTime)
 
     crosshairs_sprite.setColor(sf::Color::Transparent);
 
-    for (int i = 0; i < ship_sprites.size(); ++i)
+
+    for (auto & i : starship)
     {
-        if(comfortableBoundsCheck(translated_pos, ship_sprites[i].getGlobalBounds()))
+        if(comfortableBoundsCheck(translated_pos, i->getSpriteCompo().getSprite().getGlobalBounds()))
         {
             //ship_sprites[i].setColor(sf::Color::White);
             crosshairs_sprite.setColor(sf::Color::Cyan);
-            auto crosshairs_xpos = ship_sprites[i].getPosition().x + ship_sprites[i].getGlobalBounds().width/2 - crosshairs_sprite.getGlobalBounds().width/2;
-            auto crosshairs_ypos = ship_sprites[i].getPosition().y + ship_sprites[i].getGlobalBounds().height/2 - crosshairs_sprite.getGlobalBounds().height/2;
+            auto crosshairs_xpos = i->getSpriteCompo().getPos().x + i->getSpriteCompo().getSprite().getGlobalBounds().width/2 - crosshairs_sprite.getGlobalBounds().width/2;
+            auto crosshairs_ypos = i->getSpriteCompo().getPos().y + i->getSpriteCompo().getSprite().getGlobalBounds().height/2 - crosshairs_sprite.getGlobalBounds().height/2;
             crosshairs_sprite.setPosition(crosshairs_xpos, crosshairs_ypos);
-        }
-        else if(!comfortableBoundsCheck(translated_pos, ship_sprites[i].getGlobalBounds()))
-        {
-            ship_sprites[i].setColor(sf::Color::Cyan);
         }
     }
 }
@@ -162,9 +152,9 @@ void MenuScene::render(sf::RenderWindow& window)
 {
     window.draw(background_sprite);
     window.draw(menu_title_img_sprite);
-    for (const auto & ship_sprite : ship_sprites)
+    for (auto & ship : starship)
     {
-        window.draw(ship_sprite);
+        ship->render(window);
     }
     for (auto & panel : panels)
     {

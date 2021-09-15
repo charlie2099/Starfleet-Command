@@ -2,10 +2,7 @@
 #define STARFLEET_COMMAND_GAMESCENE_HPP
 #include "../Scene.hpp"
 #include "../../Player/Fleet.hpp"
-#include "../../Ships/LightFighter.hpp"
-#include "../../Ships/RepairShip.hpp"
-#include "../../Ships/Destroyer.hpp"
-#include "../../Ships/Battleship.hpp"
+#include "../../Ships/Starship.hpp"
 
 class GameScene : public Scene
 {
@@ -20,15 +17,10 @@ class GameScene : public Scene
 
  private:
     bool initBackground();
+    void initPlayerStarships();
     bool comfortableBoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect sprite_bounds);
 
-    //Fleet player_fleet;
-
-    //std::vector<LightFighter> light_fighter;
-    std::vector<std::unique_ptr<LightFighter>> light_fighter;
-    std::vector<std::unique_ptr<RepairShip>> repair_ship;
-    std::vector<std::unique_ptr<Destroyer>> destroyer_ship;
-    std::vector<std::unique_ptr<Battleship>> battleship_ship;
+    std::vector<std::unique_ptr<Starship>> starship;
 
     sf::Texture background_texture;
 

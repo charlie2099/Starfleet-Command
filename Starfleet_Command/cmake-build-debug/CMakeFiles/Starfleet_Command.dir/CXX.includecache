@@ -704,10 +704,6 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.
 Panel.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.cpp
-Fleet.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
-
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
 array
 -
@@ -740,31 +736,23 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/
 ../SceneManagement/Scenes/ShipyardScene.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.cpp
-GameScene.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp
-
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp
 ../Scene.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
 ../../Player/Fleet.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
-../../Ships/LightFighter.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/LightFighter.hpp
-../../Ships/RepairShip.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/RepairShip.hpp
-../../Ships/Destroyer.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Destroyer.hpp
-../../Ships/Battleship.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Battleship.hpp
+../../Ships/Starship.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.cpp
+MenuScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.hpp
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.hpp
 ../Scene.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
-
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.cpp
-ShipyardScene.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.hpp
+../../Ships/Starship.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.hpp
 ../Scene.hpp
@@ -775,22 +763,6 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.hpp
 ../../Player/Fleet.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
-
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Battleship.hpp
-Starship.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
-
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Destroyer.hpp
-Starship.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
-
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/LightFighter.hpp
-Starship.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
-
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/RepairShip.hpp
-Starship.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
 ../SpriteComponent.hpp

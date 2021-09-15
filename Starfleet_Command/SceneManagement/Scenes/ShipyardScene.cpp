@@ -122,8 +122,7 @@ void ShipyardScene::update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         panels[i].setText("Fleet Colour: " + colours_text[active_colour]);
         panels[i].setPanelColour(colours_sf_light[active_colour]);
-        //Fleet::setFleetColour(&colours_sf[active_colour]);
-        //Fleet::setFleetColour(active_colour);
+        Fleet::setFleetColourRGB(colours_sf[active_colour].r, colours_sf[active_colour].g, colours_sf[active_colour].b);
     }
 
     // Fleet Size Panel
@@ -171,7 +170,7 @@ void ShipyardScene::initTitleText()
     shipyard_title_text.setOutlineThickness(1);
     shipyard_title_text.setFont(getBoldFont());
     shipyard_title_text.setCharacterSize(60);
-    shipyard_title_text.setPosition(utility.WINDOW_WIDTH * 0.5F - shipyard_title_text.getGlobalBounds().width / 2, utility.WINDOW_HEIGHT * 0.2F - shipyard_title_text.getGlobalBounds().height / 2);
+    shipyard_title_text.setPosition(Constants::WINDOW_WIDTH * 0.5F - shipyard_title_text.getGlobalBounds().width / 2, Constants::WINDOW_HEIGHT * 0.2F - shipyard_title_text.getGlobalBounds().height / 2);
 }
 
 void ShipyardScene::initCreditsText()
@@ -182,7 +181,7 @@ void ShipyardScene::initCreditsText()
     credits_text.setOutlineThickness(1);
     credits_text.setFont(getRegularFont());
     credits_text.setCharacterSize(45);
-    credits_text.setPosition(utility.WINDOW_WIDTH * 0.05F, utility.WINDOW_HEIGHT * 0.85F - credits_text.getGlobalBounds().height / 2);
+    credits_text.setPosition(Constants::WINDOW_WIDTH * 0.05F, Constants::WINDOW_HEIGHT * 0.85F - credits_text.getGlobalBounds().height / 2);
 }
 
 void ShipyardScene::initNotificationText()
@@ -193,7 +192,7 @@ void ShipyardScene::initNotificationText()
     notification_text.setOutlineThickness(1);
     notification_text.setFont(getRegularFont());
     notification_text.setCharacterSize(25);
-    notification_text.setPosition(utility.WINDOW_WIDTH * 0.45F, utility.WINDOW_HEIGHT * 0.85F);
+    notification_text.setPosition(Constants::WINDOW_WIDTH * 0.45F, Constants::WINDOW_HEIGHT * 0.85F);
 }
 
 void ShipyardScene::initPanels()
@@ -206,7 +205,7 @@ void ShipyardScene::initPanels()
         panels[i].setFont(Panel::TextFont::BOLD);
         panels[i].setPanelColour(sf::Color(178, 178, 178, 0));
         panels[i].setPadding(20);
-        panels[i].setPosition(utility.WINDOW_WIDTH * 0.9F - panels[i].getTextSize().width / 2, utility.WINDOW_HEIGHT * 0.85F - panels[i].getTextSize().height / 2);
+        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.9F - panels[i].getTextSize().width / 2, Constants::WINDOW_HEIGHT * 0.85F - panels[i].getTextSize().height / 2);
     }
 
     // Fleet Colour Panel
@@ -230,7 +229,7 @@ void ShipyardScene::initPanels()
         panels[i].setText("Fleet Colour: " + colours_text[active_colour]);
         panels[i].setFont(Panel::TextFont::BOLD);
         panels[i].setTextSize(18);
-        panels[i].setPosition(utility.WINDOW_WIDTH * 0.5F - panels[i].getPanelSize().width/2, utility.WINDOW_HEIGHT * 0.745F - panels[i].getPanelSize().height/2);
+        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.5F - panels[i].getPanelSize().width/2, Constants::WINDOW_HEIGHT * 0.745F - panels[i].getPanelSize().height/2);
     }
 
     // Fleet Size Panel
@@ -278,14 +277,14 @@ void ShipyardScene::initShipCards()
         // Ship card position alignment
         if(i < 1)
         {
-            float position = utility.WINDOW_WIDTH * 0.18F;
-            ship_cards[i].setPosition(position, utility.WINDOW_HEIGHT * 0.4F);
+            float position = Constants::WINDOW_WIDTH * 0.18F;
+            ship_cards[i].setPosition(position, Constants::WINDOW_HEIGHT * 0.4F);
         }
         else
         {
             // Position of the panel before it
             float spacing = (70 + ship_cards[i - 1].getPanel().getPanelPosition().x + ship_cards[i - 1].getPanel().getPanelSize().width);
-            ship_cards[i].setPosition(spacing, utility.WINDOW_HEIGHT * 0.4F);
+            ship_cards[i].setPosition(spacing, Constants::WINDOW_HEIGHT * 0.4F);
         }
     }
 }

@@ -1,6 +1,7 @@
 #ifndef STARFLEET_COMMAND_MENUSCENE_HPP
 #define STARFLEET_COMMAND_MENUSCENE_HPP
 #include "../Scene.hpp"
+#include "../../Ships/Starship.hpp"
 
 class MenuScene : public Scene
 {
@@ -21,15 +22,13 @@ class MenuScene : public Scene
     static const int BUTTONS = 3;
     static const int LEADERBOARD = 4;
     static const int TITLE_PANEL = 5;
-
-    Constants utility;
+    
     std::array<Panel, 5> panels;
-    std::array<sf::Sprite, 5> ship_sprites;
+    std::vector<std::unique_ptr<Starship>> starship;
     std::array<std::string, 3> button_text;
 
     sf::Texture background_texture;
     sf::Texture menu_title_img_texture;
-    sf::Texture ship_texture;
     sf::Texture crosshairs_texture;
 
     sf::Sprite background_sprite;

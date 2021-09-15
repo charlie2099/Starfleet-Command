@@ -5,7 +5,7 @@
 class LightFighter : public Starship
 {
  public:
-     LightFighter();
+     explicit LightFighter(int health = 1);
      ~LightFighter() = default;
 
      void render(sf::RenderWindow& window) override;
@@ -13,6 +13,7 @@ class LightFighter : public Starship
 
  private:
     SpriteComponent spriteComponent;
+    int health_test_;
 };
 
 #endif //STARFLEET_COMMAND_LIGHTFIGHTER_HPP
