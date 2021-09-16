@@ -128,6 +128,30 @@ Starfleet_Command/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/build
 .PHONY : Starfleet_Command/fast
 
+Crosshair.obj: Crosshair.cpp.obj
+.PHONY : Crosshair.obj
+
+# target to build an object file
+Crosshair.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Crosshair.cpp.obj
+.PHONY : Crosshair.cpp.obj
+
+Crosshair.i: Crosshair.cpp.i
+.PHONY : Crosshair.i
+
+# target to preprocess a source file
+Crosshair.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Crosshair.cpp.i
+.PHONY : Crosshair.cpp.i
+
+Crosshair.s: Crosshair.cpp.s
+.PHONY : Crosshair.s
+
+# target to generate assembly for a file
+Crosshair.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Crosshair.cpp.s
+.PHONY : Crosshair.cpp.s
+
 Game/Game.obj: Game/Game.cpp.obj
 .PHONY : Game/Game.obj
 
@@ -392,30 +416,6 @@ SceneManagement/Scenes/ShipyardScene.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.s
 .PHONY : SceneManagement/Scenes/ShipyardScene.cpp.s
 
-Ships/Battleship.obj: Ships/Battleship.cpp.obj
-.PHONY : Ships/Battleship.obj
-
-# target to build an object file
-Ships/Battleship.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Battleship.cpp.obj
-.PHONY : Ships/Battleship.cpp.obj
-
-Ships/Battleship.i: Ships/Battleship.cpp.i
-.PHONY : Ships/Battleship.i
-
-# target to preprocess a source file
-Ships/Battleship.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Battleship.cpp.i
-.PHONY : Ships/Battleship.cpp.i
-
-Ships/Battleship.s: Ships/Battleship.cpp.s
-.PHONY : Ships/Battleship.s
-
-# target to generate assembly for a file
-Ships/Battleship.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Battleship.cpp.s
-.PHONY : Ships/Battleship.cpp.s
-
 Ships/CommandShip.obj: Ships/CommandShip.cpp.obj
 .PHONY : Ships/CommandShip.obj
 
@@ -439,78 +439,6 @@ Ships/CommandShip.s: Ships/CommandShip.cpp.s
 Ships/CommandShip.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/CommandShip.cpp.s
 .PHONY : Ships/CommandShip.cpp.s
-
-Ships/Destroyer.obj: Ships/Destroyer.cpp.obj
-.PHONY : Ships/Destroyer.obj
-
-# target to build an object file
-Ships/Destroyer.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Destroyer.cpp.obj
-.PHONY : Ships/Destroyer.cpp.obj
-
-Ships/Destroyer.i: Ships/Destroyer.cpp.i
-.PHONY : Ships/Destroyer.i
-
-# target to preprocess a source file
-Ships/Destroyer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Destroyer.cpp.i
-.PHONY : Ships/Destroyer.cpp.i
-
-Ships/Destroyer.s: Ships/Destroyer.cpp.s
-.PHONY : Ships/Destroyer.s
-
-# target to generate assembly for a file
-Ships/Destroyer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Destroyer.cpp.s
-.PHONY : Ships/Destroyer.cpp.s
-
-Ships/LightFighter.obj: Ships/LightFighter.cpp.obj
-.PHONY : Ships/LightFighter.obj
-
-# target to build an object file
-Ships/LightFighter.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/LightFighter.cpp.obj
-.PHONY : Ships/LightFighter.cpp.obj
-
-Ships/LightFighter.i: Ships/LightFighter.cpp.i
-.PHONY : Ships/LightFighter.i
-
-# target to preprocess a source file
-Ships/LightFighter.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/LightFighter.cpp.i
-.PHONY : Ships/LightFighter.cpp.i
-
-Ships/LightFighter.s: Ships/LightFighter.cpp.s
-.PHONY : Ships/LightFighter.s
-
-# target to generate assembly for a file
-Ships/LightFighter.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/LightFighter.cpp.s
-.PHONY : Ships/LightFighter.cpp.s
-
-Ships/RepairShip.obj: Ships/RepairShip.cpp.obj
-.PHONY : Ships/RepairShip.obj
-
-# target to build an object file
-Ships/RepairShip.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/RepairShip.cpp.obj
-.PHONY : Ships/RepairShip.cpp.obj
-
-Ships/RepairShip.i: Ships/RepairShip.cpp.i
-.PHONY : Ships/RepairShip.i
-
-# target to preprocess a source file
-Ships/RepairShip.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/RepairShip.cpp.i
-.PHONY : Ships/RepairShip.cpp.i
-
-Ships/RepairShip.s: Ships/RepairShip.cpp.s
-.PHONY : Ships/RepairShip.s
-
-# target to generate assembly for a file
-Ships/RepairShip.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/RepairShip.cpp.s
-.PHONY : Ships/RepairShip.cpp.s
 
 Ships/Starship.obj: Ships/Starship.cpp.obj
 .PHONY : Ships/Starship.obj
@@ -593,6 +521,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Starfleet_Command
+	@echo ... Crosshair.obj
+	@echo ... Crosshair.i
+	@echo ... Crosshair.s
 	@echo ... Game/Game.obj
 	@echo ... Game/Game.i
 	@echo ... Game/Game.s
@@ -626,21 +557,9 @@ help:
 	@echo ... SceneManagement/Scenes/ShipyardScene.obj
 	@echo ... SceneManagement/Scenes/ShipyardScene.i
 	@echo ... SceneManagement/Scenes/ShipyardScene.s
-	@echo ... Ships/Battleship.obj
-	@echo ... Ships/Battleship.i
-	@echo ... Ships/Battleship.s
 	@echo ... Ships/CommandShip.obj
 	@echo ... Ships/CommandShip.i
 	@echo ... Ships/CommandShip.s
-	@echo ... Ships/Destroyer.obj
-	@echo ... Ships/Destroyer.i
-	@echo ... Ships/Destroyer.s
-	@echo ... Ships/LightFighter.obj
-	@echo ... Ships/LightFighter.i
-	@echo ... Ships/LightFighter.s
-	@echo ... Ships/RepairShip.obj
-	@echo ... Ships/RepairShip.i
-	@echo ... Ships/RepairShip.s
 	@echo ... Ships/Starship.obj
 	@echo ... Ships/Starship.i
 	@echo ... Ships/Starship.s

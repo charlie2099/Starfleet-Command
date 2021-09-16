@@ -1,63 +1,15 @@
+#include <chrono>
 #include "MenuScene.hpp"
 
 bool MenuScene::init()
 {
+    std::mt19937 generator = getEngine();
     initBackground();
-
-    button_text.at(0).append("PLAY");
-    button_text.at(1).append("OPTIONS");
-    button_text.at(2).append("EXIT");
-
-    // Button panels
-    for (int i = 0; i < BUTTONS; ++i)
-    {
-        panels[i].setText(button_text[i]);
-        panels[i].setTextSize(35);
-        panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
-        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.185F, (Constants::WINDOW_HEIGHT * 0.57F) + static_cast<float>(i * 100));
-    }
-
-    // Leaderboard panel
-    for (int i = BUTTONS; i < LEADERBOARD; ++i)
-    {
-        panels[i].setText("HIGHSCORES");
-        panels[i].setTextSize(35);
-        panels[i].setTextOffset(Panel::TextAlign::OFFSET, 40);
-        panels[i].setSize(120, 250);
-        panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
-        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.56F, Constants::WINDOW_HEIGHT * 0.6F);
-    }
-
-    // Title panel
-    for (int i = LEADERBOARD; i < TITLE_PANEL; ++i)
-    {
-        panels[i].setText("Starfleet Command", sf::Color::Cyan);
-        panels[i].setTextSize(85);
-        panels[i].setFont(Panel::TextFont::BOLD);
-        panels[i].setPanelColour(sf::Color(178, 178, 178, 0));
-        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.5F - panels[i].getTextSize().width / 2, Constants::WINDOW_HEIGHT * 0.22F);
-    }
-
+    initButtonPanels();
+    initLeaderboardPanel();
+    initTitlePanel();
     initMenuTitleIcon();
-
-    for (int i = 0; i < 5; ++i)
-    {
-        starship.emplace_back(std::make_unique<Starship>(Starship::Type::FIGHTER));
-        starship[i]->getSpriteCompo().setPos({0, static_cast<float >(i * 80) + 300});
-    }
-    starship[0]->getSpriteCompo().setPos({20, starship[0]->getSpriteCompo().getPos().y});
-    starship[1]->getSpriteCompo().setPos({180, starship[1]->getSpriteCompo().getPos().y});
-    starship[2]->getSpriteCompo().setPos({-100, starship[2]->getSpriteCompo().getPos().y});
-    starship[3]->getSpriteCompo().setPos({120, starship[3]->getSpriteCompo().getPos().y});
-    starship[4]->getSpriteCompo().setPos({0, starship[4]->getSpriteCompo().getPos().y});
-
-    if (!crosshairs_texture.loadFromFile("images/starfleet_selection_crosshairs.png"))
-    {
-        return false;
-    }
-    crosshairs_sprite.setTexture(crosshairs_texture);
-    crosshairs_sprite.setColor(sf::Color::Transparent);
-    crosshairs_sprite.setScale(0.35F, 0.35F);
+    initBackgroundShips(generator);
 
     return true;
 }
@@ -71,15 +23,15 @@ void MenuScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
 
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
-        if(panels[0].isClicked())
+        if(panels[PLAY_BUTTON].isClicked())
         {
             setScene(Scene::ID::SHIPYARD);
         }
-        else if(panels[1].isClicked())
+        else if(panels[OPTIONS_BUTTON].isClicked())
         {
-            std::cout << "options" << std::endl;
+            setScene(Scene::ID::OPTIONS);
         }
-        else if(panels[2].isClicked())
+        else if(panels[EXIT_BUTTON].isClicked())
         {
             window.close();
         }
@@ -92,19 +44,19 @@ void MenuScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
             if(panels[i].isHoveredOver())
             {
                 panels[i].setPanelColour(sf::Color(20, 210, 242, 60));
-                panels[i].setText(button_text[i], sf::Color::Cyan);
+                panels[i].setText(panels[i].getText().getString(), sf::Color::Cyan);
             }
             }
         else // EXIT button
         {
             panels[i].setPanelColour(sf::Color(242, 22, 22, 60));
-            panels[i].setText(button_text[i], sf::Color::Red);
+            panels[i].setText(panels[i].getText().getString(), sf::Color::Red);
         }
 
         if(!panels[i].isHoveredOver())
         {
             panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
-            panels[i].setText(button_text[i], sf::Color::White);
+            panels[i].setText(panels[i].getText().getString(), sf::Color::White);
         }
     }
 }
@@ -116,34 +68,44 @@ void MenuScene::update(sf::RenderWindow& window, sf::Time deltaTime)
         panels[i].update(window, deltaTime);
     }
 
-    sf::Vector2f movement(0.f, 0.f);
-    movement.x += 100.0F;
-
-    for (auto & i : starship)
+    for (int i = 0; i < starship.size(); ++i)
     {
-        i->getSpriteCompo().getSprite().move(movement * deltaTime.asSeconds());
-
-        if(i->getSpriteCompo().getPos().x >= Constants::WINDOW_WIDTH)
+        // Ally ships
+        if(i < BACKGROUND_SHIPS/2)
         {
-            i->getSpriteCompo().setPos({0, i->getSpriteCompo().getPos().y});
+            sf::Vector2f movement(static_cast<float>(starship_speed_vec[i]), 0.f);
+            starship[i]->getSpriteCompo().getSprite().move(movement * deltaTime.asSeconds());
+        }
+        // Enemy ships
+        if(i >= BACKGROUND_SHIPS/2)
+        {
+            sf::Vector2f movement(static_cast<float>(starship_speed_vec[i] *-1), 0.f);
+            starship[i]->getSpriteCompo().getSprite().move(movement * deltaTime.asSeconds());
+        }
+
+        if(starship[i]->getSpriteCompo().getPos().x >= Constants::WINDOW_WIDTH)
+        {
+            starship[i]->getSpriteCompo().setPos({0, starship[i]->getSpriteCompo().getPos().y});
+        }
+        else if(starship[i]->getSpriteCompo().getPos().x <= 0)
+        {
+            starship[i]->getSpriteCompo().setPos({Constants::WINDOW_WIDTH, starship[i]->getSpriteCompo().getPos().y});
         }
     }
 
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
 
-    crosshairs_sprite.setColor(sf::Color::Transparent);
-
-
-    for (auto & i : starship)
+    for (int i = 0; i < BACKGROUND_SHIPS/2; ++i)
     {
-        if(comfortableBoundsCheck(translated_pos, i->getSpriteCompo().getSprite().getGlobalBounds()))
+        if(comfortableBoundsCheck(mousePosWorldCoords, starship[i]->getSpriteCompo().getSprite().getGlobalBounds()))
         {
-            //ship_sprites[i].setColor(sf::Color::White);
-            crosshairs_sprite.setColor(sf::Color::Cyan);
-            auto crosshairs_xpos = i->getSpriteCompo().getPos().x + i->getSpriteCompo().getSprite().getGlobalBounds().width/2 - crosshairs_sprite.getGlobalBounds().width/2;
-            auto crosshairs_ypos = i->getSpriteCompo().getPos().y + i->getSpriteCompo().getSprite().getGlobalBounds().height/2 - crosshairs_sprite.getGlobalBounds().height/2;
-            crosshairs_sprite.setPosition(crosshairs_xpos, crosshairs_ypos);
+            SELECTED_SHIP = i;
+            crosshair.snapTo(starship[SELECTED_SHIP]);
+        }
+        else if(!comfortableBoundsCheck(mousePosWorldCoords, starship[SELECTED_SHIP]->getSpriteCompo().getSprite().getGlobalBounds()))
+        {
+            crosshair.unSnap();
         }
     }
 }
@@ -151,29 +113,81 @@ void MenuScene::update(sf::RenderWindow& window, sf::Time deltaTime)
 void MenuScene::render(sf::RenderWindow& window)
 {
     window.draw(background_sprite);
-    window.draw(menu_title_img_sprite);
     for (auto & ship : starship)
     {
         ship->render(window);
     }
+    window.draw(menu_title_img_sprite);
     for (auto & panel : panels)
     {
         panel.render(window);
     }
-    window.draw(crosshairs_sprite);
+    crosshair.render(window);
 }
 
 /// OTHER
+
+std::mt19937 MenuScene::getEngine()
+{
+    std::random_device eng;
+    std::mt19937 generator(eng());
+    unsigned long int time = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    generator.seed(time);
+    return generator;
+}
+
 bool MenuScene::initBackground()
 {
     if (!background_texture.loadFromFile("images/space_background.jpg"))
     {
         return false;
-        /*return EXIT_FAILURE;*/
     }
     background_sprite.setTexture(background_texture);
 
     return true;
+}
+
+void MenuScene::initButtonPanels()
+{
+    std::array<std::string, 3> button_text
+    {
+        "PLAY",
+        "OPTIONS",
+        "EXIT"
+    };
+
+    for (int i = 0; i < BUTTONS; ++i)
+    {
+        panels[i].setText(button_text[i]);
+        panels[i].setTextSize(35);
+        panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
+        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.185F, (Constants::WINDOW_HEIGHT * 0.57F) + static_cast<float>(i * 100));
+    }
+}
+
+void MenuScene::initLeaderboardPanel()
+{
+    for (int i = BUTTONS; i < LEADERBOARD; ++i)
+    {
+        panels[i].setText("HIGHSCORES");
+        panels[i].setTextSize(35);
+        panels[i].setTextOffset(Panel::TextAlign::OFFSET, 40);
+        panels[i].setSize(120, 250);
+        panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
+        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.56F, Constants::WINDOW_HEIGHT * 0.6F);
+    }
+}
+
+void MenuScene::initTitlePanel()
+{
+    for (int i = LEADERBOARD; i < TITLE_PANEL; ++i)
+    {
+        panels[i].setText("Starfleet Command", sf::Color::Cyan);
+        panels[i].setTextSize(85);
+        panels[i].setFont(Panel::TextFont::BOLD);
+        panels[i].setPanelColour(sf::Color(178, 178, 178, 0));
+        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.5F - panels[i].getTextSize().width / 2, Constants::WINDOW_HEIGHT * 0.22F);
+    }
 }
 
 bool MenuScene::initMenuTitleIcon()
@@ -191,6 +205,34 @@ bool MenuScene::initMenuTitleIcon()
     return true;
 }
 
+void MenuScene::initBackgroundShips(std::mt19937 &generator)
+{
+    createDistribution("Ship xpos", 0, 1280);
+    createDistribution("Ship ypos", 20, 720);
+    createDistribution("Ship class", 0, 3);
+    createDistribution("Ship speed", 50, 250);
+
+    for (int i = 0; i < BACKGROUND_SHIPS; ++i)
+    {
+        int rand_x = uint_distrib[0](generator);
+        int rand_y = uint_distrib[1](generator);
+        int rand_ship = uint_distrib[2](generator);
+        int rand_speed = uint_distrib[3](generator);
+
+        starship_speed_vec.emplace_back(int());
+        starship_speed_vec[i] = rand_speed;
+        starship.emplace_back(std::make_unique<Starship>(static_cast<Starship::Type>(rand_ship)));
+        starship[i]->getSpriteCompo().getSprite().setColor(sf::Color::Cyan);
+        starship[i]->getSpriteCompo().setPos({static_cast<float>(rand_x), static_cast<float>(rand_y)});
+
+        if(i >= BACKGROUND_SHIPS/2)
+        {
+            starship[i]->getSpriteCompo().getSprite().setRotation(180);
+            starship[i]->getSpriteCompo().getSprite().setColor(sf::Color::Red);
+        }
+    }
+}
+
 bool MenuScene::comfortableBoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect sprite_bounds)
 {
     auto offset = 20.0F;
@@ -198,4 +240,10 @@ bool MenuScene::comfortableBoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRe
     mouse_vec.y > sprite_bounds.top - offset &&
     mouse_vec.x < sprite_bounds.left + sprite_bounds.width + offset &&
     mouse_vec.y < sprite_bounds.top + sprite_bounds.height + offset);
+}
+
+void MenuScene::createDistribution(const std::string& name, int min, int max)
+{
+    std::uniform_int_distribution<int> instance{min, max};
+    uint_distrib.emplace_back(instance);
 }

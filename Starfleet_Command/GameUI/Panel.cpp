@@ -189,6 +189,11 @@ bool Panel::isClicked() const
     return is_clicked;
 }
 
+sf::Text& Panel::getText()
+{
+    return text;
+}
+
 sf::FloatRect Panel::getTextSize()
 {
     /// Panels adjust to accommodate text
@@ -212,5 +217,6 @@ sf::Vector2f Panel::getPanelPosition()
     /// Panels follow text position
     return panel.getPosition();
 }
+
 
 

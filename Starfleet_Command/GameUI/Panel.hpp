@@ -31,6 +31,7 @@ class Panel
     void setTextOffset(TextAlign alignment, float offset);
     enum class TextFont { REGULAR, BOLD };
     void setFont(TextFont text_font);
+    sf::Text &getText();
     sf::FloatRect getTextSize();
     sf::Vector2f getTextPosition();
 

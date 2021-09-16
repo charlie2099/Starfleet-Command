@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Starfleet_Command.dir/Crosshair.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/GameUI/Panel.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.obj"
@@ -10,11 +11,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/GameScene.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/MenuScene.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.obj"
-  "CMakeFiles/Starfleet_Command.dir/Ships/Battleship.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Ships/CommandShip.cpp.obj"
-  "CMakeFiles/Starfleet_Command.dir/Ships/Destroyer.cpp.obj"
-  "CMakeFiles/Starfleet_Command.dir/Ships/LightFighter.cpp.obj"
-  "CMakeFiles/Starfleet_Command.dir/Ships/RepairShip.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Ships/Starship.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/SpriteComponent.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/main.cpp.obj"

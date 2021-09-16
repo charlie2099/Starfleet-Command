@@ -676,6 +676,12 @@ SFML/Config.hpp
 
 C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp
 
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Crosshair.hpp
+SpriteComponent.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SpriteComponent.hpp
+Ships/Starship.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
+
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.cpp
 Game.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.hpp
@@ -745,6 +751,8 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.cpp
+chrono
+-
 MenuScene.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.hpp
 
@@ -753,6 +761,10 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
 ../../Ships/Starship.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
+../../Crosshair.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Crosshair.hpp
+random
+-
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.hpp
 ../Scene.hpp
