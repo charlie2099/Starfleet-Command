@@ -23,7 +23,6 @@ class GameScene : public Scene
     std::vector<std::unique_ptr<Starship>> starship;
 
     sf::Texture background_texture;
-
     sf::Sprite background_sprite;
 };
 

@@ -126,7 +126,6 @@ void MenuScene::render(sf::RenderWindow& window)
 }
 
 /// OTHER
-
 std::mt19937 MenuScene::getEngine()
 {
     std::random_device eng;

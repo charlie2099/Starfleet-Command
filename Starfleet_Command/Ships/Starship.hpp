@@ -14,6 +14,7 @@ class Starship
         REPAIR,
         DESTROYER,
         BATTLESHIP,
+        FLAGSHIP
     };
     explicit Starship(Type type);
 

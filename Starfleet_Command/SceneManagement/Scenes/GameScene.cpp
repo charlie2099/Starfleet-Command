@@ -3,7 +3,6 @@
 bool GameScene::init()
 {
     initBackground();
-
     initPlayerStarships();
 
     return true;
@@ -50,10 +49,13 @@ void GameScene::initPlayerStarships()
         }
     }
 
+    // Command ship which players controls
+    starship.emplace_back(std::make_unique<Starship>(Starship::Type::FLAGSHIP));
+
     auto r = Fleet::getFleetColourRGB().rgb_r;
     auto g = Fleet::getFleetColourRGB().rgb_g;
     auto b = Fleet::getFleetColourRGB().rgb_b;
-    for (int i = 0; i < Fleet::getFleetSize(); ++i)
+    for (int i = 0; i < starship.size(); ++i)
     {
         starship[i]->getSpriteCompo().setPos({50, (i * 30.0F) + Constants::WINDOW_HEIGHT*0.1F });
         starship[i]->getSpriteCompo().getSprite().setColor(sf::Color(r, g, b));

@@ -6,22 +6,26 @@ Starship::Starship(Type type) : ship_type(type)
     {
         case Type::FIGHTER:
             spriteComponent.loadSprite("images/starfleet_ship_fighter.png");
+            spriteComponent.getSprite().scale({0.05F, 0.05F});
             break;
         case Type::REPAIR:
             spriteComponent.loadSprite("images/starfleet_ship_repair.png");
+            spriteComponent.getSprite().scale({0.05F, 0.05F});
             break;
         case Type::DESTROYER:
             spriteComponent.loadSprite("images/starfleet_ship_destroyer.png");
+            spriteComponent.getSprite().scale({0.05F, 0.05F});
             break;
         case Type::BATTLESHIP:
             spriteComponent.loadSprite("images/starfleet_ship_battleship.png");
+            spriteComponent.getSprite().scale({0.05F, 0.05F});
             break;
-        /*case Type::FLAGSHIP:
+        case Type::FLAGSHIP:
             spriteComponent.loadSprite("images/starfleet_ship_command.png");
-            spriteComponent.getSprite().scale({0.1F, 0.1F});
-            break;*/
+            spriteComponent.getSprite().scale({0.15F, 0.15F});
+            break;
     }
-    spriteComponent.getSprite().scale({0.05F, 0.05F});
+    //spriteComponent.getSprite().scale({0.05F, 0.05F});
 }
 
 void Starship::render(sf::RenderWindow &window)

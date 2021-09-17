@@ -2,7 +2,6 @@
 
 bool SceneManager::init()
 {
-    //changeScene(Scene::ID::MENU);
     current_scene = std::make_unique<MenuScene>();
     return current_scene->init();
 }

@@ -21,6 +21,10 @@ class SceneManager
  private:
     std::unique_ptr<Scene> current_scene;
     Scene::ID current_ID{};
+
+    /// Same background across all scenes
+    //sf::Texture background_texture;
+    //sf::Sprite background_sprite;
 };
 
 #endif //STARFLEET_COMMAND_SCENEMANAGER_HPP
