@@ -245,15 +245,15 @@ void ShipyardScene::initPanels()
 
 bool ShipyardScene::initMenuTitleIcon()
 {
-    if (!ship_img_texture.loadFromFile("images/starfleet_ship_fighter.png"))
+    if (!ship_img_texture.loadFromFile("images/starfleet_ship_fighternew2.png"))
     {
         return false;
     }
     ship_img_sprite.setTexture(ship_img_texture);
     ship_img_sprite.setColor(sf::Color(178, 178, 178, 200));
-    ship_img_sprite.setScale(0.4F, 0.4F);
+    ship_img_sprite.setScale(0.185F, 0.185F);
     ship_img_sprite.setRotation(-8);
-    ship_img_sprite.setPosition(panels[0].getTextPosition().x - 35, panels[0].getTextPosition().y - 32);
+    ship_img_sprite.setPosition(panels[0].getTextPosition().x - 30, panels[0].getTextPosition().y - 34);
 
     return true;
 }

@@ -24,6 +24,7 @@ class GameScene : public Scene
 
     sf::Texture background_texture;
     sf::Sprite background_sprite;
+    sf::View player_view{};
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

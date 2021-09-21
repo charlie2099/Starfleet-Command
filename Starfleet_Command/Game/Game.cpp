@@ -9,8 +9,11 @@ Game::Game()
 void Game::run()
 {
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
-    sf::Time timePerFrame = sf::seconds(1.0f / 60.0f);
+    const sf::Time timePerFrame = sf::seconds(1.0f / 144.0f);
     sf::Clock clock;
+
+    //window.setFramerateLimit(144);
+    //window.setVerticalSyncEnabled(true);
 
     while (window.isOpen())
     {
@@ -18,11 +21,10 @@ void Game::run()
         while (timeSinceLastUpdate > timePerFrame)
         {
             timeSinceLastUpdate -= timePerFrame;
-            sf::Event event{};
-            processEvents(event);
             update(timePerFrame);
         }
-
+        sf::Event event{};
+        processEvents(event);
         render();
     }
 }
@@ -56,12 +58,12 @@ void Game::render()
 /// OTHER
 void Game::initWindow()
 {
-    window.create(sf::VideoMode(1280, 720), "Starfleet Command");
+    window.create(sf::VideoMode(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT), "Starfleet Command");
     window.setTitle("Starfleet Command");
     window.setPosition(sf::Vector2i(500, 200));
 
     auto image = sf::Image{};
-    if (!image.loadFromFile("images/starfleet_ship.png"))
+    if (!image.loadFromFile("images/starfleet_ship_repairnew4.png"))
     {
         std::cout << "Failed to load window icon image file" << std::endl;
     }

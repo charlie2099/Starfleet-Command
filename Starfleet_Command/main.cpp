@@ -1,7 +1,8 @@
+#include <sstream>
 #include "Game/Game.hpp"
 
-int main() {
-
+int main()
+{
     Game game;
     game.run();
 

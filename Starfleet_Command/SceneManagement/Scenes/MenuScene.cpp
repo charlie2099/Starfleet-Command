@@ -43,8 +43,9 @@ void MenuScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
             {
             if(panels[i].isHoveredOver())
             {
-                panels[i].setPanelColour(sf::Color(20, 210, 242, 60));
-                panels[i].setText(panels[i].getText().getString(), sf::Color::Cyan);
+                //panels[i].setPanelColour(sf::Color(20, 210, 242, 60));
+                panels[i].setPanelColour(sf::Color(153, 210, 242, 80));
+                panels[i].setText(panels[i].getText().getString(), sf::Color(153, 210, 242, 255));
             }
             }
         else // EXIT button
@@ -181,25 +182,25 @@ void MenuScene::initTitlePanel()
 {
     for (int i = LEADERBOARD; i < TITLE_PANEL; ++i)
     {
-        panels[i].setText("Starfleet Command", sf::Color::Cyan);
+        panels[i].setText("Starfleet Command", sf::Color(153, 210, 242));
         panels[i].setTextSize(85);
         panels[i].setFont(Panel::TextFont::BOLD);
-        panels[i].setPanelColour(sf::Color(178, 178, 178, 0));
+        panels[i].setPanelColour(sf::Color(0, 0, 0, 0));
         panels[i].setPosition(Constants::WINDOW_WIDTH * 0.5F - panels[i].getTextSize().width / 2, Constants::WINDOW_HEIGHT * 0.22F);
     }
 }
 
 bool MenuScene::initMenuTitleIcon()
 {
-    if (!menu_title_img_texture.loadFromFile("images/starfleet_ship_fighter.png"))
+    if (!menu_title_img_texture.loadFromFile("images/starfleet_ship_fighternew2.png"))
     {
         return false;
     }
     menu_title_img_sprite.setTexture(menu_title_img_texture);
-    menu_title_img_sprite.setColor(sf::Color(0, 255, 255, 100));
-    menu_title_img_sprite.setScale(0.75F, 0.75F);
+    menu_title_img_sprite.setColor(sf::Color(153, 210, 242, 175));
+    menu_title_img_sprite.setScale(0.35F, 0.35F);
     menu_title_img_sprite.setRotation(-8);
-    menu_title_img_sprite.setPosition(panels[4].getTextPosition().x - 60, panels[4].getTextPosition().y - 50);
+    menu_title_img_sprite.setPosition(panels[4].getTextPosition().x - 44, panels[4].getTextPosition().y - 54);
 
     return true;
 }
@@ -221,13 +222,14 @@ void MenuScene::initBackgroundShips(std::mt19937 &generator)
         starship_speed_vec.emplace_back(int());
         starship_speed_vec[i] = rand_speed;
         starship.emplace_back(std::make_unique<Starship>(static_cast<Starship::Type>(rand_ship)));
-        starship[i]->getSpriteCompo().getSprite().setColor(sf::Color::Cyan);
+        starship[i]->getSpriteCompo().getSprite().setColor(sf::Color(153, 210, 242));
         starship[i]->getSpriteCompo().setPos({static_cast<float>(rand_x), static_cast<float>(rand_y)});
 
         if(i >= BACKGROUND_SHIPS/2)
         {
             starship[i]->getSpriteCompo().getSprite().setRotation(180);
-            starship[i]->getSpriteCompo().getSprite().setColor(sf::Color::Red);
+            //starship[i]->getSpriteCompo().getSprite().setColor(sf::Color(247, 85, 85));
+            starship[i]->getSpriteCompo().getSprite().setColor(sf::Color(91, 239, 170));
         }
     }
 }

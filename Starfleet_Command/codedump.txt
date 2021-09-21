@@ -275,6 +275,9 @@ GameScene::init()
         {
             crosshair.setPos();
         }
+
+
+        // TODO: Fix choppy movement
    }
 
 
