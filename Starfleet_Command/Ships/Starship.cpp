@@ -5,19 +5,19 @@ Starship::Starship(Type type) : ship_type(type)
     switch(type)
     {
         case Type::FIGHTER:
-            spriteComponent.loadSprite("images/starfleet_ship_fighternew2.png");
+            spriteComponent.loadSprite("images/starfleet_ship_fighter.png");
             break;
         case Type::REPAIR:
-            spriteComponent.loadSprite("images/starfleet_ship_repairnew2.png");
+            spriteComponent.loadSprite("images/starfleet_ship_repair.png");
             break;
         case Type::DESTROYER:
-            spriteComponent.loadSprite("images/starfleet_ship_destroyernew2.png");
+            spriteComponent.loadSprite("images/starfleet_ship_destroyer.png");
             break;
         case Type::BATTLESHIP:
-            spriteComponent.loadSprite("images/starfleet_ship_battleshipnew2.png");
+            spriteComponent.loadSprite("images/starfleet_ship_battleship.png");
             break;
         case Type::FLAGSHIP:
-            spriteComponent.loadSprite("images/starfleet_ship_flagshipnew3.png");
+            spriteComponent.loadSprite("images/starfleet_ship_flagship.png");
             break;
     }
     spriteComponent.getSprite().scale({0.05F, 0.05F});

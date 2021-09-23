@@ -40,8 +40,8 @@ class MenuScene : public Scene
     Crosshair crosshair;
     std::array<Panel, 5> panels;
     std::vector<std::unique_ptr<Starship>> starship;
-    std::vector<std::uniform_int_distribution<int>> uint_distrib;
     std::vector<int> starship_speed_vec;
+    std::vector<std::uniform_int_distribution<int>> uint_distrib;
 
     sf::Texture background_texture;
     sf::Texture menu_title_img_texture;

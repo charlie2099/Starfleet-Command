@@ -14,11 +14,11 @@ int &Fleet::getFleetSize()
     return fleet_size;
 }
 
-void Fleet::setFleetColourRGB(int r, int g, int b)
+void Fleet::setFleetColourRGB(sf::Color colour)
 {
-    fleet_colour.rgb_r = r;
-    fleet_colour.rgb_g = g;
-    fleet_colour.rgb_b = b;
+    fleet_colour.rgb_r = colour.r;
+    fleet_colour.rgb_g = colour.g;
+    fleet_colour.rgb_b = colour.b;
 }
 
 Fleet::Colour &Fleet::getFleetColourRGB()
@@ -27,7 +27,7 @@ Fleet::Colour &Fleet::getFleetColourRGB()
 }
 
 
-void Fleet::setNumOfShips(int count, Fleet::ShipType shipType)
+void Fleet::setNumOfShips(int count, Starship::Type shipType)
 {
     for (int i = 0; i < SHIP_CLASSES; ++i)
     {

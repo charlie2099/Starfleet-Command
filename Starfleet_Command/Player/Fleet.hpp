@@ -3,6 +3,7 @@
 #include <array>
 #include <iostream>
 #include <SFML/Graphics/Color.hpp>
+#include "../Ships/Starship.hpp"
 
 class Fleet
 {
@@ -17,14 +18,12 @@ class Fleet
         int rgb_b;
     };
 
-    enum class ShipType {FIGHTER, REPAIR, DESTROYER, BATTLESHIP};
-
-    /// Mutator Functions
+    /// Modifiers
     static void setFleetSize(int size);
-    static void setFleetColourRGB(int r, int g, int b);
-    static void setNumOfShips(int count, ShipType shipType);
+    static void setFleetColourRGB(sf::Color colour); // Colour colour
+    static void setNumOfShips(int count, Starship::Type shipType);
 
-    /// Accessor Functions
+    /// Accessors
     static int &getFleetSize();
     static Colour &getFleetColourRGB();
     static std::array<int, 4> &getNumOfShips();

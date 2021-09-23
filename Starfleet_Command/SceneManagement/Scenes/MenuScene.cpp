@@ -54,6 +54,7 @@ void MenuScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
             panels[i].setText(panels[i].getText().getString(), sf::Color::Red);
         }
 
+        // All Buttons
         if(!panels[i].isHoveredOver())
         {
             panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
@@ -192,7 +193,7 @@ void MenuScene::initTitlePanel()
 
 bool MenuScene::initMenuTitleIcon()
 {
-    if (!menu_title_img_texture.loadFromFile("images/starfleet_ship_fighternew2.png"))
+    if (!menu_title_img_texture.loadFromFile("images/starfleet_ship_fighter.png"))
     {
         return false;
     }
@@ -207,8 +208,8 @@ bool MenuScene::initMenuTitleIcon()
 
 void MenuScene::initBackgroundShips(std::mt19937 &generator)
 {
-    createDistribution("Ship xpos", 0, 1280);
-    createDistribution("Ship ypos", 20, 720);
+    createDistribution("Ship xpos", 0, Constants::WINDOW_WIDTH);
+    createDistribution("Ship ypos", 45, 675);
     createDistribution("Ship class", 0, 3);
     createDistribution("Ship speed", 50, 250);
 

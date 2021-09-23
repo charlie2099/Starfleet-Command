@@ -122,7 +122,7 @@ void ShipyardScene::update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         panels[i].setText("Fleet Colour: " + colours_text[active_colour]);
         panels[i].setPanelColour(colours_sf_light[active_colour]);
-        Fleet::setFleetColourRGB(colours_sf[active_colour].r, colours_sf[active_colour].g, colours_sf[active_colour].b);
+        Fleet::setFleetColourRGB(colours_sf[active_colour]);
     }
 
     // Fleet Size Panel
@@ -211,20 +211,24 @@ void ShipyardScene::initPanels()
     // Fleet Colour Panel
     for (int i = PLAY_BUTTON; i < FLEET_COLOUR; ++i)
     {
-        colours_text.at(0) = ("CYAN");
+        colours_text.at(0) = ("BLUE");
         colours_text.at(1) = ("RED");
         colours_text.at(2) = ("GREEN");
         colours_text.at(3) = ("YELLOW");
 
-        colours_sf.at(0) = sf::Color(20, 210, 242, 255); // cyan
-        colours_sf.at(1) = sf::Color(255, 0, 0, 255); // red
-        colours_sf.at(2) = sf::Color(0, 255, 0, 255); // green
-        colours_sf.at(3) = sf::Color(255, 255, 0, 255); // yellow
+        colours_sf.at(0) = predefinedColours.LIGHTBLUE;
+        colours_sf.at(1) = predefinedColours.LIGHTRED;
+        colours_sf.at(2) = predefinedColours.LIGHTGREEN;
+        colours_sf.at(3) = sf::Color::Yellow;
 
-        colours_sf_light.at(0) = sf::Color(20, 210, 242, 120); // cyan
-        colours_sf_light.at(1) = sf::Color(255, 0, 0, 120); // red
-        colours_sf_light.at(2) = sf::Color(0, 255, 0, 120); // green
-        colours_sf_light.at(3) = sf::Color(255, 255, 0, 120); // yellow
+        predefinedColours.LIGHTBLUE.a = 120;
+        predefinedColours.LIGHTRED.a = 120;
+        predefinedColours.LIGHTGREEN.a = 120;
+        sf::Color yellow = sf::Color(255, 255, 0, 120);
+        colours_sf_light.at(0) = predefinedColours.LIGHTBLUE;
+        colours_sf_light.at(1) = predefinedColours.LIGHTRED;
+        colours_sf_light.at(2) = predefinedColours.LIGHTGREEN;
+        colours_sf_light.at(3) = yellow;
 
         panels[i].setText("Fleet Colour: " + colours_text[active_colour]);
         panels[i].setFont(Panel::TextFont::BOLD);
@@ -245,7 +249,7 @@ void ShipyardScene::initPanels()
 
 bool ShipyardScene::initMenuTitleIcon()
 {
-    if (!ship_img_texture.loadFromFile("images/starfleet_ship_fighternew2.png"))
+    if (!ship_img_texture.loadFromFile("images/starfleet_ship_fighter.png"))
     {
         return false;
     }
@@ -272,7 +276,7 @@ void ShipyardScene::initShipCards()
         ship_cards[i].setCounterText(Fleet::getNumOfShips()[i]);
         //ship_cards[i].setCounterText(ship_count[i]);
         ship_cards[i].setShipCost(50 + (i * 50));
-        ship_cards[i].setShipType(static_cast<ShipCard::ShipType>(i));
+        ship_cards[i].setShipType(static_cast<Starship::Type>(i));
 
         // Ship card position alignment
         if(i < 1)
@@ -323,7 +327,7 @@ void ShipyardScene::shipCardsLeftClicked(int i)
 {
     if(Fleet::getNumOfShips()[i] < 5 && player.getCredits() >= ship_cards[i].getShipCost())
     {
-        Fleet::setNumOfShips(Fleet::getNumOfShips()[i] + 1, static_cast<Fleet::ShipType>(i));
+        Fleet::setNumOfShips(Fleet::getNumOfShips()[i] + 1, static_cast<Starship::Type>(i));
 
         int sum = 0;
         for (int elements : Fleet::getNumOfShips())
@@ -344,7 +348,7 @@ void ShipyardScene::shipCardsRightClicked(int i)
 {
     if(Fleet::getNumOfShips()[i] > 0)
     {
-        Fleet::setNumOfShips(Fleet::getNumOfShips()[i] - 1, static_cast<Fleet::ShipType>(i));
+        Fleet::setNumOfShips(Fleet::getNumOfShips()[i] - 1, static_cast<Starship::Type>(i));
 
         int sum = 0;
         for (int elements : Fleet::getNumOfShips())

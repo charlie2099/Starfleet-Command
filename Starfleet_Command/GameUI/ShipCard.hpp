@@ -1,6 +1,7 @@
 #ifndef STARFLEET_COMMAND_SHIPCARD_HPP
 #define STARFLEET_COMMAND_SHIPCARD_HPP
 #include "Panel.hpp"
+#include "../Ships/Starship.hpp"
 
 class ShipCard
 {
@@ -8,19 +9,16 @@ class ShipCard
     ShipCard();
     ~ShipCard() = default;
 
+    /// General
     void render(sf::RenderWindow& window);
 
-    enum class ShipType
-    {
-        FIGHTER,
-        REPAIR,
-        DESTROYER,
-        BATTLESHIP
-    };
-    void setShipType(ShipType shipType);
+    /// Modifiers
+    void setShipType(Starship::Type shipType);
     void setShipCost(int cost); // Move to fleet class?
     void setCounterText(int count);
     void setPosition(float x, float y);
+
+    /// Accessors
     Panel &getPanel();
     sf::Sprite &getImage();
     int &getShipCost();
@@ -38,7 +36,7 @@ class ShipCard
 
     sf::Sprite ship_sprite;
 
-    sf::Font font_regular;
+    sf::Font font_regular; // FontLoader class?
 
     sf::Text cost_text;
     sf::Text counter_text;

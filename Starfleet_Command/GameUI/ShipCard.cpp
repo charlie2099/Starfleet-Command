@@ -83,24 +83,24 @@ bool ShipCard::loadFont()
     return true;
 }
 
-void ShipCard::setShipType(ShipCard::ShipType shipType)
+void ShipCard::setShipType(Starship::Type shipType)
 {
     switch (shipType)
     {
-        case ShipType::FIGHTER:
-            ship_texture.loadFromFile("images/starfleet_ship_fighternew2.png");
+        case Starship::Type::FIGHTER:
+            ship_texture.loadFromFile("images/starfleet_ship_fighter.png");
             break;
-        case ShipType::REPAIR:
-            ship_texture.loadFromFile("images/starfleet_ship_repairnew2.png");
+            case Starship::Type::REPAIR:
+            ship_texture.loadFromFile("images/starfleet_ship_repair.png");
             break;
-        case ShipType::DESTROYER:
-            ship_texture.loadFromFile("images/starfleet_ship_destroyernew2.png");
+            case Starship::Type::DESTROYER:
+            ship_texture.loadFromFile("images/starfleet_ship_destroyer.png");
             break;
-        case ShipType::BATTLESHIP:
-            ship_texture.loadFromFile("images/starfleet_ship_battleshipnew2.png");
+            case Starship::Type::BATTLESHIP:
+            ship_texture.loadFromFile("images/starfleet_ship_battleship.png");
             break;
         default:
-            ship_texture.loadFromFile("images/starfleet_ship_fighternew2.png");
+            ship_texture.loadFromFile("images/starfleet_ship_fighter.png");
     }
     ship_sprite.scale(0.6F, 0.6F);
     ship_sprite.setTexture(ship_texture);

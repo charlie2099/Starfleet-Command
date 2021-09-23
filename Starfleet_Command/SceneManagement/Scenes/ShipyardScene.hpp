@@ -4,6 +4,7 @@
 #include "../../GameUI/ShipCard.hpp"
 #include "../../Player/Player.hpp"
 #include "../../Player/Fleet.hpp"
+#include "../../Utility/PredefinedColours.hpp"
 
 class ShipyardScene : public Scene
 {
@@ -40,6 +41,7 @@ class ShipyardScene : public Scene
 
     Player player;
     Fleet player_fleet;
+    PredefinedColours predefinedColours;
     std::array<Panel, 3> panels;
     std::array<ShipCard, 4> ship_cards;
 

@@ -5,7 +5,6 @@
 class Starship
 {
  public:
-    Starship() = default;
     ~Starship() = default;
 
     enum class Type
@@ -21,7 +20,7 @@ class Starship
     /// General
     virtual void render(sf::RenderWindow& window);
 
-    /// Mutators
+    /// Modifiers
     void setHealth(float health);
     void setDamage(float damage);
     void setSpeed(float speed); // Entity class?
