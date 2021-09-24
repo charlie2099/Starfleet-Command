@@ -158,6 +158,7 @@ CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj: \
  ../Crosshair.hpp \
  ../Game/Game.cpp \
  ../Game/Game.hpp \
+ ../GameUI/Button.hpp \
  ../GameUI/Panel.hpp \
  ../GameUI/ShipCard.hpp \
  ../Player/Fleet.hpp \
@@ -171,6 +172,83 @@ CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj: \
  ../SpriteComponent.hpp \
  ../Utility/Constants.hpp \
  ../Utility/PredefinedColours.hpp
+CMakeFiles/Starfleet_Command.dir/GameUI/Button.cpp.obj: \
+ C:/Libraries/SFML/include/SFML/Config.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/BlendMode.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/CircleShape.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Color.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/ConvexShape.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Drawable.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Export.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Font.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Glsl.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Glsl.inl \
+ C:/Libraries/SFML/include/SFML/Graphics/Glyph.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Image.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/PrimitiveType.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Rect.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Rect.inl \
+ C:/Libraries/SFML/include/SFML/Graphics/RectangleShape.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/RenderStates.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/RenderTarget.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/RenderTexture.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/RenderWindow.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Shader.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Shape.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Sprite.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Text.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Texture.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Transform.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Transformable.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/Vertex.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/VertexArray.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/VertexBuffer.hpp \
+ C:/Libraries/SFML/include/SFML/Graphics/View.hpp \
+ C:/Libraries/SFML/include/SFML/System.hpp \
+ C:/Libraries/SFML/include/SFML/System/Clock.hpp \
+ C:/Libraries/SFML/include/SFML/System/Err.hpp \
+ C:/Libraries/SFML/include/SFML/System/Export.hpp \
+ C:/Libraries/SFML/include/SFML/System/FileInputStream.hpp \
+ C:/Libraries/SFML/include/SFML/System/InputStream.hpp \
+ C:/Libraries/SFML/include/SFML/System/Lock.hpp \
+ C:/Libraries/SFML/include/SFML/System/MemoryInputStream.hpp \
+ C:/Libraries/SFML/include/SFML/System/Mutex.hpp \
+ C:/Libraries/SFML/include/SFML/System/NonCopyable.hpp \
+ C:/Libraries/SFML/include/SFML/System/Sleep.hpp \
+ C:/Libraries/SFML/include/SFML/System/String.hpp \
+ C:/Libraries/SFML/include/SFML/System/String.inl \
+ C:/Libraries/SFML/include/SFML/System/Thread.hpp \
+ C:/Libraries/SFML/include/SFML/System/Thread.inl \
+ C:/Libraries/SFML/include/SFML/System/ThreadLocal.hpp \
+ C:/Libraries/SFML/include/SFML/System/ThreadLocalPtr.hpp \
+ C:/Libraries/SFML/include/SFML/System/ThreadLocalPtr.inl \
+ C:/Libraries/SFML/include/SFML/System/Time.hpp \
+ C:/Libraries/SFML/include/SFML/System/Utf.hpp \
+ C:/Libraries/SFML/include/SFML/System/Utf.inl \
+ C:/Libraries/SFML/include/SFML/System/Vector2.hpp \
+ C:/Libraries/SFML/include/SFML/System/Vector2.inl \
+ C:/Libraries/SFML/include/SFML/System/Vector3.hpp \
+ C:/Libraries/SFML/include/SFML/System/Vector3.inl \
+ C:/Libraries/SFML/include/SFML/Window.hpp \
+ C:/Libraries/SFML/include/SFML/Window/Clipboard.hpp \
+ C:/Libraries/SFML/include/SFML/Window/Context.hpp \
+ C:/Libraries/SFML/include/SFML/Window/ContextSettings.hpp \
+ C:/Libraries/SFML/include/SFML/Window/Cursor.hpp \
+ C:/Libraries/SFML/include/SFML/Window/Event.hpp \
+ C:/Libraries/SFML/include/SFML/Window/Export.hpp \
+ C:/Libraries/SFML/include/SFML/Window/GlResource.hpp \
+ C:/Libraries/SFML/include/SFML/Window/Joystick.hpp \
+ C:/Libraries/SFML/include/SFML/Window/Keyboard.hpp \
+ C:/Libraries/SFML/include/SFML/Window/Mouse.hpp \
+ C:/Libraries/SFML/include/SFML/Window/Sensor.hpp \
+ C:/Libraries/SFML/include/SFML/Window/Touch.hpp \
+ C:/Libraries/SFML/include/SFML/Window/VideoMode.hpp \
+ C:/Libraries/SFML/include/SFML/Window/Window.hpp \
+ C:/Libraries/SFML/include/SFML/Window/WindowHandle.hpp \
+ C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp \
+ ../GameUI/Button.cpp \
+ ../GameUI/Button.hpp
 CMakeFiles/Starfleet_Command.dir/GameUI/Panel.cpp.obj: \
  C:/Libraries/SFML/include/SFML/Config.hpp \
  C:/Libraries/SFML/include/SFML/Graphics.hpp \
@@ -568,6 +646,7 @@ CMakeFiles/Starfleet_Command.dir/SceneManagement/SceneManager.cpp.obj: \
  C:/Libraries/SFML/include/SFML/Window/WindowHandle.hpp \
  C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp \
  ../Crosshair.hpp \
+ ../GameUI/Button.hpp \
  ../GameUI/Panel.hpp \
  ../GameUI/ShipCard.hpp \
  ../Player/Fleet.hpp \
@@ -823,6 +902,7 @@ CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.obj: \
  C:/Libraries/SFML/include/SFML/Window/Window.hpp \
  C:/Libraries/SFML/include/SFML/Window/WindowHandle.hpp \
  C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp \
+ ../GameUI/Button.hpp \
  ../GameUI/Panel.hpp \
  ../GameUI/ShipCard.hpp \
  ../Player/Fleet.hpp \
@@ -1145,6 +1225,7 @@ CMakeFiles/Starfleet_Command.dir/main.cpp.obj: \
  C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp \
  ../Crosshair.hpp \
  ../Game/Game.hpp \
+ ../GameUI/Button.hpp \
  ../GameUI/Panel.hpp \
  ../GameUI/ShipCard.hpp \
  ../Player/Fleet.hpp \

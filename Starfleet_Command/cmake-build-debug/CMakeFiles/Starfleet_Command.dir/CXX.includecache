@@ -680,12 +680,6 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
 SFML/Graphics.hpp
 -
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.hpp
-Panel.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
-../Ships/Starship.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
-
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
 array
 -
@@ -696,8 +690,6 @@ SFML/Graphics/Color.hpp
 ../Ships/Starship.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.hpp
-
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
 SFML/Graphics.hpp
 -
@@ -706,21 +698,17 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constant
 ../GameUI/Panel.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.cpp
-ShipyardScene.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.cpp
+GameScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp
 ../Scene.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
-../../GameUI/ShipCard.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.hpp
-../../Player/Player.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.hpp
 ../../Player/Fleet.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
-../../Utility/PredefinedColours.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/PredefinedColours.hpp
+../../Ships/Starship.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
 ../SpriteComponent.hpp
@@ -733,8 +721,4 @@ SFML/Graphics.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constants.hpp
 iostream
 -
-
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/PredefinedColours.hpp
-SFML/Graphics/Color.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/SFML/Graphics/Color.hpp
 

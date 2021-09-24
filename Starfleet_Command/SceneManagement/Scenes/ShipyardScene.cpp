@@ -9,12 +9,16 @@ bool ShipyardScene::init()
     initPanels();
     initMenuTitleIcon();
     initShipCards();
+    initColourSelectArrows();
 
     return true;
 }
 
 void ShipyardScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
 {
+    auto mouse_pos_relative = sf::Mouse::getPosition(window); // Mouse position relative to the window
+    auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse position translated into world coordinates
+
     for (auto & panel : panels)
     {
         panel.eventHandler(window, event);
@@ -45,28 +49,22 @@ void ShipyardScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
         }
     }
 
-    // Fleet Colour Panel
-    for (int i = PLAY_BUTTON; i < FLEET_COLOUR; ++i)
+    // Fleet Colour Selection Arrows
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
-        if (event.type == sf::Event::MouseButtonPressed)
+        if(select_arrows_sprite[LEFT_ARROW].getGlobalBounds().contains(mouse_pos_world))
         {
-            if(panels[i].isClicked())
+            if(active_colour > 0)
             {
-                if(event.mouseButton.button == sf::Mouse::Left)
-                {
-                    if(active_colour < 3)
-                    {
-                        active_colour+= 1;
-                    }
-                }
+                active_colour-= 1;
+            }
+        }
 
-                else if(event.mouseButton.button == sf::Mouse::Right)
-                {
-                    if(active_colour > 0)
-                    {
-                        active_colour-= 1;
-                    }
-                }
+        else if(select_arrows_sprite[RIGHT_ARROW].getGlobalBounds().contains(mouse_pos_world))
+        {
+            if(active_colour < 3)
+            {
+                active_colour+= 1;
             }
         }
     }
@@ -108,6 +106,9 @@ void ShipyardScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
 
 void ShipyardScene::update(sf::RenderWindow& window, sf::Time deltaTime)
 {
+    auto mouse_pos_relative = sf::Mouse::getPosition(window); // Mouse position relative to the window
+    auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse position translated into world coordinates
+
     for (auto & panel : panels)
     {
         panel.update(window, deltaTime);
@@ -122,6 +123,16 @@ void ShipyardScene::update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         panels[i].setText("Fleet Colour: " + colours_text[active_colour]);
         panels[i].setPanelColour(colours_sf_light[active_colour]);
+    }
+
+    // Fleet Colour Selection Arrows
+    for (auto & arrows : select_arrows_sprite)
+    {
+        arrows.setColor(sf::Color::White);
+        if(arrows.getGlobalBounds().contains(mouse_pos_world))
+        {
+            arrows.setColor(colours_sf_light[active_colour]);
+        }
         Fleet::setFleetColourRGB(colours_sf[active_colour]);
     }
 
@@ -140,13 +151,21 @@ void ShipyardScene::render(sf::RenderWindow& window)
     window.draw(credits_text);
     window.draw(notification_text);
     window.draw(ship_img_sprite);
-    for (auto & panel : panels)
+    for (auto &panel : panels)
     {
         panel.render(window);
     }
-    for (auto & ship_card : ship_cards)
+    for (auto &ship_card : ship_cards)
     {
         ship_card.render(window);
+    }
+    for (const auto &select_arrow : select_arrows_sprite)
+    {
+        window.draw(select_arrow);
+    }
+    for (auto &select_arrow_button : select_arrow_buttons)
+    {
+        select_arrow_button->render(window);
     }
 }
 
@@ -274,7 +293,6 @@ void ShipyardScene::initShipCards()
         ship_cards[i].getPanel().setText(ship_names[i]);
         ship_cards[i].setPosition(500, 500);
         ship_cards[i].setCounterText(Fleet::getNumOfShips()[i]);
-        //ship_cards[i].setCounterText(ship_count[i]);
         ship_cards[i].setShipCost(50 + (i * 50));
         ship_cards[i].setShipType(static_cast<Starship::Type>(i));
 
@@ -291,6 +309,39 @@ void ShipyardScene::initShipCards()
             ship_cards[i].setPosition(spacing, Constants::WINDOW_HEIGHT * 0.4F);
         }
     }
+}
+
+bool ShipyardScene::initColourSelectArrows()
+{
+    if(!left_arrow_texture.loadFromFile("images/backward.png"))
+    {
+        return false;
+    }
+    if(!right_arrow_texture.loadFromFile("images/forward.png"))
+    {
+        return false;
+    }
+
+    select_arrows_sprite[LEFT_ARROW].setTexture(left_arrow_texture);
+    select_arrows_sprite[RIGHT_ARROW].setTexture(right_arrow_texture);
+
+    auto colour_panel = panels[FLEET_COLOUR-1];
+    auto xpos = colour_panel.getPanelPosition().x - 35;
+    auto ypos = colour_panel.getPanelPosition().y + colour_panel.getPanelSize().height/2;
+    float arrow_spacing = 12.5F;
+    auto lArrowWidth = select_arrows_sprite[LEFT_ARROW].getGlobalBounds().width/2 + arrow_spacing;
+    auto arrowHeight = select_arrows_sprite[LEFT_ARROW].getGlobalBounds().height/2;
+    auto rArrowWidth = select_arrows_sprite[RIGHT_ARROW].getGlobalBounds().width/2 - arrow_spacing;
+
+    select_arrows_sprite[LEFT_ARROW].setPosition(xpos-lArrowWidth, ypos-arrowHeight);
+    select_arrows_sprite[RIGHT_ARROW].setPosition(xpos-rArrowWidth, ypos-arrowHeight);
+
+
+
+    select_arrow_buttons[LEFT_ARROW] = std::make_unique<Button>("images/backward.png");
+    select_arrow_buttons[RIGHT_ARROW] = std::make_unique<Button>("images/forward.png");
+
+    return true;
 }
 
 void ShipyardScene::playButtonActive(int i)
@@ -364,5 +415,6 @@ void ShipyardScene::shipCardsRightClicked(int i)
     ship_cards[i].getPanel().setPanelColour(sf::Color(255, 0, 0, 80));
 
 }
+
 
 

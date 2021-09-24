@@ -176,6 +176,30 @@ Game/Game.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.s
 .PHONY : Game/Game.cpp.s
 
+GameUI/Button.obj: GameUI/Button.cpp.obj
+.PHONY : GameUI/Button.obj
+
+# target to build an object file
+GameUI/Button.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/Button.cpp.obj
+.PHONY : GameUI/Button.cpp.obj
+
+GameUI/Button.i: GameUI/Button.cpp.i
+.PHONY : GameUI/Button.i
+
+# target to preprocess a source file
+GameUI/Button.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/Button.cpp.i
+.PHONY : GameUI/Button.cpp.i
+
+GameUI/Button.s: GameUI/Button.cpp.s
+.PHONY : GameUI/Button.s
+
+# target to generate assembly for a file
+GameUI/Button.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/Button.cpp.s
+.PHONY : GameUI/Button.cpp.s
+
 GameUI/Panel.obj: GameUI/Panel.cpp.obj
 .PHONY : GameUI/Panel.obj
 
@@ -527,6 +551,9 @@ help:
 	@echo ... Game/Game.obj
 	@echo ... Game/Game.i
 	@echo ... Game/Game.s
+	@echo ... GameUI/Button.obj
+	@echo ... GameUI/Button.i
+	@echo ... GameUI/Button.s
 	@echo ... GameUI/Panel.obj
 	@echo ... GameUI/Panel.i
 	@echo ... GameUI/Panel.s

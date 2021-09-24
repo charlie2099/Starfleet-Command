@@ -9,11 +9,11 @@ bool GameScene::init()
     //view.setCenter(window.getDefaultView().getCenter());
     //view.setSize(window.getDefaultView().getSize());
 
-    player_view.setCenter({Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F});
     player_view.setSize(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT);
-    //auto flagship = starship[starship.size()-1]->getSpriteCompo().getSprite();
-    //player_view.setCenter(flagship.getPosition());
-    //player_view.zoom(0.5F);
+    //player_view.setCenter({Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F});
+    auto flagship = starship[starship.size()-1]->getSpriteCompo().getSprite();
+    player_view.setCenter(flagship.getPosition());
+    player_view.zoom(0.75F);
 
     return true;
 }
@@ -29,6 +29,11 @@ void GameScene::update(sf::RenderWindow& window, sf::Time deltaTime)
     view.setSize(window.getView().getSize());
     view.move(20*deltaTime.asSeconds(),0);
     window.setView(view);*/
+
+    sf::Vector2f movement(20.0F, 0.f);
+    starship[starship.size()-1]->getSpriteCompo().getSprite().move(movement * deltaTime.asSeconds());
+    player_view.setCenter(starship[starship.size()-1]->getSpriteCompo().getSprite().getPosition());
+
 }
 
 void GameScene::render(sf::RenderWindow& window)

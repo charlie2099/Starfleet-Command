@@ -5,6 +5,7 @@
 #include "../../Player/Player.hpp"
 #include "../../Player/Fleet.hpp"
 #include "../../Utility/PredefinedColours.hpp"
+#include "../../GameUI/Button.hpp"
 
 class ShipyardScene : public Scene
 {
@@ -25,6 +26,7 @@ class ShipyardScene : public Scene
     void initPanels();
     bool initMenuTitleIcon();
     void initShipCards();
+    bool initColourSelectArrows();
 
     void playButtonActive(int i);
     void playButtonInactive(int i);
@@ -37,11 +39,15 @@ class ShipyardScene : public Scene
     static const int FLEET_COLOUR = 2;
     static const int FLEET_SIZE = 3;
 
+    static const int LEFT_ARROW = 0;
+    static const int RIGHT_ARROW = 1;
+
     int active_colour = 0;
 
     Player player;
     Fleet player_fleet;
     PredefinedColours predefinedColours;
+    std::array<std::unique_ptr<Button>, 2> select_arrow_buttons; // array of unique ptrs bad/redundant?
     std::array<Panel, 3> panels;
     std::array<ShipCard, 4> ship_cards;
 
@@ -52,9 +58,12 @@ class ShipyardScene : public Scene
 
     sf::Texture background_texture;
     sf::Texture ship_img_texture;
+    sf::Texture left_arrow_texture; // Button class?
+    sf::Texture right_arrow_texture;
 
     sf::Sprite background_sprite;
     sf::Sprite ship_img_sprite;
+    std::array<sf::Sprite, 2> select_arrows_sprite;
 
     sf::Text shipyard_title_text;
     sf::Text credits_text;
