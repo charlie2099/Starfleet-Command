@@ -1,6 +1,6 @@
 #ifndef STARFLEET_COMMAND_CROSSHAIR_HPP
 #define STARFLEET_COMMAND_CROSSHAIR_HPP
-#include "SpriteComponent.hpp"
+#include "Components/SpriteComponent.hpp"
 #include "Ships/Starship.hpp"
 
 class Crosshair

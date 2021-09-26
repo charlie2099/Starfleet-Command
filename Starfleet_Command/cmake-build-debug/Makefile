@@ -128,6 +128,30 @@ Starfleet_Command/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/build
 .PHONY : Starfleet_Command/fast
 
+Components/SpriteComponent.obj: Components/SpriteComponent.cpp.obj
+.PHONY : Components/SpriteComponent.obj
+
+# target to build an object file
+Components/SpriteComponent.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/SpriteComponent.cpp.obj
+.PHONY : Components/SpriteComponent.cpp.obj
+
+Components/SpriteComponent.i: Components/SpriteComponent.cpp.i
+.PHONY : Components/SpriteComponent.i
+
+# target to preprocess a source file
+Components/SpriteComponent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/SpriteComponent.cpp.i
+.PHONY : Components/SpriteComponent.cpp.i
+
+Components/SpriteComponent.s: Components/SpriteComponent.cpp.s
+.PHONY : Components/SpriteComponent.s
+
+# target to generate assembly for a file
+Components/SpriteComponent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/SpriteComponent.cpp.s
+.PHONY : Components/SpriteComponent.cpp.s
+
 Crosshair.obj: Crosshair.cpp.obj
 .PHONY : Crosshair.obj
 
@@ -488,30 +512,6 @@ Ships/Starship.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Starship.cpp.s
 .PHONY : Ships/Starship.cpp.s
 
-SpriteComponent.obj: SpriteComponent.cpp.obj
-.PHONY : SpriteComponent.obj
-
-# target to build an object file
-SpriteComponent.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SpriteComponent.cpp.obj
-.PHONY : SpriteComponent.cpp.obj
-
-SpriteComponent.i: SpriteComponent.cpp.i
-.PHONY : SpriteComponent.i
-
-# target to preprocess a source file
-SpriteComponent.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SpriteComponent.cpp.i
-.PHONY : SpriteComponent.cpp.i
-
-SpriteComponent.s: SpriteComponent.cpp.s
-.PHONY : SpriteComponent.s
-
-# target to generate assembly for a file
-SpriteComponent.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SpriteComponent.cpp.s
-.PHONY : SpriteComponent.cpp.s
-
 main.obj: main.cpp.obj
 .PHONY : main.obj
 
@@ -545,6 +545,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... Starfleet_Command
+	@echo ... Components/SpriteComponent.obj
+	@echo ... Components/SpriteComponent.i
+	@echo ... Components/SpriteComponent.s
 	@echo ... Crosshair.obj
 	@echo ... Crosshair.i
 	@echo ... Crosshair.s
@@ -590,9 +593,6 @@ help:
 	@echo ... Ships/Starship.obj
 	@echo ... Ships/Starship.i
 	@echo ... Ships/Starship.s
-	@echo ... SpriteComponent.obj
-	@echo ... SpriteComponent.i
-	@echo ... SpriteComponent.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

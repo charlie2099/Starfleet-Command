@@ -24,31 +24,28 @@ void Panel::eventHandler(sf::RenderWindow &window, sf::Event &event)
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
 
-    if (event.type == sf::Event::MouseButtonPressed/* && event.mouseButton.button == sf::Mouse::Left*/)
+    if (event.type == sf::Event::MouseButtonPressed && is_hovered_over/* && event.mouseButton.button == sf::Mouse::Left*/)
     {
-        if(panel.getGlobalBounds().contains(translated_pos))
-        {
-            setIsClicked(true);
-        }
+        is_clicked = true;
     }
     else if (event.type == sf::Event::MouseButtonReleased/* && event.mouseButton.button == sf::Mouse::Left*/)
     {
-        setIsClicked(false);
+        is_clicked = false;
     }
 }
 
-void Panel::update(sf::RenderWindow &window, sf::Time /*deltaTime*/)
+void Panel::update(sf::RenderWindow &window)
 {
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
 
     if(panel.getGlobalBounds().contains(translated_pos))
     {
-        setIsHoveredOver(true);
+        is_hovered_over = true;
     }
     else
     {
-        setIsHoveredOver(false);
+        is_hovered_over = false;
     }
 }
 
@@ -169,19 +166,9 @@ void Panel::centreAlignPanelToText()
     }
 }
 
-void Panel::setIsHoveredOver(bool hovered_over)
-{
-    is_hovered_over = hovered_over;
-}
-
 bool Panel::isHoveredOver() const
 {
     return is_hovered_over;
-}
-
-void Panel::setIsClicked(bool clicked)
-{
-    is_clicked = clicked;
 }
 
 bool Panel::isClicked() const
@@ -217,6 +204,11 @@ sf::Vector2f Panel::getPanelPosition()
     /// Panels follow text position
     return panel.getPosition();
 }
+
+/*Button &Panel::getButton()
+{
+    return button;
+}*/
 
 
 

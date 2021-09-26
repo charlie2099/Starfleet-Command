@@ -1,6 +1,6 @@
 #ifndef STARFLEET_COMMAND_STARSHIP_HPP
 #define STARFLEET_COMMAND_STARSHIP_HPP
-#include "../SpriteComponent.hpp"
+#include "../Components/SpriteComponent.hpp"
 
 class Starship
 {
@@ -27,7 +27,7 @@ class Starship
     void setAcceleration(float acceleration);
 
     /// Accessors
-    SpriteComponent &getSpriteCompo();
+    SpriteComponent &getSpriteComponent();
     float getHealth() const;
     float getDamage() const;
     float getSpeed() const;

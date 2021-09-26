@@ -27,7 +27,7 @@ void Crosshair::snapTo(std::unique_ptr<Starship>& starship)
 {
     is_visible_ = true;
     sprite->getSprite().setColor(sf::Color::Cyan);
-    auto ship = starship->getSpriteCompo();
+    auto ship = starship->getSpriteComponent();
     auto crosshair_bounds = sprite->getSprite().getGlobalBounds();
     auto xpos = ship.getPos().x + ship.getSprite().getGlobalBounds().width / 2 - crosshair_bounds.width / 2;
     auto ypos = ship.getPos().y + ship.getSprite().getGlobalBounds().height / 2 - crosshair_bounds.height / 2;

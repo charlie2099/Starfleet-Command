@@ -9,11 +9,14 @@ bool GameScene::init()
     //view.setCenter(window.getDefaultView().getCenter());
     //view.setSize(window.getDefaultView().getSize());
 
-    player_view.setSize(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT);
-    //player_view.setCenter({Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F});
-    auto flagship = starship[starship.size()-1]->getSpriteCompo().getSprite();
-    player_view.setCenter(flagship.getPosition());
-    player_view.zoom(0.75F);
+    auto flagship = starship[starship.size() - 1]->getSpriteComponent().getSprite();
+    sf::Vector2f VIEW_SIZE = { Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT };
+    sf::Vector2f WORLD_PERSPECTIVE = { Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F };
+    sf::Vector2f PLAYER_PERSPECTIVE = {flagship.getPosition().x + flagship.getGlobalBounds().width/2,
+                                       flagship.getPosition().y + flagship.getGlobalBounds().height/2};
+    player_view.setSize(VIEW_SIZE);
+    player_view.setCenter(PLAYER_PERSPECTIVE);
+    player_view.zoom(0.5F);
 
     return true;
 }
@@ -25,14 +28,13 @@ void GameScene::eventHandler(sf::RenderWindow& /*window*/, sf::Event& /*event*/)
 
 void GameScene::update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    /*view.setCenter(window.getView().getCenter());
-    view.setSize(window.getView().getSize());
-    view.move(20*deltaTime.asSeconds(),0);
-    window.setView(view);*/
-
+    static const size_t FLAGSHIP = starship.size()-1;
+    auto& flagship = starship[FLAGSHIP]->getSpriteComponent().getSprite();
     sf::Vector2f movement(20.0F, 0.f);
-    starship[starship.size()-1]->getSpriteCompo().getSprite().move(movement * deltaTime.asSeconds());
-    player_view.setCenter(starship[starship.size()-1]->getSpriteCompo().getSprite().getPosition());
+    sf::Vector2f PLAYER_PERSPECTIVE = {flagship.getPosition().x + flagship.getGlobalBounds().width/2,
+                                       flagship.getPosition().y + flagship.getGlobalBounds().height/2};
+    player_view.setCenter(PLAYER_PERSPECTIVE);
+    flagship.move(movement * deltaTime.asSeconds());
 
 }
 
@@ -49,7 +51,7 @@ void GameScene::render(sf::RenderWindow& window)
 /// OTHER
 bool GameScene::initBackground()
 {
-    if (!background_texture.loadFromFile("images/background2.png"))
+    /*if (!background_texture.loadFromFile("images/background2.png"))
     {
         return false;
     }
@@ -58,7 +60,18 @@ bool GameScene::initBackground()
     background_sprite.scale(0.40F, 0.40F);
     auto bTexSizeX = static_cast<int>(background_texture.getSize().x);
     auto bTexSizeY = static_cast<int>(background_texture.getSize().y);
-    background_sprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX*3, bTexSizeY*3));
+    background_sprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX*3, bTexSizeY*3));*/
+
+    if (!background_texture.loadFromFile("images/space_nebula.png")) // background2
+    {
+        return false;
+    }
+    background_texture.setRepeated(true);
+    background_sprite.setTexture(background_texture);
+    background_sprite.scale(0.2F, 0.2F);
+    auto bTexSizeX = static_cast<int>(background_texture.getSize().x);
+    auto bTexSizeY = static_cast<int>(background_texture.getSize().y);
+    background_sprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX*2, bTexSizeY*2));
     //background_sprite.setOrigin(background_sprite.getLocalBounds().width/2, background_sprite.getLocalBounds().height/2);
 
     return true;
@@ -83,14 +96,14 @@ void GameScene::initPlayerStarships()
     auto b = Fleet::getFleetColourRGB().rgb_b;
     for (int i = 0; i < starship.size(); ++i)
     {
-        starship[i]->getSpriteCompo().setPos({50, (i * 40.0F) + Constants::WINDOW_HEIGHT*0.1F });
-        starship[i]->getSpriteCompo().getSprite().setColor(sf::Color(r, g, b));
+        starship[i]->getSpriteComponent().setPos({50, (i * 40.0F) + Constants::WINDOW_HEIGHT * 0.1F });
+        starship[i]->getSpriteComponent().getSprite().setColor(sf::Color(r, g, b));
     }
 
-    auto flagship = starship[FLAGSHIP]->getSpriteCompo();
-    auto xpos = starship[0]->getSpriteCompo().getPos().x + flagship.getSprite().getGlobalBounds().width+20;
+    auto flagship = starship[FLAGSHIP]->getSpriteComponent();
+    auto xpos = starship[0]->getSpriteComponent().getPos().x + flagship.getSprite().getGlobalBounds().width + 20;
     float ypos = Constants::WINDOW_HEIGHT/2 - flagship.getSprite().getGlobalBounds().height/2;
-    starship[FLAGSHIP]->getSpriteCompo().setPos({xpos, ypos});
+    starship[FLAGSHIP]->getSpriteComponent().setPos({xpos, ypos});
 
 }
 

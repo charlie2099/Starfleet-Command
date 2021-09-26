@@ -26,28 +26,27 @@ class ShipyardScene : public Scene
     void initPanels();
     bool initMenuTitleIcon();
     void initShipCards();
-    bool initColourSelectArrows();
-
+    void initColourSelectArrows();
     void playButtonActive(int i);
     void playButtonInactive(int i);
     void shipCardsActive(int i);
     void shipCardsInactive(int i);
     void shipCardsLeftClicked(int i);
     void shipCardsRightClicked(int i);
+    static void incrementCounter(int& counter, int max_value);
+    static void decrementCounter(int& counter, int min_value);
 
     static const int PLAY_BUTTON = 1;
     static const int FLEET_COLOUR = 2;
     static const int FLEET_SIZE = 3;
-
     static const int LEFT_ARROW = 0;
     static const int RIGHT_ARROW = 1;
 
     int active_colour = 0;
 
     Player player;
-    Fleet player_fleet;
     PredefinedColours predefinedColours;
-    std::array<std::unique_ptr<Button>, 2> select_arrow_buttons; // array of unique ptrs bad/redundant?
+    std::array<std::unique_ptr<Button>, 2> button; // array of unique ptrs bad/redundant?
     std::array<Panel, 3> panels;
     std::array<ShipCard, 4> ship_cards;
 
@@ -58,12 +57,9 @@ class ShipyardScene : public Scene
 
     sf::Texture background_texture;
     sf::Texture ship_img_texture;
-    sf::Texture left_arrow_texture; // Button class?
-    sf::Texture right_arrow_texture;
 
     sf::Sprite background_sprite;
     sf::Sprite ship_img_sprite;
-    std::array<sf::Sprite, 2> select_arrows_sprite;
 
     sf::Text shipyard_title_text;
     sf::Text credits_text;

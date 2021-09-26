@@ -68,7 +68,7 @@ float Starship::getAcceleration() const
     return acceleration_;
 }
 
-SpriteComponent &Starship::getSpriteCompo()
+SpriteComponent &Starship::getSpriteComponent()
 {
     return spriteComponent;
 }

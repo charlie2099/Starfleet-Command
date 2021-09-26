@@ -16,9 +16,6 @@ bool ShipyardScene::init()
 
 void ShipyardScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
 {
-    auto mouse_pos_relative = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse position translated into world coordinates
-
     for (auto & panel : panels)
     {
         panel.eventHandler(window, event);
@@ -50,22 +47,15 @@ void ShipyardScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
     }
 
     // Fleet Colour Selection Arrows
-    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
-        if(select_arrows_sprite[LEFT_ARROW].getGlobalBounds().contains(mouse_pos_world))
+        if(button[LEFT_ARROW]->hoveredOver())
         {
-            if(active_colour > 0)
-            {
-                active_colour-= 1;
-            }
+            decrementCounter(active_colour, 0);
         }
-
-        else if(select_arrows_sprite[RIGHT_ARROW].getGlobalBounds().contains(mouse_pos_world))
+        else if(button[RIGHT_ARROW]->hoveredOver())
         {
-            if(active_colour < 3)
-            {
-                active_colour+= 1;
-            }
+            incrementCounter(active_colour, 3);
         }
     }
 
@@ -85,20 +75,17 @@ void ShipyardScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
         }
 
         // If ship cards clicked
-        if (event.type == sf::Event::MouseButtonPressed)
+        if(ship_cards[i].getPanel().isClicked()) // TODO: Change this
         {
-            if(ship_cards[i].getPanel().isClicked())
+            if(event.mouseButton.button == sf::Mouse::Left)
             {
-                if(event.mouseButton.button == sf::Mouse::Left)
-                {
-                    notification_text.setString("");
-                    shipCardsLeftClicked(i);
-                }
+                notification_text.setString("");
+                shipCardsLeftClicked(i);
+            }
 
-                else if(event.mouseButton.button == sf::Mouse::Right)
-                {
-                    shipCardsRightClicked(i);
-                }
+            else if(event.mouseButton.button == sf::Mouse::Right)
+            {
+                shipCardsRightClicked(i);
             }
         }
     }
@@ -106,16 +93,17 @@ void ShipyardScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
 
 void ShipyardScene::update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    auto mouse_pos_relative = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse position translated into world coordinates
-
     for (auto & panel : panels)
     {
-        panel.update(window, deltaTime);
+        panel.update(window);
     }
     for (auto & ship_card : ship_cards)
     {
-        ship_card.getPanel().update(window, deltaTime);
+        ship_card.getPanel().update(window);
+    }
+    for(auto& myButton : button)
+    {
+        myButton->update(window);
     }
 
     // Fleet Colour Panel
@@ -125,14 +113,9 @@ void ShipyardScene::update(sf::RenderWindow& window, sf::Time deltaTime)
         panels[i].setPanelColour(colours_sf_light[active_colour]);
     }
 
-    // Fleet Colour Selection Arrows
-    for (auto & arrows : select_arrows_sprite)
+    for (auto& myButton: button)
     {
-        arrows.setColor(sf::Color::White);
-        if(arrows.getGlobalBounds().contains(mouse_pos_world))
-        {
-            arrows.setColor(colours_sf_light[active_colour]);
-        }
+        myButton->setActiveColour(colours_sf_light[active_colour]);
         Fleet::setFleetColourRGB(colours_sf[active_colour]);
     }
 
@@ -159,11 +142,7 @@ void ShipyardScene::render(sf::RenderWindow& window)
     {
         ship_card.render(window);
     }
-    for (const auto &select_arrow : select_arrows_sprite)
-    {
-        window.draw(select_arrow);
-    }
-    for (auto &select_arrow_button : select_arrow_buttons)
+    for (auto &select_arrow_button : button)
     {
         select_arrow_button->render(window);
     }
@@ -172,11 +151,16 @@ void ShipyardScene::render(sf::RenderWindow& window)
 /// OTHER
 bool ShipyardScene::initBackground()
 {
-    if (!background_texture.loadFromFile("images/space_background.jpg"))
+    if (!background_texture.loadFromFile("images/space_nebula.png")) // background2
     {
         return false;
     }
+    background_texture.setRepeated(true);
     background_sprite.setTexture(background_texture);
+    background_sprite.scale(0.2F, 0.2F);
+    auto bTexSizeX = static_cast<int>(background_texture.getSize().x);
+    auto bTexSizeY = static_cast<int>(background_texture.getSize().y);
+    background_sprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX*2, bTexSizeY*2));
 
     return true;
 }
@@ -311,37 +295,21 @@ void ShipyardScene::initShipCards()
     }
 }
 
-bool ShipyardScene::initColourSelectArrows()
+void ShipyardScene::initColourSelectArrows()
 {
-    if(!left_arrow_texture.loadFromFile("images/backward.png"))
-    {
-        return false;
-    }
-    if(!right_arrow_texture.loadFromFile("images/forward.png"))
-    {
-        return false;
-    }
-
-    select_arrows_sprite[LEFT_ARROW].setTexture(left_arrow_texture);
-    select_arrows_sprite[RIGHT_ARROW].setTexture(right_arrow_texture);
+    button[LEFT_ARROW] = std::make_unique<Button>("images/backward.png");
+    button[RIGHT_ARROW] = std::make_unique<Button>("images/forward.png");
 
     auto colour_panel = panels[FLEET_COLOUR-1];
     auto xpos = colour_panel.getPanelPosition().x - 35;
     auto ypos = colour_panel.getPanelPosition().y + colour_panel.getPanelSize().height/2;
     float arrow_spacing = 12.5F;
-    auto lArrowWidth = select_arrows_sprite[LEFT_ARROW].getGlobalBounds().width/2 + arrow_spacing;
-    auto arrowHeight = select_arrows_sprite[LEFT_ARROW].getGlobalBounds().height/2;
-    auto rArrowWidth = select_arrows_sprite[RIGHT_ARROW].getGlobalBounds().width/2 - arrow_spacing;
+    auto lArrowWidth = button[LEFT_ARROW]->getSpriteComponent().getSprite().getGlobalBounds().width / 2 + arrow_spacing;
+    auto arrowHeight = button[LEFT_ARROW]->getSpriteComponent().getSprite().getGlobalBounds().height / 2;
+    auto rArrowWidth = button[RIGHT_ARROW]->getSpriteComponent().getSprite().getGlobalBounds().width / 2 - arrow_spacing;
 
-    select_arrows_sprite[LEFT_ARROW].setPosition(xpos-lArrowWidth, ypos-arrowHeight);
-    select_arrows_sprite[RIGHT_ARROW].setPosition(xpos-rArrowWidth, ypos-arrowHeight);
-
-
-
-    select_arrow_buttons[LEFT_ARROW] = std::make_unique<Button>("images/backward.png");
-    select_arrow_buttons[RIGHT_ARROW] = std::make_unique<Button>("images/forward.png");
-
-    return true;
+    button[LEFT_ARROW]->getSpriteComponent().getSprite().setPosition(xpos - lArrowWidth, ypos - arrowHeight);
+    button[RIGHT_ARROW]->getSpriteComponent().getSprite().setPosition(xpos - rArrowWidth, ypos - arrowHeight);
 }
 
 void ShipyardScene::playButtonActive(int i)
@@ -414,6 +382,22 @@ void ShipyardScene::shipCardsRightClicked(int i)
     }
     ship_cards[i].getPanel().setPanelColour(sf::Color(255, 0, 0, 80));
 
+}
+
+void ShipyardScene::incrementCounter(int& counter, int max_value)
+{
+    if(counter < max_value)
+    {
+        counter+= 1;
+    }
+}
+
+void ShipyardScene::decrementCounter(int& counter, int min_value)
+{
+    if(counter > min_value)
+    {
+        counter-= 1;
+    }
 }
 
 
