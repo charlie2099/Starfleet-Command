@@ -168,7 +168,7 @@ bool ShipyardScene::initBackground()
 void ShipyardScene::initTitleText()
 {
     shipyard_title_text.setString("Shipyard");
-    shipyard_title_text.setFillColor(sf::Color::Cyan);
+    shipyard_title_text.setFillColor(predefinedColours.LIGHTBLUE);
     shipyard_title_text.setOutlineColor(sf::Color::Black);
     shipyard_title_text.setOutlineThickness(1);
     shipyard_title_text.setFont(getBoldFont());

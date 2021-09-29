@@ -21,7 +21,7 @@ void MenuScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
         panels[i].eventHandler(window, event);
     }
 
-    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         if(panels[PLAY_BUTTON].isClicked())
         {
@@ -125,6 +125,7 @@ void MenuScene::render(sf::RenderWindow& window)
         panel.render(window);
     }
     crosshair.render(window);
+    //test_player.render(window);
 }
 
 /// OTHER

@@ -11,7 +11,7 @@ class SpriteComponent
     /// General
     void render(sf::RenderWindow& renderWindow);
 
-    /// Mutators
+    /// Modifiers
     void loadSprite(const std::string& texture_filepath);
     void setPos(sf::Vector2<float> pos);
 

@@ -3,6 +3,8 @@
 #include "../Scene.hpp"
 #include "../../Player/Fleet.hpp"
 #include "../../Ships/Starship.hpp"
+#include "../../Player/Player.hpp"
+#include "../../Crosshair.hpp"
 
 class GameScene : public Scene
 {
@@ -18,13 +20,20 @@ class GameScene : public Scene
  private:
     bool initBackground();
     void initPlayerStarships();
+    void initView();
     bool comfortableBoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect sprite_bounds);
 
-    std::vector<std::unique_ptr<Starship>> starship;
+    int selected = 0;
 
+    Player player;
+    Crosshair crosshair;
+    sf::View player_view{};
     sf::Texture background_texture;
     sf::Sprite background_sprite;
-    sf::View player_view{};
+
+    void flagshipMovement();
+
+    void initCrosshair();
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

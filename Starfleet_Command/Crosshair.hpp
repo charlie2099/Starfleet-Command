@@ -20,6 +20,7 @@ class Crosshair
 
     /// Accessors
     std::unique_ptr<SpriteComponent>& getSprite();
+    sf::Color& getColour();
     bool getVisibility() const;
 
 
@@ -27,6 +28,7 @@ class Crosshair
     bool initTexture();
     std::unique_ptr<SpriteComponent> sprite;
     sf::Texture texture;
+    sf::Color colour_ = sf::Color::Cyan;
     bool is_visible_ = false;
 };
 

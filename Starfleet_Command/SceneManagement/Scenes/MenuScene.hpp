@@ -3,6 +3,7 @@
 #include "../Scene.hpp"
 #include "../../Ships/Starship.hpp"
 #include "../../Crosshair.hpp"
+#include "../../Temporary/TestPlayer.hpp"
 #include <random>
 
 class MenuScene : public Scene
@@ -37,6 +38,7 @@ class MenuScene : public Scene
 
     int SELECTED_SHIP = 0;
 
+    //TestPlayer test_player;
     Crosshair crosshair;
     std::array<Panel, 5> panels;
     std::vector<std::unique_ptr<Starship>> starship;

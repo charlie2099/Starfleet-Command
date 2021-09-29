@@ -5,8 +5,6 @@
 class Starship
 {
  public:
-    ~Starship() = default;
-
     enum class Type
     {
         FIGHTER,
@@ -16,6 +14,7 @@ class Starship
         FLAGSHIP
     };
     explicit Starship(Type type);
+    ~Starship() = default;
 
     /// General
     virtual void render(sf::RenderWindow& window);

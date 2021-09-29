@@ -176,6 +176,54 @@ Crosshair.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Crosshair.cpp.s
 .PHONY : Crosshair.cpp.s
 
+ECS/Component.obj: ECS/Component.cpp.obj
+.PHONY : ECS/Component.obj
+
+# target to build an object file
+ECS/Component.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/ECS/Component.cpp.obj
+.PHONY : ECS/Component.cpp.obj
+
+ECS/Component.i: ECS/Component.cpp.i
+.PHONY : ECS/Component.i
+
+# target to preprocess a source file
+ECS/Component.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/ECS/Component.cpp.i
+.PHONY : ECS/Component.cpp.i
+
+ECS/Component.s: ECS/Component.cpp.s
+.PHONY : ECS/Component.s
+
+# target to generate assembly for a file
+ECS/Component.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/ECS/Component.cpp.s
+.PHONY : ECS/Component.cpp.s
+
+ECS/Object.obj: ECS/Object.cpp.obj
+.PHONY : ECS/Object.obj
+
+# target to build an object file
+ECS/Object.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/ECS/Object.cpp.obj
+.PHONY : ECS/Object.cpp.obj
+
+ECS/Object.i: ECS/Object.cpp.i
+.PHONY : ECS/Object.i
+
+# target to preprocess a source file
+ECS/Object.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/ECS/Object.cpp.i
+.PHONY : ECS/Object.cpp.i
+
+ECS/Object.s: ECS/Object.cpp.s
+.PHONY : ECS/Object.s
+
+# target to generate assembly for a file
+ECS/Object.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/ECS/Object.cpp.s
+.PHONY : ECS/Object.cpp.s
+
 Game/Game.obj: Game/Game.cpp.obj
 .PHONY : Game/Game.obj
 
@@ -512,6 +560,54 @@ Ships/Starship.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Starship.cpp.s
 .PHONY : Ships/Starship.cpp.s
 
+Temporary/TestComponent.obj: Temporary/TestComponent.cpp.obj
+.PHONY : Temporary/TestComponent.obj
+
+# target to build an object file
+Temporary/TestComponent.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Temporary/TestComponent.cpp.obj
+.PHONY : Temporary/TestComponent.cpp.obj
+
+Temporary/TestComponent.i: Temporary/TestComponent.cpp.i
+.PHONY : Temporary/TestComponent.i
+
+# target to preprocess a source file
+Temporary/TestComponent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Temporary/TestComponent.cpp.i
+.PHONY : Temporary/TestComponent.cpp.i
+
+Temporary/TestComponent.s: Temporary/TestComponent.cpp.s
+.PHONY : Temporary/TestComponent.s
+
+# target to generate assembly for a file
+Temporary/TestComponent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Temporary/TestComponent.cpp.s
+.PHONY : Temporary/TestComponent.cpp.s
+
+Temporary/TestPlayer.obj: Temporary/TestPlayer.cpp.obj
+.PHONY : Temporary/TestPlayer.obj
+
+# target to build an object file
+Temporary/TestPlayer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Temporary/TestPlayer.cpp.obj
+.PHONY : Temporary/TestPlayer.cpp.obj
+
+Temporary/TestPlayer.i: Temporary/TestPlayer.cpp.i
+.PHONY : Temporary/TestPlayer.i
+
+# target to preprocess a source file
+Temporary/TestPlayer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Temporary/TestPlayer.cpp.i
+.PHONY : Temporary/TestPlayer.cpp.i
+
+Temporary/TestPlayer.s: Temporary/TestPlayer.cpp.s
+.PHONY : Temporary/TestPlayer.s
+
+# target to generate assembly for a file
+Temporary/TestPlayer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Temporary/TestPlayer.cpp.s
+.PHONY : Temporary/TestPlayer.cpp.s
+
 main.obj: main.cpp.obj
 .PHONY : main.obj
 
@@ -551,6 +647,12 @@ help:
 	@echo ... Crosshair.obj
 	@echo ... Crosshair.i
 	@echo ... Crosshair.s
+	@echo ... ECS/Component.obj
+	@echo ... ECS/Component.i
+	@echo ... ECS/Component.s
+	@echo ... ECS/Object.obj
+	@echo ... ECS/Object.i
+	@echo ... ECS/Object.s
 	@echo ... Game/Game.obj
 	@echo ... Game/Game.i
 	@echo ... Game/Game.s
@@ -593,6 +695,12 @@ help:
 	@echo ... Ships/Starship.obj
 	@echo ... Ships/Starship.i
 	@echo ... Ships/Starship.s
+	@echo ... Temporary/TestComponent.obj
+	@echo ... Temporary/TestComponent.i
+	@echo ... Temporary/TestComponent.s
+	@echo ... Temporary/TestPlayer.obj
+	@echo ... Temporary/TestPlayer.i
+	@echo ... Temporary/TestPlayer.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

@@ -20,6 +20,8 @@ Starship::Starship(Type type) : ship_type(type)
             spriteComponent.loadSprite("images/starfleet_ship_flagship.png");
             break;
     }
+    spriteComponent.getSprite().setOrigin(spriteComponent.getSprite().getLocalBounds().width/2,
+                                          spriteComponent.getSprite().getLocalBounds().height/2);
     spriteComponent.getSprite().scale({0.05F, 0.05F});
 }
 
