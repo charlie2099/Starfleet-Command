@@ -36,21 +36,21 @@ void Player::update(sf::RenderWindow &window, sf::Time deltaTime)
     direction.x = cos(angleRADS);
     direction.y = sin(angleRADS);
 
-    float speed = 50.0F;
+    float speed = 30.0F;
 
     if(key_state[sf::Keyboard::W])
     {
         speed *= 3.0F;
     }
-    else if(key_state[sf::Keyboard::A])
+    if(key_state[sf::Keyboard::A])
     {
         flagship_spr.getSprite().rotate(-65 * deltaTime.asSeconds());
     }
-    else if(key_state[sf::Keyboard::S])
+    if(key_state[sf::Keyboard::S])
     {
         speed /= 2.0F;
     }
-    else if(key_state[sf::Keyboard::D])
+    if(key_state[sf::Keyboard::D])
     {
         flagship_spr.getSprite().rotate(65 * deltaTime.asSeconds());
     }

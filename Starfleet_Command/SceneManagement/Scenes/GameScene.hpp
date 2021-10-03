@@ -21,19 +21,22 @@ class GameScene : public Scene
     bool initBackground();
     void initPlayerStarships();
     void initView();
-    bool comfortableBoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect sprite_bounds);
+    void initCrosshair();
+    bool comfortableBoundsCheck(sf::Vector2<float> mouse_vec, std::unique_ptr<Starship>& starship);
 
     int selected = 0;
+
+    std::vector<std::unique_ptr<Projectile>> projectile{};
 
     Player player;
     Crosshair crosshair;
     sf::View player_view{};
+
+    sf::Texture cursor_texture;
+    sf::Sprite cursor_sprite;
+
     sf::Texture background_texture;
     sf::Sprite background_sprite;
-
-    void flagshipMovement();
-
-    void initCrosshair();
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

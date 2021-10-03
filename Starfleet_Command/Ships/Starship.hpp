@@ -1,6 +1,7 @@
 #ifndef STARFLEET_COMMAND_STARSHIP_HPP
 #define STARFLEET_COMMAND_STARSHIP_HPP
 #include "../Components/SpriteComponent.hpp"
+#include "Projectile.hpp"
 
 class Starship
 {
@@ -27,6 +28,7 @@ class Starship
 
     /// Accessors
     SpriteComponent &getSpriteComponent();
+    std::vector<std::unique_ptr<Projectile>>& getProjectile();
     float getHealth() const;
     float getDamage() const;
     float getSpeed() const;
@@ -34,6 +36,7 @@ class Starship
 
  private:
     SpriteComponent spriteComponent;
+    std::vector<std::unique_ptr<Projectile>> projectile{};
     Type ship_type{};
     float health_ = 0.0F;
     float damage_ = 0.0F;

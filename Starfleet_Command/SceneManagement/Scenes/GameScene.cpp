@@ -7,12 +7,27 @@ bool GameScene::init()
     initView();
     initCrosshair();
 
+    // initCursor
+    cursor_texture.loadFromFile("images/crosshair.png");
+    cursor_sprite.setTexture(cursor_texture);
+    cursor_sprite.scale(0.1F, 0.1F);
+
     return true;
 }
 
 void GameScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
 {
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
+
     player.eventHandler(window, event);
+
+    // TODO: Move into player class?
+    if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Button::Left)
+    {
+        auto flagship_pos = player.getShip()[player.getShip().size()-1]->getSpriteComponent().getPos();
+        projectile.emplace_back(std::make_unique<Projectile>(Projectile::Type::LASER_BLUE, flagship_pos, mousePosWorldCoords));
+    }
 }
 
 void GameScene::update(sf::RenderWindow& window, sf::Time deltaTime)
@@ -20,24 +35,51 @@ void GameScene::update(sf::RenderWindow& window, sf::Time deltaTime)
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
 
+    window.setMouseCursorVisible(false);
+
     player.update(window, deltaTime);
 
-    flagshipMovement(); // TODO: Refactor
+    // TODO: Move into player class?
+    for(auto& projectiles : projectile)
+    {
+        projectiles->update(window, deltaTime);
+    }
 
-    // Ship selecting with crosshair
+    // Destroy projectiles if there are too many on screen
+    if(projectile.size() > 10)
+    {
+        projectile.erase(projectile.begin());
+    }
+
+    // Destroy projectiles if off-screen
+    for(int i = 0; i < projectile.size(); i++)
+    {
+        if(projectile[i]->getSprite().getSprite().getPosition().x < 0 ||
+           projectile[i]->getSprite().getSprite().getPosition().x > Constants::WINDOW_WIDTH ||
+           projectile[i]->getSprite().getSprite().getPosition().y < 0 ||
+           projectile[i]->getSprite().getSprite().getPosition().y > Constants::WINDOW_HEIGHT)
+        {
+            projectile.erase(projectile.begin() + i);
+        }
+    }
+
     for (int i = 0; i < player.getShip().size(); ++i)
     {
-        if(comfortableBoundsCheck(mousePosWorldCoords, player.getShip()[i]->getSpriteComponent().getSprite().getGlobalBounds()))
+        // if mouse within bounds of any ship
+        if(comfortableBoundsCheck(mousePosWorldCoords, player.getShip()[i]))
         {
             selected = i;
+            crosshair.sizeAdjust(player.getShip()[selected]);
             crosshair.snapTo(player.getShip()[selected]);
         }
-        // if crosshair is no longer in bounds of the SELECTED ship, unsnap it
-        else if(!comfortableBoundsCheck(mousePosWorldCoords, player.getShip()[selected]->getSpriteComponent().getSprite().getGlobalBounds()))
+        else if(!comfortableBoundsCheck(mousePosWorldCoords, player.getShip()[selected]))
         {
             crosshair.unSnap();
         }
     }
+
+    cursor_sprite.setPosition(mousePosWorldCoords.x - cursor_sprite.getGlobalBounds().width/2,
+                              mousePosWorldCoords.y - cursor_sprite.getGlobalBounds().height/2);
 }
 
 void GameScene::render(sf::RenderWindow& window)
@@ -48,7 +90,12 @@ void GameScene::render(sf::RenderWindow& window)
     {
         ships->render(window);
     }
+    for(auto& projectiles : projectile)
+    {
+        projectiles->render(window);
+    }
     crosshair.render(window);
+    window.draw(cursor_sprite);
 }
 
 /// OTHER
@@ -107,9 +154,6 @@ void GameScene::initPlayerStarships()
     auto xpos = player.getShip()[0]->getSpriteComponent().getPos().x + flagship.getSprite().getGlobalBounds().width + 20;
     float ypos = Constants::WINDOW_HEIGHT/2 - flagship.getSprite().getGlobalBounds().height/2;
     player.getShip()[FLAGSHIP]->getSpriteComponent().setPos({xpos, ypos});
-
-    //flagship.getSprite().setOrigin(flagship.getPos().x + flagship.getSprite().getLocalBounds().width/2,
-                                   //flagship.getPos().y + flagship.getSprite().getLocalBounds().height/2);
 }
 
 void GameScene::initView()
@@ -137,25 +181,15 @@ void GameScene::initCrosshair()
     crosshair.setColour(sf::Color(r, g, b));
 }
 
-bool GameScene::comfortableBoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect sprite_bounds)
+// template?
+bool GameScene::comfortableBoundsCheck(sf::Vector2<float> mouse_vec, std::unique_ptr<Starship>& starship)
 {
     auto offset = 10.0F;
+    auto sprite_bounds = starship->getSpriteComponent().getSprite().getGlobalBounds();
     return (mouse_vec.x > sprite_bounds.left - offset &&
     mouse_vec.y > sprite_bounds.top - offset &&
     mouse_vec.x < sprite_bounds.left + sprite_bounds.width + offset &&
     mouse_vec.y < sprite_bounds.top + sprite_bounds.height + offset);
 }
 
-void GameScene::flagshipMovement()
-{
-    static const size_t FLAGSHIP = player.getShip().size() - 1;
-    auto& flagship = player.getShip()[FLAGSHIP]->getSpriteComponent().getSprite();
-    sf::Vector2f movement(20.0F, 0.f);
-    //flagship.move(movement * deltaTime.asSeconds());
-
-    sf::Vector2f PLAYER_PERSPECTIVE = {flagship.getPosition().x + flagship.getGlobalBounds().width/2,
-                                       flagship.getPosition().y + flagship.getGlobalBounds().height/2};
-    //player_view.setCenter(PLAYER_PERSPECTIVE);
-
-}
 

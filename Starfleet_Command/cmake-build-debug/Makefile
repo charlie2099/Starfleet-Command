@@ -536,6 +536,30 @@ Ships/CommandShip.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/CommandShip.cpp.s
 .PHONY : Ships/CommandShip.cpp.s
 
+Ships/Projectile.obj: Ships/Projectile.cpp.obj
+.PHONY : Ships/Projectile.obj
+
+# target to build an object file
+Ships/Projectile.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Projectile.cpp.obj
+.PHONY : Ships/Projectile.cpp.obj
+
+Ships/Projectile.i: Ships/Projectile.cpp.i
+.PHONY : Ships/Projectile.i
+
+# target to preprocess a source file
+Ships/Projectile.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Projectile.cpp.i
+.PHONY : Ships/Projectile.cpp.i
+
+Ships/Projectile.s: Ships/Projectile.cpp.s
+.PHONY : Ships/Projectile.s
+
+# target to generate assembly for a file
+Ships/Projectile.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Projectile.cpp.s
+.PHONY : Ships/Projectile.cpp.s
+
 Ships/Starship.obj: Ships/Starship.cpp.obj
 .PHONY : Ships/Starship.obj
 
@@ -607,6 +631,30 @@ Temporary/TestPlayer.s: Temporary/TestPlayer.cpp.s
 Temporary/TestPlayer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Temporary/TestPlayer.cpp.s
 .PHONY : Temporary/TestPlayer.cpp.s
+
+Utility/Functions.obj: Utility/Functions.cpp.obj
+.PHONY : Utility/Functions.obj
+
+# target to build an object file
+Utility/Functions.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Utility/Functions.cpp.obj
+.PHONY : Utility/Functions.cpp.obj
+
+Utility/Functions.i: Utility/Functions.cpp.i
+.PHONY : Utility/Functions.i
+
+# target to preprocess a source file
+Utility/Functions.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Utility/Functions.cpp.i
+.PHONY : Utility/Functions.cpp.i
+
+Utility/Functions.s: Utility/Functions.cpp.s
+.PHONY : Utility/Functions.s
+
+# target to generate assembly for a file
+Utility/Functions.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Utility/Functions.cpp.s
+.PHONY : Utility/Functions.cpp.s
 
 main.obj: main.cpp.obj
 .PHONY : main.obj
@@ -692,6 +740,9 @@ help:
 	@echo ... Ships/CommandShip.obj
 	@echo ... Ships/CommandShip.i
 	@echo ... Ships/CommandShip.s
+	@echo ... Ships/Projectile.obj
+	@echo ... Ships/Projectile.i
+	@echo ... Ships/Projectile.s
 	@echo ... Ships/Starship.obj
 	@echo ... Ships/Starship.i
 	@echo ... Ships/Starship.s
@@ -701,6 +752,9 @@ help:
 	@echo ... Temporary/TestPlayer.obj
 	@echo ... Temporary/TestPlayer.i
 	@echo ... Temporary/TestPlayer.s
+	@echo ... Utility/Functions.obj
+	@echo ... Utility/Functions.i
+	@echo ... Utility/Functions.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

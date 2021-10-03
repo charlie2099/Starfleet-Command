@@ -22,6 +22,8 @@ class Player
 
  private:
     std::vector<std::unique_ptr<Starship>> starship{};
+
+    // TODO: Controller Class?
     std::map<sf::Keyboard::Key, bool> key_state{};
     std::map<sf::Keyboard::Key, bool>::iterator key_idx{};
     int player_credits = 2500;

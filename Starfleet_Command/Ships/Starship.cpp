@@ -20,9 +20,13 @@ Starship::Starship(Type type) : ship_type(type)
             spriteComponent.loadSprite("images/starfleet_ship_flagship.png");
             break;
     }
-    spriteComponent.getSprite().setOrigin(spriteComponent.getSprite().getLocalBounds().width/2,
-                                          spriteComponent.getSprite().getLocalBounds().height/2);
     spriteComponent.getSprite().scale({0.05F, 0.05F});
+
+    /// Change default origin to center
+    sf::Vector2<float> centered_origin;
+    centered_origin.x = spriteComponent.getSprite().getLocalBounds().width/2;
+    centered_origin.y = spriteComponent.getSprite().getLocalBounds().height/2;
+    spriteComponent.getSprite().setOrigin(centered_origin);
 }
 
 void Starship::render(sf::RenderWindow &window)
@@ -73,6 +77,11 @@ float Starship::getAcceleration() const
 SpriteComponent &Starship::getSpriteComponent()
 {
     return spriteComponent;
+}
+
+std::vector<std::unique_ptr<Projectile>>& Starship::getProjectile()
+{
+    return projectile;
 }
 
 

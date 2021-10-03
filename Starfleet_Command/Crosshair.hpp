@@ -16,6 +16,7 @@ class Crosshair
 
     /// Mutators
     void setColour(sf::Color colour);
+    void sizeAdjust(std::unique_ptr<Starship>& starship);
     void setVisibility(bool visible);
 
     /// Accessors
@@ -23,13 +24,14 @@ class Crosshair
     sf::Color& getColour();
     bool getVisibility() const;
 
-
  private:
     bool initTexture();
+
     std::unique_ptr<SpriteComponent> sprite;
     sf::Texture texture;
     sf::Color colour_ = sf::Color::Cyan;
     bool is_visible_ = false;
+    bool in_bounds = false;
 };
 
 #endif //STARFLEET_COMMAND_CROSSHAIR_HPP

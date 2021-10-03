@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Crosshair.hpp"
 
 
@@ -7,7 +8,7 @@ Crosshair::Crosshair()
     sprite = std::make_unique<SpriteComponent>();
     sprite->getSprite().setTexture(texture);
     sprite->getSprite().setColor(colour_);
-    sprite->getSprite().setScale(0.35F, 0.35F);
+    sprite->getSprite().setScale(0.36F, 0.36F);
 }
 
 void Crosshair::render(sf::RenderWindow &window)
@@ -27,11 +28,25 @@ void Crosshair::snapTo(std::unique_ptr<Starship>& starship)
 {
     is_visible_ = true;
     sprite->getSprite().setColor(colour_);
-    auto ship = starship->getSpriteComponent();
+    auto& ship = starship->getSpriteComponent();
     auto crosshair_bounds = sprite->getSprite().getGlobalBounds();
-    auto xpos = ship.getPos().x + ship.getSprite().getGlobalBounds().width / 2 - crosshair_bounds.width / 2;
-    auto ypos = ship.getPos().y + ship.getSprite().getGlobalBounds().height / 2 - crosshair_bounds.height / 2;
-    sprite->getSprite().setPosition(xpos, ypos);
+
+    if(ship.getSprite().getOrigin().x == 0)
+    {
+        /// Default origin
+        sf::Vector2<float> topleftPos;
+        topleftPos.x = ship.getPos().x + ship.getSprite().getGlobalBounds().width/2 - crosshair_bounds.width/2;
+        topleftPos.y = ship.getPos().y + ship.getSprite().getGlobalBounds().height/2 - crosshair_bounds.height/2;
+        sprite->getSprite().setPosition(topleftPos);
+    }
+    else
+    {
+        /// Centered origin
+        sf::Vector2<float> centerPos;
+        centerPos.x = ship.getPos().x - crosshair_bounds.width / 2;
+        centerPos.y = ship.getPos().y - crosshair_bounds.height/2;
+        sprite->getSprite().setPosition(centerPos);
+    }
 }
 
 void Crosshair::unSnap()
@@ -68,5 +83,14 @@ bool Crosshair::initTexture()
     }
     return true;
 }
+
+void Crosshair::sizeAdjust(std::unique_ptr<Starship>& starship)
+{
+    auto starship_spr = starship->getSpriteComponent().getSprite();
+    float scale_x = starship_spr.getGlobalBounds().width * starship_spr.getScale().x/8.0F;
+    float scale_y = starship_spr.getGlobalBounds().height * starship_spr.getScale().y/8.0F;
+    sprite->getSprite().setScale({scale_x, scale_y});
+}
+
 
 
