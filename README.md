@@ -1,7 +1,7 @@
 # Starfleet-Command
 
 ## General
-A 2D space combat game made with the SFML library
+A 2D space combat RTS made with the SFML library
 
 ## Compilation
 - In the Cmakelists.txt ensure to set the SFML_DIR path to wherever your SFML directory is located. 
