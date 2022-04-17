@@ -2,6 +2,8 @@
 #define STARFLEET_COMMAND_STARSHIP_HPP
 #include "../Components/SpriteComponent.hpp"
 #include "Projectile.hpp"
+#include "StarshipCommands.hpp"
+#include "../GameUI/CommandMenu.hpp"
 
 class Starship
 {
@@ -16,9 +18,15 @@ class Starship
     };
     explicit Starship(Type type);
     ~Starship() = default;
+    virtual void render(sf::RenderWindow& window);
 
     /// General
-    virtual void render(sf::RenderWindow& window);
+    void shoot(std::vector<std::unique_ptr<Projectile>>& projectile); // flagship only
+    void attack(Starship& starship);
+    void defend(Starship& starship);
+    void follow(Starship& starship);
+    void moveTo(sf::Vector2<float> pos, sf::Time deltaTime);
+    void selfDestruct();
 
     /// Modifiers
     void setHealth(float health);
@@ -28,7 +36,8 @@ class Starship
 
     /// Accessors
     SpriteComponent &getSpriteComponent();
-    std::vector<std::unique_ptr<Projectile>>& getProjectile();
+    CommandMenu &getCommandMenu() { return command_menu; };
+    //std::vector<std::unique_ptr<Projectile>>& getProjectile();
     float getHealth() const;
     float getDamage() const;
     float getSpeed() const;
@@ -36,7 +45,8 @@ class Starship
 
  private:
     SpriteComponent spriteComponent;
-    std::vector<std::unique_ptr<Projectile>> projectile{};
+    CommandMenu command_menu{};
+    //std::vector<std::unique_ptr<Projectile>> projectile{};
     Type ship_type{};
     float health_ = 0.0F;
     float damage_ = 0.0F;

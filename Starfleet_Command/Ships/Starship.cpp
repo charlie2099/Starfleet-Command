@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Starship.hpp"
 
 Starship::Starship(Type type) : ship_type(type)
@@ -79,9 +80,68 @@ SpriteComponent &Starship::getSpriteComponent()
     return spriteComponent;
 }
 
-std::vector<std::unique_ptr<Projectile>>& Starship::getProjectile()
+/*StarshipCommands &Starship::getCommands()
+{
+    return command;
+}*/
+
+/*std::vector<std::unique_ptr<Projectile>>& Starship::getProjectile()
 {
     return projectile;
+}*/
+
+void Starship::shoot(std::vector<std::unique_ptr<Projectile>>& projectile)
+{
+    auto& flagship_pos = this->getSpriteComponent().getSprite().getPosition();
+    if(ship_type == Type::FLAGSHIP)
+    {
+        //projectile.emplace_back(std::make_unique<Projectile>(Projectile::Type::LASER_BLUE, flagship_pos, mousePosWorldCoords));
+    }
 }
+
+void Starship::attack(Starship &starship)
+{
+
+}
+
+void Starship::defend(Starship &starship)
+{
+
+}
+
+void Starship::follow(Starship &starship)
+{
+
+}
+
+void Starship::moveTo(sf::Vector2<float> pos, sf::Time deltaTime)
+{
+    // Set rotation
+    const float PI = 3.14159265;
+    float dx = spriteComponent.getPos().x - pos.x;
+    float dy = spriteComponent.getPos().y - pos.y;
+    float rotation = (atan2(dy, dx)) * 180 / PI;
+    spriteComponent.getSprite().setRotation(rotation + 180);
+
+    // Set direction
+    auto angleX = pos.x - spriteComponent.getPos().x;
+    auto angleY = pos.y - spriteComponent.getPos().y;
+    float vectorLength = sqrt(angleX*angleX + angleY*angleY);
+    sf::Vector2<float> direction;
+    direction.x = angleX / vectorLength;
+    direction.y = angleY / vectorLength;
+
+    auto speed = 100.0F;
+    sf::Vector2<float> movement = direction * speed;
+
+    // move ship until it reaches its destination
+    spriteComponent.getSprite().move(movement * deltaTime.asSeconds());
+}
+
+void Starship::selfDestruct()
+{
+    spriteComponent.getSprite().setColor(sf::Color::Red);
+}
+
 
 

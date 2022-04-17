@@ -5,6 +5,7 @@
 #include "../../Ships/Starship.hpp"
 #include "../../Player/Player.hpp"
 #include "../../Crosshair.hpp"
+#include "../../GameUI/CommandMenu.hpp"
 
 class GameScene : public Scene
 {
@@ -25,16 +26,23 @@ class GameScene : public Scene
     bool comfortableBoundsCheck(sf::Vector2<float> mouse_vec, std::unique_ptr<Starship>& starship);
 
     int selected = 0;
+    bool clicked = false;
+    //sf::Vector2<float> clicked_pos;
+    //bool moveTo = false;
 
-    std::vector<std::unique_ptr<Projectile>> projectile{};
+    //std::vector<std::unique_ptr<Projectile>> projectile{};
 
-    Player player;
-    Crosshair crosshair;
     sf::View player_view{};
 
+    //CommandMenu command_menu;
+    Player player;
+    Crosshair crosshair;
+
+    /// cursor class?
     sf::Texture cursor_texture;
     sf::Sprite cursor_sprite;
 
+    /// background class?
     sf::Texture background_texture;
     sf::Sprite background_sprite;
 };

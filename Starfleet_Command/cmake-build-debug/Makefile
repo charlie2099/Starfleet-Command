@@ -272,6 +272,30 @@ GameUI/Button.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/Button.cpp.s
 .PHONY : GameUI/Button.cpp.s
 
+GameUI/CommandMenu.obj: GameUI/CommandMenu.cpp.obj
+.PHONY : GameUI/CommandMenu.obj
+
+# target to build an object file
+GameUI/CommandMenu.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/CommandMenu.cpp.obj
+.PHONY : GameUI/CommandMenu.cpp.obj
+
+GameUI/CommandMenu.i: GameUI/CommandMenu.cpp.i
+.PHONY : GameUI/CommandMenu.i
+
+# target to preprocess a source file
+GameUI/CommandMenu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/CommandMenu.cpp.i
+.PHONY : GameUI/CommandMenu.cpp.i
+
+GameUI/CommandMenu.s: GameUI/CommandMenu.cpp.s
+.PHONY : GameUI/CommandMenu.s
+
+# target to generate assembly for a file
+GameUI/CommandMenu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/CommandMenu.cpp.s
+.PHONY : GameUI/CommandMenu.cpp.s
+
 GameUI/Panel.obj: GameUI/Panel.cpp.obj
 .PHONY : GameUI/Panel.obj
 
@@ -512,30 +536,6 @@ SceneManagement/Scenes/ShipyardScene.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.s
 .PHONY : SceneManagement/Scenes/ShipyardScene.cpp.s
 
-Ships/CommandShip.obj: Ships/CommandShip.cpp.obj
-.PHONY : Ships/CommandShip.obj
-
-# target to build an object file
-Ships/CommandShip.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/CommandShip.cpp.obj
-.PHONY : Ships/CommandShip.cpp.obj
-
-Ships/CommandShip.i: Ships/CommandShip.cpp.i
-.PHONY : Ships/CommandShip.i
-
-# target to preprocess a source file
-Ships/CommandShip.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/CommandShip.cpp.i
-.PHONY : Ships/CommandShip.cpp.i
-
-Ships/CommandShip.s: Ships/CommandShip.cpp.s
-.PHONY : Ships/CommandShip.s
-
-# target to generate assembly for a file
-Ships/CommandShip.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/CommandShip.cpp.s
-.PHONY : Ships/CommandShip.cpp.s
-
 Ships/Projectile.obj: Ships/Projectile.cpp.obj
 .PHONY : Ships/Projectile.obj
 
@@ -583,6 +583,30 @@ Ships/Starship.s: Ships/Starship.cpp.s
 Ships/Starship.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Starship.cpp.s
 .PHONY : Ships/Starship.cpp.s
+
+Ships/StarshipCommands.obj: Ships/StarshipCommands.cpp.obj
+.PHONY : Ships/StarshipCommands.obj
+
+# target to build an object file
+Ships/StarshipCommands.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/StarshipCommands.cpp.obj
+.PHONY : Ships/StarshipCommands.cpp.obj
+
+Ships/StarshipCommands.i: Ships/StarshipCommands.cpp.i
+.PHONY : Ships/StarshipCommands.i
+
+# target to preprocess a source file
+Ships/StarshipCommands.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/StarshipCommands.cpp.i
+.PHONY : Ships/StarshipCommands.cpp.i
+
+Ships/StarshipCommands.s: Ships/StarshipCommands.cpp.s
+.PHONY : Ships/StarshipCommands.s
+
+# target to generate assembly for a file
+Ships/StarshipCommands.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/StarshipCommands.cpp.s
+.PHONY : Ships/StarshipCommands.cpp.s
 
 Temporary/TestComponent.obj: Temporary/TestComponent.cpp.obj
 .PHONY : Temporary/TestComponent.obj
@@ -707,6 +731,9 @@ help:
 	@echo ... GameUI/Button.obj
 	@echo ... GameUI/Button.i
 	@echo ... GameUI/Button.s
+	@echo ... GameUI/CommandMenu.obj
+	@echo ... GameUI/CommandMenu.i
+	@echo ... GameUI/CommandMenu.s
 	@echo ... GameUI/Panel.obj
 	@echo ... GameUI/Panel.i
 	@echo ... GameUI/Panel.s
@@ -737,15 +764,15 @@ help:
 	@echo ... SceneManagement/Scenes/ShipyardScene.obj
 	@echo ... SceneManagement/Scenes/ShipyardScene.i
 	@echo ... SceneManagement/Scenes/ShipyardScene.s
-	@echo ... Ships/CommandShip.obj
-	@echo ... Ships/CommandShip.i
-	@echo ... Ships/CommandShip.s
 	@echo ... Ships/Projectile.obj
 	@echo ... Ships/Projectile.i
 	@echo ... Ships/Projectile.s
 	@echo ... Ships/Starship.obj
 	@echo ... Ships/Starship.i
 	@echo ... Ships/Starship.s
+	@echo ... Ships/StarshipCommands.obj
+	@echo ... Ships/StarshipCommands.i
+	@echo ... Ships/StarshipCommands.s
 	@echo ... Temporary/TestComponent.obj
 	@echo ... Temporary/TestComponent.i
 	@echo ... Temporary/TestComponent.s

@@ -7,10 +7,12 @@ bool GameScene::init()
     initView();
     initCrosshair();
 
-    // initCursor
     cursor_texture.loadFromFile("images/crosshair.png");
     cursor_sprite.setTexture(cursor_texture);
     cursor_sprite.scale(0.1F, 0.1F);
+
+    // TODO: Testing
+    //player.getShip()[0]->selfDestruct();
 
     return true;
 }
@@ -23,10 +25,27 @@ void GameScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
     player.eventHandler(window, event);
 
     // TODO: Move into player class?
-    if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Button::Left)
+    /*if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Button::Left)
     {
         auto flagship_pos = player.getShip()[player.getShip().size()-1]->getSpriteComponent().getPos();
-        projectile.emplace_back(std::make_unique<Projectile>(Projectile::Type::LASER_BLUE, flagship_pos, mousePosWorldCoords));
+        //projectile.emplace_back(std::make_unique<Projectile>(Projectile::Type::LASER_BLUE, flagship_pos, mousePosWorldCoords));
+        //clicked_pos = mousePosWorldCoords;
+        //moveTo = true;
+    }*/
+
+    if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Button::Left)
+    {
+        if(comfortableBoundsCheck(mousePosWorldCoords, player.getShip()[selected]) && !clicked)
+        {
+            //crosshair.sizeAdjust(player.getShip()[selected]);
+            crosshair.snapTo(player.getShip()[selected]);
+            clicked = true;
+        }
+        else
+        {
+            crosshair.unSnap();
+            clicked = false;
+        }
     }
 }
 
@@ -39,8 +58,13 @@ void GameScene::update(sf::RenderWindow& window, sf::Time deltaTime)
 
     player.update(window, deltaTime);
 
-    // TODO: Move into player class?
-    for(auto& projectiles : projectile)
+    /*if(moveTo)
+    {
+        player.getShip()[0]->moveTo(clicked_pos, deltaTime);
+    }*/
+
+    // TODO: Move into starship class?
+    /*for(auto& projectiles : projectile)
     {
         projectiles->update(window, deltaTime);
     }
@@ -61,18 +85,31 @@ void GameScene::update(sf::RenderWindow& window, sf::Time deltaTime)
         {
             projectile.erase(projectile.begin() + i);
         }
+    }*/
+
+    if(clicked)
+    {
+        crosshair.snapTo(player.getShip()[selected]);
+        crosshair.setColour(sf::Color::Blue);
+    }
+    else
+    {
+        auto r = Fleet::getFleetColourRGB().rgb_r;
+        auto g = Fleet::getFleetColourRGB().rgb_g;
+        auto b = Fleet::getFleetColourRGB().rgb_b;
+        crosshair.setColour(sf::Color(r, g, b));
     }
 
     for (int i = 0; i < player.getShip().size(); ++i)
     {
         // if mouse within bounds of any ship
-        if(comfortableBoundsCheck(mousePosWorldCoords, player.getShip()[i]))
+        if(comfortableBoundsCheck(mousePosWorldCoords, player.getShip()[i]) && !clicked)
         {
             selected = i;
             crosshair.sizeAdjust(player.getShip()[selected]);
             crosshair.snapTo(player.getShip()[selected]);
         }
-        else if(!comfortableBoundsCheck(mousePosWorldCoords, player.getShip()[selected]))
+        else if(!comfortableBoundsCheck(mousePosWorldCoords, player.getShip()[selected]) && !clicked)
         {
             crosshair.unSnap();
         }
@@ -86,14 +123,11 @@ void GameScene::render(sf::RenderWindow& window)
 {
     window.setView(player_view);
     window.draw(background_sprite);
-    for (auto & ships : player.getShip())
-    {
-        ships->render(window);
-    }
-    for(auto& projectiles : projectile)
+    /*for(auto& projectiles : projectile)
     {
         projectiles->render(window);
-    }
+    }*/
+    player.render(window);
     crosshair.render(window);
     window.draw(cursor_sprite);
 }
