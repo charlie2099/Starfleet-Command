@@ -96,6 +96,12 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Crosshair.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Cursor.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Cursor.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Component.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
@@ -106,6 +112,12 @@
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Object.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.cpp">
@@ -144,6 +156,12 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player1.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player1.h">
+			<Option target="Starfleet_Command"/>
+		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/PlayerStats.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
@@ -180,10 +198,10 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/CommandShip.cpp">
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/TestScene.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/CommandShip.hpp">
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/TestScene.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Projectile.cpp">
@@ -220,6 +238,12 @@
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/PredefinedColours.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/main.cpp">

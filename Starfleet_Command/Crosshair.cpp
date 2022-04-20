@@ -28,7 +28,7 @@ void Crosshair::snapTo(std::unique_ptr<Starship>& starship)
 {
     is_visible_ = true;
     sprite->getSprite().setColor(colour_);
-    auto& ship = starship->getSpriteComponent();
+    auto& ship = starship->GetSpriteComponent();
     auto crosshair_bounds = sprite->getSprite().getGlobalBounds();
 
     if(ship.getSprite().getOrigin().x == 0)
@@ -86,7 +86,7 @@ bool Crosshair::initTexture()
 
 void Crosshair::sizeAdjust(std::unique_ptr<Starship>& starship)
 {
-    auto starship_spr = starship->getSpriteComponent().getSprite();
+    auto starship_spr = starship->GetSpriteComponent().getSprite();
     float scale_x = starship_spr.getGlobalBounds().width * starship_spr.getScale().x/8.0F;
     float scale_y = starship_spr.getGlobalBounds().height * starship_spr.getScale().y/8.0F;
     sprite->getSprite().setScale({scale_x, scale_y});

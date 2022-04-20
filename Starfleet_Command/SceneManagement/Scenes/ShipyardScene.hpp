@@ -13,10 +13,10 @@ class ShipyardScene : public Scene
     ShipyardScene() = default;
     ~ShipyardScene() override = default;
 
-    bool init() override;
-    void eventHandler(sf::RenderWindow& window, sf::Event& event) override;
-    void update(sf::RenderWindow &window, sf::Time deltaTime) override;
-    void render(sf::RenderWindow& window) override;
+    bool Init() override;
+    void EventHandler(sf::RenderWindow& window, sf::Event& event) override;
+    void Update(sf::RenderWindow &window, sf::Time deltaTime) override;
+    void Render(sf::RenderWindow& window) override;
 
  private:
     bool initBackground();

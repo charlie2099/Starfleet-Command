@@ -1,6 +1,6 @@
 #include "Player.hpp"
 
-void Player::eventHandler(sf::RenderWindow &window, sf::Event &event)
+void Player::EventHandler(sf::RenderWindow &window, sf::Event &event)
 {
     for(key_idx = key_state.begin(); key_idx != key_state.end(); ++key_idx)
     {
@@ -23,10 +23,10 @@ void Player::eventHandler(sf::RenderWindow &window, sf::Event &event)
     }
 }
 
-void Player::update(sf::RenderWindow &window, sf::Time deltaTime)
+void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    auto& flagship = this->getShip()[this->getShip().size()-1];
-    auto& flagship_spr = flagship->getSpriteComponent();
+    auto& flagship = this->GetShip()[this->GetShip().size() - 1];
+    auto& flagship_spr = flagship->GetSpriteComponent();
 
     //Convert angle to radians
     double angleRADS = (3.1415926536/180)*(flagship_spr.getSprite().getRotation());
@@ -59,17 +59,17 @@ void Player::update(sf::RenderWindow &window, sf::Time deltaTime)
     flagship_spr.getSprite().move(movement * deltaTime.asSeconds());
 }
 
-void Player::setCredits(int credits)
+void Player::SetCredits(int credits)
 {
     player_credits = credits;
 }
 
-int Player::getCredits() const
+int Player::GetCredits() const
 {
     return player_credits;
 }
 
-std::vector<std::unique_ptr<Starship>> &Player::getShip()
+std::vector<std::unique_ptr<Starship>> &Player::GetShip()
 {
     return starship;
 }

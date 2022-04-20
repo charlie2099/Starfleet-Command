@@ -176,6 +176,30 @@ Crosshair.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Crosshair.cpp.s
 .PHONY : Crosshair.cpp.s
 
+Cursor.obj: Cursor.cpp.obj
+.PHONY : Cursor.obj
+
+# target to build an object file
+Cursor.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Cursor.cpp.obj
+.PHONY : Cursor.cpp.obj
+
+Cursor.i: Cursor.cpp.i
+.PHONY : Cursor.i
+
+# target to preprocess a source file
+Cursor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Cursor.cpp.i
+.PHONY : Cursor.cpp.i
+
+Cursor.s: Cursor.cpp.s
+.PHONY : Cursor.s
+
+# target to generate assembly for a file
+Cursor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Cursor.cpp.s
+.PHONY : Cursor.cpp.s
+
 ECS/Component.obj: ECS/Component.cpp.obj
 .PHONY : ECS/Component.obj
 
@@ -223,6 +247,30 @@ ECS/Object.s: ECS/Object.cpp.s
 ECS/Object.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/ECS/Object.cpp.s
 .PHONY : ECS/Object.cpp.s
+
+Enemy.obj: Enemy.cpp.obj
+.PHONY : Enemy.obj
+
+# target to build an object file
+Enemy.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Enemy.cpp.obj
+.PHONY : Enemy.cpp.obj
+
+Enemy.i: Enemy.cpp.i
+.PHONY : Enemy.i
+
+# target to preprocess a source file
+Enemy.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Enemy.cpp.i
+.PHONY : Enemy.cpp.i
+
+Enemy.s: Enemy.cpp.s
+.PHONY : Enemy.s
+
+# target to generate assembly for a file
+Enemy.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Enemy.cpp.s
+.PHONY : Enemy.cpp.s
 
 Game/Game.obj: Game/Game.cpp.obj
 .PHONY : Game/Game.obj
@@ -368,6 +416,30 @@ Player/Player.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Player.cpp.s
 .PHONY : Player/Player.cpp.s
 
+Player/Player1.obj: Player/Player1.cpp.obj
+.PHONY : Player/Player1.obj
+
+# target to build an object file
+Player/Player1.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Player1.cpp.obj
+.PHONY : Player/Player1.cpp.obj
+
+Player/Player1.i: Player/Player1.cpp.i
+.PHONY : Player/Player1.i
+
+# target to preprocess a source file
+Player/Player1.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Player1.cpp.i
+.PHONY : Player/Player1.cpp.i
+
+Player/Player1.s: Player/Player1.cpp.s
+.PHONY : Player/Player1.s
+
+# target to generate assembly for a file
+Player/Player1.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Player1.cpp.s
+.PHONY : Player/Player1.cpp.s
+
 Player/PlayerStats.obj: Player/PlayerStats.cpp.obj
 .PHONY : Player/PlayerStats.obj
 
@@ -512,29 +584,29 @@ SceneManagement/Scenes/ShipyardScene.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.s
 .PHONY : SceneManagement/Scenes/ShipyardScene.cpp.s
 
-Ships/CommandShip.obj: Ships/CommandShip.cpp.obj
-.PHONY : Ships/CommandShip.obj
+SceneManagement/Scenes/TestScene.obj: SceneManagement/Scenes/TestScene.cpp.obj
+.PHONY : SceneManagement/Scenes/TestScene.obj
 
 # target to build an object file
-Ships/CommandShip.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/CommandShip.cpp.obj
-.PHONY : Ships/CommandShip.cpp.obj
+SceneManagement/Scenes/TestScene.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/TestScene.cpp.obj
+.PHONY : SceneManagement/Scenes/TestScene.cpp.obj
 
-Ships/CommandShip.i: Ships/CommandShip.cpp.i
-.PHONY : Ships/CommandShip.i
+SceneManagement/Scenes/TestScene.i: SceneManagement/Scenes/TestScene.cpp.i
+.PHONY : SceneManagement/Scenes/TestScene.i
 
 # target to preprocess a source file
-Ships/CommandShip.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/CommandShip.cpp.i
-.PHONY : Ships/CommandShip.cpp.i
+SceneManagement/Scenes/TestScene.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/TestScene.cpp.i
+.PHONY : SceneManagement/Scenes/TestScene.cpp.i
 
-Ships/CommandShip.s: Ships/CommandShip.cpp.s
-.PHONY : Ships/CommandShip.s
+SceneManagement/Scenes/TestScene.s: SceneManagement/Scenes/TestScene.cpp.s
+.PHONY : SceneManagement/Scenes/TestScene.s
 
 # target to generate assembly for a file
-Ships/CommandShip.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/CommandShip.cpp.s
-.PHONY : Ships/CommandShip.cpp.s
+SceneManagement/Scenes/TestScene.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/TestScene.cpp.s
+.PHONY : SceneManagement/Scenes/TestScene.cpp.s
 
 Ships/Projectile.obj: Ships/Projectile.cpp.obj
 .PHONY : Ships/Projectile.obj
@@ -656,6 +728,30 @@ Utility/Functions.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Utility/Functions.cpp.s
 .PHONY : Utility/Functions.cpp.s
 
+Utility/Vector.obj: Utility/Vector.cpp.obj
+.PHONY : Utility/Vector.obj
+
+# target to build an object file
+Utility/Vector.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Utility/Vector.cpp.obj
+.PHONY : Utility/Vector.cpp.obj
+
+Utility/Vector.i: Utility/Vector.cpp.i
+.PHONY : Utility/Vector.i
+
+# target to preprocess a source file
+Utility/Vector.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Utility/Vector.cpp.i
+.PHONY : Utility/Vector.cpp.i
+
+Utility/Vector.s: Utility/Vector.cpp.s
+.PHONY : Utility/Vector.s
+
+# target to generate assembly for a file
+Utility/Vector.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Utility/Vector.cpp.s
+.PHONY : Utility/Vector.cpp.s
+
 main.obj: main.cpp.obj
 .PHONY : main.obj
 
@@ -695,12 +791,18 @@ help:
 	@echo ... Crosshair.obj
 	@echo ... Crosshair.i
 	@echo ... Crosshair.s
+	@echo ... Cursor.obj
+	@echo ... Cursor.i
+	@echo ... Cursor.s
 	@echo ... ECS/Component.obj
 	@echo ... ECS/Component.i
 	@echo ... ECS/Component.s
 	@echo ... ECS/Object.obj
 	@echo ... ECS/Object.i
 	@echo ... ECS/Object.s
+	@echo ... Enemy.obj
+	@echo ... Enemy.i
+	@echo ... Enemy.s
 	@echo ... Game/Game.obj
 	@echo ... Game/Game.i
 	@echo ... Game/Game.s
@@ -719,6 +821,9 @@ help:
 	@echo ... Player/Player.obj
 	@echo ... Player/Player.i
 	@echo ... Player/Player.s
+	@echo ... Player/Player1.obj
+	@echo ... Player/Player1.i
+	@echo ... Player/Player1.s
 	@echo ... Player/PlayerStats.obj
 	@echo ... Player/PlayerStats.i
 	@echo ... Player/PlayerStats.s
@@ -737,9 +842,9 @@ help:
 	@echo ... SceneManagement/Scenes/ShipyardScene.obj
 	@echo ... SceneManagement/Scenes/ShipyardScene.i
 	@echo ... SceneManagement/Scenes/ShipyardScene.s
-	@echo ... Ships/CommandShip.obj
-	@echo ... Ships/CommandShip.i
-	@echo ... Ships/CommandShip.s
+	@echo ... SceneManagement/Scenes/TestScene.obj
+	@echo ... SceneManagement/Scenes/TestScene.i
+	@echo ... SceneManagement/Scenes/TestScene.s
 	@echo ... Ships/Projectile.obj
 	@echo ... Ships/Projectile.i
 	@echo ... Ships/Projectile.s
@@ -755,6 +860,9 @@ help:
 	@echo ... Utility/Functions.obj
 	@echo ... Utility/Functions.i
 	@echo ... Utility/Functions.s
+	@echo ... Utility/Vector.obj
+	@echo ... Utility/Vector.i
+	@echo ... Utility/Vector.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

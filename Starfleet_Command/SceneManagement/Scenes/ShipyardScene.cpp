@@ -1,6 +1,6 @@
 #include "ShipyardScene.hpp"
 
-bool ShipyardScene::init()
+bool ShipyardScene::Init()
 {
     initBackground();
     initTitleText();
@@ -14,7 +14,7 @@ bool ShipyardScene::init()
     return true;
 }
 
-void ShipyardScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
+void ShipyardScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     for (auto & panel : panels)
     {
@@ -37,7 +37,7 @@ void ShipyardScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
         {
             if(Fleet::getFleetSize() > 0)
             {
-                setScene(Scene::ID::GAME);
+                SetScene(Scene::ID::GAME);
             }
             else
             {
@@ -91,7 +91,7 @@ void ShipyardScene::eventHandler(sf::RenderWindow& window, sf::Event& event)
     }
 }
 
-void ShipyardScene::update(sf::RenderWindow& window, sf::Time deltaTime)
+void ShipyardScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     for (auto & panel : panels)
     {
@@ -127,7 +127,7 @@ void ShipyardScene::update(sf::RenderWindow& window, sf::Time deltaTime)
     }
 }
 
-void ShipyardScene::render(sf::RenderWindow& window)
+void ShipyardScene::Render(sf::RenderWindow& window)
 {
     window.draw(background_sprite);
     window.draw(shipyard_title_text);
@@ -171,18 +171,18 @@ void ShipyardScene::initTitleText()
     shipyard_title_text.setFillColor(predefinedColours.LIGHTBLUE);
     shipyard_title_text.setOutlineColor(sf::Color::Black);
     shipyard_title_text.setOutlineThickness(1);
-    shipyard_title_text.setFont(getBoldFont());
+    shipyard_title_text.setFont(GetBoldFont());
     shipyard_title_text.setCharacterSize(60);
     shipyard_title_text.setPosition(Constants::WINDOW_WIDTH * 0.5F - shipyard_title_text.getGlobalBounds().width / 2, Constants::WINDOW_HEIGHT * 0.2F - shipyard_title_text.getGlobalBounds().height / 2);
 }
 
 void ShipyardScene::initCreditsText()
 {
-    credits_text.setString("Credits: " + std::to_string(player.getCredits()));
+    credits_text.setString("Credits: " + std::to_string(player.GetCredits()));
     credits_text.setFillColor(sf::Color(153, 210, 242));
     credits_text.setOutlineColor(sf::Color::Black);
     credits_text.setOutlineThickness(1);
-    credits_text.setFont(getRegularFont());
+    credits_text.setFont(GetRegularFont());
     credits_text.setCharacterSize(45);
     credits_text.setPosition(Constants::WINDOW_WIDTH * 0.05F, Constants::WINDOW_HEIGHT * 0.85F - credits_text.getGlobalBounds().height / 2);
 }
@@ -193,7 +193,7 @@ void ShipyardScene::initNotificationText()
     notification_text.setFillColor(sf::Color::Red);
     notification_text.setOutlineColor(sf::Color::Black);
     notification_text.setOutlineThickness(1);
-    notification_text.setFont(getRegularFont());
+    notification_text.setFont(GetRegularFont());
     notification_text.setCharacterSize(25);
     notification_text.setPosition(Constants::WINDOW_WIDTH * 0.45F, Constants::WINDOW_HEIGHT * 0.85F);
 }
@@ -344,7 +344,7 @@ void ShipyardScene::shipCardsInactive(int i)
 
 void ShipyardScene::shipCardsLeftClicked(int i)
 {
-    if(Fleet::getNumOfShips()[i] < 5 && player.getCredits() >= ship_cards[i].getShipCost())
+    if(Fleet::getNumOfShips()[i] < 5 && player.GetCredits() >= ship_cards[i].getShipCost())
     {
         Fleet::setNumOfShips(Fleet::getNumOfShips()[i] + 1, static_cast<Starship::Type>(i));
 
@@ -355,8 +355,8 @@ void ShipyardScene::shipCardsLeftClicked(int i)
         }
         Fleet::setFleetSize(sum);
 
-        player.setCredits(player.getCredits() - ship_cards[i].getShipCost());
-        credits_text.setString("Credits: " + std::to_string(player.getCredits()));
+        player.SetCredits(player.GetCredits() - ship_cards[i].getShipCost());
+        credits_text.setString("Credits: " + std::to_string(player.GetCredits()));
 
         ship_cards[i].setCounterText(Fleet::getNumOfShips()[i]);
     }
@@ -376,8 +376,8 @@ void ShipyardScene::shipCardsRightClicked(int i)
         }
         Fleet::setFleetSize(sum);
 
-        player.setCredits(player.getCredits() + ship_cards[i].getShipCost());
-        credits_text.setString("Credits: " + std::to_string(player.getCredits()));
+        player.SetCredits(player.GetCredits() + ship_cards[i].getShipCost());
+        credits_text.setString("Credits: " + std::to_string(player.GetCredits()));
         ship_cards[i].setCounterText(Fleet::getNumOfShips()[i]);
     }
     ship_cards[i].getPanel().setPanelColour(sf::Color(255, 0, 0, 80));

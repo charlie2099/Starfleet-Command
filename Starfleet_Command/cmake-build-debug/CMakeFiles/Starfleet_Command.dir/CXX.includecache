@@ -686,6 +686,18 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/Sprit
 Ships/Starship.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
 
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Cursor.hpp
+SFML/Graphics.hpp
+-
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.hpp
+Ships/Starship.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
+Utility/Vector.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp
+cmath
+-
+
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Button.hpp
 SFML/Graphics.hpp
 -
@@ -708,13 +720,9 @@ SFML/Graphics/Color.hpp
 ../Ships/Starship.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player1.h
 ../Ships/Starship.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
-iostream
--
-cmath
--
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
 SFML/Graphics.hpp
@@ -724,21 +732,27 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constant
 ../GameUI/Panel.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.cpp
-GameScene.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/TestScene.cpp
+TestScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/TestScene.hpp
+../../Utility/Vector.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/TestScene.hpp
 ../Scene.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
 ../../Player/Fleet.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
 ../../Ships/Starship.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
-../../Player/Player.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.hpp
 ../../Crosshair.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Crosshair.hpp
+../../Cursor.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Cursor.hpp
+../../Enemy.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.hpp
+../../Player/Player1.h
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player1.h
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Projectile.hpp
 ../Components/SpriteComponent.hpp
@@ -751,8 +765,16 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.h
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp
 Projectile.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Projectile.hpp
+../Utility/Vector.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constants.hpp
 iostream
+-
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp
+SFML/System/Vector2.hpp
+-
+cmath
 -
 

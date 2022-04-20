@@ -4,6 +4,7 @@
 #include "../../Ships/Starship.hpp"
 #include "../../Crosshair.hpp"
 #include "../../Temporary/TestPlayer.hpp"
+#include "../../Cursor.hpp"
 #include <random>
 
 class MenuScene : public Scene
@@ -12,21 +13,21 @@ class MenuScene : public Scene
     MenuScene() = default;
     ~MenuScene() override = default;
 
-    bool init() override;
-    void eventHandler(sf::RenderWindow& window, sf::Event& event) override;
-    void update(sf::RenderWindow &window, sf::Time deltaTime) override;
-    void render(sf::RenderWindow& window) override;
+    bool Init() override;
+    void EventHandler(sf::RenderWindow& window, sf::Event& event) override;
+    void Update(sf::RenderWindow &window, sf::Time deltaTime) override;
+    void Render(sf::RenderWindow& window) override;
 
  private:
-    static std::mt19937 getEngine();
-    bool initBackground();
-    void initButtonPanels();
-    void initLeaderboardPanel();
-    void initTitlePanel();
-    bool initMenuTitleIcon();
-    void initBackgroundShips(std::mt19937 &generator);
-    bool comfortableBoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect sprite_bounds);
-    void createDistribution(const std::string& name, int min, int max);
+    static std::mt19937 GetEngine();
+    bool InitBackground();
+    void InitButtonPanels();
+    void InitLeaderboardPanel();
+    void InitTitlePanel();
+    bool InitMenuTitleIcon();
+    void InitBackgroundShips(std::mt19937 &generator);
+    bool ComfortableBoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect sprite_bounds);
+    void CreateDistribution(const std::string& name, int min, int max);
 
     static const int PLAY_BUTTON = 0;
     static const int OPTIONS_BUTTON = 1;
@@ -38,6 +39,7 @@ class MenuScene : public Scene
 
     int SELECTED_SHIP = 0;
 
+    Chilli::Cursor cursor;
     //TestPlayer test_player;
     Crosshair crosshair;
     std::array<Panel, 5> panels;

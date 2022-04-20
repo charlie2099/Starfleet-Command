@@ -21,19 +21,19 @@ class Scene
     };
 
     // Pure virtual functions
-    virtual bool init()                                                     = 0;
-    virtual void eventHandler(sf::RenderWindow& window, sf::Event& event)   = 0;
-    virtual void update(sf::RenderWindow &window, sf::Time deltaTime)       = 0;
-    virtual void render(sf::RenderWindow& window)                           = 0;
+    virtual bool Init()                                                     = 0;
+    virtual void EventHandler(sf::RenderWindow& window, sf::Event& event)   = 0;
+    virtual void Update(sf::RenderWindow &window, sf::Time deltaTime)       = 0;
+    virtual void Render(sf::RenderWindow& window)                           = 0;
 
-    void setScene(Scene::ID scene) { scene_id = scene; }
-    [[nodiscard]] ID getScene() const { return scene_id; }
+    void SetScene(Scene::ID scene) { scene_id = scene; }
+    [[nodiscard]] ID GetScene() const { return scene_id; }
 
-    sf::Font& getRegularFont() { return game_font_r; };
-    sf::Font& getBoldFont() { return game_font_b; };
+    sf::Font& GetRegularFont() { return game_font_r; };
+    sf::Font& GetBoldFont() { return game_font_b; };
 
  private:
-    bool loadFont();
+    bool LoadFont();
     ID scene_id{};
     sf::Font game_font_r;
     sf::Font game_font_b;

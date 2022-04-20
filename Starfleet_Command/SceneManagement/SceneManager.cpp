@@ -3,26 +3,26 @@
 bool SceneManager::init()
 {
     current_scene = std::make_unique<MenuScene>();
-    return current_scene->init();
+    return current_scene->Init();
 }
 
 void SceneManager::eventHandler(sf::RenderWindow& window, sf::Event& event)
 {
-    current_scene->eventHandler(window, event);
+    current_scene->EventHandler(window, event);
 }
 
 void SceneManager::update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    if (current_scene->getScene() != current_ID)
+    if (current_scene->GetScene() != current_ID)
     {
-        changeScene(current_scene->getScene());
+        changeScene(current_scene->GetScene());
     }
-    current_scene->update(window, deltaTime);
+    current_scene->Update(window, deltaTime);
 }
 
 void SceneManager::render(sf::RenderWindow& window)
 {
-    current_scene->render(window);
+    current_scene->Render(window);
 }
 
 void SceneManager::changeScene(Scene::ID id)
@@ -39,11 +39,12 @@ void SceneManager::changeScene(Scene::ID id)
             current_scene = std::make_unique<ShipyardScene>();
             break;
         case Scene::ID::GAME:
-            current_scene = std::make_unique<GameScene>();
+            //current_scene = std::make_unique<GameScene>();
+            current_scene = std::make_unique<TestScene>();
             break;
     }
-    current_scene->setScene(id);
-    current_scene->init();
+    current_scene->SetScene(id);
+    current_scene->Init();
 }
 
 

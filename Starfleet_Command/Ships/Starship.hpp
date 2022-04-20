@@ -2,6 +2,7 @@
 #define STARFLEET_COMMAND_STARSHIP_HPP
 #include "../Components/SpriteComponent.hpp"
 #include "Projectile.hpp"
+#include "../Utility/Vector.hpp"
 
 class Starship
 {
@@ -16,23 +17,25 @@ class Starship
     };
     explicit Starship(Type type);
     ~Starship() = default;
+    void Update(sf::RenderWindow& window, sf::Time deltaTime);
+    void Render(sf::RenderWindow& window);
 
-    /// General
-    virtual void render(sf::RenderWindow& window);
+    // Functionality
+    void MoveTowards(sf::Vector2f target, sf::Time deltaTime);
 
     /// Modifiers
-    void setHealth(float health);
-    void setDamage(float damage);
-    void setSpeed(float speed); // Entity class?
-    void setAcceleration(float acceleration);
+    void SetHealth(float health);
+    void SetDamage(float damage);
+    void SetSpeed(float speed); // Entity class?
+    void SetAcceleration(float acceleration);
 
     /// Accessors
-    SpriteComponent &getSpriteComponent();
-    std::vector<std::unique_ptr<Projectile>>& getProjectile();
-    float getHealth() const;
-    float getDamage() const;
-    float getSpeed() const;
-    float getAcceleration() const;
+    SpriteComponent &GetSpriteComponent();
+    std::vector<std::unique_ptr<Projectile>>& GetProjectile();
+    float GetHealth() const;
+    float GetDamage() const;
+    float GetSpeed() const;
+    float GetAcceleration() const;
 
  private:
     SpriteComponent spriteComponent;
@@ -40,7 +43,7 @@ class Starship
     Type ship_type{};
     float health_ = 0.0F;
     float damage_ = 0.0F;
-    float speed_ = 0.0F;
+    float _speed = 0.0F;
     float acceleration_ = 0.0F;
 };
 

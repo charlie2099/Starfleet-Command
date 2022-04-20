@@ -2,10 +2,10 @@
 
 Scene::Scene()
 {
-    loadFont();
+    LoadFont();
 }
 
-bool Scene::loadFont()
+bool Scene::LoadFont()
 {
     if(!game_font_r.loadFromFile("fonts/Orbitron/Orbitron-Regular.ttf"))
     {

@@ -68,6 +68,7 @@ void Game::initWindow()
         std::cout << "Failed to load window icon image file" << std::endl;
     }
     window.setIcon(image.getSize().x, image.getSize().y, image.getPixelsPtr());
+    window.setMouseCursorVisible(false);
 }
 
 void Game::initSceneManager()

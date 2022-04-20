@@ -10,15 +10,15 @@ class Player
     Player() = default;
     ~Player() = default;
 
-    void eventHandler(sf::RenderWindow& window, sf::Event& event);
-    void update(sf::RenderWindow& window, sf::Time deltaTime);
+    void EventHandler(sf::RenderWindow& window, sf::Event& event);
+    void Update(sf::RenderWindow& window, sf::Time deltaTime);
 
     /// Modifiers
-    void setCredits(int credits);
+    void SetCredits(int credits);
 
     /// Accessors
-    std::vector<std::unique_ptr<Starship>> &getShip();
-    int getCredits() const;
+    std::vector<std::unique_ptr<Starship>> &GetShip();
+    int GetCredits() const;
 
  private:
     std::vector<std::unique_ptr<Starship>> starship{};

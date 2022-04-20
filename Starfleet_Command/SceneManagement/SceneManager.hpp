@@ -3,6 +3,7 @@
 #include "Scene.hpp"
 #include "../SceneManagement/Scenes/MenuScene.hpp"
 #include "../SceneManagement/Scenes/GameScene.hpp"
+#include "../SceneManagement/Scenes/TestScene.hpp"
 #include "../SceneManagement/Scenes/ShipyardScene.hpp"
 
 class SceneManager
