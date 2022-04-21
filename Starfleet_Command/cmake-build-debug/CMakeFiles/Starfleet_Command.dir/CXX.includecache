@@ -693,8 +693,6 @@ SFML/Graphics.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.hpp
 Ships/Starship.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
-Utility/Vector.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp
 cmath
 -
 
@@ -720,7 +718,7 @@ SFML/Graphics/Color.hpp
 ../Ships/Starship.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player1.h
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.h
 ../Ships/Starship.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
 
@@ -729,16 +727,16 @@ SFML/Graphics.hpp
 -
 ../Utility/Constants.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constants.hpp
+../Utility/PredefinedColours.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/PredefinedColours.hpp
 ../GameUI/Panel.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/TestScene.cpp
-TestScene.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/TestScene.hpp
-../../Utility/Vector.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.cpp
+GameScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/TestScene.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp
 ../Scene.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
 ../../Player/Fleet.hpp
@@ -751,8 +749,8 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Crosshair.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Cursor.hpp
 ../../Enemy.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.hpp
-../../Player/Player1.h
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player1.h
+../../Player/Player.h
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.h
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Projectile.hpp
 ../Components/SpriteComponent.hpp
@@ -771,6 +769,10 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.h
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constants.hpp
 iostream
 -
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/PredefinedColours.hpp
+SFML/Graphics/Color.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/SFML/Graphics/Color.hpp
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp
 SFML/System/Vector2.hpp

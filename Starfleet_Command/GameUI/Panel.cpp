@@ -3,8 +3,8 @@
 
 Panel::Panel()
 {
-    loadTextures();
-    loadFonts();
+    LoadTextures();
+    LoadFonts();
 
     // default design for panels upon construction
     text.setString("Text");
@@ -16,10 +16,10 @@ Panel::Panel()
     text.setPosition(400, 400);
 
     panel.setTexture(&panel_texture);
-    centreAlignPanelToText();
+    CentreAlignPanelToText();
 }
 
-void Panel::eventHandler(sf::RenderWindow &window, sf::Event &event)
+void Panel::EventHandler(sf::RenderWindow &window, sf::Event &event)
 {
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
@@ -34,7 +34,7 @@ void Panel::eventHandler(sf::RenderWindow &window, sf::Event &event)
     }
 }
 
-void Panel::update(sf::RenderWindow &window)
+void Panel::Update(sf::RenderWindow &window)
 {
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
@@ -49,67 +49,67 @@ void Panel::update(sf::RenderWindow &window)
     }
 }
 
-void Panel::render(sf::RenderWindow& window)
+void Panel::Render(sf::RenderWindow& window)
 {
     window.draw(panel);
     window.draw(text);
 }
 
-void Panel::setPanelColour(sf::Color color)
+void Panel::SetPanelColour(sf::Color color)
 {
     panel.setFillColor(color);
 }
 
-void Panel::setPadding(float padding)
+void Panel::SetPadding(float padding)
 {
     panel_w = padding;
     panel_h = padding;
-    centreAlignPanelToText();
+    CentreAlignPanelToText();
 }
 
-void Panel::setSize(float width, float height)
+void Panel::SetSize(float width, float height)
 {
     panel_w = width;
     panel_h = height;
     auto panel_width = text.getGlobalBounds().width + panel_w * 2;
     auto panel_height = text.getGlobalBounds().height + panel_h;
     panel.setSize({panel_width, panel_height});
-    centreAlignPanelToText();
+    CentreAlignPanelToText();
 }
 
-void Panel::setPosition(float x, float y)
+void Panel::SetPosition(float x, float y)
 {
     text.setPosition(x, y);
-    centreAlignPanelToText();
+    CentreAlignPanelToText();
 }
 
-void Panel::setText(const std::string& text_str)
+void Panel::SetText(const std::string& text_str)
 {
     text.setString(text_str);
-    centreAlignPanelToText();
+    CentreAlignPanelToText();
 }
 
-void Panel::setText(const std::string& text_str, sf::Color colour)
+void Panel::SetText(const std::string& text_str, sf::Color colour)
 {
     text.setString(text_str);
     text.setFillColor(colour);
-    centreAlignPanelToText();
+    CentreAlignPanelToText();
 }
 
-void Panel::setTextSize(int text_size)
+void Panel::SetTextSize(int text_size)
 {
     text.setCharacterSize(text_size);
-    centreAlignPanelToText();
+    CentreAlignPanelToText();
 }
 
-void Panel::setTextOffset(TextAlign alignment, float offset)
+void Panel::SetTextOffset(TextAlign alignment, float offset)
 {
     textAlign = alignment;
     text_offset = offset;
-    centreAlignPanelToText();
+    CentreAlignPanelToText();
 }
 
-void Panel::setFont(Panel::TextFont text_font)
+void Panel::SetFont(Panel::TextFont text_font)
 {
     textFont = text_font;
     if(textFont == TextFont::REGULAR)
@@ -122,7 +122,7 @@ void Panel::setFont(Panel::TextFont text_font)
     }
 }
 
-bool Panel::loadTextures()
+bool Panel::LoadTextures()
 {
     if (!panel_texture.loadFromFile("images/panel_image1.png"))
     {
@@ -132,7 +132,7 @@ bool Panel::loadTextures()
 }
 
 /// Unnecessary to load fonts which may not even be used
-bool Panel::loadFonts()
+bool Panel::LoadFonts()
 {
     if(!font_regular.loadFromFile("fonts/Orbitron/Orbitron-Regular.ttf"))
     {
@@ -145,7 +145,7 @@ bool Panel::loadFonts()
     return true;
 }
 
-void Panel::centreAlignPanelToText()
+void Panel::CentreAlignPanelToText()
 {
     // Update panel size before re-centering text
     auto panel_width = text.getGlobalBounds().width + panel_w * 2;
@@ -166,40 +166,40 @@ void Panel::centreAlignPanelToText()
     }
 }
 
-bool Panel::isHoveredOver() const
+bool Panel::IsHoveredOver() const
 {
     return is_hovered_over;
 }
 
-bool Panel::isClicked() const
+bool Panel::IsClicked() const
 {
     return is_clicked;
 }
 
-sf::Text& Panel::getText()
+sf::Text& Panel::GetText()
 {
     return text;
 }
 
-sf::FloatRect Panel::getTextSize()
+sf::FloatRect Panel::GetTextSize()
 {
     /// Panels adjust to accommodate text
     return text.getGlobalBounds();
 }
 
-sf::Vector2f Panel::getTextPosition()
+sf::Vector2f Panel::GetTextPosition()
 {
     /// Panels follow text position
     return text.getPosition();
 }
 
-sf::FloatRect Panel::getPanelSize()
+sf::FloatRect Panel::GetPanelSize()
 {
     /// Panels adjust to accommodate text
     return panel.getGlobalBounds();
 }
 
-sf::Vector2f Panel::getPanelPosition()
+sf::Vector2f Panel::GetPanelPosition()
 {
     /// Panels follow text position
     return panel.getPosition();

@@ -219,7 +219,7 @@ GameScene::init()
    Fleet
    {
     public:
-        setSize();
+        SetSize();
         setAction(std::vector<Starship>& ship, StarshipCommands action);
     private:
         std::vector<Starship> fleet_;

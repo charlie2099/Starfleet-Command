@@ -27,7 +27,7 @@ Starship::Starship(Type type) : ship_type(type)
         case Type::FLAGSHIP:
             spriteComponent.loadSprite("images/starfleet_ship_flagship.png");
             spriteComponent.getSprite().scale({0.10F, 0.10F});
-            _speed = 20;
+            _speed = 10;
             break;
     }
     //spriteComponent.getSprite().scale({0.05F, 0.05F});

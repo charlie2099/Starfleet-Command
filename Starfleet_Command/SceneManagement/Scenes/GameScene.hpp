@@ -3,12 +3,14 @@
 #include "../Scene.hpp"
 #include "../../Player/Fleet.hpp"
 #include "../../Ships/Starship.hpp"
-#include "../../Player/Player.hpp"
 #include "../../Crosshair.hpp"
+#include "../../Cursor.hpp"
+#include "../../Enemy.hpp"
+#include "../../Player/Player.h"
 
 class GameScene : public Scene
 {
- public:
+public:
     GameScene() = default;
     ~GameScene() override = default;
 
@@ -17,26 +19,32 @@ class GameScene : public Scene
     void Update(sf::RenderWindow &window, sf::Time deltaTime) override;
     void Render(sf::RenderWindow& window) override;
 
- private:
-    bool initBackground();
-    void initPlayerStarships();
-    void initView();
-    void initCrosshair();
-    bool comfortableBoundsCheck(sf::Vector2<float> mouse_vec, std::unique_ptr<Starship>& starship);
+private:
+    bool InitBackground();
+    bool InitCommandButtons();
+    void InitPlayerFlagship();
+    void InitEnemyFlagship();
+    void InitView();
 
-    int selected = 0;
+    // Utility
+    Chilli::Cursor _cursor;
+    Chilli::Colours _predefinedColours;
 
-    std::vector<std::unique_ptr<Projectile>> projectile{};
+    // Ui
+    sf::Texture _command_button_1_texture;
+    sf::Sprite _command_button_1_sprite;
+    //Panel _panel;
 
-    Player player;
-    Crosshair crosshair;
-    sf::View player_view{};
+    // Sprites
+    Player _player;
+    Enemy _enemy;
 
-    sf::Texture cursor_texture;
-    sf::Sprite cursor_sprite;
+    // Other
+    sf::View _player_view{};
+    sf::Texture _background_texture;
+    sf::Sprite _background_sprite;
 
-    sf::Texture background_texture;
-    sf::Sprite background_sprite;
+    bool is_hovered_over = false;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

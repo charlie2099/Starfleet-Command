@@ -2,11 +2,11 @@
 
 Game::Game()
 {
-    initWindow();
-    initSceneManager();
+    InitWindow();
+    InitSceneManager();
 }
 
-void Game::run()
+void Game::Run()
 {
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
     const sf::Time timePerFrame = sf::seconds(1.0f / 144.0f);
@@ -21,15 +21,15 @@ void Game::run()
         while (timeSinceLastUpdate > timePerFrame)
         {
             timeSinceLastUpdate -= timePerFrame;
-            update(timePerFrame);
+            Update(timePerFrame);
         }
         sf::Event event{};
-        processEvents(event);
-        render();
+        ProcessEvents(event);
+        Render();
     }
 }
 
-void Game::processEvents(sf::Event& event)
+void Game::ProcessEvents(sf::Event& event)
 {
     while (window.pollEvent(event))
     {
@@ -43,12 +43,12 @@ void Game::processEvents(sf::Event& event)
     }
 }
 
-void Game::update(sf::Time deltaTime)
+void Game::Update(sf::Time deltaTime)
 {
     scene_manager->update(window, deltaTime);
 }
 
-void Game::render()
+void Game::Render()
 {
     window.clear();
     scene_manager->render(window);
@@ -56,7 +56,7 @@ void Game::render()
 }
 
 /// OTHER
-void Game::initWindow()
+void Game::InitWindow()
 {
     window.create(sf::VideoMode(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT), "Starfleet Command");
     window.setTitle("Starfleet Command");
@@ -71,7 +71,7 @@ void Game::initWindow()
     window.setMouseCursorVisible(false);
 }
 
-void Game::initSceneManager()
+void Game::InitSceneManager()
 {
     scene_manager = std::make_unique<SceneManager>();
     scene_manager->init();

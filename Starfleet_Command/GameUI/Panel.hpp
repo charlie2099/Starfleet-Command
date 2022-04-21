@@ -12,39 +12,39 @@ class Panel
     Panel();
     ~Panel() = default;
 
-    void eventHandler(sf::RenderWindow& window, sf::Event& event);
-    void update(sf::RenderWindow& window);
-    void render(sf::RenderWindow& window);
+    void EventHandler(sf::RenderWindow& window, sf::Event& event);
+    void Update(sf::RenderWindow& window);
+    void Render(sf::RenderWindow& window);
 
     // Panel
-    void setPanelColour(sf::Color color);
-    void setPadding(float padding);
-    void setSize(float width, float height);
-    void setPosition(float x, float y);
-    sf::FloatRect getPanelSize();
-    sf::Vector2f getPanelPosition();
+    void SetPanelColour(sf::Color color);
+    void SetPadding(float padding);
+    void SetSize(float width, float height);
+    void SetPosition(float x, float y);
+    sf::FloatRect GetPanelSize();
+    sf::Vector2f GetPanelPosition();
 
     // Text
-    void setText(const std::string& text_str);
-    void setText(const std::string& text_str, sf::Color colour);
-    void setTextSize(int text_size);
+    void SetText(const std::string& text_str);
+    void SetText(const std::string& text_str, sf::Color colour);
+    void SetTextSize(int text_size);
     enum class TextAlign { CENTRE, OFFSET };
-    void setTextOffset(TextAlign alignment, float offset);
+    void SetTextOffset(TextAlign alignment, float offset);
     enum class TextFont { REGULAR, BOLD };
-    void setFont(TextFont text_font);
-    sf::Text &getText();
-    sf::FloatRect getTextSize();
-    sf::Vector2f getTextPosition();
+    void SetFont(TextFont text_font);
+    sf::Text &GetText();
+    sf::FloatRect GetTextSize();
+    sf::Vector2f GetTextPosition();
 
     /// Button adaptation
     //Button &getButton();
-    bool isClicked() const;
-    bool isHoveredOver() const;
+    bool IsClicked() const;
+    bool IsHoveredOver() const;
 
 private:
-    bool loadTextures();
-    bool loadFonts();
-    void centreAlignPanelToText();
+    bool LoadTextures();
+    bool LoadFonts();
+    void CentreAlignPanelToText();
 
     //Button button;
     sf::RectangleShape panel;

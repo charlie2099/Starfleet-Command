@@ -35,12 +35,9 @@ void SceneManager::changeScene(Scene::ID id)
         case Scene::ID::MENU:
             current_scene = std::make_unique<MenuScene>();
             break;
-        case Scene::ID::SHIPYARD:
-            current_scene = std::make_unique<ShipyardScene>();
-            break;
         case Scene::ID::GAME:
             //current_scene = std::make_unique<GameScene>();
-            current_scene = std::make_unique<TestScene>();
+            current_scene = std::make_unique<GameScene>();
             break;
     }
     current_scene->SetScene(id);

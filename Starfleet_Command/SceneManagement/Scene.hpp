@@ -2,6 +2,7 @@
 #define STARFLEET_COMMAND_SCENE_HPP
 #include <SFML/Graphics.hpp>
 #include "../Utility/Constants.hpp"
+#include "../Utility/PredefinedColours.hpp"
 #include "../GameUI/Panel.hpp"
 
 class Scene
@@ -14,7 +15,6 @@ class Scene
     {
         MENU = 0,
         OPTIONS,
-        SHIPYARD,
         GAME,
         WIN,
         LOSE

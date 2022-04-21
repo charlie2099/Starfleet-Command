@@ -416,30 +416,6 @@ Player/Player.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Player.cpp.s
 .PHONY : Player/Player.cpp.s
 
-Player/Player1.obj: Player/Player1.cpp.obj
-.PHONY : Player/Player1.obj
-
-# target to build an object file
-Player/Player1.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Player1.cpp.obj
-.PHONY : Player/Player1.cpp.obj
-
-Player/Player1.i: Player/Player1.cpp.i
-.PHONY : Player/Player1.i
-
-# target to preprocess a source file
-Player/Player1.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Player1.cpp.i
-.PHONY : Player/Player1.cpp.i
-
-Player/Player1.s: Player/Player1.cpp.s
-.PHONY : Player/Player1.s
-
-# target to generate assembly for a file
-Player/Player1.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Player/Player1.cpp.s
-.PHONY : Player/Player1.cpp.s
-
 Player/PlayerStats.obj: Player/PlayerStats.cpp.obj
 .PHONY : Player/PlayerStats.obj
 
@@ -559,54 +535,6 @@ SceneManagement/Scenes/MenuScene.s: SceneManagement/Scenes/MenuScene.cpp.s
 SceneManagement/Scenes/MenuScene.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/MenuScene.cpp.s
 .PHONY : SceneManagement/Scenes/MenuScene.cpp.s
-
-SceneManagement/Scenes/ShipyardScene.obj: SceneManagement/Scenes/ShipyardScene.cpp.obj
-.PHONY : SceneManagement/Scenes/ShipyardScene.obj
-
-# target to build an object file
-SceneManagement/Scenes/ShipyardScene.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.obj
-.PHONY : SceneManagement/Scenes/ShipyardScene.cpp.obj
-
-SceneManagement/Scenes/ShipyardScene.i: SceneManagement/Scenes/ShipyardScene.cpp.i
-.PHONY : SceneManagement/Scenes/ShipyardScene.i
-
-# target to preprocess a source file
-SceneManagement/Scenes/ShipyardScene.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.i
-.PHONY : SceneManagement/Scenes/ShipyardScene.cpp.i
-
-SceneManagement/Scenes/ShipyardScene.s: SceneManagement/Scenes/ShipyardScene.cpp.s
-.PHONY : SceneManagement/Scenes/ShipyardScene.s
-
-# target to generate assembly for a file
-SceneManagement/Scenes/ShipyardScene.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/ShipyardScene.cpp.s
-.PHONY : SceneManagement/Scenes/ShipyardScene.cpp.s
-
-SceneManagement/Scenes/TestScene.obj: SceneManagement/Scenes/TestScene.cpp.obj
-.PHONY : SceneManagement/Scenes/TestScene.obj
-
-# target to build an object file
-SceneManagement/Scenes/TestScene.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/TestScene.cpp.obj
-.PHONY : SceneManagement/Scenes/TestScene.cpp.obj
-
-SceneManagement/Scenes/TestScene.i: SceneManagement/Scenes/TestScene.cpp.i
-.PHONY : SceneManagement/Scenes/TestScene.i
-
-# target to preprocess a source file
-SceneManagement/Scenes/TestScene.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/TestScene.cpp.i
-.PHONY : SceneManagement/Scenes/TestScene.cpp.i
-
-SceneManagement/Scenes/TestScene.s: SceneManagement/Scenes/TestScene.cpp.s
-.PHONY : SceneManagement/Scenes/TestScene.s
-
-# target to generate assembly for a file
-SceneManagement/Scenes/TestScene.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/TestScene.cpp.s
-.PHONY : SceneManagement/Scenes/TestScene.cpp.s
 
 Ships/Projectile.obj: Ships/Projectile.cpp.obj
 .PHONY : Ships/Projectile.obj
@@ -821,9 +749,6 @@ help:
 	@echo ... Player/Player.obj
 	@echo ... Player/Player.i
 	@echo ... Player/Player.s
-	@echo ... Player/Player1.obj
-	@echo ... Player/Player1.i
-	@echo ... Player/Player1.s
 	@echo ... Player/PlayerStats.obj
 	@echo ... Player/PlayerStats.i
 	@echo ... Player/PlayerStats.s
@@ -839,12 +764,6 @@ help:
 	@echo ... SceneManagement/Scenes/MenuScene.obj
 	@echo ... SceneManagement/Scenes/MenuScene.i
 	@echo ... SceneManagement/Scenes/MenuScene.s
-	@echo ... SceneManagement/Scenes/ShipyardScene.obj
-	@echo ... SceneManagement/Scenes/ShipyardScene.i
-	@echo ... SceneManagement/Scenes/ShipyardScene.s
-	@echo ... SceneManagement/Scenes/TestScene.obj
-	@echo ... SceneManagement/Scenes/TestScene.i
-	@echo ... SceneManagement/Scenes/TestScene.s
 	@echo ... Ships/Projectile.obj
 	@echo ... Ships/Projectile.i
 	@echo ... Ships/Projectile.s

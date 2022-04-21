@@ -2,15 +2,11 @@
 
 bool GameScene::Init()
 {
-    initBackground();
-    initPlayerStarships();
-    initView();
-    initCrosshair();
-
-    // initCursor
-    cursor_texture.loadFromFile("images/crosshair.png");
-    cursor_sprite.setTexture(cursor_texture);
-    cursor_sprite.scale(0.1F, 0.1F);
+    InitBackground();
+    InitCommandButtons();
+    InitView();
+    InitPlayerFlagship();
+    InitEnemyFlagship();
 
     return true;
 }
@@ -18,178 +14,191 @@ bool GameScene::Init()
 void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
+    auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
 
-    player.EventHandler(window, event);
-
-    // TODO: Move into player class?
-    if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Button::Left)
+    if(_command_button_1_sprite.getGlobalBounds().contains(translated_pos))
     {
-        auto flagship_pos = player.GetShip()[player.GetShip().size() - 1]->GetSpriteComponent().getPos();
-        projectile.emplace_back(std::make_unique<Projectile>(Projectile::Type::LASER_BLUE, flagship_pos, mousePosWorldCoords));
+        _command_button_1_sprite.setColor(_predefinedColours.LIGHTBLUE);
+        is_hovered_over = true;
+    }
+    else
+    {
+        _command_button_1_sprite.setColor({178, 178, 178, 255});
+        is_hovered_over = false;
+    }
+
+    if (event.type == sf::Event::MouseButtonPressed && is_hovered_over)
+    {
+        _command_button_1_sprite.setColor({153, 210, 242, 150});
+        _player.CreateShip(Starship::Type::FIGHTER);
+        _player.GetShip()[_player.GetShip().size()-1]->GetSpriteComponent().getSprite().setColor(_predefinedColours.LIGHTBLUE);
+        _player.GetShip()[_player.GetShip().size()-1]->GetSpriteComponent().getSprite().setPosition(_player.GetShip()[0]->GetSpriteComponent().getSprite().getPosition());
     }
 }
 
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
+    _cursor.Update(window, deltaTime);
 
-    window.setMouseCursorVisible(false);
+    int flagship = 0;
+    auto& player_flagship = _player.GetShip()[flagship]->GetSpriteComponent().getSprite();
+    auto& enemy_flagship = _enemy.GetShip()[flagship]->GetSpriteComponent().getSprite();
+    player_flagship.move(_player.GetShip()[flagship]->GetSpeed() * deltaTime.asSeconds(), 0);
+    enemy_flagship.move(_enemy.GetShip()[flagship]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
 
-    player.Update(window, deltaTime);
-
-    // TODO: Move into player class?
-    for(auto& projectiles : projectile)
+    for(int i = 1; i < _player.GetShip().size(); i++)
     {
-        projectiles->update(window, deltaTime);
-    }
+        auto& player_sprite = _player.GetShip()[i]->GetSpriteComponent().getSprite();
+        auto& enemy_sprite = _enemy.GetShip()[0]->GetSpriteComponent().getSprite();
+        float distance = (abs(sqrt(((player_sprite.getPosition().x - enemy_sprite.getPosition().x) * (player_sprite.getPosition().x - enemy_sprite.getPosition().x)) + ((player_sprite.getPosition().y - enemy_sprite.getPosition().y) * (player_sprite.getPosition().y - enemy_sprite.getPosition().y)))));
 
-    // Destroy projectiles if there are too many on screen
-    if(projectile.size() > 10)
-    {
-        projectile.erase(projectile.begin());
-    }
-
-    // Destroy projectiles if off-screen
-    for(int i = 0; i < projectile.size(); i++)
-    {
-        if(projectile[i]->getSprite().getSprite().getPosition().x < 0 ||
-           projectile[i]->getSprite().getSprite().getPosition().x > Constants::WINDOW_WIDTH ||
-           projectile[i]->getSprite().getSprite().getPosition().y < 0 ||
-           projectile[i]->getSprite().getSprite().getPosition().y > Constants::WINDOW_HEIGHT)
+        if(distance < 300)
         {
-            projectile.erase(projectile.begin() + i);
+            _player.GetShip()[i]->SetSpeed(20);
+
+            if(distance > 150)
+            {
+                _player.GetShip()[i]->MoveTowards(enemy_sprite.getPosition(), deltaTime);
+            }
+        }
+        else
+        {
+            _player.GetShip()[i]->SetSpeed(80);
+            player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
         }
     }
 
-    for (int i = 0; i < player.GetShip().size(); ++i)
-    {
-        // if mouse within bounds of any ship
-        if(comfortableBoundsCheck(mousePosWorldCoords, player.GetShip()[i]))
-        {
-            selected = i;
-            crosshair.sizeAdjust(player.GetShip()[selected]);
-            crosshair.snapTo(player.GetShip()[selected]);
-        }
-        else if(!comfortableBoundsCheck(mousePosWorldCoords, player.GetShip()[selected]))
-        {
-            crosshair.unSnap();
-        }
-    }
+//    for(int i = 1; i < _player.GetShip().size(); i++)
+//    {
+//        auto& player_sprite = _player.GetShip()[i]->GetSpriteComponent().getSprite();
+//        //player_sprite.move(100 * deltaTime.asSeconds(), 0);
+//
+//        for(int i = 0; i < _enemy.GetShip().size(); i++)
+//        {
+//            auto& enemy_sprite = _enemy.GetShip()[i]->GetSpriteComponent().getSprite();
+//            float distance = (abs(sqrt(((player_sprite.getPosition().x - enemy_sprite.getPosition().x) * (player_sprite.getPosition().x - enemy_sprite.getPosition().x)) + ((player_sprite.getPosition().y - enemy_sprite.getPosition().y) * (player_sprite.getPosition().y - enemy_sprite.getPosition().y)))));
+//
+//            if (distance < 200)
+//            {
+//                _player.GetShip()[i]->MoveTowards(enemy_sprite.getPosition(), deltaTime);
+//                //_player.GetShip()[i]->SetSpeed(30);
+//            }
+//            else
+//            {
+//                player_sprite.move(100 * deltaTime.asSeconds(), 0);
+//                //enemy_sprite.setRotation(180);
+//                //TODO: return to original speed
+//            }
+//        }
+//    }
 
-    cursor_sprite.setPosition(mousePosWorldCoords.x - cursor_sprite.getGlobalBounds().width/2,
-                              mousePosWorldCoords.y - cursor_sprite.getGlobalBounds().height/2);
+//    for(int i = 0; i < _player.GetShip().size(); i++)
+//    {
+//        auto& player_sprite = _player.GetShip()[i]->GetSpriteComponent().getSprite();
+//        //player_sprite.move(100 * deltaTime.asSeconds(), 0);
+//
+//        for(int i = 0; i < _enemy.GetShip().size(); i++)
+//        {
+//            auto& enemy_sprite = _enemy.GetShip()[i]->GetSpriteComponent().getSprite();
+//            float distance = (abs(sqrt(((player_sprite.getPosition().x - enemy_sprite.getPosition().x) * (player_sprite.getPosition().x - enemy_sprite.getPosition().x)) + ((player_sprite.getPosition().y - enemy_sprite.getPosition().y) * (player_sprite.getPosition().y - enemy_sprite.getPosition().y)))));
+//
+//            if (distance < 200)
+//            {
+//                _enemy.GetShip()[i]->MoveTowards(player_sprite.getPosition(), deltaTime);
+//                _enemy.GetShip()[i]->SetSpeed(30);
+//            }
+//            else
+//            {
+//                //enemy_sprite.move(100 * deltaTime.asSeconds() * -1, 0);
+//                enemy_sprite.setRotation(180);
+//                //TODO: return to original speed
+//            }
+//        }
+//    }
+
+    //TODO:
+    // - Write up a learning log i.e. write-up how enemy chasing mechanic was achieved, to help properly understand it
 }
 
 void GameScene::Render(sf::RenderWindow& window)
 {
-    window.setView(player_view);
-    window.draw(background_sprite);
-    for (auto & ships : player.GetShip())
-    {
-        ships->Render(window);
-    }
-    for(auto& projectiles : projectile)
-    {
-        projectiles->render(window);
-    }
-    crosshair.render(window);
-    window.draw(cursor_sprite);
+    window.setView(_player_view);
+    window.draw(_background_sprite);
+    //_panel.Render(window);
+    window.draw(_command_button_1_sprite);
+    _player.Render(window);
+    _enemy.Render(window);
+    _cursor.Render(window);
 }
 
 /// OTHER
-bool GameScene::initBackground()
+bool GameScene::InitBackground()
 {
-    /*if (!background_texture.loadFromFile("images/background2.png"))
+    if (!_background_texture.loadFromFile("images/space_nebula.png")) // background2
     {
         return false;
     }
-    background_texture.setRepeated(true);
-    background_sprite.setTexture(background_texture);
-    background_sprite.scale(0.40F, 0.40F);
-    auto bTexSizeX = static_cast<int>(background_texture.getSize().x);
-    auto bTexSizeY = static_cast<int>(background_texture.getSize().y);
-    background_sprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX*3, bTexSizeY*3));*/
-
-    if (!background_texture.loadFromFile("images/space_nebula.png")) // background2
-    {
-        return false;
-    }
-    background_texture.setRepeated(true);
-    background_sprite.setTexture(background_texture);
-    background_sprite.scale(0.2F, 0.2F);
-    auto bTexSizeX = static_cast<int>(background_texture.getSize().x);
-    auto bTexSizeY = static_cast<int>(background_texture.getSize().y);
-    background_sprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX*2, bTexSizeY*2));
-    //background_sprite.setOrigin(background_sprite.getLocalBounds().width/2, background_sprite.getLocalBounds().height/2);
+    _background_texture.setRepeated(true);
+    _background_sprite.setTexture(_background_texture);
+    _background_sprite.scale(0.2F, 0.2F);
+    auto bTexSizeX = static_cast<int>(_background_texture.getSize().x);
+    auto bTexSizeY = static_cast<int>(_background_texture.getSize().y);
+    _background_sprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX * 2, bTexSizeY * 2));
+    //_background_sprite.setOrigin(_background_sprite.getLocalBounds().width/2, _background_sprite.getLocalBounds().height/2);
 
     return true;
 }
 
-void GameScene::initPlayerStarships()
+bool GameScene::InitCommandButtons()
 {
-    for (int i = 0; i < Fleet::getNumOfShips().size(); ++i)
+    if (!_command_button_1_texture.loadFromFile("images/command_button_1.png")) // background2
     {
-        for (int j = 0; j < Fleet::getNumOfShips()[i]; ++j)
-        {
-            player.GetShip().emplace_back(std::make_unique<Starship>(static_cast<Starship::Type>(i)));
-        }
+        return false;
     }
+    _command_button_1_texture.setRepeated(true);
+    _command_button_1_sprite.setTexture(_command_button_1_texture);
+    _command_button_1_sprite.scale(0.3f, 0.3f);
+    _command_button_1_sprite.setPosition(Constants::WINDOW_WIDTH/2.0f - _command_button_1_sprite.getGlobalBounds().width/2.0f,Constants::WINDOW_HEIGHT - (_command_button_1_sprite.getGlobalBounds().height/2.0f*4));
+    _command_button_1_sprite.setColor({178, 178, 178, 255});
+    //_command_button_1_sprite.setColor({153, 210, 242, 255});
 
-    // Command ship which player controls
-    player.GetShip().emplace_back(std::make_unique<Starship>(Starship::Type::FLAGSHIP));
-    static const unsigned int FLAGSHIP = player.GetShip().size() - 1;
-
-    auto r = Fleet::getFleetColourRGB().rgb_r;
-    auto g = Fleet::getFleetColourRGB().rgb_g;
-    auto b = Fleet::getFleetColourRGB().rgb_b;
-    for (int i = 0; i < player.GetShip().size(); ++i)
-    {
-        player.GetShip()[i]->GetSpriteComponent().setPos({50, (i * 40.0F) + Constants::WINDOW_HEIGHT * 0.1F });
-        player.GetShip()[i]->GetSpriteComponent().getSprite().setColor(sf::Color(r, g, b));
-    }
-
-    auto flagship = player.GetShip()[FLAGSHIP]->GetSpriteComponent();
-    auto xpos = player.GetShip()[0]->GetSpriteComponent().getPos().x + flagship.getSprite().getGlobalBounds().width + 20;
-    float ypos = Constants::WINDOW_HEIGHT/2 - flagship.getSprite().getGlobalBounds().height/2;
-    player.GetShip()[FLAGSHIP]->GetSpriteComponent().setPos({xpos, ypos});
+    return true;
 }
 
-void GameScene::initView()
+void GameScene::InitView()
 {
     /// Reset View to default settings
     //view.setCenter(window.getDefaultView().getCenter());
-    //view.setSize(window.getDefaultView().getSize());
+    //view.SetSize(window.getDefaultView().getSize());
 
-    auto flagship = player.GetShip()[player.GetShip().size() - 1]->GetSpriteComponent().getSprite();
     sf::Vector2f VIEW_SIZE = { Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT };
     sf::Vector2f WORLD_PERSPECTIVE = { Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F };
-    sf::Vector2f PLAYER_PERSPECTIVE = {flagship.getPosition().x + flagship.getGlobalBounds().width/2,
-                                       flagship.getPosition().y + flagship.getGlobalBounds().height/2};
-    player_view.setSize(VIEW_SIZE);
-    player_view.setCenter(WORLD_PERSPECTIVE);
-    //player_view.zoom(0.5F);
+    _player_view.setSize(VIEW_SIZE);
+    _player_view.setCenter(WORLD_PERSPECTIVE);
+    //_player_view.zoom(0.5F);
 }
 
-void GameScene::initCrosshair()
+void GameScene::InitPlayerFlagship()
 {
-    auto r = Fleet::getFleetColourRGB().rgb_r;
-    auto g = Fleet::getFleetColourRGB().rgb_g;
-    auto b = Fleet::getFleetColourRGB().rgb_b;
-    crosshair.setVisibility(true);
-    crosshair.setColour(sf::Color(r, g, b));
+    _player.CreateShip(Starship::Type::FLAGSHIP);
+    int flagship = 0;
+    auto player_flagship_bounds = _player.GetShip()[flagship]->GetSpriteComponent().getSprite().getGlobalBounds();
+    auto player_width = player_flagship_bounds.width/2;
+    auto player_height = Constants::WINDOW_HEIGHT/2.0f;
+    _player.GetShip()[flagship]->GetSpriteComponent().setPos({player_width, player_height});
+    _player.GetShip()[flagship]->GetSpriteComponent().getSprite().setColor(_predefinedColours.LIGHTBLUE);
 }
 
-// template?
-bool GameScene::comfortableBoundsCheck(sf::Vector2<float> mouse_vec, std::unique_ptr<Starship>& starship)
+void GameScene::InitEnemyFlagship()
 {
-    auto offset = 10.0F;
-    auto sprite_bounds = starship->GetSpriteComponent().getSprite().getGlobalBounds();
-    return (mouse_vec.x > sprite_bounds.left - offset &&
-    mouse_vec.y > sprite_bounds.top - offset &&
-    mouse_vec.x < sprite_bounds.left + sprite_bounds.width + offset &&
-    mouse_vec.y < sprite_bounds.top + sprite_bounds.height + offset);
+    _enemy.CreateShip(Starship::Type::FLAGSHIP);
+    int flagship = 0;
+    auto enemy_flagship_bounds = _enemy.GetShip()[flagship]->GetSpriteComponent().getSprite().getGlobalBounds();
+    auto enemy_width = Constants::WINDOW_WIDTH - enemy_flagship_bounds.width/2.0f;
+    auto enemy_height = Constants::WINDOW_HEIGHT/2.0f;
+    _enemy.GetShip()[flagship]->GetSpriteComponent().setPos({enemy_width, enemy_height});
+    _enemy.GetShip()[flagship]->GetSpriteComponent().getSprite().setColor(_predefinedColours.LIGHTGREEN);
+    _enemy.GetShip()[flagship]->GetSpriteComponent().getSprite().setRotation(180);
 }
 
 

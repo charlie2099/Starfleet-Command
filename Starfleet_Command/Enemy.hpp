@@ -1,7 +1,6 @@
 #ifndef STARFLEET_COMMAND_ENEMY_HPP
 #define STARFLEET_COMMAND_ENEMY_HPP
 #include "Ships/Starship.hpp"
-#include "Utility/Vector.hpp"
 #include <cmath>
 
 class Enemy

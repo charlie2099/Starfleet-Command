@@ -3,8 +3,6 @@
 #include "Scene.hpp"
 #include "../SceneManagement/Scenes/MenuScene.hpp"
 #include "../SceneManagement/Scenes/GameScene.hpp"
-#include "../SceneManagement/Scenes/TestScene.hpp"
-#include "../SceneManagement/Scenes/ShipyardScene.hpp"
 
 class SceneManager
 {
@@ -24,8 +22,8 @@ class SceneManager
     Scene::ID current_ID{};
 
     /// Same background across all scenes
-    //sf::Texture background_texture;
-    //sf::Sprite background_sprite;
+    //sf::Texture _background_texture;
+    //sf::Sprite _background_sprite;
 };
 
 #endif //STARFLEET_COMMAND_SCENEMANAGER_HPP

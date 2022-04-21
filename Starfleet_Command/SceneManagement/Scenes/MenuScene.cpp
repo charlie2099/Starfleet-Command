@@ -18,20 +18,20 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     for (int i = 0; i < BUTTONS; ++i)
     {
-        panels[i].eventHandler(window, event);
+        panels[i].EventHandler(window, event);
     }
 
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        if(panels[PLAY_BUTTON].isClicked())
+        if(panels[PLAY_BUTTON].IsClicked())
         {
             SetScene(Scene::ID::GAME);
         }
-        else if(panels[OPTIONS_BUTTON].isClicked())
+        else if(panels[OPTIONS_BUTTON].IsClicked())
         {
             SetScene(Scene::ID::OPTIONS);
         }
-        else if(panels[EXIT_BUTTON].isClicked())
+        else if(panels[EXIT_BUTTON].IsClicked())
         {
             window.close();
         }
@@ -41,24 +41,24 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     {
         if(i < 2) // PLAY and OPTIONS button
             {
-            if(panels[i].isHoveredOver())
+            if(panels[i].IsHoveredOver())
             {
-                //panels[i].setPanelColour(sf::Color(20, 210, 242, 60));
-                panels[i].setPanelColour(sf::Color(153, 210, 242, 80));
-                panels[i].setText(panels[i].getText().getString(), sf::Color(153, 210, 242, 255));
+                //panels[i].SetPanelColour(sf::Color(20, 210, 242, 60));
+                panels[i].SetPanelColour(sf::Color(153, 210, 242, 80));
+                panels[i].SetText(panels[i].GetText().getString(), sf::Color(153, 210, 242, 255));
             }
             }
         else // EXIT button
         {
-            panels[i].setPanelColour(sf::Color(242, 22, 22, 60));
-            panels[i].setText(panels[i].getText().getString(), sf::Color::Red);
+            panels[i].SetPanelColour(sf::Color(242, 22, 22, 60));
+            panels[i].SetText(panels[i].GetText().getString(), sf::Color::Red);
         }
 
         // All Buttons
-        if(!panels[i].isHoveredOver())
+        if(!panels[i].IsHoveredOver())
         {
-            panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
-            panels[i].setText(panels[i].getText().getString(), sf::Color::White);
+            panels[i].SetPanelColour(sf::Color(178, 178, 178, 100));
+            panels[i].SetText(panels[i].GetText().getString(), sf::Color::White);
         }
     }
 }
@@ -69,7 +69,7 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     for (int i = 0; i < BUTTONS; ++i)
     {
-        panels[i].update(window);
+        panels[i].Update(window);
     }
 
     for (int i = 0; i < starship.size(); ++i)
@@ -127,7 +127,7 @@ void MenuScene::Render(sf::RenderWindow& window)
     window.draw(menu_title_img_sprite);
     for (auto & panel : panels)
     {
-        panel.render(window);
+        panel.Render(window);
     }
     crosshair.render(window);
     //test_player.Render(window);
@@ -146,11 +146,11 @@ std::mt19937 MenuScene::GetEngine()
 
 bool MenuScene::InitBackground()
 {
-    /*if (!background_texture.loadFromFile("images/space_background.jpg"))
+    /*if (!_background_texture.loadFromFile("images/space_background.jpg"))
     {
         return false;
     }
-    background_sprite.setTexture(background_texture);*/
+    _background_sprite.setTexture(_background_texture);*/
 
     if (!background_texture.loadFromFile("images/space_nebula.png")) // background2
     {
@@ -177,10 +177,11 @@ void MenuScene::InitButtonPanels()
 
     for (int i = 0; i < BUTTONS; ++i)
     {
-        panels[i].setText(button_text[i]);
-        panels[i].setTextSize(35);
-        panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
-        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.185F, (Constants::WINDOW_HEIGHT * 0.57F) + static_cast<float>(i * 100));
+        panels[i].SetText(button_text[i]);
+        panels[i].SetTextSize(35);
+        panels[i].SetPanelColour(sf::Color(178, 178, 178, 100));
+        panels[i].SetPosition(Constants::WINDOW_WIDTH * 0.185F,
+                              (Constants::WINDOW_HEIGHT * 0.57F) + static_cast<float>(i * 100));
     }
 }
 
@@ -188,12 +189,12 @@ void MenuScene::InitLeaderboardPanel()
 {
     for (int i = BUTTONS; i < LEADERBOARD; ++i)
     {
-        panels[i].setText("HIGHSCORES");
-        panels[i].setTextSize(35);
-        panels[i].setTextOffset(Panel::TextAlign::OFFSET, 40);
-        panels[i].setSize(120, 250);
-        panels[i].setPanelColour(sf::Color(178, 178, 178, 100));
-        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.56F, Constants::WINDOW_HEIGHT * 0.6F);
+        panels[i].SetText("HIGHSCORES");
+        panels[i].SetTextSize(35);
+        panels[i].SetTextOffset(Panel::TextAlign::OFFSET, 40);
+        panels[i].SetSize(120, 250);
+        panels[i].SetPanelColour(sf::Color(178, 178, 178, 100));
+        panels[i].SetPosition(Constants::WINDOW_WIDTH * 0.56F, Constants::WINDOW_HEIGHT * 0.6F);
     }
 }
 
@@ -201,11 +202,12 @@ void MenuScene::InitTitlePanel()
 {
     for (int i = LEADERBOARD; i < TITLE_PANEL; ++i)
     {
-        panels[i].setText("Starfleet Command", sf::Color(153, 210, 242));
-        panels[i].setTextSize(85);
-        panels[i].setFont(Panel::TextFont::BOLD);
-        panels[i].setPanelColour(sf::Color(0, 0, 0, 0));
-        panels[i].setPosition(Constants::WINDOW_WIDTH * 0.5F - panels[i].getTextSize().width / 2, Constants::WINDOW_HEIGHT * 0.22F);
+        panels[i].SetText("Starfleet Command", sf::Color(153, 210, 242));
+        panels[i].SetTextSize(85);
+        panels[i].SetFont(Panel::TextFont::BOLD);
+        panels[i].SetPanelColour(sf::Color(0, 0, 0, 0));
+        panels[i].SetPosition(Constants::WINDOW_WIDTH * 0.5F - panels[i].GetTextSize().width / 2,
+                              Constants::WINDOW_HEIGHT * 0.22F);
     }
 }
 
@@ -219,7 +221,7 @@ bool MenuScene::InitMenuTitleIcon()
     menu_title_img_sprite.setColor(sf::Color(153, 210, 242, 175));
     menu_title_img_sprite.setScale(0.35F, 0.35F);
     menu_title_img_sprite.setRotation(-8);
-    menu_title_img_sprite.setPosition(panels[4].getTextPosition().x - 44, panels[4].getTextPosition().y - 54);
+    menu_title_img_sprite.setPosition(panels[4].GetTextPosition().x - 44, panels[4].GetTextPosition().y - 54);
 
     return true;
 }

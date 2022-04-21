@@ -1,75 +1,24 @@
-#include "Player.hpp"
-
-void Player::EventHandler(sf::RenderWindow &window, sf::Event &event)
-{
-    for(key_idx = key_state.begin(); key_idx != key_state.end(); ++key_idx)
-    {
-        if (event.type == sf::Event::KeyPressed)
-        {
-            // first element of map is a keyboard keycode
-            if(event.key.code == key_idx->first)
-            {
-                key_state[event.key.code] = true;
-            }
-        }
-
-        else if (event.type == sf::Event::KeyReleased)
-        {
-            if(event.key.code == key_idx->first)
-            {
-                key_state[event.key.code] = false;
-            }
-        }
-    }
-}
+#include "Player.h"
 
 void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    auto& flagship = this->GetShip()[this->GetShip().size() - 1];
-    auto& flagship_spr = flagship->GetSpriteComponent();
 
-    //Convert angle to radians
-    double angleRADS = (3.1415926536/180)*(flagship_spr.getSprite().getRotation());
-
-    // move ship in direction it is facing
-    sf::Vector2f direction;
-    direction.x = cos(angleRADS);
-    direction.y = sin(angleRADS);
-
-    float speed = 30.0F;
-
-    if(key_state[sf::Keyboard::W])
-    {
-        speed *= 3.0F;
-    }
-    if(key_state[sf::Keyboard::A])
-    {
-        flagship_spr.getSprite().rotate(-65 * deltaTime.asSeconds());
-    }
-    if(key_state[sf::Keyboard::S])
-    {
-        speed /= 2.0F;
-    }
-    if(key_state[sf::Keyboard::D])
-    {
-        flagship_spr.getSprite().rotate(65 * deltaTime.asSeconds());
-    }
-
-    sf::Vector2f movement = direction * speed;
-    flagship_spr.getSprite().move(movement * deltaTime.asSeconds());
 }
 
-void Player::SetCredits(int credits)
+void Player::Render(sf::RenderWindow &window)
 {
-    player_credits = credits;
-}
-
-int Player::GetCredits() const
-{
-    return player_credits;
+    for (auto& ship : starship)
+    {
+        ship->Render(window);
+    }
 }
 
 std::vector<std::unique_ptr<Starship>> &Player::GetShip()
 {
     return starship;
+}
+
+void Player::CreateShip(Starship::Type type)
+{
+    starship.emplace_back(std::make_unique<Starship>(type));
 }

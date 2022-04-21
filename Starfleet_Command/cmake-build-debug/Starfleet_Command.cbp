@@ -153,13 +153,7 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.hpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player1.cpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player1.h">
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.h">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/PlayerStats.cpp">
@@ -190,18 +184,6 @@
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.hpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.cpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/ShipyardScene.hpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/TestScene.cpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/TestScene.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Projectile.cpp">
