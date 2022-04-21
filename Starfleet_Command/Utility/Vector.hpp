@@ -9,6 +9,7 @@ namespace Chilli
     {
     public:
         static sf::Vector2f Normalize(sf::Vector2f vec);
+        static double Distance(sf::Vector2f a, sf::Vector2f b);
 
     private:
     };

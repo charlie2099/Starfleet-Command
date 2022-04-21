@@ -9,3 +9,8 @@ sf::Vector2f Chilli::Vector::Normalize(sf::Vector2f vec)
     }
     return vec;
 }
+
+double Chilli::Vector::Distance(sf::Vector2f a, sf::Vector2f b)
+{
+    return std::sqrt((a.x - b.x) * (a.x - b.x)  + (a.y - b.y) * (a.y - b.y));
+}

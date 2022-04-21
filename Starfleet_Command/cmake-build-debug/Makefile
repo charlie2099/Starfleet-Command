@@ -632,30 +632,6 @@ Temporary/TestPlayer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Temporary/TestPlayer.cpp.s
 .PHONY : Temporary/TestPlayer.cpp.s
 
-Utility/Functions.obj: Utility/Functions.cpp.obj
-.PHONY : Utility/Functions.obj
-
-# target to build an object file
-Utility/Functions.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Utility/Functions.cpp.obj
-.PHONY : Utility/Functions.cpp.obj
-
-Utility/Functions.i: Utility/Functions.cpp.i
-.PHONY : Utility/Functions.i
-
-# target to preprocess a source file
-Utility/Functions.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Utility/Functions.cpp.i
-.PHONY : Utility/Functions.cpp.i
-
-Utility/Functions.s: Utility/Functions.cpp.s
-.PHONY : Utility/Functions.s
-
-# target to generate assembly for a file
-Utility/Functions.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Utility/Functions.cpp.s
-.PHONY : Utility/Functions.cpp.s
-
 Utility/Vector.obj: Utility/Vector.cpp.obj
 .PHONY : Utility/Vector.obj
 
@@ -776,9 +752,6 @@ help:
 	@echo ... Temporary/TestPlayer.obj
 	@echo ... Temporary/TestPlayer.i
 	@echo ... Temporary/TestPlayer.s
-	@echo ... Utility/Functions.obj
-	@echo ... Utility/Functions.i
-	@echo ... Utility/Functions.s
 	@echo ... Utility/Vector.obj
 	@echo ... Utility/Vector.i
 	@echo ... Utility/Vector.s

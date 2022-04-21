@@ -50,22 +50,32 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         auto& player_sprite = _player.GetShip()[i]->GetSpriteComponent().getSprite();
         auto& enemy_sprite = _enemy.GetShip()[0]->GetSpriteComponent().getSprite();
-        float distance = (abs(sqrt(((player_sprite.getPosition().x - enemy_sprite.getPosition().x) * (player_sprite.getPosition().x - enemy_sprite.getPosition().x)) + ((player_sprite.getPosition().y - enemy_sprite.getPosition().y) * (player_sprite.getPosition().y - enemy_sprite.getPosition().y)))));
 
-        if(distance < 300)
+        if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) < 200)
         {
             _player.GetShip()[i]->SetSpeed(20);
-
-            if(distance > 150)
-            {
-                _player.GetShip()[i]->MoveTowards(enemy_sprite.getPosition(), deltaTime);
-            }
+            //_player.GetShip()[i]->MoveTowards(enemy_sprite.getPosition(), deltaTime);
         }
         else
         {
             _player.GetShip()[i]->SetSpeed(80);
-            player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
         }
+        player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
+
+//        if(distance < 300)
+//        {
+//            _player.GetShip()[i]->SetSpeed(20);
+//
+//            if(distance > 150)
+//            {
+//                _player.GetShip()[i]->MoveTowards(enemy_sprite.getPosition(), deltaTime);
+//            }
+//        }
+//        else
+//        {
+//            _player.GetShip()[i]->SetSpeed(80);
+//            player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
+//        }
     }
 
 //    for(int i = 1; i < _player.GetShip().size(); i++)

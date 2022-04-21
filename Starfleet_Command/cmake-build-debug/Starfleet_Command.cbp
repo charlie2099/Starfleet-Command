@@ -213,12 +213,6 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constants.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Functions.cpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Functions.hpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/PredefinedColours.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>

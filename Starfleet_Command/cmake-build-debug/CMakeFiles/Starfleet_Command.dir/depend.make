@@ -1569,9 +1569,6 @@ CMakeFiles/Starfleet_Command.dir/Temporary/TestPlayer.cpp.obj: \
  ../Temporary/TestComponent.hpp \
  ../Temporary/TestPlayer.cpp \
  ../Temporary/TestPlayer.hpp
-CMakeFiles/Starfleet_Command.dir/Utility/Functions.cpp.obj: \
- ../Utility/Functions.cpp \
- ../Utility/Functions.hpp
 CMakeFiles/Starfleet_Command.dir/Utility/Vector.cpp.obj: \
  C:/Libraries/SFML/include/SFML/System/Vector2.hpp \
  C:/Libraries/SFML/include/SFML/System/Vector2.inl \
