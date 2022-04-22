@@ -2,6 +2,15 @@
 
 bool GameScene::Init()
 {
+    generator = GetEngine();
+    CreateDistribution("Ship xPos", 1100, 1100);
+    CreateDistribution("Ship yPos", 45, 675);
+    dist_code =
+    {
+            {"Ship yPos",1},
+            {"Ship xPos",0}
+    };
+
     InitBackground();
     InitCommandButtons();
 
@@ -51,10 +60,15 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
                 int flagship = 0;
                 _player.CreateShip(static_cast<Starship::Type>(i));
                 _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
-                _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().SetPos({
-                    _player.GetShip()[flagship]->GetSpriteComponent().GetSprite().getPosition().x,75 + static_cast<float>(i * 115)});
+
+                // Randomise starship spawning locations
+                auto flagship_pos = _player.GetShip()[flagship]->GetSpriteComponent().GetPos();
+                UpdateDistribution("Ship xPos", flagship_pos.x, flagship_pos.x);
+
+                int rand_x = uint_distrib[0](generator);
+                int rand_y = uint_distrib[1](generator);
+                _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().SetPos({static_cast<float>(rand_x), static_cast<float>(rand_y)});
             }
-                //_player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().SetPos(_player.GetShip()[flagship]->GetSpriteComponent().GetSprite().getPosition());
         }
         else if(!_command_buttons[i]->IsHoveredOver())
         {
@@ -243,6 +257,35 @@ void GameScene::InitEnemyFlagship()
     _enemy.GetShip()[flagship]->GetSpriteComponent().SetPos({enemy_width, enemy_height});
     _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
     _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite().setRotation(180);
+}
+
+void GameScene::CreateDistribution(const std::string& name, int min, int max)
+{
+    std::uniform_int_distribution<int> instance{min, max};
+    uint_distrib.emplace_back(instance);
+}
+
+void GameScene::UpdateDistribution(const std::string& name, int min, int max)
+{
+    std::map<std::string, int>::iterator iter;
+    iter = dist_code.find(name);
+
+    if(iter == dist_code.end())
+        std::cout << "Key not found" << std::endl;
+    else
+    {
+        uint_distrib[iter->second] = std::uniform_int_distribution<>(min,max);
+        std::cout << "Key found!" << std::endl;
+    }
+}
+
+std::mt19937 GameScene::GetEngine()
+{
+    std::random_device eng;
+    std::mt19937 generator(eng());
+    unsigned long int time = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    generator.seed(time);
+    return generator;
 }
 
 

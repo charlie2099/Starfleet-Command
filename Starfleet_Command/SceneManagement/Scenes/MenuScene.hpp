@@ -39,7 +39,8 @@ class MenuScene : public Scene
     int SELECTED_SHIP = 0;
 
     Chilli::Cursor cursor;
-    Crosshair crosshair;
+    Chilli::Colours _predefinedColours;
+    //Crosshair crosshair;
     std::array<Panel, 5> panels;
     std::vector<std::unique_ptr<Starship>> starship;
     std::vector<std::uniform_int_distribution<int>> uint_distrib;

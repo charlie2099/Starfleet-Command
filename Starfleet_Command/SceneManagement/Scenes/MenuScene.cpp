@@ -109,14 +109,17 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, starship[i]->GetSpriteComponent().GetSprite().getGlobalBounds()))
         {
             SELECTED_SHIP = i;
-            crosshair.snapTo(starship[SELECTED_SHIP]);
+            //.snapTo(starship[SELECTED_SHIP]);
             cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::Cyan);
+            starship[i]->SetHealthBarVisibility(true);
+            starship[i]->GetSpriteComponent().GetSprite().setColor(sf::Color::Cyan);
         }
-        else if(!Chilli::Vector::BoundsCheck(mousePosWorldCoords,
-                                        starship[SELECTED_SHIP]->GetSpriteComponent().GetSprite().getGlobalBounds()))
+        else if(!Chilli::Vector::BoundsCheck(mousePosWorldCoords,starship[SELECTED_SHIP]->GetSpriteComponent().GetSprite().getGlobalBounds()))
         {
-            crosshair.unSnap();
+            //crosshair.unSnap();
             cursor.SetCursorType(Chilli::Cursor::DEFAULT, sf::Color::White);
+            starship[i]->SetHealthBarVisibility(false);
+            starship[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
         }
     }
 }
@@ -133,7 +136,7 @@ void MenuScene::Render(sf::RenderWindow& window)
     {
         panel.Render(window);
     }
-    crosshair.render(window);
+    //crosshair.render(window);
     //test_player.Render(window);
     cursor.Render(window);
 }
