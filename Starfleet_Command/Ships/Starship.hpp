@@ -53,7 +53,6 @@ class Starship
     float _speed = 0.0F;
     float _acceleration = 0.0F;
     bool _healthBarIsVisible = false;
-    bool _isDead = false;
 };
 
 #endif //STARFLEET_COMMAND_STARSHIP_HPP

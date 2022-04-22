@@ -234,7 +234,7 @@ void MenuScene::InitBackgroundShips(std::mt19937 &generator)
 {
     CreateDistribution("Ship xpos", 0, Constants::WINDOW_WIDTH);
     CreateDistribution("Ship ypos", 45, 675);
-    CreateDistribution("Ship class", 0, 3);
+    CreateDistribution("Ship class", 0, 5);
 
     for (int i = 0; i < BACKGROUND_SHIPS; ++i)
     {

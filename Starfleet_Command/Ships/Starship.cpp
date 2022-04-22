@@ -36,7 +36,7 @@ Starship::Starship(Type type) : ship_type(type)
             break;
         case Type::FLAGSHIP:
             spriteComponent.LoadSprite("images/starfleet_ship_flagship.png");
-            spriteComponent.GetSprite().scale({0.10F, 0.10F});
+            spriteComponent.GetSprite().scale({0.08F, 0.08F});
             _health = 5000;
             _speed = 10;
             break;
@@ -55,41 +55,25 @@ Starship::Starship(Type type) : ship_type(type)
 
 void Starship::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    if(_healthBar[0].GetHealth() <= 0)
+    for(auto& bar : _healthBar)
     {
-        _isDead = true;
-    }
-
-    if(!_isDead)
-    {
-        for(auto& bar : _healthBar)
-        {
-            bar.Update(window, deltaTime);
-            auto ship_bounds = spriteComponent.GetSprite().getGlobalBounds();
-            auto bar_bounds = bar.GetSpriteComponent().GetSprite().getGlobalBounds();
-            auto xPos = (spriteComponent.GetPos().x) - (ship_bounds.width/2.0f + bar_bounds.width/2.0f);
-            auto yPos = (spriteComponent.GetPos().y + ship_bounds.height/2.0f) - (ship_bounds.height + bar_bounds.height*4);
-            bar.SetPos({xPos, yPos});
-        }
-
-        if(_healthBar[0].GetHealth() <= 0)
-        {
-
-        }
+        bar.Update(window, deltaTime);
+        auto ship_bounds = spriteComponent.GetSprite().getGlobalBounds();
+        auto bar_bounds = bar.GetSpriteComponent().GetSprite().getGlobalBounds();
+        auto xPos = (spriteComponent.GetPos().x) - (ship_bounds.width/2.0f + bar_bounds.width/2.0f);
+        auto yPos = (spriteComponent.GetPos().y + ship_bounds.height/2.0f) - (ship_bounds.height + bar_bounds.height*4);
+        bar.SetPos({xPos, yPos});
     }
 }
 
 void Starship::Render(sf::RenderWindow &window)
 {
-    if(!_isDead)
+    window.draw(spriteComponent.GetSprite());
+    for(auto& health : _healthBar)
     {
-        window.draw(spriteComponent.GetSprite());
-        for(auto& health : _healthBar)
+        if(_healthBarIsVisible)
         {
-            if(_healthBarIsVisible)
-            {
-                health.Render(window);
-            }
+            health.Render(window);
         }
     }
 }

@@ -31,8 +31,9 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         {
             if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _player.GetShip()[i]->GetSpriteComponent().GetSprite().getGlobalBounds()))
             {
+                std::cout << "Starship index: " << i << std::endl;
                 _player.GetShip()[i]->GetHealthBar()[0].TakeDamage(50);
-                std::cout << "Flagship health: " << _player.GetShip()[i]->GetHealthBar()[0].GetHealth() << std::endl;
+                //std::cout << "Starship health: " << _player.GetShip()[i]->GetHealthBar()[0].GetHealth() << std::endl;
             }
         }
     }
@@ -50,9 +51,10 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
                 int flagship = 0;
                 _player.CreateShip(static_cast<Starship::Type>(i));
                 _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
-                _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().SetPos(
-                        _player.GetShip()[flagship]->GetSpriteComponent().GetSprite().getPosition());
+                _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().SetPos({
+                    _player.GetShip()[flagship]->GetSpriteComponent().GetSprite().getPosition().x,75 + static_cast<float>(i * 115)});
             }
+                //_player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().SetPos(_player.GetShip()[flagship]->GetSpriteComponent().GetSprite().getPosition());
         }
         else if(!_command_buttons[i]->IsHoveredOver())
         {
@@ -83,13 +85,15 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, player_flagship.getGlobalBounds()))
     {
         _selected_ship = 0;
-        _player.GetShip()[flagship]->GetSpriteComponent().GetSprite().setColor(sf::Color::Cyan);
+        _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::Cyan);
         _player.GetShip()[flagship]->SetHealthBarVisibility(true);
+        _player.GetShip()[flagship]->GetSpriteComponent().GetSprite().setColor(sf::Color::Cyan);
     }
     else if(!Chilli::Vector::BoundsCheck(mousePosWorldCoords, _player.GetShip()[_selected_ship]->GetSpriteComponent().GetSprite().getGlobalBounds()))
     {
-        _player.GetShip()[flagship]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+        _cursor.SetCursorType(Chilli::Cursor::DEFAULT, sf::Color::White);
         _player.GetShip()[flagship]->SetHealthBarVisibility(false);
+        _player.GetShip()[flagship]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
     }
 
     for(int i = 1; i < _player.GetShip().size(); i++)
@@ -109,6 +113,10 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             }
         }
         player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
+
+
+
+        // Select ship
 
         if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, player_sprite.getGlobalBounds()))
         {

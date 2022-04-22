@@ -6,6 +6,15 @@ void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         ship->Update(window, deltaTime);
     }
+
+    for (int i = 0; i < starship.size(); i++)
+    {
+        if(starship[i]->GetHealthBar()[0].GetHealth() <= 0)
+        {
+            //starship.clear();
+            starship.erase(starship.begin() + i);
+        }
+    }
 }
 
 void Player::Render(sf::RenderWindow &window)
