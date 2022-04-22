@@ -1,27 +1,27 @@
 #include "SpriteComponent.hpp"
 
-void SpriteComponent::loadSprite(const std::string& texture_filepath)
+void SpriteComponent::LoadSprite(const std::string& texture_filepath)
 {
     texture_.loadFromFile(texture_filepath);
     sprite.setTexture(texture_);
 }
 
-sf::Sprite &SpriteComponent::getSprite()
+sf::Sprite &SpriteComponent::GetSprite()
 {
     return sprite;
 }
 
-void SpriteComponent::setPos(sf::Vector2<float> pos)
+void SpriteComponent::SetPos(sf::Vector2<float> pos)
 {
     sprite.setPosition(pos);
 }
 
-sf::Vector2<float> SpriteComponent::getPos()
+sf::Vector2<float> SpriteComponent::GetPos()
 {
     return sprite.getPosition();
 }
 
-void SpriteComponent::render(sf::RenderWindow &renderWindow)
+void SpriteComponent::Render(sf::RenderWindow &renderWindow)
 {
     renderWindow.draw(sprite);
 }

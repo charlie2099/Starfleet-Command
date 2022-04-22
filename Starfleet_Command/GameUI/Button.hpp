@@ -11,20 +11,15 @@ class Button
     ~Button() = default;
 
     /// General
-    void update(sf::RenderWindow& window);
-    void render(sf::RenderWindow& window);
-
-    /// Modifiers
-    void setActiveColour(sf::Color colour);
+    void Update(sf::RenderWindow& window);
+    void Render(sf::RenderWindow& window);
 
     /// Accessors
-    SpriteComponent &getSpriteComponent();
-    bool hoveredOver() const { return is_within_bounds; };
+    SpriteComponent &GetSpriteComponent();
+    bool IsHoveredOver() const { return is_within_bounds; };
 
  private:
     SpriteComponent spriteComponent;
-    sf::Color idle_colour;
-    sf::Color active_colour;
     bool is_within_bounds = false;
 };
 

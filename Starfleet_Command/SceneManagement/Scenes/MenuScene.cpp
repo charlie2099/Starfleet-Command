@@ -71,29 +71,33 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         panels[i].Update(window);
     }
+    for (auto & ship : starship)
+    {
+        ship->Update(window, deltaTime);
+    }
 
     for (int i = 0; i < starship.size(); ++i)
     {
         // Ally ships
         if(i < BACKGROUND_SHIPS/2)
         {
-            sf::Vector2f movement(static_cast<float>(starship_speed_vec[i]), 0.f);
-            starship[i]->GetSpriteComponent().getSprite().move(movement * deltaTime.asSeconds());
+            sf::Vector2f movement(starship[i]->GetSpeed()*2, 0.0f);
+            starship[i]->GetSpriteComponent().GetSprite().move(movement * deltaTime.asSeconds());
         }
         // Enemy ships
         if(i >= BACKGROUND_SHIPS/2)
         {
-            sf::Vector2f movement(static_cast<float>(starship_speed_vec[i] *-1), 0.f);
-            starship[i]->GetSpriteComponent().getSprite().move(movement * deltaTime.asSeconds());
+            sf::Vector2f movement((starship[i]->GetSpeed()*2) * -1, 0.0f);
+            starship[i]->GetSpriteComponent().GetSprite().move(movement * deltaTime.asSeconds());
         }
 
-        if(starship[i]->GetSpriteComponent().getPos().x >= Constants::WINDOW_WIDTH)
+        if(starship[i]->GetSpriteComponent().GetPos().x >= Constants::WINDOW_WIDTH)
         {
-            starship[i]->GetSpriteComponent().setPos({0, starship[i]->GetSpriteComponent().getPos().y});
+            starship[i]->GetSpriteComponent().SetPos({0, starship[i]->GetSpriteComponent().GetPos().y});
         }
-        else if(starship[i]->GetSpriteComponent().getPos().x <= 0)
+        else if(starship[i]->GetSpriteComponent().GetPos().x <= 0)
         {
-            starship[i]->GetSpriteComponent().setPos({Constants::WINDOW_WIDTH, starship[i]->GetSpriteComponent().getPos().y});
+            starship[i]->GetSpriteComponent().SetPos({Constants::WINDOW_WIDTH, starship[i]->GetSpriteComponent().GetPos().y});
         }
     }
 
@@ -102,14 +106,14 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     for (int i = 0; i < BACKGROUND_SHIPS/2; ++i)
     {
-        if(ComfortableBoundsCheck(mousePosWorldCoords, starship[i]->GetSpriteComponent().getSprite().getGlobalBounds()))
+        if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, starship[i]->GetSpriteComponent().GetSprite().getGlobalBounds()))
         {
             SELECTED_SHIP = i;
             crosshair.snapTo(starship[SELECTED_SHIP]);
             cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::Cyan);
         }
-        else if(!ComfortableBoundsCheck(mousePosWorldCoords,
-                                        starship[SELECTED_SHIP]->GetSpriteComponent().getSprite().getGlobalBounds()))
+        else if(!Chilli::Vector::BoundsCheck(mousePosWorldCoords,
+                                        starship[SELECTED_SHIP]->GetSpriteComponent().GetSprite().getGlobalBounds()))
         {
             crosshair.unSnap();
             cursor.SetCursorType(Chilli::Cursor::DEFAULT, sf::Color::White);
@@ -231,37 +235,23 @@ void MenuScene::InitBackgroundShips(std::mt19937 &generator)
     CreateDistribution("Ship xpos", 0, Constants::WINDOW_WIDTH);
     CreateDistribution("Ship ypos", 45, 675);
     CreateDistribution("Ship class", 0, 3);
-    CreateDistribution("Ship speed", 50, 250);
 
     for (int i = 0; i < BACKGROUND_SHIPS; ++i)
     {
         int rand_x = uint_distrib[0](generator);
         int rand_y = uint_distrib[1](generator);
         int rand_ship = uint_distrib[2](generator);
-        int rand_speed = uint_distrib[3](generator);
-
-        starship_speed_vec.emplace_back(int());
-        starship_speed_vec[i] = rand_speed;
         starship.emplace_back(std::make_unique<Starship>(static_cast<Starship::Type>(rand_ship)));
-        starship[i]->GetSpriteComponent().getSprite().setColor(sf::Color(153, 210, 242));
-        starship[i]->GetSpriteComponent().setPos({static_cast<float>(rand_x), static_cast<float>(rand_y)});
+        starship[i]->GetSpriteComponent().GetSprite().setColor(sf::Color(153, 210, 242));
+        starship[i]->GetSpriteComponent().SetPos({static_cast<float>(rand_x), static_cast<float>(rand_y)});
 
         if(i >= BACKGROUND_SHIPS/2)
         {
-            starship[i]->GetSpriteComponent().getSprite().setRotation(180);
-            //starship[i]->GetSpriteComponent().getSprite().setColor(sf::Color(247, 85, 85));
-            starship[i]->GetSpriteComponent().getSprite().setColor(sf::Color(91, 239, 170));
+            starship[i]->GetSpriteComponent().GetSprite().setRotation(180);
+            //starship[i]->GetSpriteComponent().GetSprite().setColor(sf::Color(247, 85, 85));
+            starship[i]->GetSpriteComponent().GetSprite().setColor(sf::Color(91, 239, 170));
         }
     }
-}
-
-bool MenuScene::ComfortableBoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect sprite_bounds)
-{
-    auto offset = 20.0F;
-    return (mouse_vec.x > sprite_bounds.left - offset &&
-    mouse_vec.y > sprite_bounds.top - offset &&
-    mouse_vec.x < sprite_bounds.left + sprite_bounds.width + offset &&
-    mouse_vec.y < sprite_bounds.top + sprite_bounds.height + offset);
 }
 
 void MenuScene::CreateDistribution(const std::string& name, int min, int max)

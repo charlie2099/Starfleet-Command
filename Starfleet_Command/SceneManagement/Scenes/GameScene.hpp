@@ -31,9 +31,10 @@ private:
     Chilli::Colours _predefinedColours;
 
     // Ui
-    sf::Texture _command_button_1_texture;
-    sf::Sprite _command_button_1_sprite;
-    //Panel _panel;
+    //Crosshair crosshair;
+    std::vector<std::unique_ptr<Button>> _command_buttons;
+    std::vector<sf::Text> _ship_cost_text;
+    sf::Text _credits_text;
 
     // Sprites
     Player _player;
@@ -43,8 +44,8 @@ private:
     sf::View _player_view{};
     sf::Texture _background_texture;
     sf::Sprite _background_sprite;
+    int _selected_ship;
 
-    bool is_hovered_over = false;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

@@ -26,7 +26,6 @@ class MenuScene : public Scene
     void InitTitlePanel();
     bool InitMenuTitleIcon();
     void InitBackgroundShips(std::mt19937 &generator);
-    bool ComfortableBoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect sprite_bounds);
     void CreateDistribution(const std::string& name, int min, int max);
 
     static const int PLAY_BUTTON = 0;
@@ -40,11 +39,9 @@ class MenuScene : public Scene
     int SELECTED_SHIP = 0;
 
     Chilli::Cursor cursor;
-    //TestPlayer test_player;
     Crosshair crosshair;
     std::array<Panel, 5> panels;
     std::vector<std::unique_ptr<Starship>> starship;
-    std::vector<int> starship_speed_vec;
     std::vector<std::uniform_int_distribution<int>> uint_distrib;
 
     sf::Texture background_texture;

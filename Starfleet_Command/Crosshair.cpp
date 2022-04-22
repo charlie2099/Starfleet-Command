@@ -6,16 +6,16 @@ Crosshair::Crosshair()
 {
     initTexture();
     sprite = std::make_unique<SpriteComponent>();
-    sprite->getSprite().setTexture(texture);
-    sprite->getSprite().setColor(colour_);
-    sprite->getSprite().setScale(0.36F, 0.36F);
+    sprite->GetSprite().setTexture(texture);
+    sprite->GetSprite().setColor(colour_);
+    sprite->GetSprite().setScale(0.25F, 0.25F);
 }
 
 void Crosshair::render(sf::RenderWindow &window)
 {
     if(is_visible_)
     {
-        window.draw(sprite->getSprite());
+        window.draw(sprite->GetSprite());
     }
 }
 
@@ -27,32 +27,32 @@ std::unique_ptr<SpriteComponent>& Crosshair::getSprite()
 void Crosshair::snapTo(std::unique_ptr<Starship>& starship)
 {
     is_visible_ = true;
-    sprite->getSprite().setColor(colour_);
+    sprite->GetSprite().setColor(colour_);
     auto& ship = starship->GetSpriteComponent();
-    auto crosshair_bounds = sprite->getSprite().getGlobalBounds();
+    auto crosshair_bounds = sprite->GetSprite().getGlobalBounds();
 
-    if(ship.getSprite().getOrigin().x == 0)
+    if(ship.GetSprite().getOrigin().x == 0)
     {
         /// Default origin
         sf::Vector2<float> topleftPos;
-        topleftPos.x = ship.getPos().x + ship.getSprite().getGlobalBounds().width/2 - crosshair_bounds.width/2;
-        topleftPos.y = ship.getPos().y + ship.getSprite().getGlobalBounds().height/2 - crosshair_bounds.height/2;
-        sprite->getSprite().setPosition(topleftPos);
+        topleftPos.x = ship.GetPos().x + ship.GetSprite().getGlobalBounds().width / 2 - crosshair_bounds.width / 2;
+        topleftPos.y = ship.GetPos().y + ship.GetSprite().getGlobalBounds().height / 2 - crosshair_bounds.height / 2;
+        sprite->GetSprite().setPosition(topleftPos);
     }
     else
     {
         /// Centered origin
         sf::Vector2<float> centerPos;
-        centerPos.x = ship.getPos().x - crosshair_bounds.width / 2;
-        centerPos.y = ship.getPos().y - crosshair_bounds.height/2;
-        sprite->getSprite().setPosition(centerPos);
+        centerPos.x = ship.GetPos().x - crosshair_bounds.width / 2;
+        centerPos.y = ship.GetPos().y - crosshair_bounds.height / 2;
+        sprite->GetSprite().setPosition(centerPos);
     }
 }
 
 void Crosshair::unSnap()
 {
     is_visible_ = false;
-    sprite->getSprite().setPosition(0, 0);
+    sprite->GetSprite().setPosition(0, 0);
 }
 
 void Crosshair::setColour(sf::Color colour)
@@ -86,10 +86,10 @@ bool Crosshair::initTexture()
 
 void Crosshair::sizeAdjust(std::unique_ptr<Starship>& starship)
 {
-    auto starship_spr = starship->GetSpriteComponent().getSprite();
+    auto starship_spr = starship->GetSpriteComponent().GetSprite();
     float scale_x = starship_spr.getGlobalBounds().width * starship_spr.getScale().x/8.0F;
     float scale_y = starship_spr.getGlobalBounds().height * starship_spr.getScale().y/8.0F;
-    sprite->getSprite().setScale({scale_x, scale_y});
+    sprite->GetSprite().setScale({scale_x, scale_y});
 }
 
 

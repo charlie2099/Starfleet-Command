@@ -5,32 +5,32 @@ Projectile::Projectile(Projectile::Type type, sf::Vector2<float> start_pos, sf::
     switch (type)
     {
         case Type::LASER_BLUE:
-            sprite_.loadSprite("images/laser_blue.png");
+            sprite_.LoadSprite("images/laser_blue.png");
             break;
         case Type::LASER_RED:
-            sprite_.loadSprite("images/laser_red.png");
+            sprite_.LoadSprite("images/laser_red.png");
             break;
         case Type::MISSILE_BLUE:
-            sprite_.loadSprite("images/missile_blue.png");
+            sprite_.LoadSprite("images/missile_blue.png");
             break;
         case Type::MISSILE_RED:
-            sprite_.loadSprite("images/missile_red.png");
+            sprite_.LoadSprite("images/missile_red.png");
             break;
     }
 
-    sprite_.getSprite().setScale(0.5F, 0.5F);
-    sprite_.setPos(start_pos);
+    sprite_.GetSprite().setScale(0.5F, 0.5F);
+    sprite_.SetPos(start_pos);
 
     // Set rotation
     const float PI = 3.14159265;
     float dx = start_pos.x - mouse_pos.x;
     float dy = start_pos.y - mouse_pos.y;
     float rotation = (atan2(dy, dx)) * 180 / PI;
-    sprite_.getSprite().setRotation(rotation + 180);
+    sprite_.GetSprite().setRotation(rotation + 180);
 
     // Set direction
-    auto angleX = mouse_pos.x - sprite_.getPos().x;
-    auto angleY = mouse_pos.y - sprite_.getPos().y;
+    auto angleX = mouse_pos.x - sprite_.GetPos().x;
+    auto angleY = mouse_pos.y - sprite_.GetPos().y;
     float vectorLength = sqrt(angleX*angleX + angleY*angleY);
     direction_.x = angleX / vectorLength;
     direction_.y = angleY / vectorLength;
@@ -41,7 +41,7 @@ void Projectile::update(sf::RenderWindow &window, sf::Time deltaTime)
     // Shoot projectile towards position of mouse click
     float speed = 200.0F;
     sf::Vector2f movement = direction_ * speed;
-    sprite_.getSprite().move(movement * deltaTime.asSeconds());
+    sprite_.GetSprite().move(movement * deltaTime.asSeconds());
 
 
     // TODO: Change this so the projectiles follow the position
@@ -57,12 +57,12 @@ void Projectile::update(sf::RenderWindow &window, sf::Time deltaTime)
 
     float speed = 200.0F;
     sf::Vector2f movement = direction * speed;
-    sprite_.getSprite().move(movement * deltaTime.asSeconds());*/
+    sprite_.GetSprite().move(movement * deltaTime.asSeconds());*/
 }
 
 void Projectile::render(sf::RenderWindow &window)
 {
-    sprite_.render(window);
+    sprite_.Render(window);
 }
 
 SpriteComponent &Projectile::getSprite()

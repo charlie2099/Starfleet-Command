@@ -2,7 +2,10 @@
 
 void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-
+    for (auto& ship : starship)
+    {
+        ship->Update(window, deltaTime);
+    }
 }
 
 void Player::Render(sf::RenderWindow &window)

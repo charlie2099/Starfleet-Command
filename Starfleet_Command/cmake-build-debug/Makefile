@@ -320,6 +320,30 @@ GameUI/Button.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/Button.cpp.s
 .PHONY : GameUI/Button.cpp.s
 
+GameUI/HealthBar.obj: GameUI/HealthBar.cpp.obj
+.PHONY : GameUI/HealthBar.obj
+
+# target to build an object file
+GameUI/HealthBar.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/HealthBar.cpp.obj
+.PHONY : GameUI/HealthBar.cpp.obj
+
+GameUI/HealthBar.i: GameUI/HealthBar.cpp.i
+.PHONY : GameUI/HealthBar.i
+
+# target to preprocess a source file
+GameUI/HealthBar.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/HealthBar.cpp.i
+.PHONY : GameUI/HealthBar.cpp.i
+
+GameUI/HealthBar.s: GameUI/HealthBar.cpp.s
+.PHONY : GameUI/HealthBar.s
+
+# target to generate assembly for a file
+GameUI/HealthBar.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/HealthBar.cpp.s
+.PHONY : GameUI/HealthBar.cpp.s
+
 GameUI/Panel.obj: GameUI/Panel.cpp.obj
 .PHONY : GameUI/Panel.obj
 
@@ -713,6 +737,9 @@ help:
 	@echo ... GameUI/Button.obj
 	@echo ... GameUI/Button.i
 	@echo ... GameUI/Button.s
+	@echo ... GameUI/HealthBar.obj
+	@echo ... GameUI/HealthBar.i
+	@echo ... GameUI/HealthBar.s
 	@echo ... GameUI/Panel.obj
 	@echo ... GameUI/Panel.i
 	@echo ... GameUI/Panel.s

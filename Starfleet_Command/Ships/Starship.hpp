@@ -1,8 +1,10 @@
 #ifndef STARFLEET_COMMAND_STARSHIP_HPP
 #define STARFLEET_COMMAND_STARSHIP_HPP
-#include "../Components/SpriteComponent.hpp"
 #include "Projectile.hpp"
+#include "../Components/SpriteComponent.hpp"
 #include "../Utility/Vector.hpp"
+#include "../GameUI/HealthBar.hpp"
+#include <iostream>
 
 class Starship
 {
@@ -11,6 +13,7 @@ class Starship
     {
         FIGHTER,
         REPAIR,
+        SCOUT,
         DESTROYER,
         BATTLESHIP,
         FLAGSHIP
@@ -28,6 +31,7 @@ class Starship
     void SetDamage(float damage);
     void SetSpeed(float speed); // Entity class?
     void SetAcceleration(float acceleration);
+    void SetHealthBarVisibility(bool visible);
 
     /// Accessors
     SpriteComponent &GetSpriteComponent();
@@ -36,15 +40,18 @@ class Starship
     float GetDamage() const;
     float GetSpeed() const;
     float GetAcceleration() const;
+    bool IsHealthBarVisible() const { return _healthBarIsVisible; };
 
  private:
+    std::vector<HealthBar> _healthBar;
     SpriteComponent spriteComponent;
     std::vector<std::unique_ptr<Projectile>> projectile{};
     Type ship_type{};
-    float health_ = 0.0F;
-    float damage_ = 0.0F;
+    float _health = 0.0F;
+    float _damage = 0.0F;
     float _speed = 0.0F;
-    float acceleration_ = 0.0F;
+    float _acceleration = 0.0F;
+    bool _healthBarIsVisible = false;
 };
 
 #endif //STARFLEET_COMMAND_STARSHIP_HPP

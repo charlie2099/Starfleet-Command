@@ -9,15 +9,15 @@ class SpriteComponent
     ~SpriteComponent() = default;
 
     /// General
-    void render(sf::RenderWindow& renderWindow);
+    void Render(sf::RenderWindow& renderWindow);
 
     /// Modifiers
-    void loadSprite(const std::string& texture_filepath);
-    void setPos(sf::Vector2<float> pos);
+    void LoadSprite(const std::string& texture_filepath);
+    void SetPos(sf::Vector2<float> pos);
 
     /// Accessors
-    sf::Sprite &getSprite();
-    sf::Vector2<float> getPos();
+    sf::Sprite &GetSprite();
+    sf::Vector2<float> GetPos();
 
  private:
     sf::Vector2<float> position {0, 0};

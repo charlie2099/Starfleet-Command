@@ -2,22 +2,17 @@
 
 Button::Button(const std::string& filepath)
 {
-    spriteComponent.loadSprite(filepath);
-    idle_colour = sf::Color::White;
+    spriteComponent.LoadSprite(filepath);
 }
 
-void Button::update(sf::RenderWindow &window)
+void Button::Update(sf::RenderWindow &window)
 {
     auto mouse_pos_relative = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse position translated into world coordinates
 
-    // default colour
-    spriteComponent.getSprite().setColor(idle_colour);
-
     // if mouse within button bounds, do something
-    if(spriteComponent.getSprite().getGlobalBounds().contains(mouse_pos_world))
+    if(spriteComponent.GetSprite().getGlobalBounds().contains(mouse_pos_world))
     {
-        spriteComponent.getSprite().setColor(active_colour);
         is_within_bounds = true;
     }
     else
@@ -26,17 +21,12 @@ void Button::update(sf::RenderWindow &window)
     }
 }
 
-void Button::render(sf::RenderWindow &window)
+void Button::Render(sf::RenderWindow &window)
 {
-    window.draw(spriteComponent.getSprite());
+    window.draw(spriteComponent.GetSprite());
 }
 
-void Button::setActiveColour(sf::Color colour)
-{
-    active_colour = colour;
-}
-
-SpriteComponent &Button::getSpriteComponent()
+SpriteComponent &Button::GetSpriteComponent()
 {
     return spriteComponent;
 }

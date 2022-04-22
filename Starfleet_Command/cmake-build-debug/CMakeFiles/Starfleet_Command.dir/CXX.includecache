@@ -702,6 +702,12 @@ SFML/Graphics.hpp
 ../Components/SpriteComponent.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp
 
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp
+SFML/Graphics/RenderWindow.hpp
+-
+../Components/SpriteComponent.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp
+
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
 SFML/Graphics.hpp
 -
@@ -759,12 +765,16 @@ cmath
 -
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
-../Components/SpriteComponent.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp
 Projectile.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Projectile.hpp
+../Components/SpriteComponent.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp
 ../Utility/Vector.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp
+../GameUI/HealthBar.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp
+iostream
+-
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constants.hpp
 iostream
@@ -774,12 +784,10 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Predefin
 SFML/Graphics/Color.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/SFML/Graphics/Color.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.cpp
-Vector.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp
-
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp
 SFML/System/Vector2.hpp
+-
+SFML/Graphics/Rect.hpp
 -
 cmath
 -

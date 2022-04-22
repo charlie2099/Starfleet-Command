@@ -117,7 +117,7 @@ GameScene::init()
     - speed = 16;
 
     Battleship class : public Starship
-    - loadSprite(battleship.png) in constructor
+    - LoadSprite(battleship.png) in constructor
     - health = 1200;
     - damage = 200;
     - speed = 12;
@@ -271,9 +271,9 @@ GameScene::init()
 
         }
 
-        if(mouse.HoveredOver(starship))
+        if(mouse.IsHoveredOver(starship))
         {
-            crosshair.setPos();
+            crosshair.SetPos();
         }
 
 
@@ -286,7 +286,7 @@ enemy.AddToFleet(Ship::BOMBER);
 
 
 
-auto& player_sprite = _player.GetShip()[0]->GetSpriteComponent().getSprite();
+auto& player_sprite = _player.GetShip()[0]->GetSpriteComponent().GetSprite();
 
 //Convert angle to radians
 double playerAngleRADS = (3.1415926536/180)*(player_sprite.getRotation());
