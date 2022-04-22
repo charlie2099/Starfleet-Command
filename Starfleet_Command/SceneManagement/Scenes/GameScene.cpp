@@ -22,6 +22,21 @@ bool GameScene::Init()
 
 void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
+
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+        for (int i = 0; i < _player.GetShip().size(); ++i)
+        {
+            if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _player.GetShip()[i]->GetSpriteComponent().GetSprite().getGlobalBounds()))
+            {
+                _player.GetShip()[i]->GetHealthBar()[0].TakeDamage(50);
+                std::cout << "Flagship health: " << _player.GetShip()[i]->GetHealthBar()[0].GetHealth() << std::endl;
+            }
+        }
+    }
+
     for (int i = 0; i < _command_buttons.size(); i++)
     {
         if(_command_buttons[i]->IsHoveredOver())

@@ -36,6 +36,7 @@ class Starship
     /// Accessors
     SpriteComponent &GetSpriteComponent();
     std::vector<std::unique_ptr<Projectile>>& GetProjectile();
+    std::vector<HealthBar>& GetHealthBar() { return _healthBar; };
     float GetHealth() const;
     float GetDamage() const;
     float GetSpeed() const;
@@ -52,6 +53,7 @@ class Starship
     float _speed = 0.0F;
     float _acceleration = 0.0F;
     bool _healthBarIsVisible = false;
+    bool _isDead = false;
 };
 
 #endif //STARFLEET_COMMAND_STARSHIP_HPP

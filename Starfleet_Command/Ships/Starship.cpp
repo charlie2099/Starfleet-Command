@@ -8,46 +8,43 @@ Starship::Starship(Type type) : ship_type(type)
             spriteComponent.LoadSprite("images/starfleet_ship_fighter.png");
             spriteComponent.GetSprite().scale({0.05F, 0.05F});
             _health = 100;
-            _healthBar.emplace_back(HealthBar(_health));
             _speed = 80;
             break;
         case Type::REPAIR:
             spriteComponent.LoadSprite("images/starfleet_ship_repair.png");
             spriteComponent.GetSprite().scale({0.05F, 0.05F});
             _health = 150;
-            _healthBar.emplace_back(HealthBar(_health));
             _speed = 70;
             break;
         case Type::SCOUT:
             spriteComponent.LoadSprite("images/starfleet_ship_scout.png");
             spriteComponent.GetSprite().scale({0.30F, 0.30F});
             _health = 75;
-            _healthBar.emplace_back(HealthBar(_health));
             _speed = 100;
             break;
         case Type::DESTROYER:
             spriteComponent.LoadSprite("images/starfleet_ship_destroyer.png");
             spriteComponent.GetSprite().scale({0.05F, 0.05F});
             _health = 250;
-            _healthBar.emplace_back(HealthBar(_health));
             _speed = 40;
             break;
         case Type::BATTLESHIP:
             spriteComponent.LoadSprite("images/starfleet_ship_battleship.png");
             spriteComponent.GetSprite().scale({0.05F, 0.05F});
             _health = 500;
-            _healthBar.emplace_back(HealthBar(_health));
             _speed = 30;
             break;
         case Type::FLAGSHIP:
             spriteComponent.LoadSprite("images/starfleet_ship_flagship.png");
             spriteComponent.GetSprite().scale({0.10F, 0.10F});
             _health = 5000;
-            _healthBar.emplace_back(HealthBar(_health));
             _speed = 10;
             break;
     }
     //spriteComponent.GetSprite().scale({0.05F, 0.05F});
+
+    _healthBar.emplace_back(HealthBar());
+    _healthBar[0].SetMaxHealth(_health);
 
     /// Change default origin to center
     sf::Vector2<float> centered_origin;
@@ -58,25 +55,41 @@ Starship::Starship(Type type) : ship_type(type)
 
 void Starship::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    for(auto& bar : _healthBar)
+    if(_healthBar[0].GetHealth() <= 0)
     {
-        bar.Update(window, deltaTime);
-        auto ship_bounds = spriteComponent.GetSprite().getGlobalBounds();
-        auto bar_bounds = bar.GetSpriteComponent().GetSprite().getGlobalBounds();
-        auto xPos = (spriteComponent.GetPos().x + ship_bounds.width/2.0f) - (ship_bounds.width/2.0f + bar_bounds.width/2.0f);
-        auto yPos = (spriteComponent.GetPos().y + ship_bounds.height/2.0f) - (ship_bounds.height + bar_bounds.height*4);
-        bar.SetPos({xPos, yPos});
+        _isDead = true;
+    }
+
+    if(!_isDead)
+    {
+        for(auto& bar : _healthBar)
+        {
+            bar.Update(window, deltaTime);
+            auto ship_bounds = spriteComponent.GetSprite().getGlobalBounds();
+            auto bar_bounds = bar.GetSpriteComponent().GetSprite().getGlobalBounds();
+            auto xPos = (spriteComponent.GetPos().x) - (ship_bounds.width/2.0f + bar_bounds.width/2.0f);
+            auto yPos = (spriteComponent.GetPos().y + ship_bounds.height/2.0f) - (ship_bounds.height + bar_bounds.height*4);
+            bar.SetPos({xPos, yPos});
+        }
+
+        if(_healthBar[0].GetHealth() <= 0)
+        {
+
+        }
     }
 }
 
 void Starship::Render(sf::RenderWindow &window)
 {
-    window.draw(spriteComponent.GetSprite());
-    for(auto& health : _healthBar)
+    if(!_isDead)
     {
-        if(_healthBarIsVisible)
+        window.draw(spriteComponent.GetSprite());
+        for(auto& health : _healthBar)
         {
-            health.Render(window);
+            if(_healthBarIsVisible)
+            {
+                health.Render(window);
+            }
         }
     }
 }

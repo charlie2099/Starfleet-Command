@@ -82,7 +82,7 @@ GameScene::init()
     Starship Class : public SpriteComponent
     - Projectile projectile;
     - CommandActions actions - actions.setCommand(ATTACK);
-    - SetHealth(float health);
+    - SetMaxHealth(float health);
     - SetDamage(float damage);
     - SetSpeed(float speed);
     - setVelocity();
