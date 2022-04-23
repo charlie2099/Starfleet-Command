@@ -2,26 +2,10 @@
 
 bool GameScene::Init()
 {
-    generator = GetEngine();
-    CreateDistribution("Ship xPos", 1100, 1100);
-    CreateDistribution("Ship yPos", 45, 675);
-    dist_code =
-    {
-            {"Ship yPos",1},
-            {"Ship xPos",0}
-    };
-
+    InitDistribution();
     InitBackground();
     InitCommandButtons();
-
-    _credits_text.setString("Credits: 10000");
-    _credits_text.setFillColor(sf::Color(153, 210, 242));
-    _credits_text.setOutlineColor(sf::Color::Black);
-    _credits_text.setOutlineThickness(1);
-    _credits_text.setFont(GetRegularFont());
-    _credits_text.setCharacterSize(20);
-    _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
-
+    InitCreditsText();
     InitView();
     InitPlayerFlagship();
     InitEnemyFlagship();
@@ -34,15 +18,18 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
 
+    // Damage ships on mouse press
     if (event.type == sf::Event::MouseButtonPressed)
     {
         for (int i = 0; i < _player.GetShip().size(); ++i)
         {
-            if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _player.GetShip()[i]->GetSpriteComponent().GetSprite().getGlobalBounds()))
+            if(_player.GetShip()[i] != nullptr)
             {
-                std::cout << "Starship index: " << i << std::endl;
-                _player.GetShip()[i]->GetHealthBar()[0].TakeDamage(50);
-                //std::cout << "Starship health: " << _player.GetShip()[i]->GetHealthBar()[0].GetHealth() << std::endl;
+                if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _player.GetShip()[i]->GetSpriteComponent().GetSprite().getGlobalBounds()))
+                {
+                    std::cout << "Starship index: " << i << std::endl;
+                    _player.GetShip()[i]->GetHealthBar()[0].TakeDamage(500);
+                }
             }
         }
     }
@@ -57,17 +44,10 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             {
                 _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({153, 210, 242, 150});
 
-                int flagship = 0;
                 _player.CreateShip(static_cast<Starship::Type>(i));
                 _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
 
-                // Randomise starship spawning locations
-                auto flagship_pos = _player.GetShip()[flagship]->GetSpriteComponent().GetPos();
-                UpdateDistribution("Ship xPos", flagship_pos.x, flagship_pos.x);
-
-                int rand_x = uint_distrib[0](generator);
-                int rand_y = uint_distrib[1](generator);
-                _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().SetPos({static_cast<float>(rand_x), static_cast<float>(rand_y)});
+                RandomiseShipSpawnPoint();
             }
         }
         else if(!_command_buttons[i]->IsHoveredOver())
@@ -91,61 +71,53 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _enemy.Update(window, deltaTime);
 
     int flagship = 0;
-    auto& player_flagship = _player.GetShip()[flagship]->GetSpriteComponent().GetSprite();
-    auto& enemy_flagship = _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite();
-    player_flagship.move(_player.GetShip()[flagship]->GetSpeed() * deltaTime.asSeconds(), 0);
-    enemy_flagship.move(_enemy.GetShip()[flagship]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
-
-    if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, player_flagship.getGlobalBounds()))
+    if(_player.GetShip()[flagship] != nullptr)
     {
-        _selected_ship = 0;
-        _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::Cyan);
-        _player.GetShip()[flagship]->SetHealthBarVisibility(true);
-        _player.GetShip()[flagship]->GetSpriteComponent().GetSprite().setColor(sf::Color::Cyan);
+        auto& player_flagship = _player.GetShip()[flagship]->GetSpriteComponent().GetSprite();
+        auto& enemy_flagship = _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite();
+        player_flagship.move(_player.GetShip()[flagship]->GetSpeed() * deltaTime.asSeconds(), 0);
+        enemy_flagship.move(_enemy.GetShip()[flagship]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
     }
-    else if(!Chilli::Vector::BoundsCheck(mousePosWorldCoords, _player.GetShip()[_selected_ship]->GetSpriteComponent().GetSprite().getGlobalBounds()))
+
+    for(auto & ship : _player.GetShip())
     {
-        _cursor.SetCursorType(Chilli::Cursor::DEFAULT, sf::Color::White);
-        _player.GetShip()[flagship]->SetHealthBarVisibility(false);
-        _player.GetShip()[flagship]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+        if(ship != nullptr)
+        {
+            if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, ship->GetSpriteComponent().GetSprite().getGlobalBounds()))
+            {
+                _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::Cyan);
+                ship->SetHealthBarVisibility(true);
+                ship->GetSpriteComponent().GetSprite().setColor(sf::Color::Cyan);
+            }
+            else
+            {
+                _cursor.SetCursorType(Chilli::Cursor::DEFAULT, sf::Color::White);
+                ship->SetHealthBarVisibility(false);
+                ship->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+            }
+        }
     }
 
     for(int i = 1; i < _player.GetShip().size(); i++)
     {
-        auto& player_sprite = _player.GetShip()[i]->GetSpriteComponent().GetSprite();
-        for(int j = 0; j < _enemy.GetShip().size(); j++)
+        if(_player.GetShip()[i] != nullptr)
         {
-            auto& enemy_sprite = _enemy.GetShip()[j]->GetSpriteComponent().GetSprite();
-            if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) < 200)
+            auto& player_sprite = _player.GetShip()[i]->GetSpriteComponent().GetSprite();
+
+            for(int j = 0; j < _enemy.GetShip().size(); j++)
             {
-                _player.GetShip()[i]->SetSpeed(20);
-                _player.GetShip()[i]->MoveTowards(enemy_sprite.getPosition(), deltaTime);
+                auto& enemy_sprite = _enemy.GetShip()[j]->GetSpriteComponent().GetSprite();
+                if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) < 200)
+                {
+                    _player.GetShip()[i]->SetSpeed(20);
+                    _player.GetShip()[i]->MoveTowards(enemy_sprite.getPosition(), deltaTime);
+                }
+                else
+                {
+                    //_player.GetShip()[i]->SetSpeed(80);
+                }
             }
-            else
-            {
-                //_player.GetShip()[i]->SetSpeed(80);
-            }
-        }
-        player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
-
-
-
-        // Select ship
-
-        if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, player_sprite.getGlobalBounds()))
-        {
-            _selected_ship = i;
-            //crosshair.snapTo(_player.GetShip()[_selected_ship]);
-            _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::Cyan);
-            _player.GetShip()[i]->SetHealthBarVisibility(true);
-            _player.GetShip()[i]->GetSpriteComponent().GetSprite().setColor(sf::Color::Cyan);
-        }
-        else if(!Chilli::Vector::BoundsCheck(mousePosWorldCoords, _player.GetShip()[_selected_ship]->GetSpriteComponent().GetSprite().getGlobalBounds()))
-        {
-            //crosshair.unSnap();
-            _cursor.SetCursorType(Chilli::Cursor::DEFAULT, sf::Color::White);
-            _player.GetShip()[i]->SetHealthBarVisibility(false);
-            _player.GetShip()[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+            player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
         }
     }
 
@@ -172,7 +144,18 @@ void GameScene::Render(sf::RenderWindow& window)
     _cursor.Render(window);
 }
 
-/// OTHER
+void GameScene::InitDistribution()
+{
+    generator = GetEngine();
+    CreateDistribution("Ship xPos", 1100, 1100);
+    CreateDistribution("Ship yPos", 45, 675);
+    dist_code =
+    {
+            {"Ship yPos",1},
+            {"Ship xPos",0}
+    };
+}
+
 bool GameScene::InitBackground()
 {
     if (!_background_texture.loadFromFile("images/space_nebula.png")) // background2
@@ -223,6 +206,17 @@ bool GameScene::InitCommandButtons()
     return true;
 }
 
+void GameScene::InitCreditsText()
+{
+    _credits_text.setString("Credits: 10000");
+    _credits_text.setFillColor(sf::Color(153, 210, 242));
+    _credits_text.setOutlineColor(sf::Color::Black);
+    _credits_text.setOutlineThickness(1);
+    _credits_text.setFont(GetRegularFont());
+    _credits_text.setCharacterSize(20);
+    _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
+}
+
 void GameScene::InitView()
 {
     /// Reset View to default settings
@@ -257,6 +251,16 @@ void GameScene::InitEnemyFlagship()
     _enemy.GetShip()[flagship]->GetSpriteComponent().SetPos({enemy_width, enemy_height});
     _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
     _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite().setRotation(180);
+}
+
+void GameScene::RandomiseShipSpawnPoint()
+{
+    int flagship = 0;
+    auto flagship_pos = _player.GetShip()[flagship]->GetSpriteComponent().GetPos();
+    UpdateDistribution("Ship xPos", flagship_pos.x, flagship_pos.x);
+    int rand_x = uint_distrib[0](generator);
+    int rand_y = uint_distrib[1](generator);
+    _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().SetPos({static_cast<float>(rand_x), static_cast<float>(rand_y)});
 }
 
 void GameScene::CreateDistribution(const std::string& name, int min, int max)

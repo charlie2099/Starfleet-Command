@@ -11,7 +11,6 @@ void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         if(starship[i]->GetHealthBar()[0].GetHealth() <= 0)
         {
-            //starship.clear();
             starship.erase(starship.begin() + i);
         }
     }

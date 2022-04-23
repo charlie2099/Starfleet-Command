@@ -22,11 +22,14 @@ public:
     void Render(sf::RenderWindow& window) override;
 
 private:
+    void InitDistribution();
     bool InitBackground();
     bool InitCommandButtons();
     void InitPlayerFlagship();
     void InitEnemyFlagship();
+    void InitCreditsText();
     void InitView();
+    void RandomiseShipSpawnPoint();
     void CreateDistribution(const std::string& name, int min, int max);
     void UpdateDistribution(const std::string& name, int min, int max);
     static std::mt19937 GetEngine();
@@ -49,11 +52,9 @@ private:
     sf::View _player_view{};
     sf::Texture _background_texture;
     sf::Sprite _background_sprite;
-    int _selected_ship;
     std::mt19937 generator;
     std::vector<std::uniform_int_distribution<int>> uint_distrib;
     std::map<std::string, int> dist_code;
-
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP
