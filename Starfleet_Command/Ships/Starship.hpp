@@ -25,6 +25,7 @@ class Starship
 
     // Functionality
     void MoveTowards(sf::Vector2f target, sf::Time deltaTime);
+    void ShootAt(Projectile::Type projectile, float fireRate, sf::Vector2f target);
 
     /// Modifiers
     void SetHealth(float health);
@@ -46,13 +47,14 @@ class Starship
  private:
     std::vector<HealthBar> _healthBar;
     SpriteComponent spriteComponent;
-    std::vector<std::unique_ptr<Projectile>> projectile{};
+    std::vector<std::unique_ptr<Projectile>> _projectile;
     Type ship_type{};
     float _health = 0.0F;
     float _damage = 0.0F;
     float _speed = 0.0F;
     float _acceleration = 0.0F;
     bool _healthBarIsVisible = false;
+    float timePassed = 0;
 };
 
 #endif //STARFLEET_COMMAND_STARSHIP_HPP

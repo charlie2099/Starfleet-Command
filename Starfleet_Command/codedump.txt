@@ -28,7 +28,7 @@ std::vector<Ship> ships.
 ships.create(5, FIGHTER);
 
 
-GameScene::init()
+GameScene::Init()
 {
     std::vector<Ship> ships;
     for(int i = 0; i < Fleet::fleet_size; i++)
@@ -73,7 +73,7 @@ GameScene::init()
 
     SpriteComponent class
     - loadSprite()
-    - getSprite()
+    - GetSprite()
 
     CommandActions class
     - enum class Actions { NONE, ATTACK, DEFEND, REGROUP, REPOSITION }

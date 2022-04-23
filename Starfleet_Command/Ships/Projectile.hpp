@@ -6,22 +6,26 @@
 class Projectile
 {
  public:
-    enum class Type;
+    enum class Type
+    {
+        LASER_BLUE,
+        LASER_RED,
+        MISSILE_BLUE,
+        MISSILE_RED
+    };
 
  public:
-    Projectile(Type type, sf::Vector2<float> start_pos, sf::Vector2<float> mouse_pos);
+    Projectile(Type type, sf::Vector2f spawn_pos, sf::Vector2f target_pos);
     ~Projectile() = default;
 
-    void update(sf::RenderWindow& window, sf::Time deltaTime);
-    void render(sf::RenderWindow& window);
+    void Update(sf::RenderWindow& window, sf::Time deltaTime);
+    void Render(sf::RenderWindow& window);
 
-    enum class Type { LASER_BLUE, LASER_RED, MISSILE_BLUE, MISSILE_RED };
-    SpriteComponent& getSprite();
+    SpriteComponent& GetSprite();
 
  private:
     SpriteComponent sprite_;
     Type type_;
-    sf::Vector2<float> click_position_;
     sf::Vector2<float> direction_;
 };
 

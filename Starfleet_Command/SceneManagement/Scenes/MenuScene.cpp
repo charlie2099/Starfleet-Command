@@ -136,7 +136,7 @@ void MenuScene::Render(sf::RenderWindow& window)
     {
         panel.Render(window);
     }
-    //crosshair.render(window);
+    //crosshair.Render(window);
     //test_player.Render(window);
     cursor.Render(window);
 }

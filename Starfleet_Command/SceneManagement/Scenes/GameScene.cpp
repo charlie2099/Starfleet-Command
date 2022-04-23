@@ -27,7 +27,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             {
                 if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _player.GetShip()[i]->GetSpriteComponent().GetSprite().getGlobalBounds()))
                 {
-                    std::cout << "Starship index: " << i << std::endl;
+                    //std::cout << "Starship index: " << i << std::endl;
                     _player.GetShip()[i]->GetHealthBar()[0].TakeDamage(500);
                 }
             }
@@ -102,22 +102,35 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         if(_player.GetShip()[i] != nullptr)
         {
-            auto& player_sprite = _player.GetShip()[i]->GetSpriteComponent().GetSprite();
-
             for(int j = 0; j < _enemy.GetShip().size(); j++)
             {
+                auto& player_sprite = _player.GetShip()[i]->GetSpriteComponent().GetSprite();
                 auto& enemy_sprite = _enemy.GetShip()[j]->GetSpriteComponent().GetSprite();
-                if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) < 200)
+
+                if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) > 400)
                 {
-                    _player.GetShip()[i]->SetSpeed(20);
+                    player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
+                }
+
+                if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) <= 400 &&
+                   Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) > 200)
+                {
                     _player.GetShip()[i]->MoveTowards(enemy_sprite.getPosition(), deltaTime);
+                }
+                if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) <= 200)
+                {
+                    _player.GetShip()[i]->SetSpeed(0);
+
+                    // fire projectiles if there is a target to shoot at (flee if low on health and target has more?)
+                    _player.GetShip()[i]->ShootAt(Projectile::Type::LASER_BLUE, 1, enemy_sprite.getPosition());
+                    //_player.GetShip()[i]->GetProjectile().emplace_back(std::make_unique<Projectile>(Projectile::Type::LASER_BLUE, player_sprite.getPosition(), enemy_sprite.getPosition()));
                 }
                 else
                 {
+                    //player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
                     //_player.GetShip()[i]->SetSpeed(80);
                 }
             }
-            player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
         }
     }
 
@@ -140,7 +153,7 @@ void GameScene::Render(sf::RenderWindow& window)
     window.draw(_credits_text);
     _player.Render(window);
     _enemy.Render(window);
-    //crosshair.render(window);
+    //crosshair.Render(window);
     _cursor.Render(window);
 }
 

@@ -5,252 +5,258 @@
 		<Option title="Starfleet_Command"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\Libraries\;CMake Files\Libraries\SFML\;CMake Files\Libraries\SFML\lib\;CMake Files\Libraries\SFML\lib\cmake\;CMake Files\Libraries\SFML\lib\cmake\SFML\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\SFML-2.5.1\;CMake Files\SFML-2.5.1\lib\;CMake Files\SFML-2.5.1\lib\cmake\;CMake Files\SFML-2.5.1\lib\cmake\SFML\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug"/>
+				<Option working_dir="D:/Starfleet-Command/Starfleet_Command/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug"/>
+				<Option working_dir="D:/Starfleet-Command/Starfleet_Command/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Starfleet_Command">
-				<Option output="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Starfleet_Command.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug"/>
+				<Option output="D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Starfleet_Command.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/Starfleet-Command/Starfleet_Command/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add option="-DSFML_STATIC"/>
-					<Add directory="C:/Libraries/SFML/include"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="C:/SFML-2.5.1/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 Starfleet_Command"/>
-					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 Starfleet_Command"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Starfleet_Command/fast">
-				<Option output="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Starfleet_Command.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug"/>
+				<Option output="D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Starfleet_Command.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/Starfleet-Command/Starfleet_Command/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add option="-DSFML_STATIC"/>
-					<Add directory="C:/Libraries/SFML/include"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed"/>
-					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/7.3.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="C:/SFML-2.5.1/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 Starfleet_Command/fast"/>
-					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 Starfleet_Command/fast"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug"/>
+				<Option working_dir="D:/Starfleet-Command/Starfleet_Command/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Crosshair.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Crosshair.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Crosshair.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Crosshair.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Cursor.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Cursor.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Cursor.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Cursor.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Component.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/ECS/Component.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Component.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/ECS/Component.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Object.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/ECS/Object.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Object.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/ECS/Object.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Enemy.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Enemy.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Game/Game.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Game/Game.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Button.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/GameUI/Button.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Button.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/GameUI/Button.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/GameUI/Panel.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Player/Fleet.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Player/Player.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.h">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Player/Player.h">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/PlayerStats.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Player/PlayerStats.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/PlayerStats.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Player/PlayerStats.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/SceneManager.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SceneManagement/SceneManager.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/SceneManager.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SceneManagement/SceneManager.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/GameScene.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Projectile.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/OptionsScene.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Projectile.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/OptionsScene.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Ships/Projectile.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Ships/Projectile.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestComponent.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Ships/Starship.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestComponent.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestPlayer.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Temporary/TestComponent.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestPlayer.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Temporary/TestComponent.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Constants.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Temporary/TestPlayer.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/PredefinedColours.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Temporary/TestPlayer.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Utility/Constants.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Utility/PredefinedColours.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/main.cpp">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Utility/Vector.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/CMakeLists.txt">
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/main.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Libraries/SFML/lib/cmake/SFML/SFMLConfig.cmake">
-			<Option virtualFolder="CMake Files\Libraries\SFML\lib\cmake\SFML\"/>
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SFML-2.5.1/lib/cmake/SFML/SFMLConfig.cmake">
+			<Option virtualFolder="CMake Files\SFML-2.5.1\lib\cmake\SFML\"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Libraries/SFML/lib/cmake/SFML/SFMLConfigDependencies.cmake">
-			<Option virtualFolder="CMake Files\Libraries\SFML\lib\cmake\SFML\"/>
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SFML-2.5.1/lib/cmake/SFML/SFMLConfigDependencies.cmake">
+			<Option virtualFolder="CMake Files\SFML-2.5.1\lib\cmake\SFML\"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Libraries/SFML/lib/cmake/SFML/SFMLConfigVersion.cmake">
-			<Option virtualFolder="CMake Files\Libraries\SFML\lib\cmake\SFML\"/>
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SFML-2.5.1/lib/cmake/SFML/SFMLConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\SFML-2.5.1\lib\cmake\SFML\"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Libraries/SFML/lib/cmake/SFML/SFMLStaticTargets-debug.cmake">
-			<Option virtualFolder="CMake Files\Libraries\SFML\lib\cmake\SFML\"/>
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SFML-2.5.1/lib/cmake/SFML/SFMLStaticTargets-debug.cmake">
+			<Option virtualFolder="CMake Files\SFML-2.5.1\lib\cmake\SFML\"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Libraries/SFML/lib/cmake/SFML/SFMLStaticTargets-release.cmake">
-			<Option virtualFolder="CMake Files\Libraries\SFML\lib\cmake\SFML\"/>
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SFML-2.5.1/lib/cmake/SFML/SFMLStaticTargets-release.cmake">
+			<Option virtualFolder="CMake Files\SFML-2.5.1\lib\cmake\SFML\"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Libraries/SFML/lib/cmake/SFML/SFMLStaticTargets.cmake">
-			<Option virtualFolder="CMake Files\Libraries\SFML\lib\cmake\SFML\"/>
+		<Unit filename="D:/Starfleet-Command/Starfleet_Command/SFML-2.5.1/lib/cmake/SFML/SFMLStaticTargets.cmake">
+			<Option virtualFolder="CMake Files\SFML-2.5.1\lib\cmake\SFML\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

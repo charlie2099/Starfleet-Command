@@ -9,42 +9,48 @@ Starship::Starship(Type type) : ship_type(type)
             spriteComponent.GetSprite().scale({0.05F, 0.05F});
             _health = 100;
             _speed = 80;
+            _damage = 20;
             break;
         case Type::REPAIR:
             spriteComponent.LoadSprite("images/starfleet_ship_repair.png");
             spriteComponent.GetSprite().scale({0.05F, 0.05F});
             _health = 150;
             _speed = 70;
+            _damage = 0;
             break;
         case Type::SCOUT:
             spriteComponent.LoadSprite("images/starfleet_ship_scout.png");
             spriteComponent.GetSprite().scale({0.30F, 0.30F});
             _health = 75;
             _speed = 100;
+            _damage = 10;
             break;
         case Type::DESTROYER:
             spriteComponent.LoadSprite("images/starfleet_ship_destroyer.png");
             spriteComponent.GetSprite().scale({0.05F, 0.05F});
             _health = 250;
             _speed = 40;
+            _damage = 150;
             break;
         case Type::BATTLESHIP:
             spriteComponent.LoadSprite("images/starfleet_ship_battleship.png");
             spriteComponent.GetSprite().scale({0.05F, 0.05F});
             _health = 500;
             _speed = 30;
+            _damage = 75;
             break;
         case Type::FLAGSHIP:
             spriteComponent.LoadSprite("images/starfleet_ship_flagship.png");
             spriteComponent.GetSprite().scale({0.08F, 0.08F});
             _health = 5000;
             _speed = 10;
+            _damage = 50;
             break;
     }
     //spriteComponent.GetSprite().scale({0.05F, 0.05F});
 
     _healthBar.emplace_back(HealthBar());
-    _healthBar[0].SetMaxHealth(_health);
+    _healthBar[0].SetMaxHealth(_health); // TODO: This doesn't need to be a vector!
 
     /// Change default origin to center
     sf::Vector2<float> centered_origin;
@@ -55,6 +61,11 @@ Starship::Starship(Type type) : ship_type(type)
 
 void Starship::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
+    for(auto& projectiles : _projectile)
+    {
+        projectiles->Update(window, deltaTime);
+    }
+
     for(auto& bar : _healthBar)
     {
         bar.Update(window, deltaTime);
@@ -68,7 +79,13 @@ void Starship::Update(sf::RenderWindow &window, sf::Time deltaTime)
 
 void Starship::Render(sf::RenderWindow &window)
 {
+    for(auto& projectiles : _projectile)
+    {
+        projectiles->Render(window);
+    }
+
     window.draw(spriteComponent.GetSprite());
+
     for(auto& health : _healthBar)
     {
         if(_healthBarIsVisible)
@@ -125,7 +142,7 @@ SpriteComponent &Starship::GetSpriteComponent()
 
 std::vector<std::unique_ptr<Projectile>>& Starship::GetProjectile()
 {
-    return projectile;
+    return _projectile;
 }
 
 void Starship::MoveTowards(sf::Vector2f target, sf::Time deltaTime)
@@ -140,10 +157,25 @@ void Starship::MoveTowards(sf::Vector2f target, sf::Time deltaTime)
     ship_sprite.setRotation(ship_rot);
 }
 
+void Starship::ShootAt(Projectile::Type projectile, float fireRate, sf::Vector2f target)
+{
+    sf::Clock clock;
+    if(clock.getElapsedTime().asSeconds() <= timePassed)
+    {
+        auto spawnPos = spriteComponent.GetPos();
+        _projectile.emplace_back(std::make_unique<Projectile>(projectile, spawnPos, target));
+
+        timePassed += fireRate;
+    }
+
+    //std::cout << "Elapsed Time: " << clock.getElapsedTime().asSeconds() << std::endl;
+}
+
 void Starship::SetHealthBarVisibility(bool visible)
 {
     _healthBarIsVisible = visible;
 }
+
 
 
 

@@ -1,31 +1,31 @@
 #include "SceneManager.hpp"
 
-bool SceneManager::init()
+bool SceneManager::Init()
 {
     current_scene = std::make_unique<MenuScene>();
     return current_scene->Init();
 }
 
-void SceneManager::eventHandler(sf::RenderWindow& window, sf::Event& event)
+void SceneManager::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     current_scene->EventHandler(window, event);
 }
 
-void SceneManager::update(sf::RenderWindow &window, sf::Time deltaTime)
+void SceneManager::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
     if (current_scene->GetScene() != current_ID)
     {
-        changeScene(current_scene->GetScene());
+        ChangeScene(current_scene->GetScene());
     }
     current_scene->Update(window, deltaTime);
 }
 
-void SceneManager::render(sf::RenderWindow& window)
+void SceneManager::Render(sf::RenderWindow& window)
 {
     current_scene->Render(window);
 }
 
-void SceneManager::changeScene(Scene::ID id)
+void SceneManager::ChangeScene(Scene::ID id)
 {
     current_scene = nullptr;
     current_ID    = id;
@@ -36,8 +36,10 @@ void SceneManager::changeScene(Scene::ID id)
             current_scene = std::make_unique<MenuScene>();
             break;
         case Scene::ID::GAME:
-            //current_scene = std::make_unique<GameScene>();
             current_scene = std::make_unique<GameScene>();
+            break;
+        case Scene::ID::OPTIONS:
+            current_scene = std::make_unique<OptionsScene>();
             break;
     }
     current_scene->SetScene(id);
