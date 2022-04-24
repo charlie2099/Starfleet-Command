@@ -6,6 +6,14 @@ void Enemy::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         ship->Update(window, deltaTime);
     }
+
+    for (int i = 0; i < starship.size(); i++)
+    {
+        if(starship[i]->GetHealthBar().GetHealth() <= 0)
+        {
+            starship.erase(starship.begin() + i);
+        }
+    }
 }
 
 void Enemy::Render(sf::RenderWindow &window)

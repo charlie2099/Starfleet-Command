@@ -560,6 +560,30 @@ SceneManagement/Scenes/MenuScene.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/MenuScene.cpp.s
 .PHONY : SceneManagement/Scenes/MenuScene.cpp.s
 
+SceneManagement/Scenes/OptionsScene.obj: SceneManagement/Scenes/OptionsScene.cpp.obj
+.PHONY : SceneManagement/Scenes/OptionsScene.obj
+
+# target to build an object file
+SceneManagement/Scenes/OptionsScene.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/OptionsScene.cpp.obj
+.PHONY : SceneManagement/Scenes/OptionsScene.cpp.obj
+
+SceneManagement/Scenes/OptionsScene.i: SceneManagement/Scenes/OptionsScene.cpp.i
+.PHONY : SceneManagement/Scenes/OptionsScene.i
+
+# target to preprocess a source file
+SceneManagement/Scenes/OptionsScene.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/OptionsScene.cpp.i
+.PHONY : SceneManagement/Scenes/OptionsScene.cpp.i
+
+SceneManagement/Scenes/OptionsScene.s: SceneManagement/Scenes/OptionsScene.cpp.s
+.PHONY : SceneManagement/Scenes/OptionsScene.s
+
+# target to generate assembly for a file
+SceneManagement/Scenes/OptionsScene.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/OptionsScene.cpp.s
+.PHONY : SceneManagement/Scenes/OptionsScene.cpp.s
+
 Ships/Projectile.obj: Ships/Projectile.cpp.obj
 .PHONY : Ships/Projectile.obj
 
@@ -767,6 +791,9 @@ help:
 	@echo ... SceneManagement/Scenes/MenuScene.obj
 	@echo ... SceneManagement/Scenes/MenuScene.i
 	@echo ... SceneManagement/Scenes/MenuScene.s
+	@echo ... SceneManagement/Scenes/OptionsScene.obj
+	@echo ... SceneManagement/Scenes/OptionsScene.i
+	@echo ... SceneManagement/Scenes/OptionsScene.s
 	@echo ... Ships/Projectile.obj
 	@echo ... Ships/Projectile.i
 	@echo ... Ships/Projectile.s

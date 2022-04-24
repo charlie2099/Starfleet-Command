@@ -23,6 +23,7 @@ class Game
 
     sf::RenderWindow window;
     std::unique_ptr<SceneManager> scene_manager;
+    sf::Time elapsed;
 };
 
 #endif //STARFLEET_COMMAND_GAME_HPP

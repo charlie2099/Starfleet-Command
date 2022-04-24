@@ -1,8 +1,9 @@
 #ifndef STARFLEET_COMMAND_SCENEMANAGER_HPP
 #define STARFLEET_COMMAND_SCENEMANAGER_HPP
 #include "Scene.hpp"
-#include "../SceneManagement/Scenes/MenuScene.hpp"
-#include "../SceneManagement/Scenes/GameScene.hpp"
+#include "Scenes/MenuScene.hpp"
+#include "Scenes/GameScene.hpp"
+#include "Scenes/OptionsScene.hpp"
 
 class SceneManager
 {
@@ -10,12 +11,12 @@ class SceneManager
     SceneManager() = default;
     ~SceneManager() = default;
 
-    bool init();
-    void eventHandler(sf::RenderWindow& window, sf::Event& event);
-    void update(sf::RenderWindow &window, sf::Time deltaTime);
-    void render(sf::RenderWindow& window);
+    bool Init();
+    void EventHandler(sf::RenderWindow& window, sf::Event& event);
+    void Update(sf::RenderWindow &window, sf::Time deltaTime);
+    void Render(sf::RenderWindow& window);
 
-    void changeScene(Scene::ID id);
+    void ChangeScene(Scene::ID id);
 
  private:
     std::unique_ptr<Scene> current_scene;

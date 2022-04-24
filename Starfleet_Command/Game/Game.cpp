@@ -33,7 +33,7 @@ void Game::ProcessEvents(sf::Event& event)
 {
     while (window.pollEvent(event))
     {
-        scene_manager->eventHandler(window, event);
+        scene_manager->EventHandler(window, event);
 
         if(event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed &&
         event.key.code == sf::Keyboard::Escape)
@@ -45,13 +45,13 @@ void Game::ProcessEvents(sf::Event& event)
 
 void Game::Update(sf::Time deltaTime)
 {
-    scene_manager->update(window, deltaTime);
+    scene_manager->Update(window, deltaTime);
 }
 
 void Game::Render()
 {
     window.clear();
-    scene_manager->render(window);
+    scene_manager->Render(window);
     window.display();
 }
 
@@ -74,5 +74,5 @@ void Game::InitWindow()
 void Game::InitSceneManager()
 {
     scene_manager = std::make_unique<SceneManager>();
-    scene_manager->init();
+    scene_manager->Init();
 }

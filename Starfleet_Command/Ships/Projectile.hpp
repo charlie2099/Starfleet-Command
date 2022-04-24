@@ -6,23 +6,33 @@
 class Projectile
 {
  public:
-    enum class Type;
+    enum class Type
+    {
+        LASER_RED_SMALL,
+        LASER_BLUE_SMALL,
+        LASER_GREEN_SMALL,
+        LASER_RED_REGULAR,
+        LASER_BLUE_REGULAR,
+        LASER_GREEN_REGULAR,
+        LASER_RED_LARGE,
+        LASER_BLUE_LARGE,
+        LASER_GREEN_LARGE
+    };
 
  public:
-    Projectile(Type type, sf::Vector2<float> start_pos, sf::Vector2<float> mouse_pos);
+    Projectile(Type type, sf::Vector2f spawn_pos, sf::Vector2f target_pos);
     ~Projectile() = default;
 
-    void update(sf::RenderWindow& window, sf::Time deltaTime);
-    void render(sf::RenderWindow& window);
+    void Update(sf::RenderWindow& window, sf::Time deltaTime);
+    void Render(sf::RenderWindow& window);
 
-    enum class Type { LASER_BLUE, LASER_RED, MISSILE_BLUE, MISSILE_RED };
-    SpriteComponent& getSprite();
+    SpriteComponent& GetSpriteComponent();
+    Type& GetType() { return  _type; };
 
  private:
-    SpriteComponent sprite_;
-    Type type_;
-    sf::Vector2<float> click_position_;
-    sf::Vector2<float> direction_;
+    SpriteComponent _spriteComponent;
+    Type _type;
+    sf::Vector2<float> _direction;
 };
 
 #endif //STARFLEET_COMMAND_PROJECTILE_HPP

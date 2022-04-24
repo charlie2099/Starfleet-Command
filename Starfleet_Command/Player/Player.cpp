@@ -9,7 +9,7 @@ void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
 
     for (int i = 0; i < starship.size(); i++)
     {
-        if(starship[i]->GetHealthBar()[0].GetHealth() <= 0)
+        if(starship[i]->GetHealthBar().GetHealth() <= 0)
         {
             starship.erase(starship.begin() + i);
         }

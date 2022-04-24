@@ -17,6 +17,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/SceneManager.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/GameScene.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/MenuScene.cpp.obj"
+  "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/OptionsScene.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Ships/Projectile.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Ships/Starship.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Temporary/TestComponent.cpp.obj"
