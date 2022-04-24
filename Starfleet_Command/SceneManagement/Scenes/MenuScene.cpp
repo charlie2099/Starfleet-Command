@@ -251,7 +251,7 @@ void MenuScene::InitBackgroundShips(std::mt19937 &generator)
         if(i >= BACKGROUND_SHIPS/2)
         {
             starship[i]->GetSpriteComponent().GetSprite().setRotation(180);
-            //starship[i]->GetSpriteComponent().GetSprite().setColor(sf::Color(247, 85, 85));
+            //starship[i]->GetSpriteComponent().GetSpriteComponent().setColor(sf::Color(247, 85, 85));
             starship[i]->GetSpriteComponent().GetSprite().setColor(sf::Color(91, 239, 170));
         }
     }

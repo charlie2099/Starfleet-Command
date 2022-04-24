@@ -286,7 +286,7 @@ enemy.AddToFleet(Ship::BOMBER);
 
 
 
-auto& player_sprite = _player.GetShip()[0]->GetSpriteComponent().GetSprite();
+auto& player_sprite = _player.GetShip()[0]->GetSpriteComponent().GetSpriteComponent();
 
 //Convert angle to radians
 double playerAngleRADS = (3.1415926536/180)*(player_sprite.getRotation());

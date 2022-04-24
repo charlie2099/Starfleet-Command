@@ -35,26 +35,33 @@ class Starship
     void SetHealthBarVisibility(bool visible);
 
     /// Accessors
-    SpriteComponent &GetSpriteComponent();
-    std::vector<std::unique_ptr<Projectile>>& GetProjectile();
-    std::vector<HealthBar>& GetHealthBar() { return _healthBar; };
-    float GetHealth() const;
-    float GetDamage() const;
-    float GetSpeed() const;
-    float GetAcceleration() const;
+    SpriteComponent &GetSpriteComponent() { return _spriteComponent; };
+    std::vector<std::unique_ptr<Projectile>>& GetProjectile() { return _projectile; };
+    Projectile::Type& GetProjectileType() { return _projectileType; };
+    HealthBar& GetHealthBar() { return _healthBar; };
+    float GetHealth() const { return _health; };
+    float GetDamage() const { return _damage; };
+    float GetSpeed() const { return _speed; };
+    float GetFireRate() const { return _fireRate; };
+    float GetAcceleration() const { return _acceleration; };
     bool IsHealthBarVisible() const { return _healthBarIsVisible; };
 
  private:
-    std::vector<HealthBar> _healthBar;
-    SpriteComponent spriteComponent;
+    HealthBar _healthBar;
+    SpriteComponent _spriteComponent;
     std::vector<std::unique_ptr<Projectile>> _projectile;
+    Projectile::Type _projectileType;
     Type ship_type{};
-    float _health = 0.0F;
-    float _damage = 0.0F;
-    float _speed = 0.0F;
+    float _health = 100.0F;
+    float _damage = 10.0F;
+    float _speed = 1.0F;
+    float _fireRate = 1.0F;
     float _acceleration = 0.0F;
     bool _healthBarIsVisible = false;
+
+    float _maxHealth;
     float timePassed = 0;
+    sf::Clock clock;
 };
 
 #endif //STARFLEET_COMMAND_STARSHIP_HPP

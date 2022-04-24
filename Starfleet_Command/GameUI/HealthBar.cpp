@@ -2,15 +2,15 @@
 
 HealthBar::HealthBar()
 {
-    spriteComponent.LoadSprite("images/panel_image.png");
-    spriteComponent.GetSprite().setScale(0.2f, 0.05f);
-    spriteComponent.GetSprite().setColor(sf::Color::Green);
+    spriteComponent.LoadSprite("images/panel_5.png");
+    spriteComponent.GetSprite().setScale(0.2f, 0.075f);
+    spriteComponent.GetSprite().setColor(sf::Color(0,255,0,255));
 }
 
 void HealthBar::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
     spriteComponent.SetPos({_position.x + spriteComponent.GetSprite().getGlobalBounds().width/2, _position.y});
-    spriteComponent.GetSprite().setScale((_health / _maxHealth)*0.25f, 0.05f);
+    spriteComponent.GetSprite().setScale((_health / _maxHealth)*0.2f, 0.075f);
 }
 
 void HealthBar::Render(sf::RenderWindow &window)
