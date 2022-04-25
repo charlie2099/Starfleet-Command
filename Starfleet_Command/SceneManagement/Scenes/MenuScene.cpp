@@ -4,6 +4,7 @@
 bool MenuScene::Init()
 {
     std::mt19937 generator = GetEngine();
+    InitView();
     InitBackground();
     InitButtonPanels();
     InitLeaderboardPanel();
@@ -65,7 +66,11 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse position translated into world coordinates
+
     cursor.Update(window, deltaTime);
+    cursor.SetCursorPos(window, _worldView);
 
     for (int i = 0; i < BUTTONS; ++i)
     {
@@ -101,9 +106,6 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
     }
 
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
-
     for (int i = 0; i < BACKGROUND_SHIPS/2; ++i)
     {
         if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, starship[i]->GetSpriteComponent().GetSprite().getGlobalBounds()))
@@ -126,6 +128,7 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
 void MenuScene::Render(sf::RenderWindow& window)
 {
+    window.setView(_worldView);
     window.draw(background_sprite);
     for (auto & ship : starship)
     {
@@ -137,7 +140,6 @@ void MenuScene::Render(sf::RenderWindow& window)
         panel.Render(window);
     }
     //crosshair.Render(window);
-    //test_player.Render(window);
     cursor.Render(window);
 }
 
@@ -149,6 +151,14 @@ std::mt19937 MenuScene::GetEngine()
     unsigned long int time = std::chrono::high_resolution_clock::now().time_since_epoch().count();
     generator.seed(time);
     return generator;
+}
+
+void MenuScene::InitView()
+{
+    sf::Vector2f VIEW_SIZE = { Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT };
+    sf::Vector2f WORLD_PERSPECTIVE = { Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F };
+    _worldView.setSize(VIEW_SIZE);
+    _worldView.setCenter(WORLD_PERSPECTIVE);
 }
 
 bool MenuScene::InitBackground()
@@ -262,3 +272,5 @@ void MenuScene::CreateDistribution(const std::string& name, int min, int max)
     std::uniform_int_distribution<int> instance{min, max};
     uint_distrib.emplace_back(instance);
 }
+
+

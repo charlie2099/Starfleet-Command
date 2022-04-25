@@ -21,6 +21,7 @@ namespace Chilli
         void Update(sf::RenderWindow &window, sf::Time deltaTime);
         void Render(sf::RenderWindow& window);
 
+        void SetCursorPos(sf::RenderWindow &window, sf::View& view);
         void SetCursorType(Type type, sf::Color color);
 
     private:

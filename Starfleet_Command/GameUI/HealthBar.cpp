@@ -7,10 +7,9 @@ HealthBar::HealthBar()
     spriteComponent.GetSprite().setColor(sf::Color(0,255,0,255));
 }
 
-void HealthBar::Update(sf::RenderWindow &window, sf::Time deltaTime)
+void HealthBar::Update()
 {
     spriteComponent.SetPos({_position.x + spriteComponent.GetSprite().getGlobalBounds().width/2, _position.y});
-    spriteComponent.GetSprite().setScale((_health / _maxHealth)*0.2f, 0.075f);
 }
 
 void HealthBar::Render(sf::RenderWindow &window)
@@ -29,15 +28,10 @@ void HealthBar::SetMaxHealth(float health)
     _health = _maxHealth;
 }
 
-void HealthBar::TakeDamage(float damage)
+void HealthBar::UpdateHealth(float health)
 {
-    if(_health > 0)
-    {
-        _health -= damage;
-
-        if(_health < 0)
-        {
-            _health = 0;
-        }
-    }
+    _health = health;
+    spriteComponent.SetPos({_position.x + spriteComponent.GetSprite().getGlobalBounds().width/2, _position.y});
+    spriteComponent.GetSprite().setScale((_health / _maxHealth)*0.2f, 0.075f);
 }
+

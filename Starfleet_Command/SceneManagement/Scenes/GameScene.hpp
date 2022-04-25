@@ -49,9 +49,12 @@ private:
     Enemy _enemy;
 
     // Other
-    sf::View _player_view{};
+    sf::View _worldView{};
+    sf::View _minimapView{};
     sf::Texture _background_texture;
     sf::Sprite _background_sprite;
+    sf::Texture _background_texture2;
+    sf::Sprite _background_sprite2;
     std::mt19937 generator;
     std::vector<std::uniform_int_distribution<int>> uint_distrib;
     std::map<std::string, int> dist_code;

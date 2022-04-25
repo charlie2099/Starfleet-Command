@@ -9,12 +9,12 @@ class HealthBar
 public:
     HealthBar();
     ~HealthBar() = default;
-    void Update(sf::RenderWindow &window, sf::Time deltaTime);
+    void Update();
     void Render(sf::RenderWindow& window);
 
     void SetPos(sf::Vector2f pos);
     void SetMaxHealth(float health);
-    void TakeDamage(float damage);
+    void UpdateHealth(float health);
 
     SpriteComponent& GetSpriteComponent() { return spriteComponent; };
     float GetHealth() const { return _health; };

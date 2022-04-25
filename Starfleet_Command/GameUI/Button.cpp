@@ -13,11 +13,11 @@ void Button::Update(sf::RenderWindow &window)
     // if mouse within button bounds, do something
     if(spriteComponent.GetSprite().getGlobalBounds().contains(mouse_pos_world))
     {
-        is_within_bounds = true;
+        is_hovered_over = true;
     }
     else
     {
-        is_within_bounds = false;
+        is_hovered_over = false;
     }
 }
 

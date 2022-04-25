@@ -20,6 +20,7 @@ class MenuScene : public Scene
 
  private:
     static std::mt19937 GetEngine();
+    void InitView();
     bool InitBackground();
     void InitButtonPanels();
     void InitLeaderboardPanel();
@@ -38,6 +39,7 @@ class MenuScene : public Scene
 
     int SELECTED_SHIP = 0;
 
+    sf::View _worldView{};
     Chilli::Cursor cursor;
     Chilli::Colours _predefinedColours;
     //Crosshair crosshair;

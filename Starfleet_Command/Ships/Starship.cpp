@@ -77,11 +77,11 @@ void Starship::Update(sf::RenderWindow &window, sf::Time deltaTime)
         projectiles->Update(window, deltaTime);
     }
 
-    _healthBar.Update(window, deltaTime);
     auto ship_bounds = _spriteComponent.GetSprite().getGlobalBounds();
     auto bar_bounds = _healthBar.GetSpriteComponent().GetSprite().getGlobalBounds();
     auto xPos = (_spriteComponent.GetPos().x) - (ship_bounds.width/2.0f + bar_bounds.width/2.0f);
     auto yPos = (_spriteComponent.GetPos().y + ship_bounds.height/2.0f) - (ship_bounds.height + bar_bounds.height*4);
+    _healthBar.Update();
     _healthBar.SetPos({xPos, yPos});
 
     if(_healthBar.GetHealth() < _maxHealth)
@@ -159,6 +159,20 @@ void Starship::ShootAt(Projectile::Type projectile, float fireRate, sf::Vector2f
 
     //std::cout << "Projectiles: " << _projectile.size() << std::endl;
     //std::cout << "Elapsed Time: " << clock.getElapsedTime().asSeconds() << std::endl;
+}
+
+void Starship::TakeDamage(float damage)
+{
+    if(_health > 0)
+    {
+        _health -= damage;
+        _healthBar.UpdateHealth(_health);
+
+        if(_health < 0)
+        {
+            _health = 0;
+        }
+    }
 }
 
 

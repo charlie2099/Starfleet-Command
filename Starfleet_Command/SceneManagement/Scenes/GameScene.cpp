@@ -16,27 +16,11 @@ bool GameScene::Init()
 void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
-
-    // Damage ships on mouse press
-    if (event.type == sf::Event::MouseButtonPressed)
-    {
-        for (int i = 0; i < _player.GetShip().size(); ++i)
-        {
-            if(_player.GetShip()[i] != nullptr)
-            {
-                if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _player.GetShip()[i]->GetSpriteComponent().GetSprite().getGlobalBounds()))
-                {
-                    //std::cout << "Starship index: " << i << std::endl;
-                    _player.GetShip()[i]->GetHealthBar().TakeDamage(500);
-                }
-            }
-        }
-    }
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse position translated into world coordinates
 
     for (int i = 0; i < _command_buttons.size(); i++)
     {
-        if(_command_buttons[i]->IsHoveredOver())
+        if(_command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds().contains(mousePosWorldCoords))
         {
             _command_buttons[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
 
@@ -50,38 +34,45 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
                 RandomiseShipSpawnPoint();
             }
         }
-        else if(!_command_buttons[i]->IsHoveredOver())
+        else if(!_command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds().contains(mousePosWorldCoords))
         {
             _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({178, 178, 178, 255});
         }
+
+//        if(_command_buttons[i]->IsHoveredOver())
+//        {
+//            _command_buttons[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+//
+//            if (event.type == sf::Event::MouseButtonPressed)
+//            {
+//                _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({153, 210, 242, 150});
+//
+//                _player.CreateShip(static_cast<Starship::Type>(i));
+//                _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+//
+//                RandomiseShipSpawnPoint();
+//            }
+//        }
+//        else if(!_command_buttons[i]->IsHoveredOver())
+//        {
+//            _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({178, 178, 178, 255});
+//        }
     }
 }
 
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse position translated into world coordinates
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse position translated into world coordinates
 
     for(auto& button : _command_buttons)
     {
         button->Update(window);
     }
     _cursor.Update(window, deltaTime);
+    _cursor.SetCursorPos(window, _worldView);
     _player.Update(window, deltaTime);
     _enemy.Update(window, deltaTime);
-
-    int flagship = 0;
-    if(_player.GetShip()[flagship] != nullptr)
-    {
-        auto& player_flagship = _player.GetShip()[flagship]->GetSpriteComponent().GetSprite();
-        player_flagship.move(_player.GetShip()[flagship]->GetSpeed() * deltaTime.asSeconds(), 0);
-    }
-
-    if(_enemy.GetShip()[flagship] != nullptr)
-    {
-        auto& enemy_flagship = _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite();
-        enemy_flagship.move(_enemy.GetShip()[flagship]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
-    }
 
     for(auto & player_ship : _player.GetShip())
     {
@@ -101,6 +92,24 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 player_ship->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
             }
         }
+    }
+
+    int flagship = 0;
+    if(_player.GetShip()[flagship] != nullptr)
+    {
+        auto& player_flagship = _player.GetShip()[flagship]->GetSpriteComponent().GetSprite();
+        player_flagship.move(_player.GetShip()[flagship]->GetSpeed() * deltaTime.asSeconds(), 0);
+    }
+
+    if(_enemy.GetShip()[flagship] != nullptr)
+    {
+        auto& enemy_flagship = _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite();
+        enemy_flagship.move(_enemy.GetShip()[flagship]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
+    }
+
+    for (int i = 1; i < _enemy.GetShip().size(); ++i)
+    {
+        _enemy.GetShip()[i]->GetSpriteComponent().GetSprite().move(_enemy.GetShip()[i]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
     }
 
     for(int i = 1; i < _player.GetShip().size(); i++)
@@ -136,10 +145,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                     _player.GetShip()[i]->SetSpeed(25);
                     _player.GetShip()[i]->MoveTowards(enemy_sprite.getPosition(), deltaTime);
 
-
-                        auto& ship = _player.GetShip()[i];
-                        ship->ShootAt(ship->GetProjectileType(), ship->GetFireRate(), enemy_sprite.getPosition());
-
+                    auto& ship = _player.GetShip()[i];
+                    ship->ShootAt(ship->GetProjectileType(), ship->GetFireRate(), enemy_sprite.getPosition());
                 }
 
                 for(int k = 0; k < _player.GetShip()[i]->GetProjectile().size(); k++)
@@ -149,7 +156,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                     // Destroy projectiles if collided with enemy ship
                     if(enemy_sprite.getGlobalBounds().intersects(player_bullet.GetSprite().getGlobalBounds()))
                     {
-                        _enemy.GetShip()[j]->GetHealthBar().TakeDamage(_player.GetShip()[i]->GetDamage());
+                        _enemy.GetShip()[j]->TakeDamage(_player.GetShip()[i]->GetDamage());
                         _player.GetShip()[i]->GetProjectile().erase(_player.GetShip()[i]->GetProjectile().begin() + k);
                     }
                 }
@@ -163,7 +170,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
 void GameScene::Render(sf::RenderWindow& window)
 {
-    window.setView(_player_view);
+    window.setView(_worldView);
     window.draw(_background_sprite);
     for(auto& button : _command_buttons)
     {
@@ -178,6 +185,10 @@ void GameScene::Render(sf::RenderWindow& window)
     _enemy.Render(window);
     //crosshair.Render(window);
     _cursor.Render(window);
+
+    //window.setView(_minimapView);
+    //window.draw(_background_sprite2);
+    //_cursor.Render(window);
 }
 
 void GameScene::InitDistribution()
@@ -205,6 +216,13 @@ bool GameScene::InitBackground()
     auto bTexSizeY = static_cast<int>(_background_texture.getSize().y);
     _background_sprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX * 2, bTexSizeY * 2));
     //_background_sprite.setOrigin(_background_sprite.getLocalBounds().width/2, _background_sprite.getLocalBounds().height/2);
+
+//    if (!_background_texture2.loadFromFile("images/space_background.jpg"))
+//    {
+//        return false;
+//    }
+//    _background_sprite2.setTexture(_background_texture2);
+//    _background_sprite2.scale(1.0F, 1.25F);
 
     return true;
 }
@@ -261,9 +279,35 @@ void GameScene::InitView()
 
     sf::Vector2f VIEW_SIZE = { Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT };
     sf::Vector2f WORLD_PERSPECTIVE = { Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F };
-    _player_view.setSize(VIEW_SIZE);
-    _player_view.setCenter(WORLD_PERSPECTIVE);
+    _worldView.setSize(VIEW_SIZE);
+    _worldView.setCenter(WORLD_PERSPECTIVE);
     //_player_view.zoom(0.5F);
+
+    //_minimapView.setViewport(sf::FloatRect(0.70f, 0.70f, 0.25f, 0.25f));
+
+
+      // LEFT 75%, RIGHT 25%
+//    const sf::Vector2f leftSize(1440.0f, 1080.0f);
+//    const sf::Vector2f rightSize(480.0f, 1080.0f);
+//    const sf::Vector2f origin(0.0f, 0.0f);
+//
+//    _worldView = sf::View(sf::FloatRect(origin, leftSize));
+//    _worldView.setViewport(sf::FloatRect(0.0f, 0.0f, 0.75f, 1.0f));
+//
+//    _minimapView = sf::View(sf::FloatRect(origin, rightSize));
+//    _minimapView.setViewport(sf::FloatRect(0.75f, 0, 0.25f, 1.0f));
+
+
+      // TOP 75%, BOTTOM 25%
+//    const sf::Vector2f leftSize(1440.0f, 720.0f);
+//    const sf::Vector2f rightSize(1440.0f, 270.0f);
+//    const sf::Vector2f origin(0.0f, 0.0f);
+//
+//    _worldView = sf::View(sf::FloatRect(origin, leftSize));
+//    _worldView.setViewport(sf::FloatRect(0.0f, 0.0f, 1.0f, 0.75f));
+//
+//    _minimapView = sf::View(sf::FloatRect(origin, rightSize));
+//    _minimapView.setViewport(sf::FloatRect(0.0f, 0.0f, 1.0f, 0.25f));
 }
 
 void GameScene::InitPlayerFlagship()
@@ -282,11 +326,20 @@ void GameScene::InitEnemyFlagship()
     _enemy.CreateShip(Starship::Type::FLAGSHIP);
     int flagship = 0;
     auto enemy_flagship_bounds = _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite().getGlobalBounds();
-    auto enemy_width = Constants::WINDOW_WIDTH - enemy_flagship_bounds.width/2.0f;
-    auto enemy_height = Constants::WINDOW_HEIGHT/2.0f;
-    _enemy.GetShip()[flagship]->GetSpriteComponent().SetPos({enemy_width, enemy_height});
+    auto enemy_xPos = Constants::WINDOW_WIDTH - enemy_flagship_bounds.width / 2.0f;
+    auto enemy_yPos = Constants::WINDOW_HEIGHT / 2.0f;
+    _enemy.GetShip()[flagship]->GetSpriteComponent().SetPos({enemy_xPos, enemy_yPos});
     _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
     _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite().setRotation(180);
+
+    _enemy.CreateShip(Starship::Type::FIGHTER);
+    _enemy.CreateShip(Starship::Type::FIGHTER);
+    _enemy.GetShip()[1]->GetSpriteComponent().SetPos({enemy_xPos, 200});
+    _enemy.GetShip()[2]->GetSpriteComponent().SetPos({enemy_xPos, 500});
+    _enemy.GetShip()[1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
+    _enemy.GetShip()[2]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
+    _enemy.GetShip()[1]->GetSpriteComponent().GetSprite().setRotation(180);
+    _enemy.GetShip()[2]->GetSpriteComponent().GetSprite().setRotation(180);
 }
 
 void GameScene::RandomiseShipSpawnPoint()

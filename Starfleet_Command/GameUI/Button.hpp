@@ -16,11 +16,11 @@ class Button
 
     /// Accessors
     SpriteComponent &GetSpriteComponent();
-    bool IsHoveredOver() const { return is_within_bounds; };
+    bool IsHoveredOver() const { return is_hovered_over; };
 
  private:
     SpriteComponent spriteComponent;
-    bool is_within_bounds = false;
+    bool is_hovered_over = false;
 };
 
 #endif //STARFLEET_COMMAND_BUTTON_HPP

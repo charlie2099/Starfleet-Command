@@ -26,6 +26,7 @@ class Starship
     // Functionality
     void MoveTowards(sf::Vector2f target, sf::Time deltaTime);
     void ShootAt(Projectile::Type projectile, float fireRate, sf::Vector2f target);
+    void TakeDamage(float damage);
 
     /// Modifiers
     void SetHealth(float health);
