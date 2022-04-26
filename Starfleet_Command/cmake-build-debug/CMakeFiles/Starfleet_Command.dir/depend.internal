@@ -156,6 +156,7 @@ CMakeFiles/Starfleet_Command.dir/Crosshair.cpp.obj
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Crosshair.cpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Crosshair.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePopUpEffect.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Projectile.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
@@ -386,6 +387,7 @@ CMakeFiles/Starfleet_Command.dir/Enemy.cpp.obj
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.cpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePopUpEffect.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Projectile.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp
@@ -474,6 +476,7 @@ CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.cpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Button.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePopUpEffect.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
@@ -568,6 +571,48 @@ CMakeFiles/Starfleet_Command.dir/GameUI/Button.cpp.obj
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Button.cpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Button.hpp
+CMakeFiles/Starfleet_Command.dir/GameUI/DamagePopUpEffect.cpp.obj
+ C:/Libraries/SFML/include/SFML/Config.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/BlendMode.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/Color.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/Drawable.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/Export.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/Font.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/Glyph.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/Image.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/PrimitiveType.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/Rect.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/Rect.inl
+ C:/Libraries/SFML/include/SFML/Graphics/RenderStates.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/RenderTarget.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/RenderWindow.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/Text.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/Texture.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/Transform.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/Transformable.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/Vertex.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/VertexArray.hpp
+ C:/Libraries/SFML/include/SFML/Graphics/View.hpp
+ C:/Libraries/SFML/include/SFML/System/Clock.hpp
+ C:/Libraries/SFML/include/SFML/System/Export.hpp
+ C:/Libraries/SFML/include/SFML/System/NonCopyable.hpp
+ C:/Libraries/SFML/include/SFML/System/String.hpp
+ C:/Libraries/SFML/include/SFML/System/String.inl
+ C:/Libraries/SFML/include/SFML/System/Time.hpp
+ C:/Libraries/SFML/include/SFML/System/Utf.hpp
+ C:/Libraries/SFML/include/SFML/System/Utf.inl
+ C:/Libraries/SFML/include/SFML/System/Vector2.hpp
+ C:/Libraries/SFML/include/SFML/System/Vector2.inl
+ C:/Libraries/SFML/include/SFML/Window/ContextSettings.hpp
+ C:/Libraries/SFML/include/SFML/Window/Cursor.hpp
+ C:/Libraries/SFML/include/SFML/Window/Export.hpp
+ C:/Libraries/SFML/include/SFML/Window/GlResource.hpp
+ C:/Libraries/SFML/include/SFML/Window/VideoMode.hpp
+ C:/Libraries/SFML/include/SFML/Window/Window.hpp
+ C:/Libraries/SFML/include/SFML/Window/WindowHandle.hpp
+ C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePopUpEffect.cpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePopUpEffect.hpp
 CMakeFiles/Starfleet_Command.dir/GameUI/HealthBar.cpp.obj
  C:/Libraries/SFML/include/SFML/Config.hpp
  C:/Libraries/SFML/include/SFML/Graphics.hpp
@@ -802,6 +847,7 @@ CMakeFiles/Starfleet_Command.dir/GameUI/ShipCard.cpp.obj
  C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Button.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePopUpEffect.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.cpp
@@ -885,6 +931,7 @@ CMakeFiles/Starfleet_Command.dir/Player/Fleet.cpp.obj
  C:/Libraries/SFML/include/SFML/Window/WindowHandle.hpp
  C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePopUpEffect.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.cpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
@@ -967,6 +1014,7 @@ CMakeFiles/Starfleet_Command.dir/Player/Player.cpp.obj
  C:/Libraries/SFML/include/SFML/Window/WindowHandle.hpp
  C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePopUpEffect.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.cpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.h
@@ -1140,6 +1188,7 @@ CMakeFiles/Starfleet_Command.dir/SceneManagement/SceneManager.cpp.obj
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Object.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Button.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePopUpEffect.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
@@ -1237,6 +1286,7 @@ CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/GameScene.cpp.obj
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Cursor.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Button.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePopUpEffect.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp
@@ -1330,6 +1380,7 @@ CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/MenuScene.cpp.obj
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Component.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Object.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Button.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePopUpEffect.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scene.hpp
@@ -1580,6 +1631,7 @@ CMakeFiles/Starfleet_Command.dir/Ships/Starship.cpp.obj
  C:/Libraries/SFML/include/SFML/Window/WindowHandle.hpp
  C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePopUpEffect.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Projectile.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.cpp
@@ -1833,6 +1885,7 @@ CMakeFiles/Starfleet_Command.dir/main.cpp.obj
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Button.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePopUpEffect.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HealthBar.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Panel.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.hpp

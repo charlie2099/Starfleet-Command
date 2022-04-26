@@ -10,8 +10,9 @@ Starship::Starship(Type type) : ship_type(type)
             _health = 100;
             _speed = 80;
             _damage = 20;
+            _damageScaleFactor = 0.25f;
             _fireRate = 0.25f;
-            _projectileType = Projectile::Type::LASER_BLUE_REGULAR;
+            _projectileType = Projectile::Type::LASER_RED_REGULAR;
             break;
         case Type::REPAIR:
             _spriteComponent.LoadSprite("images/starfleet_ship_repair.png");
@@ -19,6 +20,7 @@ Starship::Starship(Type type) : ship_type(type)
             _health = 150;
             _speed = 70;
             _damage = 0;
+            _damageScaleFactor = 0.10f;
             _fireRate = 2.0f;
             _projectileType = Projectile::Type::LASER_BLUE_SMALL;
             break;
@@ -28,6 +30,7 @@ Starship::Starship(Type type) : ship_type(type)
             _health = 75;
             _speed = 100;
             _damage = 10;
+            _damageScaleFactor = 0.10f;
             _fireRate = 1.0f;
             _projectileType = Projectile::Type::LASER_BLUE_SMALL;
             break;
@@ -37,6 +40,7 @@ Starship::Starship(Type type) : ship_type(type)
             _health = 250;
             _speed = 40;
             _damage = 150;
+            _damageScaleFactor = 1.0f;
             _fireRate = 3.0f;
             _projectileType = Projectile::Type::LASER_BLUE_LARGE;
             break;
@@ -46,6 +50,7 @@ Starship::Starship(Type type) : ship_type(type)
             _health = 500;
             _speed = 30;
             _damage = 75;
+            _damageScaleFactor = 0.75f;
             _fireRate = 3.0f;
             _projectileType = Projectile::Type::LASER_BLUE_LARGE;
             break;
@@ -88,6 +93,19 @@ void Starship::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         _healthBarIsVisible = true;
     }
+
+    for(auto& popup : _damagePopUpEffect)
+    {
+        popup->Update(window, deltaTime);
+    }
+
+    for (int i = 0; i < _damagePopUpEffect.size(); ++i)
+    {
+        if(_damagePopUpEffect[i]->IsFaded())
+        {
+            _damagePopUpEffect.erase(_damagePopUpEffect.begin() + i);
+        }
+    }
 }
 
 void Starship::Render(sf::RenderWindow &window)
@@ -102,6 +120,11 @@ void Starship::Render(sf::RenderWindow &window)
     if(_healthBarIsVisible)
     {
         _healthBar.Render(window);
+    }
+
+    for(auto& popup : _damagePopUpEffect)
+    {
+        popup->Render(window);
     }
 }
 
@@ -167,6 +190,7 @@ void Starship::TakeDamage(float damage)
     {
         _health -= damage;
         _healthBar.UpdateHealth(_health);
+        _damagePopUpEffect.emplace_back(std::make_unique<DamagePopUpEffect>(damage, _spriteComponent.GetPos()));
 
         if(_health < 0)
         {

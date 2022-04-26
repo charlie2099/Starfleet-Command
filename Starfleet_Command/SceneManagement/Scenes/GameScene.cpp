@@ -133,12 +133,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             {
                 auto& enemy_sprite = _enemy.GetShip()[j]->GetSpriteComponent().GetSprite();
 
-                // Move player ships forward if 400 pixels from any enemy ship
-                if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) > 400)
-                {
-                    player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
-                }
-
                 // Move towards and shoot at enemy ship if less than 400 pixels away from it
                 if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) <= 400)
                 {
@@ -156,16 +150,19 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                     // Destroy projectiles if collided with enemy ship
                     if(enemy_sprite.getGlobalBounds().intersects(player_bullet.GetSprite().getGlobalBounds()))
                     {
-                        _enemy.GetShip()[j]->TakeDamage(_player.GetShip()[i]->GetDamage());
+                        //UpdateDistribution("Ship damage", 10, 80);
+                        int rand_damage = uint_distrib[2](generator);
+
+                        //_enemy.GetShip()[j]->TakeDamage(_player.GetShip()[i]->GetDamage());
+                        _enemy.GetShip()[j]->TakeDamage(rand_damage * _player.GetShip()[i]->GetDamageScaleFactor());
                         _player.GetShip()[i]->GetProjectile().erase(_player.GetShip()[i]->GetProjectile().begin() + k);
                     }
                 }
             }
+
+            player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
         }
     }
-
-    //TODO:
-    // - Write up a learning log i.e. write-up how enemy chasing mechanic was achieved, to help properly understand concepts
 }
 
 void GameScene::Render(sf::RenderWindow& window)
@@ -196,10 +193,12 @@ void GameScene::InitDistribution()
     generator = GetEngine();
     CreateDistribution("Ship xPos", 1100, 1100);
     CreateDistribution("Ship yPos", 45, 675);
+    CreateDistribution("Ship damage", 100, 250);
     dist_code =
     {
             {"Ship yPos",1},
-            {"Ship xPos",0}
+            {"Ship xPos",0},
+            {"Ship damage",2}
     };
 }
 

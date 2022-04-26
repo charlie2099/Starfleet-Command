@@ -4,6 +4,7 @@
 #include "../Components/SpriteComponent.hpp"
 #include "../Utility/Vector.hpp"
 #include "../GameUI/HealthBar.hpp"
+#include "../GameUI/DamagePopUpEffect.hpp"
 #include <iostream>
 
 class Starship
@@ -42,6 +43,7 @@ class Starship
     HealthBar& GetHealthBar() { return _healthBar; };
     float GetHealth() const { return _health; };
     float GetDamage() const { return _damage; };
+    float GetDamageScaleFactor() const { return _damageScaleFactor; };
     float GetSpeed() const { return _speed; };
     float GetFireRate() const { return _fireRate; };
     float GetAcceleration() const { return _acceleration; };
@@ -50,11 +52,13 @@ class Starship
  private:
     HealthBar _healthBar;
     SpriteComponent _spriteComponent;
+    Type ship_type{};
+    std::vector<std::unique_ptr<DamagePopUpEffect>> _damagePopUpEffect;
     std::vector<std::unique_ptr<Projectile>> _projectile;
     Projectile::Type _projectileType;
-    Type ship_type{};
     float _health = 100.0F;
     float _damage = 10.0F;
+    float _damageScaleFactor = 1.0F;
     float _speed = 1.0F;
     float _fireRate = 1.0F;
     float _acceleration = 0.0F;
