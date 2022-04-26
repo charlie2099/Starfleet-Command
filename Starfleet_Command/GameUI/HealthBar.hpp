@@ -22,6 +22,7 @@ public:
 
 private:
     SpriteComponent spriteComponent;
+    SpriteComponent spriteComponent2;
     float _maxHealth = 100;
     float _health = _maxHealth;
     sf::Vector2f _position;

@@ -332,14 +332,13 @@ void GameScene::InitEnemyFlagship()
     _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
     _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite().setRotation(180);
 
-    _enemy.CreateShip(Starship::Type::FIGHTER);
-    _enemy.CreateShip(Starship::Type::FIGHTER);
-    _enemy.GetShip()[1]->GetSpriteComponent().SetPos({enemy_xPos, 200});
-    _enemy.GetShip()[2]->GetSpriteComponent().SetPos({enemy_xPos, 500});
-    _enemy.GetShip()[1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
-    _enemy.GetShip()[2]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
-    _enemy.GetShip()[1]->GetSpriteComponent().GetSprite().setRotation(180);
-    _enemy.GetShip()[2]->GetSpriteComponent().GetSprite().setRotation(180);
+    for (int i = 0; i < 5; ++i)
+    {
+        _enemy.CreateShip(static_cast<Starship::Type>(i));
+        _enemy.GetShip()[i+1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
+        _enemy.GetShip()[i+1]->GetSpriteComponent().SetPos({enemy_xPos, static_cast<float>(200 + (i * 75))});
+        _enemy.GetShip()[i+1]->GetSpriteComponent().GetSprite().setRotation(180);
+    }
 }
 
 void GameScene::RandomiseShipSpawnPoint()
