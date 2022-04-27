@@ -45,8 +45,10 @@ class Starship
     float GetDamage() const { return _damage; };
     float GetDamageScaleFactor() const { return _damageScaleFactor; };
     float GetSpeed() const { return _speed; };
+    float GetTrainingSpeed() const { return _trainingSpeed; };
     float GetFireRate() const { return _fireRate; };
     float GetAcceleration() const { return _acceleration; };
+    float GetShipCost() const { return _shipCost; };
     bool IsHealthBarVisible() const { return _healthBarIsVisible; };
 
  private:
@@ -60,8 +62,10 @@ class Starship
     float _damage = 10.0F;
     float _damageScaleFactor = 1.0F;
     float _speed = 1.0F;
+    float _trainingSpeed = 0.5f;
     float _fireRate = 1.0F;
     float _acceleration = 0.0F;
+    float _shipCost = 100;
     bool _healthBarIsVisible = false;
 
     float _maxHealth;

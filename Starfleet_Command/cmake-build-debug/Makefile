@@ -344,6 +344,30 @@ GameUI/DamagePopUpEffect.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/DamagePopUpEffect.cpp.s
 .PHONY : GameUI/DamagePopUpEffect.cpp.s
 
+GameUI/HUD.obj: GameUI/HUD.cpp.obj
+.PHONY : GameUI/HUD.obj
+
+# target to build an object file
+GameUI/HUD.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/HUD.cpp.obj
+.PHONY : GameUI/HUD.cpp.obj
+
+GameUI/HUD.i: GameUI/HUD.cpp.i
+.PHONY : GameUI/HUD.i
+
+# target to preprocess a source file
+GameUI/HUD.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/HUD.cpp.i
+.PHONY : GameUI/HUD.cpp.i
+
+GameUI/HUD.s: GameUI/HUD.cpp.s
+.PHONY : GameUI/HUD.s
+
+# target to generate assembly for a file
+GameUI/HUD.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/GameUI/HUD.cpp.s
+.PHONY : GameUI/HUD.cpp.s
+
 GameUI/HealthBar.obj: GameUI/HealthBar.cpp.obj
 .PHONY : GameUI/HealthBar.obj
 
@@ -788,6 +812,9 @@ help:
 	@echo ... GameUI/DamagePopUpEffect.obj
 	@echo ... GameUI/DamagePopUpEffect.i
 	@echo ... GameUI/DamagePopUpEffect.s
+	@echo ... GameUI/HUD.obj
+	@echo ... GameUI/HUD.i
+	@echo ... GameUI/HUD.s
 	@echo ... GameUI/HealthBar.obj
 	@echo ... GameUI/HealthBar.i
 	@echo ... GameUI/HealthBar.s

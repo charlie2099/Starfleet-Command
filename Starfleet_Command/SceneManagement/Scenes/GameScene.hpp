@@ -7,6 +7,7 @@
 #include "../../Cursor.hpp"
 #include "../../Enemy.hpp"
 #include "../../Player/Player.h"
+#include "../../GameUI/HUD.hpp"
 #include <random>
 #include <chrono>
 
@@ -38,11 +39,19 @@ private:
     Chilli::Cursor _cursor;
     Chilli::Colours _predefinedColours;
 
-    // Ui
+    // HUD
+    HUD _hud;
+    sf::Text _credits_text;
+    int _credits = 10000;
+
+    // GUI
     //Crosshair crosshair;
     std::vector<std::unique_ptr<Button>> _command_buttons;
     std::vector<sf::Text> _ship_cost_text;
-    sf::Text _credits_text;
+
+    // UI
+    sf::Texture _background_texture;
+    sf::Sprite _background_sprite;
 
     // Sprites
     Player _player;
@@ -51,13 +60,11 @@ private:
     // Other
     sf::View _worldView{};
     sf::View _minimapView{};
-    sf::Texture _background_texture;
-    sf::Sprite _background_sprite;
-    sf::Texture _background_texture2;
-    sf::Sprite _background_sprite2;
     std::mt19937 generator;
     std::vector<std::uniform_int_distribution<int>> uint_distrib;
     std::map<std::string, int> dist_code;
+
+    int ship_spawned_index = 0;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

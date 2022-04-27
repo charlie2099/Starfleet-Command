@@ -24,14 +24,50 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         {
             _command_buttons[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
 
-            if (event.type == sf::Event::MouseButtonPressed)
+            if (event.type == sf::Event::MouseButtonPressed && !_hud.IsTraining())
             {
                 _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({153, 210, 242, 150});
 
-                _player.CreateShip(static_cast<Starship::Type>(i));
-                _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+                //_hud.SetTrainingSpeed(0.8f/*_player.GetShip()[i]->GetTrainingSpeed()*/);
 
-                RandomiseShipSpawnPoint();
+                // TEMPORARY SOLUTION
+                switch (i)
+                {
+                    case 0: // FIGHTER
+                        _hud.SetTrainingSpeed(0.4f);
+                        _credits -= 250;
+                        //_credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
+                        break;
+                    case 1: // REPAIR
+                        _hud.SetTrainingSpeed(0.5f);
+                        _credits -= 200;
+                        break;
+                    case 2: // SCOUT
+                        _hud.SetTrainingSpeed(0.6f);
+                        _credits -= 100;
+                        break;
+                    case 3: // DESTROYER
+                        _hud.SetTrainingSpeed(0.2f);
+                        _credits -= 1000;
+                        break;
+                    case 4: // BATTLESHIP
+                        _hud.SetTrainingSpeed(0.3f);
+                        _credits -= 750;
+                        break;
+                }
+                _credits_text.setString("Credits: " + std::to_string(_credits));
+
+                _hud.SetTrainingStatus(true);
+                ship_spawned_index = i;
+
+                // make use of an event?
+
+                //if(_hud.IsTrainingComplete())
+                //{
+                //    _player.CreateShip(static_cast<Starship::Type>(i));
+                //    _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+                //    RandomiseShipSpawnPoint();
+                //}
             }
         }
         else if(!_command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds().contains(mousePosWorldCoords))
@@ -39,24 +75,24 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({178, 178, 178, 255});
         }
 
-//        if(_command_buttons[i]->IsHoveredOver())
-//        {
-//            _command_buttons[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
-//
-//            if (event.type == sf::Event::MouseButtonPressed)
-//            {
-//                _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({153, 210, 242, 150});
-//
-//                _player.CreateShip(static_cast<Starship::Type>(i));
-//                _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
-//
-//                RandomiseShipSpawnPoint();
-//            }
-//        }
-//        else if(!_command_buttons[i]->IsHoveredOver())
-//        {
-//            _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({178, 178, 178, 255});
-//        }
+        //if(_command_buttons[i]->IsHoveredOver())
+        //{
+        //    _command_buttons[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+        //
+        //    if (event.type == sf::Event::MouseButtonPressed)
+        //    {
+        //        _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({153, 210, 242, 150});
+        //
+        //        _player.CreateShip(static_cast<Starship::Type>(i));
+        //        _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+        //
+        //        RandomiseShipSpawnPoint();
+        //    }
+        //}
+        //else if(!_command_buttons[i]->IsHoveredOver())
+        //{
+        //    _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({178, 178, 178, 255});
+        //}
     }
 }
 
@@ -69,10 +105,19 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         button->Update(window);
     }
+     _hud.Update(window, deltaTime);
     _cursor.Update(window, deltaTime);
     _cursor.SetCursorPos(window, _worldView);
     _player.Update(window, deltaTime);
     _enemy.Update(window, deltaTime);
+
+    if(_hud.IsTrainingComplete())
+    {
+        _player.CreateShip(static_cast<Starship::Type>(ship_spawned_index));
+        _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+        RandomiseShipSpawnPoint();
+        _hud.SetTrainingCompletedStatus(false);
+    }
 
     for(auto & player_ship : _player.GetShip())
     {
@@ -181,7 +226,9 @@ void GameScene::Render(sf::RenderWindow& window)
     _player.Render(window);
     _enemy.Render(window);
     //crosshair.Render(window);
+    _hud.Render(window);
     _cursor.Render(window);
+
 
     //window.setView(_minimapView);
     //window.draw(_background_sprite2);
@@ -192,7 +239,7 @@ void GameScene::InitDistribution()
 {
     generator = GetEngine();
     CreateDistribution("Ship xPos", 1100, 1100);
-    CreateDistribution("Ship yPos", 45, 675);
+    CreateDistribution("Ship yPos", 100, 600);
     CreateDistribution("Ship damage", 100, 250);
     dist_code =
     {
@@ -261,7 +308,7 @@ bool GameScene::InitCommandButtons()
 
 void GameScene::InitCreditsText()
 {
-    _credits_text.setString("Credits: 10000");
+    _credits_text.setString("Credits: " + std::to_string(_credits));
     _credits_text.setFillColor(sf::Color(153, 210, 242));
     _credits_text.setOutlineColor(sf::Color::Black);
     _credits_text.setOutlineThickness(1);

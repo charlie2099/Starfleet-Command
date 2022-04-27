@@ -9,9 +9,11 @@ Starship::Starship(Type type) : ship_type(type)
             _spriteComponent.GetSprite().scale({0.05F, 0.05F});
             _health = 100;
             _speed = 80;
+            _trainingSpeed = 0.5f;
             _damage = 20;
             _damageScaleFactor = 0.25f;
             _fireRate = 0.25f;
+            _shipCost = 250;
             _projectileType = Projectile::Type::LASER_RED_REGULAR;
             break;
         case Type::REPAIR:
@@ -19,9 +21,11 @@ Starship::Starship(Type type) : ship_type(type)
             _spriteComponent.GetSprite().scale({0.05F, 0.05F});
             _health = 150;
             _speed = 70;
+            _trainingSpeed = 0.4f;
             _damage = 0;
             _damageScaleFactor = 0.10f;
             _fireRate = 2.0f;
+            _shipCost = 200;
             _projectileType = Projectile::Type::LASER_BLUE_SMALL;
             break;
         case Type::SCOUT:
@@ -29,9 +33,11 @@ Starship::Starship(Type type) : ship_type(type)
             _spriteComponent.GetSprite().scale({0.30F, 0.30F});
             _health = 75;
             _speed = 100;
+            _trainingSpeed = 0.6f;
             _damage = 10;
             _damageScaleFactor = 0.10f;
             _fireRate = 1.0f;
+            _shipCost = 100;
             _projectileType = Projectile::Type::LASER_BLUE_SMALL;
             break;
         case Type::DESTROYER:
@@ -39,9 +45,11 @@ Starship::Starship(Type type) : ship_type(type)
             _spriteComponent.GetSprite().scale({0.05F, 0.05F});
             _health = 250;
             _speed = 40;
+            _trainingSpeed = 0.9f;
             _damage = 150;
             _damageScaleFactor = 1.0f;
             _fireRate = 3.0f;
+            _shipCost = 1000;
             _projectileType = Projectile::Type::LASER_BLUE_LARGE;
             break;
         case Type::BATTLESHIP:
@@ -49,9 +57,11 @@ Starship::Starship(Type type) : ship_type(type)
             _spriteComponent.GetSprite().scale({0.05F, 0.05F});
             _health = 500;
             _speed = 30;
+            _trainingSpeed = 0.8f;
             _damage = 75;
             _damageScaleFactor = 0.75f;
             _fireRate = 3.0f;
+            _shipCost = 750;
             _projectileType = Projectile::Type::LASER_BLUE_LARGE;
             break;
         case Type::FLAGSHIP:
