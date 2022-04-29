@@ -200,30 +200,6 @@ Cursor.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Cursor.cpp.s
 .PHONY : Cursor.cpp.s
 
-ECS/Component.obj: ECS/Component.cpp.obj
-.PHONY : ECS/Component.obj
-
-# target to build an object file
-ECS/Component.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/ECS/Component.cpp.obj
-.PHONY : ECS/Component.cpp.obj
-
-ECS/Component.i: ECS/Component.cpp.i
-.PHONY : ECS/Component.i
-
-# target to preprocess a source file
-ECS/Component.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/ECS/Component.cpp.i
-.PHONY : ECS/Component.cpp.i
-
-ECS/Component.s: ECS/Component.cpp.s
-.PHONY : ECS/Component.s
-
-# target to generate assembly for a file
-ECS/Component.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/ECS/Component.cpp.s
-.PHONY : ECS/Component.cpp.s
-
 ECS/Object.obj: ECS/Object.cpp.obj
 .PHONY : ECS/Object.obj
 
@@ -794,9 +770,6 @@ help:
 	@echo ... Cursor.obj
 	@echo ... Cursor.i
 	@echo ... Cursor.s
-	@echo ... ECS/Component.obj
-	@echo ... ECS/Component.i
-	@echo ... ECS/Component.s
 	@echo ... ECS/Object.obj
 	@echo ... ECS/Object.i
 	@echo ... ECS/Object.s

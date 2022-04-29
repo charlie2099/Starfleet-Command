@@ -2,7 +2,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/Starfleet_Command.dir/Components/SpriteComponent.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Crosshair.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Cursor.cpp.obj"
-  "CMakeFiles/Starfleet_Command.dir/ECS/Component.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/ECS/Object.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Enemy.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj"

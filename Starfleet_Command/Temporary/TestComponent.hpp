@@ -6,10 +6,10 @@
 class TestComponent : public Component
 {
  public:
-    explicit TestComponent(Object* object);
+    explicit TestComponent(GameObject* object);
 
     /// General
-    void render(sf::RenderWindow& renderWindow) override;
+    void Render(sf::RenderWindow& renderWindow) override;
 
     /// Mutators
     void loadSprite(const std::string& texture_filepath);

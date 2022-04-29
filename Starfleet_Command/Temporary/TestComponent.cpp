@@ -1,6 +1,6 @@
 #include "TestComponent.hpp"
 
-TestComponent::TestComponent(Object *object) : Component(object) {}
+TestComponent::TestComponent(GameObject *object) : Component(object) {}
 
 void TestComponent::loadSprite(const std::string& texture_filepath)
 {
@@ -23,7 +23,7 @@ sf::Vector2<float> TestComponent::getPos()
     return sprite.getPosition();
 }
 
-void TestComponent::render(sf::RenderWindow &renderWindow)
+void TestComponent::Render(sf::RenderWindow &renderWindow)
 {
     renderWindow.draw(sprite);
 }

@@ -238,41 +238,6 @@ CMakeFiles/Starfleet_Command.dir/Cursor.cpp.obj
  C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Cursor.cpp
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Cursor.hpp
-CMakeFiles/Starfleet_Command.dir/ECS/Component.cpp.obj
- C:/Libraries/SFML/include/SFML/Config.hpp
- C:/Libraries/SFML/include/SFML/Graphics/BlendMode.hpp
- C:/Libraries/SFML/include/SFML/Graphics/Color.hpp
- C:/Libraries/SFML/include/SFML/Graphics/Export.hpp
- C:/Libraries/SFML/include/SFML/Graphics/Image.hpp
- C:/Libraries/SFML/include/SFML/Graphics/PrimitiveType.hpp
- C:/Libraries/SFML/include/SFML/Graphics/Rect.hpp
- C:/Libraries/SFML/include/SFML/Graphics/Rect.inl
- C:/Libraries/SFML/include/SFML/Graphics/RenderStates.hpp
- C:/Libraries/SFML/include/SFML/Graphics/RenderTarget.hpp
- C:/Libraries/SFML/include/SFML/Graphics/RenderWindow.hpp
- C:/Libraries/SFML/include/SFML/Graphics/Transform.hpp
- C:/Libraries/SFML/include/SFML/Graphics/Vertex.hpp
- C:/Libraries/SFML/include/SFML/Graphics/View.hpp
- C:/Libraries/SFML/include/SFML/System/Clock.hpp
- C:/Libraries/SFML/include/SFML/System/Export.hpp
- C:/Libraries/SFML/include/SFML/System/NonCopyable.hpp
- C:/Libraries/SFML/include/SFML/System/String.hpp
- C:/Libraries/SFML/include/SFML/System/String.inl
- C:/Libraries/SFML/include/SFML/System/Time.hpp
- C:/Libraries/SFML/include/SFML/System/Utf.hpp
- C:/Libraries/SFML/include/SFML/System/Utf.inl
- C:/Libraries/SFML/include/SFML/System/Vector2.hpp
- C:/Libraries/SFML/include/SFML/System/Vector2.inl
- C:/Libraries/SFML/include/SFML/Window/ContextSettings.hpp
- C:/Libraries/SFML/include/SFML/Window/Cursor.hpp
- C:/Libraries/SFML/include/SFML/Window/Export.hpp
- C:/Libraries/SFML/include/SFML/Window/GlResource.hpp
- C:/Libraries/SFML/include/SFML/Window/VideoMode.hpp
- C:/Libraries/SFML/include/SFML/Window/Window.hpp
- C:/Libraries/SFML/include/SFML/Window/WindowHandle.hpp
- C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp
- D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Component.cpp
- D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Component.hpp
 CMakeFiles/Starfleet_Command.dir/ECS/Object.cpp.obj
  C:/Libraries/SFML/include/SFML/Config.hpp
  C:/Libraries/SFML/include/SFML/Graphics/BlendMode.hpp

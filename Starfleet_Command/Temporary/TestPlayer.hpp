@@ -1,6 +1,6 @@
 #ifndef STARFLEET_COMMAND_TESTPLAYER_HPP
 #define STARFLEET_COMMAND_TESTPLAYER_HPP
-#include "../ECS/Object.hpp"
+#include "../ECS/GameObject.hpp"
 #include "TestComponent.hpp"
 
 class TestPlayer
@@ -12,7 +12,7 @@ class TestPlayer
     void render(sf::RenderWindow& window);
 
  private:
-    std::shared_ptr<Object> object;
+    std::shared_ptr<GameObject> object;
 };
 
 #endif //STARFLEET_COMMAND_TESTPLAYER_HPP
