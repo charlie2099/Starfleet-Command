@@ -6,7 +6,7 @@
 class TestComponent : public Component
 {
  public:
-    explicit TestComponent(GameObject* object);
+    explicit TestComponent(Entity* object);
 
     /// General
     void Render(sf::RenderWindow& renderWindow) override;

@@ -1,41 +1,37 @@
 #include "GameObject.hpp"
 
-void GameObject::Awake()
+IComponent* GameObject::AddComponent(std::unique_ptr<IComponent> component)
 {
-    for(int i = components.size() - 1; i >= 0; i--)
+    m_components.push_back(std::move(component));
+    return m_components.back().get();
+}
+
+void GameObject::EventHandler(sf::RenderWindow &window, sf::Event &event)
+{
+    for(auto& component : m_components)
     {
-        components[i]->Awake();
+        component->EventHandler(window, event);
     }
 }
 
-void GameObject::Start()
+void GameObject::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    for(int i = components.size() - 1; i >= 0; i--)
+    for (auto& component : m_components)
     {
-        components[i]->Start();
-    }
-}
-
-void GameObject::Update(sf::Time deltaTime)
-{
-    for(int i = components.size() - 1; i >= 0; i--)
-    {
-        components[i]->Update(deltaTime);
-    }
-}
-
-void GameObject::LateUpdate(sf::Time deltaTime)
-{
-    for(int i = components.size() - 1; i >= 0; i--)
-    {
-        components[i]->LateUpdate(deltaTime);
+        component->Update(window, deltaTime);
     }
 }
 
 void GameObject::Render(sf::RenderWindow& window)
 {
-    for(int i = components.size() - 1; i >= 0; i--)
+    for (auto& component : m_components)
     {
-        components[i]->Render(window);
+        component->Render(window);
     }
 }
+
+
+
+
+
+

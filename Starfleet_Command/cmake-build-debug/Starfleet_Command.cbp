@@ -84,10 +84,31 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/AiComponent.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/AiComponent.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/IComponent.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/NewSpriteComponent.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/NewSpriteComponent.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/TestComponent.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/TestComponent.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Crosshair.cpp">
@@ -105,10 +126,16 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Component.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Object.cpp">
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Entity.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Object.hpp">
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Entity.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/GameObject.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/GameObject.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.cpp">

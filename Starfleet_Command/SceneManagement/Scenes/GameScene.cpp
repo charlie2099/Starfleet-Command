@@ -10,6 +10,17 @@ bool GameScene::Init()
     InitPlayerFlagship();
     InitEnemyFlagship();
 
+    auto spritecomp = dynamic_cast<NewSpriteComponent*>(gameObject.AddComponent(std::make_unique<NewSpriteComponent>()));
+    //auto spritecomp = gameObject.GetComponent(std::make_unique<NewSpriteComponent>());
+    spritecomp->LoadSprite("images/starfleet_ship_fighter.png");
+    spritecomp->GetSprite().scale(0.10f, 0.10f);
+    spritecomp->GetSprite().setColor(sf::Color::Red);
+    spritecomp->GetSprite().setPosition(400, 400);
+    newSpriteComponent = spritecomp;
+
+    auto aiComp = dynamic_cast<AiComponent*>(gameObject.AddComponent(std::make_unique<AiComponent>()));
+    aiComponent = aiComp;
+
     return true;
 }
 
@@ -208,6 +219,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
         }
     }
+
+    //aiComponent->MoveTowards(newSpriteComponent->GetSprite(), _enemy.GetShip()[0]->GetSpriteComponent().GetPos(), 100, deltaTime);
 }
 
 void GameScene::Render(sf::RenderWindow& window)
@@ -225,6 +238,9 @@ void GameScene::Render(sf::RenderWindow& window)
     window.draw(_credits_text);
     _player.Render(window);
     _enemy.Render(window);
+
+    gameObject.Render(window);
+
     //crosshair.Render(window);
     _hud.Render(window);
     _cursor.Render(window);

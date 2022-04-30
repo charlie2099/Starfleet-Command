@@ -1,8 +1,12 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Starfleet_Command.dir/Components/AiComponent.cpp.obj"
+  "CMakeFiles/Starfleet_Command.dir/Components/NewSpriteComponent.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Components/SpriteComponent.cpp.obj"
+  "CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Crosshair.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Cursor.cpp.obj"
-  "CMakeFiles/Starfleet_Command.dir/ECS/Object.cpp.obj"
+  "CMakeFiles/Starfleet_Command.dir/ECS/Entity.cpp.obj"
+  "CMakeFiles/Starfleet_Command.dir/ECS/GameObject.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Enemy.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/GameUI/Button.cpp.obj"

@@ -8,10 +8,14 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/AiComponent.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Components/AiComponent.cpp.obj"
+  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/NewSpriteComponent.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Components/NewSpriteComponent.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Components/SpriteComponent.cpp.obj"
+  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/TestComponent.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Crosshair.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Crosshair.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Cursor.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Cursor.cpp.obj"
-  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Object.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/ECS/Object.cpp.obj"
+  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Entity.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/ECS/Entity.cpp.obj"
+  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/GameObject.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/ECS/GameObject.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Enemy.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/Button.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/GameUI/Button.cpp.obj"

@@ -2,7 +2,7 @@
 
 TestPlayer::TestPlayer()
 {
-    object = std::make_shared<GameObject>();
+    object = std::make_shared<Entity>();
     // Adds a component by calling our previously written template function.
     auto sprite = object->AddComponent<TestComponent>();
     sprite->loadSprite("images/starfleet_ship.png");

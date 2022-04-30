@@ -8,6 +8,9 @@
 #include "../../Enemy.hpp"
 #include "../../Player/Player.h"
 #include "../../GameUI/HUD.hpp"
+#include "../../ECS/GameObject.hpp"
+#include "../../Components/NewSpriteComponent.hpp"
+#include "../../Components/AiComponent.hpp"
 #include <random>
 #include <chrono>
 
@@ -34,6 +37,11 @@ private:
     void CreateDistribution(const std::string& name, int min, int max);
     void UpdateDistribution(const std::string& name, int min, int max);
     static std::mt19937 GetEngine();
+
+    //Entity gameObject;
+    GameObject gameObject;
+    NewSpriteComponent* newSpriteComponent;
+    AiComponent* aiComponent;
 
     // Utility
     Chilli::Cursor _cursor;
@@ -63,7 +71,6 @@ private:
     std::mt19937 generator;
     std::vector<std::uniform_int_distribution<int>> uint_distrib;
     std::map<std::string, int> dist_code;
-
     int ship_spawned_index = 0;
 };
 

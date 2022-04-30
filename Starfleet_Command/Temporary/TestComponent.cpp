@@ -1,6 +1,6 @@
 #include "TestComponent.hpp"
 
-TestComponent::TestComponent(GameObject *object) : Component(object) {}
+TestComponent::TestComponent(Entity *object) : Component(object) {}
 
 void TestComponent::loadSprite(const std::string& texture_filepath)
 {

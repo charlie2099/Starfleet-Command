@@ -676,6 +676,28 @@ SFML/Config.hpp
 
 C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp
 
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/AiComponent.cpp
+AiComponent.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/AiComponent.hpp
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/AiComponent.hpp
+IComponent.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/IComponent.hpp
+SFML/Graphics/Sprite.hpp
+-
+../Utility/Vector.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.hpp
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/IComponent.hpp
+SFML/Graphics/RenderWindow.hpp
+-
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/NewSpriteComponent.hpp
+SFML/Graphics.hpp
+-
+IComponent.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/IComponent.hpp
+
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp
 SFML/Graphics.hpp
 -
@@ -694,11 +716,7 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Component.hp
 SFML/Graphics/RenderWindow.hpp
 -
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Object.cpp
-Object.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Object.hpp
-
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Object.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Entity.hpp
 vector
 -
 memory
@@ -707,6 +725,16 @@ SFML/Graphics/RenderWindow.hpp
 -
 Component.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Component.hpp
+
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/GameObject.hpp
+../Components/IComponent.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/IComponent.hpp
+../Components/NewSpriteComponent.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/NewSpriteComponent.hpp
+memory
+-
+vector
+-
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.hpp
 Ships/Starship.hpp
@@ -827,16 +855,16 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Enemy.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Player.h
 ../../GameUI/HUD.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/HUD.hpp
+../../ECS/GameObject.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/GameObject.hpp
+../../Components/NewSpriteComponent.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/NewSpriteComponent.hpp
+../../Components/AiComponent.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/AiComponent.hpp
 random
 -
 chrono
 -
-
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.cpp
-chrono
--
-MenuScene.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.hpp
 
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/SceneManagement/Scenes/MenuScene.hpp
 ../Scene.hpp
@@ -878,23 +906,15 @@ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/DamagePop
 iostream
 -
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestComponent.cpp
-TestComponent.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestComponent.hpp
-
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestComponent.hpp
 SFML/Graphics.hpp
 -
 ../ECS/Component.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Component.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestPlayer.cpp
-TestPlayer.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestPlayer.hpp
-
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestPlayer.hpp
-../ECS/Object.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Object.hpp
+../ECS/Entity.hpp
+D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ECS/Entity.hpp
 TestComponent.hpp
 D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestComponent.hpp
 
