@@ -800,6 +800,30 @@ Temporary/TestPlayer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Temporary/TestPlayer.cpp.s
 .PHONY : Temporary/TestPlayer.cpp.s
 
+TestClass.obj: TestClass.cpp.obj
+.PHONY : TestClass.obj
+
+# target to build an object file
+TestClass.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/TestClass.cpp.obj
+.PHONY : TestClass.cpp.obj
+
+TestClass.i: TestClass.cpp.i
+.PHONY : TestClass.i
+
+# target to preprocess a source file
+TestClass.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/TestClass.cpp.i
+.PHONY : TestClass.cpp.i
+
+TestClass.s: TestClass.cpp.s
+.PHONY : TestClass.s
+
+# target to generate assembly for a file
+TestClass.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/TestClass.cpp.s
+.PHONY : TestClass.cpp.s
+
 Utility/Vector.obj: Utility/Vector.cpp.obj
 .PHONY : Utility/Vector.obj
 
@@ -941,6 +965,9 @@ help:
 	@echo ... Temporary/TestPlayer.obj
 	@echo ... Temporary/TestPlayer.i
 	@echo ... Temporary/TestPlayer.s
+	@echo ... TestClass.obj
+	@echo ... TestClass.i
+	@echo ... TestClass.s
 	@echo ... Utility/Vector.obj
 	@echo ... Utility/Vector.i
 	@echo ... Utility/Vector.s

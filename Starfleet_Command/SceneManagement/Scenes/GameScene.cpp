@@ -10,6 +10,17 @@ bool GameScene::Init()
     InitPlayerFlagship();
     InitEnemyFlagship();
 
+    //testClass = std::make_unique<TestClass>();
+
+    // checks for any player ship spawn events BEYOND this point
+    auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
+    _player.AddObserver({Player::EventID::SHIP_SPAWNED, callbackFnc1});
+
+    auto callbackFnc2 = std::bind(&TestClass::OnEvent, testClass, std::placeholders::_1);
+    _player.AddObserver2({Player::EventID::SHIP_SPAWNED, callbackFnc2});
+
+
+
     auto spritecomp = dynamic_cast<NewSpriteComponent*>(gameObject.AddComponent(std::make_unique<NewSpriteComponent>()));
     //auto spritecomp = gameObject.GetComponent(std::make_unique<NewSpriteComponent>());
     spritecomp->LoadSprite("images/starfleet_ship_fighter.png");

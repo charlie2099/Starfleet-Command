@@ -11,6 +11,7 @@
 #include "../../ECS/GameObject.hpp"
 #include "../../Components/NewSpriteComponent.hpp"
 #include "../../Components/AiComponent.hpp"
+#include "../../TestClass.hpp"
 #include <random>
 #include <chrono>
 
@@ -72,6 +73,9 @@ private:
     std::vector<std::uniform_int_distribution<int>> uint_distrib;
     std::map<std::string, int> dist_code;
     int ship_spawned_index = 0;
+
+    //std::unique_ptr<TestClass> testClass;
+    TestClass testClass;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

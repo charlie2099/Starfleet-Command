@@ -36,6 +36,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Ships/Starship.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestComponent.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Temporary/TestComponent.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestPlayer.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Temporary/TestPlayer.cpp.obj"
+  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/TestClass.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/TestClass.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Utility/Vector.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Utility/Vector.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/main.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/main.cpp.obj"
   )

@@ -27,6 +27,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/Starfleet_Command.dir/Ships/Starship.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Temporary/TestComponent.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Temporary/TestPlayer.cpp.obj"
+  "CMakeFiles/Starfleet_Command.dir/TestClass.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Utility/Vector.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/main.cpp.obj"
   "Starfleet_Command.exe"

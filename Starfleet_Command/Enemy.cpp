@@ -24,15 +24,27 @@ void Enemy::Render(sf::RenderWindow &window)
     }
 }
 
+void Enemy::CreateShip(Starship::Type type)
+{
+    starship.emplace_back(std::make_unique<Starship>(type));
+
+    auto range = _observers.equal_range(EventID::SHIP_SPAWNED);
+    for(auto iter = range.first; iter != range.second; ++iter)
+    {
+        iter->second();
+    }
+}
+
+void Enemy::AddObserver(std::pair<EventID, std::function<void()>> observer)
+{
+    _observers.insert(observer);
+}
+
 std::vector<std::unique_ptr<Starship>> &Enemy::GetShip()
 {
     return starship;
 }
 
-void Enemy::CreateShip(Starship::Type type)
-{
-    starship.emplace_back(std::make_unique<Starship>(type));
-}
 
 
 
