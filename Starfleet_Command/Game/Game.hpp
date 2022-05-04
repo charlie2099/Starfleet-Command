@@ -1,12 +1,12 @@
 #ifndef STARFLEET_COMMAND_GAME_HPP
 #define STARFLEET_COMMAND_GAME_HPP
 #include <iostream>
-#include "../SceneManagement/Scenes/MenuScene.hpp"
-#include "../SceneManagement/SceneManager.hpp"
+#include "Scenes/MenuScene.hpp"
+#include "Scenes/SceneManager.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-class Game
+class Game // Rename to Engine?
 {
  public:
     Game();

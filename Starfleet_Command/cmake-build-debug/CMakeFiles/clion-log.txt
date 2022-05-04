@@ -1,5 +1,17 @@
 "C:\Program Files\JetBrains\CLion 2021.2\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command
 -- Found SFML 2.5.1 in C:/Libraries/SFML/lib/cmake/SFML
 -- Configuring done
--- Generating done
--- Build files have been written to: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug
+CMake Error at CMakeLists.txt:7 (add_executable):
+  Cannot find source file:
+
+    Gamelibs/include/SceneManagement/SceneManager.hpp
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .cu .mpp .m .M .mm .h .hh .h++
+  .hm .hpp .hxx .in .txx .f .F .for .f77 .f90 .f95 .f03 .ispc
+
+
+CMake Error at CMakeLists.txt:7 (add_executable):
+  No SOURCES given to target: Starfleet_Command
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
