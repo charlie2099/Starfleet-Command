@@ -6,5 +6,5 @@ CXX_DEFINES = -DSFML_STATIC
 
 CXX_INCLUDES = @CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 
-CXX_FLAGS = -g -std=gnu++14
+CXX_FLAGS = -g -std=gnu++1z
 
