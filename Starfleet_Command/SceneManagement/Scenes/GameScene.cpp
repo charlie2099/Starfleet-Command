@@ -12,7 +12,13 @@ bool GameScene::Init()
 
     //testClass = std::make_unique<TestClass>();
 
-    // checks for any player ship spawn events BEYOND this point
+
+    // OBSERVER PATTERN
+
+    // TODO: Static events? i.e. Player.AddObserver instead of _player.AddObserver?
+
+    /// Whenever a SHIP_SPAWNED event occurs, the TestFncForObserverToCall method is called
+    /// A SHIP_SPAWNED event is invoked in the player CreateShip method.
     auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
     _player.AddObserver({Player::EventID::SHIP_SPAWNED, callbackFnc1});
 
@@ -20,17 +26,30 @@ bool GameScene::Init()
     _player.AddObserver2({Player::EventID::SHIP_SPAWNED, callbackFnc2});
 
 
+    // COMPONENT PATTERN
 
-    auto spritecomp = dynamic_cast<NewSpriteComponent*>(gameObject.AddComponent(std::make_unique<NewSpriteComponent>()));
-    //auto spritecomp = gameObject.GetComponent(std::make_unique<NewSpriteComponent>());
-    spritecomp->LoadSprite("images/starfleet_ship_fighter.png");
-    spritecomp->GetSprite().scale(0.10f, 0.10f);
-    spritecomp->GetSprite().setColor(sf::Color::Red);
-    spritecomp->GetSprite().setPosition(400, 400);
-    newSpriteComponent = spritecomp;
+//    auto spritecomp = dynamic_cast<NewSpriteComponent*>(gameObject.AddComponent(std::make_unique<NewSpriteComponent>()));
+//    //auto spritecomp = gameObject.GetComponent(std::make_unique<NewSpriteComponent>());
+//    spritecomp->LoadSprite("images/starfleet_ship_fighter.png");
+//    spritecomp->GetSprite().scale(0.10f, 0.10f);
+//    spritecomp->GetSprite().setColor(sf::Color::Red);
+//    spritecomp->GetSprite().setPosition(400, 400);
+//    newSpriteComponent = spritecomp;
+//
+//    auto aiComp = dynamic_cast<AiComponent*>(gameObject.AddComponent(std::make_unique<AiComponent>()));
+//    aiComponent = aiComp;
 
-    auto aiComp = dynamic_cast<AiComponent*>(gameObject.AddComponent(std::make_unique<AiComponent>()));
-    aiComponent = aiComp;
+
+    // FACTORY PATTERN
+    starship = StarshipFactory::CreateShip(StarshipFactory::FIGHTER);
+
+    auto callbackFnc3 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
+    starship->GetHealthComponent().AddObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc3});
+
+    // DILEMMA
+    // Should classes be purely generic and reusable with game logic kept in the main game source file [YES]
+    // OR
+    // can the player class for example contain logic for determining when the health bar should be updated. [NO]
 
     return true;
 }
@@ -39,6 +58,11 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse position translated into world coordinates
+
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+        starship->GetHealthComponent().SetHealth(starship->GetHealthComponent().GetHealth() - 10);
+    }
 
     for (int i = 0; i < _command_buttons.size(); i++)
     {
@@ -132,6 +156,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _cursor.SetCursorPos(window, _worldView);
     _player.Update(window, deltaTime);
     _enemy.Update(window, deltaTime);
+    starship->Update(window, deltaTime);
 
     if(_hud.IsTrainingComplete())
     {
@@ -250,7 +275,8 @@ void GameScene::Render(sf::RenderWindow& window)
     _player.Render(window);
     _enemy.Render(window);
 
-    gameObject.Render(window);
+    //gameObject.Render(window);
+    starship->Render(window);
 
     //crosshair.Render(window);
     _hud.Render(window);

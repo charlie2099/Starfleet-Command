@@ -9,7 +9,8 @@ class Player
 public:
     enum EventID
     {
-        SHIP_SPAWNED = 1
+        SHIP_SPAWNED = 1,
+        SHIP_DESTROYED = 2 // starship class?
     };
 
     Player() = default;

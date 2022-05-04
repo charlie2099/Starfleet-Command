@@ -90,7 +90,28 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/AiComponent.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/IComponent.hpp">
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/AnimationComponent.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/AnimationComponent.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/AudioComponent.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/AudioComponent.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/HealthComponent.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/HealthComponent.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/MovementComponent.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/MovementComponent.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/NewSpriteComponent.cpp">
@@ -105,10 +126,10 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/SpriteComponent.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/TestComponent.cpp">
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/WeaponComponent.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/TestComponent.hpp">
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Components/WeaponComponent.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Crosshair.cpp">
@@ -186,6 +207,12 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/GameUI/ShipCard.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Interfaces/IComponent.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Interfaces/IStarship.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Player/Fleet.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
@@ -240,10 +267,22 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Projectile.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/ShipClasses/StarshipFighter.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/ShipClasses/StarshipFighter.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/Starship.hpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/StarshipFactory.cpp">
+			<Option target="Starfleet_Command"/>
+		</Unit>
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Ships/StarshipFactory.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Temporary/TestComponent.cpp">

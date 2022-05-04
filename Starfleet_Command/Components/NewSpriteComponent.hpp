@@ -1,7 +1,7 @@
 #ifndef STARFLEET_COMMAND_NEWSPRITECOMPONENT_HPP
 #define STARFLEET_COMMAND_NEWSPRITECOMPONENT_HPP
 #include <SFML/Graphics.hpp>
-#include "IComponent.hpp"
+#include "../Interfaces/IComponent.hpp"
 
 class NewSpriteComponent : public IComponent
 {

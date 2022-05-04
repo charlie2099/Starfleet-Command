@@ -1,6 +1,6 @@
 #ifndef STARFLEET_COMMAND_AICOMPONENT_HPP
 #define STARFLEET_COMMAND_AICOMPONENT_HPP
-#include "IComponent.hpp"
+#include "../Interfaces/IComponent.hpp"
 #include <SFML/Graphics/Sprite.hpp>
 #include "../Utility/Vector.hpp"
 

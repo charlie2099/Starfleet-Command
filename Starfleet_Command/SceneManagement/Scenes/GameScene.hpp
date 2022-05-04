@@ -8,10 +8,9 @@
 #include "../../Enemy.hpp"
 #include "../../Player/Player.h"
 #include "../../GameUI/HUD.hpp"
-#include "../../ECS/GameObject.hpp"
-#include "../../Components/NewSpriteComponent.hpp"
-#include "../../Components/AiComponent.hpp"
 #include "../../TestClass.hpp"
+#include "../../Interfaces/IStarship.hpp"
+#include "../../Ships/StarshipFactory.hpp"
 #include <random>
 #include <chrono>
 
@@ -40,9 +39,9 @@ private:
     static std::mt19937 GetEngine();
 
     //Entity gameObject;
-    GameObject gameObject;
-    NewSpriteComponent* newSpriteComponent;
-    AiComponent* aiComponent;
+    //GameObject gameObject;
+    //NewSpriteComponent* newSpriteComponent;
+    //AiComponent* aiComponent;
 
     // Utility
     Chilli::Cursor _cursor;
@@ -74,8 +73,10 @@ private:
     std::map<std::string, int> dist_code;
     int ship_spawned_index = 0;
 
-    //std::unique_ptr<TestClass> testClass;
+    // TEST VARIABLES (TEMPORARY)
     TestClass testClass;
+    std::unique_ptr<IStarship> starship;
+    //std::unique_ptr<TestClass> testClass;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

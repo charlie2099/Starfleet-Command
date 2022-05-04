@@ -14,13 +14,17 @@ public:
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
     bool IsFaded() const { return _isFaded; };
+    void SetColour(sf::Color color);
+    void SetCharSize(int size);
 
 private:
     bool InitFont();
     static std::mt19937 GetEngine();
     std::mt19937 generator;
     sf::Text text;
+    sf::Color _color;
     sf::Font font;
+    float m_timePassed = 0;
     bool _isFaded = false;
 };
 

@@ -429,24 +429,10 @@ CMakeFiles/Starfleet_Command.dir/GameUI/HUD.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/GameUI/HUD.cpp.s"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\GameUI\HUD.cpp -o CMakeFiles\Starfleet_Command.dir\GameUI\HUD.cpp.s
 
-CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
-CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
-CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.obj: ../Components/TestComponent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.obj"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Components\TestComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\TestComponent.cpp
-
-CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.i"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\TestComponent.cpp > CMakeFiles\Starfleet_Command.dir\Components\TestComponent.cpp.i
-
-CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.s"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\TestComponent.cpp -o CMakeFiles\Starfleet_Command.dir\Components\TestComponent.cpp.s
-
 CMakeFiles/Starfleet_Command.dir/ECS/GameObject.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/ECS/GameObject.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/ECS/GameObject.cpp.obj: ../ECS/GameObject.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/Starfleet_Command.dir/ECS/GameObject.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/Starfleet_Command.dir/ECS/GameObject.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\ECS\GameObject.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\ECS\GameObject.cpp
 
 CMakeFiles/Starfleet_Command.dir/ECS/GameObject.cpp.i: cmake_force
@@ -460,7 +446,7 @@ CMakeFiles/Starfleet_Command.dir/ECS/GameObject.cpp.s: cmake_force
 CMakeFiles/Starfleet_Command.dir/Components/NewSpriteComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Components/NewSpriteComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Components/NewSpriteComponent.cpp.obj: ../Components/NewSpriteComponent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/Starfleet_Command.dir/Components/NewSpriteComponent.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/Starfleet_Command.dir/Components/NewSpriteComponent.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Components\NewSpriteComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\NewSpriteComponent.cpp
 
 CMakeFiles/Starfleet_Command.dir/Components/NewSpriteComponent.cpp.i: cmake_force
@@ -474,7 +460,7 @@ CMakeFiles/Starfleet_Command.dir/Components/NewSpriteComponent.cpp.s: cmake_forc
 CMakeFiles/Starfleet_Command.dir/Components/AiComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Components/AiComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Components/AiComponent.cpp.obj: ../Components/AiComponent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/Starfleet_Command.dir/Components/AiComponent.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/Starfleet_Command.dir/Components/AiComponent.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Components\AiComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\AiComponent.cpp
 
 CMakeFiles/Starfleet_Command.dir/Components/AiComponent.cpp.i: cmake_force
@@ -488,7 +474,7 @@ CMakeFiles/Starfleet_Command.dir/Components/AiComponent.cpp.s: cmake_force
 CMakeFiles/Starfleet_Command.dir/TestClass.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/TestClass.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/TestClass.cpp.obj: ../TestClass.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/Starfleet_Command.dir/TestClass.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/Starfleet_Command.dir/TestClass.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\TestClass.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\TestClass.cpp
 
 CMakeFiles/Starfleet_Command.dir/TestClass.cpp.i: cmake_force
@@ -498,6 +484,104 @@ CMakeFiles/Starfleet_Command.dir/TestClass.cpp.i: cmake_force
 CMakeFiles/Starfleet_Command.dir/TestClass.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/TestClass.cpp.s"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\TestClass.cpp -o CMakeFiles\Starfleet_Command.dir\TestClass.cpp.s
+
+CMakeFiles/Starfleet_Command.dir/Ships/StarshipFactory.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
+CMakeFiles/Starfleet_Command.dir/Ships/StarshipFactory.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
+CMakeFiles/Starfleet_Command.dir/Ships/StarshipFactory.cpp.obj: ../Ships/StarshipFactory.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/Starfleet_Command.dir/Ships/StarshipFactory.cpp.obj"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Ships\StarshipFactory.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Ships\StarshipFactory.cpp
+
+CMakeFiles/Starfleet_Command.dir/Ships/StarshipFactory.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Ships/StarshipFactory.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Ships\StarshipFactory.cpp > CMakeFiles\Starfleet_Command.dir\Ships\StarshipFactory.cpp.i
+
+CMakeFiles/Starfleet_Command.dir/Ships/StarshipFactory.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Ships/StarshipFactory.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Ships\StarshipFactory.cpp -o CMakeFiles\Starfleet_Command.dir\Ships\StarshipFactory.cpp.s
+
+CMakeFiles/Starfleet_Command.dir/Ships/ShipClasses/StarshipFighter.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
+CMakeFiles/Starfleet_Command.dir/Ships/ShipClasses/StarshipFighter.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
+CMakeFiles/Starfleet_Command.dir/Ships/ShipClasses/StarshipFighter.cpp.obj: ../Ships/ShipClasses/StarshipFighter.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/Starfleet_Command.dir/Ships/ShipClasses/StarshipFighter.cpp.obj"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Ships\ShipClasses\StarshipFighter.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Ships\ShipClasses\StarshipFighter.cpp
+
+CMakeFiles/Starfleet_Command.dir/Ships/ShipClasses/StarshipFighter.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Ships/ShipClasses/StarshipFighter.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Ships\ShipClasses\StarshipFighter.cpp > CMakeFiles\Starfleet_Command.dir\Ships\ShipClasses\StarshipFighter.cpp.i
+
+CMakeFiles/Starfleet_Command.dir/Ships/ShipClasses/StarshipFighter.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Ships/ShipClasses/StarshipFighter.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Ships\ShipClasses\StarshipFighter.cpp -o CMakeFiles\Starfleet_Command.dir\Ships\ShipClasses\StarshipFighter.cpp.s
+
+CMakeFiles/Starfleet_Command.dir/Components/HealthComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
+CMakeFiles/Starfleet_Command.dir/Components/HealthComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
+CMakeFiles/Starfleet_Command.dir/Components/HealthComponent.cpp.obj: ../Components/HealthComponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/Starfleet_Command.dir/Components/HealthComponent.cpp.obj"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Components\HealthComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\HealthComponent.cpp
+
+CMakeFiles/Starfleet_Command.dir/Components/HealthComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Components/HealthComponent.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\HealthComponent.cpp > CMakeFiles\Starfleet_Command.dir\Components\HealthComponent.cpp.i
+
+CMakeFiles/Starfleet_Command.dir/Components/HealthComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Components/HealthComponent.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\HealthComponent.cpp -o CMakeFiles\Starfleet_Command.dir\Components\HealthComponent.cpp.s
+
+CMakeFiles/Starfleet_Command.dir/Components/MovementComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
+CMakeFiles/Starfleet_Command.dir/Components/MovementComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
+CMakeFiles/Starfleet_Command.dir/Components/MovementComponent.cpp.obj: ../Components/MovementComponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/Starfleet_Command.dir/Components/MovementComponent.cpp.obj"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Components\MovementComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\MovementComponent.cpp
+
+CMakeFiles/Starfleet_Command.dir/Components/MovementComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Components/MovementComponent.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\MovementComponent.cpp > CMakeFiles\Starfleet_Command.dir\Components\MovementComponent.cpp.i
+
+CMakeFiles/Starfleet_Command.dir/Components/MovementComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Components/MovementComponent.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\MovementComponent.cpp -o CMakeFiles\Starfleet_Command.dir\Components\MovementComponent.cpp.s
+
+CMakeFiles/Starfleet_Command.dir/Components/AnimationComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
+CMakeFiles/Starfleet_Command.dir/Components/AnimationComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
+CMakeFiles/Starfleet_Command.dir/Components/AnimationComponent.cpp.obj: ../Components/AnimationComponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/Starfleet_Command.dir/Components/AnimationComponent.cpp.obj"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Components\AnimationComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\AnimationComponent.cpp
+
+CMakeFiles/Starfleet_Command.dir/Components/AnimationComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Components/AnimationComponent.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\AnimationComponent.cpp > CMakeFiles\Starfleet_Command.dir\Components\AnimationComponent.cpp.i
+
+CMakeFiles/Starfleet_Command.dir/Components/AnimationComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Components/AnimationComponent.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\AnimationComponent.cpp -o CMakeFiles\Starfleet_Command.dir\Components\AnimationComponent.cpp.s
+
+CMakeFiles/Starfleet_Command.dir/Components/AudioComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
+CMakeFiles/Starfleet_Command.dir/Components/AudioComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
+CMakeFiles/Starfleet_Command.dir/Components/AudioComponent.cpp.obj: ../Components/AudioComponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/Starfleet_Command.dir/Components/AudioComponent.cpp.obj"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Components\AudioComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\AudioComponent.cpp
+
+CMakeFiles/Starfleet_Command.dir/Components/AudioComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Components/AudioComponent.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\AudioComponent.cpp > CMakeFiles\Starfleet_Command.dir\Components\AudioComponent.cpp.i
+
+CMakeFiles/Starfleet_Command.dir/Components/AudioComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Components/AudioComponent.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\AudioComponent.cpp -o CMakeFiles\Starfleet_Command.dir\Components\AudioComponent.cpp.s
+
+CMakeFiles/Starfleet_Command.dir/Components/WeaponComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
+CMakeFiles/Starfleet_Command.dir/Components/WeaponComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
+CMakeFiles/Starfleet_Command.dir/Components/WeaponComponent.cpp.obj: ../Components/WeaponComponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/Starfleet_Command.dir/Components/WeaponComponent.cpp.obj"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Components\WeaponComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\WeaponComponent.cpp
+
+CMakeFiles/Starfleet_Command.dir/Components/WeaponComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Components/WeaponComponent.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\WeaponComponent.cpp > CMakeFiles\Starfleet_Command.dir\Components\WeaponComponent.cpp.i
+
+CMakeFiles/Starfleet_Command.dir/Components/WeaponComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Components/WeaponComponent.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Components\WeaponComponent.cpp -o CMakeFiles\Starfleet_Command.dir\Components\WeaponComponent.cpp.s
 
 # Object files for target Starfleet_Command
 Starfleet_Command_OBJECTS = \
@@ -527,11 +611,17 @@ Starfleet_Command_OBJECTS = \
 "CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/OptionsScene.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/GameUI/DamagePopUpEffect.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/GameUI/HUD.cpp.obj" \
-"CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/ECS/GameObject.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Components/NewSpriteComponent.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Components/AiComponent.cpp.obj" \
-"CMakeFiles/Starfleet_Command.dir/TestClass.cpp.obj"
+"CMakeFiles/Starfleet_Command.dir/TestClass.cpp.obj" \
+"CMakeFiles/Starfleet_Command.dir/Ships/StarshipFactory.cpp.obj" \
+"CMakeFiles/Starfleet_Command.dir/Ships/ShipClasses/StarshipFighter.cpp.obj" \
+"CMakeFiles/Starfleet_Command.dir/Components/HealthComponent.cpp.obj" \
+"CMakeFiles/Starfleet_Command.dir/Components/MovementComponent.cpp.obj" \
+"CMakeFiles/Starfleet_Command.dir/Components/AnimationComponent.cpp.obj" \
+"CMakeFiles/Starfleet_Command.dir/Components/AudioComponent.cpp.obj" \
+"CMakeFiles/Starfleet_Command.dir/Components/WeaponComponent.cpp.obj"
 
 # External object files for target Starfleet_Command
 Starfleet_Command_EXTERNAL_OBJECTS =
@@ -562,11 +652,17 @@ Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/GameUI/HealthBar.cpp.obj
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/SceneManagement/Scenes/OptionsScene.cpp.obj
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/GameUI/DamagePopUpEffect.cpp.obj
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/GameUI/HUD.cpp.obj
-Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.obj
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/ECS/GameObject.cpp.obj
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Components/NewSpriteComponent.cpp.obj
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Components/AiComponent.cpp.obj
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/TestClass.cpp.obj
+Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Ships/StarshipFactory.cpp.obj
+Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Ships/ShipClasses/StarshipFighter.cpp.obj
+Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Components/HealthComponent.cpp.obj
+Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Components/MovementComponent.cpp.obj
+Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Components/AnimationComponent.cpp.obj
+Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Components/AudioComponent.cpp.obj
+Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Components/WeaponComponent.cpp.obj
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/build.make
 Starfleet_Command.exe: C:/Libraries/SFML/lib/libsfml-graphics-s-d.a
 Starfleet_Command.exe: C:/Libraries/SFML/lib/libsfml-window-s-d.a
@@ -575,7 +671,7 @@ Starfleet_Command.exe: C:/Libraries/SFML/lib/libfreetype.a
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/linklibs.rsp
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/objects1.rsp
 Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Linking CXX executable Starfleet_Command.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Linking CXX executable Starfleet_Command.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Starfleet_Command.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

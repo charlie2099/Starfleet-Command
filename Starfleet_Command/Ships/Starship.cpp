@@ -200,7 +200,14 @@ void Starship::TakeDamage(float damage)
     {
         _health -= damage;
         _healthBar.UpdateHealth(_health);
-        _damagePopUpEffect.emplace_back(std::make_unique<DamagePopUpEffect>(damage, _spriteComponent.GetPos()));
+
+        auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<DamagePopUpEffect>(damage, _spriteComponent.GetPos()));
+
+        if(damage > 60)
+        {
+            damagePopup->SetColour(sf::Color::Red);
+            damagePopup->SetCharSize(15);
+        }
 
         if(_health < 0)
         {

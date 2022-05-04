@@ -33,15 +33,19 @@ void Player::CreateShip(Starship::Type type)
 {
     starship.emplace_back(std::make_unique<Starship>(type));
 
+    /// SHIP_SPAWNED event is invoked (non-agnostic)
     auto range = _observers.equal_range(EventID::SHIP_SPAWNED);
     for(auto iter = range.first; iter != range.second; ++iter)
     {
+        /// subscribed method is called
         iter->second();
     }
 
+    /// SHIP_SPAWNED event is invoked (agnostic)
     auto ag_range = _observers_agnostic.equal_range(EventID::SHIP_SPAWNED);
     for(auto iter = ag_range.first; iter != ag_range.second; ++iter)
     {
+        /// subscribed method is called
         iter->second(this);
     }
 }

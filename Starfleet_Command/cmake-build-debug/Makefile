@@ -152,6 +152,102 @@ Components/AiComponent.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/AiComponent.cpp.s
 .PHONY : Components/AiComponent.cpp.s
 
+Components/AnimationComponent.obj: Components/AnimationComponent.cpp.obj
+.PHONY : Components/AnimationComponent.obj
+
+# target to build an object file
+Components/AnimationComponent.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/AnimationComponent.cpp.obj
+.PHONY : Components/AnimationComponent.cpp.obj
+
+Components/AnimationComponent.i: Components/AnimationComponent.cpp.i
+.PHONY : Components/AnimationComponent.i
+
+# target to preprocess a source file
+Components/AnimationComponent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/AnimationComponent.cpp.i
+.PHONY : Components/AnimationComponent.cpp.i
+
+Components/AnimationComponent.s: Components/AnimationComponent.cpp.s
+.PHONY : Components/AnimationComponent.s
+
+# target to generate assembly for a file
+Components/AnimationComponent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/AnimationComponent.cpp.s
+.PHONY : Components/AnimationComponent.cpp.s
+
+Components/AudioComponent.obj: Components/AudioComponent.cpp.obj
+.PHONY : Components/AudioComponent.obj
+
+# target to build an object file
+Components/AudioComponent.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/AudioComponent.cpp.obj
+.PHONY : Components/AudioComponent.cpp.obj
+
+Components/AudioComponent.i: Components/AudioComponent.cpp.i
+.PHONY : Components/AudioComponent.i
+
+# target to preprocess a source file
+Components/AudioComponent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/AudioComponent.cpp.i
+.PHONY : Components/AudioComponent.cpp.i
+
+Components/AudioComponent.s: Components/AudioComponent.cpp.s
+.PHONY : Components/AudioComponent.s
+
+# target to generate assembly for a file
+Components/AudioComponent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/AudioComponent.cpp.s
+.PHONY : Components/AudioComponent.cpp.s
+
+Components/HealthComponent.obj: Components/HealthComponent.cpp.obj
+.PHONY : Components/HealthComponent.obj
+
+# target to build an object file
+Components/HealthComponent.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/HealthComponent.cpp.obj
+.PHONY : Components/HealthComponent.cpp.obj
+
+Components/HealthComponent.i: Components/HealthComponent.cpp.i
+.PHONY : Components/HealthComponent.i
+
+# target to preprocess a source file
+Components/HealthComponent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/HealthComponent.cpp.i
+.PHONY : Components/HealthComponent.cpp.i
+
+Components/HealthComponent.s: Components/HealthComponent.cpp.s
+.PHONY : Components/HealthComponent.s
+
+# target to generate assembly for a file
+Components/HealthComponent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/HealthComponent.cpp.s
+.PHONY : Components/HealthComponent.cpp.s
+
+Components/MovementComponent.obj: Components/MovementComponent.cpp.obj
+.PHONY : Components/MovementComponent.obj
+
+# target to build an object file
+Components/MovementComponent.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/MovementComponent.cpp.obj
+.PHONY : Components/MovementComponent.cpp.obj
+
+Components/MovementComponent.i: Components/MovementComponent.cpp.i
+.PHONY : Components/MovementComponent.i
+
+# target to preprocess a source file
+Components/MovementComponent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/MovementComponent.cpp.i
+.PHONY : Components/MovementComponent.cpp.i
+
+Components/MovementComponent.s: Components/MovementComponent.cpp.s
+.PHONY : Components/MovementComponent.s
+
+# target to generate assembly for a file
+Components/MovementComponent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/MovementComponent.cpp.s
+.PHONY : Components/MovementComponent.cpp.s
+
 Components/NewSpriteComponent.obj: Components/NewSpriteComponent.cpp.obj
 .PHONY : Components/NewSpriteComponent.obj
 
@@ -200,29 +296,29 @@ Components/SpriteComponent.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/SpriteComponent.cpp.s
 .PHONY : Components/SpriteComponent.cpp.s
 
-Components/TestComponent.obj: Components/TestComponent.cpp.obj
-.PHONY : Components/TestComponent.obj
+Components/WeaponComponent.obj: Components/WeaponComponent.cpp.obj
+.PHONY : Components/WeaponComponent.obj
 
 # target to build an object file
-Components/TestComponent.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.obj
-.PHONY : Components/TestComponent.cpp.obj
+Components/WeaponComponent.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/WeaponComponent.cpp.obj
+.PHONY : Components/WeaponComponent.cpp.obj
 
-Components/TestComponent.i: Components/TestComponent.cpp.i
-.PHONY : Components/TestComponent.i
+Components/WeaponComponent.i: Components/WeaponComponent.cpp.i
+.PHONY : Components/WeaponComponent.i
 
 # target to preprocess a source file
-Components/TestComponent.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.i
-.PHONY : Components/TestComponent.cpp.i
+Components/WeaponComponent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/WeaponComponent.cpp.i
+.PHONY : Components/WeaponComponent.cpp.i
 
-Components/TestComponent.s: Components/TestComponent.cpp.s
-.PHONY : Components/TestComponent.s
+Components/WeaponComponent.s: Components/WeaponComponent.cpp.s
+.PHONY : Components/WeaponComponent.s
 
 # target to generate assembly for a file
-Components/TestComponent.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/TestComponent.cpp.s
-.PHONY : Components/TestComponent.cpp.s
+Components/WeaponComponent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Components/WeaponComponent.cpp.s
+.PHONY : Components/WeaponComponent.cpp.s
 
 Crosshair.obj: Crosshair.cpp.obj
 .PHONY : Crosshair.obj
@@ -728,6 +824,30 @@ Ships/Projectile.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Projectile.cpp.s
 .PHONY : Ships/Projectile.cpp.s
 
+Ships/ShipClasses/StarshipFighter.obj: Ships/ShipClasses/StarshipFighter.cpp.obj
+.PHONY : Ships/ShipClasses/StarshipFighter.obj
+
+# target to build an object file
+Ships/ShipClasses/StarshipFighter.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/ShipClasses/StarshipFighter.cpp.obj
+.PHONY : Ships/ShipClasses/StarshipFighter.cpp.obj
+
+Ships/ShipClasses/StarshipFighter.i: Ships/ShipClasses/StarshipFighter.cpp.i
+.PHONY : Ships/ShipClasses/StarshipFighter.i
+
+# target to preprocess a source file
+Ships/ShipClasses/StarshipFighter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/ShipClasses/StarshipFighter.cpp.i
+.PHONY : Ships/ShipClasses/StarshipFighter.cpp.i
+
+Ships/ShipClasses/StarshipFighter.s: Ships/ShipClasses/StarshipFighter.cpp.s
+.PHONY : Ships/ShipClasses/StarshipFighter.s
+
+# target to generate assembly for a file
+Ships/ShipClasses/StarshipFighter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/ShipClasses/StarshipFighter.cpp.s
+.PHONY : Ships/ShipClasses/StarshipFighter.cpp.s
+
 Ships/Starship.obj: Ships/Starship.cpp.obj
 .PHONY : Ships/Starship.obj
 
@@ -751,6 +871,30 @@ Ships/Starship.s: Ships/Starship.cpp.s
 Ships/Starship.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/Starship.cpp.s
 .PHONY : Ships/Starship.cpp.s
+
+Ships/StarshipFactory.obj: Ships/StarshipFactory.cpp.obj
+.PHONY : Ships/StarshipFactory.obj
+
+# target to build an object file
+Ships/StarshipFactory.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/StarshipFactory.cpp.obj
+.PHONY : Ships/StarshipFactory.cpp.obj
+
+Ships/StarshipFactory.i: Ships/StarshipFactory.cpp.i
+.PHONY : Ships/StarshipFactory.i
+
+# target to preprocess a source file
+Ships/StarshipFactory.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/StarshipFactory.cpp.i
+.PHONY : Ships/StarshipFactory.cpp.i
+
+Ships/StarshipFactory.s: Ships/StarshipFactory.cpp.s
+.PHONY : Ships/StarshipFactory.s
+
+# target to generate assembly for a file
+Ships/StarshipFactory.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Ships/StarshipFactory.cpp.s
+.PHONY : Ships/StarshipFactory.cpp.s
 
 Temporary/TestComponent.obj: Temporary/TestComponent.cpp.obj
 .PHONY : Temporary/TestComponent.obj
@@ -884,15 +1028,27 @@ help:
 	@echo ... Components/AiComponent.obj
 	@echo ... Components/AiComponent.i
 	@echo ... Components/AiComponent.s
+	@echo ... Components/AnimationComponent.obj
+	@echo ... Components/AnimationComponent.i
+	@echo ... Components/AnimationComponent.s
+	@echo ... Components/AudioComponent.obj
+	@echo ... Components/AudioComponent.i
+	@echo ... Components/AudioComponent.s
+	@echo ... Components/HealthComponent.obj
+	@echo ... Components/HealthComponent.i
+	@echo ... Components/HealthComponent.s
+	@echo ... Components/MovementComponent.obj
+	@echo ... Components/MovementComponent.i
+	@echo ... Components/MovementComponent.s
 	@echo ... Components/NewSpriteComponent.obj
 	@echo ... Components/NewSpriteComponent.i
 	@echo ... Components/NewSpriteComponent.s
 	@echo ... Components/SpriteComponent.obj
 	@echo ... Components/SpriteComponent.i
 	@echo ... Components/SpriteComponent.s
-	@echo ... Components/TestComponent.obj
-	@echo ... Components/TestComponent.i
-	@echo ... Components/TestComponent.s
+	@echo ... Components/WeaponComponent.obj
+	@echo ... Components/WeaponComponent.i
+	@echo ... Components/WeaponComponent.s
 	@echo ... Crosshair.obj
 	@echo ... Crosshair.i
 	@echo ... Crosshair.s
@@ -956,9 +1112,15 @@ help:
 	@echo ... Ships/Projectile.obj
 	@echo ... Ships/Projectile.i
 	@echo ... Ships/Projectile.s
+	@echo ... Ships/ShipClasses/StarshipFighter.obj
+	@echo ... Ships/ShipClasses/StarshipFighter.i
+	@echo ... Ships/ShipClasses/StarshipFighter.s
 	@echo ... Ships/Starship.obj
 	@echo ... Ships/Starship.i
 	@echo ... Ships/Starship.s
+	@echo ... Ships/StarshipFactory.obj
+	@echo ... Ships/StarshipFactory.i
+	@echo ... Ships/StarshipFactory.s
 	@echo ... Temporary/TestComponent.obj
 	@echo ... Temporary/TestComponent.i
 	@echo ... Temporary/TestComponent.s

@@ -15,13 +15,17 @@ DamagePopUpEffect::DamagePopUpEffect(int damage, sf::Vector2f pos)
 
 void DamagePopUpEffect::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    float moveSpeed = 100.0f;
+    _color = text.getFillColor();
+    m_timePassed += 1.0f * deltaTime.asSeconds();
+    std::cout << "Time passed: " << m_timePassed << std::endl;
+
+    float moveSpeed = 25.0f;
     text.setPosition(text.getPosition().x, text.getPosition().y - moveSpeed * deltaTime.asSeconds());
 
-    if(text.getFillColor().a > 0)
+    if(_color.a > 0 /*&& m_timePassed > 3*/)
     {
-        float disappearSpeed = 300.0f;
-        text.setFillColor(sf::Color(255, 255, 255, text.getFillColor().a - disappearSpeed * deltaTime.asSeconds()));
+        float disappearSpeed = 10;
+        text.setFillColor(sf::Color(_color.r, _color.g, _color.b, _color.a - disappearSpeed * deltaTime.asSeconds()));
     }
     else
     {
@@ -51,4 +55,15 @@ std::mt19937 DamagePopUpEffect::GetEngine()
     unsigned long int time = std::chrono::high_resolution_clock::now().time_since_epoch().count();
     generator.seed(time);
     return generator;
+}
+
+void DamagePopUpEffect::SetColour(sf::Color color)
+{
+    text.setFillColor(color);
+}
+
+void DamagePopUpEffect::SetCharSize(int size)
+{
+    text.setCharacterSize(size);
+    text.setStyle(sf::Text::Style::Bold);
 }
