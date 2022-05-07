@@ -1,38 +1,39 @@
 #ifndef STARFLEET_COMMAND_GAMEOBJECT_HPP
 #define STARFLEET_COMMAND_GAMEOBJECT_HPP
-#include "Interfaces/IComponent.hpp"
-#include "Components/NewSpriteComponent.hpp"
-#include <memory>
+#include "Components/Component.hpp"
+#include "Components/SpriteComponent.hpp"
+#include "Components/HealthComponent.hpp"
+#include "Components/PhysicsComponent.hpp"
+#include "Components/AnimationComponent.hpp"
+#include "Components/AudioComponent.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <vector>
-#include <typeindex>
+#include <memory>
 
 class GameObject
 {
 public:
-    GameObject() = default;
+    void EventHandler(sf::RenderWindow& window, sf::Event& event);
+    void Update(sf::RenderWindow &window, sf::Time deltaTime);
+    void Render(sf::RenderWindow& window);
 
-    virtual void EventHandler(sf::RenderWindow& window, sf::Event& event);
-    virtual void Update(sf::RenderWindow &window, sf::Time deltaTime);
-    virtual void Render(sf::RenderWindow& window);
+    Component* AddComponent(std::unique_ptr<Component> component);
 
-    /// Not all GameObjects may contain a sprite or physics
-    //void AddComponent(const std::shared_ptr<IComponent>& component);
-    //template <typename T>
-    //std::shared_ptr<T> GetComponent();
-
-    IComponent* AddComponent(std::unique_ptr<IComponent> component);
-    /*template<typename ComponentType>
-    ComponentType* GetComponent();*/
-    //std::unique_ptr<IComponent> GetComponent(std::unique_ptr<IComponent> component);
-    //NewSpriteComponent* GetNewSpriteComponent() { return dynamic_cast<NewSpriteComponent*>(m_components.back().get()); };
+    /*SpriteComponent& GetSpriteComponent() { return _spriteComponent; };
+    HealthComponent& GetHealthComponent() { return _healthComponent; };
+    PhysicsComponent& GetPhysicsComponent() { return _physicsComponent; };
+    AnimationComponent& GetAnimationComponent() { return _animationComponent; };
+    AudioComponent& GetAudioComponent() { return _audioComponent; };*/
 
 private:
-    std::vector<std::unique_ptr<IComponent>> m_components;
-    //std::map<std::type_index, std::shared_ptr<IComponent>> m_components;
+    std::vector<std::unique_ptr<Component>> components;
+    //std::map<int, Component> components;
 
-    //std::unordered_map<std::string, IComponent*> components;
-    //std::multimap<std::unique_ptr<IComponent>, int> _componenetID{};
-    //std::map<std::unique_ptr<IComponent>, int> _map;
+    /*SpriteComponent _spriteComponent;
+    HealthComponent _healthComponent;
+    PhysicsComponent _physicsComponent;
+    AnimationComponent _animationComponent;
+    AudioComponent _audioComponent;*/
 };
 
 #endif //STARFLEET_COMMAND_GAMEOBJECT_HPP

@@ -27,7 +27,7 @@ class Starship
     // Functionality
     void MoveTowards(sf::Vector2f target, sf::Time deltaTime);
     void ShootAt(Projectile::Type projectile, float fireRate, sf::Vector2f target);
-    void TakeDamage(float damage);
+    //void TakeDamage(float damage);
 
     /// Modifiers
     void SetHealth(float health);
@@ -38,10 +38,11 @@ class Starship
 
     /// Accessors
     SpriteComponent &GetSpriteComponent() { return _spriteComponent; };
+    HealthComponent &GetHealthComponent() { return _healthComponent; };
     std::vector<std::unique_ptr<Projectile>>& GetProjectile() { return _projectile; };
     Projectile::Type& GetProjectileType() { return _projectileType; };
-    HealthBar& GetHealthBar() { return _healthBar; };
-    float GetHealth() const { return _health; };
+    std::unique_ptr<HealthBar>& GetHealthBar() { return _healthBar; };
+    float GetHealth() const { return _healthComponent.GetHealth(); };
     float GetDamage() const { return _damage; };
     float GetDamageScaleFactor() const { return _damageScaleFactor; };
     float GetSpeed() const { return _speed; };
@@ -52,13 +53,13 @@ class Starship
     bool IsHealthBarVisible() const { return _healthBarIsVisible; };
 
  private:
-    HealthBar _healthBar;
+    HealthComponent _healthComponent;
+    std::unique_ptr<HealthBar> _healthBar;
     SpriteComponent _spriteComponent;
     Type ship_type{};
     std::vector<std::unique_ptr<DamagePopUpEffect>> _damagePopUpEffect;
     std::vector<std::unique_ptr<Projectile>> _projectile;
     Projectile::Type _projectileType;
-    float _health = 100.0F;
     float _damage = 10.0F;
     float _damageScaleFactor = 1.0F;
     float _speed = 1.0F;

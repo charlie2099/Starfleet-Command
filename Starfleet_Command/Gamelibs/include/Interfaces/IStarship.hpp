@@ -2,7 +2,7 @@
 #define STARFLEET_COMMAND_ISTARSHIP_HPP
 #include "Components/SpriteComponent.hpp"
 #include "Components/HealthComponent.hpp"
-#include "Components/MovementComponent.hpp"
+#include "Components/PhysicsComponent.hpp"
 #include "Components/AnimationComponent.hpp"
 #include "Components/AudioComponent.hpp"
 
@@ -24,7 +24,7 @@ public:
     // HealthBarComponent
     virtual SpriteComponent& GetSpriteComponent() = 0;
     virtual HealthComponent& GetHealthComponent() = 0;
-    virtual MovementComponent& GetMovementComponent() = 0; // or can be called PhysicsComponent
+    virtual PhysicsComponent& GetMovementComponent() = 0; // or can be called PhysicsComponent
     virtual AnimationComponent& GetAnimationComponent() = 0; // or can be called GraphicsComponent
     virtual AudioComponent& GetAudioComponent() = 0;
     virtual const float GetSpeed() = 0;
@@ -34,7 +34,7 @@ public:
 protected:
     SpriteComponent _spriteComponent;
     HealthComponent _healthComponent;
-    MovementComponent _movementComponent;
+    PhysicsComponent _movementComponent;
     AnimationComponent _animationComponent;
     AudioComponent _audioComponent;
     float _damage;

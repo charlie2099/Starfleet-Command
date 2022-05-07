@@ -2,22 +2,19 @@
 #define STARFLEET_COMMAND_COMPONENT_HPP
 #include <SFML/Graphics/RenderWindow.hpp>
 
-class Entity; // forward declaration
+class GameObject;
 
-// base class for all m_components to come
 class Component
 {
  public:
-    explicit Component(Entity* owner) : owner(owner){}
+    //explicit Component(GameObject* owner) : owner(owner){}
 
-    virtual void Awake() {};
-    virtual void Start() {};
-    virtual void Update(sf::Time deltaTime) {};
-    virtual void LateUpdate(sf::Time deltaTime) {};
-    virtual void Render(sf::RenderWindow& window) {};
+    virtual void EventHandler(sf::RenderWindow& window, sf::Event& event) = 0;
+    virtual void Update(sf::RenderWindow &window, sf::Time deltaTime) = 0;
+    virtual void Render(sf::RenderWindow& window) = 0;
 
  protected:
-    Entity* owner;
+    //GameObject* owner;
 };
 
 #endif //STARFLEET_COMMAND_COMPONENT_HPP

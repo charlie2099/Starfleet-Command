@@ -1,20 +1,21 @@
 #ifndef STARFLEET_COMMAND_HEALTHBAR_HPP
 #define STARFLEET_COMMAND_HEALTHBAR_HPP
-#include <SFML/Graphics/RenderWindow.hpp>
 #include "Components/SpriteComponent.hpp"
+#include "Components/HealthComponent.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <iostream>
 
 class HealthBar
 {
 public:
-    HealthBar();
+    explicit HealthBar(HealthComponent& healthComponent);
     ~HealthBar() = default;
     void Update();
     void Render(sf::RenderWindow& window);
 
     void SetPos(sf::Vector2f pos);
     void SetMaxHealth(float health);
-    void UpdateHealth(float health);
+    void UpdateHealth(std::any eventData);
 
     SpriteComponent& GetSpriteComponent() { return spriteComponent; };
     float GetHealth() const { return _health; };

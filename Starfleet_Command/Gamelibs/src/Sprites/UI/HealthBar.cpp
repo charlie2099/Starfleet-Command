@@ -1,6 +1,6 @@
 #include "Sprites/UI/HealthBar.hpp"
 
-HealthBar::HealthBar()
+HealthBar::HealthBar(HealthComponent& healthComponent)
 {
     spriteComponent.LoadSprite("Resources/Textures/panel_5.png");
     spriteComponent.GetSprite().setScale(0.2f, 0.075f);
@@ -9,7 +9,9 @@ HealthBar::HealthBar()
     spriteComponent2.LoadSprite("Resources/Textures/health_bar_mask.png");
     spriteComponent2.GetSprite().setScale(0.2f, 0.075f);
 
-    //std::cout << "Texture rect: " << spriteComponent2.GetSprite().getTextureRect().width*spriteComponent2.GetSprite().getScale().x << std::endl;
+    /// Observer to healthcomponent
+    auto healthCallback = std::bind(&HealthBar::UpdateHealth, this, std::placeholders::_1);
+    healthComponent.AddObserver1Param({HealthComponent::EventID::HEALTH_UPDATED, healthCallback});
 }
 
 void HealthBar::Update()
@@ -44,10 +46,12 @@ void HealthBar::SetMaxHealth(float health)
     _health = _maxHealth;
 }
 
-void HealthBar::UpdateHealth(float health)
+void HealthBar::UpdateHealth(std::any eventData)
 {
-    _health = health;
+    std::cout << "Health updated: " << std::any_cast<float>(eventData) << std::endl;
+    _health = std::any_cast<float>(eventData);
     spriteComponent.SetPos({_position.x + spriteComponent.GetSprite().getGlobalBounds().width/2, _position.y});
     spriteComponent.GetSprite().setScale((_health / _maxHealth)*0.2f, 0.075f);
 }
+
 

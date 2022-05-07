@@ -248,53 +248,29 @@ Gamelibs/src/Components/HealthComponent.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.s
 .PHONY : Gamelibs/src/Components/HealthComponent.cpp.s
 
-Gamelibs/src/Components/MovementComponent.obj: Gamelibs/src/Components/MovementComponent.cpp.obj
-.PHONY : Gamelibs/src/Components/MovementComponent.obj
+Gamelibs/src/Components/PhysicsComponent.obj: Gamelibs/src/Components/PhysicsComponent.cpp.obj
+.PHONY : Gamelibs/src/Components/PhysicsComponent.obj
 
 # target to build an object file
-Gamelibs/src/Components/MovementComponent.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/MovementComponent.cpp.obj
-.PHONY : Gamelibs/src/Components/MovementComponent.cpp.obj
+Gamelibs/src/Components/PhysicsComponent.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/PhysicsComponent.cpp.obj
+.PHONY : Gamelibs/src/Components/PhysicsComponent.cpp.obj
 
-Gamelibs/src/Components/MovementComponent.i: Gamelibs/src/Components/MovementComponent.cpp.i
-.PHONY : Gamelibs/src/Components/MovementComponent.i
-
-# target to preprocess a source file
-Gamelibs/src/Components/MovementComponent.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/MovementComponent.cpp.i
-.PHONY : Gamelibs/src/Components/MovementComponent.cpp.i
-
-Gamelibs/src/Components/MovementComponent.s: Gamelibs/src/Components/MovementComponent.cpp.s
-.PHONY : Gamelibs/src/Components/MovementComponent.s
-
-# target to generate assembly for a file
-Gamelibs/src/Components/MovementComponent.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/MovementComponent.cpp.s
-.PHONY : Gamelibs/src/Components/MovementComponent.cpp.s
-
-Gamelibs/src/Components/NewSpriteComponent.obj: Gamelibs/src/Components/NewSpriteComponent.cpp.obj
-.PHONY : Gamelibs/src/Components/NewSpriteComponent.obj
-
-# target to build an object file
-Gamelibs/src/Components/NewSpriteComponent.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/NewSpriteComponent.cpp.obj
-.PHONY : Gamelibs/src/Components/NewSpriteComponent.cpp.obj
-
-Gamelibs/src/Components/NewSpriteComponent.i: Gamelibs/src/Components/NewSpriteComponent.cpp.i
-.PHONY : Gamelibs/src/Components/NewSpriteComponent.i
+Gamelibs/src/Components/PhysicsComponent.i: Gamelibs/src/Components/PhysicsComponent.cpp.i
+.PHONY : Gamelibs/src/Components/PhysicsComponent.i
 
 # target to preprocess a source file
-Gamelibs/src/Components/NewSpriteComponent.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/NewSpriteComponent.cpp.i
-.PHONY : Gamelibs/src/Components/NewSpriteComponent.cpp.i
+Gamelibs/src/Components/PhysicsComponent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/PhysicsComponent.cpp.i
+.PHONY : Gamelibs/src/Components/PhysicsComponent.cpp.i
 
-Gamelibs/src/Components/NewSpriteComponent.s: Gamelibs/src/Components/NewSpriteComponent.cpp.s
-.PHONY : Gamelibs/src/Components/NewSpriteComponent.s
+Gamelibs/src/Components/PhysicsComponent.s: Gamelibs/src/Components/PhysicsComponent.cpp.s
+.PHONY : Gamelibs/src/Components/PhysicsComponent.s
 
 # target to generate assembly for a file
-Gamelibs/src/Components/NewSpriteComponent.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/NewSpriteComponent.cpp.s
-.PHONY : Gamelibs/src/Components/NewSpriteComponent.cpp.s
+Gamelibs/src/Components/PhysicsComponent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/PhysicsComponent.cpp.s
+.PHONY : Gamelibs/src/Components/PhysicsComponent.cpp.s
 
 Gamelibs/src/Components/SpriteComponent.obj: Gamelibs/src/Components/SpriteComponent.cpp.obj
 .PHONY : Gamelibs/src/Components/SpriteComponent.obj
@@ -487,30 +463,6 @@ Gamelibs/src/Sprites/Enemy/Enemy.s: Gamelibs/src/Sprites/Enemy/Enemy.cpp.s
 Gamelibs/src/Sprites/Enemy/Enemy.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Enemy/Enemy.cpp.s
 .PHONY : Gamelibs/src/Sprites/Enemy/Enemy.cpp.s
-
-Gamelibs/src/Sprites/Entity.obj: Gamelibs/src/Sprites/Entity.cpp.obj
-.PHONY : Gamelibs/src/Sprites/Entity.obj
-
-# target to build an object file
-Gamelibs/src/Sprites/Entity.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Entity.cpp.obj
-.PHONY : Gamelibs/src/Sprites/Entity.cpp.obj
-
-Gamelibs/src/Sprites/Entity.i: Gamelibs/src/Sprites/Entity.cpp.i
-.PHONY : Gamelibs/src/Sprites/Entity.i
-
-# target to preprocess a source file
-Gamelibs/src/Sprites/Entity.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Entity.cpp.i
-.PHONY : Gamelibs/src/Sprites/Entity.cpp.i
-
-Gamelibs/src/Sprites/Entity.s: Gamelibs/src/Sprites/Entity.cpp.s
-.PHONY : Gamelibs/src/Sprites/Entity.s
-
-# target to generate assembly for a file
-Gamelibs/src/Sprites/Entity.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Entity.cpp.s
-.PHONY : Gamelibs/src/Sprites/Entity.cpp.s
 
 Gamelibs/src/Sprites/GameObject.obj: Gamelibs/src/Sprites/GameObject.cpp.obj
 .PHONY : Gamelibs/src/Sprites/GameObject.obj
@@ -896,54 +848,6 @@ Gamelibs/src/Temporary/TestClass.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.s
 .PHONY : Gamelibs/src/Temporary/TestClass.cpp.s
 
-Gamelibs/src/Temporary/TestComponent.obj: Gamelibs/src/Temporary/TestComponent.cpp.obj
-.PHONY : Gamelibs/src/Temporary/TestComponent.obj
-
-# target to build an object file
-Gamelibs/src/Temporary/TestComponent.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestComponent.cpp.obj
-.PHONY : Gamelibs/src/Temporary/TestComponent.cpp.obj
-
-Gamelibs/src/Temporary/TestComponent.i: Gamelibs/src/Temporary/TestComponent.cpp.i
-.PHONY : Gamelibs/src/Temporary/TestComponent.i
-
-# target to preprocess a source file
-Gamelibs/src/Temporary/TestComponent.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestComponent.cpp.i
-.PHONY : Gamelibs/src/Temporary/TestComponent.cpp.i
-
-Gamelibs/src/Temporary/TestComponent.s: Gamelibs/src/Temporary/TestComponent.cpp.s
-.PHONY : Gamelibs/src/Temporary/TestComponent.s
-
-# target to generate assembly for a file
-Gamelibs/src/Temporary/TestComponent.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestComponent.cpp.s
-.PHONY : Gamelibs/src/Temporary/TestComponent.cpp.s
-
-Gamelibs/src/Temporary/TestPlayer.obj: Gamelibs/src/Temporary/TestPlayer.cpp.obj
-.PHONY : Gamelibs/src/Temporary/TestPlayer.obj
-
-# target to build an object file
-Gamelibs/src/Temporary/TestPlayer.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestPlayer.cpp.obj
-.PHONY : Gamelibs/src/Temporary/TestPlayer.cpp.obj
-
-Gamelibs/src/Temporary/TestPlayer.i: Gamelibs/src/Temporary/TestPlayer.cpp.i
-.PHONY : Gamelibs/src/Temporary/TestPlayer.i
-
-# target to preprocess a source file
-Gamelibs/src/Temporary/TestPlayer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestPlayer.cpp.i
-.PHONY : Gamelibs/src/Temporary/TestPlayer.cpp.i
-
-Gamelibs/src/Temporary/TestPlayer.s: Gamelibs/src/Temporary/TestPlayer.cpp.s
-.PHONY : Gamelibs/src/Temporary/TestPlayer.s
-
-# target to generate assembly for a file
-Gamelibs/src/Temporary/TestPlayer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestPlayer.cpp.s
-.PHONY : Gamelibs/src/Temporary/TestPlayer.cpp.s
-
 Gamelibs/src/Utility/Cursor.obj: Gamelibs/src/Utility/Cursor.cpp.obj
 .PHONY : Gamelibs/src/Utility/Cursor.obj
 
@@ -1040,12 +944,9 @@ help:
 	@echo ... Gamelibs/src/Components/HealthComponent.obj
 	@echo ... Gamelibs/src/Components/HealthComponent.i
 	@echo ... Gamelibs/src/Components/HealthComponent.s
-	@echo ... Gamelibs/src/Components/MovementComponent.obj
-	@echo ... Gamelibs/src/Components/MovementComponent.i
-	@echo ... Gamelibs/src/Components/MovementComponent.s
-	@echo ... Gamelibs/src/Components/NewSpriteComponent.obj
-	@echo ... Gamelibs/src/Components/NewSpriteComponent.i
-	@echo ... Gamelibs/src/Components/NewSpriteComponent.s
+	@echo ... Gamelibs/src/Components/PhysicsComponent.obj
+	@echo ... Gamelibs/src/Components/PhysicsComponent.i
+	@echo ... Gamelibs/src/Components/PhysicsComponent.s
 	@echo ... Gamelibs/src/Components/SpriteComponent.obj
 	@echo ... Gamelibs/src/Components/SpriteComponent.i
 	@echo ... Gamelibs/src/Components/SpriteComponent.s
@@ -1070,9 +971,6 @@ help:
 	@echo ... Gamelibs/src/Sprites/Enemy/Enemy.obj
 	@echo ... Gamelibs/src/Sprites/Enemy/Enemy.i
 	@echo ... Gamelibs/src/Sprites/Enemy/Enemy.s
-	@echo ... Gamelibs/src/Sprites/Entity.obj
-	@echo ... Gamelibs/src/Sprites/Entity.i
-	@echo ... Gamelibs/src/Sprites/Entity.s
 	@echo ... Gamelibs/src/Sprites/GameObject.obj
 	@echo ... Gamelibs/src/Sprites/GameObject.i
 	@echo ... Gamelibs/src/Sprites/GameObject.s
@@ -1121,12 +1019,6 @@ help:
 	@echo ... Gamelibs/src/Temporary/TestClass.obj
 	@echo ... Gamelibs/src/Temporary/TestClass.i
 	@echo ... Gamelibs/src/Temporary/TestClass.s
-	@echo ... Gamelibs/src/Temporary/TestComponent.obj
-	@echo ... Gamelibs/src/Temporary/TestComponent.i
-	@echo ... Gamelibs/src/Temporary/TestComponent.s
-	@echo ... Gamelibs/src/Temporary/TestPlayer.obj
-	@echo ... Gamelibs/src/Temporary/TestPlayer.i
-	@echo ... Gamelibs/src/Temporary/TestPlayer.s
 	@echo ... Gamelibs/src/Utility/Cursor.obj
 	@echo ... Gamelibs/src/Utility/Cursor.i
 	@echo ... Gamelibs/src/Utility/Cursor.s

@@ -3,7 +3,6 @@
 #include "Scenes/Scene.hpp"
 #include "Sprites/Starships/Starship.hpp"
 #include "Sprites/UI/Crosshair.hpp"
-#include "Temporary/TestPlayer.hpp"
 #include "Utility/Cursor.hpp"
 #include <random>
 

@@ -247,52 +247,10 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/GUI/Button.cpp.s: cmake
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/GUI/Button.cpp.s"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\UI\GUI\Button.cpp -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI\GUI\Button.cpp.s
 
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Entity.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Entity.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Entity.cpp.obj: ../Gamelibs/src/Sprites/Entity.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Entity.cpp.obj"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Entity.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\Entity.cpp
-
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Entity.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Entity.cpp.i"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\Entity.cpp > CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Entity.cpp.i
-
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Entity.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Entity.cpp.s"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\Entity.cpp -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Entity.cpp.s
-
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestComponent.cpp.obj: ../Gamelibs/src/Temporary/TestComponent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestComponent.cpp.obj"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Temporary\TestComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Temporary\TestComponent.cpp
-
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestComponent.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestComponent.cpp.i"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Temporary\TestComponent.cpp > CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Temporary\TestComponent.cpp.i
-
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestComponent.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestComponent.cpp.s"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Temporary\TestComponent.cpp -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Temporary\TestComponent.cpp.s
-
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestPlayer.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestPlayer.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestPlayer.cpp.obj: ../Gamelibs/src/Temporary/TestPlayer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestPlayer.cpp.obj"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Temporary\TestPlayer.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Temporary\TestPlayer.cpp
-
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestPlayer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestPlayer.cpp.i"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Temporary\TestPlayer.cpp > CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Temporary\TestPlayer.cpp.i
-
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestPlayer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestPlayer.cpp.s"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Temporary\TestPlayer.cpp -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Temporary\TestPlayer.cpp.s
-
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projectile.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projectile.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projectile.cpp.obj: ../Gamelibs/src/Sprites/Projectiles/Projectile.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projectile.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projectile.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Projectiles\Projectile.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\Projectiles\Projectile.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projectile.cpp.i: cmake_force
@@ -306,7 +264,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projectile.cpp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/GameScene.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/GameScene.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/GameScene.cpp.obj: ../Gamelibs/src/Scenes/GameScene.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/GameScene.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/GameScene.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes\GameScene.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Scenes\GameScene.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/GameScene.cpp.i: cmake_force
@@ -320,7 +278,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/GameScene.cpp.s: cmake_forc
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj: ../Gamelibs/src/Utility/Cursor.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility\Cursor.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Utility\Cursor.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.i: cmake_force
@@ -334,7 +292,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.s: cmake_force
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Enemy/Enemy.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Enemy/Enemy.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Enemy/Enemy.cpp.obj: ../Gamelibs/src/Sprites/Enemy/Enemy.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Enemy/Enemy.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Enemy/Enemy.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Enemy\Enemy.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\Enemy\Enemy.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Enemy/Enemy.cpp.i: cmake_force
@@ -348,7 +306,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Enemy/Enemy.cpp.s: cmake_f
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Player/Player.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Player/Player.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Player/Player.cpp.obj: ../Gamelibs/src/Sprites/Player/Player.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Player/Player.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Player/Player.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Player\Player.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\Player\Player.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Player/Player.cpp.i: cmake_force
@@ -362,7 +320,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Player/Player.cpp.s: cmake
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Vector.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Vector.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Vector.cpp.obj: ../Gamelibs/src/Utility/Vector.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Vector.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Vector.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility\Vector.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Utility\Vector.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Vector.cpp.i: cmake_force
@@ -376,7 +334,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Vector.cpp.s: cmake_force
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.obj: ../Gamelibs/src/Sprites/UI/HealthBar.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI\HealthBar.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\UI\HealthBar.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.i: cmake_force
@@ -390,7 +348,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.s: cmake_
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/OptionsScene.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/OptionsScene.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/OptionsScene.cpp.obj: ../Gamelibs/src/Scenes/OptionsScene.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/OptionsScene.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/OptionsScene.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes\OptionsScene.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Scenes\OptionsScene.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/OptionsScene.cpp.i: cmake_force
@@ -404,7 +362,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/OptionsScene.cpp.s: cmake_f
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp.obj: ../Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI\Effects\DamagePopUpEffect.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\UI\Effects\DamagePopUpEffect.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp.i: cmake_force
@@ -418,7 +376,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffe
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/HUD.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/HUD.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/HUD.cpp.obj: ../Gamelibs/src/Sprites/UI/HUD/HUD.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/HUD.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/HUD.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI\HUD\HUD.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\UI\HUD\HUD.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/HUD.cpp.i: cmake_force
@@ -429,38 +387,10 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/HUD.cpp.s: cmake_fo
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/HUD.cpp.s"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\UI\HUD\HUD.cpp -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI\HUD\HUD.cpp.s
 
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.obj: ../Gamelibs/src/Sprites/GameObject.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.obj"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\GameObject.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\GameObject.cpp
-
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.i"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\GameObject.cpp > CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\GameObject.cpp.i
-
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.s"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\GameObject.cpp -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\GameObject.cpp.s
-
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/NewSpriteComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/NewSpriteComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/NewSpriteComponent.cpp.obj: ../Gamelibs/src/Components/NewSpriteComponent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/NewSpriteComponent.cpp.obj"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\NewSpriteComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\NewSpriteComponent.cpp
-
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/NewSpriteComponent.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/NewSpriteComponent.cpp.i"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\NewSpriteComponent.cpp > CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\NewSpriteComponent.cpp.i
-
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/NewSpriteComponent.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/NewSpriteComponent.cpp.s"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\NewSpriteComponent.cpp -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\NewSpriteComponent.cpp.s
-
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AiComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AiComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AiComponent.cpp.obj: ../Gamelibs/src/Components/AiComponent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AiComponent.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AiComponent.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\AiComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\AiComponent.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AiComponent.cpp.i: cmake_force
@@ -474,7 +404,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AiComponent.cpp.s: cmak
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.obj: ../Gamelibs/src/Temporary/TestClass.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Temporary\TestClass.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Temporary\TestClass.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.i: cmake_force
@@ -488,7 +418,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.s: cmake_f
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.obj: ../Gamelibs/src/Sprites/Starships/StarshipFactory.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipFactory.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\Starships\StarshipFactory.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.i: cmake_force
@@ -502,7 +432,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.obj: ../Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipClasses\StarshipFighter.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\Starships\StarshipClasses\StarshipFighter.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.i: cmake_force
@@ -516,7 +446,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.obj: ../Gamelibs/src/Components/HealthComponent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\HealthComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\HealthComponent.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.i: cmake_force
@@ -527,24 +457,24 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.s: 
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.s"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\HealthComponent.cpp -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\HealthComponent.cpp.s
 
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/MovementComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/MovementComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/MovementComponent.cpp.obj: ../Gamelibs/src/Components/MovementComponent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/MovementComponent.cpp.obj"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\MovementComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\MovementComponent.cpp
+CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/PhysicsComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
+CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/PhysicsComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
+CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/PhysicsComponent.cpp.obj: ../Gamelibs/src/Components/PhysicsComponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/PhysicsComponent.cpp.obj"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\PhysicsComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\PhysicsComponent.cpp
 
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/MovementComponent.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/MovementComponent.cpp.i"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\MovementComponent.cpp > CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\MovementComponent.cpp.i
+CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/PhysicsComponent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/PhysicsComponent.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\PhysicsComponent.cpp > CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\PhysicsComponent.cpp.i
 
-CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/MovementComponent.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/MovementComponent.cpp.s"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\MovementComponent.cpp -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\MovementComponent.cpp.s
+CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/PhysicsComponent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/PhysicsComponent.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\PhysicsComponent.cpp -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\PhysicsComponent.cpp.s
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AnimationComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AnimationComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AnimationComponent.cpp.obj: ../Gamelibs/src/Components/AnimationComponent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AnimationComponent.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AnimationComponent.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\AnimationComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\AnimationComponent.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AnimationComponent.cpp.i: cmake_force
@@ -558,7 +488,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AnimationComponent.cpp.
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AudioComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AudioComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AudioComponent.cpp.obj: ../Gamelibs/src/Components/AudioComponent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AudioComponent.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AudioComponent.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\AudioComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\AudioComponent.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AudioComponent.cpp.i: cmake_force
@@ -572,7 +502,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AudioComponent.cpp.s: c
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/WeaponComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/WeaponComponent.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/WeaponComponent.cpp.obj: ../Gamelibs/src/Components/WeaponComponent.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/WeaponComponent.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/WeaponComponent.cpp.obj"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\WeaponComponent.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\WeaponComponent.cpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/WeaponComponent.cpp.i: cmake_force
@@ -582,6 +512,20 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/WeaponComponent.cpp.i: 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/WeaponComponent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/WeaponComponent.cpp.s"
 	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Components\WeaponComponent.cpp -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\WeaponComponent.cpp.s
+
+CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.obj: CMakeFiles/Starfleet_Command.dir/flags.make
+CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.obj: CMakeFiles/Starfleet_Command.dir/includes_CXX.rsp
+CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.obj: ../Gamelibs/src/Sprites/GameObject.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.obj"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\GameObject.cpp.obj -c D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\GameObject.cpp
+
+CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\GameObject.cpp > CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\GameObject.cpp.i
+
+CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\src\Sprites\GameObject.cpp -o CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\GameObject.cpp.s
 
 # Object files for target Starfleet_Command
 Starfleet_Command_OBJECTS = \
@@ -598,9 +542,6 @@ Starfleet_Command_OBJECTS = \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/Starship.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Crosshair.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/GUI/Button.cpp.obj" \
-"CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Entity.cpp.obj" \
-"CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestComponent.cpp.obj" \
-"CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestPlayer.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projectile.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/GameScene.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj" \
@@ -611,17 +552,16 @@ Starfleet_Command_OBJECTS = \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/OptionsScene.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/HUD.cpp.obj" \
-"CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.obj" \
-"CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/NewSpriteComponent.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AiComponent.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.obj" \
-"CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/MovementComponent.cpp.obj" \
+"CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/PhysicsComponent.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AnimationComponent.cpp.obj" \
 "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AudioComponent.cpp.obj" \
-"CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/WeaponComponent.cpp.obj"
+"CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/WeaponComponent.cpp.obj" \
+"CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.obj"
 
 # External object files for target Starfleet_Command
 Starfleet_Command_EXTERNAL_OBJECTS =
@@ -639,9 +579,6 @@ Starfleet_Command_EXTERNAL_OBJECTS =
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/Starship.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Crosshair.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/GUI/Button.cpp.obj
-../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Entity.cpp.obj
-../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestComponent.cpp.obj
-../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestPlayer.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projectile.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/GameScene.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj
@@ -652,17 +589,16 @@ Starfleet_Command_EXTERNAL_OBJECTS =
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/OptionsScene.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/HUD.cpp.obj
-../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.obj
-../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/NewSpriteComponent.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AiComponent.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.obj
-../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/MovementComponent.cpp.obj
+../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/PhysicsComponent.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AnimationComponent.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AudioComponent.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/WeaponComponent.cpp.obj
+../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/GameObject.cpp.obj
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/build.make
 ../Starfleet_Command.exe: C:/Libraries/SFML/lib/libsfml-graphics-s-d.a
 ../Starfleet_Command.exe: C:/Libraries/SFML/lib/libsfml-window-s-d.a
@@ -671,7 +607,7 @@ Starfleet_Command_EXTERNAL_OBJECTS =
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/linklibs.rsp
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/objects1.rsp
 ../Starfleet_Command.exe: CMakeFiles/Starfleet_Command.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Linking CXX executable ..\Starfleet_Command.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Linking CXX executable ..\Starfleet_Command.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\Starfleet_Command.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -45,7 +45,7 @@ HealthComponent &StarshipFighter::GetHealthComponent()
     return _healthComponent;
 }
 
-MovementComponent &StarshipFighter::GetMovementComponent()
+PhysicsComponent &StarshipFighter::GetMovementComponent()
 {
     return _movementComponent;
 }

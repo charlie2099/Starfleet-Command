@@ -1,0 +1,32 @@
+{
+  "Name": "Fighter",
+  "Health": 100,
+  "Damage": 50,
+  "Class": "Starship",
+  "Type": "Fighter",
+
+  "Abilities": [
+  {
+    "Name": "Explosive Fireball",
+    "Type": "Active",
+    "ManaCost": 10,
+    "Cooldown": 3,
+    "Effect": "DealDamage amount:20-30 type:fire pattern:aoe range:10 radius:3"
+  },
+  {
+    "Name": "Fiery Aura",
+    "Type": "Passive",
+    "OnEachTurn": "DealDamage amount:5 type:fire pattern:pbaoe radius:2"
+  },
+  {
+    "Name": "Death Explosion",
+    "Type": "Trigger",
+    "OnDeath": "DealDamage amount:50 type:fire pattern:pbaoe radius:5"
+  }
+  ]
+}
+
+
+
+
+

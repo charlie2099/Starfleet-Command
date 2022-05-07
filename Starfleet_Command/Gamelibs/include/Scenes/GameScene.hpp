@@ -11,6 +11,7 @@
 #include "Temporary/TestClass.hpp"
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
+#include "Sprites/GameObject.hpp"
 #include <random>
 #include <chrono>
 
@@ -39,7 +40,7 @@ private:
     static std::mt19937 GetEngine();
 
     //Entity gameObject;
-    //GameObject gameObject;
+    //OldGameObject gameObject;
     //NewSpriteComponent* newSpriteComponent;
     //AiComponent* aiComponent;
 
@@ -58,7 +59,7 @@ private:
     std::vector<sf::Text> _ship_cost_text;
 
     // UI
-    sf::Texture _background_texture;
+    std::unique_ptr<sf::Texture> _background_texture;
     sf::Sprite _background_sprite;
 
     // Sprites
@@ -76,7 +77,7 @@ private:
     // TEST VARIABLES (TEMPORARY)
     TestClass testClass;
     std::unique_ptr<IStarship> starship;
-    //std::unique_ptr<TestClass> testClass;
+    //GameObject gameObject;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

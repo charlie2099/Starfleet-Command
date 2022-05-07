@@ -2,27 +2,27 @@
 
 void SpriteComponent::LoadSprite(const std::string& texture_filepath)
 {
-    texture_.loadFromFile(texture_filepath);
-    sprite.setTexture(texture_);
+    _texture.loadFromFile(texture_filepath);
+    _sprite.setTexture(_texture);
 }
 
 sf::Sprite &SpriteComponent::GetSprite()
 {
-    return sprite;
+    return _sprite;
 }
 
 void SpriteComponent::SetPos(sf::Vector2<float> pos)
 {
-    sprite.setPosition(pos);
+    _sprite.setPosition(pos);
 }
 
 sf::Vector2<float> SpriteComponent::GetPos()
 {
-    return sprite.getPosition();
+    return _sprite.getPosition();
 }
 
 void SpriteComponent::Render(sf::RenderWindow &renderWindow)
 {
-    renderWindow.draw(sprite);
+    renderWindow.draw(_sprite);
 }
 

@@ -1,10 +1,10 @@
 #ifndef STARFLEET_COMMAND_GAME_HPP
 #define STARFLEET_COMMAND_GAME_HPP
-#include <iostream>
 #include "Scenes/MenuScene.hpp"
 #include "Scenes/SceneManager.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 class Game // Rename to Engine?
 {
@@ -23,7 +23,6 @@ class Game // Rename to Engine?
 
     sf::RenderWindow window;
     std::unique_ptr<SceneManager> scene_manager;
-    sf::Time elapsed;
 };
 
 #endif //STARFLEET_COMMAND_GAME_HPP

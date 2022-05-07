@@ -7,7 +7,7 @@ Starship::Starship(Type type) : ship_type(type)
         case Type::FIGHTER:
             _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_fighter.png");
             _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-            _health = 100;
+            _healthComponent.SetHealth(100);
             _speed = 80;
             _trainingSpeed = 0.5f;
             _damage = 20;
@@ -19,7 +19,7 @@ Starship::Starship(Type type) : ship_type(type)
         case Type::REPAIR:
             _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_repair.png");
             _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-            _health = 150;
+            _healthComponent.SetHealth(150);
             _speed = 70;
             _trainingSpeed = 0.4f;
             _damage = 0;
@@ -31,7 +31,7 @@ Starship::Starship(Type type) : ship_type(type)
         case Type::SCOUT:
             _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_scout.png");
             _spriteComponent.GetSprite().scale({0.30F, 0.30F});
-            _health = 75;
+            _healthComponent.SetHealth(75);
             _speed = 100;
             _trainingSpeed = 0.6f;
             _damage = 10;
@@ -43,7 +43,7 @@ Starship::Starship(Type type) : ship_type(type)
         case Type::DESTROYER:
             _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_destroyer.png");
             _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-            _health = 250;
+            _healthComponent.SetHealth(250);
             _speed = 40;
             _trainingSpeed = 0.9f;
             _damage = 150;
@@ -55,7 +55,7 @@ Starship::Starship(Type type) : ship_type(type)
         case Type::BATTLESHIP:
             _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_battleship.png");
             _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-            _health = 500;
+            _healthComponent.SetHealth(500);
             _speed = 30;
             _trainingSpeed = 0.8f;
             _damage = 75;
@@ -67,7 +67,7 @@ Starship::Starship(Type type) : ship_type(type)
         case Type::FLAGSHIP:
             _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_flagship.png");
             _spriteComponent.GetSprite().scale({0.08F, 0.08F});
-            _health = 5000;
+            _healthComponent.SetHealth(5000);
             _speed = 10;
             _damage = 50;
             _fireRate = 1.0f;
@@ -75,8 +75,9 @@ Starship::Starship(Type type) : ship_type(type)
             break;
     }
 
-    _healthBar.SetMaxHealth(_health);
-    _maxHealth = _health;
+    _healthBar = std::make_unique<HealthBar>(_healthComponent);
+    _healthBar->SetMaxHealth(_healthComponent.GetHealth());
+    _maxHealth = _healthComponent.GetHealth();
 
     /// Change default origin to center
     sf::Vector2<float> centered_origin;
@@ -93,13 +94,13 @@ void Starship::Update(sf::RenderWindow &window, sf::Time deltaTime)
     }
 
     auto ship_bounds = _spriteComponent.GetSprite().getGlobalBounds();
-    auto bar_bounds = _healthBar.GetSpriteComponent().GetSprite().getGlobalBounds();
+    auto bar_bounds = _healthBar->GetSpriteComponent().GetSprite().getGlobalBounds();
     auto xPos = (_spriteComponent.GetPos().x) - (ship_bounds.width/2.0f + bar_bounds.width/2.0f);
     auto yPos = (_spriteComponent.GetPos().y + ship_bounds.height/2.0f) - (ship_bounds.height + bar_bounds.height*4);
-    _healthBar.Update();
-    _healthBar.SetPos({xPos, yPos});
+    _healthBar->Update();
+    _healthBar->SetPos({xPos, yPos});
 
-    if(_healthBar.GetHealth() < _maxHealth)
+    if(_healthBar->GetHealth() < _maxHealth)
     {
         _healthBarIsVisible = true;
     }
@@ -129,7 +130,7 @@ void Starship::Render(sf::RenderWindow &window)
 
     if(_healthBarIsVisible)
     {
-        _healthBar.Render(window);
+        _healthBar->Render(window);
     }
 
     for(auto& popup : _damagePopUpEffect)
@@ -140,7 +141,7 @@ void Starship::Render(sf::RenderWindow &window)
 
 void Starship::SetHealth(float health)
 {
-    _health = health;
+    _healthComponent.SetHealth(health);
 }
 
 void Starship::SetDamage(float damage)
@@ -194,27 +195,27 @@ void Starship::ShootAt(Projectile::Type projectile, float fireRate, sf::Vector2f
     //std::cout << "Elapsed Time: " << clock.getElapsedTime().asSeconds() << std::endl;
 }
 
-void Starship::TakeDamage(float damage)
+/*void Starship::TakeDamage(float damage)
 {
-    if(_health > 0)
-    {
-        _health -= damage;
-        _healthBar.UpdateHealth(_health);
-
-        auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<DamagePopUpEffect>(damage, _spriteComponent.GetPos()));
-
-        if(damage > 60)
-        {
-            damagePopup->SetColour(sf::Color::Red);
-            damagePopup->SetCharSize(15);
-        }
-
-        if(_health < 0)
-        {
-            _health = 0;
-        }
-    }
-}
+//    if(_health > 0)
+//    {
+//        _health -= damage;
+//        _healthBar.UpdateHealth(_health);
+//
+//        auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<DamagePopUpEffect>(damage, _spriteComponent.GetPos()));
+//
+//        if(damage > 60)
+//        {
+//            damagePopup->SetColour(sf::Color::Red);
+//            damagePopup->SetCharSize(15);
+//        }
+//
+//        if(_health < 0)
+//        {
+//            _health = 0;
+//        }
+//    }
+}*/
 
 
 

@@ -18,28 +18,39 @@ bool GameScene::Init()
     auto callbackFnc2 = std::bind(&TestClass::OnEvent, testClass, std::placeholders::_1);
     _player.AddObserver2({Player::EventID::SHIP_SPAWNED, callbackFnc2});
 
+    //auto callbackFnc3 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
+    //_player.GetShip()[0].GetHealthComponent().AddObserver({Player::EventID::SHIP_SPAWNED, callbackFnc3});
+
     // FACTORY PATTERN
     starship = StarshipFactory::CreateShip(StarshipFactory::FIGHTER);
 
-    auto callbackFnc4 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
-    starship->GetHealthComponent().AddObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc4});
+    //auto callbackFnc4 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
+    //starship->GetHealthComponent().AddObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc4});
+
     /// Remove from vector container
     /// Play explosion audio
     /// Play death animation?
 
+    /// DILEMMA
+    /// Should classes be purely generic and reusable with game logic kept in the main game source file [YES]
+    /// OR
+    /// can the player class for example contain logic for determining when the health bar should be updated. [NO]
 
-    // DILEMMA
-    // Should classes be purely generic and reusable with game logic kept in the main game source file [YES]
-    // OR
-    // can the player class for example contain logic for determining when the health bar should be updated. [NO]
+    //gameObject.AddComponent(std::make_unique<TestComponent>());
+    //gameObject.AddComponent<TestComponent>();
+    //gameObject.GetComponent<TestComponent>()->loadSprite("");
+    //gameObject.GetComponent(std::make_unique<TestComponent>())->loadSprite("Resources/Textures/starfleet_ship.png");
+    //auto testcomp = dynamic_cast<TestComponent*>(gameObject.AddComponent(std::make_unique<TestComponent>()));
+    //testcomp->loadSprite("Resources/Textures/starfleet_ship.png");
+    //gameObject.GetComponent<TestComponent>()->loadSprite("Resources/Textures/starfleet_ship.png");
 
     return true;
 }
 
 void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse position translated into world coordinates
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse _position translated into world coordinates
 
     if (event.type == sf::Event::MouseButtonPressed)
     {
@@ -126,8 +137,8 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse position translated into world coordinates
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse _position translated into world coordinates
 
     for(auto& button : _command_buttons)
     {
@@ -228,7 +239,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         int rand_damage = uint_distrib[2](generator);
 
                         //_enemy.GetShip()[j]->TakeDamage(_player.GetShip()[i]->GetDamage());
-                        _enemy.GetShip()[j]->TakeDamage(rand_damage * _player.GetShip()[i]->GetDamageScaleFactor());
+                        _enemy.GetShip()[j]->GetHealthComponent().TakeDamage(rand_damage * _player.GetShip()[i]->GetDamageScaleFactor());
                         _player.GetShip()[i]->GetProjectile().erase(_player.GetShip()[i]->GetProjectile().begin() + k);
                     }
                 }
@@ -286,15 +297,17 @@ void GameScene::InitDistribution()
 
 bool GameScene::InitBackground()
 {
-    if (!_background_texture.loadFromFile("Resources/Textures/space_nebula.png")) // background2
+    _background_texture = std::make_unique<sf::Texture>();
+    if (!_background_texture->loadFromFile("Resources/Textures/space_nebula.png")) // background2
     {
         return false;
     }
-    _background_texture.setRepeated(true);
-    _background_sprite.setTexture(_background_texture);
+
+    _background_texture->setRepeated(true);
+    _background_sprite.setTexture(*_background_texture);
     _background_sprite.scale(0.2F, 0.2F);
-    auto bTexSizeX = static_cast<int>(_background_texture.getSize().x);
-    auto bTexSizeY = static_cast<int>(_background_texture.getSize().y);
+    auto bTexSizeX = static_cast<int>(_background_texture->getSize().x);
+    auto bTexSizeY = static_cast<int>(_background_texture->getSize().y);
     _background_sprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX * 2, bTexSizeY * 2));
     //_background_sprite.setOrigin(_background_sprite.getLocalBounds().width/2, _background_sprite.getLocalBounds().height/2);
 

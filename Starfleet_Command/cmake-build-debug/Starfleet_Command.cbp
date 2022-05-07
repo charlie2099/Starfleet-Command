@@ -109,10 +109,7 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Components/HealthComponent.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Components/MovementComponent.hpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Components/NewSpriteComponent.hpp">
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Components/PhysicsComponent.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Components/SpriteComponent.hpp">
@@ -143,9 +140,6 @@
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Enemy/Enemy.hpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Entity.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/GameObject.hpp">
@@ -196,12 +190,6 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Temporary/TestClass.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Temporary/TestComponent.hpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Temporary/TestPlayer.hpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Constants.hpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
@@ -226,10 +214,7 @@
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/HealthComponent.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/MovementComponent.cpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/NewSpriteComponent.cpp">
+		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/PhysicsComponent.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/SpriteComponent.cpp">
@@ -254,9 +239,6 @@
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Enemy/Enemy.cpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Entity.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/GameObject.cpp">
@@ -305,12 +287,6 @@
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Temporary/TestClass.cpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Temporary/TestComponent.cpp">
-			<Option target="Starfleet_Command"/>
-		</Unit>
-		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Temporary/TestPlayer.cpp">
 			<Option target="Starfleet_Command"/>
 		</Unit>
 		<Unit filename="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Utility/Cursor.cpp">

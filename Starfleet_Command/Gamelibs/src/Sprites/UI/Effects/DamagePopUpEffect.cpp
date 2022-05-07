@@ -17,7 +17,7 @@ void DamagePopUpEffect::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     _color = text.getFillColor();
     m_timePassed += 1.0f * deltaTime.asSeconds();
-    std::cout << "Time passed: " << m_timePassed << std::endl;
+    //std::cout << "Time passed: " << m_timePassed << std::endl;
 
     float moveSpeed = 25.0f;
     text.setPosition(text.getPosition().x, text.getPosition().y - moveSpeed * deltaTime.asSeconds());

@@ -66,8 +66,8 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse position translated into world coordinates
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse _position translated into world coordinates
 
     cursor.Update(window, deltaTime);
     cursor.SetCursorPos(window, _worldView);

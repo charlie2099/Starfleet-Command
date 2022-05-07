@@ -15,7 +15,7 @@ public:
 
     SpriteComponent& GetSpriteComponent() override;
     HealthComponent& GetHealthComponent() override;
-    MovementComponent& GetMovementComponent() override;
+    PhysicsComponent& GetMovementComponent() override;
     AnimationComponent& GetAnimationComponent() override;
     AudioComponent& GetAudioComponent() override;
     const float GetSpeed() override;
