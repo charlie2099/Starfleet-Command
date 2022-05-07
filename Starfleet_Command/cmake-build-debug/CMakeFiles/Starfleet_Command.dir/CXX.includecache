@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+../Gamelibs/include/Components/AiComponent.hpp
+Interfaces/IComponent.hpp
+../Gamelibs/include/Components/Interfaces/IComponent.hpp
+SFML/Graphics/Sprite.hpp
+-
+Utility/Vector.hpp
+../Gamelibs/include/Components/Utility/Vector.hpp
+
 ../Gamelibs/include/Components/AnimationComponent.hpp
 
 ../Gamelibs/include/Components/AudioComponent.hpp
@@ -30,6 +38,12 @@ any
 
 ../Gamelibs/include/Components/SpriteComponent.hpp
 SFML/Graphics.hpp
+-
+
+../Gamelibs/include/Components/WeaponComponent.hpp
+
+../Gamelibs/include/Interfaces/IComponent.hpp
+SFML/Graphics/RenderWindow.hpp
 -
 
 ../Gamelibs/include/Interfaces/IStarship.hpp
@@ -147,6 +161,8 @@ functional
 -
 any
 -
+
+../Gamelibs/include/Sprites/Player/PlayerStats.hpp
 
 ../Gamelibs/include/Sprites/Projectiles/Projectile.hpp
 Components/SpriteComponent.hpp
@@ -270,11 +286,11 @@ SFML/Graphics/Rect.hpp
 cmath
 -
 
-C:/Libraries/SFML/include/SFML/Config.hpp
+C:/SFML-2.5.1/include/SFML/Config.hpp
 TargetConditionals.h
-C:/Libraries/SFML/include/SFML/TargetConditionals.h
+C:/SFML-2.5.1/include/SFML/TargetConditionals.h
 
-C:/Libraries/SFML/include/SFML/Graphics.hpp
+C:/SFML-2.5.1/include/SFML/Graphics.hpp
 SFML/Window.hpp
 -
 SFML/Graphics/BlendMode.hpp
@@ -330,21 +346,21 @@ SFML/Graphics/VertexBuffer.hpp
 SFML/Graphics/View.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/BlendMode.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/BlendMode.hpp
 SFML/Graphics/Export.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/CircleShape.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/CircleShape.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Shape.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Color.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Color.hpp
 SFML/Graphics/Export.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/ConvexShape.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/ConvexShape.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Shape.hpp
@@ -352,17 +368,17 @@ SFML/Graphics/Shape.hpp
 vector
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Drawable.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Drawable.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/RenderStates.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Export.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Export.hpp
 SFML/Config.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Font.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Font.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Glyph.hpp
@@ -382,7 +398,7 @@ string
 vector
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Glsl.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Glsl.hpp
 SFML/Graphics/Transform.hpp
 -
 SFML/Graphics/Color.hpp
@@ -394,15 +410,15 @@ SFML/System/Vector3.hpp
 SFML/Graphics/Glsl.inl
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Glsl.inl
+C:/SFML-2.5.1/include/SFML/Graphics/Glsl.inl
 
-C:/Libraries/SFML/include/SFML/Graphics/Glyph.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Glyph.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Rect.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Image.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Image.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Color.hpp
@@ -414,9 +430,9 @@ string
 vector
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/PrimitiveType.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/PrimitiveType.hpp
 
-C:/Libraries/SFML/include/SFML/Graphics/Rect.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Rect.hpp
 SFML/System/Vector2.hpp
 -
 algorithm
@@ -424,15 +440,15 @@ algorithm
 SFML/Graphics/Rect.inl
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Rect.inl
+C:/SFML-2.5.1/include/SFML/Graphics/Rect.inl
 
-C:/Libraries/SFML/include/SFML/Graphics/RectangleShape.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/RectangleShape.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Shape.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/RenderStates.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/RenderStates.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/BlendMode.hpp
@@ -440,7 +456,7 @@ SFML/Graphics/BlendMode.hpp
 SFML/Graphics/Transform.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/RenderTarget.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/RenderTarget.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Color.hpp
@@ -462,7 +478,7 @@ SFML/Graphics/Vertex.hpp
 SFML/System/NonCopyable.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/RenderTexture.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/RenderTexture.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Texture.hpp
@@ -472,7 +488,7 @@ SFML/Graphics/RenderTarget.hpp
 SFML/Window/ContextSettings.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/RenderWindow.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/RenderWindow.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/RenderTarget.hpp
@@ -484,7 +500,7 @@ SFML/Window/Window.hpp
 string
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Shader.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Shader.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Glsl.hpp
@@ -502,7 +518,7 @@ map
 string
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Shape.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Shape.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Drawable.hpp
@@ -514,7 +530,7 @@ SFML/Graphics/VertexArray.hpp
 SFML/System/Vector2.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Sprite.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Sprite.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Drawable.hpp
@@ -526,7 +542,7 @@ SFML/Graphics/Vertex.hpp
 SFML/Graphics/Rect.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Text.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Text.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Drawable.hpp
@@ -546,7 +562,7 @@ string
 vector
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Texture.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Texture.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Image.hpp
@@ -554,7 +570,7 @@ SFML/Graphics/Image.hpp
 SFML/Window/GlResource.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Transform.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Transform.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Rect.hpp
@@ -562,13 +578,13 @@ SFML/Graphics/Rect.hpp
 SFML/System/Vector2.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Transformable.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Transformable.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Transform.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/Vertex.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/Vertex.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Color.hpp
@@ -576,7 +592,7 @@ SFML/Graphics/Color.hpp
 SFML/System/Vector2.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/VertexArray.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/VertexArray.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Vertex.hpp
@@ -590,7 +606,7 @@ SFML/Graphics/Drawable.hpp
 vector
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/VertexBuffer.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/VertexBuffer.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/PrimitiveType.hpp
@@ -600,7 +616,7 @@ SFML/Graphics/Drawable.hpp
 SFML/Window/GlResource.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Graphics/View.hpp
+C:/SFML-2.5.1/include/SFML/Graphics/View.hpp
 SFML/Graphics/Export.hpp
 -
 SFML/Graphics/Rect.hpp
@@ -610,7 +626,7 @@ SFML/Graphics/Transform.hpp
 SFML/System/Vector2.hpp
 -
 
-C:/Libraries/SFML/include/SFML/System.hpp
+C:/SFML-2.5.1/include/SFML/System.hpp
 SFML/Config.hpp
 -
 SFML/System/Clock.hpp
@@ -648,23 +664,23 @@ SFML/System/Vector2.hpp
 SFML/System/Vector3.hpp
 -
 
-C:/Libraries/SFML/include/SFML/System/Clock.hpp
+C:/SFML-2.5.1/include/SFML/System/Clock.hpp
 SFML/System/Export.hpp
 -
 SFML/System/Time.hpp
 -
 
-C:/Libraries/SFML/include/SFML/System/Err.hpp
+C:/SFML-2.5.1/include/SFML/System/Err.hpp
 SFML/System/Export.hpp
 -
 ostream
 -
 
-C:/Libraries/SFML/include/SFML/System/Export.hpp
+C:/SFML-2.5.1/include/SFML/System/Export.hpp
 SFML/Config.hpp
 -
 
-C:/Libraries/SFML/include/SFML/System/FileInputStream.hpp
+C:/SFML-2.5.1/include/SFML/System/FileInputStream.hpp
 SFML/Config.hpp
 -
 SFML/System/Export.hpp
@@ -678,19 +694,19 @@ cstdio
 string
 -
 
-C:/Libraries/SFML/include/SFML/System/InputStream.hpp
+C:/SFML-2.5.1/include/SFML/System/InputStream.hpp
 SFML/Config.hpp
 -
 SFML/System/Export.hpp
 -
 
-C:/Libraries/SFML/include/SFML/System/Lock.hpp
+C:/SFML-2.5.1/include/SFML/System/Lock.hpp
 SFML/System/Export.hpp
 -
 SFML/System/NonCopyable.hpp
 -
 
-C:/Libraries/SFML/include/SFML/System/MemoryInputStream.hpp
+C:/SFML-2.5.1/include/SFML/System/MemoryInputStream.hpp
 SFML/Config.hpp
 -
 SFML/System/InputStream.hpp
@@ -700,23 +716,23 @@ SFML/System/Export.hpp
 cstdlib
 -
 
-C:/Libraries/SFML/include/SFML/System/Mutex.hpp
+C:/SFML-2.5.1/include/SFML/System/Mutex.hpp
 SFML/System/Export.hpp
 -
 SFML/System/NonCopyable.hpp
 -
 
-C:/Libraries/SFML/include/SFML/System/NonCopyable.hpp
+C:/SFML-2.5.1/include/SFML/System/NonCopyable.hpp
 SFML/System/Export.hpp
 -
 
-C:/Libraries/SFML/include/SFML/System/Sleep.hpp
+C:/SFML-2.5.1/include/SFML/System/Sleep.hpp
 SFML/System/Export.hpp
 -
 SFML/System/Time.hpp
 -
 
-C:/Libraries/SFML/include/SFML/System/String.hpp
+C:/SFML-2.5.1/include/SFML/System/String.hpp
 SFML/System/Export.hpp
 -
 SFML/System/Utf.hpp
@@ -730,9 +746,9 @@ string
 SFML/System/String.inl
 -
 
-C:/Libraries/SFML/include/SFML/System/String.inl
+C:/SFML-2.5.1/include/SFML/System/String.inl
 
-C:/Libraries/SFML/include/SFML/System/Thread.hpp
+C:/SFML-2.5.1/include/SFML/System/Thread.hpp
 SFML/System/Export.hpp
 -
 SFML/System/NonCopyable.hpp
@@ -742,9 +758,9 @@ cstdlib
 SFML/System/Thread.inl
 -
 
-C:/Libraries/SFML/include/SFML/System/Thread.inl
+C:/SFML-2.5.1/include/SFML/System/Thread.inl
 
-C:/Libraries/SFML/include/SFML/System/ThreadLocal.hpp
+C:/SFML-2.5.1/include/SFML/System/ThreadLocal.hpp
 SFML/System/Export.hpp
 -
 SFML/System/NonCopyable.hpp
@@ -752,19 +768,19 @@ SFML/System/NonCopyable.hpp
 cstdlib
 -
 
-C:/Libraries/SFML/include/SFML/System/ThreadLocalPtr.hpp
+C:/SFML-2.5.1/include/SFML/System/ThreadLocalPtr.hpp
 SFML/System/ThreadLocal.hpp
 -
 SFML/System/ThreadLocalPtr.inl
 -
 
-C:/Libraries/SFML/include/SFML/System/ThreadLocalPtr.inl
+C:/SFML-2.5.1/include/SFML/System/ThreadLocalPtr.inl
 
-C:/Libraries/SFML/include/SFML/System/Time.hpp
+C:/SFML-2.5.1/include/SFML/System/Time.hpp
 SFML/System/Export.hpp
 -
 
-C:/Libraries/SFML/include/SFML/System/Utf.hpp
+C:/SFML-2.5.1/include/SFML/System/Utf.hpp
 SFML/Config.hpp
 -
 algorithm
@@ -778,21 +794,21 @@ cstdlib
 SFML/System/Utf.inl
 -
 
-C:/Libraries/SFML/include/SFML/System/Utf.inl
+C:/SFML-2.5.1/include/SFML/System/Utf.inl
 
-C:/Libraries/SFML/include/SFML/System/Vector2.hpp
+C:/SFML-2.5.1/include/SFML/System/Vector2.hpp
 SFML/System/Vector2.inl
 -
 
-C:/Libraries/SFML/include/SFML/System/Vector2.inl
+C:/SFML-2.5.1/include/SFML/System/Vector2.inl
 
-C:/Libraries/SFML/include/SFML/System/Vector3.hpp
+C:/SFML-2.5.1/include/SFML/System/Vector3.hpp
 SFML/System/Vector3.inl
 -
 
-C:/Libraries/SFML/include/SFML/System/Vector3.inl
+C:/SFML-2.5.1/include/SFML/System/Vector3.inl
 
-C:/Libraries/SFML/include/SFML/Window.hpp
+C:/SFML-2.5.1/include/SFML/Window.hpp
 SFML/System.hpp
 -
 SFML/Window/Clipboard.hpp
@@ -824,13 +840,13 @@ SFML/Window/WindowHandle.hpp
 SFML/Window/WindowStyle.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/Clipboard.hpp
+C:/SFML-2.5.1/include/SFML/Window/Clipboard.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/String.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/Context.hpp
+C:/SFML-2.5.1/include/SFML/Window/Context.hpp
 SFML/Window/Export.hpp
 -
 SFML/Window/GlResource.hpp
@@ -840,11 +856,11 @@ SFML/Window/ContextSettings.hpp
 SFML/System/NonCopyable.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/ContextSettings.hpp
+C:/SFML-2.5.1/include/SFML/Window/ContextSettings.hpp
 SFML/Config.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/Cursor.hpp
+C:/SFML-2.5.1/include/SFML/Window/Cursor.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/NonCopyable.hpp
@@ -852,7 +868,7 @@ SFML/System/NonCopyable.hpp
 SFML/System/Vector2.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/Event.hpp
+C:/SFML-2.5.1/include/SFML/Window/Event.hpp
 SFML/Config.hpp
 -
 SFML/Window/Joystick.hpp
@@ -864,33 +880,33 @@ SFML/Window/Mouse.hpp
 SFML/Window/Sensor.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/Export.hpp
+C:/SFML-2.5.1/include/SFML/Window/Export.hpp
 SFML/Config.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/GlResource.hpp
+C:/SFML-2.5.1/include/SFML/Window/GlResource.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/NonCopyable.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/Joystick.hpp
+C:/SFML-2.5.1/include/SFML/Window/Joystick.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/String.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/Keyboard.hpp
+C:/SFML-2.5.1/include/SFML/Window/Keyboard.hpp
 SFML/Window/Export.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/Mouse.hpp
+C:/SFML-2.5.1/include/SFML/Window/Mouse.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/Vector2.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/Sensor.hpp
+C:/SFML-2.5.1/include/SFML/Window/Sensor.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/Vector3.hpp
@@ -898,19 +914,19 @@ SFML/System/Vector3.hpp
 SFML/System/Time.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/Touch.hpp
+C:/SFML-2.5.1/include/SFML/Window/Touch.hpp
 SFML/Window/Export.hpp
 -
 SFML/System/Vector2.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/VideoMode.hpp
+C:/SFML-2.5.1/include/SFML/Window/VideoMode.hpp
 SFML/Window/Export.hpp
 -
 vector
 -
 
-C:/Libraries/SFML/include/SFML/Window/Window.hpp
+C:/SFML-2.5.1/include/SFML/Window/Window.hpp
 SFML/Window/ContextSettings.hpp
 -
 SFML/Window/Cursor.hpp
@@ -934,21 +950,21 @@ SFML/System/String.hpp
 SFML/System/Vector2.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/WindowHandle.hpp
+C:/SFML-2.5.1/include/SFML/Window/WindowHandle.hpp
 SFML/Config.hpp
 -
 
-C:/Libraries/SFML/include/SFML/Window/WindowStyle.hpp
+C:/SFML-2.5.1/include/SFML/Window/WindowStyle.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.cpp
+D:/Starfleet-Command/Starfleet_Command/Game/Game.cpp
 Game.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.hpp
+D:/Starfleet-Command/Starfleet_Command/Game/Game.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.hpp
+D:/Starfleet-Command/Starfleet_Command/Game/Game.hpp
 Scenes/MenuScene.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Scenes/MenuScene.hpp
+D:/Starfleet-Command/Starfleet_Command/Game/Scenes/MenuScene.hpp
 Scenes/SceneManager.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Scenes/SceneManager.hpp
+D:/Starfleet-Command/Starfleet_Command/Game/Scenes/SceneManager.hpp
 SFML/Window.hpp
 -
 SFML/Graphics.hpp
@@ -956,73 +972,139 @@ SFML/Graphics.hpp
 iostream
 -
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/HealthComponent.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/AiComponent.cpp
+Components/AiComponent.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/Components/AiComponent.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/AnimationComponent.cpp
+Components/AnimationComponent.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/Components/AnimationComponent.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/AudioComponent.cpp
+Components/AudioComponent.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/Components/AudioComponent.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/HealthComponent.cpp
 Components/HealthComponent.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/Components/HealthComponent.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/Components/HealthComponent.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/GameScene.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/PhysicsComponent.cpp
+Components/PhysicsComponent.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/Components/PhysicsComponent.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/SpriteComponent.cpp
+Components/SpriteComponent.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/Components/SpriteComponent.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/WeaponComponent.cpp
+Components/WeaponComponent.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/Components/WeaponComponent.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/GameScene.cpp
 Scenes/GameScene.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/Scenes/GameScene.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/Scenes/GameScene.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/MenuScene.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/MenuScene.cpp
 chrono
 -
 Scenes/MenuScene.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/Scenes/MenuScene.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/Scenes/MenuScene.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/SceneManager.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/OptionsScene.cpp
+Scenes/OptionsScene.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/Scenes/OptionsScene.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/Scene.cpp
+Scenes/Scene.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/Scenes/Scene.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/SceneManager.cpp
 Scenes/SceneManager.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/Scenes/SceneManager.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Scenes/Scenes/SceneManager.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Enemy/Enemy.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Enemy/Enemy.cpp
 Sprites/Enemy/Enemy.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Enemy/Sprites/Enemy/Enemy.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Enemy/Sprites/Enemy/Enemy.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/GameObject.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/GameObject.cpp
 Sprites/GameObject.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Sprites/GameObject.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Sprites/GameObject.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Player/Player.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Player/Player.cpp
 Sprites/Player/Player.h
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Player/Sprites/Player/Player.h
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Player/Sprites/Player/Player.h
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/Fleet.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Player/PlayerStats.cpp
+Sprites/Player/PlayerStats.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Player/Sprites/Player/PlayerStats.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Projectiles/Projectile.cpp
+Sprites/Projectiles/Projectile.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Projectiles/Sprites/Projectiles/Projectile.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/Fleet.cpp
 Sprites/Starships/Fleet.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/Sprites/Starships/Fleet.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/Sprites/Starships/Fleet.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/Starship.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/Starship.cpp
 Sprites/Starships/Starship.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/Sprites/Starships/Starship.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/Sprites/Starships/Starship.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp
 Sprites/Starships/StarshipClasses/StarshipFighter.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/StarshipClasses/Sprites/Starships/StarshipClasses/StarshipFighter.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/StarshipClasses/Sprites/Starships/StarshipClasses/StarshipFighter.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp
 Sprites/Starships/StarshipFactory.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/Sprites/Starships/StarshipFactory.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/Sprites/Starships/StarshipFactory.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Crosshair.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Crosshair.cpp
 iostream
 -
 Sprites/UI/Crosshair.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Sprites/UI/Crosshair.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Sprites/UI/Crosshair.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/HealthBar.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp
+Sprites/UI/Effects/DamagePopUpEffect.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Effects/Sprites/UI/Effects/DamagePopUpEffect.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/GUI/Button.cpp
+Sprites/UI/GUI/Button.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/GUI/Sprites/UI/GUI/Button.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/HUD/HUD.cpp
+Sprites/UI/HUD/HUD.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/HUD/Sprites/UI/HUD/HUD.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/HealthBar.cpp
 Sprites/UI/HealthBar.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Sprites/UI/HealthBar.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Sprites/UI/HealthBar.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/ShipCard.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Panel.cpp
+iostream
+-
+Sprites/UI/Panel.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Sprites/UI/Panel.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/ShipCard.cpp
 Sprites/UI/ShipCard.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Sprites/UI/ShipCard.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Sprites/UI/ShipCard.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Temporary/TestClass.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Temporary/TestClass.cpp
 Temporary/TestClass.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Temporary/Temporary/TestClass.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Temporary/Temporary/TestClass.hpp
 
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/main.cpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Utility/Cursor.cpp
+Utility/Cursor.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Utility/Utility/Cursor.hpp
+
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Utility/Vector.cpp
+Utility/Vector.hpp
+D:/Starfleet-Command/Starfleet_Command/Gamelibs/src/Utility/Utility/Vector.hpp
+
+D:/Starfleet-Command/Starfleet_Command/main.cpp
 sstream
 -
 Game/Game.hpp
-D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.hpp
+D:/Starfleet-Command/Starfleet_Command/Game/Game.hpp
 

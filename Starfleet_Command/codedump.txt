@@ -118,7 +118,53 @@ if(CollisionBetween(player.GetFleet().GetStarship()[i].GetCollider()))
 
 
 
+Type object pattern
+i.e. monsters, items
 
+Actor // or Entity
+{
+    position / transformComponent
+    healthComponent?
+    spriteComponent?
+}
+
+class Monster : Actor
+{
+    Breed breed
+    int health
+    float position
+}
+
+class Breed
+{
+    string name
+    int maxHealth
+    attack
+    moves
+    flags
+    loot
+}
+
+
+Command pattern
+
+class Monster : Action
+{
+    Action takeTurn();
+}
+
+abstract class Action
+{
+    ActionResult perform();
+}
+
+class WalkAction : Action
+{
+    ActionResult perform()
+    {
+        ...
+    }
+}
 
 
 
