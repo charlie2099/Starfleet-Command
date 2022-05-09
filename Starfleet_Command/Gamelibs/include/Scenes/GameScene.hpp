@@ -2,7 +2,7 @@
 #define STARFLEET_COMMAND_GAMESCENE_HPP
 #include "Scenes/Scene.hpp"
 #include "Sprites/Starships/Fleet.hpp"
-#include "Sprites/Starships/Starship.hpp"
+#include "Sprites/Starships/OLDStarship.hpp"
 #include "Sprites/UI/Crosshair.hpp"
 #include "Utility/Cursor.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
@@ -12,6 +12,9 @@
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 #include "Sprites/GameObject.hpp"
+#include "Sprites/Starships/StarshipClass.hpp"
+#include "Behaviours/StarshipFighterBehaviour.hpp"
+#include "Sprites/Starships/Starship.h"
 #include <random>
 #include <chrono>
 
@@ -78,6 +81,8 @@ private:
     TestClass testClass;
     std::unique_ptr<IStarship> starship;
     //GameObject gameObject;
+    std::unique_ptr<Starship> starshipFighter;
+    std::unique_ptr<Starship> starshipScout;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

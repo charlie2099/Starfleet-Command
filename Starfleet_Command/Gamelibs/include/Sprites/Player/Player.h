@@ -1,6 +1,6 @@
 #ifndef STARFLEET_COMMAND_PLAYER_H
 #define STARFLEET_COMMAND_PLAYER_H
-#include "Sprites/Starships/Starship.hpp"
+#include "Sprites/Starships/OLDStarship.hpp"
 #include <functional>
 #include <any>
 
@@ -18,17 +18,17 @@ public:
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
-    void CreateShip(Starship::Type type);
+    void CreateShip(OLDStarship::Type type);
 
     using PlayerEvent = std::pair<EventID, std::function<void()>>;
     using PlayerAgnosticEvent = std::pair<EventID, std::function<void(std::any)>>;
     void AddObserver(PlayerEvent observer);
     void AddObserver2(PlayerAgnosticEvent observer);
 
-    std::vector<std::unique_ptr<Starship>> &GetShip();
+    std::vector<std::unique_ptr<OLDStarship>> &GetShip();
 
 private:
-    std::vector<std::unique_ptr<Starship>> starship{};
+    std::vector<std::unique_ptr<OLDStarship>> starship{};
     std::multimap<EventID, std::function<void()>> _observers{};
     std::multimap<EventID, std::function<void(std::any)>> _observers_agnostic{};
 };

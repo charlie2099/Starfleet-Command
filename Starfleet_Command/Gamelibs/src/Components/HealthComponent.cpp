@@ -14,7 +14,7 @@ void HealthComponent::ReplenishHealth(float amount)
     InvokeEvent(HEALTH_UPDATED, _health);
 }
 
-void HealthComponent::SetHealth(float health)
+void HealthComponent::SetHealth(int health)
 {
     _health = health;
 }

@@ -27,8 +27,8 @@ public:
     void TakeDamage(float amount);
     void ReplenishHealth(float amount);
 
-    void SetHealth(float health);
-    float GetHealth() const { return _health; }
+    void SetHealth(int health);
+    int GetHealth() const { return _health; }
 
     // Observer (for other classes to use to hook into and subscribe)
     using HealthEvent = std::pair<EventID, std::function<void()>>;
@@ -40,7 +40,7 @@ public:
 private:
     void InvokeEvent(EventID eventId);
     void InvokeEvent(EventID eventId, std::any anyData);
-    float _health;
+    int _health;
     std::multimap<EventID, std::function<void()>> _observers{};
     std::multimap<EventID, std::function<void(std::any)>> _observers1Param{};
 };

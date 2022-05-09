@@ -10,6 +10,38 @@ bool GameScene::Init()
     InitPlayerFlagship();
     InitEnemyFlagship();
 
+
+
+
+    std::unique_ptr<StarshipClass> fighterClass =
+            std::make_unique<StarshipClass>("Resources/Textures/starfleet_ship_fighter.png",
+                                            250,
+                                            50,
+                                            std::make_unique<StarshipFighterBehaviour>());
+
+    std::unique_ptr<StarshipClass> scoutClass =
+            std::make_unique<StarshipClass>("Resources/Textures/starfleet_ship_scout.png",
+                                            100,
+                                            10,
+                                            std::make_unique<StarshipFighterBehaviour>());
+
+    starshipFighter = std::make_unique<Starship>(fighterClass);
+    starshipScout = std::make_unique<Starship>(scoutClass);
+    // TODO: (FIX) Can't initialise more than 1 of the same class right now because of std::move in the starship class.
+
+    /// StarshipClass newClassType(texture, color, health, damage, behaviour(?));
+    /// Starship newShip(newClassType);
+    /// starshipFighter.AddBehaviour(ChaseBehaviour());
+    /// starshipFighter.AddBehaviour(FleeBehaviour());
+    /// starshipFighter.AddWeapon(PlasmaCannonWeapon());
+    /// starshipFighter.AddWeapon(TorpedoLauncherWeapon());
+    ///
+    /// for(auto& starship : starships)
+    ///     starship.Update();
+    ///     starship.Render();
+
+
+
     /// Whenever a SHIP_SPAWNED event occurs, the TestFncForObserverToCall method is called
     /// A SHIP_SPAWNED event is invoked in the player CreateShip method.
     auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
@@ -103,7 +135,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
                 //if(_hud.IsTrainingComplete())
                 //{
-                //    _player.CreateShip(static_cast<Starship::Type>(i));
+                //    _player.CreateShip(static_cast<OLDStarship::Type>(i));
                 //    _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
                 //    RandomiseShipSpawnPoint();
                 //}
@@ -122,7 +154,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         //    {
         //        _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({153, 210, 242, 150});
         //
-        //        _player.CreateShip(static_cast<Starship::Type>(i));
+        //        _player.CreateShip(static_cast<OLDStarship::Type>(i));
         //        _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
         //
         //        RandomiseShipSpawnPoint();
@@ -153,7 +185,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     if(_hud.IsTrainingComplete())
     {
-        _player.CreateShip(static_cast<Starship::Type>(ship_spawned_index));
+        _player.CreateShip(static_cast<OLDStarship::Type>(ship_spawned_index));
         _player.GetShip()[_player.GetShip().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
         RandomiseShipSpawnPoint();
         _hud.SetTrainingCompletedStatus(false);
@@ -270,6 +302,8 @@ void GameScene::Render(sf::RenderWindow& window)
 
     //gameObject.Render(window);
     starship->Render(window);
+    starshipFighter->Render(window);
+    starshipScout->Render(window);
 
     //crosshair.Render(window);
     _hud.Render(window);
@@ -406,7 +440,7 @@ void GameScene::InitView()
 
 void GameScene::InitPlayerFlagship()
 {
-    _player.CreateShip(Starship::Type::FLAGSHIP);
+    _player.CreateShip(OLDStarship::Type::FLAGSHIP);
     int flagship = 0;
     auto player_flagship_bounds = _player.GetShip()[flagship]->GetSpriteComponent().GetSprite().getGlobalBounds();
     auto player_width = player_flagship_bounds.width/2;
@@ -417,7 +451,7 @@ void GameScene::InitPlayerFlagship()
 
 void GameScene::InitEnemyFlagship()
 {
-    _enemy.CreateShip(Starship::Type::FLAGSHIP);
+    _enemy.CreateShip(OLDStarship::Type::FLAGSHIP);
     int flagship = 0;
     auto enemy_flagship_bounds = _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite().getGlobalBounds();
     auto enemy_xPos = Constants::WINDOW_WIDTH - enemy_flagship_bounds.width / 2.0f;
@@ -428,7 +462,7 @@ void GameScene::InitEnemyFlagship()
 
     for (int i = 0; i < 5; ++i)
     {
-        _enemy.CreateShip(static_cast<Starship::Type>(i));
+        _enemy.CreateShip(static_cast<OLDStarship::Type>(i));
         _enemy.GetShip()[i+1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
         _enemy.GetShip()[i+1]->GetSpriteComponent().SetPos({enemy_xPos, static_cast<float>(200 + (i * 75))});
         _enemy.GetShip()[i+1]->GetSpriteComponent().GetSprite().setRotation(180);

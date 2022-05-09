@@ -24,14 +24,14 @@ void Player::Render(sf::RenderWindow &window)
     }
 }
 
-std::vector<std::unique_ptr<Starship>> &Player::GetShip()
+std::vector<std::unique_ptr<OLDStarship>> &Player::GetShip()
 {
     return starship;
 }
 
-void Player::CreateShip(Starship::Type type)
+void Player::CreateShip(OLDStarship::Type type)
 {
-    starship.emplace_back(std::make_unique<Starship>(type));
+    starship.emplace_back(std::make_unique<OLDStarship>(type));
 
     /// SHIP_SPAWNED event is invoked (non-agnostic)
     auto range = _observers.equal_range(EventID::SHIP_SPAWNED);

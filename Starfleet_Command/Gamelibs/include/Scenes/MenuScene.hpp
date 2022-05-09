@@ -1,7 +1,7 @@
 #ifndef STARFLEET_COMMAND_MENUSCENE_HPP
 #define STARFLEET_COMMAND_MENUSCENE_HPP
 #include "Scenes/Scene.hpp"
-#include "Sprites/Starships/Starship.hpp"
+#include "Sprites/Starships/OLDStarship.hpp"
 #include "Sprites/UI/Crosshair.hpp"
 #include "Utility/Cursor.hpp"
 #include <random>
@@ -43,7 +43,7 @@ class MenuScene : public Scene
     Chilli::Colours _predefinedColours;
     //Crosshair crosshair;
     std::array<Panel, 5> panels;
-    std::vector<std::unique_ptr<Starship>> starship;
+    std::vector<std::unique_ptr<OLDStarship>> starship;
     std::vector<std::uniform_int_distribution<int>> uint_distrib;
 
     sf::Texture background_texture;

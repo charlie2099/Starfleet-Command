@@ -3,7 +3,7 @@
 #include <array>
 #include <iostream>
 #include <SFML/Graphics/Color.hpp>
-#include "Starship.hpp"
+#include "OLDStarship.hpp"
 
 class Fleet
 {
@@ -21,7 +21,7 @@ class Fleet
     /// Modifiers
     static void setFleetSize(int size);
     static void setFleetColourRGB(sf::Color colour); // Colour colour
-    static void setNumOfShips(int count, Starship::Type shipType);
+    static void setNumOfShips(int count, OLDStarship::Type shipType);
 
     /// Accessors
     static int &getFleetSize();

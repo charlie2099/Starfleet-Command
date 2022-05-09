@@ -12,21 +12,21 @@
 
    Game::Init()
    {
-        fleet.add(Starship(Starship::Class::FIGHTER));
+        fleet.add(OLDStarship(OLDStarship::Class::FIGHTER));
 
-        fleet.getStarshipCommands().Attack(Starship& starship);
+        fleet.getStarshipCommands().Attack(OLDStarship& starship);
         fleet.getStarshipCommands().Defend();
         fleet.getStarshipCommands().Reposition(sf::Vector2f<float>{0,0});
 
         Projectile laser(Projectile::Type::Laser);
         Projectile missile(Projectile::Type::Missile);
 
-        starship[SELECTED].getCommands().Attack(Starship& starship, missile);
-        starship[SELECTED].getCommands().Defend(Starship& starship); // OR Protect()
-        starship[SELECTED].getCommands().Protect(Starship& starship);
+        starship[SELECTED].getCommands().Attack(OLDStarship& starship, missile);
+        starship[SELECTED].getCommands().Defend(OLDStarship& starship); // OR Protect()
+        starship[SELECTED].getCommands().Protect(OLDStarship& starship);
         starship[SELECTED].getCommands().Shields(int duration, int strength);
         starship[SELECTED].getCommands().Reposition(sf::Vector2f<float>{});
-        starship[SELECTED].getCommands().Follow(Starship& starship);
+        starship[SELECTED].getCommands().Follow(OLDStarship& starship);
    }
 
 player.AddToFleet(Ship::FIGHTER);
@@ -52,7 +52,7 @@ Background           { Sprite }
 ParticleEffect       { Sprite }
 Panel                { Sprite, UiText }
 Projectile           { Sprite, ParticleEffect }
-Starship             { Sprite, Weapon{Projectile}, Physics, Ai, LevelSystem, Health, Collider }
+OLDStarship             { Sprite, Weapon{Projectile}, Physics, Ai, LevelSystem, Health, Collider }
 Health bar           { Panel }
 Fleet panel          { Panel }
 Command panel        { Panel }
@@ -62,7 +62,7 @@ Ship level           { Panel }
 Galaxy map           { Panel, Map }
 Button               { Panel, Collider }
 Command button       { Button }
-Fleet                { Starship }
+Fleet                { OLDStarship }
 Player               { Fleet, Credits }
 Enemy                { Fleet }
 
@@ -88,7 +88,7 @@ StarshipFighterBehaviour : IBehaviour
     Flee() override;
 }
 
-StarshipFighter : Starship
+StarshipFighter : OLDStarship
 {
     StarshipFighterBehaviour;
 }
@@ -103,7 +103,7 @@ enemy.GetStarship().GetAnimation();
 
 Audio
 - Projectile impact
-- Starship thrusters
+- OLDStarship thrusters
 - Button press
 - Menu music
 - Game music
@@ -137,7 +137,7 @@ class Monster : Actor
 
 class Breed
 {
-    string name
+    string T
     int maxHealth
     attack
     moves
