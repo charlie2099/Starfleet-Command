@@ -39,7 +39,7 @@ public:
 
 private:
     void InvokeEvent(EventID eventId);
-    void InvokeEvent(EventID eventId, std::any anyData);
+    void InvokeEvent(EventID eventId, const std::any& anyData);
     int _health;
     std::multimap<EventID, std::function<void()>> _observers{};
     std::multimap<EventID, std::function<void(std::any)>> _observers1Param{};

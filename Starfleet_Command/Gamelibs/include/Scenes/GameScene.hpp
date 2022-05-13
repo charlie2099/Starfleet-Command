@@ -79,10 +79,10 @@ private:
 
     // TEST VARIABLES (TEMPORARY)
     TestClass testClass;
-    std::unique_ptr<IStarship> starship;
+    //std::unique_ptr<IStarship> starship;
     //GameObject gameObject;
-    std::unique_ptr<Starship> starshipFighter;
-    std::unique_ptr<Starship> starshipScout;
+    //std::unique_ptr<Starship> starshipFighter;
+    //std::unique_ptr<Starship> starshipScout;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

@@ -11,8 +11,6 @@ bool GameScene::Init()
     InitEnemyFlagship();
 
 
-
-
     std::unique_ptr<StarshipClass> fighterClass =
             std::make_unique<StarshipClass>("Resources/Textures/starfleet_ship_fighter.png",
                                             250,
@@ -25,8 +23,8 @@ bool GameScene::Init()
                                             10,
                                             std::make_unique<StarshipFighterBehaviour>());
 
-    starshipFighter = std::make_unique<Starship>(fighterClass);
-    starshipScout = std::make_unique<Starship>(scoutClass);
+    //starshipFighter = std::make_unique<Starship>(fighterClass);
+    //starshipScout = std::make_unique<Starship>(scoutClass);
     // TODO: (FIX) Can't initialise more than 1 of the same class right now because of std::move in the starship class.
 
     /// StarshipClass newClassType(texture, color, health, damage, behaviour(?));
@@ -54,7 +52,7 @@ bool GameScene::Init()
     //_player.GetShip()[0].GetHealthComponent().AddObserver({Player::EventID::SHIP_SPAWNED, callbackFnc3});
 
     // FACTORY PATTERN
-    starship = StarshipFactory::CreateShip(StarshipFactory::FIGHTER);
+    //starship = StarshipFactory::CreateShip(StarshipFactory::FIGHTER);
 
     //auto callbackFnc4 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
     //starship->GetHealthComponent().AddObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc4});
@@ -86,7 +84,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     if (event.type == sf::Event::MouseButtonPressed)
     {
-        starship->GetHealthComponent().SetHealth(starship->GetHealthComponent().GetHealth() - 10);
+        //starship->GetHealthComponent().SetHealth(starship->GetHealthComponent().GetHealth() - 10);
     }
 
     for (int i = 0; i < _command_buttons.size(); i++)
@@ -181,7 +179,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _cursor.SetCursorPos(window, _worldView);
     _player.Update(window, deltaTime);
     _enemy.Update(window, deltaTime);
-    starship->Update(window, deltaTime);
+    //starship->Update(window, deltaTime);
 
     if(_hud.IsTrainingComplete())
     {
@@ -301,9 +299,9 @@ void GameScene::Render(sf::RenderWindow& window)
     _enemy.Render(window);
 
     //gameObject.Render(window);
-    starship->Render(window);
-    starshipFighter->Render(window);
-    starshipScout->Render(window);
+    //starship->Render(window);
+    //starshipFighter->Render(window);
+    //starshipScout->Render(window);
 
     //crosshair.Render(window);
     _hud.Render(window);

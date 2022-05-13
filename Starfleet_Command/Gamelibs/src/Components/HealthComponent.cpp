@@ -47,7 +47,7 @@ void HealthComponent::InvokeEvent(HealthComponent::EventID eventId)
     }
 }
 
-void HealthComponent::InvokeEvent(HealthComponent::EventID eventId, std::any anyData)
+void HealthComponent::InvokeEvent(HealthComponent::EventID eventId, const std::any& anyData)
 {
     /// SHIP_SPAWNED event is invoked (agnostic)
     auto ag_range = _observers1Param.equal_range(eventId);

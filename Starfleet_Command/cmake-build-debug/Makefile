@@ -152,6 +152,30 @@ Game/Game.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.s
 .PHONY : Game/Game.cpp.s
 
+Gamelibs/include/Sprites/Unit.obj: Gamelibs/include/Sprites/Unit.cpp.obj
+.PHONY : Gamelibs/include/Sprites/Unit.obj
+
+# target to build an object file
+Gamelibs/include/Sprites/Unit.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/include/Sprites/Unit.cpp.obj
+.PHONY : Gamelibs/include/Sprites/Unit.cpp.obj
+
+Gamelibs/include/Sprites/Unit.i: Gamelibs/include/Sprites/Unit.cpp.i
+.PHONY : Gamelibs/include/Sprites/Unit.i
+
+# target to preprocess a source file
+Gamelibs/include/Sprites/Unit.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/include/Sprites/Unit.cpp.i
+.PHONY : Gamelibs/include/Sprites/Unit.cpp.i
+
+Gamelibs/include/Sprites/Unit.s: Gamelibs/include/Sprites/Unit.cpp.s
+.PHONY : Gamelibs/include/Sprites/Unit.s
+
+# target to generate assembly for a file
+Gamelibs/include/Sprites/Unit.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/include/Sprites/Unit.cpp.s
+.PHONY : Gamelibs/include/Sprites/Unit.cpp.s
+
 Gamelibs/src/Behaviours/StarshipFighterBehaviour.obj: Gamelibs/src/Behaviours/StarshipFighterBehaviour.cpp.obj
 .PHONY : Gamelibs/src/Behaviours/StarshipFighterBehaviour.obj
 
@@ -1004,6 +1028,9 @@ help:
 	@echo ... Game/Game.obj
 	@echo ... Game/Game.i
 	@echo ... Game/Game.s
+	@echo ... Gamelibs/include/Sprites/Unit.obj
+	@echo ... Gamelibs/include/Sprites/Unit.i
+	@echo ... Gamelibs/include/Sprites/Unit.s
 	@echo ... Gamelibs/src/Behaviours/StarshipFighterBehaviour.obj
 	@echo ... Gamelibs/src/Behaviours/StarshipFighterBehaviour.i
 	@echo ... Gamelibs/src/Behaviours/StarshipFighterBehaviour.s

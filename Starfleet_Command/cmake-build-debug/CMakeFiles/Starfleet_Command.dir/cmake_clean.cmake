@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "../Starfleet_Command.exe.manifest"
   "../Starfleet_Command.pdb"
   "CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj"
+  "CMakeFiles/Starfleet_Command.dir/Gamelibs/include/Sprites/Unit.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Behaviours/StarshipFighterBehaviour.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AiComponent.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AnimationComponent.cpp.obj"
