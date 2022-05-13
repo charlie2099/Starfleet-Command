@@ -48,8 +48,8 @@ void HealthBar::SetMaxHealth(float health)
 
 void HealthBar::UpdateHealth(std::any eventData)
 {
-    std::cout << "Health updated: " << std::any_cast<float>(eventData) << std::endl;
-    _health = std::any_cast<float>(eventData);
+    std::cout << "Health updated: " << std::any_cast<int>(eventData) << std::endl;
+    _health = std::any_cast<int>(eventData);
     spriteComponent.SetPos({_position.x + spriteComponent.GetSprite().getGlobalBounds().width/2, _position.y});
     spriteComponent.GetSprite().setScale((_health / _maxHealth)*0.2f, 0.075f);
 }
