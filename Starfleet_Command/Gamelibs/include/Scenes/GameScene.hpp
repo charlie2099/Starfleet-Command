@@ -10,10 +10,6 @@
 #include "Sprites/UI/HUD/HUD.hpp"
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
-#include "Sprites/GameObject.hpp"
-#include "Sprites/Starships/StarshipClass.hpp"
-#include "Behaviours/StarshipFighterBehaviour.hpp"
-#include "Sprites/Starships/Starship.h"
 #include <random>
 #include <chrono>
 
@@ -31,17 +27,14 @@ private:
     void InitDistribution();
     bool InitBackground();
     bool InitCommandButtons();
-    void InitPlayerFlagship();
-    void InitEnemyFlagship();
+    void InitPlayerShips();
+    void InitEnemyShips();
     void InitCreditsText();
     void InitView();
     void RandomiseShipSpawnPoint();
     void CreateDistribution(const std::string& name, int min, int max);
     void UpdateDistribution(const std::string& name, int min, int max);
     static std::mt19937 GetEngine();
-
-    // (TEMPORARY)
-    //std::unique_ptr<IStarship> starship; // FACTORY
 
     // Utility
     Chilli::Cursor _cursor;

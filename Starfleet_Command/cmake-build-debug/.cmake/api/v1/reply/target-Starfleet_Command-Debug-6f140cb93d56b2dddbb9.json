@@ -179,29 +179,19 @@
 				20,
 				22,
 				25,
-				28,
-				30,
-				32,
-				34,
-				36,
-				38,
-				40,
-				42,
-				44,
-				46,
+				27,
+				29,
+				31,
+				33,
+				35,
+				37,
+				39,
+				41,
+				43,
+				45,
 				49,
-				52,
-				54,
-				56,
-				58,
-				60,
-				62,
-				64,
-				66,
-				70,
-				72,
-				74,
-				75
+				51,
+				53
 			]
 		}
 	],
@@ -286,29 +276,19 @@
 				20,
 				22,
 				25,
-				28,
-				30,
-				32,
-				34,
-				36,
-				38,
-				40,
-				42,
-				44,
-				46,
+				27,
+				29,
+				31,
+				33,
+				35,
+				37,
+				39,
+				41,
+				43,
+				45,
 				49,
-				52,
-				54,
-				56,
-				58,
-				60,
-				62,
-				64,
-				66,
-				70,
-				72,
-				74,
-				75
+				51,
+				53
 			]
 		},
 		{
@@ -329,33 +309,21 @@
 				23,
 				24,
 				26,
-				27,
-				29,
-				31,
-				33,
-				35,
-				37,
-				39,
-				41,
-				43,
-				45,
+				28,
+				30,
+				32,
+				34,
+				36,
+				38,
+				40,
+				42,
+				44,
+				46,
 				47,
 				48,
 				50,
-				51,
-				53,
-				55,
-				57,
-				59,
-				61,
-				63,
-				65,
-				67,
-				68,
-				69,
-				71,
-				73,
-				76
+				52,
+				54
 			]
 		}
 	],
@@ -511,11 +479,6 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Gamelibs/include/Components/Component.hpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "Gamelibs/src/Sprites/Projectiles/Projectile.cpp",
 			"sourceGroupIndex" : 0
@@ -631,17 +594,6 @@
 		},
 		{
 			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/Components/AiComponent.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Gamelibs/include/Components/AiComponent.hpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
 			"path" : "Gamelibs/include/Interfaces/IStarship.hpp",
 			"sourceGroupIndex" : 1
 		},
@@ -676,110 +628,6 @@
 		{
 			"backtrace" : 1,
 			"path" : "Gamelibs/include/Components/HealthComponent.hpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/Components/PhysicsComponent.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Gamelibs/include/Components/PhysicsComponent.hpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/Components/AnimationComponent.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Gamelibs/include/Components/AnimationComponent.hpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/Components/AudioComponent.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Gamelibs/include/Components/AudioComponent.hpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/Components/WeaponComponent.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Gamelibs/include/Components/WeaponComponent.hpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/Sprites/GameObject.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Gamelibs/include/Sprites/GameObject.hpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Gamelibs/include/Sprites/Starships/StarshipClass.hpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Gamelibs/include/Sprites/Starships/Starship.h",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/Sprites/Starships/Starship.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Gamelibs/include/Interfaces/IBehaviour.hpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/Behaviours/StarshipFighterBehaviour.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Gamelibs/include/Behaviours/StarshipFighterBehaviour.hpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/Sprites/Starships/StarshipClass.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/Sprites/Unit.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Gamelibs/include/Sprites/Unit.hpp",
 			"sourceGroupIndex" : 1
 		}
 	],

@@ -17,13 +17,13 @@ public:
     void SetMaxHealth(float health);
     void UpdateHealth(std::any eventData);
 
-    SpriteComponent& GetSpriteComponent() { return spriteComponent; };
+    SpriteComponent& GetSpriteComponent() { return _healthBar; };
     float GetHealth() const { return _health; };
     sf::Vector2f GetPos() const { return _position; };
 
 private:
-    SpriteComponent spriteComponent;
-    SpriteComponent spriteComponent2;
+    SpriteComponent _healthBar;
+    SpriteComponent _healthBarMask;
     float _maxHealth = 100;
     float _health = _maxHealth;
     sf::Vector2f _position;

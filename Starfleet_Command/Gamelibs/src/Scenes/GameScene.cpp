@@ -7,8 +7,8 @@ bool GameScene::Init()
     InitCommandButtons();
     InitCreditsText();
     InitView();
-    InitPlayerFlagship();
-    InitEnemyFlagship();
+    InitPlayerShips();
+    InitEnemyShips();
 
     /// StarshipClass newClassType(texture, color, health, damage);
     /// Starship newShip(newClassType);
@@ -348,7 +348,7 @@ void GameScene::InitView()
     //_player_view.zoom(0.5F);
 }
 
-void GameScene::InitPlayerFlagship()
+void GameScene::InitPlayerShips()
 {
     _player.CreateShip(OLDStarship::Type::FLAGSHIP);
     int flagship = 0;
@@ -359,9 +359,9 @@ void GameScene::InitPlayerFlagship()
     _player.GetShip()[flagship]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
 }
 
-void GameScene::InitEnemyFlagship()
+void GameScene::InitEnemyShips()
 {
-    _enemy.CreateShip(OLDStarship::Type::FLAGSHIP);
+    _enemy.CreateShip(StarshipFactory::FLAGSHIP);
     int flagship = 0;
     auto enemy_flagship_bounds = _enemy.GetShip()[flagship]->GetSpriteComponent().GetSprite().getGlobalBounds();
     auto enemy_xPos = Constants::WINDOW_WIDTH - enemy_flagship_bounds.width / 2.0f;
@@ -372,7 +372,7 @@ void GameScene::InitEnemyFlagship()
 
     for (int i = 0; i < 5; ++i)
     {
-        _enemy.CreateShip(static_cast<OLDStarship::Type>(i));
+        _enemy.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(i));
         _enemy.GetShip()[i+1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
         _enemy.GetShip()[i+1]->GetSpriteComponent().SetPos({enemy_xPos, static_cast<float>(200 + (i * 75))});
         _enemy.GetShip()[i+1]->GetSpriteComponent().GetSprite().setRotation(180);

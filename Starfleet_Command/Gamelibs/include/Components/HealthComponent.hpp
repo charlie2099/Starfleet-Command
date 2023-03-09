@@ -46,7 +46,6 @@ private:
     void InvokeAgnosticEvent(EventID eventId, const std::any& anyData);
     int _health{};
     std::vector<std::unique_ptr<DamagePopUpEffect>> _damagePopUpEffect;
-    //SpriteComponent _spriteComponent;
     std::multimap<EventID, std::function<void()>> _basicObservers{};
     std::multimap<EventID, std::function<void(std::any)>> _agnosticObservers{};
 };
