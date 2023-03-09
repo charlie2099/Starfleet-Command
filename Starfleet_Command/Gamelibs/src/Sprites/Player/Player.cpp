@@ -34,7 +34,7 @@ void Player::CreateShip(OLDStarship::Type type)
     starship.emplace_back(std::make_unique<OLDStarship>(type));
 
     /// SHIP_SPAWNED event is invoked (non-agnostic)
-    auto range = _observers.equal_range(EventID::SHIP_SPAWNED);
+    auto range = _basicObservers.equal_range(EventID::SHIP_SPAWNED);
     for(auto iter = range.first; iter != range.second; ++iter)
     {
         /// subscribed method is called
@@ -42,7 +42,7 @@ void Player::CreateShip(OLDStarship::Type type)
     }
 
     /// SHIP_SPAWNED event is invoked (agnostic)
-    auto ag_range = _observers_agnostic.equal_range(EventID::SHIP_SPAWNED);
+    auto ag_range = _agnosticObservers.equal_range(EventID::SHIP_SPAWNED);
     for(auto iter = ag_range.first; iter != ag_range.second; ++iter)
     {
         /// subscribed method is called
@@ -50,12 +50,12 @@ void Player::CreateShip(OLDStarship::Type type)
     }
 }
 
-void Player::AddObserver(PlayerEvent observer)
+void Player::AddBasicObserver(BasicPlayerEvent observer)
 {
-    _observers.insert(observer);
+    _basicObservers.insert(observer);
 }
 
-void Player::AddObserver2(Player::PlayerAgnosticEvent observer)
+void Player::AddAgnosticObserver(Player::AgnosticPlayerEvent observer)
 {
-    _observers_agnostic.insert(observer);
+    _agnosticObservers.insert(observer);
 }

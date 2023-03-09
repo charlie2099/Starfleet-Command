@@ -20,17 +20,17 @@ public:
 
     void CreateShip(OLDStarship::Type type);
 
-    using PlayerEvent = std::pair<EventID, std::function<void()>>;
-    using PlayerAgnosticEvent = std::pair<EventID, std::function<void(std::any)>>;
-    void AddObserver(PlayerEvent observer);
-    void AddObserver2(PlayerAgnosticEvent observer);
+    using BasicPlayerEvent = std::pair<EventID, std::function<void()>>;
+    using AgnosticPlayerEvent = std::pair<EventID, std::function<void(std::any)>>;
+    void AddBasicObserver(BasicPlayerEvent observer);
+    void AddAgnosticObserver(AgnosticPlayerEvent observer);
 
     std::vector<std::unique_ptr<OLDStarship>> &GetShip();
 
 private:
     std::vector<std::unique_ptr<OLDStarship>> starship{};
-    std::multimap<EventID, std::function<void()>> _observers{};
-    std::multimap<EventID, std::function<void(std::any)>> _observers_agnostic{};
+    std::multimap<EventID, std::function<void()>> _basicObservers{};
+    std::multimap<EventID, std::function<void(std::any)>> _agnosticObservers{};
 };
 
 #endif //STARFLEET_COMMAND_PLAYER_H

@@ -57,7 +57,6 @@ class OLDStarship
     std::unique_ptr<HealthBar> _healthBar;
     SpriteComponent _spriteComponent;
     Type ship_type{};
-    std::vector<std::unique_ptr<DamagePopUpEffect>> _damagePopUpEffect;
     std::vector<std::unique_ptr<Projectile>> _projectile;
     Projectile::Type _projectileType;
     float _damage = 10.0F;

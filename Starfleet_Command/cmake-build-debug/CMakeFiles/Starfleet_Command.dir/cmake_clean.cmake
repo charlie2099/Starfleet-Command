@@ -32,7 +32,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Panel.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/ShipCard.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Unit.cpp.obj"
-  "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Vector.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/main.cpp.obj"

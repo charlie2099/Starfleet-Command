@@ -3,7 +3,7 @@
 #include <SFML/System/Vector2.hpp>
 #include "Interfaces/IStarship.hpp"
 
-class StarshipFighter : public IStarship
+/*class StarshipFighter : public IStarship
 {
 public:
     StarshipFighter();
@@ -19,6 +19,6 @@ public:
     AnimationComponent& GetAnimationComponent() override;
     AudioComponent& GetAudioComponent() override;
     const float GetSpeed() override;
-};
+};*/
 
 #endif //STARFLEET_COMMAND_STARSHIPFIGHTER_HPP

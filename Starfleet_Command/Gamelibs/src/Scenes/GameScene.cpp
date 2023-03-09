@@ -21,13 +21,13 @@ bool GameScene::Init()
     ///     starship.Update();
     ///     starship.Render();
 
-    /// Whenever a SHIP_SPAWNED event occurs, the TestFncForObserverToCall method is called
+  /*  /// Whenever a SHIP_SPAWNED event occurs, the TestFncForObserverToCall method is called
     /// A SHIP_SPAWNED event is invoked in the player CreateShip method.
     auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
-    _player.AddObserver({Player::EventID::SHIP_SPAWNED, callbackFnc1});
+    _player.AddBasicObserver({Player::EventID::SHIP_SPAWNED, callbackFnc1});
 
     auto callbackFnc2 = std::bind(&TestClass::OnEvent, testClass, std::placeholders::_1);
-    _player.AddObserver2({Player::EventID::SHIP_SPAWNED, callbackFnc2});
+    _player.AddObserver2({Player::EventID::SHIP_SPAWNED, callbackFnc2});*/
 
     // FACTORY PATTERN
     //starship = StarshipFactory::CreateShip(StarshipFactory::FIGHTER);
@@ -227,7 +227,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         int rand_damage = uint_distrib[2](generator);
 
                         //_enemy.GetShip()[j]->TakeDamage(_player.GetShip()[i]->GetDamage());
-                        _enemy.GetShip()[j]->GetHealthComponent().TakeDamage(rand_damage * _player.GetShip()[i]->GetDamageScaleFactor());
+                        _enemy.GetShip()[j]->GetHealthComponent().TakeDamage(rand_damage * _player.GetShip()[i]->GetDamageScaleFactor(), _enemy.GetShip()[j]->GetSpriteComponent().GetPos());
                         _player.GetShip()[i]->GetProjectile().erase(_player.GetShip()[i]->GetProjectile().begin() + k);
                     }
                 }

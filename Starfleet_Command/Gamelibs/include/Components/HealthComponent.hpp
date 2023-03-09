@@ -5,6 +5,8 @@
 #include <functional>
 #include <map>
 #include <any>
+#include "Sprites/UI/Effects/DamagePopUpEffect.hpp"
+#include "SpriteComponent.hpp"
 
 class HealthComponent
 {
@@ -14,35 +16,39 @@ public:
         HEALTH_DEPLETED = 1,
         HEALTH_UPDATED = 2,
     };
-    struct EventParam
+    /*struct EventParam
     {
         std::string stringData;
         float floatData;
         int intData;
         bool boolData;
-    };
+    };*/
 
-    void Update(sf::RenderWindow& window, sf::Time time);
+    //explicit HealthComponent(SpriteComponent& spriteComponent);
+    void Update(sf::RenderWindow& window, sf::Time deltaTime);
+    void Render(sf::RenderWindow& window);
 
-    void TakeDamage(float amount);
+    void TakeDamage(float amount, sf::Vector2f damageLocation); // TODO: Remove 2nd argument
     void ReplenishHealth(float amount);
 
     void SetHealth(int health);
     int GetHealth() const { return _health; }
 
     // Observer (for other classes to use to hook into and subscribe)
-    using HealthEvent = std::pair<EventID, std::function<void()>>;
-    void AddObserver(HealthEvent observer);
+    using BasicHealthEvent = std::pair<EventID, std::function<void()>>;
+    void AddBasicObserver(BasicHealthEvent observer);
 
-    using HealthEvent1Param = std::pair<EventID, std::function<void(std::any)>>;
-    void AddObserver1Param(HealthEvent1Param observer);
+    using AgnosticHealthEvent = std::pair<EventID, std::function<void(std::any)>>;
+    void AddAgnosticObserver(AgnosticHealthEvent observer);
 
 private:
-    void InvokeEvent(EventID eventId);
-    void InvokeEvent(EventID eventId, const std::any& anyData);
-    int _health;
-    std::multimap<EventID, std::function<void()>> _observers{};
-    std::multimap<EventID, std::function<void(std::any)>> _observers1Param{};
+    void InvokeSimpleEvent(EventID eventId);
+    void InvokeAgnosticEvent(EventID eventId, const std::any& anyData);
+    int _health{};
+    std::vector<std::unique_ptr<DamagePopUpEffect>> _damagePopUpEffect;
+    //SpriteComponent _spriteComponent;
+    std::multimap<EventID, std::function<void()>> _basicObservers{};
+    std::multimap<EventID, std::function<void(std::any)>> _agnosticObservers{};
 };
 
 #endif //STARFLEET_COMMAND_HEALTHCOMPONENT_HPP

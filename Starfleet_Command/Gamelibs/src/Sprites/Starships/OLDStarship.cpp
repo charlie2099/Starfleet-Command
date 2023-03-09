@@ -97,7 +97,7 @@ void OLDStarship::Update(sf::RenderWindow &window, sf::Time deltaTime)
     auto bar_bounds = _healthBar->GetSpriteComponent().GetSprite().getGlobalBounds();
     auto xPos = (_spriteComponent.GetPos().x) - (ship_bounds.width/2.0f + bar_bounds.width/2.0f);
     auto yPos = (_spriteComponent.GetPos().y + ship_bounds.height/2.0f) - (ship_bounds.height + bar_bounds.height*4);
-    _healthBar->Update();
+    _healthBar->Update(window, deltaTime);
     _healthBar->SetPos({xPos, yPos});
 
     if(_healthBar->GetHealth() < _maxHealth)
@@ -105,18 +105,7 @@ void OLDStarship::Update(sf::RenderWindow &window, sf::Time deltaTime)
         _healthBarIsVisible = true;
     }
 
-    for(auto& popup : _damagePopUpEffect)
-    {
-        popup->Update(window, deltaTime);
-    }
-
-    for (int i = 0; i < _damagePopUpEffect.size(); ++i)
-    {
-        if(_damagePopUpEffect[i]->IsFaded())
-        {
-            _damagePopUpEffect.erase(_damagePopUpEffect.begin() + i);
-        }
-    }
+    _healthComponent.Update(window, deltaTime);
 }
 
 void OLDStarship::Render(sf::RenderWindow &window)
@@ -133,10 +122,7 @@ void OLDStarship::Render(sf::RenderWindow &window)
         _healthBar->Render(window);
     }
 
-    for(auto& popup : _damagePopUpEffect)
-    {
-        popup->Render(window);
-    }
+    _healthComponent.Render(window);
 }
 
 void OLDStarship::SetHealth(float health)
@@ -195,27 +181,6 @@ void OLDStarship::ShootAt(Projectile::Type projectile, float fireRate, sf::Vecto
     //std::cout << "Elapsed Time: " << clock.getElapsedTime().asSeconds() << std::endl;
 }
 
-/*void OLDStarship::TakeDamage(float damage)
-{
-//    if(_health > 0)
-//    {
-//        _health -= damage;
-//        _healthBar.UpdateHealth(_health);
-//
-//        auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<DamagePopUpEffect>(damage, _spriteComponent.GetPos()));
-//
-//        if(damage > 60)
-//        {
-//            damagePopup->SetColour(sf::Color::Red);
-//            damagePopup->SetCharSize(15);
-//        }
-//
-//        if(_health < 0)
-//        {
-//            _health = 0;
-//        }
-//    }
-}*/
 
 
 

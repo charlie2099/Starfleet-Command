@@ -1,6 +1,6 @@
 #include "Sprites/Starships/Starship.h"
 
-Starship::Starship(std::unique_ptr<StarshipClass>& starshipClass)
+/*Starship::Starship(std::unique_ptr<StarshipClass>& starshipClass)
 : _damage(starshipClass->GetDamage())
 {
     _spriteComponent.LoadSprite(starshipClass->GetTexturePath());
@@ -12,4 +12,4 @@ Starship::Starship(std::unique_ptr<StarshipClass>& starshipClass)
 void Starship::Render(sf::RenderWindow &window)
 {
     _spriteComponent.Render(window);
-}
+}*/

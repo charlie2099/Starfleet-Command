@@ -33,7 +33,7 @@ public:
 
 protected:
     SpriteComponent _spriteComponent;
-    HealthComponent _healthComponent;
+    //HealthComponent _healthComponent;
     PhysicsComponent _movementComponent;
     AnimationComponent _animationComponent;
     AudioComponent _audioComponent;

@@ -920,30 +920,6 @@ Gamelibs/src/Sprites/Unit.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Unit.cpp.s
 .PHONY : Gamelibs/src/Sprites/Unit.cpp.s
 
-Gamelibs/src/Temporary/TestClass.obj: Gamelibs/src/Temporary/TestClass.cpp.obj
-.PHONY : Gamelibs/src/Temporary/TestClass.obj
-
-# target to build an object file
-Gamelibs/src/Temporary/TestClass.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.obj
-.PHONY : Gamelibs/src/Temporary/TestClass.cpp.obj
-
-Gamelibs/src/Temporary/TestClass.i: Gamelibs/src/Temporary/TestClass.cpp.i
-.PHONY : Gamelibs/src/Temporary/TestClass.i
-
-# target to preprocess a source file
-Gamelibs/src/Temporary/TestClass.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.i
-.PHONY : Gamelibs/src/Temporary/TestClass.cpp.i
-
-Gamelibs/src/Temporary/TestClass.s: Gamelibs/src/Temporary/TestClass.cpp.s
-.PHONY : Gamelibs/src/Temporary/TestClass.s
-
-# target to generate assembly for a file
-Gamelibs/src/Temporary/TestClass.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.s
-.PHONY : Gamelibs/src/Temporary/TestClass.cpp.s
-
 Gamelibs/src/Utility/Cursor.obj: Gamelibs/src/Utility/Cursor.cpp.obj
 .PHONY : Gamelibs/src/Utility/Cursor.obj
 
@@ -1124,9 +1100,6 @@ help:
 	@echo ... Gamelibs/src/Sprites/Unit.obj
 	@echo ... Gamelibs/src/Sprites/Unit.i
 	@echo ... Gamelibs/src/Sprites/Unit.s
-	@echo ... Gamelibs/src/Temporary/TestClass.obj
-	@echo ... Gamelibs/src/Temporary/TestClass.i
-	@echo ... Gamelibs/src/Temporary/TestClass.s
 	@echo ... Gamelibs/src/Utility/Cursor.obj
 	@echo ... Gamelibs/src/Utility/Cursor.i
 	@echo ... Gamelibs/src/Utility/Cursor.s

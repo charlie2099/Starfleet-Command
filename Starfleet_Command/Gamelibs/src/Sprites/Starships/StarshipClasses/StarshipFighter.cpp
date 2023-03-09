@@ -1,6 +1,6 @@
 #include "Sprites/Starships/StarshipClasses/StarshipFighter.hpp"
 
-StarshipFighter::StarshipFighter()
+/*StarshipFighter::StarshipFighter()
 {
     _healthComponent.SetHealth(100);
     _damage = 20;
@@ -12,7 +12,7 @@ StarshipFighter::StarshipFighter()
     _spriteComponent.GetSprite().setPosition(300, 300);
 
     //auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
-    //_healthComponent.AddObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc1});
+    //_healthComponent.AddBasicObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc1});
 }
 
 void StarshipFighter::Update(sf::RenderWindow &window, sf::Time time)
@@ -23,6 +23,7 @@ void StarshipFighter::Update(sf::RenderWindow &window, sf::Time time)
 void StarshipFighter::Render(sf::RenderWindow &window)
 {
     _spriteComponent.Render(window);
+    _healthComponent.Render(window);
 }
 
 void StarshipFighter::SetDamage(float damage)
@@ -63,7 +64,7 @@ AudioComponent &StarshipFighter::GetAudioComponent()
 const float StarshipFighter::GetSpeed()
 {
     return _speed;
-}
+}*/
 
 
 

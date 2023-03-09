@@ -8,7 +8,6 @@
 #include "Sprites/Enemy/Enemy.hpp"
 #include "Sprites/Player/Player.h"
 #include "Sprites/UI/HUD/HUD.hpp"
-#include "Temporary/TestClass.hpp"
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 #include "Sprites/GameObject.hpp"
@@ -42,7 +41,6 @@ private:
     static std::mt19937 GetEngine();
 
     // (TEMPORARY)
-    TestClass testClass;
     //std::unique_ptr<IStarship> starship; // FACTORY
 
     // Utility

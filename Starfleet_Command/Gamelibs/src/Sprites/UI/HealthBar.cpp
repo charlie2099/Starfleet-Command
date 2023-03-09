@@ -11,10 +11,10 @@ HealthBar::HealthBar(HealthComponent& healthComponent)
 
     /// Observer to healthcomponent
     auto healthCallback = std::bind(&HealthBar::UpdateHealth, this, std::placeholders::_1);
-    healthComponent.AddObserver1Param({HealthComponent::EventID::HEALTH_UPDATED, healthCallback});
+    healthComponent.AddAgnosticObserver({HealthComponent::EventID::HEALTH_UPDATED, healthCallback});
 }
 
-void HealthBar::Update()
+void HealthBar::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     spriteComponent.SetPos({_position.x + spriteComponent.GetSprite().getGlobalBounds().width/2, _position.y});
     spriteComponent2.SetPos({ spriteComponent.GetPos().x, spriteComponent.GetPos().y });

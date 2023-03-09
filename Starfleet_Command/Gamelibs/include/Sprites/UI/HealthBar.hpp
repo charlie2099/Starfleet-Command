@@ -10,7 +10,7 @@ class HealthBar
 public:
     explicit HealthBar(HealthComponent& healthComponent);
     ~HealthBar() = default;
-    void Update();
+    void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
     void SetPos(sf::Vector2f pos);
