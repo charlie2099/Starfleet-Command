@@ -1,1 +1,1 @@
--ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+-I"D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include" -I"D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src" -isystem C:/Libraries/SFML/include

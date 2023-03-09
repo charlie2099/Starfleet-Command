@@ -10,24 +10,7 @@ bool GameScene::Init()
     InitPlayerFlagship();
     InitEnemyFlagship();
 
-
-    std::unique_ptr<StarshipClass> fighterClass =
-            std::make_unique<StarshipClass>("Resources/Textures/starfleet_ship_fighter.png",
-                                            250,
-                                            50,
-                                            std::make_unique<StarshipFighterBehaviour>());
-
-    std::unique_ptr<StarshipClass> scoutClass =
-            std::make_unique<StarshipClass>("Resources/Textures/starfleet_ship_scout.png",
-                                            100,
-                                            10,
-                                            std::make_unique<StarshipFighterBehaviour>());
-
-    //starshipFighter = std::make_unique<Starship>(fighterClass);
-    //starshipScout = std::make_unique<Starship>(scoutClass);
-    // TODO: (FIX) Can't initialise more than 1 of the same class right now because of std::move in the starship class.
-
-    /// StarshipClass newClassType(texture, color, health, damage, behaviour(?));
+    /// StarshipClass newClassType(texture, color, health, damage);
     /// Starship newShip(newClassType);
     /// starshipFighter.AddBehaviour(ChaseBehaviour());
     /// starshipFighter.AddBehaviour(FleeBehaviour());
@@ -38,8 +21,6 @@ bool GameScene::Init()
     ///     starship.Update();
     ///     starship.Render();
 
-
-
     /// Whenever a SHIP_SPAWNED event occurs, the TestFncForObserverToCall method is called
     /// A SHIP_SPAWNED event is invoked in the player CreateShip method.
     auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
@@ -48,31 +29,8 @@ bool GameScene::Init()
     auto callbackFnc2 = std::bind(&TestClass::OnEvent, testClass, std::placeholders::_1);
     _player.AddObserver2({Player::EventID::SHIP_SPAWNED, callbackFnc2});
 
-    //auto callbackFnc3 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
-    //_player.GetShip()[0].GetHealthComponent().AddObserver({Player::EventID::SHIP_SPAWNED, callbackFnc3});
-
     // FACTORY PATTERN
     //starship = StarshipFactory::CreateShip(StarshipFactory::FIGHTER);
-
-    //auto callbackFnc4 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
-    //starship->GetHealthComponent().AddObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc4});
-
-    /// Remove from vector container
-    /// Play explosion audio
-    /// Play death animation?
-
-    /// DILEMMA
-    /// Should classes be purely generic and reusable with game logic kept in the main game source file [YES]
-    /// OR
-    /// can the player class for example contain logic for determining when the health bar should be updated. [NO]
-
-    //gameObject.AddComponent(std::make_unique<TestComponent>());
-    //gameObject.AddComponent<TestComponent>();
-    //gameObject.GetComponent<TestComponent>()->loadSprite("");
-    //gameObject.GetComponent(std::make_unique<TestComponent>())->loadSprite("Resources/Textures/starfleet_ship.png");
-    //auto testcomp = dynamic_cast<TestComponent*>(gameObject.AddComponent(std::make_unique<TestComponent>()));
-    //testcomp->loadSprite("Resources/Textures/starfleet_ship.png");
-    //gameObject.GetComponent<TestComponent>()->loadSprite("Resources/Textures/starfleet_ship.png");
 
     return true;
 }
@@ -278,8 +236,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             player_sprite.move(_player.GetShip()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
         }
     }
-
-    //aiComponent->MoveTowards(newSpriteComponent->GetSprite(), _enemy.GetShip()[0]->GetSpriteComponent().GetPos(), 100, deltaTime);
 }
 
 void GameScene::Render(sf::RenderWindow& window)
@@ -297,20 +253,10 @@ void GameScene::Render(sf::RenderWindow& window)
     window.draw(_credits_text);
     _player.Render(window);
     _enemy.Render(window);
-
-    //gameObject.Render(window);
     //starship->Render(window);
-    //starshipFighter->Render(window);
-    //starshipScout->Render(window);
-
     //crosshair.Render(window);
     _hud.Render(window);
     _cursor.Render(window);
-
-
-    //window.setView(_minimapView);
-    //window.draw(_background_sprite2);
-    //_cursor.Render(window);
 }
 
 void GameScene::InitDistribution()
@@ -330,7 +276,7 @@ void GameScene::InitDistribution()
 bool GameScene::InitBackground()
 {
     _background_texture = std::make_unique<sf::Texture>();
-    if (!_background_texture->loadFromFile("Resources/Textures/space_nebula.png")) // background2
+    if (!_background_texture->loadFromFile("Resources/Textures/space_nebula.png"))
     {
         return false;
     }
@@ -341,14 +287,6 @@ bool GameScene::InitBackground()
     auto bTexSizeX = static_cast<int>(_background_texture->getSize().x);
     auto bTexSizeY = static_cast<int>(_background_texture->getSize().y);
     _background_sprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX * 2, bTexSizeY * 2));
-    //_background_sprite.setOrigin(_background_sprite.getLocalBounds().width/2, _background_sprite.getLocalBounds().height/2);
-
-//    if (!_background_texture2.loadFromFile("Resources/Textures/space_background.jpg"))
-//    {
-//        return false;
-//    }
-//    _background_sprite2.setTexture(_background_texture2);
-//    _background_sprite2.scale(1.0F, 1.25F);
 
     return true;
 }
@@ -408,32 +346,6 @@ void GameScene::InitView()
     _worldView.setSize(VIEW_SIZE);
     _worldView.setCenter(WORLD_PERSPECTIVE);
     //_player_view.zoom(0.5F);
-
-    //_minimapView.setViewport(sf::FloatRect(0.70f, 0.70f, 0.25f, 0.25f));
-
-
-      // LEFT 75%, RIGHT 25%
-//    const sf::Vector2f leftSize(1440.0f, 1080.0f);
-//    const sf::Vector2f rightSize(480.0f, 1080.0f);
-//    const sf::Vector2f origin(0.0f, 0.0f);
-//
-//    _worldView = sf::View(sf::FloatRect(origin, leftSize));
-//    _worldView.setViewport(sf::FloatRect(0.0f, 0.0f, 0.75f, 1.0f));
-//
-//    _minimapView = sf::View(sf::FloatRect(origin, rightSize));
-//    _minimapView.setViewport(sf::FloatRect(0.75f, 0, 0.25f, 1.0f));
-
-
-      // TOP 75%, BOTTOM 25%
-//    const sf::Vector2f leftSize(1440.0f, 720.0f);
-//    const sf::Vector2f rightSize(1440.0f, 270.0f);
-//    const sf::Vector2f origin(0.0f, 0.0f);
-//
-//    _worldView = sf::View(sf::FloatRect(origin, leftSize));
-//    _worldView.setViewport(sf::FloatRect(0.0f, 0.0f, 1.0f, 0.75f));
-//
-//    _minimapView = sf::View(sf::FloatRect(origin, rightSize));
-//    _minimapView.setViewport(sf::FloatRect(0.0f, 0.0f, 1.0f, 0.25f));
 }
 
 void GameScene::InitPlayerFlagship()

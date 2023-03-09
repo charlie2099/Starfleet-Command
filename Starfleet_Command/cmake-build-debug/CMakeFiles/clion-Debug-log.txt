@@ -1,0 +1,5 @@
+C:\Users\Charl\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\223.8617.54\bin\cmake\win\x64\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" -S D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command -B D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\cmake-build-debug
+-- Found SFML 2.5.1 in C:/Libraries/SFML/lib/cmake/SFML
+-- Configuring done
+-- Generating done
+-- Build files have been written to: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug

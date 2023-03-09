@@ -1,9 +1,5 @@
 file(REMOVE_RECURSE
-  "../Starfleet_Command.exe"
-  "../Starfleet_Command.exe.manifest"
-  "../Starfleet_Command.pdb"
   "CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj"
-  "CMakeFiles/Starfleet_Command.dir/Gamelibs/include/Sprites/Unit.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Behaviours/StarshipFighterBehaviour.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AiComponent.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AnimationComponent.cpp.obj"
@@ -35,10 +31,14 @@ file(REMOVE_RECURSE
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Panel.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/ShipCard.cpp.obj"
+  "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Unit.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Vector.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/main.cpp.obj"
+  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Starfleet_Command.exe"
+  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Starfleet_Command.exe.manifest"
+  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Starfleet_Command.pdb"
   "libStarfleet_Command.dll.a"
 )
 

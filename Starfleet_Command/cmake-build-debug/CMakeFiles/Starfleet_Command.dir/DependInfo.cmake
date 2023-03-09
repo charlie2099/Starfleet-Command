@@ -9,7 +9,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Game/Game.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj"
-  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Unit.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Gamelibs/include/Sprites/Unit.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Behaviours/StarshipFighterBehaviour.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Behaviours/StarshipFighterBehaviour.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/AiComponent.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AiComponent.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Components/AnimationComponent.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/AnimationComponent.cpp.obj"
@@ -41,6 +40,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/HealthBar.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Panel.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Panel.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/ShipCard.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/ShipCard.cpp.obj"
+  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Unit.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Unit.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Temporary/TestClass.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Temporary/TestClass.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Utility/Cursor.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj"
   "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Utility/Vector.cpp" "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Vector.cpp.obj"
@@ -55,8 +55,8 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "../Gamelibs/include"
-  "../Gamelibs/src"
+  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include"
+  "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src"
   "C:/Libraries/SFML/include"
   )
 

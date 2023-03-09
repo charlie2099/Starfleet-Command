@@ -23,7 +23,6 @@ class GameScene : public Scene
 public:
     GameScene() = default;
     ~GameScene() override = default;
-
     bool Init() override;
     void EventHandler(sf::RenderWindow& window, sf::Event& event) override;
     void Update(sf::RenderWindow &window, sf::Time deltaTime) override;
@@ -42,10 +41,9 @@ private:
     void UpdateDistribution(const std::string& name, int min, int max);
     static std::mt19937 GetEngine();
 
-    //Entity gameObject;
-    //OldGameObject gameObject;
-    //NewSpriteComponent* newSpriteComponent;
-    //AiComponent* aiComponent;
+    // (TEMPORARY)
+    TestClass testClass;
+    //std::unique_ptr<IStarship> starship; // FACTORY
 
     // Utility
     Chilli::Cursor _cursor;
@@ -76,13 +74,6 @@ private:
     std::vector<std::uniform_int_distribution<int>> uint_distrib;
     std::map<std::string, int> dist_code;
     int ship_spawned_index = 0;
-
-    // TEST VARIABLES (TEMPORARY)
-    TestClass testClass;
-    //std::unique_ptr<IStarship> starship;
-    //GameObject gameObject;
-    //std::unique_ptr<Starship> starshipFighter;
-    //std::unique_ptr<Starship> starshipScout;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP
