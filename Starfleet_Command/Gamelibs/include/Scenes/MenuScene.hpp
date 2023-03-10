@@ -25,7 +25,6 @@ class MenuScene : public Scene
     void InitView();
     bool InitBackground();
     void InitButtonPanels();
-    void InitLeaderboardPanel();
     void InitTitlePanel();
     bool InitMenuTitleIcon();
     void InitBackgroundShips(std::mt19937 &generator);
@@ -35,7 +34,6 @@ class MenuScene : public Scene
     static const int OPTIONS_BUTTON = 1;
     static const int EXIT_BUTTON = 2;
     static const int BUTTONS = 3;
-    static const int LEADERBOARD = 4;
     static const int TITLE_PANEL = 5;
     static const int BACKGROUND_SHIPS = 16;
 
