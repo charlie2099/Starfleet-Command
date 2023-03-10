@@ -1,7 +1,7 @@
 #ifndef STARFLEET_COMMAND_CROSSHAIR_HPP
 #define STARFLEET_COMMAND_CROSSHAIR_HPP
 #include "Components/SpriteComponent.hpp"
-#include "Sprites/Starships/OLDStarship.hpp"
+#include "Interfaces/IStarship.hpp"
 
 class Crosshair
 {
@@ -11,12 +11,12 @@ class Crosshair
 
     void render(sf::RenderWindow& window);
 
-    void snapTo(std::unique_ptr<OLDStarship>& starship);
+    void snapTo(std::unique_ptr<IStarship>& starship);
     void unSnap();
 
     /// Mutators
     void setColour(sf::Color colour);
-    void sizeAdjust(std::unique_ptr<OLDStarship>& starship);
+    void sizeAdjust(std::unique_ptr<IStarship>& starship);
     void setVisibility(bool visible);
 
     /// Accessors

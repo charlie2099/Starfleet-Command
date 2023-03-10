@@ -1,4 +1,3 @@
-#include <chrono>
 #include "Scenes/MenuScene.hpp"
 
 bool MenuScene::Init()
@@ -254,7 +253,8 @@ void MenuScene::InitBackgroundShips(std::mt19937 &generator)
         int rand_x = uint_distrib[0](generator);
         int rand_y = uint_distrib[1](generator);
         int rand_ship = uint_distrib[2](generator);
-        starship.emplace_back(std::make_unique<OLDStarship>(static_cast<OLDStarship::Type>(rand_ship)));
+        std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(rand_ship));
+        starship.emplace_back(std::move(newStarship));
         starship[i]->GetSpriteComponent().GetSprite().setColor(sf::Color(153, 210, 242));
         starship[i]->GetSpriteComponent().SetPos({static_cast<float>(rand_x), static_cast<float>(rand_y)});
 

@@ -2,7 +2,6 @@
 #define STARFLEET_COMMAND_GAMESCENE_HPP
 #include "Scenes/Scene.hpp"
 #include "Sprites/Starships/Fleet.hpp"
-#include "Sprites/Starships/OLDStarship.hpp"
 #include "Sprites/UI/Crosshair.hpp"
 #include "Utility/Cursor.hpp"
 #include "Sprites/Enemy/Enemy.hpp"

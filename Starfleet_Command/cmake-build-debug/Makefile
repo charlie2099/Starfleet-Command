@@ -440,53 +440,149 @@ Gamelibs/src/Sprites/Starships/Fleet.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/Fleet.cpp.s
 .PHONY : Gamelibs/src/Sprites/Starships/Fleet.cpp.s
 
-Gamelibs/src/Sprites/Starships/OLDStarship.obj: Gamelibs/src/Sprites/Starships/OLDStarship.cpp.obj
-.PHONY : Gamelibs/src/Sprites/Starships/OLDStarship.obj
+Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.obj: Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.obj
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.obj
 
 # target to build an object file
-Gamelibs/src/Sprites/Starships/OLDStarship.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/OLDStarship.cpp.obj
-.PHONY : Gamelibs/src/Sprites/Starships/OLDStarship.cpp.obj
+Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.obj
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.obj
 
-Gamelibs/src/Sprites/Starships/OLDStarship.i: Gamelibs/src/Sprites/Starships/OLDStarship.cpp.i
-.PHONY : Gamelibs/src/Sprites/Starships/OLDStarship.i
+Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.i: Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.i
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.i
 
 # target to preprocess a source file
-Gamelibs/src/Sprites/Starships/OLDStarship.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/OLDStarship.cpp.i
-.PHONY : Gamelibs/src/Sprites/Starships/OLDStarship.cpp.i
+Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.i
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.i
 
-Gamelibs/src/Sprites/Starships/OLDStarship.s: Gamelibs/src/Sprites/Starships/OLDStarship.cpp.s
-.PHONY : Gamelibs/src/Sprites/Starships/OLDStarship.s
+Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.s: Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.s
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.s
 
 # target to generate assembly for a file
-Gamelibs/src/Sprites/Starships/OLDStarship.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/OLDStarship.cpp.s
-.PHONY : Gamelibs/src/Sprites/Starships/OLDStarship.cpp.s
+Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.s
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.s
 
-Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.obj: Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.obj
-.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.obj
+Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.obj: Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp.obj
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.obj
 
 # target to build an object file
-Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.obj
-.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.obj
+Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp.obj
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp.obj
 
-Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.i: Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.i
-.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.i
+Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.i: Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp.i
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.i
 
 # target to preprocess a source file
-Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.i
-.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.i
+Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp.i
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp.i
 
-Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.s: Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.s
-.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.s
+Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.s: Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp.s
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.s
 
 # target to generate assembly for a file
-Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.s
-.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.cpp.s
+Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp.s
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp.s
+
+Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.obj: Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.obj
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.obj
+
+# target to build an object file
+Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.obj
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.obj
+
+Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.i: Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.i
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.i
+
+# target to preprocess a source file
+Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.i
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.i
+
+Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.s: Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.s
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.s
+
+# target to generate assembly for a file
+Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.s
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.s
+
+Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.obj: Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.obj
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.obj
+
+# target to build an object file
+Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.obj
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.obj
+
+Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.i: Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.i
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.i
+
+# target to preprocess a source file
+Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.i
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.i
+
+Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.s: Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.s
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.s
+
+# target to generate assembly for a file
+Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.s
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.s
+
+Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.obj: Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.obj
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.obj
+
+# target to build an object file
+Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.obj
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.obj
+
+Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.i: Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.i
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.i
+
+# target to preprocess a source file
+Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.i
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.i
+
+Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.s: Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.s
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.s
+
+# target to generate assembly for a file
+Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.s
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.s
+
+Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.obj: Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp.obj
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.obj
+
+# target to build an object file
+Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp.obj
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp.obj
+
+Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.i: Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp.i
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.i
+
+# target to preprocess a source file
+Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp.i
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp.i
+
+Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.s: Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp.s
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.s
+
+# target to generate assembly for a file
+Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp.s
+.PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp.s
 
 Gamelibs/src/Sprites/Starships/StarshipFactory.obj: Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.obj
 .PHONY : Gamelibs/src/Sprites/Starships/StarshipFactory.obj
@@ -800,12 +896,24 @@ help:
 	@echo ... Gamelibs/src/Sprites/Starships/Fleet.obj
 	@echo ... Gamelibs/src/Sprites/Starships/Fleet.i
 	@echo ... Gamelibs/src/Sprites/Starships/Fleet.s
-	@echo ... Gamelibs/src/Sprites/Starships/OLDStarship.obj
-	@echo ... Gamelibs/src/Sprites/Starships/OLDStarship.i
-	@echo ... Gamelibs/src/Sprites/Starships/OLDStarship.s
-	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.obj
-	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.i
-	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/StarshipFighter.s
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.obj
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.i
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.s
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.obj
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.i
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.s
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.obj
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.i
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.s
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.obj
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.i
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.s
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.obj
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.i
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.s
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.obj
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.i
+	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.s
 	@echo ... Gamelibs/src/Sprites/Starships/StarshipFactory.obj
 	@echo ... Gamelibs/src/Sprites/Starships/StarshipFactory.i
 	@echo ... Gamelibs/src/Sprites/Starships/StarshipFactory.s

@@ -1,3 +1,78 @@
+[NEW]
+
+case Type::LIGHTFIGHTER:
+            _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_fighter.png");
+            _spriteComponent.GetSprite().scale({0.05F, 0.05F});
+            _healthComponent.SetHealth(100);
+            _speed = 80;
+            _trainingSpeed = 0.5f;
+            _damage = 20;
+            _damageScaleFactor = 0.25f;
+            _fireRate = 0.25f;
+            _shipCost = 250;
+            _projectileType = Projectile::Type::LASER_RED_REGULAR;
+            break;
+        case Type::HEAVYFIGHTER:
+            _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_repair.png");
+            _spriteComponent.GetSprite().scale({0.05F, 0.05F});
+            _healthComponent.SetHealth(150);
+            _speed = 70;
+            _trainingSpeed = 0.4f;
+            _damage = 0;
+            _damageScaleFactor = 0.10f;
+            _fireRate = 2.0f;
+            _shipCost = 200;
+            _projectileType = Projectile::Type::LASER_BLUE_SMALL;
+            break;
+        case Type::SUPPORT:
+            _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_scout.png");
+            _spriteComponent.GetSprite().scale({0.30F, 0.30F});
+            _healthComponent.SetHealth(75);
+            _speed = 100;
+            _trainingSpeed = 0.6f;
+            _damage = 10;
+            _damageScaleFactor = 0.10f;
+            _fireRate = 1.0f;
+            _shipCost = 100;
+            _projectileType = Projectile::Type::LASER_BLUE_SMALL;
+            break;
+        case Type::DESTROYER:
+            _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_destroyer.png");
+            _spriteComponent.GetSprite().scale({0.05F, 0.05F});
+            _healthComponent.SetHealth(250);
+            _speed = 40;
+            _trainingSpeed = 0.9f;
+            _damage = 150;
+            _damageScaleFactor = 1.0f;
+            _fireRate = 3.0f;
+            _shipCost = 1000;
+            _projectileType = Projectile::Type::LASER_BLUE_LARGE;
+            break;
+        case Type::BATTLESHIP:
+            _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_battleship.png");
+            _spriteComponent.GetSprite().scale({0.05F, 0.05F});
+            _healthComponent.SetHealth(500);
+            _speed = 30;
+            _trainingSpeed = 0.8f;
+            _damage = 75;
+            _damageScaleFactor = 0.75f;
+            _fireRate = 3.0f;
+            _shipCost = 750;
+            _projectileType = Projectile::Type::LASER_BLUE_LARGE;
+            break;
+        case Type::MOTHERSHIP:
+            _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_flagship.png");
+            _spriteComponent.GetSprite().scale({0.08F, 0.08F});
+            _healthComponent.SetHealth(5000);
+            _speed = 10;
+            _damage = 50;
+            _fireRate = 1.0f;
+            _projectileType = Projectile::Type::LASER_BLUE_LARGE;
+            break;
+
+
+
+
 [PREMISE]: Take command of fleets capital ship and take your fleet into battle. Control
            the actions of each ship in your fleet individually through various commands
            like Attack, Defend, Regroup and Reposition. Your fleet will follow wherever
@@ -12,7 +87,7 @@
 
    Game::Init()
    {
-        fleet.add(OLDStarship(OLDStarship::Class::FIGHTER));
+        fleet.add(OLDStarship(OLDStarship::Class::LIGHTFIGHTER));
 
         fleet.getStarshipCommands().Attack(OLDStarship& starship);
         fleet.getStarshipCommands().Defend();
@@ -29,7 +104,7 @@
         starship[SELECTED].getCommands().Follow(OLDStarship& starship);
    }
 
-player.AddToFleet(Ship::FIGHTER);
+player.AddToFleet(Ship::LIGHTFIGHTER);
 enemy.AddToFleet(Ship::BOMBER);
 
 /*SpriteComponent& GetSpriteComponent() { return _spriteComponent; };
@@ -88,7 +163,7 @@ StarshipFighterBehaviour : IBehaviour
     Flee() override;
 }
 
-StarshipFighter : OLDStarship
+LightFighter : OLDStarship
 {
     StarshipFighterBehaviour;
 }

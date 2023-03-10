@@ -9,7 +9,7 @@ void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
 
     for (int i = 0; i < starship.size(); i++)
     {
-        if(starship[i]->GetHealthBar()->GetHealth() <= 0)
+        if(starship[i]->GetHealthComponent().GetHealth() <= 0)
         {
             starship.erase(starship.begin() + i);
         }
@@ -24,14 +24,15 @@ void Player::Render(sf::RenderWindow &window)
     }
 }
 
-std::vector<std::unique_ptr<OLDStarship>> &Player::GetShip()
+std::vector<std::unique_ptr<IStarship>> &Player::GetShips()
 {
     return starship;
 }
 
-void Player::CreateShip(OLDStarship::Type type)
+void Player::CreateShip(StarshipFactory::SHIP_TYPE type)
 {
-    starship.emplace_back(std::make_unique<OLDStarship>(type));
+    std::unique_ptr<IStarship> starship1 = StarshipFactory::CreateShip(type);
+    starship.emplace_back(std::move(starship1));
 
     /// SHIP_SPAWNED event is invoked (non-agnostic)
     auto range = _basicObservers.equal_range(EventID::SHIP_SPAWNED);
@@ -55,7 +56,7 @@ void Player::AddBasicObserver(BasicPlayerEvent observer)
     _basicObservers.insert(observer);
 }
 
-void Player::AddAgnosticObserver(Player::AgnosticPlayerEvent observer)
+void Player::AddAgnosticObserver(AgnosticPlayerEvent observer)
 {
     _agnosticObservers.insert(observer);
 }

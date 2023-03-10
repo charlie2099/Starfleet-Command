@@ -1,6 +1,5 @@
 #ifndef STARFLEET_COMMAND_ENEMY_HPP
 #define STARFLEET_COMMAND_ENEMY_HPP
-#include "Sprites/Starships/OLDStarship.hpp"
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 #include <cmath>
@@ -11,7 +10,8 @@ class Enemy
 public:
     enum EventID
     {
-        SHIP_SPAWNED = 1
+        SHIP_SPAWNED = 1,
+        SHIP_DESTROYED = 2 // starship class?
     };
 
     Enemy () = default;
@@ -20,14 +20,17 @@ public:
     void Render(sf::RenderWindow& window);
 
     void CreateShip(StarshipFactory::SHIP_TYPE type);
-    void AddObserver(std::pair<EventID, std::function<void()>> observer);
+    using BasicEnemyEvent = std::pair<EventID, std::function<void()>>;
+    using AgnosticEnemyEvent = std::pair<EventID, std::function<void(std::any)>>;
+    void AddBasicObserver(BasicEnemyEvent observer);
+    void AddAgnosticObserver(AgnosticEnemyEvent observer);
 
-    std::vector<std::unique_ptr<IStarship>> &GetShip();
+    std::vector<std::unique_ptr<IStarship>> &GetShips();
 
 private:
-    //std::vector<std::unique_ptr<OLDStarship>> starship{};
     std::vector<std::unique_ptr<IStarship>> starship{};
-    std::multimap<EventID, std::function<void()>> _observers;
+    std::multimap<EventID, std::function<void()>> _basicObservers{};
+    std::multimap<EventID, std::function<void(std::any)>> _agnosticObservers{};
 };
 
 #endif //STARFLEET_COMMAND_ENEMY_HPP
