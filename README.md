@@ -3,6 +3,9 @@
 ## General
 A 2D space combat RTS made with the SFML library
 
+### Teaser Video
+[StarfleetCommandDemo.webm](https://github.com/charlie2099/Starfleet-Command/assets/55750961/4ce6a3a3-f97a-4c43-9bd1-f97988312105)
+
 ## Compilation
 - In the Cmakelists.txt ensure to set the SFML_DIR path to wherever your SFML directory is located. 
 - MinGW 7.3.0 compiler version required.
