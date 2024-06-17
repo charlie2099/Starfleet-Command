@@ -24,7 +24,7 @@ std::unique_ptr<SpriteComponent>& Crosshair::getSprite()
     return sprite;
 }
 
-void Crosshair::snapTo(std::unique_ptr<Starship>& starship)
+void Crosshair::snapTo(std::unique_ptr<IStarship>& starship)
 {
     is_visible_ = true;
     sprite->GetSprite().setColor(colour_);
@@ -84,7 +84,7 @@ bool Crosshair::initTexture()
     return true;
 }
 
-void Crosshair::sizeAdjust(std::unique_ptr<Starship>& starship)
+void Crosshair::sizeAdjust(std::unique_ptr<IStarship>& starship)
 {
     auto starship_spr = starship->GetSpriteComponent().GetSprite();
     float scale_x = starship_spr.getGlobalBounds().width * starship_spr.getScale().x/8.0F;

@@ -4,18 +4,11 @@ std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::SHIP_TYP
 {
     switch (shipType)
     {
-        case FIGHTER: return std::make_unique<StarshipFighter>();
-
-        case REPAIR: return std::make_unique<StarshipFighter>();
-
-        case SCOUT: return std::make_unique<StarshipFighter>();
-
-        case DESTROYER: return std::make_unique<StarshipFighter>();
-
-        case BATTLESHIP: return std::make_unique<StarshipFighter>();
-
-        case FLAGSHIP: return std::make_unique<StarshipFighter>();
-
-        default: return std::make_unique<StarshipFighter>();
+        case LIGHTFIGHTER: return std::make_unique<LightFighter>();
+        case HEAVYFIGHTER: return std::make_unique<HeavyFighter>();
+        case SUPPORT: return std::make_unique<SupportShip>();
+        case DESTROYER: return std::make_unique<Destroyer>();
+        case BATTLESHIP: return std::make_unique<Battleship>();
+        case MOTHERSHIP: return std::make_unique<Mothership>();
     }
 }

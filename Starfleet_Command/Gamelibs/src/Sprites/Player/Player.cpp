@@ -9,7 +9,7 @@ void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
 
     for (int i = 0; i < starship.size(); i++)
     {
-        if(starship[i]->GetHealthBar().GetHealth() <= 0)
+        if(starship[i]->GetHealthComponent().GetHealth() <= 0)
         {
             starship.erase(starship.begin() + i);
         }
@@ -24,17 +24,18 @@ void Player::Render(sf::RenderWindow &window)
     }
 }
 
-std::vector<std::unique_ptr<Starship>> &Player::GetShip()
+std::vector<std::unique_ptr<IStarship>> &Player::GetShips()
 {
     return starship;
 }
 
-void Player::CreateShip(Starship::Type type)
+void Player::CreateShip(StarshipFactory::SHIP_TYPE type)
 {
-    starship.emplace_back(std::make_unique<Starship>(type));
+    std::unique_ptr<IStarship> starship1 = StarshipFactory::CreateShip(type);
+    starship.emplace_back(std::move(starship1));
 
     /// SHIP_SPAWNED event is invoked (non-agnostic)
-    auto range = _observers.equal_range(EventID::SHIP_SPAWNED);
+    auto range = _basicObservers.equal_range(EventID::SHIP_SPAWNED);
     for(auto iter = range.first; iter != range.second; ++iter)
     {
         /// subscribed method is called
@@ -42,7 +43,7 @@ void Player::CreateShip(Starship::Type type)
     }
 
     /// SHIP_SPAWNED event is invoked (agnostic)
-    auto ag_range = _observers_agnostic.equal_range(EventID::SHIP_SPAWNED);
+    auto ag_range = _agnosticObservers.equal_range(EventID::SHIP_SPAWNED);
     for(auto iter = ag_range.first; iter != ag_range.second; ++iter)
     {
         /// subscribed method is called
@@ -50,12 +51,12 @@ void Player::CreateShip(Starship::Type type)
     }
 }
 
-void Player::AddObserver(PlayerEvent observer)
+void Player::AddBasicObserver(BasicPlayerEvent observer)
 {
-    _observers.insert(observer);
+    _basicObservers.insert(observer);
 }
 
-void Player::AddObserver2(Player::PlayerAgnosticEvent observer)
+void Player::AddAgnosticObserver(AgnosticPlayerEvent observer)
 {
-    _observers_agnostic.insert(observer);
+    _agnosticObservers.insert(observer);
 }

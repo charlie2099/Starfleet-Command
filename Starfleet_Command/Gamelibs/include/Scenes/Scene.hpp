@@ -21,10 +21,10 @@ class Scene
     };
 
     // Pure virtual functions
-    virtual bool Init()                                                     = 0;
-    virtual void EventHandler(sf::RenderWindow& window, sf::Event& event)   = 0;
-    virtual void Update(sf::RenderWindow &window, sf::Time deltaTime)       = 0;
-    virtual void Render(sf::RenderWindow& window)                           = 0;
+    virtual bool Init() = 0;
+    virtual void EventHandler(sf::RenderWindow& window, sf::Event& event)  = 0;
+    virtual void Update(sf::RenderWindow &window, sf::Time deltaTime)  = 0;
+    virtual void Render(sf::RenderWindow& window)  = 0;
 
     void SetScene(Scene::ID scene) { scene_id = scene; }
     [[nodiscard]] ID GetScene() const { return scene_id; }

@@ -26,7 +26,7 @@ ShipCard::ShipCard()
     auto counter_text_y = panel.GetPanelPosition().y + panel.GetPanelSize().height * 0.8F;
     counter_text.SetPosition(counter_text_x, counter_text_y);*/
 
-    //setShipType(ShipType::FIGHTER);
+    //setShipType(ShipType::LIGHTFIGHTER);
     //ship_sprite.setTexture(ship_texture);
     ship_sprite.scale(0.2F,0.2F);
     ship_sprite.setPosition(panel.GetPanelPosition().x, panel.GetPanelPosition().y);
@@ -85,20 +85,20 @@ bool ShipCard::loadFont()
     return true;
 }
 
-void ShipCard::setShipType(Starship::Type shipType)
+void ShipCard::setShipType(StarshipFactory::SHIP_TYPE shipType)
 {
     switch (shipType)
     {
-        case Starship::Type::FIGHTER:
+        case StarshipFactory::SHIP_TYPE::LIGHTFIGHTER:
             ship_texture.loadFromFile("Resources/Textures/starfleet_ship_fighter.png");
             break;
-            case Starship::Type::REPAIR:
+            case StarshipFactory::SHIP_TYPE::HEAVYFIGHTER:
             ship_texture.loadFromFile("Resources/Textures/starfleet_ship_repair.png");
             break;
-            case Starship::Type::DESTROYER:
+            case StarshipFactory::SHIP_TYPE::DESTROYER:
             ship_texture.loadFromFile("Resources/Textures/starfleet_ship_destroyer.png");
             break;
-            case Starship::Type::BATTLESHIP:
+            case StarshipFactory::SHIP_TYPE::BATTLESHIP:
             ship_texture.loadFromFile("Resources/Textures/starfleet_ship_battleship.png");
             break;
         default:

@@ -26,7 +26,7 @@ Fleet::Colour &Fleet::getFleetColourRGB()
     return fleet_colour;
 }
 
-void Fleet::setNumOfShips(int count, Starship::Type shipType)
+void Fleet::setNumOfShips(int count, StarshipFactory::SHIP_TYPE shipType)
 {
     for (int i = 0; i < SHIP_CLASSES; ++i)
     {

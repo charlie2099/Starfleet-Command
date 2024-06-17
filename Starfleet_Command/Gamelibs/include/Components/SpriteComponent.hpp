@@ -20,9 +20,9 @@ class SpriteComponent
     sf::Vector2<float> GetPos();
 
  private:
-    sf::Vector2<float> position {0, 0};
-    sf::Texture texture_;
-    sf::Sprite sprite;
+    sf::Vector2<float> _position;
+    sf::Texture _texture;
+    sf::Sprite _sprite;
 };
 
 #endif //STARFLEET_COMMAND_SPRITECOMPONENT_HPP

@@ -7,8 +7,8 @@ Button::Button(const std::string& filepath)
 
 void Button::Update(sf::RenderWindow &window)
 {
-    auto mouse_pos_relative = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse position translated into world coordinates
+    auto mouse_pos_relative = sf::Mouse::getPosition(window); // Mouse _position relative to the window
+    auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse _position translated into world coordinates
 
     // if mouse within button bounds, do something
     if(spriteComponent.GetSprite().getGlobalBounds().contains(mouse_pos_world))

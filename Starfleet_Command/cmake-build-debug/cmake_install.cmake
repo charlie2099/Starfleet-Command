@@ -1,4 +1,4 @@
-# Install script for directory: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command
+# Install script for directory: C:/Users/Chilli/Documents/Projects/Starfleet-Command/Starfleet_Command
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Chilli/Documents/Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

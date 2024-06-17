@@ -62,12 +62,12 @@ Projectile::Projectile(Projectile::Type type, sf::Vector2f spawn_pos, sf::Vector
 
 void Projectile::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    // Shoot projectile towards position of mouse click
+    // Shoot projectile towards _position of mouse click
     float speed = 500.0F;
     sf::Vector2f movement = _direction * speed;
     _spriteComponent.GetSprite().move(movement * deltaTime.asSeconds());
 
-    // TODO: Change this so the projectiles follow the position
+    // TODO: Change this so the projectiles follow the _position
     //  and rotation of the mouse and NOT the ship
     /*//Convert angle to radians
     const float PI = 3.14159265;

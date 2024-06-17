@@ -1,4 +1,3 @@
-#include <chrono>
 #include "Scenes/MenuScene.hpp"
 
 bool MenuScene::Init()
@@ -7,7 +6,6 @@ bool MenuScene::Init()
     InitView();
     InitBackground();
     InitButtonPanels();
-    InitLeaderboardPanel();
     InitTitlePanel();
     InitMenuTitleIcon();
     InitBackgroundShips(generator);
@@ -58,7 +56,7 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         // All Buttons
         if(!panels[i].IsHoveredOver())
         {
-            panels[i].SetPanelColour(sf::Color(178, 178, 178, 100));
+            panels[i].SetPanelColour(sf::Color(75, 75, 75, 100));
             panels[i].SetText(panels[i].GetText().getString(), sf::Color::White);
         }
     }
@@ -66,8 +64,8 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse position translated into world coordinates
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse _position translated into world coordinates
 
     cursor.Update(window, deltaTime);
     cursor.SetCursorPos(window, _worldView);
@@ -163,13 +161,7 @@ void MenuScene::InitView()
 
 bool MenuScene::InitBackground()
 {
-    /*if (!_background_texture.loadFromFile("Resources/Textures/space_background.jpg"))
-    {
-        return false;
-    }
-    _background_sprite.setTexture(_background_texture);*/
-
-    if (!background_texture.loadFromFile("Resources/Textures/space_nebula.png")) // background2
+    if (!background_texture.loadFromFile("Resources/Textures/space_nebula.png"))
     {
         return false;
     }
@@ -195,29 +187,17 @@ void MenuScene::InitButtonPanels()
     for (int i = 0; i < BUTTONS; ++i)
     {
         panels[i].SetText(button_text[i]);
-        panels[i].SetTextSize(35);
-        panels[i].SetPanelColour(sf::Color(178, 178, 178, 100));
+        panels[i].SetTextSize(20);
+        panels[i].SetSize(25,20);
+        panels[i].SetPanelColour(sf::Color(75, 75, 75, 100));
         panels[i].SetPosition(Constants::WINDOW_WIDTH * 0.185F,
-                              (Constants::WINDOW_HEIGHT * 0.57F) + static_cast<float>(i * 100));
-    }
-}
-
-void MenuScene::InitLeaderboardPanel()
-{
-    for (int i = BUTTONS; i < LEADERBOARD; ++i)
-    {
-        panels[i].SetText("HIGHSCORES");
-        panels[i].SetTextSize(35);
-        panels[i].SetTextOffset(Panel::TextAlign::OFFSET, 40);
-        panels[i].SetSize(120, 250);
-        panels[i].SetPanelColour(sf::Color(178, 178, 178, 100));
-        panels[i].SetPosition(Constants::WINDOW_WIDTH * 0.56F, Constants::WINDOW_HEIGHT * 0.6F);
+                              (Constants::WINDOW_HEIGHT * 0.57F) + static_cast<float>((i * (panels[i].GetPanelSize().height + 10))));
     }
 }
 
 void MenuScene::InitTitlePanel()
 {
-    for (int i = LEADERBOARD; i < TITLE_PANEL; ++i)
+    for (int i = BUTTONS; i < TITLE_PANEL; ++i)
     {
         panels[i].SetText("Starfleet Command", sf::Color(153, 210, 242));
         panels[i].SetTextSize(85);
@@ -254,7 +234,8 @@ void MenuScene::InitBackgroundShips(std::mt19937 &generator)
         int rand_x = uint_distrib[0](generator);
         int rand_y = uint_distrib[1](generator);
         int rand_ship = uint_distrib[2](generator);
-        starship.emplace_back(std::make_unique<Starship>(static_cast<Starship::Type>(rand_ship)));
+        std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(rand_ship));
+        starship.emplace_back(std::move(newStarship));
         starship[i]->GetSpriteComponent().GetSprite().setColor(sf::Color(153, 210, 242));
         starship[i]->GetSpriteComponent().SetPos({static_cast<float>(rand_x), static_cast<float>(rand_y)});
 

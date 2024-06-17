@@ -1,7 +1,7 @@
 #ifndef STARFLEET_COMMAND_SHIPCARD_HPP
 #define STARFLEET_COMMAND_SHIPCARD_HPP
 #include "Sprites/UI/Panel.hpp"
-#include "Sprites/Starships/Starship.hpp"
+#include "Sprites/Starships/StarshipFactory.hpp"
 
 class ShipCard
 {
@@ -13,7 +13,7 @@ class ShipCard
     void render(sf::RenderWindow& window);
 
     /// Modifiers
-    void setShipType(Starship::Type shipType);
+    void setShipType(StarshipFactory::SHIP_TYPE shipType);
     void setShipCost(int cost); // Move to fleet class?
     void setCounterText(int count);
     void setPosition(float x, float y);

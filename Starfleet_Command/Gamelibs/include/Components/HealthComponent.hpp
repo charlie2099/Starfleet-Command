@@ -4,6 +4,11 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <functional>
 #include <map>
+#include <any>
+#include <memory>
+
+#include "Sprites/UI/Effects/DamagePopUpEffect.hpp"
+#include "SpriteComponent.hpp"
 
 class HealthComponent
 {
@@ -11,27 +16,40 @@ public:
     enum EventID
     {
         HEALTH_DEPLETED = 1,
+        HEALTH_UPDATED = 2,
     };
+    /*struct EventParam
+    {
+        std::string stringData;
+        float floatData;
+        int intData;
+        bool boolData;
+    };*/
 
-    HealthComponent() = default;
-    ~HealthComponent() = default;
-    void Update(sf::RenderWindow& window, sf::Time time);
+    //explicit HealthComponent(SpriteComponent& spriteComponent);
+    void Update(sf::RenderWindow& window, sf::Time deltaTime);
+    void Render(sf::RenderWindow& window);
 
-    // Modifiers
-    void SetHealth(float health);
+    void TakeDamage(float amount, sf::Vector2f damageLocation); // TODO: Remove 2nd argument
+    void ReplenishHealth(float amount);
 
-    // Accessors
-    float GetHealth() const { return _health; }
+    void SetHealth(int health);
+    int GetHealth() const { return _health; }
 
     // Observer (for other classes to use to hook into and subscribe)
-    using HealthEvent = std::pair<EventID, std::function<void()>>;
-    void AddObserver(HealthEvent observer);
+    using BasicHealthEvent = std::pair<EventID, std::function<void()>>;
+    void AddBasicObserver(BasicHealthEvent observer);
+
+    using AgnosticHealthEvent = std::pair<EventID, std::function<void(std::any)>>;
+    void AddAgnosticObserver(AgnosticHealthEvent observer);
 
 private:
-    // PanelComponent _background?
-    // PanelComponent _bar?
-    float _health;
-    std::multimap<EventID, std::function<void()>> _observers{};
+    void InvokeSimpleEvent(EventID eventId);
+    void InvokeAgnosticEvent(EventID eventId, const std::any& anyData);
+    int _health{};
+    std::vector<std::unique_ptr<DamagePopUpEffect>> _damagePopUpEffect;
+    std::multimap<EventID, std::function<void()>> _basicObservers{};
+    std::multimap<EventID, std::function<void(std::any)>> _agnosticObservers{};
 };
 
 #endif //STARFLEET_COMMAND_HEALTHCOMPONENT_HPP
