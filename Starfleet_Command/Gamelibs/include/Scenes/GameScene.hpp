@@ -6,11 +6,13 @@
 #include "Utility/Cursor.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
 #include "Sprites/Player/Player.h"
-#include "Sprites/UI/HUD/HUD.hpp"
+#include "Sprites/UI/HUD/Shipyard.hpp"
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 #include <random>
 #include <chrono>
+
+#include "Sprites/UI/HUD/Shipyard.hpp"
 
 class GameScene : public Scene
 {
@@ -40,7 +42,7 @@ private:
     Chilli::Colours _predefinedColours;
 
     // HUD
-    HUD _hud;
+    Shipyard _shipyard;
     sf::Text _credits_text;
     int _credits = 10000;
 
@@ -58,7 +60,7 @@ private:
     Enemy _enemy;
 
     // Other
-    sf::View _worldView{};
+    sf::View _cameraViewport{};
     sf::View _minimapView{};
     std::mt19937 generator;
     std::vector<std::uniform_int_distribution<int>> uint_distrib;

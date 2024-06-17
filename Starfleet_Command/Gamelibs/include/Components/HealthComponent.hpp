@@ -5,6 +5,8 @@
 #include <functional>
 #include <map>
 #include <any>
+#include <memory>
+
 #include "Sprites/UI/Effects/DamagePopUpEffect.hpp"
 #include "SpriteComponent.hpp"
 

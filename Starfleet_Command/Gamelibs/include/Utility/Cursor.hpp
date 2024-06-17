@@ -1,5 +1,6 @@
 #ifndef STARFLEET_COMMAND_CURSOR_HPP
 #define STARFLEET_COMMAND_CURSOR_HPP
+#include <array>
 #include <SFML/Graphics.hpp>
 
 namespace Chilli

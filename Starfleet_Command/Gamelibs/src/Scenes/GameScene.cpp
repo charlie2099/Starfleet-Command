@@ -6,9 +6,9 @@ bool GameScene::Init()
     InitBackground();
     InitCommandButtons();
     InitCreditsText();
-    InitView();
     InitPlayerShips();
     InitEnemyShips();
+    InitView();
 
     /// StarshipClass newClassType(texture, color, health, damage);
     /// Starship newShip(newClassType);
@@ -38,7 +38,7 @@ bool GameScene::Init()
 void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse _position translated into world coordinates
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _cameraViewport); // Mouse _position translated into world coordinates
 
     if (event.type == sf::Event::MouseButtonPressed)
     {
@@ -51,7 +51,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         {
             _command_buttons[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
 
-            if (event.type == sf::Event::MouseButtonPressed && !_hud.IsTraining())
+            if (event.type == sf::Event::MouseButtonPressed && !_shipyard.IsTraining())
             {
                 _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({153, 210, 242, 150});
 
@@ -61,30 +61,30 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
                 switch (i)
                 {
                     case 0: // LIGHTFIGHTER
-                        _hud.SetTrainingSpeed(0.4f);
+                        _shipyard.SetTrainingSpeed(0.4f);
                         _credits -= 250;
                         //_credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
                         break;
                     case 1: // HEAVYFIGHTER
-                        _hud.SetTrainingSpeed(0.5f);
+                        _shipyard.SetTrainingSpeed(0.5f);
                         _credits -= 200;
                         break;
                     case 2: // SUPPORT
-                        _hud.SetTrainingSpeed(0.6f);
+                        _shipyard.SetTrainingSpeed(0.6f);
                         _credits -= 100;
                         break;
                     case 3: // DESTROYER
-                        _hud.SetTrainingSpeed(0.2f);
+                        _shipyard.SetTrainingSpeed(0.2f);
                         _credits -= 1000;
                         break;
                     case 4: // BATTLESHIP
-                        _hud.SetTrainingSpeed(0.3f);
+                        _shipyard.SetTrainingSpeed(0.3f);
                         _credits -= 750;
                         break;
                 }
                 _credits_text.setString("Credits: " + std::to_string(_credits));
 
-                _hud.SetTrainingStatus(true);
+                _shipyard.SetTrainingStatus(true);
                 ship_spawned_index = i;
 
                 // make use of an event?
@@ -125,26 +125,48 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse _position translated into world coordinates
+    sf::Vector2f PLAYER_PERSPECTIVE = { _player.GetShips()[0]->GetSpriteComponent().GetPos().x,_player.GetShips()[0]->GetSpriteComponent().GetPos().y };
+    _cameraViewport.setCenter(PLAYER_PERSPECTIVE);
 
-    for(auto& button : _command_buttons)
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _cameraViewport); // Mouse _position translated into world coordinates
+
+    // TODO: Clean up
+    const float NUM_OF_BUTTONS = 5;
+    for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
-        button->Update(window);
+        const float SPACING = 10;
+        const float OFFSET = NUM_OF_BUTTONS * SPACING;
+        auto button_bounds = _command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds();
+        auto xPos = (_cameraViewport.getCenter().x - 150.0f) + (i * (button_bounds.width+SPACING));
+        auto yPos = Constants::WINDOW_HEIGHT - (button_bounds.height/2.0f*3.0f);
+        _command_buttons[i]->GetSpriteComponent().SetPos({xPos, yPos});
+        _command_buttons[i]->Update(window);
+
+        // Ship cost text alignment to command buttons
+        auto button_sprite = _command_buttons[i]->GetSpriteComponent().GetSprite();
+        auto text_xPos = button_sprite.getPosition().x + button_sprite.getGlobalBounds().width - (_ship_cost_text[i].getGlobalBounds().width+2);
+        auto text_yPos = button_sprite.getPosition().y + 5;
+        _ship_cost_text[i].setPosition(text_xPos, text_yPos);
+
+        // Credits text alignment beneath first command button
+        _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
     }
-     _hud.Update(window, deltaTime);
+
+    _shipyard.SetPosition({_cameraViewport.getCenter().x - _cameraViewport.getSize().x/2,15});
+     _shipyard.Update(window, deltaTime);
     _cursor.Update(window, deltaTime);
-    _cursor.SetCursorPos(window, _worldView);
+    _cursor.SetCursorPos(window, _cameraViewport);
     _player.Update(window, deltaTime);
     _enemy.Update(window, deltaTime);
     //starship->Update(window, deltaTime);
 
-    if(_hud.IsTrainingComplete())
+    if(_shipyard.IsTrainingComplete())
     {
         _player.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(ship_spawned_index));
         _player.GetShips()[_player.GetShips().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
         RandomiseShipSpawnPoint();
-        _hud.SetTrainingCompletedStatus(false);
+        _shipyard.SetTrainingCompletedStatus(false);
     }
 
     for(auto & player_ship : _player.GetShips())
@@ -242,7 +264,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
 void GameScene::Render(sf::RenderWindow& window)
 {
-    window.setView(_worldView);
+    window.setView(_cameraViewport);
     window.draw(_background_sprite);
     for(auto& button : _command_buttons)
     {
@@ -257,7 +279,7 @@ void GameScene::Render(sf::RenderWindow& window)
     _enemy.Render(window);
     //starship->Render(window);
     //crosshair.Render(window);
-    _hud.Render(window);
+    _shipyard.Render(window);
     _cursor.Render(window);
 }
 
@@ -345,8 +367,9 @@ void GameScene::InitView()
 
     sf::Vector2f VIEW_SIZE = { Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT };
     sf::Vector2f WORLD_PERSPECTIVE = { Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F };
-    _worldView.setSize(VIEW_SIZE);
-    _worldView.setCenter(WORLD_PERSPECTIVE);
+    sf::Vector2f PLAYER_PERSPECTIVE = { _player.GetShips()[0]->GetSpriteComponent().GetPos().x,_player.GetShips()[0]->GetSpriteComponent().GetPos().y };
+    _cameraViewport.setSize(VIEW_SIZE);
+    _cameraViewport.setCenter(WORLD_PERSPECTIVE);
     //_player_view.zoom(0.5F);
 }
 
