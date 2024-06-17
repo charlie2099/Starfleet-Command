@@ -19,4 +19,4 @@ A 2D space combat RTS made with the SFML library
 ![game](https://user-images.githubusercontent.com/55750961/166809791-9e679bb5-0e8f-438b-bfd9-2af6cd845dc0.png)
 
 ## Other
-My Portfolio: https://charlie2099.github.io/
+My Portfolio: https://www.charlieevans.dev/
