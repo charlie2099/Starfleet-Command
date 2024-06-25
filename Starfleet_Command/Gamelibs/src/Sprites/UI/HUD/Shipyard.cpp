@@ -49,10 +49,10 @@ void Shipyard::Update(sf::RenderWindow& window, sf::Time time)
 
 void Shipyard::Render(sf::RenderWindow &window)
 {
-    window.draw(spriteComponent.GetSprite());
-    window.draw(spriteComponent2.GetSprite());
     if(_isTraining)
     {
+        window.draw(spriteComponent.GetSprite());
+        window.draw(spriteComponent2.GetSprite());
         window.draw(text);
     }
 }

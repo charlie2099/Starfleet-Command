@@ -37,8 +37,8 @@ bool GameScene::Init()
 
 void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _cameraViewport); // Mouse _position translated into world coordinates
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _cameraViewport); // Mouse position translated into world coordinates
 
     if (event.type == sf::Event::MouseButtonPressed)
     {
@@ -127,6 +127,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     sf::Vector2f PLAYER_PERSPECTIVE = { _player.GetShips()[0]->GetSpriteComponent().GetPos().x,_player.GetShips()[0]->GetSpriteComponent().GetPos().y };
     _cameraViewport.setCenter(PLAYER_PERSPECTIVE);
+    /*if(_player.GetShips()[0]->GetSpriteComponent().GetPos().x >= Constants::WINDOW_WIDTH/2.0F)
+    {
+        sf::Vector2f PLAYER_PERSPECTIVE = { _player.GetShips()[0]->GetSpriteComponent().GetPos().x,_player.GetShips()[0]->GetSpriteComponent().GetPos().y };
+        _cameraViewport.setCenter(PLAYER_PERSPECTIVE);
+    }*/
 
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
     auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _cameraViewport); // Mouse _position translated into world coordinates
@@ -153,7 +158,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
     }
 
-    _shipyard.SetPosition({_cameraViewport.getCenter().x - _cameraViewport.getSize().x/2,15});
+    _shipyard.SetPosition({(_cameraViewport.getCenter().x - _cameraViewport.getSize().x/2) + 15,15});
      _shipyard.Update(window, deltaTime);
     _cursor.Update(window, deltaTime);
     _cursor.SetCursorPos(window, _cameraViewport);
@@ -193,7 +198,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     if(_player.GetShips()[flagship] != nullptr)
     {
         auto& player_flagship = _player.GetShips()[flagship]->GetSpriteComponent().GetSprite();
-        player_flagship.move(_player.GetShips()[flagship]->GetSpeed() * deltaTime.asSeconds(), 0);
+        player_flagship.move(_player.GetShips()[flagship]->GetSpeed() * deltaTime.asSeconds() * 8, 0);
     }
 
     if(_enemy.GetShips()[flagship] != nullptr)
@@ -307,10 +312,10 @@ bool GameScene::InitBackground()
 
     _background_texture->setRepeated(true);
     _background_sprite.setTexture(*_background_texture);
-    _background_sprite.scale(0.2F, 0.2F);
     auto bTexSizeX = static_cast<int>(_background_texture->getSize().x);
     auto bTexSizeY = static_cast<int>(_background_texture->getSize().y);
-    _background_sprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX * 2, bTexSizeY * 2));
+    _background_sprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX * 4, bTexSizeY * 0.88));
+    _background_sprite.scale(0.2F, 0.2F);
 
     return true;
 }
@@ -367,9 +372,9 @@ void GameScene::InitView()
 
     sf::Vector2f VIEW_SIZE = { Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT };
     sf::Vector2f WORLD_PERSPECTIVE = { Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F };
-    sf::Vector2f PLAYER_PERSPECTIVE = { _player.GetShips()[0]->GetSpriteComponent().GetPos().x,_player.GetShips()[0]->GetSpriteComponent().GetPos().y };
+    //sf::Vector2f PLAYER_PERSPECTIVE = { _player.GetShips()[0]->GetSpriteComponent().GetPos().x,_player.GetShips()[0]->GetSpriteComponent().GetPos().y };
     _cameraViewport.setSize(VIEW_SIZE);
-    _cameraViewport.setCenter(WORLD_PERSPECTIVE);
+    //_cameraViewport.setCenter(WORLD_PERSPECTIVE);
     //_player_view.zoom(0.5F);
 }
 
@@ -377,10 +382,9 @@ void GameScene::InitPlayerShips()
 {
     _player.CreateShip(StarshipFactory::SHIP_TYPE::MOTHERSHIP);
     int flagship = 0;
-    auto player_flagship_bounds = _player.GetShips()[flagship]->GetSpriteComponent().GetSprite().getGlobalBounds();
-    auto player_width = player_flagship_bounds.width/2;
-    auto player_height = Constants::WINDOW_HEIGHT/2.0f;
-    _player.GetShips()[flagship]->GetSpriteComponent().SetPos({player_width, player_height});
+    //auto player_flagship_bounds = _player.GetShips()[flagship]->GetSpriteComponent().GetSprite().getGlobalBounds();
+    //auto player_width = player_flagship_bounds.width/2;
+    _player.GetShips()[flagship]->GetSpriteComponent().SetPos({Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0f});
     _player.GetShips()[flagship]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
 }
 

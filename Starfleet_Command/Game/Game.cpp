@@ -58,7 +58,7 @@ void Game::Render()
 /// OTHER
 void Game::InitWindow()
 {
-    window.create(sf::VideoMode(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT), "Starfleet Command");
+    window.create(sf::VideoMode(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT), "Starfleet Command", sf::Style::Fullscreen);
     window.setPosition(sf::Vector2i(0, 0));
 
     auto image = sf::Image{};
