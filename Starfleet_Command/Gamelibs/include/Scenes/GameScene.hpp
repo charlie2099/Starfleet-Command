@@ -32,6 +32,8 @@ private:
     void InitEnemyShips();
     void InitCreditsText();
     void InitView();
+    void InitMinimap();
+
     void RandomiseShipSpawnPoint();
     void CreateDistribution(const std::string& name, int min, int max);
     void UpdateDistribution(const std::string& name, int min, int max);
@@ -54,6 +56,7 @@ private:
     // UI
     std::unique_ptr<sf::Texture> _background_texture;
     sf::Sprite _background_sprite;
+    sf::RectangleShape _minimapBorder;
 
     // Sprites
     Player _player;
