@@ -9,3 +9,7 @@
 - The minimap view doesn't appear to be actually moving when the main viewport moves?
   They should move in sync with each other. Do I need to set its position constantly to
   that of the main viewport?
+
+- Currently the background image for the level is WAY TOO LARGE. However, it looks good.
+
+- Dimensions of background need to change. Should be wider in width.

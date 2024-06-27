@@ -31,10 +31,11 @@ private:
     void InitPlayerShips();
     void InitEnemyShips();
     void InitCreditsText();
-    void InitView();
-    void InitMinimap();
+    void InitMainView();
+    void InitMinimapView();
+    void InitMinimapBorder();
 
-    void RandomiseShipSpawnPoint();
+    void RandomisePlayerShipSpawnPoint();
     void CreateDistribution(const std::string& name, int min, int max);
     void UpdateDistribution(const std::string& name, int min, int max);
     static std::mt19937 GetEngine();
@@ -63,7 +64,7 @@ private:
     Enemy _enemy;
 
     // Other
-    sf::View _cameraViewport{};
+    sf::View _cameraView{};
     sf::View _minimapView{};
     std::mt19937 generator;
     std::vector<std::uniform_int_distribution<int>> uint_distrib;

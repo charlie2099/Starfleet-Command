@@ -8,12 +8,9 @@ bool GameScene::Init()
     InitCreditsText();
     InitPlayerShips();
     InitEnemyShips();
-    InitView();
-    InitMinimap();
-
-    //_minimapView.setSize(Constants::WINDOW_WIDTH/2.0f, Constants::WINDOW_HEIGHT/2.0f);
-    //sf::Vector2f WORLD_PERSPECTIVE = { Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/4.0F };
-    //_minimapView.setCenter(WORLD_PERSPECTIVE);
+    InitMainView();
+    InitMinimapView();
+    InitMinimapBorder();
 
     /// StarshipClass newClassType(texture, color, health, damage);
     /// Starship newShip(newClassType);
@@ -43,12 +40,12 @@ bool GameScene::Init()
 void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _cameraViewport); // Mouse position translated into world coordinates
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _cameraView); // Mouse position translated into world coordinates
 
-    if (event.type == sf::Event::MouseButtonPressed)
+    /*if (event.type == sf::Event::MouseButtonPressed)
     {
         //starship->GetHealthComponent().SetHealth(starship->GetHealthComponent().GetHealth() - 10);
-    }
+    }*/
 
     for (int i = 0; i < _command_buttons.size(); i++)
     {
@@ -130,9 +127,8 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    sf::Vector2f PLAYER_PERSPECTIVE = { _player.GetShips()[0]->GetSpriteComponent().GetPos().x,_player.GetShips()[0]->GetSpriteComponent().GetPos().y };
-    _cameraViewport.setCenter(PLAYER_PERSPECTIVE);
-
+    sf::Vector2f playerFlagshipPos = _player.GetShips()[0]->GetSpriteComponent().GetPos();
+    _cameraView.setCenter(playerFlagshipPos.x, playerFlagshipPos.y);
 
     /*// Update the minimap border position based on the minimap's viewport
     float viewportWidth = _minimapView.getViewport().width * window.getSize().x;
@@ -140,23 +136,9 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     float viewportLeft = _minimapView.getViewport().left * window.getSize().x;
     float viewportTop = _minimapView.getViewport().top * window.getSize().y;
     //_minimapBorder.setPosition(viewportLeft, viewportTop);*/
-
-    _minimapBorder.setPosition(_cameraViewport.getCenter().x - 257.0f, 0.01f * Constants::WINDOW_HEIGHT);
-    //_minimapBorder.setPosition(_minimapView.getViewport().getPosition().x, 0.01f * Constants::WINDOW_HEIGHT);
-    //std::cout << _cameraViewport.getCenter().x << std::endl;
-    //std::cout << _minimapView.getCenter().x << std::endl;
-
-    //_minimapBorder.setPosition(viewportLeft * Constants::WINDOW_WIDTH, viewportTop * Constants::WINDOW_HEIGHT);
-
-    /*// Position minimap at top middle of the window
-    float viewportWidth = 0.4f;
-    float viewportHeight = 0.25f;
-    float viewportLeft = 0.5f - viewportWidth/2.0f;
-    float viewportTop = 0.01f;
-
-    _minimapBorder.setPosition(100.0f, viewportTop * Constants::WINDOW_HEIGHT);
-    //std::cout << _minimapView.getCenter().x << std::endl;
-    std::cout << (_minimapView.getCenter().x - Constants::WINDOW_WIDTH/2.0f) - _minimapBorder.getSize().x/2.0f << std::endl;*/
+    //_minimapBorder.setPosition(_cameraViewport.getCenter().x-257.0f, 0.01f*Constants::WINDOW_HEIGHT);
+    _minimapBorder.setPosition(_cameraView.getCenter().x, _cameraView.getCenter().y);
+    //_minimapBorder.setPosition(Constants::VIEWPORT_LEFT*Constants::WINDOW_WIDTH,Constants::VIEWPORT_TOP*Constants::WINDOW_HEIGHT);
 
 
     /*if(_player.GetShips()[0]->GetSpriteComponent().GetPos().x >= Constants::WINDOW_WIDTH/2.0F)
@@ -166,7 +148,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     }*/
 
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _cameraViewport); // Mouse _position translated into world coordinates
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _cameraView); // Mouse _position translated into world coordinates
 
     // TODO: Clean up
     const float NUM_OF_BUTTONS = 5;
@@ -175,8 +157,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         const float SPACING = 10;
         const float OFFSET = NUM_OF_BUTTONS * SPACING;
         auto button_bounds = _command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds();
-        auto xPos = (_cameraViewport.getCenter().x - 150.0f) + (i * (button_bounds.width+SPACING));
-        auto yPos = Constants::WINDOW_HEIGHT - (button_bounds.height/2.0f*3.0f);
+        auto xPos = (_cameraView.getCenter().x - 150.0f) + (i * (button_bounds.width+SPACING));
+        auto yPos = _cameraView.getCenter().y - (button_bounds.height/2.0f*3.0f);
         _command_buttons[i]->GetSpriteComponent().SetPos({xPos, yPos});
         _command_buttons[i]->Update(window);
 
@@ -185,15 +167,15 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto text_xPos = button_sprite.getPosition().x + button_sprite.getGlobalBounds().width - (_ship_cost_text[i].getGlobalBounds().width+2);
         auto text_yPos = button_sprite.getPosition().y + 5;
         _ship_cost_text[i].setPosition(text_xPos, text_yPos);
-
-        // Credits text alignment beneath first command button
-        _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
     }
 
-    _shipyard.SetPosition({(_cameraViewport.getCenter().x - _cameraViewport.getSize().x/2) + 15,15});
-     _shipyard.Update(window, deltaTime);
+    // Credits text alignment beneath first command button
+    _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, _cameraView.getCenter().y);
+
+    _shipyard.SetPosition({(_cameraView.getCenter().x - _cameraView.getSize().x/2) + 15,_cameraView.getCenter().y});
+    _shipyard.Update(window, deltaTime);
     _cursor.Update(window, deltaTime);
-    _cursor.SetCursorPos(window, _cameraViewport);
+    _cursor.SetCursorPos(window, _cameraView);
     _player.Update(window, deltaTime);
     _enemy.Update(window, deltaTime);
     //starship->Update(window, deltaTime);
@@ -202,7 +184,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         _player.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(ship_spawned_index));
         _player.GetShips()[_player.GetShips().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
-        RandomiseShipSpawnPoint();
+        RandomisePlayerShipSpawnPoint();
         _shipyard.SetTrainingCompletedStatus(false);
     }
 
@@ -302,7 +284,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 void GameScene::Render(sf::RenderWindow& window)
 {
     // Render the main view
-    window.setView(_cameraViewport);
+    window.setView(_cameraView);
     window.draw(_background_sprite);
     for(auto& button : _command_buttons)
     {
@@ -319,8 +301,6 @@ void GameScene::Render(sf::RenderWindow& window)
     //crosshair.Render(window);
     _shipyard.Render(window);
     _cursor.Render(window);
-
-    // Draw the minimap border
     window.draw(_minimapBorder);
 
     // Render the minimap
@@ -328,13 +308,20 @@ void GameScene::Render(sf::RenderWindow& window)
     window.draw(_background_sprite);
     _player.Render(window);
     _enemy.Render(window);
+
+    // TODO: Remove (temporary testing)
+    window.draw(_minimapBorder);
+    for(auto& button : _command_buttons)
+    {
+        button->Render(window);
+    }
 }
 
 void GameScene::InitDistribution()
 {
     generator = GetEngine();
     CreateDistribution("Ship xPos", 1100, 1100);
-    CreateDistribution("Ship yPos", 100, 600);
+    CreateDistribution("Ship yPos", Constants::LEVEL_HEIGHT/2.0F, Constants::LEVEL_HEIGHT/2.0F);
     CreateDistribution("Ship damage", 100, 250);
     dist_code =
     {
@@ -354,10 +341,8 @@ bool GameScene::InitBackground()
 
     _background_texture->setRepeated(true);
     _background_sprite.setTexture(*_background_texture);
-    //auto bTexSizeX = static_cast<int>(_background_texture->getSize().x);
-    //auto bTexSizeY = static_cast<int>(_background_texture->getSize().y);
-    _background_sprite.setTextureRect(sf::IntRect(0, 0, Constants::LEVEL_WIDTH*5, Constants::LEVEL_HEIGHT*0.88));
-    _background_sprite.scale(0.2F, 0.2F);
+    _background_sprite.setTextureRect(sf::IntRect(0, 0, Constants::LEVEL_WIDTH, Constants::LEVEL_HEIGHT));
+    //_background_sprite.scale(0.2F, 0.2F);
 
     return true;
 }
@@ -406,48 +391,35 @@ void GameScene::InitCreditsText()
     _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
 }
 
-void GameScene::InitView()
+void GameScene::InitMainView()
 {
-    /// Reset View to default settings
-    //view.setCenter(window.getDefaultView().getCenter());
-    //view.SetSize(window.getDefaultView().getSize());
-
-    sf::Vector2f VIEW_SIZE = { Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT };
-    //sf::Vector2f WORLD_PERSPECTIVE = { Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F };
-    //sf::Vector2f PLAYER_PERSPECTIVE = { _player.GetShips()[0]->GetSpriteComponent().GetPos().x,_player.GetShips()[0]->GetSpriteComponent().GetPos().y };
-    _cameraViewport.setSize(VIEW_SIZE);
-    //_cameraViewport.setCenter(WORLD_PERSPECTIVE);
-    //_player_view.zoom(0.5F);
+    // Initialise the main view to the size of the window
+    _cameraView.setSize(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT);
 }
 
-void GameScene::InitMinimap()
+void GameScene::InitMinimapView()
 {
-    // Initialize minimap view to cover the entire level
-    sf::Vector2f LEVEL_SIZE = { Constants::WINDOW_WIDTH*4, Constants::WINDOW_HEIGHT }; // Assume Constants::LEVEL_WIDTH and LEVEL_HEIGHT represent the entire level size
-    _minimapView.setSize(LEVEL_SIZE);
-    _minimapView.setCenter(LEVEL_SIZE.x / 2.0f, LEVEL_SIZE.y / 2.0f);
+    // Initialize the minimap view to the size of the level
+    _minimapView.setSize(Constants::LEVEL_WIDTH,Constants::LEVEL_HEIGHT);
 
-    /*// Initialize minimap view
-    sf::Vector2f MINIMAP_SIZE = { Constants::WINDOW_WIDTH,Constants::WINDOW_HEIGHT };
-    sf::Vector2f WORLD_PERSPECTIVE = { Constants::WINDOW_WIDTH/2.0f,Constants::WINDOW_HEIGHT/2.0f };
-    _minimapView.setSize(MINIMAP_SIZE);
-    _minimapView.setCenter(WORLD_PERSPECTIVE); // Adjust this if you want a different part of the world*/
+    // Focus the view/camera on the centre point of the level
+    _minimapView.setCenter(Constants::LEVEL_WIDTH/2.0f,Constants::LEVEL_HEIGHT/2.0f);
 
-    // Position minimap at top middle of the window
-    float viewportWidth = 0.4f;
-    float viewportHeight = 0.25f;
-    float viewportLeft = 0.5f - viewportWidth/2.0f;
-    float viewportTop = 0.01f;
-    _minimapView.setViewport(sf::FloatRect(viewportLeft, viewportTop, viewportWidth, viewportHeight));
+    // Position minimap at top middle of the window and set its size
+    _minimapView.setViewport(sf::FloatRect(
+            Constants::VIEWPORT_LEFT,
+            Constants::VIEWPORT_TOP,
+            Constants::VIEWPORT_WIDTH,
+            Constants::VIEWPORT_HEIGHT));
+}
 
-
-    // Initialize minimap border
-    sf::Vector2f minimapBorderSize(Constants::WINDOW_WIDTH * viewportWidth, Constants::WINDOW_HEIGHT * viewportHeight);
-    _minimapBorder.setSize(minimapBorderSize);
+void GameScene::InitMinimapBorder()
+{
+    // Initializes the minimap border's size, thickness, colour, and position
+    _minimapBorder.setSize({Constants::WINDOW_WIDTH*Constants::VIEWPORT_WIDTH,Constants::WINDOW_HEIGHT*Constants::VIEWPORT_HEIGHT});
     _minimapBorder.setOutlineThickness(2.0f); // Set the thickness of the border
     _minimapBorder.setOutlineColor(sf::Color(128,128,128)); // Set the color of the border
-    _minimapBorder.setFillColor(sf::Color::Transparent); // Make the inside of the rectangle transparent
-    _minimapBorder.setPosition(viewportLeft * Constants::WINDOW_WIDTH, viewportTop * Constants::WINDOW_HEIGHT);
+    _minimapBorder.setFillColor(sf::Color::Red); // Make the inside of the rectangle transparent
 }
 
 void GameScene::InitPlayerShips()
@@ -456,7 +428,7 @@ void GameScene::InitPlayerShips()
     int flagship = 0;
     //auto player_flagship_bounds = _player.GetShips()[flagship]->GetSpriteComponent().GetSprite().getGlobalBounds();
     //auto player_width = player_flagship_bounds.width/2;
-    _player.GetShips()[flagship]->GetSpriteComponent().SetPos({Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0f});
+    _player.GetShips()[flagship]->GetSpriteComponent().SetPos({Constants::WINDOW_WIDTH/2.0F, Constants::LEVEL_HEIGHT/2.0f});
     _player.GetShips()[flagship]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
 }
 
@@ -465,8 +437,8 @@ void GameScene::InitEnemyShips()
     _enemy.CreateShip(StarshipFactory::MOTHERSHIP);
     int flagship = 0;
     auto enemy_flagship_bounds = _enemy.GetShips()[flagship]->GetSpriteComponent().GetSprite().getGlobalBounds();
-    auto enemy_xPos = Constants::LEVEL_WIDTH - enemy_flagship_bounds.width/2.0f;
-    auto enemy_yPos = Constants::WINDOW_HEIGHT / 2.0f;
+    auto enemy_xPos = Constants::LEVEL_WIDTH - enemy_flagship_bounds.width;
+    auto enemy_yPos = Constants::LEVEL_HEIGHT / 2.0f;
     _enemy.GetShips()[flagship]->GetSpriteComponent().SetPos({enemy_xPos, enemy_yPos});
     _enemy.GetShips()[flagship]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
     _enemy.GetShips()[flagship]->GetSpriteComponent().GetSprite().setRotation(180);
@@ -474,13 +446,13 @@ void GameScene::InitEnemyShips()
     for (int i = 0; i < 5; ++i)
     {
         _enemy.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(i));
-        _enemy.GetShips()[i + 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
-        _enemy.GetShips()[i + 1]->GetSpriteComponent().SetPos({enemy_xPos, static_cast<float>(200 + (i * 75))});
+        _enemy.GetShips()[i + 1]->GetSpriteComponent().SetPos({enemy_xPos, static_cast<float>(Constants::LEVEL_HEIGHT/2.0f + (i * 75))});
         _enemy.GetShips()[i + 1]->GetSpriteComponent().GetSprite().setRotation(180);
+        _enemy.GetShips()[i + 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
     }
 }
 
-void GameScene::RandomiseShipSpawnPoint()
+void GameScene::RandomisePlayerShipSpawnPoint()
 {
     int flagship = 0;
     auto flagship_pos = _player.GetShips()[flagship]->GetSpriteComponent().GetPos();
