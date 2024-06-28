@@ -130,16 +130,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     sf::Vector2f playerFlagshipPos = _player.GetShips()[0]->GetSpriteComponent().GetPos();
     _cameraView.setCenter(playerFlagshipPos.x, playerFlagshipPos.y);
 
-    /*// Update the minimap border position based on the minimap's viewport
-    float viewportWidth = _minimapView.getViewport().width * window.getSize().x;
-    float viewportHeight = _minimapView.getViewport().height * window.getSize().y;
-    float viewportLeft = _minimapView.getViewport().left * window.getSize().x;
-    float viewportTop = _minimapView.getViewport().top * window.getSize().y;
-    //_minimapBorder.setPosition(viewportLeft, viewportTop);*/
-    //_minimapBorder.setPosition(_cameraViewport.getCenter().x-257.0f, 0.01f*Constants::WINDOW_HEIGHT);
-    _minimapBorder.setPosition(_cameraView.getCenter().x, _cameraView.getCenter().y);
-    //_minimapBorder.setPosition(Constants::VIEWPORT_LEFT*Constants::WINDOW_WIDTH,Constants::VIEWPORT_TOP*Constants::WINDOW_HEIGHT);
-
+    _minimapBorder.setPosition(_cameraView.getCenter().x - _minimapBorder.getSize().x/2.0F, _cameraView.getCenter().y - _cameraView.getSize().y/2.0F + 7.0F);
 
     /*if(_player.GetShips()[0]->GetSpriteComponent().GetPos().x >= Constants::WINDOW_WIDTH/2.0F)
     {
@@ -158,7 +149,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         const float OFFSET = NUM_OF_BUTTONS * SPACING;
         auto button_bounds = _command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds();
         auto xPos = (_cameraView.getCenter().x - 150.0f) + (i * (button_bounds.width+SPACING));
-        auto yPos = _cameraView.getCenter().y - (button_bounds.height/2.0f*3.0f);
+        auto yPos = _cameraView.getCenter().y + _cameraView.getSize().y/2.0f - (button_bounds.height/2.0f*3.0f);
         _command_buttons[i]->GetSpriteComponent().SetPos({xPos, yPos});
         _command_buttons[i]->Update(window);
 
@@ -170,9 +161,9 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     }
 
     // Credits text alignment beneath first command button
-    _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, _cameraView.getCenter().y);
+    _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, _cameraView.getCenter().y + _cameraView.getSize().y/2.0F - 30.0F);
 
-    _shipyard.SetPosition({(_cameraView.getCenter().x - _cameraView.getSize().x/2) + 15,_cameraView.getCenter().y});
+    _shipyard.SetPosition({_cameraView.getCenter().x - _cameraView.getSize().x/2.0F + 15.0F, _cameraView.getCenter().y - _cameraView.getSize().y/2.0F + 15.0F});
     _shipyard.Update(window, deltaTime);
     _cursor.Update(window, deltaTime);
     _cursor.SetCursorPos(window, _cameraView);
@@ -308,20 +299,17 @@ void GameScene::Render(sf::RenderWindow& window)
     window.draw(_background_sprite);
     _player.Render(window);
     _enemy.Render(window);
+    window.draw(_minimapBorder); // TODO: Remove (temporary testing)
 
-    // TODO: Remove (temporary testing)
-    window.draw(_minimapBorder);
-    for(auto& button : _command_buttons)
-    {
-        button->Render(window);
-    }
+    window.setView(_cameraView);
+    _cursor.Render(window);
 }
 
 void GameScene::InitDistribution()
 {
     generator = GetEngine();
     CreateDistribution("Ship xPos", 1100, 1100);
-    CreateDistribution("Ship yPos", Constants::LEVEL_HEIGHT/2.0F, Constants::LEVEL_HEIGHT/2.0F);
+    CreateDistribution("Ship yPos", Constants::LEVEL_HEIGHT/2.0F - Constants::WINDOW_HEIGHT + 100.0F, Constants::LEVEL_HEIGHT/2.0F + Constants::WINDOW_HEIGHT - 100.0F);
     CreateDistribution("Ship damage", 100, 250);
     dist_code =
     {
