@@ -40,7 +40,60 @@ bool GameScene::Init()
 void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _cameraView); // Mouse position translated into world coordinates
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _mainView); // Mouse position translated into world coordinates
+    auto mousePosWorldCoordsOnMinimap = window.mapPixelToCoords(mouse_pos, _minimapView);
+
+    if(_minimapBorder.getGlobalBounds().contains(mousePosWorldCoords))
+    {
+        if (event.type == sf::Event::MouseWheelScrolled)
+        {
+            float zoomFactor = (event.mouseWheelScroll.delta > 0) ? 0.9f : 1.1f;
+            float newZoomLevel = _currentZoomLevel * zoomFactor;
+
+            // Check if the new zoom level is within bounds
+            if (newZoomLevel >= 0.15f && newZoomLevel <= 1.0f) // MAX ZOOM | MIN ZOOM
+            {
+                // Convert mouse position to world coordinates relative to minimap
+                sf::Vector2f beforeZoom = window.mapPixelToCoords(mouse_pos, _minimapView);
+
+                // Apply the zoom
+                _minimapView.zoom(zoomFactor);
+
+                // Update the current zoom level
+                _currentZoomLevel = newZoomLevel;
+
+                // Convert mouse position to world coordinates after zoom
+                sf::Vector2f afterZoom = window.mapPixelToCoords(mouse_pos, _minimapView);
+
+                // Calculate the difference and adjust the view center
+                sf::Vector2f offset = beforeZoom - afterZoom;
+                _minimapView.setCenter(_minimapView.getCenter() + offset);
+            }
+        }
+
+        if (_currentZoomLevel < 1.0f)
+        { // Allow moving focus only when zoomed in
+
+            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+            {
+                isDragging = true;
+                initialMousePosition = mouse_pos;
+            }
+
+            if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
+                isDragging = false;
+            }
+
+            if (event.type == sf::Event::MouseMoved && isDragging) {
+                sf::Vector2i currentMousePosition = sf::Mouse::getPosition(window);
+                sf::Vector2f delta = window.mapPixelToCoords(initialMousePosition, _minimapView) -
+                                     window.mapPixelToCoords(currentMousePosition, _minimapView);
+
+                _minimapView.setCenter(_minimapView.getCenter() + delta);
+                initialMousePosition = currentMousePosition;
+            }
+        }
+    }
 
     /*if (event.type == sf::Event::MouseButtonPressed)
     {
@@ -127,19 +180,19 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    sf::Vector2f playerFlagshipPos = _player.GetShips()[0]->GetSpriteComponent().GetPos();
-    _cameraView.setCenter(playerFlagshipPos.x, playerFlagshipPos.y);
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _mainView); // Mouse _position translated into world coordinates
 
-    _minimapBorder.setPosition(_cameraView.getCenter().x - _minimapBorder.getSize().x/2.0F, _cameraView.getCenter().y - _cameraView.getSize().y/2.0F + 7.0F);
+    sf::Vector2f playerFlagshipPos = _player.GetShips()[0]->GetSpriteComponent().GetPos();
+    _mainView.setCenter(playerFlagshipPos.x, playerFlagshipPos.y);
+
+    _minimapBorder.setPosition(_mainView.getCenter().x - _minimapBorder.getSize().x/2.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 7.0F);
 
     /*if(_player.GetShips()[0]->GetSpriteComponent().GetPos().x >= Constants::WINDOW_WIDTH/2.0F)
     {
         sf::Vector2f PLAYER_PERSPECTIVE = { _player.GetShips()[0]->GetSpriteComponent().GetPos().x,_player.GetShips()[0]->GetSpriteComponent().GetPos().y };
         _cameraViewport.setCenter(PLAYER_PERSPECTIVE);
     }*/
-
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _cameraView); // Mouse _position translated into world coordinates
 
     // TODO: Clean up
     const float NUM_OF_BUTTONS = 5;
@@ -148,8 +201,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         const float SPACING = 10;
         const float OFFSET = NUM_OF_BUTTONS * SPACING;
         auto button_bounds = _command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds();
-        auto xPos = (_cameraView.getCenter().x - 150.0f) + (i * (button_bounds.width+SPACING));
-        auto yPos = _cameraView.getCenter().y + _cameraView.getSize().y/2.0f - (button_bounds.height/2.0f*3.0f);
+        auto xPos = (_mainView.getCenter().x - 150.0f) + (i * (button_bounds.width+SPACING));
+        auto yPos = _mainView.getCenter().y + _mainView.getSize().y/2.0f - (button_bounds.height/2.0f*3.0f);
         _command_buttons[i]->GetSpriteComponent().SetPos({xPos, yPos});
         _command_buttons[i]->Update(window);
 
@@ -160,13 +213,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         _ship_cost_text[i].setPosition(text_xPos, text_yPos);
     }
 
-    // Credits text alignment beneath first command button
-    _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, _cameraView.getCenter().y + _cameraView.getSize().y/2.0F - 30.0F);
-
-    _shipyard.SetPosition({_cameraView.getCenter().x - _cameraView.getSize().x/2.0F + 15.0F, _cameraView.getCenter().y - _cameraView.getSize().y/2.0F + 15.0F});
+    _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, _mainView.getCenter().y + _mainView.getSize().y/2.0F - 30.0F);
+    _shipyard.SetPosition({_mainView.getCenter().x - _mainView.getSize().x/2.0F + 15.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 15.0F});
     _shipyard.Update(window, deltaTime);
     _cursor.Update(window, deltaTime);
-    _cursor.SetCursorPos(window, _cameraView);
+    _cursor.SetCursorPos(window, _mainView);
     _player.Update(window, deltaTime);
     _enemy.Update(window, deltaTime);
     //starship->Update(window, deltaTime);
@@ -275,7 +326,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 void GameScene::Render(sf::RenderWindow& window)
 {
     // Render the main view
-    window.setView(_cameraView);
+    window.setView(_mainView);
     window.draw(_background_sprite);
     for(auto& button : _command_buttons)
     {
@@ -291,7 +342,6 @@ void GameScene::Render(sf::RenderWindow& window)
     //starship->Render(window);
     //crosshair.Render(window);
     _shipyard.Render(window);
-    _cursor.Render(window);
     window.draw(_minimapBorder);
 
     // Render the minimap
@@ -299,9 +349,9 @@ void GameScene::Render(sf::RenderWindow& window)
     window.draw(_background_sprite);
     _player.Render(window);
     _enemy.Render(window);
-    window.draw(_minimapBorder); // TODO: Remove (temporary testing)
 
-    window.setView(_cameraView);
+    // Draw cursor over every view
+    window.setView(_mainView);
     _cursor.Render(window);
 }
 
@@ -382,7 +432,7 @@ void GameScene::InitCreditsText()
 void GameScene::InitMainView()
 {
     // Initialise the main view to the size of the window
-    _cameraView.setSize(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT);
+    _mainView.setSize(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT);
 }
 
 void GameScene::InitMinimapView()
@@ -407,15 +457,13 @@ void GameScene::InitMinimapBorder()
     _minimapBorder.setSize({Constants::WINDOW_WIDTH*Constants::VIEWPORT_WIDTH,Constants::WINDOW_HEIGHT*Constants::VIEWPORT_HEIGHT});
     _minimapBorder.setOutlineThickness(2.0f); // Set the thickness of the border
     _minimapBorder.setOutlineColor(sf::Color(128,128,128)); // Set the color of the border
-    _minimapBorder.setFillColor(sf::Color::Red); // Make the inside of the rectangle transparent
+    _minimapBorder.setFillColor(sf::Color::Transparent); // Make the inside of the rectangle transparent
 }
 
 void GameScene::InitPlayerShips()
 {
     _player.CreateShip(StarshipFactory::SHIP_TYPE::MOTHERSHIP);
     int flagship = 0;
-    //auto player_flagship_bounds = _player.GetShips()[flagship]->GetSpriteComponent().GetSprite().getGlobalBounds();
-    //auto player_width = player_flagship_bounds.width/2;
     _player.GetShips()[flagship]->GetSpriteComponent().SetPos({Constants::WINDOW_WIDTH/2.0F, Constants::LEVEL_HEIGHT/2.0f});
     _player.GetShips()[flagship]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
 }

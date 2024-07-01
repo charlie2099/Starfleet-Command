@@ -5,8 +5,9 @@ struct Constants
 {
     static constexpr float WINDOW_WIDTH  = 1280.F;
     static constexpr float WINDOW_HEIGHT = 720.F;
+    
     static constexpr float LEVEL_WIDTH   = 4096.F;  // x size of background image
-    static constexpr float LEVEL_HEIGHT  = 4096.F; // y size of background image
+    static constexpr float LEVEL_HEIGHT  = 2304.F; // y size of background image  (scaled up from 1280x720)
 
     static constexpr float VIEWPORT_WIDTH  = 0.2f;
     static constexpr float VIEWPORT_HEIGHT = 0.2f;
