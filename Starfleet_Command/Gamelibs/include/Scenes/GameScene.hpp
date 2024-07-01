@@ -33,8 +33,8 @@ private:
     void InitCreditsText();
     void InitMainView();
     void InitMinimapView();
+    void InitMainViewBorder();
     void InitMinimapBorder();
-
     void RandomisePlayerShipSpawnPoint();
     void CreateDistribution(const std::string& name, int min, int max);
     void UpdateDistribution(const std::string& name, int min, int max);
@@ -57,6 +57,7 @@ private:
     // UI
     std::unique_ptr<sf::Texture> _background_texture;
     sf::Sprite _background_sprite;
+    sf::RectangleShape _mainViewBorder;
     sf::RectangleShape _minimapBorder;
 
     // Sprites

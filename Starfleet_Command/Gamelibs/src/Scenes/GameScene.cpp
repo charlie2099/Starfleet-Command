@@ -10,6 +10,7 @@ bool GameScene::Init()
     InitEnemyShips();
     InitMainView();
     InitMinimapView();
+    InitMainViewBorder();
     InitMinimapBorder();
 
     /// StarshipClass newClassType(texture, color, health, damage);
@@ -187,6 +188,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _mainView.setCenter(playerFlagshipPos.x, playerFlagshipPos.y);
 
     _minimapBorder.setPosition(_mainView.getCenter().x - _minimapBorder.getSize().x/2.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 7.0F);
+    _mainViewBorder.setPosition(_mainView.getCenter().x - _mainViewBorder.getSize().x/2.0F, _mainView.getCenter().y - _mainViewBorder.getSize().y/2.0F);
 
     /*if(_player.GetShips()[0]->GetSpriteComponent().GetPos().x >= Constants::WINDOW_WIDTH/2.0F)
     {
@@ -239,13 +241,13 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             {
                 _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::Cyan);
                 player_ship->SetHealthBarVisibility(true);
-                player_ship->GetSpriteComponent().GetSprite().setColor(sf::Color::Cyan);
+                //player_ship->GetSpriteComponent().GetSprite().setColor(sf::Color::Cyan);
             }
             else
             {
                 _cursor.SetCursorType(Chilli::Cursor::DEFAULT, sf::Color::White);
                 player_ship->SetHealthBarVisibility(false);
-                player_ship->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+                //player_ship->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
             }
         }
     }
@@ -254,7 +256,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     if(_player.GetShips()[flagship] != nullptr)
     {
         auto& player_flagship = _player.GetShips()[flagship]->GetSpriteComponent().GetSprite();
-        player_flagship.move(_player.GetShips()[flagship]->GetSpeed() * deltaTime.asSeconds() * 8, 0);
+        player_flagship.move(_player.GetShips()[flagship]->GetSpeed() * deltaTime.asSeconds(), 0);
     }
 
     if(_enemy.GetShips()[flagship] != nullptr)
@@ -347,6 +349,7 @@ void GameScene::Render(sf::RenderWindow& window)
     // Render the minimap
     window.setView(_minimapView);
     window.draw(_background_sprite);
+    window.draw(_mainViewBorder);
     _player.Render(window);
     _enemy.Render(window);
 
@@ -358,8 +361,8 @@ void GameScene::Render(sf::RenderWindow& window)
 void GameScene::InitDistribution()
 {
     generator = GetEngine();
-    CreateDistribution("Ship xPos", 1100, 1100);
-    CreateDistribution("Ship yPos", Constants::LEVEL_HEIGHT/2.0F - Constants::WINDOW_HEIGHT + 100.0F, Constants::LEVEL_HEIGHT/2.0F + Constants::WINDOW_HEIGHT - 100.0F);
+    CreateDistribution("Ship xPos", 0, 0); // Initial values to be updated later
+    CreateDistribution("Ship yPos", 0, 0);
     CreateDistribution("Ship damage", 100, 250);
     dist_code =
     {
@@ -451,9 +454,16 @@ void GameScene::InitMinimapView()
             Constants::VIEWPORT_HEIGHT));
 }
 
+void GameScene::InitMainViewBorder()
+{
+    _mainViewBorder.setSize({Constants::WINDOW_WIDTH,Constants::WINDOW_HEIGHT});
+    _mainViewBorder.setOutlineThickness(20.0f); // Set the thickness of the border
+    _mainViewBorder.setOutlineColor(sf::Color::White); // Set the color of the border
+    _mainViewBorder.setFillColor(sf::Color::Transparent); // Make the inside of the rectangle transparent
+}
+
 void GameScene::InitMinimapBorder()
 {
-    // Initializes the minimap border's size, thickness, colour, and position
     _minimapBorder.setSize({Constants::WINDOW_WIDTH*Constants::VIEWPORT_WIDTH,Constants::WINDOW_HEIGHT*Constants::VIEWPORT_HEIGHT});
     _minimapBorder.setOutlineThickness(2.0f); // Set the thickness of the border
     _minimapBorder.setOutlineColor(sf::Color(128,128,128)); // Set the color of the border
@@ -493,6 +503,7 @@ void GameScene::RandomisePlayerShipSpawnPoint()
     int flagship = 0;
     auto flagship_pos = _player.GetShips()[flagship]->GetSpriteComponent().GetPos();
     UpdateDistribution("Ship xPos", flagship_pos.x, flagship_pos.x);
+    UpdateDistribution("Ship yPos", flagship_pos.y - 200.0f, flagship_pos.y + 200.0f);
     int rand_x = uint_distrib[0](generator);
     int rand_y = uint_distrib[1](generator);
     _player.GetShips()[_player.GetShips().size() - 1]->GetSpriteComponent().SetPos({static_cast<float>(rand_x), static_cast<float>(rand_y)});
