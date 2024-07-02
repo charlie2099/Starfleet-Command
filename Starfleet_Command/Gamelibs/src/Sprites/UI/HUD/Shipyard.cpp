@@ -16,7 +16,7 @@ Shipyard::Shipyard()
 
     spriteComponent2.LoadSprite("Resources/Textures/panel_image.png");
     spriteComponent2.GetSprite().setScale(1.175f,0.125f);
-    spriteComponent2.GetSprite().setColor(sf::Color::Red);
+    spriteComponent2.GetSprite().setColor(sf::Color::Cyan);
     spriteComponent2.GetSprite().setOrigin(0,0);
     //auto xPos = spriteComponent.GetPos().x + spriteComponent.GetSprite().getGlobalBounds().width/2 - spriteComponent2.GetSprite().getGlobalBounds().width/2;
     auto xPos = spriteComponent.GetPos().x + 5;
