@@ -49,7 +49,7 @@ private:
     // HUD
     Shipyard _shipyard;
     sf::Text _credits_text;
-    int _credits = 10000;
+    int _credits = 5000;
 
     // GUI
     //Crosshair crosshair;

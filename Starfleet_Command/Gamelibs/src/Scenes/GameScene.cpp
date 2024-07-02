@@ -162,7 +162,8 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         }
         else if(!_command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds().contains(mousePosWorldCoords))
         {
-            _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({178, 178, 178, 255});
+            //_command_buttons[i]->GetSpriteComponent().GetSprite().setColor({178, 178, 178, 255});
+            _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({255, 255, 255, 100});
         }
 
         //if(_command_buttons[i]->IsHoveredOver())
@@ -194,26 +195,50 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     sf::Vector2f playerFlagshipPos = _player.GetShips()[0]->GetSpriteComponent().GetPos();
     _mainView.setCenter(playerFlagshipPos.x, playerFlagshipPos.y);
 
-    _minimapBorder.setPosition(_mainView.getCenter().x - _minimapBorder.getSize().x/2.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 7.0F);
+    _minimapBorder.setPosition(_mainView.getCenter().x - _mainView.getSize().x/2.0F + 13.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 15.0F);
+    //_minimapBorder.setPosition(_mainView.getCenter().x - _minimapBorder.getSize().x/2.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 7.0F);
+    //_minimapBorder.setPosition(_mainView.getCenter().x - _mainView.getSize().x/2.0F + 13.0F, _mainView.getCenter().y + _minimapBorder.getSize().y/2.0F + 22.0F);
     _mainViewBorder.setPosition(_mainView.getCenter().x - _mainViewBorder.getSize().x/2.0F, _mainView.getCenter().y - _mainViewBorder.getSize().y/2.0F);
-
-    /*if(_player.GetShips()[0]->GetSpriteComponent().GetPos().x >= Constants::WINDOW_WIDTH/2.0F)
-    {
-        sf::Vector2f PLAYER_PERSPECTIVE = { _player.GetShips()[0]->GetSpriteComponent().GetPos().x,_player.GetShips()[0]->GetSpriteComponent().GetPos().y };
-        _cameraViewport.setCenter(PLAYER_PERSPECTIVE);
-    }*/
 
     // TODO: Clean up
     const float NUM_OF_BUTTONS = 5;
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
         const float SPACING = 10;
-        const float OFFSET = NUM_OF_BUTTONS * SPACING;
+        //const float OFFSET = NUM_OF_BUTTONS * SPACING;
         auto button_bounds = _command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds();
-        auto xPos = (_mainView.getCenter().x - 150.0f) + (i * (button_bounds.width+SPACING));
-        auto yPos = _mainView.getCenter().y + _mainView.getSize().y/2.0f - (button_bounds.height/2.0f*3.0f);
+        auto xPos = 0.0F;
+        auto yPos = 0.0F;
+
+        if(i < 2) // Row 1
+        {
+            xPos = _minimapBorder.getPosition().x + (i * (button_bounds.width+SPACING));
+            yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + SPACING;
+        }
+        else if(i >= 2 && i < 4) // Row 2
+        {
+            xPos = _minimapBorder.getPosition().x + ((i-2) * (button_bounds.width+SPACING));
+            yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + button_bounds.height + (SPACING*2.0F);
+        }
+        else if(i >= 4) // Row 3
+        {
+            xPos = _minimapBorder.getPosition().x + ((i-4) * (button_bounds.width+SPACING));
+            yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + (button_bounds.height*2.0F) + (SPACING*3.0F);
+        }
+
+        //auto xPos = _minimapBorder.getPosition().x + (i * (button_bounds.width+SPACING));
+        //auto yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + 15.0F;
+        //auto xPos = (_mainView.getCenter().x - 150.0f) + (i * (button_bounds.width+SPACING));
+        //auto yPos = _mainView.getCenter().y + _mainView.getSize().y/2.0f - (button_bounds.height/2.0f*3.0f);
         _command_buttons[i]->GetSpriteComponent().SetPos({xPos, yPos});
         _command_buttons[i]->Update(window);
+
+        /*if() // TODO: If ship cost associated with button is less than player's credit ammount, lower transparency of button
+        {
+            _command_buttons[i]->GetSpriteComponent().GetSprite().setColor(sf::Color(255, 255, 255, 50));
+            _player.GetShips()[i]->GetShipCost()
+            // Dictionary of command buttons and ship variations?
+        }*/
 
         // Ship cost text alignment to command buttons
         auto button_sprite = _command_buttons[i]->GetSpriteComponent().GetSprite();
@@ -222,8 +247,10 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         _ship_cost_text[i].setPosition(text_xPos, text_yPos);
     }
 
-    _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, _mainView.getCenter().y + _mainView.getSize().y/2.0F - 30.0F);
-    _shipyard.SetPosition({_mainView.getCenter().x - _mainView.getSize().x/2.0F + 15.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 15.0F});
+    _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, _command_buttons[_command_buttons.size()-1]->GetSpriteComponent().GetPos().y + _command_buttons[_command_buttons.size()-1]->GetSpriteComponent().GetSprite().getGlobalBounds().height*1.1F);
+    //_shipyard.SetPosition({_mainView.getCenter().x - _mainView.getSize().x/2.0F + 15.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 15.0F});
+    //_shipyard.SetPosition({_command_buttons[0]->GetSpriteComponent().GetPos().x, _command_buttons[0]->GetSpriteComponent().GetPos().y - _shipyard.GetSpriteComponent().GetSprite().getGlobalBounds().height*2.75F});
+    _shipyard.SetPosition({_minimapBorder.getPosition().x + _minimapBorder.getSize().x + 10.0F, _minimapBorder.getPosition().y});
     _shipyard.Update(window, deltaTime);
     _cursor.Update(window, deltaTime);
     _cursor.SetCursorPos(window, _mainView);
@@ -466,7 +493,7 @@ void GameScene::InitMainViewBorder()
 {
     _mainViewBorder.setSize({Constants::WINDOW_WIDTH,Constants::WINDOW_HEIGHT});
     _mainViewBorder.setOutlineThickness(20.0f); // Set the thickness of the border
-    _mainViewBorder.setOutlineColor(sf::Color::White); // Set the color of the border
+    _mainViewBorder.setOutlineColor(sf::Color(128,128,128)); // Set the color of the border
     _mainViewBorder.setFillColor(sf::Color::Transparent); // Make the inside of the rectangle transparent
 }
 
@@ -567,7 +594,6 @@ sf::Vector2f GameScene::ConstrainViewCenter(const sf::Vector2f& proposedCenter) 
 
 void GameScene::ResetMinimapView()
 {
-    // Reset the center of the view to the original center
     _minimapView.setCenter(_originalMinimapViewCenter);
 
     // Calculate the size adjustment needed to return to original zoom level
@@ -576,14 +602,6 @@ void GameScene::ResetMinimapView()
     // Reset the size of the view to its original size before zooming
     _minimapView.setSize(_minimapView.getSize() * zoomAdjustment);
 
-    // Reset the current zoom level
     _currentZoomLevel = _originalZoomLevel;
-
-    //_minimapView.setCenter(Constants::LEVEL_WIDTH/2.0f,Constants::LEVEL_HEIGHT/2.0f);
-
-    /*_minimapView.setCenter(_originalMinimapViewCenter);
-    _minimapView.setSize(_minimapView.getSize() * (_currentZoomLevel / _originalZoomLevel));
-    _minimapView.zoom(1.0f / _currentZoomLevel); // Reset to original zoom
-    _currentZoomLevel = _originalZoomLevel;*/
 }
 
