@@ -39,6 +39,8 @@ private:
     void CreateDistribution(const std::string& name, int min, int max);
     void UpdateDistribution(const std::string& name, int min, int max);
     static std::mt19937 GetEngine();
+    sf::Vector2f ConstrainViewCenter(const sf::Vector2f& proposedCenter) const;
+    void ResetMinimapView();
 
     // Utility
     Chilli::Cursor _cursor;
@@ -71,9 +73,11 @@ private:
     std::vector<std::uniform_int_distribution<int>> uint_distrib;
     std::map<std::string, int> dist_code;
     int ship_spawned_index = 0;
+    float _originalZoomLevel = 1.0f;
     float _currentZoomLevel = 1.0f;
     bool isDragging = false;
     sf::Vector2i initialMousePosition;
+    sf::Vector2f _originalMinimapViewCenter;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

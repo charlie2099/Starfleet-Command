@@ -42,7 +42,6 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _mainView); // Mouse position translated into world coordinates
-    auto mousePosWorldCoordsOnMinimap = window.mapPixelToCoords(mouse_pos, _minimapView);
 
     if(_minimapBorder.getGlobalBounds().contains(mousePosWorldCoords))
     {
@@ -68,32 +67,40 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
                 // Calculate the difference and adjust the view center
                 sf::Vector2f offset = beforeZoom - afterZoom;
-                _minimapView.setCenter(_minimapView.getCenter() + offset);
+                sf::Vector2f newCenter = _minimapView.getCenter() + offset;
+                _minimapView.setCenter(ConstrainViewCenter(newCenter));
             }
         }
 
+        // Allow moving focus only when zoomed in
         if (_currentZoomLevel < 1.0f)
-        { // Allow moving focus only when zoomed in
-
+        {
             if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
             {
                 isDragging = true;
                 initialMousePosition = mouse_pos;
             }
 
-            if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
+            if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+            {
                 isDragging = false;
             }
 
-            if (event.type == sf::Event::MouseMoved && isDragging) {
+            if (event.type == sf::Event::MouseMoved && isDragging)
+            {
                 sf::Vector2i currentMousePosition = sf::Mouse::getPosition(window);
                 sf::Vector2f delta = window.mapPixelToCoords(initialMousePosition, _minimapView) -
                                      window.mapPixelToCoords(currentMousePosition, _minimapView);
 
-                _minimapView.setCenter(_minimapView.getCenter() + delta);
+                sf::Vector2f newCenter = _minimapView.getCenter() + delta;
+                _minimapView.setCenter(ConstrainViewCenter(newCenter));
                 initialMousePosition = currentMousePosition;
             }
         }
+    }
+    else
+    {
+        ResetMinimapView();
     }
 
     /*if (event.type == sf::Event::MouseButtonPressed)
@@ -445,6 +452,7 @@ void GameScene::InitMinimapView()
 
     // Focus the view/camera on the centre point of the level
     _minimapView.setCenter(Constants::LEVEL_WIDTH/2.0f,Constants::LEVEL_HEIGHT/2.0f);
+    _originalMinimapViewCenter = _minimapView.getCenter();
 
     // Position minimap at top middle of the window and set its size
     _minimapView.setViewport(sf::FloatRect(
@@ -467,7 +475,7 @@ void GameScene::InitMinimapBorder()
     _minimapBorder.setSize({Constants::WINDOW_WIDTH*Constants::VIEWPORT_WIDTH,Constants::WINDOW_HEIGHT*Constants::VIEWPORT_HEIGHT});
     _minimapBorder.setOutlineThickness(2.0f); // Set the thickness of the border
     _minimapBorder.setOutlineColor(sf::Color(128,128,128)); // Set the color of the border
-    _minimapBorder.setFillColor(sf::Color::Transparent); // Make the inside of the rectangle transparent
+    _minimapBorder.setFillColor(sf::Color::Red); // Make the inside of the rectangle transparent
 }
 
 void GameScene::InitPlayerShips()
@@ -538,4 +546,44 @@ std::mt19937 GameScene::GetEngine()
     return generator;
 }
 
+sf::Vector2f GameScene::ConstrainViewCenter(const sf::Vector2f& proposedCenter) const
+{
+    sf::FloatRect levelBounds(0, 0, Constants::LEVEL_WIDTH, Constants::LEVEL_HEIGHT); // Example level bounds
+    sf::Vector2f viewSize = _minimapView.getSize();
+    sf::Vector2f halfViewSize = viewSize / 2.0f;
+
+    // Calculate the permissible bounds for the view center
+    float minX = levelBounds.left + halfViewSize.x;
+    float maxX = levelBounds.left + levelBounds.width - halfViewSize.x;
+    float minY = levelBounds.top + halfViewSize.y;
+    float maxY = levelBounds.top + levelBounds.height - halfViewSize.y;
+
+    // Constrain the center within the permissible bounds
+    float constrainedX = std::max(minX, std::min(proposedCenter.x, maxX));
+    float constrainedY = std::max(minY, std::min(proposedCenter.y, maxY));
+
+    return {constrainedX, constrainedY};
+}
+
+void GameScene::ResetMinimapView()
+{
+    // Reset the center of the view to the original center
+    _minimapView.setCenter(_originalMinimapViewCenter);
+
+    // Calculate the size adjustment needed to return to original zoom level
+    float zoomAdjustment = _originalZoomLevel / _currentZoomLevel;
+
+    // Reset the size of the view to its original size before zooming
+    _minimapView.setSize(_minimapView.getSize() * zoomAdjustment);
+
+    // Reset the current zoom level
+    _currentZoomLevel = _originalZoomLevel;
+
+    //_minimapView.setCenter(Constants::LEVEL_WIDTH/2.0f,Constants::LEVEL_HEIGHT/2.0f);
+
+    /*_minimapView.setCenter(_originalMinimapViewCenter);
+    _minimapView.setSize(_minimapView.getSize() * (_currentZoomLevel / _originalZoomLevel));
+    _minimapView.zoom(1.0f / _currentZoomLevel); // Reset to original zoom
+    _currentZoomLevel = _originalZoomLevel;*/
+}
 
