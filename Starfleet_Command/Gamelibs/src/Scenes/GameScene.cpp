@@ -5,7 +5,9 @@ bool GameScene::Init()
     InitDistribution();
     InitBackground();
     InitCommandButtons();
-    InitCreditsText();
+    InitPlayerCreditsText();
+    InitWavesRemainingText();
+    InitEnemiesRemainingText();
     InitPlayerShips();
     InitEnemyShips();
     InitMainView();
@@ -77,24 +79,24 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         {
             if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
             {
-                isDragging = true;
-                initialMousePosition = mouse_pos;
+                _isDragging = true;
+                _initialMousePosition = mouse_pos;
             }
 
             if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
             {
-                isDragging = false;
+                _isDragging = false;
             }
 
-            if (event.type == sf::Event::MouseMoved && isDragging)
+            if (event.type == sf::Event::MouseMoved && _isDragging)
             {
                 sf::Vector2i currentMousePosition = sf::Mouse::getPosition(window);
-                sf::Vector2f delta = window.mapPixelToCoords(initialMousePosition, _minimapView) -
+                sf::Vector2f delta = window.mapPixelToCoords(_initialMousePosition, _minimapView) -
                                      window.mapPixelToCoords(currentMousePosition, _minimapView);
 
                 sf::Vector2f newCenter = _minimapView.getCenter() + delta;
                 _minimapView.setCenter(ConstrainViewCenter(newCenter));
-                initialMousePosition = currentMousePosition;
+                _initialMousePosition = currentMousePosition;
             }
         }
     }
@@ -125,30 +127,30 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
                 {
                     case 0: // LIGHTFIGHTER
                         _shipyard.SetTrainingSpeed(0.4f);
-                        _credits -= 250;
+                        _playerCreditsCounter -= 250;
                         //_credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
                         break;
                     case 1: // HEAVYFIGHTER
                         _shipyard.SetTrainingSpeed(0.5f);
-                        _credits -= 200;
+                        _playerCreditsCounter -= 200;
                         break;
                     case 2: // SUPPORT
                         _shipyard.SetTrainingSpeed(0.6f);
-                        _credits -= 100;
+                        _playerCreditsCounter -= 100;
                         break;
                     case 3: // DESTROYER
                         _shipyard.SetTrainingSpeed(0.2f);
-                        _credits -= 1000;
+                        _playerCreditsCounter -= 1000;
                         break;
                     case 4: // BATTLESHIP
                         _shipyard.SetTrainingSpeed(0.3f);
-                        _credits -= 750;
+                        _playerCreditsCounter -= 750;
                         break;
                 }
-                _credits_text.setString("Credits: " + std::to_string(_credits));
+                _playerCreditsText.setString("Credits: " + std::to_string(_playerCreditsCounter));
 
                 _shipyard.SetTrainingStatus(true);
-                ship_spawned_index = i;
+                _ship_spawned_index = i;
 
                 // make use of an event?
 
@@ -210,12 +212,17 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto xPos = 0.0F;
         auto yPos = 0.0F;
 
-        if(i < 2) // Row 1
+        if(i < 3) // Row 1
         {
             xPos = _minimapBorder.getPosition().x + (i * (button_bounds.width+SPACING));
             yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + SPACING;
         }
-        else if(i >= 2 && i < 4) // Row 2
+        else if(i >= 3) // Row 2
+        {
+            xPos = _minimapBorder.getPosition().x + ((i-3) * (button_bounds.width+SPACING));
+            yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + button_bounds.height + (SPACING*2.0F);
+        }
+        /*else if(i >= 2 && i < 4) // Row 2
         {
             xPos = _minimapBorder.getPosition().x + ((i-2) * (button_bounds.width+SPACING));
             yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + button_bounds.height + (SPACING*2.0F);
@@ -224,12 +231,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         {
             xPos = _minimapBorder.getPosition().x + ((i-4) * (button_bounds.width+SPACING));
             yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + (button_bounds.height*2.0F) + (SPACING*3.0F);
-        }
+        }*/
 
-        //auto xPos = _minimapBorder.getPosition().x + (i * (button_bounds.width+SPACING));
-        //auto yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + 15.0F;
-        //auto xPos = (_mainView.getCenter().x - 150.0f) + (i * (button_bounds.width+SPACING));
-        //auto yPos = _mainView.getCenter().y + _mainView.getSize().y/2.0f - (button_bounds.height/2.0f*3.0f);
         _command_buttons[i]->GetSpriteComponent().SetPos({xPos, yPos});
         _command_buttons[i]->Update(window);
 
@@ -247,7 +250,9 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         _ship_cost_text[i].setPosition(text_xPos, text_yPos);
     }
 
-    _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, _command_buttons[_command_buttons.size()-1]->GetSpriteComponent().GetPos().y + _command_buttons[_command_buttons.size()-1]->GetSpriteComponent().GetSprite().getGlobalBounds().height*1.1F);
+    _playerCreditsText.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, _command_buttons[_command_buttons.size()-1]->GetSpriteComponent().GetPos().y + _command_buttons[_command_buttons.size()-1]->GetSpriteComponent().GetSprite().getGlobalBounds().height*1.1F);
+    _wavesRemainingText.setPosition(_mainView.getCenter().x - _wavesRemainingText.getGlobalBounds().width/2.0F, _mainView.getCenter().y - Constants::WINDOW_WIDTH/4.0F);
+    _enemiesRemainingText.setPosition(_wavesRemainingText.getPosition().x, _wavesRemainingText.getPosition().y + _wavesRemainingText.getGlobalBounds().height + 5.0F);
     //_shipyard.SetPosition({_mainView.getCenter().x - _mainView.getSize().x/2.0F + 15.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 15.0F});
     //_shipyard.SetPosition({_command_buttons[0]->GetSpriteComponent().GetPos().x, _command_buttons[0]->GetSpriteComponent().GetPos().y - _shipyard.GetSpriteComponent().GetSprite().getGlobalBounds().height*2.75F});
     _shipyard.SetPosition({_minimapBorder.getPosition().x + _minimapBorder.getSize().x + 10.0F, _minimapBorder.getPosition().y});
@@ -260,12 +265,10 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     if(_shipyard.IsTrainingComplete())
     {
-        _player.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(ship_spawned_index));
-        _player.GetShips()[_player.GetShips().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
-        RandomisePlayerShipSpawnPoint();
-        _shipyard.SetTrainingCompletedStatus(false);
+        SpawnShipFromShipyard();
     }
 
+    // Check if player cursor is over their capital ship
     for(auto & player_ship : _player.GetShips())
     {
         if(player_ship != nullptr)
@@ -286,6 +289,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
     }
 
+    // Move player capital ship
     int flagship = 0;
     if(_player.GetShips()[flagship] != nullptr)
     {
@@ -293,18 +297,39 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         player_flagship.move(_player.GetShips()[flagship]->GetSpeed() * deltaTime.asSeconds(), 0);
     }
 
+    // Move enemy capital ship
     if(_enemy.GetShips()[flagship] != nullptr)
     {
         auto& enemy_flagship = _enemy.GetShips()[flagship]->GetSpriteComponent().GetSprite();
         enemy_flagship.move(_enemy.GetShips()[flagship]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
     }
 
+    // Move enemy ships, and shoot at player ships when in range
     for (int i = 1; i < _enemy.GetShips().size(); ++i)
     {
-        _enemy.GetShips()[i]->GetSpriteComponent().GetSprite().move(
-                _enemy.GetShips()[i]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
+        auto& enemy_sprite = _enemy.GetShips()[i]->GetSpriteComponent().GetSprite();
+        enemy_sprite.move(_enemy.GetShips()[i]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
+
+        for(int j = 1; j < _player.GetShips().size(); j++)
+        {
+            if(_player.GetShips()[j] != nullptr)
+            {
+                auto& player_sprite = _player.GetShips()[j]->GetSpriteComponent().GetSprite();
+
+                // Move towards and shoot at player ship if less than 400 pixels away from it
+                if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) <= 400)
+                {
+                    _enemy.GetShips()[i]->SetSpeed(25);
+                    _enemy.GetShips()[i]->MoveTowards(player_sprite.getPosition(), deltaTime);
+
+                    auto& ship = _enemy.GetShips()[i];
+                    ship->ShootAt(ship->GetProjectileType(), ship->GetFireRate(), player_sprite.getPosition());
+                }
+            }
+        }
     }
 
+    // Move player ships, shoot at enemy ships when in range, and destroy player projectiles when too far away
     for(int i = 1; i < _player.GetShips().size(); i++)
     {
         if(_player.GetShips()[i] != nullptr)
@@ -344,7 +369,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                     if(enemy_sprite.getGlobalBounds().intersects(player_bullet.GetSprite().getGlobalBounds()))
                     {
                         //UpdateDistribution("Ship damage", 10, 80);
-                        int rand_damage = uint_distrib[2](generator);
+                        int rand_damage = _uint_distrib[2](_generator);
 
                         //_enemy.GetShips()[j]->TakeDamage(_player.GetShips()[i]->GetDamage());
                         _enemy.GetShips()[j]->GetHealthComponent().TakeDamage(rand_damage * _player.GetShips()[i]->GetDamageScaleFactor(),
@@ -372,7 +397,9 @@ void GameScene::Render(sf::RenderWindow& window)
     {
         window.draw(text);
     }
-    window.draw(_credits_text);
+    window.draw(_playerCreditsText);
+    window.draw(_wavesRemainingText);
+    window.draw(_enemiesRemainingText);
     _player.Render(window);
     _enemy.Render(window);
     //starship->Render(window);
@@ -394,11 +421,11 @@ void GameScene::Render(sf::RenderWindow& window)
 
 void GameScene::InitDistribution()
 {
-    generator = GetEngine();
+    _generator = GetEngine();
     CreateDistribution("Ship xPos", 0, 0); // Initial values to be updated later
     CreateDistribution("Ship yPos", 0, 0);
     CreateDistribution("Ship damage", 100, 250);
-    dist_code =
+    _dist_code =
     {
             {"Ship yPos",1},
             {"Ship xPos",0},
@@ -433,7 +460,7 @@ bool GameScene::InitCommandButtons()
         _command_buttons.emplace_back(std::make_unique<Button>("Resources/Textures/command_button_" + std::to_string(i) + ".png"));
         auto& button_sprite = _command_buttons[i]->GetSpriteComponent().GetSprite();
         button_sprite.setColor({178, 178, 178, 255});
-        button_sprite.scale({0.28f, 0.28f});
+        button_sprite.scale({0.20f, 0.20f});
         auto button_bounds = button_sprite.getGlobalBounds();
         auto xPos = (Constants::WINDOW_WIDTH * 0.5f - button_bounds.width*NUM_OF_BUTTONS/2.0f - OFFSET) + (i * (button_bounds.width+SPACING));
         auto yPos = Constants::WINDOW_HEIGHT - (button_bounds.height/2.0f*3.0f);
@@ -455,17 +482,38 @@ bool GameScene::InitCommandButtons()
     return true;
 }
 
-void GameScene::InitCreditsText()
+void GameScene::InitPlayerCreditsText()
 {
-    _credits_text.setString("Credits: " + std::to_string(_credits));
-    _credits_text.setFillColor(sf::Color(153, 210, 242));
-    _credits_text.setOutlineColor(sf::Color::Black);
-    _credits_text.setOutlineThickness(1);
-    _credits_text.setFont(GetRegularFont());
-    _credits_text.setCharacterSize(20);
-    _credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
+    _playerCreditsText.setString("Credits: " + std::to_string(_playerCreditsCounter));
+    _playerCreditsText.setFillColor(sf::Color(153, 210, 242));
+    _playerCreditsText.setOutlineColor(sf::Color::Black);
+    _playerCreditsText.setOutlineThickness(1);
+    _playerCreditsText.setFont(GetRegularFont());
+    _playerCreditsText.setCharacterSize(14);
+    _playerCreditsText.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
 }
 
+void GameScene::InitWavesRemainingText()
+{
+    _wavesRemainingText.setString("Waves Remaining: " + std::to_string(_wavesRemainingCounter));
+    _wavesRemainingText.setFillColor(sf::Color(153, 210, 242));
+    _wavesRemainingText.setOutlineColor(sf::Color::Black);
+    _wavesRemainingText.setOutlineThickness(1);
+    _wavesRemainingText.setFont(GetRegularFont());
+    _wavesRemainingText.setCharacterSize(24);
+    _wavesRemainingText.setPosition(Constants::WINDOW_WIDTH * 0.5F - _wavesRemainingText.getGlobalBounds().width/2.0F, Constants::WINDOW_HEIGHT * 0.1F);
+}
+
+void GameScene::InitEnemiesRemainingText()
+{
+    _enemiesRemainingText.setString("Hostiles Remaining: " + std::to_string(_enemiesRemainingCounter));
+    _enemiesRemainingText.setFillColor(sf::Color::Red);
+    _enemiesRemainingText.setOutlineColor(sf::Color::Black);
+    _enemiesRemainingText.setOutlineThickness(1);
+    _enemiesRemainingText.setFont(GetRegularFont());
+    _enemiesRemainingText.setCharacterSize(14);
+    _enemiesRemainingText.setPosition(_wavesRemainingText.getPosition().x, _wavesRemainingText.getPosition().y);
+}
 void GameScene::InitMainView()
 {
     // Initialise the main view to the size of the window
@@ -537,29 +585,38 @@ void GameScene::RandomisePlayerShipSpawnPoint()
 {
     int flagship = 0;
     auto flagship_pos = _player.GetShips()[flagship]->GetSpriteComponent().GetPos();
+    auto flagship_bounds = _player.GetShips()[flagship]->GetSpriteComponent().GetSprite().getGlobalBounds();
     UpdateDistribution("Ship xPos", flagship_pos.x, flagship_pos.x);
-    UpdateDistribution("Ship yPos", flagship_pos.y - 200.0f, flagship_pos.y + 200.0f);
-    int rand_x = uint_distrib[0](generator);
-    int rand_y = uint_distrib[1](generator);
+    UpdateDistribution("Ship yPos", flagship_pos.y - Constants::WINDOW_HEIGHT/2.0F + flagship_bounds.height, flagship_pos.y + Constants::WINDOW_HEIGHT/2.0F - flagship_bounds.height);
+    int rand_x = _uint_distrib[0](_generator);
+    int rand_y = _uint_distrib[1](_generator);
+
+    // Regenerate y pos value if too close to the captial ship/mothership
+    while(rand_y >= (flagship_pos.y - flagship_bounds.height)
+       && rand_y <= (flagship_pos.y + flagship_bounds.height))
+    {
+        rand_y = _uint_distrib[1](_generator);
+    }
+
     _player.GetShips()[_player.GetShips().size() - 1]->GetSpriteComponent().SetPos({static_cast<float>(rand_x), static_cast<float>(rand_y)});
 }
 
 void GameScene::CreateDistribution(const std::string& name, int min, int max)
 {
     std::uniform_int_distribution<int> instance{min, max};
-    uint_distrib.emplace_back(instance);
+    _uint_distrib.emplace_back(instance);
 }
 
 void GameScene::UpdateDistribution(const std::string& name, int min, int max)
 {
     std::map<std::string, int>::iterator iter;
-    iter = dist_code.find(name);
+    iter = _dist_code.find(name);
 
-    if(iter == dist_code.end())
+    if(iter == _dist_code.end())
         std::cout << "Key not found" << std::endl;
     else
     {
-        uint_distrib[iter->second] = std::uniform_int_distribution<>(min,max);
+        _uint_distrib[iter->second] = std::uniform_int_distribution<>(min,max);
         std::cout << "Key found!" << std::endl;
     }
 }
@@ -603,5 +660,13 @@ void GameScene::ResetMinimapView()
     _minimapView.setSize(_minimapView.getSize() * zoomAdjustment);
 
     _currentZoomLevel = _originalZoomLevel;
+}
+
+void GameScene::SpawnShipFromShipyard() // TODO: Rename fotr readability
+{
+    _player.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(_ship_spawned_index));
+    _player.GetShips()[_player.GetShips().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+    RandomisePlayerShipSpawnPoint();
+    _shipyard.SetTrainingCompletedStatus(false);
 }
 

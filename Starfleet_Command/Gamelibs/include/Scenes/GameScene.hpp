@@ -21,6 +21,9 @@ public:
     ~GameScene() override = default;
     bool Init() override;
     void EventHandler(sf::RenderWindow& window, sf::Event& event) override;
+
+    void SpawnShipFromShipyard();
+
     void Update(sf::RenderWindow &window, sf::Time deltaTime) override;
     void Render(sf::RenderWindow& window) override;
 
@@ -30,7 +33,9 @@ private:
     bool InitCommandButtons();
     void InitPlayerShips();
     void InitEnemyShips();
-    void InitCreditsText();
+    void InitPlayerCreditsText();
+    void InitWavesRemainingText();
+    void InitEnemiesRemainingText();
     void InitMainView();
     void InitMinimapView();
     void InitMainViewBorder();
@@ -48,8 +53,12 @@ private:
 
     // HUD
     Shipyard _shipyard;
-    sf::Text _credits_text;
-    int _credits = 5000;
+    sf::Text _playerCreditsText;
+    sf::Text _wavesRemainingText;
+    sf::Text _enemiesRemainingText;
+    int _playerCreditsCounter = 5000;
+    int _wavesRemainingCounter = 5;
+    int _enemiesRemainingCounter = 5;
 
     // GUI
     //Crosshair crosshair;
@@ -69,14 +78,14 @@ private:
     // Other
     sf::View _mainView{};
     sf::View _minimapView{};
-    std::mt19937 generator;
-    std::vector<std::uniform_int_distribution<int>> uint_distrib;
-    std::map<std::string, int> dist_code;
-    int ship_spawned_index = 0;
+    std::mt19937 _generator;
+    std::vector<std::uniform_int_distribution<int>> _uint_distrib;
+    std::map<std::string, int> _dist_code;
+    int _ship_spawned_index = 0;
     float _originalZoomLevel = 1.0f;
     float _currentZoomLevel = 1.0f;
-    bool isDragging = false;
-    sf::Vector2i initialMousePosition;
+    bool _isDragging = false;
+    sf::Vector2i _initialMousePosition;
     sf::Vector2f _originalMinimapViewCenter;
 };
 
