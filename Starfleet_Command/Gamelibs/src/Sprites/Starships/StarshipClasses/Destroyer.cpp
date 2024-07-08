@@ -12,6 +12,7 @@ Destroyer::Destroyer()
     _fireRate = 3.0f;
     _shipCost = 1000;
     _projectileType = Projectile::Type::LASER_BLUE_LARGE;
+    _shipName = typeid(Destroyer).name();
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());

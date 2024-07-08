@@ -57,8 +57,8 @@ private:
     sf::Text _wavesRemainingText;
     sf::Text _enemiesRemainingText;
     int _playerCreditsCounter = 5000;
-    int _wavesRemainingCounter = 5;
-    int _enemiesRemainingCounter = 5;
+    int _wavesRemainingCounter = 3;
+    int _enemiesRemainingCounter = 100;
 
     // GUI
     //Crosshair crosshair;
@@ -87,6 +87,7 @@ private:
     bool _isDragging = false;
     sf::Vector2i _initialMousePosition;
     sf::Vector2f _originalMinimapViewCenter;
+    //std::map<Button, IStarship> _buttonToShipDictionary;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

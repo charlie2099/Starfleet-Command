@@ -33,6 +33,7 @@ public:
     virtual std::unique_ptr<HealthBar>& GetHealthBar() = 0;
     virtual std::vector<std::unique_ptr<Projectile>>& GetProjectile() = 0;
     virtual Projectile::Type& GetProjectileType() = 0;
+    virtual std::string& GetShipName() = 0;
     virtual float GetHealth() = 0;
     virtual float GetMaxHealth() = 0;
     virtual float GetDamage() = 0;
@@ -50,6 +51,7 @@ protected:
     std::unique_ptr<HealthBar> _healthBar;
     std::vector<std::unique_ptr<Projectile>> _projectile;
     Projectile::Type _projectileType;
+    std::string _shipName;
     float _maxHealth;
     float _damage;
     float _damageScaleFactor = 1.0F;

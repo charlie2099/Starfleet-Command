@@ -12,6 +12,7 @@ HeavyFighter::HeavyFighter()
     _fireRate = 2.0f;
     _shipCost = 200;
     _projectileType = Projectile::Type::LASER_BLUE_SMALL;
+    _shipName = typeid(HeavyFighter).name();
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());

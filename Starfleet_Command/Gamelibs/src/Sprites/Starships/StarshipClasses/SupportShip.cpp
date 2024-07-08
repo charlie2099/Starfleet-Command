@@ -12,6 +12,7 @@ SupportShip::SupportShip()
     _fireRate = 1.0f;
     _shipCost = 100;
     _projectileType = Projectile::Type::LASER_BLUE_SMALL;
+    _shipName = typeid(SupportShip).name();
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());

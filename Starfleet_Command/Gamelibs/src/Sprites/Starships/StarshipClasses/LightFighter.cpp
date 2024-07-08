@@ -8,10 +8,11 @@ LightFighter::LightFighter()
     _speed = 80;
     _trainingSpeed = 0.5f;
     _damage = 20;
-   _damageScaleFactor = 0.25f;
-   _fireRate = 0.25f;
-   _shipCost = 250;
-   _projectileType = Projectile::Type::LASER_RED_REGULAR;
+    _damageScaleFactor = 0.25f;
+    _fireRate = 0.25f;
+    _shipCost = 250;
+    _projectileType = Projectile::Type::LASER_RED_REGULAR;
+    _shipName = typeid(LightFighter).name();
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());

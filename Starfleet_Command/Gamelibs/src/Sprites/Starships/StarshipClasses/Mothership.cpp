@@ -9,6 +9,7 @@ Mothership::Mothership()
     _damage = 50;
     _fireRate = 1.0f;
     _projectileType = Projectile::Type::LASER_BLUE_LARGE;
+    _shipName = typeid(Mothership).name();
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());

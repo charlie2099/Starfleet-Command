@@ -15,6 +15,22 @@ bool GameScene::Init()
     InitMainViewBorder();
     InitMinimapBorder();
 
+    // TODO:
+    // For each command button in list
+        // Iterate through the list and insert a new key pair to the dictionary
+    /*for (auto& button : _command_buttons)
+    {
+        _buttonToShipDictionary.insert(button, _player.GetShips()[0]);
+        _buttonToShipDictionary[*button] = _player.GetShips()[0];
+        _buttonToShipDictionary.emplace(button, _player.GetShips()[0]);
+        _buttonToShipDictionary.
+    }
+
+    _buttonToShipDictionary =
+    {
+        {_command_buttons[0], _player.GetShips()[0]}
+    };*/
+
     /// StarshipClass newClassType(texture, color, health, damage);
     /// Starship newShip(newClassType);
     /// starshipFighter.AddBehaviour(ChaseBehaviour());
@@ -120,31 +136,37 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             {
                 _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({153, 210, 242, 150});
 
-                //_hud.SetTrainingSpeed(0.8f/*_player.GetShips()[i]->GetTrainingSpeed()*/);
+                /*_shipyard.SetTrainingSpeed(_buttonToShipDictionary[*_command_buttons[i]].GetTrainingSpeed());
+                _playerCreditsCounter -= _buttonToShipDictionary[*_command_buttons[i]].GetShipCost();
+                _shipyard.SetDeployText("Deploying " + _buttonToShipDictionary[*_command_buttons[i]].GetShipName());*/
 
-                // TEMPORARY SOLUTION
+                // TEMPORARY SOLUTION UNTIL DICTIONARY IMPLEMENTED
                 switch (i)
                 {
                     case 0: // LIGHTFIGHTER
                         _shipyard.SetTrainingSpeed(0.4f);
                         _playerCreditsCounter -= 250;
-                        //_credits_text.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
+                        _shipyard.SetDeployText("Deploying Light Fighter");
                         break;
                     case 1: // HEAVYFIGHTER
                         _shipyard.SetTrainingSpeed(0.5f);
                         _playerCreditsCounter -= 200;
+                        _shipyard.SetDeployText("Deploying Support Ship"); // Support Shuttle?
                         break;
                     case 2: // SUPPORT
                         _shipyard.SetTrainingSpeed(0.6f);
                         _playerCreditsCounter -= 100;
+                        _shipyard.SetDeployText("Deploying Heavy Fighter");
                         break;
                     case 3: // DESTROYER
                         _shipyard.SetTrainingSpeed(0.2f);
                         _playerCreditsCounter -= 1000;
+                        _shipyard.SetDeployText("Deploying Destroyer");
                         break;
                     case 4: // BATTLESHIP
                         _shipyard.SetTrainingSpeed(0.3f);
                         _playerCreditsCounter -= 750;
+                        _shipyard.SetDeployText("Deploying Battleship");
                         break;
                 }
                 _playerCreditsText.setString("Credits: " + std::to_string(_playerCreditsCounter));
@@ -153,13 +175,6 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
                 _ship_spawned_index = i;
 
                 // make use of an event?
-
-                //if(_hud.IsTrainingComplete())
-                //{
-                //    _player.CreateShip(static_cast<OLDStarship::Type>(i));
-                //    _player.GetShips()[_player.GetShips().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
-                //    RandomiseShipSpawnPoint();
-                //}
             }
         }
         else if(!_command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds().contains(mousePosWorldCoords))
@@ -167,25 +182,6 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             //_command_buttons[i]->GetSpriteComponent().GetSprite().setColor({178, 178, 178, 255});
             _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({255, 255, 255, 100});
         }
-
-        //if(_command_buttons[i]->IsHoveredOver())
-        //{
-        //    _command_buttons[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
-        //
-        //    if (event.type == sf::Event::MouseButtonPressed)
-        //    {
-        //        _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({153, 210, 242, 150});
-        //
-        //        _player.CreateShip(static_cast<OLDStarship::Type>(i));
-        //        _player.GetShips()[_player.GetShips().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
-        //
-        //        RandomiseShipSpawnPoint();
-        //    }
-        //}
-        //else if(!_command_buttons[i]->IsHoveredOver())
-        //{
-        //    _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({178, 178, 178, 255});
-        //}
     }
 }
 
@@ -252,7 +248,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     _playerCreditsText.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, _command_buttons[_command_buttons.size()-1]->GetSpriteComponent().GetPos().y + _command_buttons[_command_buttons.size()-1]->GetSpriteComponent().GetSprite().getGlobalBounds().height*1.1F);
     _wavesRemainingText.setPosition(_mainView.getCenter().x - _wavesRemainingText.getGlobalBounds().width/2.0F, _mainView.getCenter().y - Constants::WINDOW_WIDTH/4.0F);
-    _enemiesRemainingText.setPosition(_wavesRemainingText.getPosition().x, _wavesRemainingText.getPosition().y + _wavesRemainingText.getGlobalBounds().height + 5.0F);
+    _enemiesRemainingText.setPosition(_wavesRemainingText.getPosition().x + _wavesRemainingText.getGlobalBounds().width/2.0F - _enemiesRemainingText.getGlobalBounds().width/2.0F, _wavesRemainingText.getPosition().y + _wavesRemainingText.getGlobalBounds().height + 5.0F);
     //_shipyard.SetPosition({_mainView.getCenter().x - _mainView.getSize().x/2.0F + 15.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 15.0F});
     //_shipyard.SetPosition({_command_buttons[0]->GetSpriteComponent().GetPos().x, _command_buttons[0]->GetSpriteComponent().GetPos().y - _shipyard.GetSpriteComponent().GetSprite().getGlobalBounds().height*2.75F});
     _shipyard.SetPosition({_minimapBorder.getPosition().x + _minimapBorder.getSize().x + 10.0F, _minimapBorder.getPosition().y});
@@ -277,13 +273,13 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, player_ship->GetSpriteComponent().GetSprite().getGlobalBounds()))
             {
                 _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::Cyan);
-                player_ship->SetHealthBarVisibility(true);
+                //player_ship->SetHealthBarVisibility(true);
                 //player_ship->GetSpriteComponent().GetSprite().setColor(sf::Color::Cyan);
             }
             else
             {
                 _cursor.SetCursorType(Chilli::Cursor::DEFAULT, sf::Color::White);
-                player_ship->SetHealthBarVisibility(false);
+                //player_ship->SetHealthBarVisibility(false);
                 //player_ship->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
             }
         }
@@ -325,6 +321,23 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                     auto& ship = _enemy.GetShips()[i];
                     ship->ShootAt(ship->GetProjectileType(), ship->GetFireRate(), player_sprite.getPosition());
                 }
+
+                for(int k = 0; k < _enemy.GetShips()[i]->GetProjectile().size(); k++)
+                {
+                    auto& enemy_bullet = _enemy.GetShips()[i]->GetProjectile()[k]->GetSpriteComponent();
+
+                    // Destroy projectiles if collided with enemy ship, and inflict damage to enemy ship
+                    if(player_sprite.getGlobalBounds().intersects(enemy_bullet.GetSprite().getGlobalBounds()))
+                    {
+                        //UpdateDistribution("Ship damage", 10, 80);
+                        int rand_damage = _uint_distrib[2](_generator);
+
+                        //_enemy.GetShips()[j]->TakeDamage(_player.GetShips()[i]->GetDamage());
+                        _player.GetShips()[j]->GetHealthComponent().TakeDamage(rand_damage * _enemy.GetShips()[i]->GetDamageScaleFactor(),
+                                                                              _player.GetShips()[j]->GetSpriteComponent().GetPos());
+                        _enemy.GetShips()[i]->GetProjectile().erase(_enemy.GetShips()[i]->GetProjectile().begin() + k);
+                    }
+                }
             }
         }
     }
@@ -332,6 +345,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     // Move player ships, shoot at enemy ships when in range, and destroy player projectiles when too far away
     for(int i = 1; i < _player.GetShips().size(); i++)
     {
+        // If said player ship hasn't been destroyed
         if(_player.GetShips()[i] != nullptr)
         {
             auto& player_sprite = _player.GetShips()[i]->GetSpriteComponent().GetSprite();
@@ -352,6 +366,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& enemy_sprite = _enemy.GetShips()[j]->GetSpriteComponent().GetSprite();
 
                 // Move towards and shoot at enemy ship if less than 400 pixels away from it
+                // TODO: Instead of hardcoding the range, add a GetRange() method to starship class.
                 if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) <= 400)
                 {
                     _player.GetShips()[i]->SetSpeed(25);
@@ -365,7 +380,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 {
                     auto& player_bullet = _player.GetShips()[i]->GetProjectile()[k]->GetSpriteComponent();
 
-                    // Destroy projectiles if collided with enemy ship
+                    // Destroy projectiles if collided with enemy ship, and inflict damage to enemy ship
                     if(enemy_sprite.getGlobalBounds().intersects(player_bullet.GetSprite().getGlobalBounds()))
                     {
                         //UpdateDistribution("Ship damage", 10, 80);
@@ -514,6 +529,7 @@ void GameScene::InitEnemiesRemainingText()
     _enemiesRemainingText.setCharacterSize(14);
     _enemiesRemainingText.setPosition(_wavesRemainingText.getPosition().x, _wavesRemainingText.getPosition().y);
 }
+
 void GameScene::InitMainView()
 {
     // Initialise the main view to the size of the window

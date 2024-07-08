@@ -31,6 +31,7 @@ public:
     std::unique_ptr<HealthBar>& GetHealthBar() override { return _healthBar; };
     std::vector<std::unique_ptr<Projectile>>& GetProjectile() override { return _projectile; };
     Projectile::Type& GetProjectileType() override { return _projectileType; };
+    std::string& GetShipName() override { return _shipName; };
     float GetHealth() override { return _healthComponent.GetHealth(); };
     float GetMaxHealth() override { return _maxHealth; };
     float GetDamage() override { return _damage; };
