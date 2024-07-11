@@ -4,7 +4,7 @@ Battleship::Battleship()
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_battleship.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-    _healthComponent.SetHealth(500);
+    _healthComponent.SetHealth(2000);
     _speed = 30;
     _trainingSpeed = 0.8f;
     _damage = 75;

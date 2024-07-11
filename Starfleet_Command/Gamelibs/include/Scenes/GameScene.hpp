@@ -21,9 +21,6 @@ public:
     ~GameScene() override = default;
     bool Init() override;
     void EventHandler(sf::RenderWindow& window, sf::Event& event) override;
-
-    void SpawnShipFromShipyard();
-
     void Update(sf::RenderWindow &window, sf::Time deltaTime) override;
     void Render(sf::RenderWindow& window) override;
 
@@ -46,6 +43,8 @@ private:
     static std::mt19937 GetEngine();
     sf::Vector2f ConstrainViewCenter(const sf::Vector2f& proposedCenter) const;
     void ResetMinimapView();
+    void SpawnShipFromShipyard();
+    void RescaleMinimap(float scaleFactorX, float scaleFactorY);
 
     // Utility
     Chilli::Cursor _cursor;
@@ -88,6 +87,7 @@ private:
     sf::Vector2i _initialMousePosition;
     sf::Vector2f _originalMinimapViewCenter;
     //std::map<Button, IStarship> _buttonToShipDictionary;
+    bool _isMapOpen = false;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

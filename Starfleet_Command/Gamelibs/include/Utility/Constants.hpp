@@ -9,9 +9,10 @@ struct Constants
     static constexpr float LEVEL_WIDTH   = 4096.F; // x size of background image
     static constexpr float LEVEL_HEIGHT  = 2304.F; // y size of background image  (scaled up from 1280x720)
 
-    static constexpr float VIEWPORT_WIDTH  = 0.2f;                        // original 0.2f
-    static constexpr float VIEWPORT_HEIGHT = 0.2f;                        // original 0.2f
-    static constexpr float VIEWPORT_LEFT   = 0.11f - VIEWPORT_WIDTH/2.0F; // original 0.5f - VIEWPORT_WIDTH/2.0f
+    // TODO: Rename to MINIMAP_VIEWPORT?
+    static constexpr float VIEWPORT_WIDTH  = 0.25f;                         // original 0.2f
+    static constexpr float VIEWPORT_HEIGHT = 0.25f;                         // original 0.2f
+    static constexpr float VIEWPORT_LEFT   = 0.135f - VIEWPORT_WIDTH/2.0F;  // original 0.5f - VIEWPORT_WIDTH/2.0f
     static constexpr float VIEWPORT_TOP    = 0.021f;                       // original 0.01f
 };
 

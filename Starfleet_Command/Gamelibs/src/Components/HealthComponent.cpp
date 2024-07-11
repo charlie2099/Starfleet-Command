@@ -60,17 +60,17 @@ void HealthComponent::Render(sf::RenderWindow &window)
     }
 }
 
-void HealthComponent::AddBasicObserver(HealthComponent::BasicHealthEvent observer)
+void HealthComponent::AddBasicObserver(BasicHealthEvent observer)
 {
     _basicObservers.insert(observer);
 }
 
-void HealthComponent::AddAgnosticObserver(HealthComponent::AgnosticHealthEvent observer)
+void HealthComponent::AddAgnosticObserver(AgnosticHealthEvent observer)
 {
     _agnosticObservers.insert(observer);
 }
 
-void HealthComponent::InvokeSimpleEvent(HealthComponent::EventID eventId)
+void HealthComponent::InvokeSimpleEvent(EventID eventId)
 {
     /// Invokes the callback function assigned to the specified event id?
     auto range = _basicObservers.equal_range(eventId);
@@ -80,7 +80,7 @@ void HealthComponent::InvokeSimpleEvent(HealthComponent::EventID eventId)
     }
 }
 
-void HealthComponent::InvokeAgnosticEvent(HealthComponent::EventID eventId, const std::any& anyData)
+void HealthComponent::InvokeAgnosticEvent(EventID eventId, const std::any& anyData)
 {
     /// SHIP_SPAWNED event is invoked (agnostic)
     auto ag_range = _agnosticObservers.equal_range(eventId);

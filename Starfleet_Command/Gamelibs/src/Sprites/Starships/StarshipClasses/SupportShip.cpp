@@ -4,7 +4,7 @@ SupportShip::SupportShip()
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_scout.png");
     _spriteComponent.GetSprite().scale({0.30F, 0.30F});
-    _healthComponent.SetHealth(75);
+    _healthComponent.SetHealth(150);
     _speed = 100;
     _trainingSpeed = 0.6f;
     _damage = 10;

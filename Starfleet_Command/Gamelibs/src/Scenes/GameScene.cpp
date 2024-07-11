@@ -61,6 +61,14 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _mainView); // Mouse position translated into world coordinates
 
+    // Opening Minimap
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Key::M)
+    {
+        // If map is not open then scale it up, otherwise scale it down
+        !_isMapOpen ? RescaleMinimap(1.5F, 1.5F) : RescaleMinimap(1.0F, 1.0F);
+        _isMapOpen = !_isMapOpen;
+    }
+
     if(_minimapBorder.getGlobalBounds().contains(mousePosWorldCoords))
     {
         if (event.type == sf::Event::MouseWheelScrolled)
@@ -273,13 +281,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, player_ship->GetSpriteComponent().GetSprite().getGlobalBounds()))
             {
                 _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::Cyan);
-                //player_ship->SetHealthBarVisibility(true);
                 //player_ship->GetSpriteComponent().GetSprite().setColor(sf::Color::Cyan);
             }
             else
             {
                 _cursor.SetCursorType(Chilli::Cursor::DEFAULT, sf::Color::White);
-                //player_ship->SetHealthBarVisibility(false);
                 //player_ship->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
             }
         }
@@ -306,7 +312,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto& enemy_sprite = _enemy.GetShips()[i]->GetSpriteComponent().GetSprite();
         enemy_sprite.move(_enemy.GetShips()[i]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
 
-        for(int j = 1; j < _player.GetShips().size(); j++)
+        for(int j = 0; j < _player.GetShips().size(); j++)
         {
             if(_player.GetShips()[j] != nullptr)
             {
@@ -686,3 +692,13 @@ void GameScene::SpawnShipFromShipyard() // TODO: Rename fotr readability
     _shipyard.SetTrainingCompletedStatus(false);
 }
 
+void GameScene::RescaleMinimap(float scaleFactorX, float scaleFactorY)
+{
+    _minimapView.setViewport(sf::FloatRect(
+        Constants::VIEWPORT_LEFT,
+        Constants::VIEWPORT_TOP,
+        Constants::VIEWPORT_WIDTH * scaleFactorX,
+        Constants::VIEWPORT_HEIGHT * scaleFactorY));
+
+    _minimapBorder.setSize({Constants::WINDOW_WIDTH*Constants::VIEWPORT_WIDTH * scaleFactorX,Constants::WINDOW_HEIGHT*Constants::VIEWPORT_HEIGHT * scaleFactorY});
+}

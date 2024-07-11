@@ -4,7 +4,7 @@ Destroyer::Destroyer()
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_destroyer.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-    _healthComponent.SetHealth(250);
+    _healthComponent.SetHealth(1500);
     _speed = 40;
     _trainingSpeed = 0.9f;
     _damage = 150;
