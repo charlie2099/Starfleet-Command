@@ -6,13 +6,14 @@ Destroyer::Destroyer()
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
     _healthComponent.SetHealth(1500);
     _speed = 40;
-    _trainingSpeed = 0.9f;
+    _trainingSpeed = 0.2f;
     _damage = 150;
     _damageScaleFactor = 1.0f;
     _fireRate = 3.0f;
+    _attackRange = 800.0F;
     _shipCost = 1000;
     _projectileType = Projectile::Type::LASER_BLUE_LARGE;
-    _shipName = typeid(Destroyer).name();
+    _shipName = "Destroyer";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -121,6 +122,11 @@ void Destroyer::SetSpeed(float speed)
 void Destroyer::SetAcceleration(float acceleration)
 {
     _acceleration = acceleration;
+}
+
+void Destroyer::SetAttackRange(float range)
+{
+    _attackRange = range;
 }
 
 

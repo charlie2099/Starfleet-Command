@@ -6,13 +6,14 @@ Battleship::Battleship()
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
     _healthComponent.SetHealth(2000);
     _speed = 30;
-    _trainingSpeed = 0.8f;
+    _trainingSpeed = 0.3f;
     _damage = 75;
     _damageScaleFactor = 0.75f;
     _fireRate = 3.0f;
+    _attackRange = 600.0F;
     _shipCost = 750;
     _projectileType = Projectile::Type::LASER_BLUE_LARGE;
-    _shipName = typeid(Battleship).name();
+    _shipName = "Battleship";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -121,5 +122,10 @@ void Battleship::SetSpeed(float speed)
 void Battleship::SetAcceleration(float acceleration)
 {
     _acceleration = acceleration;
+}
+
+void Battleship::SetAttackRange(float range)
+{
+    _attackRange = range;
 }
 

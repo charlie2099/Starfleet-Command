@@ -86,8 +86,14 @@ private:
     bool _isDragging = false;
     sf::Vector2i _initialMousePosition;
     sf::Vector2f _originalMinimapViewCenter;
-    //std::map<Button, IStarship> _buttonToShipDictionary;
+    std::map<Button*, IStarship*> _buttonShipDictionary;
     bool _isMapOpen = false;
+
+    std::unique_ptr<LightFighter> light_fighter;
+    std::unique_ptr<HeavyFighter> heavy_fighter;
+    std::unique_ptr<SupportShip> support_ship;
+    std::unique_ptr<Destroyer> destroyer;
+    std::unique_ptr<Battleship> battleship;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

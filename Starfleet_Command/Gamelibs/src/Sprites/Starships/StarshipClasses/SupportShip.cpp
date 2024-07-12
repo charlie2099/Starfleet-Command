@@ -10,9 +10,10 @@ SupportShip::SupportShip()
     _damage = 10;
     _damageScaleFactor = 0.10f;
     _fireRate = 1.0f;
+    _attackRange = 400.0F;
     _shipCost = 100;
     _projectileType = Projectile::Type::LASER_BLUE_SMALL;
-    _shipName = typeid(SupportShip).name();
+    _shipName = "Support Ship";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -121,6 +122,11 @@ void SupportShip::SetSpeed(float speed)
 void SupportShip::SetAcceleration(float acceleration)
 {
     _acceleration = acceleration;
+}
+
+void SupportShip::SetAttackRange(float range)
+{
+    _attackRange = range;
 }
 
 

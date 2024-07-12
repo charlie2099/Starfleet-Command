@@ -8,8 +8,9 @@ Mothership::Mothership()
     _speed = 10;
     _damage = 50;
     _fireRate = 1.0f;
+    _attackRange = 400.0F;
     _projectileType = Projectile::Type::LASER_BLUE_LARGE;
-    _shipName = typeid(Mothership).name();
+    _shipName = "Mothership";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -118,5 +119,10 @@ void Mothership::SetSpeed(float speed)
 void Mothership::SetAcceleration(float acceleration)
 {
     _acceleration = acceleration;
+}
+
+void Mothership::SetAttackRange(float range)
+{
+    _attackRange = range;
 }
 

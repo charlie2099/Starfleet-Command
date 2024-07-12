@@ -15,21 +15,24 @@ bool GameScene::Init()
     InitMainViewBorder();
     InitMinimapBorder();
 
-    // TODO:
-    // For each command button in list
-        // Iterate through the list and insert a new key pair to the dictionary
-    /*for (auto& button : _command_buttons)
+
+    light_fighter = std::make_unique<LightFighter>();
+    heavy_fighter = std::make_unique<HeavyFighter>();
+    support_ship = std::make_unique<SupportShip>();
+    destroyer = std::make_unique<Destroyer>();
+    battleship = std::make_unique<Battleship>();
+
+    _buttonShipDictionary[_command_buttons[0].get()] = light_fighter.get();
+    _buttonShipDictionary[_command_buttons[1].get()] = heavy_fighter.get();
+    _buttonShipDictionary[_command_buttons[2].get()] = support_ship.get();
+    _buttonShipDictionary[_command_buttons[3].get()] = destroyer.get();
+    _buttonShipDictionary[_command_buttons[4].get()] = battleship.get();
+
+    for(int i = 0; i < _command_buttons.size(); i++)
     {
-        _buttonToShipDictionary.insert(button, _player.GetShips()[0]);
-        _buttonToShipDictionary[*button] = _player.GetShips()[0];
-        _buttonToShipDictionary.emplace(button, _player.GetShips()[0]);
-        _buttonToShipDictionary.
+        std::cout << _buttonShipDictionary[_command_buttons[i].get()]->GetTrainingSpeed() << std::endl;
     }
 
-    _buttonToShipDictionary =
-    {
-        {_command_buttons[0], _player.GetShips()[0]}
-    };*/
 
     /// StarshipClass newClassType(texture, color, health, damage);
     /// Starship newShip(newClassType);
@@ -144,45 +147,17 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             {
                 _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({153, 210, 242, 150});
 
-                /*_shipyard.SetTrainingSpeed(_buttonToShipDictionary[*_command_buttons[i]].GetTrainingSpeed());
-                _playerCreditsCounter -= _buttonToShipDictionary[*_command_buttons[i]].GetShipCost();
-                _shipyard.SetDeployText("Deploying " + _buttonToShipDictionary[*_command_buttons[i]].GetShipName());*/
+                auto& assignedShipToButton = _buttonShipDictionary[_command_buttons[i].get()];
+                _shipyard.SetTrainingSpeed(assignedShipToButton->GetTrainingSpeed());
+                _playerCreditsCounter -= static_cast<int>(assignedShipToButton->GetShipCost());
+                _shipyard.SetDeployText("Deploying " + assignedShipToButton->GetShipName());
 
-                // TEMPORARY SOLUTION UNTIL DICTIONARY IMPLEMENTED
-                switch (i)
-                {
-                    case 0: // LIGHTFIGHTER
-                        _shipyard.SetTrainingSpeed(0.4f);
-                        _playerCreditsCounter -= 250;
-                        _shipyard.SetDeployText("Deploying Light Fighter");
-                        break;
-                    case 1: // HEAVYFIGHTER
-                        _shipyard.SetTrainingSpeed(0.5f);
-                        _playerCreditsCounter -= 200;
-                        _shipyard.SetDeployText("Deploying Support Ship"); // Support Shuttle?
-                        break;
-                    case 2: // SUPPORT
-                        _shipyard.SetTrainingSpeed(0.6f);
-                        _playerCreditsCounter -= 100;
-                        _shipyard.SetDeployText("Deploying Heavy Fighter");
-                        break;
-                    case 3: // DESTROYER
-                        _shipyard.SetTrainingSpeed(0.2f);
-                        _playerCreditsCounter -= 1000;
-                        _shipyard.SetDeployText("Deploying Destroyer");
-                        break;
-                    case 4: // BATTLESHIP
-                        _shipyard.SetTrainingSpeed(0.3f);
-                        _playerCreditsCounter -= 750;
-                        _shipyard.SetDeployText("Deploying Battleship");
-                        break;
-                }
                 _playerCreditsText.setString("Credits: " + std::to_string(_playerCreditsCounter));
 
                 _shipyard.SetTrainingStatus(true);
                 _ship_spawned_index = i;
 
-                // make use of an event?
+                // TODO: Invoke an agnostic event here notifying subscribers that a ship has finished training?
             }
         }
         else if(!_command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds().contains(mousePosWorldCoords))
@@ -319,7 +294,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& player_sprite = _player.GetShips()[j]->GetSpriteComponent().GetSprite();
 
                 // Move towards and shoot at player ship if less than 400 pixels away from it
-                if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) <= 400)
+                if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) <= _enemy.GetShips()[i]->GetAttackRange())
                 {
                     _enemy.GetShips()[i]->SetSpeed(25);
                     _enemy.GetShips()[i]->MoveTowards(player_sprite.getPosition(), deltaTime);
@@ -373,7 +348,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
                 // Move towards and shoot at enemy ship if less than 400 pixels away from it
                 // TODO: Instead of hardcoding the range, add a GetRange() method to starship class.
-                if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) <= 400)
+                if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) <= _player.GetShips()[i]->GetAttackRange())
                 {
                     _player.GetShips()[i]->SetSpeed(25);
                     _player.GetShips()[i]->MoveTowards(enemy_sprite.getPosition(), deltaTime);
@@ -548,7 +523,7 @@ void GameScene::InitMinimapView()
     _minimapView.setSize(Constants::LEVEL_WIDTH,Constants::LEVEL_HEIGHT);
 
     // Focus the view/camera on the centre point of the level
-    _minimapView.setCenter(Constants::LEVEL_WIDTH/2.0f,Constants::LEVEL_HEIGHT/2.0f);
+    _minimapView.setCenter(Constants::LEVEL_WIDTH/2.0F,Constants::LEVEL_HEIGHT/2.0F);
     _originalMinimapViewCenter = _minimapView.getCenter();
 
     // Position minimap at top middle of the window and set its size
@@ -601,6 +576,13 @@ void GameScene::InitEnemyShips()
         _enemy.GetShips()[i + 1]->GetSpriteComponent().GetSprite().setRotation(180);
         _enemy.GetShips()[i + 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
     }
+
+    /*_enemy.GetShips()[1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.YELLOW);
+    _enemy.GetShips()[2]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTRED);
+    _enemy.GetShips()[3]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+    _enemy.GetShips()[4]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.BLUEVIOLET);
+    _enemy.GetShips()[5]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);*/
+
 }
 
 void GameScene::RandomisePlayerShipSpawnPoint()
@@ -687,7 +669,7 @@ void GameScene::ResetMinimapView()
 void GameScene::SpawnShipFromShipyard() // TODO: Rename fotr readability
 {
     _player.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(_ship_spawned_index));
-    _player.GetShips()[_player.GetShips().size() - 1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
+    _player.GetShips()[_player.GetShips().size()-1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
     RandomisePlayerShipSpawnPoint();
     _shipyard.SetTrainingCompletedStatus(false);
 }

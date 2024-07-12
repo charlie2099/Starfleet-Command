@@ -26,6 +26,7 @@ public:
     virtual void SetDamage(float damage) = 0;
     virtual void SetSpeed(float speed) = 0;
     virtual void SetAcceleration(float acceleration) = 0;
+    virtual void SetAttackRange(float range) = 0;
 
     /// Accessors
     virtual SpriteComponent& GetSpriteComponent() = 0;
@@ -42,6 +43,7 @@ public:
     virtual float GetTrainingSpeed() = 0;
     virtual float GetFireRate() = 0;
     virtual float GetAcceleration() = 0;
+    virtual float GetAttackRange() = 0;
     virtual float GetShipCost() = 0;
     virtual bool IsHealthBarVisible() =0;
 
@@ -59,6 +61,7 @@ protected:
     float _trainingSpeed = 0.5f;
     float _fireRate = 1.0F;
     float _acceleration = 0.0F;
+    float _attackRange = 400.0F;
     float _shipCost = 100;
     bool _healthBarIsVisible = false;
     float timePassed = 0;

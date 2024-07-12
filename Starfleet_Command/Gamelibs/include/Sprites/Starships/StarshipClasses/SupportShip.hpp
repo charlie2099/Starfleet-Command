@@ -24,24 +24,26 @@ public:
     void SetDamage(float damage) override;
     void SetSpeed(float speed) override;
     void SetAcceleration(float acceleration) override;
+    void SetAttackRange(float range) override;
 
     /// Accessors
-    SpriteComponent& GetSpriteComponent() override { return _spriteComponent; };
-    HealthComponent& GetHealthComponent() override { return _healthComponent; };
-    std::unique_ptr<HealthBar>& GetHealthBar() override { return _healthBar; };
-    std::vector<std::unique_ptr<Projectile>>& GetProjectile() override { return _projectile; };
-    Projectile::Type& GetProjectileType() override { return _projectileType; };
-    std::string& GetShipName() override { return _shipName; };
-    float GetHealth() override { return _healthComponent.GetHealth(); };
-    float GetMaxHealth() override { return _maxHealth; };
-    float GetDamage() override { return _damage; };
-    float GetDamageScaleFactor() override { return _damageScaleFactor; };
-    float GetSpeed() override { return _speed; };
-    float GetTrainingSpeed() override { return _trainingSpeed; };
-    float GetFireRate() override { return _fireRate; };
-    float GetAcceleration() override { return _acceleration; };
-    float GetShipCost() override { return _shipCost; };
-    bool IsHealthBarVisible() override { return _healthBarIsVisible; };
+    SpriteComponent& GetSpriteComponent() override { return _spriteComponent; }
+    HealthComponent& GetHealthComponent() override { return _healthComponent; }
+    std::unique_ptr<HealthBar>& GetHealthBar() override { return _healthBar; }
+    std::vector<std::unique_ptr<Projectile>>& GetProjectile() override { return _projectile; }
+    Projectile::Type& GetProjectileType() override { return _projectileType; }
+    std::string& GetShipName() override { return _shipName; }
+    float GetHealth() override { return _healthComponent.GetHealth(); }
+    float GetMaxHealth() override { return _maxHealth; }
+    float GetDamage() override { return _damage; }
+    float GetDamageScaleFactor() override { return _damageScaleFactor; }
+    float GetSpeed() override { return _speed; }
+    float GetTrainingSpeed() override { return _trainingSpeed; }
+    float GetFireRate() override { return _fireRate; }
+    float GetAcceleration() override { return _acceleration; }
+    float GetAttackRange() override { return _attackRange; }
+    float GetShipCost() override { return _shipCost; }
+    bool IsHealthBarVisible() override { return _healthBarIsVisible; }
 };
 
 #endif //STARFLEET_COMMAND_SUPPORTSHIP_HPP

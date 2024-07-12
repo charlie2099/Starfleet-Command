@@ -6,13 +6,14 @@ HeavyFighter::HeavyFighter()
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
     _healthComponent.SetHealth(300);
     _speed = 70;
-    _trainingSpeed = 0.4f;
+    _trainingSpeed = 0.5f;
     _damage = 0;
     _damageScaleFactor = 0.10f;
     _fireRate = 2.0f;
+    _attackRange = 400.0F;
     _shipCost = 200;
     _projectileType = Projectile::Type::LASER_BLUE_SMALL;
-    _shipName = typeid(HeavyFighter).name();
+    _shipName = "Heavy Fighter";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -123,7 +124,10 @@ void HeavyFighter::SetAcceleration(float acceleration)
     _acceleration = acceleration;
 }
 
-
+void HeavyFighter::SetAttackRange(float range)
+{
+    _attackRange = range;
+}
 
 
 
