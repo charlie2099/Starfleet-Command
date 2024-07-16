@@ -85,17 +85,17 @@ void Battleship::MoveTowards(sf::Vector2f target, sf::Time deltaTime)
 
 void Battleship::ShootAt(Projectile::Type projectile, float fireRate, sf::Vector2f target)
 {
-    if(timePassed < clock.getElapsedTime().asSeconds())
+    if(_timePassed < _clock.getElapsedTime().asSeconds())
     {
-        timePassed = clock.getElapsedTime().asSeconds();
+        _timePassed = _clock.getElapsedTime().asSeconds();
     }
 
-    if(clock.getElapsedTime().asSeconds() >= timePassed)
+    if(_clock.getElapsedTime().asSeconds() >= _timePassed)
     {
         auto spawnPos = _spriteComponent.GetPos();
         _projectile.emplace_back(std::make_unique<Projectile>(projectile, spawnPos, target));
 
-        timePassed += fireRate;
+        _timePassed += fireRate;
     }
 }
 

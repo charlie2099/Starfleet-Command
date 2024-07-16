@@ -44,6 +44,7 @@ void Shipyard::Update(sf::RenderWindow& window, sf::Time time)
         {
             _spriteComponent2.GetSprite().setScale(0.0f, 0.125f);
             _trainingIsComplete = true;
+            InvokeSimpleEvent(EventID::TRAINING_COMPLETED);
             _isTraining = false;
         }
     }
@@ -51,10 +52,10 @@ void Shipyard::Update(sf::RenderWindow& window, sf::Time time)
 
 void Shipyard::Render(sf::RenderWindow &window)
 {
+    window.draw(_spriteComponent.GetSprite());
+    window.draw(_spriteComponent2.GetSprite());
     if(_isTraining)
     {
-        window.draw(_spriteComponent.GetSprite());
-        window.draw(_spriteComponent2.GetSprite());
         window.draw(_deployText);
     }
 }
@@ -90,3 +91,17 @@ void Shipyard::SetDeployText(const std::string& text)
     _deployText.setString(text);
 }
 
+void Shipyard::AddBasicObserver(BasicShipyardEvent observer)
+{
+    _basicObservers.insert(observer);
+}
+
+void Shipyard::InvokeSimpleEvent(EventID eventId)
+{
+    /// Invokes the callback function assigned to the specified event id?
+    auto range = _basicObservers.equal_range(eventId);
+    for(auto iter = range.first; iter != range.second; ++iter)
+    {
+        iter->second();
+    }
+}

@@ -15,7 +15,6 @@ bool GameScene::Init()
     InitMainViewBorder();
     InitMinimapBorder();
 
-
     light_fighter = std::make_unique<LightFighter>();
     heavy_fighter = std::make_unique<HeavyFighter>();
     support_ship = std::make_unique<SupportShip>();
@@ -32,6 +31,10 @@ bool GameScene::Init()
     {
         std::cout << _buttonShipDictionary[_command_buttons[i].get()]->GetTrainingSpeed() << std::endl;
     }
+
+    /// Observer to shipyard event
+    auto shipyardCallback = std::bind(&GameScene::SpawnShipFromShipyard, this);
+    _shipyard.AddBasicObserver({Shipyard::EventID::TRAINING_COMPLETED, shipyardCallback});
 
 
     /// StarshipClass newClassType(texture, color, health, damage);
@@ -156,8 +159,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
                 _shipyard.SetTrainingStatus(true);
                 _ship_spawned_index = i;
-
-                // TODO: Invoke an agnostic event here notifying subscribers that a ship has finished training?
+                // TODO: Invoke an agnostic event here notifying subscribers that a ship is currently training?
             }
         }
         else if(!_command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds().contains(mousePosWorldCoords))
@@ -191,6 +193,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto xPos = 0.0F;
         auto yPos = 0.0F;
 
+        // TODO: Clean this up
         if(i < 3) // Row 1
         {
             xPos = _minimapBorder.getPosition().x + (i * (button_bounds.width+SPACING));
@@ -242,18 +245,13 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _enemy.Update(window, deltaTime);
     //starship->Update(window, deltaTime);
 
-    if(_shipyard.IsTrainingComplete())
-    {
-        SpawnShipFromShipyard();
-    }
-
     // Check if player cursor is over their capital ship
-    for(auto & player_ship : _player.GetShips())
+    for(auto& playerShip : _player.GetShips())
     {
-        if(player_ship != nullptr)
+        if(playerShip != nullptr)
         {
             // Highlight player ship on mouse hover
-            if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, player_ship->GetSpriteComponent().GetSprite().getGlobalBounds()))
+            if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, playerShip->GetSpriteComponent().GetSprite().getGlobalBounds()))
             {
                 _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::Cyan);
                 //player_ship->GetSpriteComponent().GetSprite().setColor(sf::Color::Cyan);
@@ -270,51 +268,51 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     int flagship = 0;
     if(_player.GetShips()[flagship] != nullptr)
     {
-        auto& player_flagship = _player.GetShips()[flagship]->GetSpriteComponent().GetSprite();
-        player_flagship.move(_player.GetShips()[flagship]->GetSpeed() * deltaTime.asSeconds(), 0);
+        auto& playerFlagship = _player.GetShips()[flagship]->GetSpriteComponent().GetSprite();
+        playerFlagship.move(_player.GetShips()[flagship]->GetSpeed() * deltaTime.asSeconds(), 0);
     }
 
     // Move enemy capital ship
     if(_enemy.GetShips()[flagship] != nullptr)
     {
-        auto& enemy_flagship = _enemy.GetShips()[flagship]->GetSpriteComponent().GetSprite();
-        enemy_flagship.move(_enemy.GetShips()[flagship]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
+        auto& enemyFlagship = _enemy.GetShips()[flagship]->GetSpriteComponent().GetSprite();
+        enemyFlagship.move(_enemy.GetShips()[flagship]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
     }
 
     // Move enemy ships, and shoot at player ships when in range
     for (int i = 1; i < _enemy.GetShips().size(); ++i)
     {
-        auto& enemy_sprite = _enemy.GetShips()[i]->GetSpriteComponent().GetSprite();
-        enemy_sprite.move(_enemy.GetShips()[i]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
+        auto& enemySprite = _enemy.GetShips()[i]->GetSpriteComponent().GetSprite();
+        enemySprite.move(_enemy.GetShips()[i]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
 
         for(int j = 0; j < _player.GetShips().size(); j++)
         {
             if(_player.GetShips()[j] != nullptr)
             {
-                auto& player_sprite = _player.GetShips()[j]->GetSpriteComponent().GetSprite();
+                auto& playerSprite = _player.GetShips()[j]->GetSpriteComponent().GetSprite();
 
                 // Move towards and shoot at player ship if less than 400 pixels away from it
-                if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) <= _enemy.GetShips()[i]->GetAttackRange())
+                if(Chilli::Vector::Distance(playerSprite.getPosition(), enemySprite.getPosition()) <= _enemy.GetShips()[i]->GetAttackRange())
                 {
                     _enemy.GetShips()[i]->SetSpeed(25);
-                    _enemy.GetShips()[i]->MoveTowards(player_sprite.getPosition(), deltaTime);
+                    _enemy.GetShips()[i]->MoveTowards(playerSprite.getPosition(), deltaTime);
 
-                    auto& ship = _enemy.GetShips()[i];
-                    ship->ShootAt(ship->GetProjectileType(), ship->GetFireRate(), player_sprite.getPosition());
+                    auto& enemyShips = _enemy.GetShips()[i];
+                    enemyShips->ShootAt(enemyShips->GetProjectileType(), enemyShips->GetFireRate(), playerSprite.getPosition());
                 }
 
                 for(int k = 0; k < _enemy.GetShips()[i]->GetProjectile().size(); k++)
                 {
-                    auto& enemy_bullet = _enemy.GetShips()[i]->GetProjectile()[k]->GetSpriteComponent();
+                    auto& enemyBullet = _enemy.GetShips()[i]->GetProjectile()[k]->GetSpriteComponent();
 
                     // Destroy projectiles if collided with enemy ship, and inflict damage to enemy ship
-                    if(player_sprite.getGlobalBounds().intersects(enemy_bullet.GetSprite().getGlobalBounds()))
+                    if(playerSprite.getGlobalBounds().intersects(enemyBullet.GetSprite().getGlobalBounds()))
                     {
                         //UpdateDistribution("Ship damage", 10, 80);
-                        int rand_damage = _uint_distrib[2](_generator);
+                        int randDamage = _uint_distrib[2](_generator);
 
                         //_enemy.GetShips()[j]->TakeDamage(_player.GetShips()[i]->GetDamage());
-                        _player.GetShips()[j]->GetHealthComponent().TakeDamage(rand_damage * _enemy.GetShips()[i]->GetDamageScaleFactor(),
+                        _player.GetShips()[j]->GetHealthComponent().TakeDamage(randDamage * _enemy.GetShips()[i]->GetDamageScaleFactor(),
                                                                               _player.GetShips()[j]->GetSpriteComponent().GetPos());
                         _enemy.GetShips()[i]->GetProjectile().erase(_enemy.GetShips()[i]->GetProjectile().begin() + k);
                     }
@@ -329,14 +327,14 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         // If said player ship hasn't been destroyed
         if(_player.GetShips()[i] != nullptr)
         {
-            auto& player_sprite = _player.GetShips()[i]->GetSpriteComponent().GetSprite();
+            auto& playerSprite = _player.GetShips()[i]->GetSpriteComponent().GetSprite();
 
             for(int j = 0; j < _player.GetShips()[i]->GetProjectile().size(); j++)
             {
-                auto& player_bullet = _player.GetShips()[i]->GetProjectile()[j]->GetSpriteComponent();
+                auto& playerBullet = _player.GetShips()[i]->GetProjectile()[j]->GetSpriteComponent();
 
                 // Destroy player projectiles when they have travelled too far
-                if(Chilli::Vector::Distance(player_sprite.getPosition(), player_bullet.GetPos()) > Constants::WINDOW_WIDTH)
+                if(Chilli::Vector::Distance(playerSprite.getPosition(), playerBullet.GetPos()) > Constants::WINDOW_WIDTH)
                 {
                     _player.GetShips()[i]->GetProjectile().erase(_player.GetShips()[i]->GetProjectile().begin() + j);
                 }
@@ -344,38 +342,37 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
             for(int j = 0; j < _enemy.GetShips().size(); j++)
             {
-                auto& enemy_sprite = _enemy.GetShips()[j]->GetSpriteComponent().GetSprite();
+                auto& enemySprite = _enemy.GetShips()[j]->GetSpriteComponent().GetSprite();
 
                 // Move towards and shoot at enemy ship if less than 400 pixels away from it
-                // TODO: Instead of hardcoding the range, add a GetRange() method to starship class.
-                if(Chilli::Vector::Distance(player_sprite.getPosition(), enemy_sprite.getPosition()) <= _player.GetShips()[i]->GetAttackRange())
+                if(Chilli::Vector::Distance(playerSprite.getPosition(), enemySprite.getPosition()) <= _player.GetShips()[i]->GetAttackRange())
                 {
                     _player.GetShips()[i]->SetSpeed(25);
-                    _player.GetShips()[i]->MoveTowards(enemy_sprite.getPosition(), deltaTime);
+                    _player.GetShips()[i]->MoveTowards(enemySprite.getPosition(), deltaTime);
 
-                    auto& ship = _player.GetShips()[i];
-                    ship->ShootAt(ship->GetProjectileType(), ship->GetFireRate(), enemy_sprite.getPosition());
+                    auto& playerShips = _player.GetShips()[i];
+                    playerShips->ShootAt(playerShips->GetProjectileType(), playerShips->GetFireRate(), enemySprite.getPosition());
                 }
 
                 for(int k = 0; k < _player.GetShips()[i]->GetProjectile().size(); k++)
                 {
-                    auto& player_bullet = _player.GetShips()[i]->GetProjectile()[k]->GetSpriteComponent();
+                    auto& playerBullet = _player.GetShips()[i]->GetProjectile()[k]->GetSpriteComponent();
 
                     // Destroy projectiles if collided with enemy ship, and inflict damage to enemy ship
-                    if(enemy_sprite.getGlobalBounds().intersects(player_bullet.GetSprite().getGlobalBounds()))
+                    if(enemySprite.getGlobalBounds().intersects(playerBullet.GetSprite().getGlobalBounds()))
                     {
                         //UpdateDistribution("Ship damage", 10, 80);
-                        int rand_damage = _uint_distrib[2](_generator);
+                        int randDamage = _uint_distrib[2](_generator);
 
                         //_enemy.GetShips()[j]->TakeDamage(_player.GetShips()[i]->GetDamage());
-                        _enemy.GetShips()[j]->GetHealthComponent().TakeDamage(rand_damage * _player.GetShips()[i]->GetDamageScaleFactor(),
+                        _enemy.GetShips()[j]->GetHealthComponent().TakeDamage(randDamage * _player.GetShips()[i]->GetDamageScaleFactor(),
                                                                               _enemy.GetShips()[j]->GetSpriteComponent().GetPos());
                         _player.GetShips()[i]->GetProjectile().erase(_player.GetShips()[i]->GetProjectile().begin() + k);
                     }
                 }
             }
 
-            player_sprite.move(_player.GetShips()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
+            playerSprite.move(_player.GetShips()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
         }
     }
 }
@@ -528,10 +525,10 @@ void GameScene::InitMinimapView()
 
     // Position minimap at top middle of the window and set its size
     _minimapView.setViewport(sf::FloatRect(
-            Constants::VIEWPORT_LEFT,
-            Constants::VIEWPORT_TOP,
-            Constants::VIEWPORT_WIDTH,
-            Constants::VIEWPORT_HEIGHT));
+            Constants::Minimap::VIEWPORT_LEFT,
+            Constants::Minimap::VIEWPORT_TOP,
+            Constants::Minimap::VIEWPORT_WIDTH,
+            Constants::Minimap::VIEWPORT_HEIGHT));
 }
 
 void GameScene::InitMainViewBorder()
@@ -544,7 +541,7 @@ void GameScene::InitMainViewBorder()
 
 void GameScene::InitMinimapBorder()
 {
-    _minimapBorder.setSize({Constants::WINDOW_WIDTH*Constants::VIEWPORT_WIDTH,Constants::WINDOW_HEIGHT*Constants::VIEWPORT_HEIGHT});
+    _minimapBorder.setSize({Constants::WINDOW_WIDTH*Constants::Minimap::VIEWPORT_WIDTH,Constants::WINDOW_HEIGHT*Constants::Minimap::VIEWPORT_HEIGHT});
     _minimapBorder.setOutlineThickness(2.0f); // Set the thickness of the border
     _minimapBorder.setOutlineColor(sf::Color(128,128,128)); // Set the color of the border
     _minimapBorder.setFillColor(sf::Color::Red); // Make the inside of the rectangle transparent
@@ -666,7 +663,7 @@ void GameScene::ResetMinimapView()
     _currentZoomLevel = _originalZoomLevel;
 }
 
-void GameScene::SpawnShipFromShipyard() // TODO: Rename fotr readability
+void GameScene::SpawnShipFromShipyard()
 {
     _player.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(_ship_spawned_index));
     _player.GetShips()[_player.GetShips().size()-1]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
@@ -677,10 +674,10 @@ void GameScene::SpawnShipFromShipyard() // TODO: Rename fotr readability
 void GameScene::RescaleMinimap(float scaleFactorX, float scaleFactorY)
 {
     _minimapView.setViewport(sf::FloatRect(
-        Constants::VIEWPORT_LEFT,
-        Constants::VIEWPORT_TOP,
-        Constants::VIEWPORT_WIDTH * scaleFactorX,
-        Constants::VIEWPORT_HEIGHT * scaleFactorY));
+        Constants::Minimap::VIEWPORT_LEFT,
+        Constants::Minimap::VIEWPORT_TOP,
+        Constants::Minimap::VIEWPORT_WIDTH * scaleFactorX,
+        Constants::Minimap::VIEWPORT_HEIGHT * scaleFactorY));
 
-    _minimapBorder.setSize({Constants::WINDOW_WIDTH*Constants::VIEWPORT_WIDTH * scaleFactorX,Constants::WINDOW_HEIGHT*Constants::VIEWPORT_HEIGHT * scaleFactorY});
+    _minimapBorder.setSize({Constants::WINDOW_WIDTH*Constants::Minimap::VIEWPORT_WIDTH * scaleFactorX,Constants::WINDOW_HEIGHT*Constants::Minimap::VIEWPORT_HEIGHT * scaleFactorY});
 }

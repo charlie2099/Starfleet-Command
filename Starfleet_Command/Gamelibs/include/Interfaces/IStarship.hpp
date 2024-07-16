@@ -45,7 +45,7 @@ public:
     virtual float GetAcceleration() = 0;
     virtual float GetAttackRange() = 0;
     virtual float GetShipCost() = 0;
-    virtual bool IsHealthBarVisible() =0;
+    virtual bool IsHealthBarVisible() = 0;
 
 protected:
     SpriteComponent _spriteComponent;
@@ -64,8 +64,8 @@ protected:
     float _attackRange = 400.0F;
     float _shipCost = 100;
     bool _healthBarIsVisible = false;
-    float timePassed = 0;
-    sf::Clock clock;
+    float _timePassed = 0;
+    sf::Clock _clock;
 };
 
 #endif //STARFLEET_COMMAND_ISTARSHIP_HPP
