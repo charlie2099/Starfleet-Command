@@ -27,6 +27,9 @@ public:
     virtual void SetSpeed(float speed) = 0;
     virtual void SetAcceleration(float acceleration) = 0;
     virtual void SetAttackRange(float range) = 0;
+    virtual void SetColour(sf::Color& colour) = 0;
+    virtual void SetPosition(sf::Vector2f  pos) = 0;
+    virtual void SetRotation(float rot) = 0;
 
     /// Accessors
     virtual SpriteComponent& GetSpriteComponent() = 0;
@@ -35,6 +38,9 @@ public:
     virtual std::vector<std::unique_ptr<Projectile>>& GetProjectile() = 0;
     virtual Projectile::Type& GetProjectileType() = 0;
     virtual std::string& GetShipName() = 0;
+    virtual sf::Color& GetColour() = 0;
+    virtual sf::Vector2f& GetPosition() = 0;
+    virtual float GetRotation() = 0;
     virtual float GetHealth() = 0;
     virtual float GetMaxHealth() = 0;
     virtual float GetDamage() = 0;
@@ -54,6 +60,9 @@ protected:
     std::vector<std::unique_ptr<Projectile>> _projectile;
     Projectile::Type _projectileType;
     std::string _shipName;
+    sf::Color _shipColour;
+    sf::Vector2f _position;
+    float _rotation;
     float _maxHealth;
     float _damage;
     float _damageScaleFactor = 1.0F;
@@ -64,7 +73,7 @@ protected:
     float _attackRange = 400.0F;
     float _shipCost = 100;
     bool _healthBarIsVisible = false;
-    float _timePassed = 0;
+    float _nextFireTime = 0;
     sf::Clock _clock;
 };
 

@@ -85,17 +85,17 @@ void Battleship::MoveTowards(sf::Vector2f target, sf::Time deltaTime)
 
 void Battleship::ShootAt(Projectile::Type projectile, float fireRate, sf::Vector2f target)
 {
-    if(_timePassed < _clock.getElapsedTime().asSeconds())
+    if(_nextFireTime < _clock.getElapsedTime().asSeconds())
     {
-        _timePassed = _clock.getElapsedTime().asSeconds();
+        _nextFireTime = _clock.getElapsedTime().asSeconds();
     }
 
-    if(_clock.getElapsedTime().asSeconds() >= _timePassed)
+    if(_clock.getElapsedTime().asSeconds() >= _nextFireTime)
     {
         auto spawnPos = _spriteComponent.GetPos();
         _projectile.emplace_back(std::make_unique<Projectile>(projectile, spawnPos, target));
 
-        _timePassed += fireRate;
+        _nextFireTime += fireRate;
     }
 }
 
@@ -128,4 +128,23 @@ void Battleship::SetAttackRange(float range)
 {
     _attackRange = range;
 }
+
+void Battleship::SetColour(sf::Color &colour)
+{
+    _spriteComponent.GetSprite().setColor(colour);
+    _shipColour = colour;
+}
+
+void Battleship::SetPosition(sf::Vector2f pos)
+{
+    _spriteComponent.SetPos(pos);
+    _position = pos;
+}
+
+void Battleship::SetRotation(float rot)
+{
+    _spriteComponent.GetSprite().setRotation(rot);
+    _rotation = rot;
+}
+
 

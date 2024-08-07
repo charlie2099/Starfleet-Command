@@ -25,6 +25,9 @@ public:
     void SetSpeed(float speed) override;
     void SetAcceleration(float acceleration) override;
     void SetAttackRange(float range) override;
+    void SetColour(sf::Color &colour) override;
+    void SetPosition(sf::Vector2f pos) override;
+    void SetRotation(float rot) override;
 
     /// Accessors
     SpriteComponent& GetSpriteComponent() override { return _spriteComponent; }
@@ -33,6 +36,9 @@ public:
     std::vector<std::unique_ptr<Projectile>>& GetProjectile() override { return _projectile; }
     Projectile::Type& GetProjectileType() override { return _projectileType; }
     std::string& GetShipName() override { return _shipName; }
+    sf::Color &GetColour() override { return _shipColour; }
+    sf::Vector2f &GetPosition() override { return _position; }
+    float GetRotation() override { return _rotation; }
     float GetHealth() override { return _healthComponent.GetHealth(); }
     float GetMaxHealth() override { return _maxHealth; }
     float GetDamage() override { return _damage; }

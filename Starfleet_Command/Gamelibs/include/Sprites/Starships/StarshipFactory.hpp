@@ -19,7 +19,8 @@ public:
         SUPPORT,
         DESTROYER,
         BATTLESHIP,
-        MOTHERSHIP
+        MOTHERSHIP,
+        ENUM_COUNT
     };
 
     static std::unique_ptr<IStarship> CreateShip(SHIP_TYPE shipType);

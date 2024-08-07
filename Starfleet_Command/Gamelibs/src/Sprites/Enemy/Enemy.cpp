@@ -46,6 +46,31 @@ void Enemy::CreateShip(StarshipFactory::SHIP_TYPE type)
     }
 }
 
+void Enemy::PaintShip(std::unique_ptr<IStarship>& ship, sf::Color colour)
+{
+    ship->SetColour(colour);
+}
+
+void Enemy::SetFlagshipPosition(sf::Vector2f pos)
+{
+    starship[0]->SetPosition(pos);
+}
+
+void Enemy::SetFlagshipRotation(float rot)
+{
+    starship[0]->SetRotation(rot);
+}
+
+void Enemy::SetFleetPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f pos)
+{
+    ship->SetPosition(pos);
+}
+
+void Enemy::SetFleetRotation(std::unique_ptr<IStarship> &ship, float rot)
+{
+    ship->SetRotation(rot);
+}
+
 void Enemy::AddBasicObserver(BasicEnemyEvent observer)
 {
     _basicObservers.insert(observer);
@@ -60,6 +85,15 @@ std::vector<std::unique_ptr<IStarship>> &Enemy::GetShips()
 {
     return starship;
 }
+
+std::unique_ptr<IStarship> &Enemy::GetFlagship()
+{
+    return starship[0];
+}
+
+
+
+
 
 
 

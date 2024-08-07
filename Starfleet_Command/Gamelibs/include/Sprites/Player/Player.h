@@ -20,12 +20,16 @@ public:
     void Render(sf::RenderWindow& window);
 
     void CreateShip(StarshipFactory::SHIP_TYPE type);
+    void PaintShip(std::unique_ptr<IStarship>& ship, sf::Color colour);
+    void SetFlagshipPosition(sf::Vector2f pos);
+    void SetFleetPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
     using BasicPlayerEvent = std::pair<EventID, std::function<void()>>;
     using AgnosticPlayerEvent = std::pair<EventID, std::function<void(std::any)>>;
     void AddBasicObserver(BasicPlayerEvent observer);
     void AddAgnosticObserver(AgnosticPlayerEvent observer);
 
     std::vector<std::unique_ptr<IStarship>> &GetShips();
+    std::unique_ptr<IStarship> &GetFlagship();
 
 private:
     std::vector<std::unique_ptr<IStarship>> starship{};

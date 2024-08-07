@@ -13,3 +13,26 @@
 - Currently the background image for the level is WAY TOO LARGE. However, it looks good.
 
 - Dimensions of background need to change. Should be wider in width.
+
+
+__THOUGHTS__
+- Should the spacelanes be in constant motion  in front of the player flagship?
+  - NO,
+- OR
+- Should the spacelanes be stationary in the level, and have the player
+  flagship move in the centre lane?
+  - NO, because the flagship doesn't fit in the lanes
+     - HOWEVER, the enemy flagship needs to fit in the lane regardless!
+  - NO, because the flagship should be attackable from any lane? When
+     an enemy ship reaches the end of its lane, it automatically attacks
+     the mothership either through shooting or exploding?
+
+
+__Enemy Spawning__
+- Spawn a random enemy type every x amount of seconds
+- Stronger enemies have less chance of spawning
+- Spawn specific enemy types based on various conditions
+- Create a Director Ai system that defines spawning rules
+- Conditions:
+   - If enemy in lane was spawned x amount of time ago, spawn enemy in lane
+   - If player has x amount of specific unit types, spawn enemy type

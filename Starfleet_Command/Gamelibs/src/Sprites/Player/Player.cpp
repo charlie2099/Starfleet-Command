@@ -29,6 +29,11 @@ std::vector<std::unique_ptr<IStarship>> &Player::GetShips()
     return starship;
 }
 
+std::unique_ptr<IStarship> &Player::GetFlagship()
+{
+    return starship[0];
+}
+
 void Player::CreateShip(StarshipFactory::SHIP_TYPE type)
 {
     std::unique_ptr<IStarship> starship1 = StarshipFactory::CreateShip(type);
@@ -51,6 +56,21 @@ void Player::CreateShip(StarshipFactory::SHIP_TYPE type)
     }
 }
 
+void Player::PaintShip(std::unique_ptr<IStarship>& ship, sf::Color colour)
+{
+    ship->SetColour(colour);
+}
+
+void Player::SetFlagshipPosition(sf::Vector2f pos)
+{
+    starship[0]->SetPosition(pos);
+}
+
+void Player::SetFleetPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f pos)
+{
+    ship->SetPosition(pos);
+}
+
 void Player::AddBasicObserver(BasicPlayerEvent observer)
 {
     _basicObservers.insert(observer);
@@ -60,3 +80,7 @@ void Player::AddAgnosticObserver(AgnosticPlayerEvent observer)
 {
     _agnosticObservers.insert(observer);
 }
+
+
+
+

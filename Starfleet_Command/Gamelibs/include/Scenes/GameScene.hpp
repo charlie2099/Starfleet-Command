@@ -11,8 +11,8 @@
 #include "Sprites/Starships/StarshipFactory.hpp"
 #include <random>
 #include <chrono>
-
 #include "Sprites/UI/HUD/Shipyard.hpp"
+#include "../../SpaceLane.hpp"
 
 class GameScene : public Scene
 {
@@ -25,10 +25,10 @@ public:
     void Render(sf::RenderWindow& window) override;
 
 private:
-    void InitDistribution();
+    void InitRandomDistributions();
     bool InitBackground();
     bool InitCommandButtons();
-    void InitPlayerShips();
+    void InitPlayerFlagship();
     void InitEnemyShips();
     void InitPlayerCreditsText();
     void InitWavesRemainingText();
@@ -37,14 +37,23 @@ private:
     void InitMinimapView();
     void InitMainViewBorder();
     void InitMinimapBorder();
+    void InitSpaceLanes();
+    void InitEvents();
     void RandomisePlayerShipSpawnPoint();
-    void CreateDistribution(const std::string& name, int min, int max);
-    void UpdateDistribution(const std::string& name, int min, int max);
-    static std::mt19937 GetEngine();
     sf::Vector2f ConstrainViewCenter(const sf::Vector2f& proposedCenter) const;
     void ResetMinimapView();
     void SpawnShipFromShipyard();
     void RescaleMinimap(float scaleFactorX, float scaleFactorY);
+    enum DistributionsEnum
+    {
+        SHIP_XPOS = 0,
+        SHIP_YPOS = 1,
+        SHIP_DAMAGE = 2,
+        SPACELANE = 3,
+        ENEMY_SHIP_TYPE = 4,
+    };
+    void CreateDistribution(DistributionsEnum distributionsEnum, int min, int max);
+    static std::mt19937 GetEngine();
 
     // Utility
     Chilli::Cursor _cursor;
@@ -74,12 +83,15 @@ private:
     Player _player;
     Enemy _enemy;
 
-    // Other
+    // Minimap
     sf::View _mainView{};
     sf::View _minimapView{};
+
+    // Random Distributions
     std::mt19937 _generator;
-    std::vector<std::uniform_int_distribution<int>> _uint_distrib;
-    std::map<std::string, int> _dist_code;
+    std::vector<std::uniform_int_distribution<int>> _distributions;
+
+    // Other
     int _ship_spawned_index = 0;
     float _originalZoomLevel = 1.0f;
     float _currentZoomLevel = 1.0f;
@@ -89,11 +101,22 @@ private:
     std::map<Button*, IStarship*> _buttonShipDictionary;
     bool _isMapOpen = false;
 
+    // For command buttons
     std::unique_ptr<LightFighter> light_fighter;
     std::unique_ptr<HeavyFighter> heavy_fighter;
     std::unique_ptr<SupportShip> support_ship;
     std::unique_ptr<Destroyer> destroyer;
     std::unique_ptr<Battleship> battleship;
+
+    // Space Lanes
+    std::vector<std::unique_ptr<SpaceLane>> spaceLanes;
+    const float LANE_Y_SPACING = 35.0F;
+    const float NUM_OF_LANES = 5.0F;
+
+    // Enemy Spawning
+    float _enemySpawnTimer = 3.0f;
+    float _enemySpawnRate = 5.0f;
+    sf::Clock _clock;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP
