@@ -46,11 +46,9 @@ private:
     void RescaleMinimap(float scaleFactorX, float scaleFactorY);
     enum DistributionsEnum
     {
-        SHIP_XPOS = 0,
-        SHIP_YPOS = 1,
-        SHIP_DAMAGE = 2,
-        SPACELANE = 3,
-        ENEMY_SHIP_TYPE = 4,
+        SHIP_DAMAGE = 0,
+        SPACELANE = 1,
+        ENEMY_SHIP_TYPE = 2,
     };
     void CreateDistribution(DistributionsEnum distributionsEnum, int min, int max);
     static std::mt19937 GetEngine();
@@ -117,6 +115,9 @@ private:
     float _enemySpawnTimer = 3.0f;
     float _enemySpawnRate = 5.0f;
     sf::Clock _clock;
+
+    // Drag and drop
+    bool dragging = false;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

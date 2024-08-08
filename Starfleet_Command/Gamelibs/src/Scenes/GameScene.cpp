@@ -135,29 +135,30 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     for (int i = 0; i < _command_buttons.size(); i++)
     {
+        /// If cursor hovered over any ship spawning button, colour it blue
         if(_command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds().contains(mousePosWorldCoords))
         {
             _command_buttons[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
 
-            if (event.type == sf::Event::MouseButtonPressed && !_shipyard.IsTraining())
+            /// If mouse is pressed over a ship spawn button while a ship isn't currently in training, then begin training ship of the selected ship type
+            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && !_shipyard.IsTraining())
             {
+                //dragging = true;
                 _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({153, 210, 242, 150});
-
                 auto& assignedShipToButton = _buttonShipDictionary[_command_buttons[i].get()];
                 _shipyard.SetTrainingSpeed(assignedShipToButton->GetTrainingSpeed());
                 _playerCreditsCounter -= static_cast<int>(assignedShipToButton->GetShipCost());
                 _shipyard.SetDeployText("Deploying " + assignedShipToButton->GetShipName());
-
                 _playerCreditsText.setString("Credits: " + std::to_string(_playerCreditsCounter));
-
                 _shipyard.SetTrainingStatus(true);
                 _ship_spawned_index = i;
                 // TODO: Invoke an agnostic event here notifying subscribers that a ship is currently training?
             }
         }
+            /// If cursor no longer hovered over any ship spawning button, recolour it white
         else if(!_command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds().contains(mousePosWorldCoords))
         {
-            //_command_buttons[i]->GetSpriteComponent().GetSprite().setColor({178, 178, 178, 255});
+            //dragging = false;
             _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({255, 255, 255, 100});
         }
     }
@@ -246,7 +247,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             // Highlight player ship on mouse hover
             if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, playerShip->GetSpriteComponent().GetSprite().getGlobalBounds()))
             {
-                _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::Cyan);
+                _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::White);
                 //player_ship->GetSpriteComponent().GetSprite().setColor(sf::Color::Cyan);
             }
             else
@@ -450,8 +451,6 @@ void GameScene::Render(sf::RenderWindow& window)
 void GameScene::InitRandomDistributions()
 {
     _generator = GetEngine();
-    CreateDistribution(SHIP_XPOS, 0, 0); // Initial values to be updated later
-    CreateDistribution(SHIP_YPOS, 0, 0);
     CreateDistribution(SHIP_DAMAGE, 100, 250);
     CreateDistribution(SPACELANE, 0, NUM_OF_LANES-1);
     CreateDistribution(ENEMY_SHIP_TYPE, 0,  StarshipFactory::SHIP_TYPE::ENUM_COUNT-2);

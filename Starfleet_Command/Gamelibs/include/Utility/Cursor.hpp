@@ -10,10 +10,10 @@ namespace Chilli
     public:
         enum Type
         {
-            DEFAULT,
-            SELECTED,
-            LOCK_ON,
-            ENUM_LENGTH
+            DEFAULT = 0,
+            SELECTED = 1,
+            /*LOCK_ON,*/
+            ENUM_LENGTH = 2
         };
 
     public:
