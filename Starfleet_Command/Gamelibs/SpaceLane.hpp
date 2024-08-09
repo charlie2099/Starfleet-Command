@@ -13,6 +13,8 @@ public:
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
+    bool IsCursorHoveredOver() const { return _isHoveredOver; }
+
     void SetPos(sf::Vector2f  pos);
     void SetColour(sf::Color colour);
 
@@ -22,6 +24,7 @@ public:
 
 private:
     sf::RectangleShape laneRect;
+    bool _isHoveredOver = false;
 };
 
 #endif //STARFLEET_COMMAND_SPACELANE_HPP

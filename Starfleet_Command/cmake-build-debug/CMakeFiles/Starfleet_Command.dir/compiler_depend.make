@@ -358,6 +358,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/SpaceLane.cpp.obj: D:/MyProjects/SFML_
   C:/Libraries/SFML/include/SFML/Window/Cursor.hpp \
   C:/Libraries/SFML/include/SFML/Window/Export.hpp \
   C:/Libraries/SFML/include/SFML/Window/GlResource.hpp \
+  C:/Libraries/SFML/include/SFML/Window/Mouse.hpp \
   C:/Libraries/SFML/include/SFML/Window/VideoMode.hpp \
   C:/Libraries/SFML/include/SFML/Window/Window.hpp \
   C:/Libraries/SFML/include/SFML/Window/WindowHandle.hpp \

@@ -20,7 +20,7 @@ Shipyard::Shipyard()
     _spriteComponent2.GetSprite().setScale(1.175f,0.125f);
     _spriteComponent2.GetSprite().setColor(sf::Color::Cyan);
     _spriteComponent2.GetSprite().setOrigin(0,0);
-    //auto xPos = spriteComponent.GetPos().x + spriteComponent.GetSprite().getGlobalBounds().width/2 - spriteComponent2.GetSprite().getGlobalBounds().width/2;
+    //auto xPos = _spriteComponent.GetPos().x + _spriteComponent.GetSprite().getGlobalBounds().width/2 - spriteComponent2.GetSprite().getGlobalBounds().width/2;
     auto xPos = _spriteComponent.GetPos().x + 5;
     auto yPos = _spriteComponent.GetPos().y + _spriteComponent.GetSprite().getGlobalBounds().height/2 - _spriteComponent2.GetSprite().getGlobalBounds().height/2;
     _spriteComponent2.SetPos({xPos, yPos});
@@ -64,7 +64,7 @@ void Shipyard::SetPosition(sf::Vector2<float> pos)
 {
     _spriteComponent.SetPos(pos);
     _deployText.setPosition(_spriteComponent.GetPos().x+6, _spriteComponent.GetPos().y + _spriteComponent.GetSprite().getGlobalBounds().height+5);
-    //auto xPos = spriteComponent.GetPos().x + spriteComponent.GetSprite().getGlobalBounds().width/2 - spriteComponent2.GetSprite().getGlobalBounds().width/2;
+    //auto xPos = _spriteComponent.GetPos().x + _spriteComponent.GetSprite().getGlobalBounds().width/2 - spriteComponent2.GetSprite().getGlobalBounds().width/2;
     auto xPos = _spriteComponent.GetPos().x + 5;
     auto yPos = _spriteComponent.GetPos().y + _spriteComponent.GetSprite().getGlobalBounds().height/2 - _spriteComponent2.GetSprite().getGlobalBounds().height/2;
     _spriteComponent2.SetPos({xPos, yPos});

@@ -14,13 +14,18 @@ class Button
     void Update(sf::RenderWindow& window);
     void Render(sf::RenderWindow& window);
 
-    /// Accessors
-    SpriteComponent &GetSpriteComponent();
-    bool IsHoveredOver() const { return is_hovered_over; };
+    void SetPos(sf::Vector2f pos);
+    void SetScale(sf::Vector2f  scale);
+    void SetColour(sf::Color colour);
+    bool IsCursorHoveredOver() const { return _isHoveredOver; }
+
+    sf::Vector2f GetPos() { return _spriteComponent.GetPos(); }
+    sf::FloatRect GetBounds() { return _spriteComponent.GetSprite().getGlobalBounds(); }
 
  private:
-    SpriteComponent spriteComponent;
-    bool is_hovered_over = false;
+    SpriteComponent _spriteComponent;
+    sf::Color _colour;
+    bool _isHoveredOver = false;
 };
 
 #endif //STARFLEET_COMMAND_BUTTON_HPP

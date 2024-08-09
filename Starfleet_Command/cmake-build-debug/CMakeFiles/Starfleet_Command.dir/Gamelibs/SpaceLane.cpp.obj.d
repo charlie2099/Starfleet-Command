@@ -1,17 +1,19 @@
 CMakeFiles/Starfleet_Command.dir/Gamelibs/SpaceLane.cpp.obj: \
  D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\SpaceLane.cpp \
+ C:/Libraries/SFML/include/SFML/Window/Mouse.hpp \
+ C:/Libraries/SFML/include/SFML/Window/Export.hpp \
+ C:/Libraries/SFML/include/SFML/Config.hpp \
+ C:/Libraries/SFML/include/SFML/System/Vector2.hpp \
+ C:/Libraries/SFML/include/SFML/System/Vector2.inl \
  D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Gamelibs\SpaceLane.hpp \
  C:/Libraries/SFML/include/SFML/Graphics/RectangleShape.hpp \
  C:/Libraries/SFML/include/SFML/Graphics/Export.hpp \
- C:/Libraries/SFML/include/SFML/Config.hpp \
  C:/Libraries/SFML/include/SFML/Graphics/Shape.hpp \
  C:/Libraries/SFML/include/SFML/Graphics/Drawable.hpp \
  C:/Libraries/SFML/include/SFML/Graphics/RenderStates.hpp \
  C:/Libraries/SFML/include/SFML/Graphics/BlendMode.hpp \
  C:/Libraries/SFML/include/SFML/Graphics/Transform.hpp \
  C:/Libraries/SFML/include/SFML/Graphics/Rect.hpp \
- C:/Libraries/SFML/include/SFML/System/Vector2.hpp \
- C:/Libraries/SFML/include/SFML/System/Vector2.inl \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/algorithm \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/utility \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32/bits/c++config.h \
@@ -147,7 +149,6 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/SpaceLane.cpp.obj: \
  C:/Libraries/SFML/include/SFML/Window/Window.hpp \
  C:/Libraries/SFML/include/SFML/Window/ContextSettings.hpp \
  C:/Libraries/SFML/include/SFML/Window/Cursor.hpp \
- C:/Libraries/SFML/include/SFML/Window/Export.hpp \
  C:/Libraries/SFML/include/SFML/Window/GlResource.hpp \
  C:/Libraries/SFML/include/SFML/Window/VideoMode.hpp \
  C:/Libraries/SFML/include/SFML/Window/WindowHandle.hpp \

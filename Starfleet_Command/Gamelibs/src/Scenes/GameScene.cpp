@@ -4,7 +4,7 @@ bool GameScene::Init()
 {
     InitRandomDistributions();
     InitBackground();
-    InitCommandButtons();
+    InitShipSpawnerButtons();
     InitPlayerCreditsText();
     InitWavesRemainingText();
     InitEnemiesRemainingText();
@@ -22,16 +22,40 @@ bool GameScene::Init()
     destroyer = std::make_unique<Destroyer>();
     battleship = std::make_unique<Battleship>();
 
-    _buttonShipDictionary[_command_buttons[0].get()] = light_fighter.get();
-    _buttonShipDictionary[_command_buttons[1].get()] = heavy_fighter.get();
-    _buttonShipDictionary[_command_buttons[2].get()] = support_ship.get();
-    _buttonShipDictionary[_command_buttons[3].get()] = destroyer.get();
-    _buttonShipDictionary[_command_buttons[4].get()] = battleship.get();
+    _buttonShipDictionary[_shipSpawnerButtons[0].get()] = light_fighter.get();
+    _buttonShipDictionary[_shipSpawnerButtons[1].get()] = heavy_fighter.get();
+    _buttonShipDictionary[_shipSpawnerButtons[2].get()] = support_ship.get();
+    _buttonShipDictionary[_shipSpawnerButtons[3].get()] = destroyer.get();
+    _buttonShipDictionary[_shipSpawnerButtons[4].get()] = battleship.get();
 
-    for(int i = 0; i < _command_buttons.size(); i++)
+    for(int i = 0; i < _shipSpawnerButtons.size(); i++)
     {
-        std::cout << _buttonShipDictionary[_command_buttons[i].get()]->GetTrainingSpeed() << std::endl;
+        std::cout << _buttonShipDictionary[_shipSpawnerButtons[i].get()]->GetTrainingSpeed() << std::endl;
     }
+
+
+
+    _shipDragSpriteVisuals[0].LoadSprite("Resources/Textures/starfleet_ship_fighter.png");
+    _shipDragSpriteVisuals[0].GetSprite().scale({0.05F, 0.05F});
+
+    _shipDragSpriteVisuals[1].LoadSprite("Resources/Textures/starfleet_ship_repair.png");
+    _shipDragSpriteVisuals[1].GetSprite().scale({0.05F, 0.05F});
+
+    _shipDragSpriteVisuals[2].LoadSprite("Resources/Textures/starfleet_ship_scout.png");
+    _shipDragSpriteVisuals[2].GetSprite().scale({0.3F, 0.3F});
+
+    _shipDragSpriteVisuals[3].LoadSprite("Resources/Textures/starfleet_ship_destroyer.png");
+    _shipDragSpriteVisuals[3].GetSprite().scale({0.05F, 0.05F});
+
+    _shipDragSpriteVisuals[4].LoadSprite("Resources/Textures/starfleet_ship_battleship.png");
+    _shipDragSpriteVisuals[4].GetSprite().scale({0.05F, 0.05F});
+
+    for (auto& shipDragVisual : _shipDragSpriteVisuals)
+    {
+        auto playerShipColour = _player.GetShips()[0]->GetColour();
+        shipDragVisual.GetSprite().setColor({playerShipColour.r, playerShipColour.g, playerShipColour.b, 125});
+    }
+
 
     InitEvents();
 
@@ -133,34 +157,70 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         ResetMinimapView();
     }
 
-    for (int i = 0; i < _command_buttons.size(); i++)
-    {
-        /// If cursor hovered over any ship spawning button, colour it blue
-        if(_command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds().contains(mousePosWorldCoords))
-        {
-            _command_buttons[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
 
-            /// If mouse is pressed over a ship spawn button while a ship isn't currently in training, then begin training ship of the selected ship type
-            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && !_shipyard.IsTraining())
+
+
+    const sf::Color DEFAULT_COLOR = {255, 255, 255, 100};
+    const sf::Color HOVER_COLOR = _predefinedColours.LIGHTBLUE;
+    const sf::Color SELECTED_COLOR = {153, 210, 242, 150};
+    for (int i = 0; i < _shipSpawnerButtons.size(); i++)
+    {
+        // Check if the cursor is hovering over the button
+        if (_shipSpawnerButtons[i]->IsCursorHoveredOver())
+        {
+            // If the button is the currently selected one and dragging, keep it in the selected color
+            if (_dragging && i == _shipSelectedIndex)
             {
-                //dragging = true;
-                _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({153, 210, 242, 150});
-                auto& assignedShipToButton = _buttonShipDictionary[_command_buttons[i].get()];
+                _shipSpawnerButtons[i]->SetColour(SELECTED_COLOR);
+            }
+            else
+            {
+                // Highlight the button in light blue if not dragging
+                _shipSpawnerButtons[i]->SetColour(HOVER_COLOR);
+
+                // Check if the button is clicked
+                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && !_dragging && !_shipyard.IsTraining())
+                {
+                    // Set the selected button index and change its color
+                    _shipSelectedIndex = i;
+                    _shipSpawnerButtons[_shipSelectedIndex]->SetColour(SELECTED_COLOR);
+                    _isDragVisualVisible = true;
+                    _dragging = true;
+                }
+            }
+        }
+        else
+        {
+            // Revert the button color to default if not hovered and not the selected button
+            if (!_dragging || i != _shipSelectedIndex)
+            {
+                _shipSpawnerButtons[i]->SetColour(DEFAULT_COLOR);
+            }
+        }
+    }
+
+    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && _dragging)
+    {
+        for (int i = 0; i < spaceLanes.size(); ++i)
+        {
+            if(spaceLanes[i]->IsCursorHoveredOver())
+            {
+                auto& assignedShipToButton = _buttonShipDictionary[_shipSpawnerButtons[_shipSelectedIndex].get()];
                 _shipyard.SetTrainingSpeed(assignedShipToButton->GetTrainingSpeed());
                 _playerCreditsCounter -= static_cast<int>(assignedShipToButton->GetShipCost());
                 _shipyard.SetDeployText("Deploying " + assignedShipToButton->GetShipName());
                 _playerCreditsText.setString("Credits: " + std::to_string(_playerCreditsCounter));
                 _shipyard.SetTrainingStatus(true);
-                _ship_spawned_index = i;
+                spaceLaneSelected = i;
                 // TODO: Invoke an agnostic event here notifying subscribers that a ship is currently training?
             }
         }
-            /// If cursor no longer hovered over any ship spawning button, recolour it white
-        else if(!_command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds().contains(mousePosWorldCoords))
-        {
-            //dragging = false;
-            _command_buttons[i]->GetSpriteComponent().GetSprite().setColor({255, 255, 255, 100});
-        }
+
+        // Revert the selected button color to default
+        _shipSpawnerButtons[_shipSelectedIndex]->SetColour({255, 255, 255, 100});
+        _shipDragSpriteVisuals[_shipSelectedIndex].SetPos(_shipSpawnerButtons[_shipSelectedIndex]->GetPos());
+        _isDragVisualVisible = false;
+        _dragging = false;
     }
 }
 
@@ -183,7 +243,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         const float SPACING = 10;
         //const float OFFSET = NUM_OF_BUTTONS * SPACING;
-        auto button_bounds = _command_buttons[i]->GetSpriteComponent().GetSprite().getGlobalBounds();
+        auto button_bounds = _shipSpawnerButtons[i]->GetBounds();
         auto xPos = 0.0F;
         auto yPos = 0.0F;
 
@@ -209,28 +269,28 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + (button_bounds.height*2.0F) + (SPACING*3.0F);
         }*/
 
-        _command_buttons[i]->GetSpriteComponent().SetPos({xPos, yPos});
-        _command_buttons[i]->Update(window);
+        _shipSpawnerButtons[i]->SetPos({xPos, yPos});
+        _shipSpawnerButtons[i]->Update(window);
 
         /*if() // TODO: If ship cost associated with button is less than player's credit ammount, lower transparency of button
         {
-            _command_buttons[i]->GetSpriteComponent().GetSprite().setColor(sf::Color(255, 255, 255, 50));
+            _shipSpawnerButtons[i]->GetSpriteComponent().GetSprite().setColor(sf::Color(255, 255, 255, 50));
             _player.GetShips()[i]->GetShipCost()
             // Dictionary of command buttons and ship variations?
         }*/
 
         // Ship cost text alignment to command buttons
-        auto button_sprite = _command_buttons[i]->GetSpriteComponent().GetSprite();
-        auto text_xPos = button_sprite.getPosition().x + button_sprite.getGlobalBounds().width - (_ship_cost_text[i].getGlobalBounds().width+2);
-        auto text_yPos = button_sprite.getPosition().y + 5;
-        _ship_cost_text[i].setPosition(text_xPos, text_yPos);
+        auto btnPos = _shipSpawnerButtons[i]->GetPos();
+        auto btnBounds = _shipSpawnerButtons[i]->GetBounds();
+        auto text_xPos = btnPos.x + btnBounds.width - (_ship_cost_text[i].getGlobalBounds().width+2);
+        _ship_cost_text[i].setPosition(text_xPos, btnPos.y + 5);
     }
 
-    _playerCreditsText.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, _command_buttons[_command_buttons.size()-1]->GetSpriteComponent().GetPos().y + _command_buttons[_command_buttons.size()-1]->GetSpriteComponent().GetSprite().getGlobalBounds().height*1.1F);
+    _playerCreditsText.setPosition(_shipSpawnerButtons[0]->GetPos().x, _shipSpawnerButtons[_shipSpawnerButtons.size() - 1]->GetPos().y + _shipSpawnerButtons[_shipSpawnerButtons.size() - 1]->GetBounds().height * 1.1F);
     _wavesRemainingText.setPosition(_mainView.getCenter().x - _wavesRemainingText.getGlobalBounds().width/2.0F, _mainView.getCenter().y - Constants::WINDOW_WIDTH/4.0F);
     _enemiesRemainingText.setPosition(_wavesRemainingText.getPosition().x + _wavesRemainingText.getGlobalBounds().width/2.0F - _enemiesRemainingText.getGlobalBounds().width/2.0F, _wavesRemainingText.getPosition().y + _wavesRemainingText.getGlobalBounds().height + 5.0F);
     //_shipyard.SetPosition({_mainView.getCenter().x - _mainView.getSize().x/2.0F + 15.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 15.0F});
-    //_shipyard.SetPosition({_command_buttons[0]->GetSpriteComponent().GetPos().x, _command_buttons[0]->GetSpriteComponent().GetPos().y - _shipyard.GetSpriteComponent().GetSprite().getGlobalBounds().height*2.75F});
+    //_shipyard.SetPosition({_shipSpawnerButtons[0]->GetSpriteComponent().GetPos().x, _shipSpawnerButtons[0]->GetSpriteComponent().GetPos().y - _shipyard.GetSpriteComponent().GetSprite().getGlobalBounds().height*2.75F});
     _shipyard.SetPosition({_minimapBorder.getPosition().x + _minimapBorder.getSize().x + 10.0F, _minimapBorder.getPosition().y});
     _shipyard.Update(window, deltaTime);
     _cursor.Update(window, deltaTime);
@@ -403,6 +463,14 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         spaceLanes[i]->SetPos({playerFlagshipPos.x + laneXOffset, playerFlagshipPos.y + laneYOffset});
         spaceLanes[i]->Update(window, deltaTime);
     }
+
+    // Drag visual
+    if(_isDragVisualVisible)
+    {
+        auto xPos = mousePosWorldCoords.x - _shipDragSpriteVisuals[_shipSelectedIndex].GetSprite().getGlobalBounds().width/2.0F;
+        auto yPos = mousePosWorldCoords.y - _shipDragSpriteVisuals[_shipSelectedIndex].GetSprite().getGlobalBounds().height/2.0F;
+        _shipDragSpriteVisuals[_shipSelectedIndex].SetPos({xPos, yPos});
+    }
 }
 
 void GameScene::Render(sf::RenderWindow& window)
@@ -410,7 +478,7 @@ void GameScene::Render(sf::RenderWindow& window)
     /// Render the main view
     window.setView(_mainView);
     window.draw(_background_sprite);
-    for(auto& button : _command_buttons)
+    for(auto& button : _shipSpawnerButtons)
     {
         button->Render(window);
     }
@@ -430,6 +498,10 @@ void GameScene::Render(sf::RenderWindow& window)
     for (const auto &lane : spaceLanes)
     {
         lane->Render(window);
+    }
+    if(_isDragVisualVisible)
+    {
+        _shipDragSpriteVisuals[_shipSelectedIndex].Render(window);
     }
 
     /// Render the minimap
@@ -472,7 +544,7 @@ bool GameScene::InitBackground()
     return true;
 }
 
-bool GameScene::InitCommandButtons()
+bool GameScene::InitShipSpawnerButtons()
 {
     std::string ship_costs[5] = { "50", "75", "100", "300", "400", };
     const float NUM_OF_BUTTONS = 5;
@@ -480,14 +552,14 @@ bool GameScene::InitCommandButtons()
     const float OFFSET = NUM_OF_BUTTONS * SPACING;
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
-        _command_buttons.emplace_back(std::make_unique<Button>("Resources/Textures/command_button_" + std::to_string(i) + ".png"));
-        auto& button_sprite = _command_buttons[i]->GetSpriteComponent().GetSprite();
-        button_sprite.setColor({178, 178, 178, 255});
-        button_sprite.scale({0.20f, 0.20f});
-        auto button_bounds = button_sprite.getGlobalBounds();
-        auto xPos = (Constants::WINDOW_WIDTH * 0.5f - button_bounds.width*NUM_OF_BUTTONS/2.0f - OFFSET) + (i * (button_bounds.width+SPACING));
-        auto yPos = Constants::WINDOW_HEIGHT - (button_bounds.height/2.0f*3.0f);
-        _command_buttons[i]->GetSpriteComponent().SetPos({xPos, yPos});
+        _shipSpawnerButtons.emplace_back(std::make_unique<Button>("Resources/Textures/command_button_" + std::to_string(i) + ".png"));
+        _shipSpawnerButtons[i]->SetColour({255, 255, 255, 100});
+        _shipSpawnerButtons[i]->SetScale({0.20F, 0.20F});
+
+        auto btnBounds = _shipSpawnerButtons[i]->GetBounds();
+        auto xPos = (Constants::WINDOW_WIDTH * 0.5f - btnBounds.width * NUM_OF_BUTTONS / 2.0f - OFFSET) + (i * (btnBounds.width + SPACING));
+        auto yPos = Constants::WINDOW_HEIGHT - (btnBounds.height / 2.0f * 3.0f);
+        _shipSpawnerButtons[i]->SetPos({xPos, yPos});
 
         _ship_cost_text.emplace_back(sf::Text());
         _ship_cost_text[i].setString(ship_costs[i]);
@@ -497,9 +569,9 @@ bool GameScene::InitCommandButtons()
         _ship_cost_text[i].setOutlineThickness(1);
         _ship_cost_text[i].setFont(GetRegularFont());
         _ship_cost_text[i].setCharacterSize(8);
-        auto text_xPos = button_sprite.getPosition().x + button_sprite.getGlobalBounds().width - (_ship_cost_text[i].getGlobalBounds().width+2);
-        auto text_yPos = button_sprite.getPosition().y + 5;
-        _ship_cost_text[i].setPosition(text_xPos, text_yPos);
+        auto btnPos = _shipSpawnerButtons[i]->GetPos();
+        auto text_xPos = btnPos.x + btnBounds.width - (_ship_cost_text[i].getGlobalBounds().width+2);
+        _ship_cost_text[i].setPosition(text_xPos, btnPos.y + 5.0F);
     }
 
     return true;
@@ -513,7 +585,7 @@ void GameScene::InitPlayerCreditsText()
     _playerCreditsText.setOutlineThickness(1);
     _playerCreditsText.setFont(GetRegularFont());
     _playerCreditsText.setCharacterSize(14);
-    _playerCreditsText.setPosition(_command_buttons[0]->GetSpriteComponent().GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
+    _playerCreditsText.setPosition(_shipSpawnerButtons[0]->GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
 }
 
 void GameScene::InitWavesRemainingText()
@@ -685,9 +757,12 @@ void GameScene::ResetMinimapView()
 
 void GameScene::SpawnShipFromShipyard()
 {
-    _player.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(_ship_spawned_index));
+    _player.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(_shipSelectedIndex));
     _player.PaintShip(_player.GetShips()[_player.GetShips().size()-1], _predefinedColours.LIGHTBLUE);
-    RandomisePlayerShipSpawnPoint();
+    auto ship_xPos = spaceLanes[spaceLaneSelected]->GetPos().x + 25.0F;
+    auto ship_yPos = spaceLanes[spaceLaneSelected]->GetPos().y + spaceLanes[spaceLaneSelected]->GetSize().y / 2.0F;
+    _player.SetFleetPosition(_player.GetShips()[_player.GetShips().size()-1], {ship_xPos, ship_yPos});
+    //RandomisePlayerShipSpawnPoint();
     _shipyard.SetTrainingCompletedStatus(false);
 }
 

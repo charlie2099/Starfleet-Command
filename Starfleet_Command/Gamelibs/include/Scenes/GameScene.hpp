@@ -27,7 +27,7 @@ public:
 private:
     void InitRandomDistributions();
     bool InitBackground();
-    bool InitCommandButtons();
+    bool InitShipSpawnerButtons();
     void InitPlayerFlagship();
     void InitEnemyShips();
     void InitPlayerCreditsText();
@@ -68,7 +68,7 @@ private:
 
     // GUI
     //Crosshair crosshair;
-    std::vector<std::unique_ptr<Button>> _command_buttons;
+    std::vector<std::unique_ptr<Button>> _shipSpawnerButtons;
     std::vector<sf::Text> _ship_cost_text;
 
     // UI
@@ -80,6 +80,7 @@ private:
     // Sprites
     Player _player;
     Enemy _enemy;
+    std::array<SpriteComponent, StarshipFactory::SHIP_TYPE::ENUM_COUNT-1> _shipDragSpriteVisuals;
 
     // Minimap
     sf::View _mainView{};
@@ -90,7 +91,7 @@ private:
     std::vector<std::uniform_int_distribution<int>> _distributions;
 
     // Other
-    int _ship_spawned_index = 0;
+    int _shipSelectedIndex = 0;
     float _originalZoomLevel = 1.0f;
     float _currentZoomLevel = 1.0f;
     bool _isDragging = false;
@@ -110,6 +111,7 @@ private:
     std::vector<std::unique_ptr<SpaceLane>> spaceLanes;
     const float LANE_Y_SPACING = 35.0F;
     const float NUM_OF_LANES = 5.0F;
+    int spaceLaneSelected = 0;
 
     // Enemy Spawning
     float _enemySpawnTimer = 3.0f;
@@ -117,7 +119,8 @@ private:
     sf::Clock _clock;
 
     // Drag and drop
-    bool dragging = false;
+    bool _dragging = false;
+    bool _isDragVisualVisible = false;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

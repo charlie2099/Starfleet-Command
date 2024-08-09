@@ -1,3 +1,4 @@
+#include <SFML/Window/Mouse.hpp>
 #include "SpaceLane.hpp"
 
 bool SpaceLane::Init()
@@ -12,7 +13,20 @@ bool SpaceLane::Init()
 
 void SpaceLane::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
+    auto mouse_pos_relative = sf::Mouse::getPosition(window); // Mouse _position relative to the window
+    auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse _position translated into world coordinates
 
+    // if mouse within button bounds, do something
+    if(laneRect.getGlobalBounds().contains(mouse_pos_world))
+    {
+        _isHoveredOver = true;
+        laneRect.setFillColor(sf::Color(100, 100, 100, 50.0F));
+    }
+    else
+    {
+        _isHoveredOver = false;
+        laneRect.setFillColor(sf::Color::Transparent);
+    }
 }
 
 void SpaceLane::Render(sf::RenderWindow& window)
@@ -44,4 +58,5 @@ sf::Vector2f SpaceLane::GetSize()
 {
     return laneRect.getSize();
 }
+
 

@@ -1,8 +1,8 @@
 #include "Components/HealthComponent.hpp"
 
-/*HealthComponent::HealthComponent(SpriteComponent &spriteComponent)
+/*HealthComponent::HealthComponent(SpriteComponent &_spriteComponent)
 {
-    _spriteComponent = spriteComponent;
+    _spriteComponent = _spriteComponent;
 }*/
 
 void HealthComponent::TakeDamage(float amount, sf::Vector2f damageLocation)

@@ -2,7 +2,8 @@
 
 Button::Button(const std::string& filepath)
 {
-    spriteComponent.LoadSprite(filepath);
+    _spriteComponent.LoadSprite(filepath);
+    _colour = _spriteComponent.GetSprite().getColor();
 }
 
 void Button::Update(sf::RenderWindow &window)
@@ -11,24 +12,38 @@ void Button::Update(sf::RenderWindow &window)
     auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse _position translated into world coordinates
 
     // if mouse within button bounds, do something
-    if(spriteComponent.GetSprite().getGlobalBounds().contains(mouse_pos_world))
+    if(_spriteComponent.GetSprite().getGlobalBounds().contains(mouse_pos_world))
     {
-        is_hovered_over = true;
+        _isHoveredOver = true;
     }
     else
     {
-        is_hovered_over = false;
+        _isHoveredOver = false;
     }
 }
 
 void Button::Render(sf::RenderWindow &window)
 {
-    window.draw(spriteComponent.GetSprite());
+    window.draw(_spriteComponent.GetSprite());
 }
 
-SpriteComponent &Button::GetSpriteComponent()
+void Button::SetPos(sf::Vector2f pos)
 {
-    return spriteComponent;
+    _spriteComponent.SetPos(pos);
 }
+
+void Button::SetScale(sf::Vector2f scale)
+{
+    _spriteComponent.GetSprite().setScale(scale);
+}
+
+void Button::SetColour(sf::Color colour)
+{
+    _spriteComponent.GetSprite().setColor(colour);
+    _colour = colour;
+}
+
+
+
 
 
