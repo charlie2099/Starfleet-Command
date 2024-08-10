@@ -39,7 +39,7 @@ public:
     virtual Projectile::Type& GetProjectileType() = 0;
     virtual std::string& GetShipName() = 0;
     virtual sf::Color& GetColour() = 0;
-    virtual sf::Vector2f& GetPosition() = 0;
+    virtual sf::Vector2<float> GetPos() = 0;
     virtual float GetRotation() = 0;
     virtual float GetHealth() = 0;
     virtual float GetMaxHealth() = 0;
@@ -61,7 +61,6 @@ protected:
     Projectile::Type _projectileType;
     std::string _shipName;
     sf::Color _shipColour;
-    sf::Vector2f _position;
     float _rotation;
     float _maxHealth;
     float _damage;

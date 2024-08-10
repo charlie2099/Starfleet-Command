@@ -56,6 +56,8 @@ bool GameScene::Init()
         shipDragVisual.GetSprite().setColor({playerShipColour.r, playerShipColour.g, playerShipColour.b, 125});
     }
 
+    sf::Vector2f playerFlagshipPos = _player.GetFlagship()->GetPos();
+    _mainView.setCenter(playerFlagshipPos.x + 350.0F, playerFlagshipPos.y);
 
     InitEvents();
 
@@ -87,7 +89,7 @@ bool GameScene::Init()
 void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _mainView); // Mouse position translated into world coordinates
+    auto worldPositionOfMouse = window.mapPixelToCoords(mouse_pos, _mainView); // Mouse position translated into world coordinates
 
     // Opening Minimap
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Key::M)
@@ -97,7 +99,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         _isMapOpen = !_isMapOpen;
     }
 
-    if(_minimapBorder.getGlobalBounds().contains(mousePosWorldCoords))
+    if(_minimapBorder.getGlobalBounds().contains(worldPositionOfMouse))
     {
         if (event.type == sf::Event::MouseWheelScrolled)
         {
@@ -226,11 +228,42 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _mainView); // Mouse _position translated into world coordinates
+    auto mousePos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
+    auto worldPositionOfMouse = window.mapPixelToCoords(mousePos, _mainView); // Mouse _position translated into world coordinates
 
-    sf::Vector2f playerFlagshipPos = _player.GetFlagship()->GetSpriteComponent().GetPos();
-    _mainView.setCenter(playerFlagshipPos.x + 350.0F, playerFlagshipPos.y);
+    const float FLAGSHIP_FOCUS_OFFSET = 290.0F;
+
+    // Thresholds for detecting mouse proximity to window borders
+    const float EDGE_OFFSET = 200.0F;
+    auto mouseProximityToLeftWindowEdge = EDGE_OFFSET;
+    auto mouseProximityToRightWindowEdge = window.getSize().x - EDGE_OFFSET;
+
+    // Current boundaries of the view in world coordinates
+    auto viewportLeftBoundary = _mainView.getCenter().x - _mainView.getSize().x / 2.0F;
+    auto viewportRightBoundary = _mainView.getCenter().x + _mainView.getSize().x / 2.0F;
+
+    // Viewport movement conditions
+    bool isMouseNearLeftEdge = mousePos.x <= mouseProximityToLeftWindowEdge && mousePos.x > 0;
+    bool isMouseNearRightEdge = mousePos.x >= mouseProximityToRightWindowEdge && mousePos.x < window.getSize().x;
+    bool isViewportLeftEdgeWithinFlagshipFocus = viewportLeftBoundary > (_player.GetFlagship()->GetPos().x - FLAGSHIP_FOCUS_OFFSET);
+    bool isViewportRightEdgeWithinRightEdgeOfLevelBounds = viewportRightBoundary < Constants::LEVEL_WIDTH;
+    bool isMouseYposWithinWindowBounds = mousePos.y >= 0 and mousePos.y <= window.getSize().y;
+
+    const float VP_SCROLL_SPEED = 300.0F;
+    if(isMouseNearLeftEdge and isViewportLeftEdgeWithinFlagshipFocus and isMouseYposWithinWindowBounds)
+    {
+        _mainView.move(-VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
+    }
+    else if(isMouseNearRightEdge and isViewportRightEdgeWithinRightEdgeOfLevelBounds and isMouseYposWithinWindowBounds)
+    {
+        _mainView.move(VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
+    }
+    // Set main view to focus on the player flagship if the flagship passes a set distance from the left view boundary
+    else if(_player.GetFlagship()->GetPos().x > viewportLeftBoundary + FLAGSHIP_FOCUS_OFFSET)
+    {
+        _mainView.setCenter(_player.GetFlagship()->GetPos().x + 350.0F, _player.GetFlagship()->GetPos().y);
+    }
+
 
     _minimapBorder.setPosition(_mainView.getCenter().x - _mainView.getSize().x/2.0F + 13.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 15.0F);
     //_minimapBorder.setPosition(_mainView.getCenter().x - _minimapBorder.getSize().x/2.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 7.0F);
@@ -305,9 +338,9 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         if(playerShip != nullptr)
         {
             // Highlight player ship on mouse hover
-            if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, playerShip->GetSpriteComponent().GetSprite().getGlobalBounds()))
+            if(Chilli::Vector::BoundsCheck(worldPositionOfMouse, playerShip->GetSpriteComponent().GetSprite().getGlobalBounds()))
             {
-                _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::White);
+                _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED, sf::Color::Cyan);
                 //player_ship->GetSpriteComponent().GetSprite().setColor(sf::Color::Cyan);
             }
             else
@@ -372,7 +405,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 if(Chilli::Vector::Distance(playerSprite.getPosition(), enemySprite.getPosition()) <= _enemy.GetShips()[i]->GetAttackRange())
                 {
                     _enemy.GetShips()[i]->SetSpeed(25);
-                    _enemy.GetShips()[i]->MoveTowards(playerSprite.getPosition(), deltaTime);
+                    //_enemy.GetShips()[i]->MoveTowards(playerSprite.getPosition(), deltaTime);
 
                     auto& enemyShips = _enemy.GetShips()[i];
                     enemyShips->ShootAt(enemyShips->GetProjectileType(), enemyShips->GetFireRate(), playerSprite.getPosition());
@@ -425,7 +458,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 if(Chilli::Vector::Distance(playerSprite.getPosition(), enemySprite.getPosition()) <= _player.GetShips()[i]->GetAttackRange())
                 {
                     _player.GetShips()[i]->SetSpeed(25);
-                    _player.GetShips()[i]->MoveTowards(enemySprite.getPosition(), deltaTime);
+                    //_player.GetShips()[i]->MoveTowards(enemySprite.getPosition(), deltaTime);
 
                     auto& playerShips = _player.GetShips()[i];
                     playerShips->ShootAt(playerShips->GetProjectileType(), playerShips->GetFireRate(), enemySprite.getPosition());
@@ -460,15 +493,15 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         float totalLanesHeight = (laneHeight * NUM_OF_LANES) + (LANE_Y_SPACING * (NUM_OF_LANES-1));
         float laneXOffset = 75.0F;
         float laneYOffset = (i * (laneHeight + LANE_Y_SPACING)) - (totalLanesHeight / 2.0F);
-        spaceLanes[i]->SetPos({playerFlagshipPos.x + laneXOffset, playerFlagshipPos.y + laneYOffset});
+        spaceLanes[i]->SetPos({_player.GetFlagship()->GetPos().x + laneXOffset, _player.GetFlagship()->GetPos().y + laneYOffset});
         spaceLanes[i]->Update(window, deltaTime);
     }
 
     // Drag visual
     if(_isDragVisualVisible)
     {
-        auto xPos = mousePosWorldCoords.x - _shipDragSpriteVisuals[_shipSelectedIndex].GetSprite().getGlobalBounds().width/2.0F;
-        auto yPos = mousePosWorldCoords.y - _shipDragSpriteVisuals[_shipSelectedIndex].GetSprite().getGlobalBounds().height/2.0F;
+        auto xPos = worldPositionOfMouse.x - _shipDragSpriteVisuals[_shipSelectedIndex].GetSprite().getGlobalBounds().width / 2.0F;
+        auto yPos = worldPositionOfMouse.y - _shipDragSpriteVisuals[_shipSelectedIndex].GetSprite().getGlobalBounds().height / 2.0F;
         _shipDragSpriteVisuals[_shipSelectedIndex].SetPos({xPos, yPos});
     }
 }

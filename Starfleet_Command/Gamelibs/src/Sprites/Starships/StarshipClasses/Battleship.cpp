@@ -138,7 +138,6 @@ void Battleship::SetColour(sf::Color &colour)
 void Battleship::SetPosition(sf::Vector2f pos)
 {
     _spriteComponent.SetPos(pos);
-    _position = pos;
 }
 
 void Battleship::SetRotation(float rot)

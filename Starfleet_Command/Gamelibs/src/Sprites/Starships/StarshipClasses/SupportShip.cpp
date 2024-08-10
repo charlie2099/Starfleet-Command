@@ -138,7 +138,6 @@ void SupportShip::SetColour(sf::Color &colour)
 void SupportShip::SetPosition(sf::Vector2f pos)
 {
     _spriteComponent.SetPos(pos);
-    _position = pos;
 }
 
 void SupportShip::SetRotation(float rot)

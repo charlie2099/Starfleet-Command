@@ -135,7 +135,6 @@ void Mothership::SetColour(sf::Color &colour)
 void Mothership::SetPosition(sf::Vector2f pos)
 {
     _spriteComponent.SetPos(pos);
-    _position = pos;
 }
 
 void Mothership::SetRotation(float rot)

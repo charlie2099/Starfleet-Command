@@ -37,7 +37,7 @@ public:
     Projectile::Type& GetProjectileType() override { return _projectileType; }
     std::string& GetShipName() override { return _shipName; }
     sf::Color &GetColour() override { return _shipColour; }
-    sf::Vector2f &GetPosition() override { return _position; }
+    sf::Vector2<float> GetPos() override { return _spriteComponent.GetPos(); }
     float GetRotation() override { return _rotation; }
     float GetHealth() override { return _healthComponent.GetHealth(); }
     float GetMaxHealth() override { return _maxHealth; }

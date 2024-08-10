@@ -138,7 +138,6 @@ void LightFighter::SetColour(sf::Color &colour)
 void LightFighter::SetPosition(sf::Vector2f pos)
 {
     _spriteComponent.SetPos(pos);
-    _position = pos;
 }
 
 void LightFighter::SetRotation(float rot)

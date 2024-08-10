@@ -138,7 +138,6 @@ void Destroyer::SetColour(sf::Color &colour)
 void Destroyer::SetPosition(sf::Vector2f pos)
 {
     _spriteComponent.SetPos(pos);
-    _position = pos;
 }
 
 void Destroyer::SetRotation(float rot)

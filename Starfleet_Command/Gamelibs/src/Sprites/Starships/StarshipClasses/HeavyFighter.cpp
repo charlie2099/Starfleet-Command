@@ -138,7 +138,6 @@ void HeavyFighter::SetColour(sf::Color &colour)
 void HeavyFighter::SetPosition(sf::Vector2f pos)
 {
     _spriteComponent.SetPos(pos);
-    _position = pos;
 }
 
 void HeavyFighter::SetRotation(float rot)
