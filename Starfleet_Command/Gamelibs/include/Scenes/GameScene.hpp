@@ -53,7 +53,7 @@ private:
 
     // Utility
     Chilli::Cursor _cursor;
-    Chilli::Colours _predefinedColours;
+    Chilli::PredefinedColours _predefinedColours;
 
     // HUD
     Shipyard _shipyard;

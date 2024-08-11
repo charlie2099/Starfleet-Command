@@ -4,6 +4,7 @@
 #include "Components/HealthComponent.hpp"
 #include "Sprites/Projectiles/Projectile.hpp"
 #include "Sprites/UI/HealthBar.hpp"
+#include "Utility/PredefinedColours.hpp"
 
 /*
  * Interface that all ships should inherit from
@@ -18,7 +19,7 @@ public:
 
     /// Behaviours
     virtual void MoveTowards(sf::Vector2f target, sf::Time deltaTime) = 0;
-    virtual void ShootAt(Projectile::Type projectile, float fireRate, sf::Vector2f target) = 0;
+    virtual void ShootAt(float fireRate, sf::Vector2f target) = 0;
 
     /// Modifiers
     virtual void SetHealth(float health) = 0;
@@ -30,13 +31,32 @@ public:
     virtual void SetColour(sf::Color& colour) = 0;
     virtual void SetPosition(sf::Vector2f  pos) = 0;
     virtual void SetRotation(float rot) = 0;
+    void SetProjectileColour(sf::Color colour)
+    {
+        if(colour == sf::Color::Cyan || colour == sf::Color::Blue || colour == _predefinedColours.LIGHTBLUE || colour == _predefinedColours.BLUEVIOLET)
+        {
+            _projectileColour = Projectile::BLUE;
+        }
+        else if(colour == sf::Color::Green || colour == _predefinedColours.LIGHTGREEN)
+        {
+            _projectileColour = Projectile::GREEN;
+        }
+        else if(colour == sf::Color::Red || colour == _predefinedColours.LIGHTRED)
+        {
+            _projectileColour = Projectile::RED;
+        }
+        else
+        {
+            std::cout << "WARNING: Could not locate projectile of the desired colour. Defaulting to BLUE." << std::endl;
+            _projectileColour = Projectile::BLUE;
+        }
+    };
 
     /// Accessors
     virtual SpriteComponent& GetSpriteComponent() = 0;
     virtual HealthComponent& GetHealthComponent() = 0;
     virtual std::unique_ptr<HealthBar>& GetHealthBar() = 0;
     virtual std::vector<std::unique_ptr<Projectile>>& GetProjectile() = 0;
-    virtual Projectile::Type& GetProjectileType() = 0;
     virtual std::string& GetShipName() = 0;
     virtual sf::Color& GetColour() = 0;
     virtual sf::Vector2<float> GetPos() = 0;
@@ -52,13 +72,16 @@ public:
     virtual float GetAttackRange() = 0;
     virtual float GetShipCost() = 0;
     virtual bool IsHealthBarVisible() = 0;
+    virtual Projectile::Size GetProjectileSize() = 0;
+    virtual Projectile::Colour GetProjectileColour() = 0;
 
 protected:
     SpriteComponent _spriteComponent;
     HealthComponent _healthComponent;
     std::unique_ptr<HealthBar> _healthBar;
     std::vector<std::unique_ptr<Projectile>> _projectile;
-    Projectile::Type _projectileType;
+    Projectile::Size _projectileSize;
+    Projectile::Colour _projectileColour;
     std::string _shipName;
     sf::Color _shipColour;
     float _rotation;
@@ -74,6 +97,7 @@ protected:
     bool _healthBarIsVisible = false;
     float _nextFireTime = 0;
     sf::Clock _clock;
+    Chilli::PredefinedColours _predefinedColours;
 };
 
 #endif //STARFLEET_COMMAND_ISTARSHIP_HPP

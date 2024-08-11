@@ -2823,6 +2823,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Enemy/Enemy.cpp.obj: D:/My
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipFactory.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Effects/DamagePopUpEffect.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HealthBar.hpp \
+  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/PredefinedColours.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Vector.hpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Player/Player.cpp.obj: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Player/Player.cpp \
@@ -3130,6 +3131,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Player/Player.cpp.obj: D:/
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipFactory.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Effects/DamagePopUpEffect.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HealthBar.hpp \
+  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/PredefinedColours.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Vector.hpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Player/PlayerStats.cpp.obj: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Player/PlayerStats.cpp \
@@ -3701,6 +3703,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/Fleet.cpp.obj: D
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipFactory.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Effects/DamagePopUpEffect.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HealthBar.hpp \
+  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/PredefinedColours.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Vector.hpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.obj: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp \
@@ -4001,6 +4004,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipClasses/Battleship.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Effects/DamagePopUpEffect.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HealthBar.hpp \
+  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/PredefinedColours.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Vector.hpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp.obj: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/StarshipClasses/Destroyer.cpp \
@@ -4301,6 +4305,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipClasses/Destroyer.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Effects/DamagePopUpEffect.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HealthBar.hpp \
+  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/PredefinedColours.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Vector.hpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.obj: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp \
@@ -4601,6 +4606,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipClasses/HeavyFighter.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Effects/DamagePopUpEffect.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HealthBar.hpp \
+  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/PredefinedColours.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Vector.hpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.obj: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp \
@@ -4901,6 +4907,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipClasses/LightFighter.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Effects/DamagePopUpEffect.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HealthBar.hpp \
+  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/PredefinedColours.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Vector.hpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.obj: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp \
@@ -5201,6 +5208,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipClasses/Mothership.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Effects/DamagePopUpEffect.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HealthBar.hpp \
+  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/PredefinedColours.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Vector.hpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp.obj: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/StarshipClasses/SupportShip.cpp \
@@ -5501,6 +5509,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipClasses/SupportShip.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Effects/DamagePopUpEffect.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HealthBar.hpp \
+  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/PredefinedColours.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Vector.hpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.obj: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp \
@@ -5807,6 +5816,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipFactory.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Effects/DamagePopUpEffect.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HealthBar.hpp \
+  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/PredefinedColours.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Vector.hpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp.obj: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp \
@@ -7399,6 +7409,7 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/ShipCard.cpp.obj: D:/My
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HealthBar.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Panel.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/ShipCard.hpp \
+  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/PredefinedColours.hpp \
   D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Vector.hpp
 
 CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Utility/Cursor.cpp \

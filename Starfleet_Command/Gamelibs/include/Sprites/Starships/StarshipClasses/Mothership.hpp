@@ -16,7 +16,7 @@ public:
 
     /// Behaviours
     void MoveTowards(sf::Vector2f target, sf::Time deltaTime) override;
-    void ShootAt(Projectile::Type projectile, float fireRate, sf::Vector2f target) override;
+    void ShootAt(float fireRate, sf::Vector2f target) override;
 
     /// Modifiers
     void SetHealth(float health) override;
@@ -34,7 +34,8 @@ public:
     HealthComponent& GetHealthComponent() override { return _healthComponent; }
     std::unique_ptr<HealthBar>& GetHealthBar() override { return _healthBar; }
     std::vector<std::unique_ptr<Projectile>>& GetProjectile() override { return _projectile; }
-    Projectile::Type& GetProjectileType() override { return _projectileType; }
+    Projectile::Size GetProjectileSize() override { return _projectileSize; }
+    Projectile::Colour GetProjectileColour() override { return _projectileColour; }
     std::string& GetShipName() override { return _shipName; }
     sf::Color &GetColour() override { return _shipColour; }
     sf::Vector2<float> GetPos() override { return _spriteComponent.GetPos(); }

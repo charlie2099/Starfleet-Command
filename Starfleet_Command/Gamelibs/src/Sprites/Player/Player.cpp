@@ -39,6 +39,14 @@ void Player::CreateShip(StarshipFactory::SHIP_TYPE type)
     std::unique_ptr<IStarship> starship1 = StarshipFactory::CreateShip(type);
     starship.emplace_back(std::move(starship1));
 
+    if(!starship.empty())
+    {
+        auto& flagship = starship[0];
+        auto& newestShip = starship[starship.size()-1];
+        newestShip->SetColour(flagship->GetColour());
+        newestShip->SetProjectileColour(flagship->GetColour());
+    }
+
     /// SHIP_SPAWNED event is invoked (non-agnostic)
     auto range = _basicObservers.equal_range(EventID::SHIP_SPAWNED);
     for(auto iter = range.first; iter != range.second; ++iter)
@@ -56,9 +64,10 @@ void Player::CreateShip(StarshipFactory::SHIP_TYPE type)
     }
 }
 
-void Player::PaintShip(std::unique_ptr<IStarship>& ship, sf::Color colour)
+void Player::PaintFlagship(sf::Color colour)
 {
-    ship->SetColour(colour);
+    starship[0]->SetColour(colour);
+    starship[0]->SetProjectileColour(colour);
 }
 
 void Player::SetFlagshipPosition(sf::Vector2f pos)

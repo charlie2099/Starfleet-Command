@@ -389,7 +389,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             auto ship_yPos = spaceLanes[randomLane]->GetPos().y + spaceLanes[randomLane]->GetSize().y / 2.0F;
             _enemy.SetFleetPosition(ship, {ship_xPos, ship_yPos});
             _enemy.SetFleetRotation(ship, 180);
-            _enemy.PaintShip(ship, _predefinedColours.LIGHTGREEN);
         }
         _enemySpawnTimer += _enemySpawnRate;
     }
@@ -413,7 +412,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                     //_enemy.GetShips()[i]->MoveTowards(playerSprite.getPosition(), deltaTime);
 
                     auto& enemyShips = _enemy.GetShips()[i];
-                    enemyShips->ShootAt(enemyShips->GetProjectileType(), enemyShips->GetFireRate(), playerSprite.getPosition());
+                    enemyShips->ShootAt(enemyShips->GetFireRate(), playerSprite.getPosition());
                 }
 
                 for(int k = 0; k < _enemy.GetShips()[i]->GetProjectile().size(); k++)
@@ -466,7 +465,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                     //_player.GetShips()[i]->MoveTowards(enemySprite.getPosition(), deltaTime);
 
                     auto& playerShips = _player.GetShips()[i];
-                    playerShips->ShootAt(playerShips->GetProjectileType(), playerShips->GetFireRate(), enemySprite.getPosition());
+                    playerShips->ShootAt(playerShips->GetFireRate(), enemySprite.getPosition());
                 }
 
                 for(int k = 0; k < _player.GetShips()[i]->GetProjectile().size(); k++)
@@ -721,18 +720,18 @@ void GameScene::InitEvents()
 
 void GameScene::InitPlayerFlagship()
 {
-    _player.CreateShip(StarshipFactory::SHIP_TYPE::MOTHERSHIP);
-    _player.PaintShip(_player.GetFlagship(), _predefinedColours.LIGHTBLUE);
+    _player.CreateShip(StarshipFactory::SHIP_TYPE::FLAGSHIP);
+    _player.PaintFlagship(_predefinedColours.LIGHTBLUE);
     _player.SetFlagshipPosition({Constants::WINDOW_WIDTH/2.0F, Constants::LEVEL_HEIGHT/2.0f});
 }
 
 void GameScene::InitEnemyShips()
 {
-    _enemy.CreateShip(StarshipFactory::MOTHERSHIP);
+    _enemy.CreateShip(StarshipFactory::FLAGSHIP);
+    _enemy.PaintFlagship(_predefinedColours.LIGHTGREEN);
     auto flagship_xPos = Constants::LEVEL_WIDTH -  _enemy.GetFlagshipBounds().width;
     _enemy.SetFlagshipPosition({flagship_xPos, Constants::LEVEL_HEIGHT / 2.0f});
     _enemy.SetFlagshipRotation(180);
-    _enemy.PaintShip(_enemy.GetShips()[0], _predefinedColours.LIGHTGREEN);
 }
 
 // TODO: Reuse for enemy ship distribution.
@@ -795,7 +794,6 @@ void GameScene::ResetMinimapView()
 void GameScene::SpawnShipFromShipyard()
 {
     _player.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(_shipSelectedIndex));
-    _player.PaintShip(_player.GetShips()[_player.GetShips().size()-1], _predefinedColours.LIGHTBLUE);
     auto ship_xPos = spaceLanes[spaceLaneSelected]->GetPos().x + 25.0F;
     auto ship_yPos = spaceLanes[spaceLaneSelected]->GetPos().y + spaceLanes[spaceLaneSelected]->GetSize().y / 2.0F;
     _player.SetFleetPosition(_player.GetShips()[_player.GetShips().size()-1], {ship_xPos, ship_yPos});

@@ -6,33 +6,36 @@
 class Projectile
 {
  public:
-    enum class Type
+    enum Size
     {
-        LASER_RED_SMALL,
-        LASER_BLUE_SMALL,
-        LASER_GREEN_SMALL,
-        LASER_RED_REGULAR,
-        LASER_BLUE_REGULAR,
-        LASER_GREEN_REGULAR,
-        LASER_RED_LARGE,
-        LASER_BLUE_LARGE,
-        LASER_GREEN_LARGE
+        SMALL = 0,
+        REGULAR = 1,
+        LARGE = 2
+    };
+
+    enum Colour
+    {
+        BLUE,
+        GREEN,
+        RED
     };
 
  public:
-    Projectile(Type type, sf::Vector2f spawn_pos, sf::Vector2f target_pos);
+    Projectile(Size size, Colour colour, sf::Vector2f spawn_pos, sf::Vector2f target_pos);
     ~Projectile() = default;
 
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
     SpriteComponent& GetSpriteComponent();
-    Type& GetType() { return  _type; };
+    Size GetSize() { return _size; }
+    Colour GetColour() { return _colour; }
 
  private:
     SpriteComponent _spriteComponent;
-    Type _type;
     sf::Vector2<float> _direction;
+    Size _size;
+    Colour _colour;
 };
 
 #endif //STARFLEET_COMMAND_PROJECTILE_HPP

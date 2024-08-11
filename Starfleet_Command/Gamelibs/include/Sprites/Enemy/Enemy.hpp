@@ -2,6 +2,7 @@
 #define STARFLEET_COMMAND_ENEMY_HPP
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
+#include "Utility/PredefinedColours.hpp"
 #include <cmath>
 #include <functional>
 
@@ -20,7 +21,7 @@ public:
     void Render(sf::RenderWindow& window);
 
     void CreateShip(StarshipFactory::SHIP_TYPE type);
-    void PaintShip(std::unique_ptr<IStarship>& ship, sf::Color colour);
+    void PaintFlagship(sf::Color colour);
     void SetFlagshipPosition(sf::Vector2f pos);
     void SetFlagshipRotation(float rot);
     void SetFleetPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
@@ -38,6 +39,8 @@ private:
     std::vector<std::unique_ptr<IStarship>> starship{};
     std::multimap<EventID, std::function<void()>> _basicObservers{};
     std::multimap<EventID, std::function<void(std::any)>> _agnosticObservers{};
+   Chilli::PredefinedColours _predefinedColours;
+   //sf::Color _teamColour;
 };
 
 #endif //STARFLEET_COMMAND_ENEMY_HPP

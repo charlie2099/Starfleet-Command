@@ -9,7 +9,8 @@ Mothership::Mothership()
     _damage = 50;
     _fireRate = 1.0f;
     _attackRange = 400.0F;
-    _projectileType = Projectile::Type::LASER_BLUE_LARGE;
+    _projectileSize = Projectile::LARGE;
+    _projectileColour = Projectile::BLUE;
     _shipName = "Mothership";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
@@ -80,7 +81,7 @@ void Mothership::MoveTowards(sf::Vector2f target, sf::Time deltaTime)
     ship_sprite.setRotation(ship_rot);
 }
 
-void Mothership::ShootAt(Projectile::Type projectile, float fireRate, sf::Vector2f target)
+void Mothership::ShootAt(float fireRate, sf::Vector2f target)
 {
     if(_nextFireTime < _clock.getElapsedTime().asSeconds())
     {
@@ -90,7 +91,7 @@ void Mothership::ShootAt(Projectile::Type projectile, float fireRate, sf::Vector
     if(_clock.getElapsedTime().asSeconds() >= _nextFireTime)
     {
         auto spawnPos = _spriteComponent.GetPos();
-        _projectile.emplace_back(std::make_unique<Projectile>(projectile, spawnPos, target));
+        _projectile.emplace_back(std::make_unique<Projectile>(_projectileSize, _projectileColour, spawnPos, target));
 
         _nextFireTime += fireRate;
     }
@@ -142,5 +143,6 @@ void Mothership::SetRotation(float rot)
     _spriteComponent.GetSprite().setRotation(rot);
     _rotation = rot;
 }
+
 
 

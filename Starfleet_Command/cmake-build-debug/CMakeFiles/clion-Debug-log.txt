@@ -9,6 +9,6 @@ CMake Deprecation Warning:
 
 
 -- Found SFML 2.5.1 in C:/Libraries/SFML/lib/cmake/SFML
--- Configuring done (0.5s)
+-- Configuring done (0.2s)
 -- Generating done (0.1s)
 -- Build files have been written to: D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug

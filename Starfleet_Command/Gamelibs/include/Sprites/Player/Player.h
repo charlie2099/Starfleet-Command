@@ -20,7 +20,7 @@ public:
     void Render(sf::RenderWindow& window);
 
     void CreateShip(StarshipFactory::SHIP_TYPE type);
-    void PaintShip(std::unique_ptr<IStarship>& ship, sf::Color colour);
+    void PaintFlagship(sf::Color colour);
     void SetFlagshipPosition(sf::Vector2f pos);
     void SetFleetPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
     using BasicPlayerEvent = std::pair<EventID, std::function<void()>>;

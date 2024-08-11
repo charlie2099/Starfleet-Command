@@ -20,7 +20,7 @@ private:
 
     // Utility
     Chilli::Cursor _cursor;
-    Chilli::Colours _predefinedColours;
+    Chilli::PredefinedColours _predefinedColours;
 
     // Other
     sf::View _player_view{};

@@ -4,7 +4,7 @@
 
 namespace Chilli
 {
-    struct Colours
+    struct PredefinedColours
     {
         sf::Color LIGHTBLUE {153, 210, 242};
         sf::Color LIGHTGREEN {91, 239, 170};

@@ -40,7 +40,7 @@ class MenuScene : public Scene
 
     sf::View _worldView{};
     Chilli::Cursor cursor;
-    Chilli::Colours _predefinedColours;
+    Chilli::PredefinedColours _predefinedColours;
     std::array<Panel, 5> panels;
     std::vector<std::unique_ptr<IStarship>> starship;
     std::vector<std::uniform_int_distribution<int>> uint_distrib;

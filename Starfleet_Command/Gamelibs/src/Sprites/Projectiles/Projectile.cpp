@@ -1,46 +1,56 @@
 #include "Sprites/Projectiles/Projectile.hpp"
 
-Projectile::Projectile(Projectile::Type type, sf::Vector2f spawn_pos, sf::Vector2f target_pos) : _type(type)
+Projectile::Projectile(Projectile::Size size, Projectile::Colour colour, sf::Vector2f spawn_pos, sf::Vector2f target_pos)
 {
-    switch (type)
+    switch (size)
     {
-        case Type::LASER_RED_SMALL:
-            _spriteComponent.LoadSprite("Resources/Textures/laser_red.png");
+        case SMALL:
+            switch (colour)
+            {
+                case BLUE:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_blue.png");
+                    break;
+                case GREEN:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_green.png");
+                    break;
+                case RED:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_red.png");
+                    break;
+            }
             _spriteComponent.GetSprite().setScale(0.35F, 0.35F);
             break;
-        case Type::LASER_BLUE_SMALL:
-            _spriteComponent.LoadSprite("Resources/Textures/laser_blue.png");
-            _spriteComponent.GetSprite().setScale(0.35F, 0.35F);
-            break;
-        case Type::LASER_GREEN_SMALL:
-            _spriteComponent.LoadSprite("Resources/Textures/laser_green.png");
-            _spriteComponent.GetSprite().setScale(0.35F, 0.35F);
-            break;
-        case Type::LASER_RED_REGULAR:
-            _spriteComponent.LoadSprite("Resources/Textures/laser_red.png");
+        case REGULAR:
+            switch (colour)
+            {
+                case BLUE:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_blue.png");
+                    break;
+                case GREEN:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_green.png");
+                    break;
+                case RED:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_red.png");
+                    break;
+            }
             _spriteComponent.GetSprite().setScale(0.5F, 0.5F);
             break;
-        case Type::LASER_BLUE_REGULAR:
-            _spriteComponent.LoadSprite("Resources/Textures/laser_blue.png");
-            _spriteComponent.GetSprite().setScale(0.5F, 0.5F);
-            break;
-        case Type::LASER_GREEN_REGULAR:
-            _spriteComponent.LoadSprite("Resources/Textures/laser_green.png");
-            _spriteComponent.GetSprite().setScale(0.5F, 0.5F);
-            break;
-        case Type::LASER_RED_LARGE:
-            _spriteComponent.LoadSprite("Resources/Textures/laser_red.png");
-            _spriteComponent.GetSprite().setScale(0.75F, 0.75F);
-            break;
-        case Type::LASER_BLUE_LARGE:
-            _spriteComponent.LoadSprite("Resources/Textures/laser_blue.png");
-            _spriteComponent.GetSprite().setScale(0.75F, 0.75F);
-            break;
-        case Type::LASER_GREEN_LARGE:
-            _spriteComponent.LoadSprite("Resources/Textures/laser_green.png");
+        case LARGE:
+            switch (colour)
+            {
+                case BLUE:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_blue.png");
+                    break;
+                case GREEN:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_green.png");
+                    break;
+                case RED:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_red.png");
+                    break;
+            }
             _spriteComponent.GetSprite().setScale(0.75F, 0.75F);
             break;
     }
+
     _spriteComponent.SetPos(spawn_pos);
 
     // Set rotation
@@ -57,7 +67,8 @@ Projectile::Projectile(Projectile::Type type, sf::Vector2f spawn_pos, sf::Vector
     _direction.x = angleX / vectorLength;
     _direction.y = angleY / vectorLength;
 
-    _type = type;
+    _size = size;
+    _colour = colour;
 }
 
 void Projectile::Update(sf::RenderWindow &window, sf::Time deltaTime)

@@ -12,7 +12,8 @@ LightFighter::LightFighter()
     _fireRate = 0.25f;
     _attackRange = 300.0F;
     _shipCost = 250;
-    _projectileType = Projectile::Type::LASER_RED_REGULAR;
+    _projectileSize = Projectile::REGULAR;
+    _projectileColour = Projectile::BLUE;
     _shipName = "Light Fighter";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
@@ -83,7 +84,7 @@ void LightFighter::MoveTowards(sf::Vector2f target, sf::Time deltaTime)
     ship_sprite.setRotation(ship_rot);
 }
 
-void LightFighter::ShootAt(Projectile::Type projectile, float fireRate, sf::Vector2f target)
+void LightFighter::ShootAt(float fireRate, sf::Vector2f target)
 {
     if(_nextFireTime < _clock.getElapsedTime().asSeconds())
     {
@@ -93,7 +94,7 @@ void LightFighter::ShootAt(Projectile::Type projectile, float fireRate, sf::Vect
     if(_clock.getElapsedTime().asSeconds() >= _nextFireTime)
     {
         auto spawnPos = _spriteComponent.GetPos();
-        _projectile.emplace_back(std::make_unique<Projectile>(projectile, spawnPos, target));
+        _projectile.emplace_back(std::make_unique<Projectile>(_projectileSize, _projectileColour, spawnPos, target));
 
         _nextFireTime += fireRate;
     }
@@ -145,6 +146,9 @@ void LightFighter::SetRotation(float rot)
     _spriteComponent.GetSprite().setRotation(rot);
     _rotation = rot;
 }
+
+
+
 
 
 

@@ -12,7 +12,8 @@ Battleship::Battleship()
     _fireRate = 3.0f;
     _attackRange = 600.0F;
     _shipCost = 750;
-    _projectileType = Projectile::Type::LASER_BLUE_LARGE;
+    _projectileSize = Projectile::LARGE;
+    _projectileColour = Projectile::BLUE;
     _shipName = "Battleship";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
@@ -83,7 +84,7 @@ void Battleship::MoveTowards(sf::Vector2f target, sf::Time deltaTime)
     ship_sprite.setRotation(ship_rot);
 }
 
-void Battleship::ShootAt(Projectile::Type projectile, float fireRate, sf::Vector2f target)
+void Battleship::ShootAt(float fireRate, sf::Vector2f target)
 {
     if(_nextFireTime < _clock.getElapsedTime().asSeconds())
     {
@@ -93,7 +94,7 @@ void Battleship::ShootAt(Projectile::Type projectile, float fireRate, sf::Vector
     if(_clock.getElapsedTime().asSeconds() >= _nextFireTime)
     {
         auto spawnPos = _spriteComponent.GetPos();
-        _projectile.emplace_back(std::make_unique<Projectile>(projectile, spawnPos, target));
+        _projectile.emplace_back(std::make_unique<Projectile>(_projectileSize, _projectileColour, spawnPos, target));
 
         _nextFireTime += fireRate;
     }
@@ -145,5 +146,6 @@ void Battleship::SetRotation(float rot)
     _spriteComponent.GetSprite().setRotation(rot);
     _rotation = rot;
 }
+
 
 
