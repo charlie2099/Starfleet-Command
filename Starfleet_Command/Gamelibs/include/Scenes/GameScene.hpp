@@ -2,7 +2,6 @@
 #define STARFLEET_COMMAND_GAMESCENE_HPP
 #include "Scenes/Scene.hpp"
 #include "Sprites/Starships/Fleet.hpp"
-#include "Sprites/UI/Crosshair.hpp"
 #include "Utility/Cursor.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
 #include "Sprites/Player/Player.h"
@@ -43,7 +42,6 @@ private:
     sf::Vector2f ConstrainViewCenter(const sf::Vector2f& proposedCenter) const;
     void ResetMinimapView();
     void SpawnShipFromShipyard();
-    void RescaleMinimap(float scaleFactorX, float scaleFactorY);
     enum DistributionsEnum
     {
         SHIP_DAMAGE = 0,
@@ -67,7 +65,6 @@ private:
     int _enemiesRemainingCounter = 100;
 
     // GUI
-    //Crosshair crosshair;
     std::vector<std::unique_ptr<Button>> _shipSpawnerButtons;
     std::vector<sf::Text> _ship_cost_text;
 
@@ -98,7 +95,6 @@ private:
     sf::Vector2i _initialMousePosition;
     sf::Vector2f _originalMinimapViewCenter;
     std::map<Button*, IStarship*> _buttonShipDictionary;
-    bool _isMapOpen = false;
 
     // For command buttons
     std::unique_ptr<LightFighter> light_fighter;
@@ -121,6 +117,11 @@ private:
     // Drag and drop
     bool _dragging = false;
     bool _isDragVisualVisible = false;
+
+    // Main view scroll
+    const float VP_SCROLL_SPEED = 300.0F;
+    bool _scrollViewLeft = false;
+    bool _scrollViewRight = false;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

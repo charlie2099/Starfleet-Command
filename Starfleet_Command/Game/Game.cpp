@@ -62,7 +62,7 @@ void Game::InitWindow()
     window.setPosition(sf::Vector2i(Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F));
 
     auto image = sf::Image{};
-    if (!image.loadFromFile("Resources/Textures/starfleet_ship_fighter.png")) //Resources/Textures/starfleet_ship_repairnew4.png
+    if (!image.loadFromFile("Resources/Textures/starfleet_ship_0.png"))
     {
         std::cout << "Failed to load window icon image file" << std::endl;
     }

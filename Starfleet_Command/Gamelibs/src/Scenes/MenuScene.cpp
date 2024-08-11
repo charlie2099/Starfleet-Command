@@ -116,7 +116,6 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
         else if(!Chilli::Vector::BoundsCheck(mousePosWorldCoords,starship[SELECTED_SHIP]->GetSpriteComponent().GetSprite().getGlobalBounds()))
         {
-            //crosshair.unSnap();
             cursor.SetCursorType(Chilli::Cursor::DEFAULT, sf::Color::White);
             starship[i]->SetHealthBarVisibility(false);
             starship[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
@@ -137,7 +136,6 @@ void MenuScene::Render(sf::RenderWindow& window)
     {
         panel.Render(window);
     }
-    //crosshair.Render(window);
     cursor.Render(window);
 }
 
@@ -210,7 +208,7 @@ void MenuScene::InitTitlePanel()
 
 bool MenuScene::InitMenuTitleIcon()
 {
-    if (!menu_title_img_texture.loadFromFile("Resources/Textures/starfleet_ship_fighter.png"))
+    if (!menu_title_img_texture.loadFromFile("Resources/Textures/starfleet_ship_0.png"))
     {
         return false;
     }

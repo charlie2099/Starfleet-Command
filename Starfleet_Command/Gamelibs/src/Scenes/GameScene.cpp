@@ -34,26 +34,17 @@ bool GameScene::Init()
     }
 
 
-
-    _shipDragSpriteVisuals[0].LoadSprite("Resources/Textures/starfleet_ship_fighter.png");
-    _shipDragSpriteVisuals[0].GetSprite().scale({0.05F, 0.05F});
-
-    _shipDragSpriteVisuals[1].LoadSprite("Resources/Textures/starfleet_ship_repair.png");
-    _shipDragSpriteVisuals[1].GetSprite().scale({0.05F, 0.05F});
-
-    _shipDragSpriteVisuals[2].LoadSprite("Resources/Textures/starfleet_ship_scout.png");
-    _shipDragSpriteVisuals[2].GetSprite().scale({0.3F, 0.3F});
-
-    _shipDragSpriteVisuals[3].LoadSprite("Resources/Textures/starfleet_ship_destroyer.png");
-    _shipDragSpriteVisuals[3].GetSprite().scale({0.05F, 0.05F});
-
-    _shipDragSpriteVisuals[4].LoadSprite("Resources/Textures/starfleet_ship_battleship.png");
-    _shipDragSpriteVisuals[4].GetSprite().scale({0.05F, 0.05F});
+    for (int i = 0; i < _shipDragSpriteVisuals.size(); ++i)
+    {
+        _shipDragSpriteVisuals[i].LoadSprite("Resources/Textures/starfleet_ship_" + std::to_string(i) + ".png");
+        _shipDragSpriteVisuals[i].GetSprite().scale({0.05F, 0.05F});
+    }
 
     for (auto& shipDragVisual : _shipDragSpriteVisuals)
     {
         auto playerShipColour = _player.GetShips()[0]->GetColour();
         shipDragVisual.GetSprite().setColor({playerShipColour.r, playerShipColour.g, playerShipColour.b, 125});
+        //shipDragVisual.GetSprite().setColor({sf::Color::White.r, sf::Color::White.g, sf::Color::White.b, 125});
     }
 
     sf::Vector2f playerFlagshipPos = _player.GetFlagship()->GetPos();
@@ -80,9 +71,6 @@ bool GameScene::Init()
     auto callbackFnc2 = std::bind(&TestClass::OnEvent, testClass, std::placeholders::_1);
     _player.AddObserver2({Player::EventID::SHIP_SPAWNED, callbackFnc2});*/
 
-    // FACTORY PATTERN
-    //starship = StarshipFactory::CreateShip(StarshipFactory::LIGHTFIGHTER);
-
     return true;
 }
 
@@ -91,13 +79,24 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto worldPositionOfMouse = window.mapPixelToCoords(mouse_pos, _mainView); // Mouse position translated into world coordinates
 
-    // Opening Minimap
-    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Key::M)
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
     {
-        // If map is not open then scale it up, otherwise scale it down
-        !_isMapOpen ? RescaleMinimap(1.5F, 1.5F) : RescaleMinimap(1.0F, 1.0F);
-        _isMapOpen = !_isMapOpen;
+        _scrollViewLeft = true;
     }
+    else if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::A)
+    {
+        _scrollViewLeft = false;
+    }
+
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::D)
+    {
+        _scrollViewRight = true;
+    }
+    else  if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::D)
+    {
+        _scrollViewRight = false;
+    }
+
 
     if(_minimapBorder.getGlobalBounds().contains(worldPositionOfMouse))
     {
@@ -158,8 +157,6 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     {
         ResetMinimapView();
     }
-
-
 
 
     const sf::Color DEFAULT_COLOR = {255, 255, 255, 100};
@@ -249,7 +246,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     bool isViewportRightEdgeWithinRightEdgeOfLevelBounds = viewportRightBoundary < Constants::LEVEL_WIDTH;
     bool isMouseYposWithinWindowBounds = mousePos.y >= 0 and mousePos.y <= window.getSize().y;
 
-    const float VP_SCROLL_SPEED = 300.0F;
     if(isMouseNearLeftEdge and isViewportLeftEdgeWithinFlagshipFocus and isMouseYposWithinWindowBounds)
     {
         _mainView.move(-VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
@@ -265,32 +261,41 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     }
 
 
-    _minimapBorder.setPosition(_mainView.getCenter().x - _mainView.getSize().x/2.0F + 13.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 15.0F);
-    //_minimapBorder.setPosition(_mainView.getCenter().x - _minimapBorder.getSize().x/2.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 7.0F);
-    //_minimapBorder.setPosition(_mainView.getCenter().x - _mainView.getSize().x/2.0F + 13.0F, _mainView.getCenter().y + _minimapBorder.getSize().y/2.0F + 22.0F);
+
+    if(_scrollViewLeft)
+    {
+        _mainView.move(-VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
+    }
+    else if(_scrollViewRight && isViewportRightEdgeWithinRightEdgeOfLevelBounds)
+    {
+        _mainView.move(VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
+    }
+
+
+    _minimapBorder.setPosition(_mainView.getCenter().x - _mainView.getSize().x/4.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 15.0F);
     _mainViewBorder.setPosition(_mainView.getCenter().x - _mainViewBorder.getSize().x/2.0F, _mainView.getCenter().y - _mainViewBorder.getSize().y/2.0F);
 
     // TODO: Clean up
     const float NUM_OF_BUTTONS = 5;
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
+        const float ROW_LENGTH = 5;
         const float SPACING = 10;
-        //const float OFFSET = NUM_OF_BUTTONS * SPACING;
         auto button_bounds = _shipSpawnerButtons[i]->GetBounds();
         auto xPos = 0.0F;
         auto yPos = 0.0F;
 
         // TODO: Clean this up
-        if(i < 3) // Row 1
+        if(i < ROW_LENGTH) // Row 1
         {
-            xPos = _minimapBorder.getPosition().x + (i * (button_bounds.width+SPACING));
-            yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + SPACING;
+            xPos = _mainView.getCenter().x - _shipyard.GetSpriteComponent().GetSprite().getGlobalBounds().width/2.0F + (i * (button_bounds.width+SPACING));
+            yPos = _mainView.getCenter().y + Constants::WINDOW_HEIGHT/2.75F + SPACING;
         }
-        else if(i >= 3) // Row 2
+        /*else if(i >= ROW_LENGTH) // Row 2
         {
-            xPos = _minimapBorder.getPosition().x + ((i-3) * (button_bounds.width+SPACING));
-            yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + button_bounds.height + (SPACING*2.0F);
-        }
+            xPos = _mainView.getCenter().x + ((i-ROW_LENGTH) * (button_bounds.width+SPACING));
+            yPos = _mainView.getCenter().y + Constants::WINDOW_HEIGHT/3.4F + button_bounds.height + (SPACING*2.0F);
+        }*/
         /*else if(i >= 2 && i < 4) // Row 2
         {
             xPos = _minimapBorder.getPosition().x + ((i-2) * (button_bounds.width+SPACING));
@@ -323,8 +328,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _wavesRemainingText.setPosition(_mainView.getCenter().x - _wavesRemainingText.getGlobalBounds().width/2.0F, _mainView.getCenter().y - Constants::WINDOW_WIDTH/4.0F);
     _enemiesRemainingText.setPosition(_wavesRemainingText.getPosition().x + _wavesRemainingText.getGlobalBounds().width/2.0F - _enemiesRemainingText.getGlobalBounds().width/2.0F, _wavesRemainingText.getPosition().y + _wavesRemainingText.getGlobalBounds().height + 5.0F);
     //_shipyard.SetPosition({_mainView.getCenter().x - _mainView.getSize().x/2.0F + 15.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 15.0F});
-    //_shipyard.SetPosition({_shipSpawnerButtons[0]->GetSpriteComponent().GetPos().x, _shipSpawnerButtons[0]->GetSpriteComponent().GetPos().y - _shipyard.GetSpriteComponent().GetSprite().getGlobalBounds().height*2.75F});
-    _shipyard.SetPosition({_minimapBorder.getPosition().x + _minimapBorder.getSize().x + 10.0F, _minimapBorder.getPosition().y});
+    _shipyard.SetPosition({_shipSpawnerButtons[0]->GetPos().x, _shipSpawnerButtons[0]->GetPos().y - _shipyard.GetSpriteComponent().GetSprite().getGlobalBounds().height*2.75F});
+    //_shipyard.SetPosition({_minimapBorder.getPosition().x + _minimapBorder.getSize().x + 10.0F, _minimapBorder.getPosition().y});
     _shipyard.Update(window, deltaTime);
     _cursor.Update(window, deltaTime);
     _cursor.SetCursorPos(window, _mainView);
@@ -525,7 +530,6 @@ void GameScene::Render(sf::RenderWindow& window)
     _player.Render(window);
     _enemy.Render(window);
     //starship->Render(window);
-    //crosshair.Render(window);
     _shipyard.Render(window);
     window.draw(_minimapBorder);
     for (const auto &lane : spaceLanes)
@@ -652,7 +656,7 @@ void GameScene::InitMainView()
 void GameScene::InitMinimapView()
 {
     // Initialize the minimap view to the size of the level
-    _minimapView.setSize(Constants::LEVEL_WIDTH,Constants::LEVEL_HEIGHT);
+    _minimapView.setSize(Constants::LEVEL_WIDTH,Constants::LEVEL_HEIGHT/3.0F);
 
     // Focus the view/camera on the centre point of the level
     _minimapView.setCenter(Constants::LEVEL_WIDTH/2.0F,Constants::LEVEL_HEIGHT/2.0F);
@@ -662,8 +666,8 @@ void GameScene::InitMinimapView()
     _minimapView.setViewport(sf::FloatRect(
             Constants::Minimap::VIEWPORT_LEFT,
             Constants::Minimap::VIEWPORT_TOP,
-            Constants::Minimap::VIEWPORT_WIDTH,
-            Constants::Minimap::VIEWPORT_HEIGHT));
+            Constants::Minimap::VIEWPORT_WIDTH*2.0F,
+            Constants::Minimap::VIEWPORT_HEIGHT/1.5F));
 }
 
 void GameScene::InitMainViewBorder()
@@ -676,7 +680,7 @@ void GameScene::InitMainViewBorder()
 
 void GameScene::InitMinimapBorder()
 {
-    _minimapBorder.setSize({Constants::WINDOW_WIDTH*Constants::Minimap::VIEWPORT_WIDTH,Constants::WINDOW_HEIGHT*Constants::Minimap::VIEWPORT_HEIGHT});
+    _minimapBorder.setSize({(Constants::WINDOW_WIDTH*Constants::Minimap::VIEWPORT_WIDTH)*2.0F,(Constants::WINDOW_HEIGHT*Constants::Minimap::VIEWPORT_HEIGHT)/1.5F});
     _minimapBorder.setOutlineThickness(2.0f); // Set the thickness of the border
     _minimapBorder.setOutlineColor(sf::Color(128,128,128)); // Set the color of the border
     _minimapBorder.setFillColor(sf::Color::Red); // Make the inside of the rectangle transparent
@@ -797,15 +801,4 @@ void GameScene::SpawnShipFromShipyard()
     _player.SetFleetPosition(_player.GetShips()[_player.GetShips().size()-1], {ship_xPos, ship_yPos});
     //RandomisePlayerShipSpawnPoint();
     _shipyard.SetTrainingCompletedStatus(false);
-}
-
-void GameScene::RescaleMinimap(float scaleFactorX, float scaleFactorY)
-{
-    _minimapView.setViewport(sf::FloatRect(
-        Constants::Minimap::VIEWPORT_LEFT,
-        Constants::Minimap::VIEWPORT_TOP,
-        Constants::Minimap::VIEWPORT_WIDTH * scaleFactorX,
-        Constants::Minimap::VIEWPORT_HEIGHT * scaleFactorY));
-
-    _minimapBorder.setSize({Constants::WINDOW_WIDTH*Constants::Minimap::VIEWPORT_WIDTH * scaleFactorX,Constants::WINDOW_HEIGHT*Constants::Minimap::VIEWPORT_HEIGHT * scaleFactorY});
 }

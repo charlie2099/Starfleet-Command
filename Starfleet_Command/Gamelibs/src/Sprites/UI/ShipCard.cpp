@@ -90,19 +90,19 @@ void ShipCard::setShipType(StarshipFactory::SHIP_TYPE shipType)
     switch (shipType)
     {
         case StarshipFactory::SHIP_TYPE::LIGHTFIGHTER:
-            ship_texture.loadFromFile("Resources/Textures/starfleet_ship_fighter.png");
+            ship_texture.loadFromFile("Resources/Textures/starfleet_ship_0.png");
             break;
             case StarshipFactory::SHIP_TYPE::HEAVYFIGHTER:
-            ship_texture.loadFromFile("Resources/Textures/starfleet_ship_repair.png");
+            ship_texture.loadFromFile("Resources/Textures/starfleet_ship_1.png");
             break;
             case StarshipFactory::SHIP_TYPE::DESTROYER:
-            ship_texture.loadFromFile("Resources/Textures/starfleet_ship_destroyer.png");
+            ship_texture.loadFromFile("Resources/Textures/starfleet_ship_3.png");
             break;
             case StarshipFactory::SHIP_TYPE::BATTLESHIP:
-            ship_texture.loadFromFile("Resources/Textures/starfleet_ship_battleship.png");
+            ship_texture.loadFromFile("Resources/Textures/starfleet_ship_4.png");
             break;
         default:
-            ship_texture.loadFromFile("Resources/Textures/starfleet_ship_fighter.png");
+            ship_texture.loadFromFile("Resources/Textures/starfleet_ship_0.png");
     }
     ship_sprite.scale(0.6F, 0.6F);
     ship_sprite.setTexture(ship_texture);

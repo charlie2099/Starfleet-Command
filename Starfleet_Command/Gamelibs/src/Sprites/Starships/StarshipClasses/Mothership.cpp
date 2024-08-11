@@ -2,7 +2,7 @@
 
 Mothership::Mothership()
 {
-    _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_flagship.png");
+    _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_5.png");
     _spriteComponent.GetSprite().scale({0.08F, 0.08F});
     _healthComponent.SetHealth(5000);
     _speed = 10;

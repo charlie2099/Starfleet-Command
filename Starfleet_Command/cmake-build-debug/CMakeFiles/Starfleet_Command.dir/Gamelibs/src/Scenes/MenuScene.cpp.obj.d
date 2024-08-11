@@ -252,7 +252,24 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/MenuScene.cpp.obj: \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Panel.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/GUI/Button.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Components/SpriteComponent.hpp \
- D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Crosshair.hpp \
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Cursor.hpp \
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Vector.hpp \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/cmath \
+ C:/mingw64/x86_64-w64-mingw32/include/math.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/bits/specfun.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/gamma.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/special_function_util.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/bessel_function.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/special_function_util.h \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/beta_function.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/ell_integral.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/exp_integral.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/hypergeometric.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/legendre_function.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/modified_bessel_func.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/poly_hermite.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/poly_laguerre.tcc \
+ C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/riemann_zeta.tcc \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Interfaces/IStarship.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Components/HealthComponent.hpp \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/functional \
@@ -276,22 +293,6 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/MenuScene.cpp.obj: \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward/auto_ptr.h \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/Effects/DamagePopUpEffect.hpp \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/random \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/cmath \
- C:/mingw64/x86_64-w64-mingw32/include/math.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/bits/specfun.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/gamma.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/special_function_util.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/bessel_function.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/special_function_util.h \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/beta_function.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/ell_integral.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/exp_integral.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/hypergeometric.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/legendre_function.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/modified_bessel_func.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/poly_hermite.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/poly_laguerre.tcc \
- C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/tr1/riemann_zeta.tcc \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/bits/random.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32/bits/opt_random.h \
  C:/mingw64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/pmmintrin.h \
@@ -309,8 +310,6 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/MenuScene.cpp.obj: \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Components/SpriteComponent.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Projectiles/Projectile.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HealthBar.hpp \
- D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Cursor.hpp \
- D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Utility/Vector.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipFactory.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipClasses/LightFighter.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipClasses/HeavyFighter.hpp \

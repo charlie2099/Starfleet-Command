@@ -2,7 +2,7 @@
 
 HeavyFighter::HeavyFighter()
 {
-    _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_repair.png");
+    _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_1.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
     _healthComponent.SetHealth(300);
     _speed = 70;

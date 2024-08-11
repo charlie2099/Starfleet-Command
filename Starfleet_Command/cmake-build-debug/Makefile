@@ -632,30 +632,6 @@ Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.s
 .PHONY : Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.s
 
-Gamelibs/src/Sprites/UI/Crosshair.obj: Gamelibs/src/Sprites/UI/Crosshair.cpp.obj
-.PHONY : Gamelibs/src/Sprites/UI/Crosshair.obj
-
-# target to build an object file
-Gamelibs/src/Sprites/UI/Crosshair.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Crosshair.cpp.obj
-.PHONY : Gamelibs/src/Sprites/UI/Crosshair.cpp.obj
-
-Gamelibs/src/Sprites/UI/Crosshair.i: Gamelibs/src/Sprites/UI/Crosshair.cpp.i
-.PHONY : Gamelibs/src/Sprites/UI/Crosshair.i
-
-# target to preprocess a source file
-Gamelibs/src/Sprites/UI/Crosshair.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Crosshair.cpp.i
-.PHONY : Gamelibs/src/Sprites/UI/Crosshair.cpp.i
-
-Gamelibs/src/Sprites/UI/Crosshair.s: Gamelibs/src/Sprites/UI/Crosshair.cpp.s
-.PHONY : Gamelibs/src/Sprites/UI/Crosshair.s
-
-# target to generate assembly for a file
-Gamelibs/src/Sprites/UI/Crosshair.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Crosshair.cpp.s
-.PHONY : Gamelibs/src/Sprites/UI/Crosshair.cpp.s
-
 Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.obj: Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp.obj
 .PHONY : Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.obj
 
@@ -944,9 +920,6 @@ help:
 	@echo ... Gamelibs/src/Sprites/Starships/StarshipFactory.obj
 	@echo ... Gamelibs/src/Sprites/Starships/StarshipFactory.i
 	@echo ... Gamelibs/src/Sprites/Starships/StarshipFactory.s
-	@echo ... Gamelibs/src/Sprites/UI/Crosshair.obj
-	@echo ... Gamelibs/src/Sprites/UI/Crosshair.i
-	@echo ... Gamelibs/src/Sprites/UI/Crosshair.s
 	@echo ... Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.obj
 	@echo ... Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.i
 	@echo ... Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.s

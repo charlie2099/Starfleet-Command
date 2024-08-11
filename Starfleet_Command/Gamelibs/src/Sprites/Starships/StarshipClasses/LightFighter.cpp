@@ -2,7 +2,7 @@
 
 LightFighter::LightFighter()
 {
-    _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_fighter.png");
+    _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_0.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
     _healthComponent.SetHealth(200);
     _speed = 80;
