@@ -70,12 +70,12 @@ void Enemy::SetFlagshipRotation(float rot)
     starship[0]->SetRotation(rot);
 }
 
-void Enemy::SetFleetPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f pos)
+void Enemy::SetShipPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f pos)
 {
     ship->SetPosition(pos);
 }
 
-void Enemy::SetFleetRotation(std::unique_ptr<IStarship> &ship, float rot)
+void Enemy::SetShipRotation(std::unique_ptr<IStarship> &ship, float rot)
 {
     ship->SetRotation(rot);
 }

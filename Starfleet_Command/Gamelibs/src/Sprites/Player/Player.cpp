@@ -75,7 +75,7 @@ void Player::SetFlagshipPosition(sf::Vector2f pos)
     starship[0]->SetPosition(pos);
 }
 
-void Player::SetFleetPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f pos)
+void Player::SetShipPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f pos)
 {
     ship->SetPosition(pos);
 }

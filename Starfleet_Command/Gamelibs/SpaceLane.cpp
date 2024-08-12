@@ -3,10 +3,10 @@
 
 bool SpaceLane::Init()
 {
-    laneRect.setOutlineThickness(5.0F);
+    laneRect.setOutlineThickness(4.0F);
     laneRect.setOutlineColor(sf::Color(0,0,255,50));
+    //laneRect.setOutlineColor(sf::Color(252, 162, 66,50));
     laneRect.setFillColor(sf::Color::Transparent);
-    laneRect.setSize({2500.0F, 50.0F});
 
     return true;
 }
@@ -21,6 +21,7 @@ void SpaceLane::Update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         _isHoveredOver = true;
         laneRect.setFillColor(sf::Color(100, 100, 100, 50.0F));
+        //laneRect.setFillColor(sf::Color( 252, 162, 66, 100.0F));
     }
     else
     {
@@ -44,6 +45,11 @@ void SpaceLane::SetColour(sf::Color colour)
     laneRect.setOutlineColor(colour);
 }
 
+void SpaceLane::SetSize(sf::Vector2f size)
+{
+    laneRect.setSize(size);
+}
+
 sf::Vector2f SpaceLane::GetPos()
 {
     return laneRect.getPosition();
@@ -58,5 +64,6 @@ sf::Vector2f SpaceLane::GetSize()
 {
     return laneRect.getSize();
 }
+
 
 

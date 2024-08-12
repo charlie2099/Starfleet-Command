@@ -11,7 +11,7 @@ public:
     enum EventID
     {
         SHIP_SPAWNED = 1,
-        SHIP_DESTROYED = 2 // starship class?
+        SHIP_DESTROYED = 2 // _starship class?
     };
 
     Player() = default;
@@ -22,7 +22,7 @@ public:
     void CreateShip(StarshipFactory::SHIP_TYPE type);
     void PaintFlagship(sf::Color colour);
     void SetFlagshipPosition(sf::Vector2f pos);
-    void SetFleetPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
+    void SetShipPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
     using BasicPlayerEvent = std::pair<EventID, std::function<void()>>;
     using AgnosticPlayerEvent = std::pair<EventID, std::function<void(std::any)>>;
     void AddBasicObserver(BasicPlayerEvent observer);

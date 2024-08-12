@@ -47,10 +47,10 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = C:\Users\Charl\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\241.18034.45\bin\cmake\win\x64\bin\cmake.exe
+CMAKE_COMMAND = C:\Users\Charl\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\241.19072.20\bin\cmake\win\x64\bin\cmake.exe
 
 # The command to remove a file.
-RM = C:\Users\Charl\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\241.18034.45\bin\cmake\win\x64\bin\cmake.exe -E rm -f
+RM = C:\Users\Charl\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\241.19072.20\bin\cmake\win\x64\bin\cmake.exe -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -67,7 +67,7 @@ CMAKE_BINARY_DIR = D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Comma
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "No interactive CMake dialog available..."
-	C:\Users\Charl\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\241.18034.45\bin\cmake\win\x64\bin\cmake.exe -E echo "No interactive CMake dialog available."
+	C:\Users\Charl\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\241.19072.20\bin\cmake\win\x64\bin\cmake.exe -E echo "No interactive CMake dialog available."
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -77,7 +77,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake to regenerate build system..."
-	C:\Users\Charl\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\241.18034.45\bin\cmake\win\x64\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	C:\Users\Charl\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\241.19072.20\bin\cmake\win\x64\bin\cmake.exe --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -440,30 +440,6 @@ Gamelibs/src/Sprites/Projectiles/Projectile.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projectile.cpp.s
 .PHONY : Gamelibs/src/Sprites/Projectiles/Projectile.cpp.s
 
-Gamelibs/src/Sprites/Starships/Fleet.obj: Gamelibs/src/Sprites/Starships/Fleet.cpp.obj
-.PHONY : Gamelibs/src/Sprites/Starships/Fleet.obj
-
-# target to build an object file
-Gamelibs/src/Sprites/Starships/Fleet.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/Fleet.cpp.obj
-.PHONY : Gamelibs/src/Sprites/Starships/Fleet.cpp.obj
-
-Gamelibs/src/Sprites/Starships/Fleet.i: Gamelibs/src/Sprites/Starships/Fleet.cpp.i
-.PHONY : Gamelibs/src/Sprites/Starships/Fleet.i
-
-# target to preprocess a source file
-Gamelibs/src/Sprites/Starships/Fleet.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/Fleet.cpp.i
-.PHONY : Gamelibs/src/Sprites/Starships/Fleet.cpp.i
-
-Gamelibs/src/Sprites/Starships/Fleet.s: Gamelibs/src/Sprites/Starships/Fleet.cpp.s
-.PHONY : Gamelibs/src/Sprites/Starships/Fleet.s
-
-# target to generate assembly for a file
-Gamelibs/src/Sprites/Starships/Fleet.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/Fleet.cpp.s
-.PHONY : Gamelibs/src/Sprites/Starships/Fleet.cpp.s
-
 Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.obj: Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.obj
 .PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.obj
 
@@ -752,30 +728,6 @@ Gamelibs/src/Sprites/UI/Panel.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Panel.cpp.s
 .PHONY : Gamelibs/src/Sprites/UI/Panel.cpp.s
 
-Gamelibs/src/Sprites/UI/ShipCard.obj: Gamelibs/src/Sprites/UI/ShipCard.cpp.obj
-.PHONY : Gamelibs/src/Sprites/UI/ShipCard.obj
-
-# target to build an object file
-Gamelibs/src/Sprites/UI/ShipCard.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/ShipCard.cpp.obj
-.PHONY : Gamelibs/src/Sprites/UI/ShipCard.cpp.obj
-
-Gamelibs/src/Sprites/UI/ShipCard.i: Gamelibs/src/Sprites/UI/ShipCard.cpp.i
-.PHONY : Gamelibs/src/Sprites/UI/ShipCard.i
-
-# target to preprocess a source file
-Gamelibs/src/Sprites/UI/ShipCard.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/ShipCard.cpp.i
-.PHONY : Gamelibs/src/Sprites/UI/ShipCard.cpp.i
-
-Gamelibs/src/Sprites/UI/ShipCard.s: Gamelibs/src/Sprites/UI/ShipCard.cpp.s
-.PHONY : Gamelibs/src/Sprites/UI/ShipCard.s
-
-# target to generate assembly for a file
-Gamelibs/src/Sprites/UI/ShipCard.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/ShipCard.cpp.s
-.PHONY : Gamelibs/src/Sprites/UI/ShipCard.cpp.s
-
 Gamelibs/src/Utility/Cursor.obj: Gamelibs/src/Utility/Cursor.cpp.obj
 .PHONY : Gamelibs/src/Utility/Cursor.obj
 
@@ -896,9 +848,6 @@ help:
 	@echo ... Gamelibs/src/Sprites/Projectiles/Projectile.obj
 	@echo ... Gamelibs/src/Sprites/Projectiles/Projectile.i
 	@echo ... Gamelibs/src/Sprites/Projectiles/Projectile.s
-	@echo ... Gamelibs/src/Sprites/Starships/Fleet.obj
-	@echo ... Gamelibs/src/Sprites/Starships/Fleet.i
-	@echo ... Gamelibs/src/Sprites/Starships/Fleet.s
 	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.obj
 	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.i
 	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.s
@@ -935,9 +884,6 @@ help:
 	@echo ... Gamelibs/src/Sprites/UI/Panel.obj
 	@echo ... Gamelibs/src/Sprites/UI/Panel.i
 	@echo ... Gamelibs/src/Sprites/UI/Panel.s
-	@echo ... Gamelibs/src/Sprites/UI/ShipCard.obj
-	@echo ... Gamelibs/src/Sprites/UI/ShipCard.i
-	@echo ... Gamelibs/src/Sprites/UI/ShipCard.s
 	@echo ... Gamelibs/src/Utility/Cursor.obj
 	@echo ... Gamelibs/src/Utility/Cursor.i
 	@echo ... Gamelibs/src/Utility/Cursor.s

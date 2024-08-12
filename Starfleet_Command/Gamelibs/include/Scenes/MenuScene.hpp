@@ -36,19 +36,17 @@ class MenuScene : public Scene
     static const int TITLE_PANEL = 5;
     static const int BACKGROUND_SHIPS = 16;
 
-    int SELECTED_SHIP = 0;
-
     sf::View _worldView{};
-    Chilli::Cursor cursor;
+    Chilli::Cursor _cursor;
     Chilli::PredefinedColours _predefinedColours;
-    std::array<Panel, 5> panels;
-    std::vector<std::unique_ptr<IStarship>> starship;
-    std::vector<std::uniform_int_distribution<int>> uint_distrib;
+    std::array<Panel, 5> _panels;
+    std::vector<std::unique_ptr<IStarship>> _starship;
+    std::vector<std::uniform_int_distribution<int>> _distributions;
 
-    sf::Texture background_texture;
-    sf::Texture menu_title_img_texture;
+    sf::Texture _backgroundTexture;
+    sf::Texture _menuTitleImgTexture;
 
-    sf::Sprite background_sprite;
-    sf::Sprite menu_title_img_sprite;
+    sf::Sprite _backgroundSprite;
+    sf::Sprite _menuTitleImgSprite;
 };
 #endif //STARFLEET_COMMAND_MENUSCENE_HPP

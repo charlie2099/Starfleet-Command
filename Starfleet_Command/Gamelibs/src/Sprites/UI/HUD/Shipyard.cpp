@@ -11,7 +11,7 @@ Shipyard::Shipyard()
 
     _font.loadFromFile("Resources/Fonts/Orbitron/Orbitron-Regular.ttf");
     _deployText.setString("Ship preparing to deploy...");
-    //text.setString("Preparing to deploy ship from the landing bay...");
+    //_text.setString("Preparing to deploy ship from the landing bay...");
     _deployText.setFont(_font);
     _deployText.setCharacterSize(12);
     _deployText.setPosition(_spriteComponent.GetPos().x+6, _spriteComponent.GetPos().y + _spriteComponent.GetSprite().getGlobalBounds().height+5);

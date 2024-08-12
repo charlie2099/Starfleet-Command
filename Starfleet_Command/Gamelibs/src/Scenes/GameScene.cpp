@@ -10,23 +10,23 @@ bool GameScene::Init()
     InitEnemiesRemainingText();
     InitPlayerFlagship();
     InitSpaceLanes();
-    InitEnemyShips();
+    InitEnemyFlagship();
     InitMainView();
     InitMinimapView();
     InitMainViewBorder();
     InitMinimapBorder();
 
-    light_fighter = std::make_unique<LightFighter>();
-    heavy_fighter = std::make_unique<HeavyFighter>();
-    support_ship = std::make_unique<SupportShip>();
-    destroyer = std::make_unique<Destroyer>();
-    battleship = std::make_unique<Battleship>();
+    _lightFighter = std::make_unique<LightFighter>();
+    _heavyFighter = std::make_unique<HeavyFighter>();
+    _supportShip = std::make_unique<SupportShip>();
+    _destroyer = std::make_unique<Destroyer>();
+    _battleship = std::make_unique<Battleship>();
 
-    _buttonShipDictionary[_shipSpawnerButtons[0].get()] = light_fighter.get();
-    _buttonShipDictionary[_shipSpawnerButtons[1].get()] = heavy_fighter.get();
-    _buttonShipDictionary[_shipSpawnerButtons[2].get()] = support_ship.get();
-    _buttonShipDictionary[_shipSpawnerButtons[3].get()] = destroyer.get();
-    _buttonShipDictionary[_shipSpawnerButtons[4].get()] = battleship.get();
+    _buttonShipDictionary[_shipSpawnerButtons[0].get()] = _lightFighter.get();
+    _buttonShipDictionary[_shipSpawnerButtons[1].get()] = _heavyFighter.get();
+    _buttonShipDictionary[_shipSpawnerButtons[2].get()] = _supportShip.get();
+    _buttonShipDictionary[_shipSpawnerButtons[3].get()] = _destroyer.get();
+    _buttonShipDictionary[_shipSpawnerButtons[4].get()] = _battleship.get();
 
     for(int i = 0; i < _shipSpawnerButtons.size(); i++)
     {
@@ -59,9 +59,9 @@ bool GameScene::Init()
     /// starshipFighter.AddWeapon(PlasmaCannonWeapon());
     /// starshipFighter.AddWeapon(TorpedoLauncherWeapon());
     ///
-    /// for(auto& starship : starships)
-    ///     starship.Update();
-    ///     starship.Render();
+    /// for(auto& _starship : starships)
+    ///     _starship.Update();
+    ///     _starship.Render();
 
   /*  /// Whenever a SHIP_SPAWNED event occurs, the TestFncForObserverToCall method is called
     /// A SHIP_SPAWNED event is invoked in the player CreateShip method.
@@ -164,7 +164,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     const sf::Color SELECTED_COLOR = {153, 210, 242, 150};
     for (int i = 0; i < _shipSpawnerButtons.size(); i++)
     {
-        // Check if the cursor is hovering over the button
+        // Check if the _cursor is hovering over the button
         if (_shipSpawnerButtons[i]->IsCursorHoveredOver())
         {
             // If the button is the currently selected one and dragging, keep it in the selected color
@@ -200,17 +200,17 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && _dragging)
     {
-        for (int i = 0; i < spaceLanes.size(); ++i)
+        for (int i = 0; i < _spaceLanes.size(); ++i)
         {
-            if(spaceLanes[i]->IsCursorHoveredOver())
+            if(_spaceLanes[i]->IsCursorHoveredOver())
             {
                 auto& assignedShipToButton = _buttonShipDictionary[_shipSpawnerButtons[_shipSelectedIndex].get()];
                 _shipyard.SetTrainingSpeed(assignedShipToButton->GetTrainingSpeed());
                 _playerCreditsCounter -= static_cast<int>(assignedShipToButton->GetShipCost());
                 _shipyard.SetDeployText("Deploying " + assignedShipToButton->GetShipName());
-                _playerCreditsText.setString("Credits: " + std::to_string(_playerCreditsCounter));
+                _playerCreditsText.setString("Scrap Metal: " + std::to_string(_playerCreditsCounter));
                 _shipyard.SetTrainingStatus(true);
-                spaceLaneSelected = i;
+                _spaceLaneSelected = i;
                 // TODO: Invoke an agnostic event here notifying subscribers that a ship is currently training?
             }
         }
@@ -228,8 +228,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     auto mousePos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
     auto worldPositionOfMouse = window.mapPixelToCoords(mousePos, _mainView); // Mouse _position translated into world coordinates
 
-    const float FLAGSHIP_FOCUS_OFFSET = 290.0F;
-
     // Thresholds for detecting mouse proximity to window borders
     const float EDGE_OFFSET = 200.0F;
     auto mouseProximityToLeftWindowEdge = EDGE_OFFSET;
@@ -242,22 +240,23 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     // Viewport movement conditions
     bool isMouseNearLeftEdge = mousePos.x <= mouseProximityToLeftWindowEdge && mousePos.x > 0;
     bool isMouseNearRightEdge = mousePos.x >= mouseProximityToRightWindowEdge && mousePos.x < window.getSize().x;
-    bool isViewportLeftEdgeWithinFlagshipFocus = viewportLeftBoundary > (_player.GetFlagship()->GetPos().x - FLAGSHIP_FOCUS_OFFSET);
-    bool isViewportRightEdgeWithinRightEdgeOfLevelBounds = viewportRightBoundary < Constants::LEVEL_WIDTH;
+    bool isViewportLeftEdgeWithinFlagshipFocus = viewportLeftBoundary > _player.GetFlagship()->GetPos().x - _player.GetFlagship()->GetSpriteComponent().GetSprite().getGlobalBounds().width+1.0F;
+    bool isViewportRightEdgeWithinRightSideOfEnemyFlagship = viewportRightBoundary < _enemy.GetFlagship()->GetPos().x + _enemy.GetFlagshipBounds().width;
     bool isMouseYposWithinWindowBounds = mousePos.y >= 0 and mousePos.y <= window.getSize().y;
 
     if(isMouseNearLeftEdge and isViewportLeftEdgeWithinFlagshipFocus and isMouseYposWithinWindowBounds)
     {
         _mainView.move(-VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
     }
-    else if(isMouseNearRightEdge and isViewportRightEdgeWithinRightEdgeOfLevelBounds and isMouseYposWithinWindowBounds)
+    else if(isMouseNearRightEdge and isViewportRightEdgeWithinRightSideOfEnemyFlagship and isMouseYposWithinWindowBounds)
     {
         _mainView.move(VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
     }
     // Set main view to focus on the player flagship if the flagship passes a set distance from the left view boundary
-    else if(_player.GetFlagship()->GetPos().x > viewportLeftBoundary + FLAGSHIP_FOCUS_OFFSET)
+    else if(viewportLeftBoundary < _player.GetFlagship()->GetPos().x - _player.GetFlagship()->GetSpriteComponent().GetSprite().getGlobalBounds().width)
     {
-        _mainView.setCenter(_player.GetFlagship()->GetPos().x + 350.0F, _player.GetFlagship()->GetPos().y);
+        auto playerFlagshipBounds = _player.GetFlagship()->GetSpriteComponent().GetSprite().getGlobalBounds();
+        _mainView.setCenter((_player.GetFlagship()->GetPos().x - playerFlagshipBounds.width) + Constants::WINDOW_WIDTH/2.0F, _player.GetFlagship()->GetPos().y);
     }
 
 
@@ -266,7 +265,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         _mainView.move(-VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
     }
-    else if(_scrollViewRight && isViewportRightEdgeWithinRightEdgeOfLevelBounds)
+    else if(_scrollViewRight && isViewportRightEdgeWithinRightSideOfEnemyFlagship)
     {
         _mainView.move(VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
     }
@@ -317,11 +316,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             // Dictionary of command buttons and ship variations?
         }*/
 
-        // Ship cost text alignment to command buttons
+        // Ship cost _text alignment to command buttons
         auto btnPos = _shipSpawnerButtons[i]->GetPos();
         auto btnBounds = _shipSpawnerButtons[i]->GetBounds();
-        auto text_xPos = btnPos.x + btnBounds.width - (_ship_cost_text[i].getGlobalBounds().width+2);
-        _ship_cost_text[i].setPosition(text_xPos, btnPos.y + 5);
+        auto text_xPos = btnPos.x + btnBounds.width - (_shipCostText[i].getGlobalBounds().width + 2);
+        _shipCostText[i].setPosition(text_xPos, btnPos.y + 5);
     }
 
     _playerCreditsText.setPosition(_shipSpawnerButtons[0]->GetPos().x, _shipSpawnerButtons[_shipSpawnerButtons.size() - 1]->GetPos().y + _shipSpawnerButtons[_shipSpawnerButtons.size() - 1]->GetBounds().height * 1.1F);
@@ -335,9 +334,9 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _cursor.SetCursorPos(window, _mainView);
     _player.Update(window, deltaTime);
     _enemy.Update(window, deltaTime);
-    //starship->Update(window, deltaTime);
+    //_starship->Update(window, deltaTime);
 
-    // Check if player cursor is over their capital ship
+    // Check if player _cursor is over their capital ship
     for(auto& playerShip : _player.GetShips())
     {
         if(playerShip != nullptr)
@@ -356,20 +355,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
     }
 
-    // Move player capital ship
-    if(_player.GetFlagship() != nullptr)
-    {
-        auto& playerFlagship = _player.GetFlagship()->GetSpriteComponent().GetSprite();
-        playerFlagship.move(_player.GetFlagship()->GetSpeed() * deltaTime.asSeconds(), 0);
-    }
-
-    // Move enemy capital ship
-    if(_enemy.GetFlagship() != nullptr)
-    {
-        auto& enemyFlagship = _enemy.GetFlagship()->GetSpriteComponent().GetSprite();
-        enemyFlagship.move(_enemy.GetFlagship()->GetSpeed() * deltaTime.asSeconds() * -1, 0);
-    }
-
     /// Spawn enemies every x amount of time passed
     // Initialise enemySpawnTimer to the current elapsed time
     if(_enemySpawnTimer < _clock.getElapsedTime().asSeconds())
@@ -385,10 +370,10 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             _enemy.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(randomShipType));
             auto& ship = _enemy.GetShips()[_enemy.GetShips().size()-1];
             int randomLane = _distributions[SPACELANE](_generator);
-            auto ship_xPos = spaceLanes[randomLane]->GetPos().x + spaceLanes[randomLane]->GetSize().x;
-            auto ship_yPos = spaceLanes[randomLane]->GetPos().y + spaceLanes[randomLane]->GetSize().y / 2.0F;
-            _enemy.SetFleetPosition(ship, {ship_xPos, ship_yPos});
-            _enemy.SetFleetRotation(ship, 180);
+            auto ship_xPos = _spaceLanes[randomLane]->GetPos().x + _spaceLanes[randomLane]->GetSize().x;
+            auto ship_yPos = _spaceLanes[randomLane]->GetPos().y + _spaceLanes[randomLane]->GetSize().y / 2.0F;
+            _enemy.SetShipPosition(ship, {ship_xPos, ship_yPos});
+            _enemy.SetShipRotation(ship, 180);
         }
         _enemySpawnTimer += _enemySpawnRate;
     }
@@ -493,12 +478,12 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     // Space Lanes
     for (int i = 0; i < NUM_OF_LANES; ++i)
     {
-        float laneHeight = spaceLanes[i]->GetSize().y;
+        float laneHeight = _spaceLanes[i]->GetSize().y;
         float totalLanesHeight = (laneHeight * NUM_OF_LANES) + (LANE_Y_SPACING * (NUM_OF_LANES-1));
         float laneXOffset = 75.0F;
         float laneYOffset = (i * (laneHeight + LANE_Y_SPACING)) - (totalLanesHeight / 2.0F);
-        spaceLanes[i]->SetPos({_player.GetFlagship()->GetPos().x + laneXOffset, _player.GetFlagship()->GetPos().y + laneYOffset});
-        spaceLanes[i]->Update(window, deltaTime);
+        _spaceLanes[i]->SetPos({_player.GetFlagship()->GetPos().x + laneXOffset, _player.GetFlagship()->GetPos().y + laneYOffset});
+        _spaceLanes[i]->Update(window, deltaTime);
     }
 
     // Drag visual
@@ -514,12 +499,12 @@ void GameScene::Render(sf::RenderWindow& window)
 {
     /// Render the main view
     window.setView(_mainView);
-    window.draw(_background_sprite);
+    window.draw(_backgroundSprite);
     for(auto& button : _shipSpawnerButtons)
     {
         button->Render(window);
     }
-    for(auto& text : _ship_cost_text)
+    for(auto& text : _shipCostText)
     {
         window.draw(text);
     }
@@ -528,10 +513,10 @@ void GameScene::Render(sf::RenderWindow& window)
     window.draw(_enemiesRemainingText);
     _player.Render(window);
     _enemy.Render(window);
-    //starship->Render(window);
+    //_starship->Render(window);
     _shipyard.Render(window);
     window.draw(_minimapBorder);
-    for (const auto &lane : spaceLanes)
+    for (const auto &lane : _spaceLanes)
     {
         lane->Render(window);
     }
@@ -542,16 +527,16 @@ void GameScene::Render(sf::RenderWindow& window)
 
     /// Render the minimap
     window.setView(_minimapView);
-    window.draw(_background_sprite);
+    window.draw(_backgroundSprite);
     window.draw(_mainViewBorder);
     _player.Render(window);
     _enemy.Render(window);
-    for (const auto &lane : spaceLanes)
+    for (const auto &lane : _spaceLanes)
     {
         lane->Render(window);
     }
 
-    /// Draw cursor over every view
+    /// Draw _cursor over every view
     window.setView(_mainView);
     _cursor.Render(window);
 }
@@ -566,16 +551,16 @@ void GameScene::InitRandomDistributions()
 
 bool GameScene::InitBackground()
 {
-    _background_texture = std::make_unique<sf::Texture>();
-    if (!_background_texture->loadFromFile("Resources/Textures/space_nebula.png"))
+    _backgroundTexture = std::make_unique<sf::Texture>();
+    if (!_backgroundTexture->loadFromFile("Resources/Textures/space_nebula.png"))
     {
         return false;
     }
 
-    _background_texture->setRepeated(true);
-    _background_sprite.setTexture(*_background_texture);
-    _background_sprite.setTextureRect(sf::IntRect(0, 0, Constants::LEVEL_WIDTH, Constants::LEVEL_HEIGHT));
-    //_background_sprite.scale(0.2F, 0.2F);
+    _backgroundTexture->setRepeated(true);
+    _backgroundSprite.setTexture(*_backgroundTexture);
+    _backgroundSprite.setTextureRect(sf::IntRect(0, 0, Constants::LEVEL_WIDTH, Constants::LEVEL_HEIGHT));
+    //_backgroundSprite.scale(0.2F, 0.2F);
 
     return true;
 }
@@ -597,17 +582,17 @@ bool GameScene::InitShipSpawnerButtons()
         auto yPos = Constants::WINDOW_HEIGHT - (btnBounds.height / 2.0f * 3.0f);
         _shipSpawnerButtons[i]->SetPos({xPos, yPos});
 
-        _ship_cost_text.emplace_back(sf::Text());
-        _ship_cost_text[i].setString(ship_costs[i]);
-        _ship_cost_text[i].setFillColor(sf::Color(153, 210, 242));
-        //_ship_cost_text[i].setFillColor(sf::Color::Yellow);
-        _ship_cost_text[i].setOutlineColor(sf::Color::Black);
-        _ship_cost_text[i].setOutlineThickness(1);
-        _ship_cost_text[i].setFont(GetRegularFont());
-        _ship_cost_text[i].setCharacterSize(8);
+        _shipCostText.emplace_back(sf::Text());
+        _shipCostText[i].setString(ship_costs[i]);
+        _shipCostText[i].setFillColor(_predefinedColours.LIGHTBLUE);
+        //_shipCostText[i].setFillColor(sf::Color::Yellow);
+        _shipCostText[i].setOutlineColor(sf::Color::Black);
+        _shipCostText[i].setOutlineThickness(1.0F);
+        _shipCostText[i].setFont(GetRegularFont());
+        _shipCostText[i].setCharacterSize(8);
         auto btnPos = _shipSpawnerButtons[i]->GetPos();
-        auto text_xPos = btnPos.x + btnBounds.width - (_ship_cost_text[i].getGlobalBounds().width+2);
-        _ship_cost_text[i].setPosition(text_xPos, btnPos.y + 5.0F);
+        auto text_xPos = btnPos.x + btnBounds.width - (_shipCostText[i].getGlobalBounds().width + 2);
+        _shipCostText[i].setPosition(text_xPos, btnPos.y + 5.0F);
     }
 
     return true;
@@ -615,8 +600,9 @@ bool GameScene::InitShipSpawnerButtons()
 
 void GameScene::InitPlayerCreditsText()
 {
-    _playerCreditsText.setString("Credits: " + std::to_string(_playerCreditsCounter));
-    _playerCreditsText.setFillColor(sf::Color(153, 210, 242));
+    _playerCreditsText.setString("Scrap Metal: " + std::to_string(_playerCreditsCounter));
+    //_playerCreditsText.setFillColor(sf::Color(153, 210, 242));
+    _playerCreditsText.setFillColor(_predefinedColours.LIGHTBLUE);
     _playerCreditsText.setOutlineColor(sf::Color::Black);
     _playerCreditsText.setOutlineThickness(1);
     _playerCreditsText.setFont(GetRegularFont());
@@ -689,26 +675,23 @@ void GameScene::InitSpaceLanes()
 {
     for (int i = 0; i < NUM_OF_LANES; ++i)
     {
-        spaceLanes.emplace_back(std::make_unique<SpaceLane>());
+        _spaceLanes.emplace_back(std::make_unique<SpaceLane>());
 
-        float laneHeight = spaceLanes[i]->GetSize().y;
+        float laneHeight = _spaceLanes[i]->GetSize().y;
         float totalLanesHeight = (laneHeight * NUM_OF_LANES) + (LANE_Y_SPACING * (NUM_OF_LANES-1));
         float laneXOffset = 75.0F;
         float laneYOffset = (i * (laneHeight + LANE_Y_SPACING)) - (totalLanesHeight / 2.0F);
         sf::Vector2f playerFlagshipPos = _player.GetFlagship()->GetSpriteComponent().GetPos();
-        spaceLanes[i]->SetPos({playerFlagshipPos.x + laneXOffset, playerFlagshipPos.y + laneYOffset});
+        _spaceLanes[i]->SetPos({playerFlagshipPos.x + laneXOffset, playerFlagshipPos.y + laneYOffset});
+        _spaceLanes[i]->SetSize({Constants::LEVEL_WIDTH*0.92F, 50.0F});
+        _spaceLanes[i]->Init();
     }
 
-    for (const auto &lane : spaceLanes)
-    {
-        lane->Init();
-    }
-
-    /*spaceLanes[0]->SetColour(_predefinedColours.ORANGE);
-    spaceLanes[1]->SetColour(_predefinedColours.LIGHTBLUE);
-    spaceLanes[2]->SetColour(_predefinedColours.LIGHTGREEN);
-    spaceLanes[3]->SetColour(_predefinedColours.BLUEVIOLET);
-    spaceLanes[4]->SetColour(_predefinedColours.LIGHTRED);*/
+    /*_spaceLanes[0]->SetColour(_predefinedColours.ORANGE);
+    _spaceLanes[1]->SetColour(_predefinedColours.LIGHTBLUE);
+    _spaceLanes[2]->SetColour(_predefinedColours.LIGHTGREEN);
+    _spaceLanes[3]->SetColour(_predefinedColours.BLUEVIOLET);
+    _spaceLanes[4]->SetColour(_predefinedColours.LIGHTRED);*/
 }
 
 void GameScene::InitEvents()
@@ -722,25 +705,16 @@ void GameScene::InitPlayerFlagship()
 {
     _player.CreateShip(StarshipFactory::SHIP_TYPE::FLAGSHIP);
     _player.PaintFlagship(_predefinedColours.LIGHTBLUE);
-    _player.SetFlagshipPosition({Constants::WINDOW_WIDTH/2.0F, Constants::LEVEL_HEIGHT/2.0f});
+    _player.SetFlagshipPosition({Constants::WINDOW_WIDTH * 0.085F, Constants::LEVEL_HEIGHT/2.0f});
 }
 
-void GameScene::InitEnemyShips()
+void GameScene::InitEnemyFlagship()
 {
     _enemy.CreateShip(StarshipFactory::FLAGSHIP);
     _enemy.PaintFlagship(_predefinedColours.LIGHTGREEN);
-    auto flagship_xPos = Constants::LEVEL_WIDTH -  _enemy.GetFlagshipBounds().width;
-    _enemy.SetFlagshipPosition({flagship_xPos, Constants::LEVEL_HEIGHT / 2.0f});
+    auto flagshipXpos = _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x + _enemy.GetFlagshipBounds().width/1.4F;
+    _enemy.SetFlagshipPosition({flagshipXpos, Constants::LEVEL_HEIGHT / 2.0f});
     _enemy.SetFlagshipRotation(180);
-}
-
-// TODO: Reuse for enemy ship distribution.
-void GameScene::RandomisePlayerShipSpawnPoint()
-{
-    int randomLane = _distributions[SPACELANE](_generator);
-    auto ship_xPos = spaceLanes[randomLane]->GetPos().x + 25.0F;
-    auto ship_yPos = spaceLanes[randomLane]->GetPos().y + spaceLanes[randomLane]->GetSize().y / 2.0F;
-    _player.SetFleetPosition(_player.GetShips()[_player.GetShips().size()-1], {ship_xPos, ship_yPos});
 }
 
 /// \param distributionsEnum - no use in the method, purely for readability
@@ -794,9 +768,8 @@ void GameScene::ResetMinimapView()
 void GameScene::SpawnShipFromShipyard()
 {
     _player.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(_shipSelectedIndex));
-    auto ship_xPos = spaceLanes[spaceLaneSelected]->GetPos().x + 25.0F;
-    auto ship_yPos = spaceLanes[spaceLaneSelected]->GetPos().y + spaceLanes[spaceLaneSelected]->GetSize().y / 2.0F;
-    _player.SetFleetPosition(_player.GetShips()[_player.GetShips().size()-1], {ship_xPos, ship_yPos});
-    //RandomisePlayerShipSpawnPoint();
+    auto ship_xPos = _spaceLanes[_spaceLaneSelected]->GetPos().x + 25.0F;
+    auto ship_yPos = _spaceLanes[_spaceLaneSelected]->GetPos().y + _spaceLanes[_spaceLaneSelected]->GetSize().y / 2.0F;
+    _player.SetShipPosition(_player.GetShips()[_player.GetShips().size() - 1], {ship_xPos, ship_yPos});
     _shipyard.SetTrainingCompletedStatus(false);
 }

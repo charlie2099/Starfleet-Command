@@ -23,8 +23,8 @@ class SceneManager
     Scene::ID current_ID{};
 
     /// Same background across all scenes
-    //sf::Texture _background_texture;
-    //sf::Sprite _background_sprite;
+    //sf::Texture _backgroundTexture;
+    //sf::Sprite _backgroundSprite;
 };
 
 #endif //STARFLEET_COMMAND_SCENEMANAGER_HPP

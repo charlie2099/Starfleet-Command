@@ -17,6 +17,7 @@ public:
 
     void SetPos(sf::Vector2f  pos);
     void SetColour(sf::Color colour);
+    void SetSize(sf::Vector2f  size);
 
     sf::Vector2f GetPos();
     float GetCentreYPos();

@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Sprites/UI/GUI/Button.hpp"
 
-///* Panels will adjust in size to fit text of any
+///* Panels will adjust in size to fit _text of any
 ///  string length given to it. Padding can be
 ///  customised as desired.*/
 class Panel
@@ -36,30 +36,29 @@ class Panel
     sf::FloatRect GetTextSize();
     sf::Vector2f GetTextPosition();
 
-    /// Button adaptation
-    //Button &getButton();
     bool IsClicked() const;
     bool IsHoveredOver() const;
 
 private:
     bool LoadTextures();
     bool LoadFonts();
+    void InitText();
     void CentreAlignPanelToText();
 
     //Button button;
-    sf::RectangleShape panel;
-    sf::Texture panel_texture;
-    sf::Text text;
-    sf::Font font_regular;
-    sf::Font font_bold;
-    TextAlign textAlign = TextAlign::CENTRE;
-    TextFont textFont = TextFont::REGULAR;
+    sf::RectangleShape _panel;
+    sf::Texture _panelTexture;
+    sf::Text _text;
+    sf::Font _fontRegular;
+    sf::Font _fontBold;
+    TextAlign _textAlign = TextAlign::CENTRE;
+    TextFont _textFont = TextFont::REGULAR;
 
-    float panel_w = 50.0F;
-    float panel_h = 50.0F;
-    float text_offset = 0.0F;
-    bool is_clicked = false;
-    bool is_hovered_over = false;
+    float _panelWidth = 50.0F;
+    float _panelHeight = 50.0F;
+    float _textOffset = 0.0F;
+    bool _isClicked = false;
+    bool _isHoveredOver = false;
 };
 
 #endif //STARFLEET_COMMAND_PANEL_HPP

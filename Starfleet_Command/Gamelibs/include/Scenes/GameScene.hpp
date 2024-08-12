@@ -1,7 +1,6 @@
 #ifndef STARFLEET_COMMAND_GAMESCENE_HPP
 #define STARFLEET_COMMAND_GAMESCENE_HPP
 #include "Scenes/Scene.hpp"
-#include "Sprites/Starships/Fleet.hpp"
 #include "Utility/Cursor.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
 #include "Sprites/Player/Player.h"
@@ -28,7 +27,7 @@ private:
     bool InitBackground();
     bool InitShipSpawnerButtons();
     void InitPlayerFlagship();
-    void InitEnemyShips();
+    void InitEnemyFlagship();
     void InitPlayerCreditsText();
     void InitWavesRemainingText();
     void InitEnemiesRemainingText();
@@ -38,7 +37,6 @@ private:
     void InitMinimapBorder();
     void InitSpaceLanes();
     void InitEvents();
-    void RandomisePlayerShipSpawnPoint();
     sf::Vector2f ConstrainViewCenter(const sf::Vector2f& proposedCenter) const;
     void ResetMinimapView();
     void SpawnShipFromShipyard();
@@ -66,11 +64,11 @@ private:
 
     // GUI
     std::vector<std::unique_ptr<Button>> _shipSpawnerButtons;
-    std::vector<sf::Text> _ship_cost_text;
+    std::vector<sf::Text> _shipCostText;
 
     // UI
-    std::unique_ptr<sf::Texture> _background_texture;
-    sf::Sprite _background_sprite;
+    std::unique_ptr<sf::Texture> _backgroundTexture;
+    sf::Sprite _backgroundSprite;
     sf::RectangleShape _mainViewBorder;
     sf::RectangleShape _minimapBorder;
 
@@ -97,17 +95,17 @@ private:
     std::map<Button*, IStarship*> _buttonShipDictionary;
 
     // For command buttons
-    std::unique_ptr<LightFighter> light_fighter;
-    std::unique_ptr<HeavyFighter> heavy_fighter;
-    std::unique_ptr<SupportShip> support_ship;
-    std::unique_ptr<Destroyer> destroyer;
-    std::unique_ptr<Battleship> battleship;
+    std::unique_ptr<LightFighter> _lightFighter;
+    std::unique_ptr<HeavyFighter> _heavyFighter;
+    std::unique_ptr<SupportShip> _supportShip;
+    std::unique_ptr<Destroyer> _destroyer;
+    std::unique_ptr<Battleship> _battleship;
 
     // Space Lanes
-    std::vector<std::unique_ptr<SpaceLane>> spaceLanes;
+    std::vector<std::unique_ptr<SpaceLane>> _spaceLanes;
     const float LANE_Y_SPACING = 35.0F;
-    const float NUM_OF_LANES = 5.0F;
-    int spaceLaneSelected = 0;
+    const int NUM_OF_LANES = 5;
+    int _spaceLaneSelected = 0;
 
     // Enemy Spawning
     float _enemySpawnTimer = 3.0f;

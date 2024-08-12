@@ -12,7 +12,7 @@ public:
     enum EventID
     {
         SHIP_SPAWNED = 1,
-        SHIP_DESTROYED = 2 // starship class?
+        SHIP_DESTROYED = 2 // _starship class?
     };
 
     Enemy () = default;
@@ -24,8 +24,8 @@ public:
     void PaintFlagship(sf::Color colour);
     void SetFlagshipPosition(sf::Vector2f pos);
     void SetFlagshipRotation(float rot);
-    void SetFleetPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
-    void SetFleetRotation(std::unique_ptr<IStarship>& ship, float rot);
+    void SetShipPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
+    void SetShipRotation(std::unique_ptr<IStarship>& ship, float rot);
     using BasicEnemyEvent = std::pair<EventID, std::function<void()>>;
     using AgnosticEnemyEvent = std::pair<EventID, std::function<void(std::any)>>;
     void AddBasicObserver(BasicEnemyEvent observer);

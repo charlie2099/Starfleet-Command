@@ -31,6 +31,7 @@ public:
     virtual void SetColour(sf::Color& colour) = 0;
     virtual void SetPosition(sf::Vector2f  pos) = 0;
     virtual void SetRotation(float rot) = 0;
+
     void SetProjectileColour(sf::Color colour)
     {
         if(colour == sf::Color::Cyan || colour == sf::Color::Blue || colour == _predefinedColours.LIGHTBLUE || colour == _predefinedColours.BLUEVIOLET)

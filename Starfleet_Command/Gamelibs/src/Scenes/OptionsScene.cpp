@@ -54,7 +54,7 @@ bool OptionsScene::InitBackground()
     auto bTexSizeX = static_cast<int>(_background_texture.getSize().x);
     auto bTexSizeY = static_cast<int>(_background_texture.getSize().y);
     _background_sprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX * 2, bTexSizeY * 2));
-    //_background_sprite.setOrigin(_background_sprite.getLocalBounds().width/2, _background_sprite.getLocalBounds().height/2);
+    //_backgroundSprite.setOrigin(_backgroundSprite.getLocalBounds().width/2, _backgroundSprite.getLocalBounds().height/2);
 
     return true;
 }

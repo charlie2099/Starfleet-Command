@@ -5,17 +5,8 @@ Panel::Panel()
 {
     LoadTextures();
     LoadFonts();
-
-    // default design for panels upon construction
-    text.setString("Text");
-    text.setFont(font_regular);
-    text.setCharacterSize(40);
-    text.setFillColor(sf::Color::White);
-    text.setOutlineThickness(1);
-    text.setOutlineColor(sf::Color::Black);
-    text.setPosition(400, 400);
-
-    panel.setTexture(&panel_texture);
+    InitText();
+    _panel.setTexture(&_panelTexture);
     CentreAlignPanelToText();
 }
 
@@ -24,13 +15,13 @@ void Panel::EventHandler(sf::RenderWindow &window, sf::Event &event)
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
     auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse _position translated into world coordinates
 
-    if (event.type == sf::Event::MouseButtonPressed && is_hovered_over/* && event.mouseButton.button == sf::Mouse::Left*/)
+    if (event.type == sf::Event::MouseButtonPressed && _isHoveredOver/* && event.mouseButton.button == sf::Mouse::Left*/)
     {
-        is_clicked = true;
+        _isClicked = true;
     }
     else if (event.type == sf::Event::MouseButtonReleased/* && event.mouseButton.button == sf::Mouse::Left*/)
     {
-        is_clicked = false;
+        _isClicked = false;
     }
 }
 
@@ -39,106 +30,117 @@ void Panel::Update(sf::RenderWindow &window)
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
     auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse _position translated into world coordinates
 
-    if(panel.getGlobalBounds().contains(translated_pos))
+    if(_panel.getGlobalBounds().contains(translated_pos))
     {
-        is_hovered_over = true;
+        _isHoveredOver = true;
     }
     else
     {
-        is_hovered_over = false;
+        _isHoveredOver = false;
     }
 }
 
 void Panel::Render(sf::RenderWindow& window)
 {
-    window.draw(panel);
-    window.draw(text);
+    window.draw(_panel);
+    window.draw(_text);
 }
 
 void Panel::SetPanelColour(sf::Color color)
 {
-    panel.setFillColor(color);
+    _panel.setFillColor(color);
 }
 
 void Panel::SetPadding(float padding)
 {
-    panel_w = padding;
-    panel_h = padding;
+    _panelWidth = padding;
+    _panelHeight = padding;
     CentreAlignPanelToText();
 }
 
 void Panel::SetSize(float width, float height)
 {
-    panel_w = width;
-    panel_h = height;
-    auto panel_width = text.getGlobalBounds().width + panel_w * 2;
-    auto panel_height = text.getGlobalBounds().height + panel_h;
-    panel.setSize({panel_width, panel_height});
+    _panelWidth = width;
+    _panelHeight = height;
+    auto panel_width = _text.getGlobalBounds().width + _panelWidth * 2;
+    auto panel_height = _text.getGlobalBounds().height + _panelHeight;
+    _panel.setSize({panel_width, panel_height});
     CentreAlignPanelToText();
 }
 
 void Panel::SetPosition(float x, float y)
 {
-    text.setPosition(x, y);
+    _text.setPosition(x, y);
     CentreAlignPanelToText();
 }
 
 void Panel::SetText(const std::string& text_str)
 {
-    text.setString(text_str);
+    _text.setString(text_str);
     CentreAlignPanelToText();
 }
 
 void Panel::SetText(const std::string& text_str, sf::Color colour)
 {
-    text.setString(text_str);
-    text.setFillColor(colour);
+    _text.setString(text_str);
+    _text.setFillColor(colour);
     CentreAlignPanelToText();
 }
 
 void Panel::SetTextSize(int text_size)
 {
-    text.setCharacterSize(text_size);
+    _text.setCharacterSize(text_size);
     CentreAlignPanelToText();
 }
 
 void Panel::SetTextOffset(TextAlign alignment, float offset)
 {
-    textAlign = alignment;
-    text_offset = offset;
+    _textAlign = alignment;
+    _textOffset = offset;
     CentreAlignPanelToText();
 }
 
 void Panel::SetFont(Panel::TextFont text_font)
 {
-    textFont = text_font;
-    if(textFont == TextFont::REGULAR)
+    _textFont = text_font;
+    if(_textFont == TextFont::REGULAR)
     {
-        text.setFont(font_regular);
+        _text.setFont(_fontRegular);
     }
-    else if(textFont == TextFont::BOLD)
+    else if(_textFont == TextFont::BOLD)
     {
-        text.setFont(font_bold);
+        _text.setFont(_fontBold);
     }
 }
 
 bool Panel::LoadTextures()
 {
-    if (!panel_texture.loadFromFile("Resources/Textures/panel_image1.png"))
+    if (!_panelTexture.loadFromFile("Resources/Textures/panel_image1.png"))
     {
         return false;
     }
     return true;
 }
 
+void Panel::InitText()
+{
+    _text.setString("Text");
+    _text.setFont(_fontRegular);
+    _text.setCharacterSize(40);
+    _text.setFillColor(sf::Color::White);
+    _text.setOutlineThickness(1);
+    _text.setOutlineColor(sf::Color::Black);
+    _text.setPosition(400, 400);
+}
+
 /// Unnecessary to load fonts which may not even be used
 bool Panel::LoadFonts()
 {
-    if(!font_regular.loadFromFile("Resources/Fonts/Orbitron/Orbitron-Regular.ttf"))
+    if(!_fontRegular.loadFromFile("Resources/Fonts/Orbitron/Orbitron-Regular.ttf"))
     {
         return false;
     }
-    if(!font_bold.loadFromFile("Resources/Fonts/Orbitron/Orbitron-Bold.ttf"))
+    if(!_fontBold.loadFromFile("Resources/Fonts/Orbitron/Orbitron-Bold.ttf"))
     {
         return false;
     }
@@ -147,62 +149,62 @@ bool Panel::LoadFonts()
 
 void Panel::CentreAlignPanelToText()
 {
-    // Update panel size before re-centering text
-    auto panel_width = text.getGlobalBounds().width + panel_w * 2;
-    auto panel_height = text.getGlobalBounds().height + panel_h;
-    panel.setSize({panel_width, panel_height});
+    // Update _panel size before re-centering _text
+    auto panel_width = _text.getGlobalBounds().width + _panelWidth * 2;
+    auto panel_height = _text.getGlobalBounds().height + _panelHeight;
+    _panel.setSize({panel_width, panel_height});
 
-    if(textAlign == TextAlign::CENTRE)
+    if(_textAlign == TextAlign::CENTRE)
     {
-        auto panel_xpos = text.getPosition().x - panel_w;
-        auto panel_ypos = (text.getGlobalBounds().top + text.getGlobalBounds().height / 2) - panel.getGlobalBounds().height / 2;
-        panel.setPosition(panel_xpos, panel_ypos);
+        auto panel_xpos = _text.getPosition().x - _panelWidth;
+        auto panel_ypos = (_text.getGlobalBounds().top + _text.getGlobalBounds().height / 2) - _panel.getGlobalBounds().height / 2;
+        _panel.setPosition(panel_xpos, panel_ypos);
     }
-    else if(textAlign == TextAlign::OFFSET)
+    else if(_textAlign == TextAlign::OFFSET)
     {
-        auto panel_xpos = text.getPosition().x - panel_w;
-        auto panel_ypos = (text.getPosition().y - text_offset);
-        panel.setPosition(panel_xpos, panel_ypos);
+        auto panel_xpos = _text.getPosition().x - _panelWidth;
+        auto panel_ypos = (_text.getPosition().y - _textOffset);
+        _panel.setPosition(panel_xpos, panel_ypos);
     }
 }
 
 bool Panel::IsHoveredOver() const
 {
-    return is_hovered_over;
+    return _isHoveredOver;
 }
 
 bool Panel::IsClicked() const
 {
-    return is_clicked;
+    return _isClicked;
 }
 
 sf::Text& Panel::GetText()
 {
-    return text;
+    return _text;
 }
 
 sf::FloatRect Panel::GetTextSize()
 {
-    /// Panels adjust to accommodate text
-    return text.getGlobalBounds();
+    /// Panels adjust to accommodate _text
+    return _text.getGlobalBounds();
 }
 
 sf::Vector2f Panel::GetTextPosition()
 {
-    /// Panels follow text _position
-    return text.getPosition();
+    /// Panels follow _text _position
+    return _text.getPosition();
 }
 
 sf::FloatRect Panel::GetPanelSize()
 {
-    /// Panels adjust to accommodate text
-    return panel.getGlobalBounds();
+    /// Panels adjust to accommodate _text
+    return _panel.getGlobalBounds();
 }
 
 sf::Vector2f Panel::GetPanelPosition()
 {
-    /// Panels follow text _position
-    return panel.getPosition();
+    /// Panels follow _text _position
+    return _panel.getPosition();
 }
 
 /*Button &Panel::getButton()
