@@ -4,14 +4,14 @@ SupportShip::SupportShip()
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_2.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-    _healthComponent.SetHealth(150);
-    _speed = 100;
-    _trainingSpeed = 0.6f;
-    _damage = 10;
+    _healthComponent.SetHealth(300);
+    _speed = 70;
+    _trainingSpeed = 0.5f;
+    _damage = 0;
     _damageScaleFactor = 0.10f;
-    _fireRate = 1.0f;
+    _fireRate = 2.0f;
     _attackRange = 400.0F;
-    _shipCost = 100;
+    _shipCost = 200;
     _projectileSize = Projectile::SMALL;
     _projectileColour = Projectile::BLUE;
     _shipName = "Support Ship";

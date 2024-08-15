@@ -1,15 +1,15 @@
 #include "Components/HealthComponent.hpp"
 
-/*HealthComponent::HealthComponent(SpriteComponent &_spriteComponent)
+/*HealthComponent::HealthComponent(SpriteComponent &_outsideBarSpriteComponent)
 {
-    _spriteComponent = _spriteComponent;
+    _outsideBarSpriteComponent = _outsideBarSpriteComponent;
 }*/
 
 void HealthComponent::TakeDamage(float amount, sf::Vector2f damageLocation)
 {
     _health -= amount;
 
-    //auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<DamagePopUpEffect>(_health, _spriteComponent.GetPos()));
+    //auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<DamagePopUpEffect>(_health, _outsideBarSpriteComponent.GetPos()));
     auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<DamagePopUpEffect>(amount, damageLocation));
     if(amount > 60)
     {

@@ -71,7 +71,7 @@ public:
     virtual float GetFireRate() = 0;
     virtual float GetAcceleration() = 0;
     virtual float GetAttackRange() = 0;
-    virtual float GetShipCost() = 0;
+    virtual int GetShipCost() = 0;
     virtual bool IsHealthBarVisible() = 0;
     virtual Projectile::Size GetProjectileSize() = 0;
     virtual Projectile::Colour GetProjectileColour() = 0;
@@ -94,7 +94,7 @@ protected:
     float _fireRate = 1.0F;
     float _acceleration = 0.0F;
     float _attackRange = 400.0F;
-    float _shipCost = 100;
+    int _shipCost = 100;
     bool _healthBarIsVisible = false;
     float _nextFireTime = 0;
     sf::Clock _clock;

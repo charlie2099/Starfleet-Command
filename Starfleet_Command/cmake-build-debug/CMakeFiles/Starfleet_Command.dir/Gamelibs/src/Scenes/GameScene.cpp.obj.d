@@ -319,5 +319,5 @@ CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/GameScene.cpp.obj: \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipClasses/Battleship.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Starships/StarshipClasses/Mothership.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Player/Player.h \
- D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HUD/Shipyard.hpp \
- D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/SpaceLane.hpp
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/SpaceLane.hpp \
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/ProgressBar.hpp

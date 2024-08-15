@@ -4,15 +4,15 @@ LightFighter::LightFighter()
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_0.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-    _healthComponent.SetHealth(200);
-    _speed = 80;
-    _trainingSpeed = 0.4f;
-    _damage = 20;
-    _damageScaleFactor = 0.25f;
-    _fireRate = 0.25f;
-    _attackRange = 300.0F;
-    _shipCost = 250;
-    _projectileSize = Projectile::REGULAR;
+    _healthComponent.SetHealth(150);
+    _speed = 100;
+    _trainingSpeed = 0.6f;
+    _damage = 10;
+    _damageScaleFactor = 0.10f;
+    _fireRate = 1.0f;
+    _attackRange = 400.0F;
+    _shipCost = 100;
+    _projectileSize = Projectile::SMALL;
     _projectileColour = Projectile::BLUE;
     _shipName = "Light Fighter";
 

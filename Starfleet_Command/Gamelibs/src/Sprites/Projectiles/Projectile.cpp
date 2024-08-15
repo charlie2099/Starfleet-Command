@@ -82,7 +82,7 @@ void Projectile::Update(sf::RenderWindow &window, sf::Time deltaTime)
     //  and rotation of the mouse and NOT the ship
     /*//Convert angle to radians
     const float PI = 3.14159265;
-    double angleRADS = (PI/180)*(_spriteComponent.GetSprite().getRotation());
+    double angleRADS = (PI/180)*(_outsideBarSpriteComponent.GetSprite().getRotation());
 
     // move ship in direction it is facing
     sf::Vector2f direction;
@@ -91,7 +91,7 @@ void Projectile::Update(sf::RenderWindow &window, sf::Time deltaTime)
 
     float speed = 200.0F;
     sf::Vector2f movement = direction * speed;
-    _spriteComponent.GetSpriteComponent().move(movement * deltaTime.asSeconds());*/
+    _outsideBarSpriteComponent.GetSpriteComponent().move(movement * deltaTime.asSeconds());*/
 }
 
 void Projectile::Render(sf::RenderWindow& window)

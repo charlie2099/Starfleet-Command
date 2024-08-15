@@ -49,7 +49,7 @@ public:
     float GetFireRate() override { return _fireRate; }
     float GetAcceleration() override { return _acceleration; }
     float GetAttackRange() override { return _attackRange; }
-    float GetShipCost() override { return _shipCost; }
+    int GetShipCost() override { return _shipCost; }
     bool IsHealthBarVisible() override { return _healthBarIsVisible; }
 };
 

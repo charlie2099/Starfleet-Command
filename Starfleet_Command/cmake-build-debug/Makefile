@@ -152,6 +152,30 @@ Game/Game.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.s
 .PHONY : Game/Game.cpp.s
 
+Gamelibs/ProgressBar.obj: Gamelibs/ProgressBar.cpp.obj
+.PHONY : Gamelibs/ProgressBar.obj
+
+# target to build an object file
+Gamelibs/ProgressBar.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/ProgressBar.cpp.obj
+.PHONY : Gamelibs/ProgressBar.cpp.obj
+
+Gamelibs/ProgressBar.i: Gamelibs/ProgressBar.cpp.i
+.PHONY : Gamelibs/ProgressBar.i
+
+# target to preprocess a source file
+Gamelibs/ProgressBar.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/ProgressBar.cpp.i
+.PHONY : Gamelibs/ProgressBar.cpp.i
+
+Gamelibs/ProgressBar.s: Gamelibs/ProgressBar.cpp.s
+.PHONY : Gamelibs/ProgressBar.s
+
+# target to generate assembly for a file
+Gamelibs/ProgressBar.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/ProgressBar.cpp.s
+.PHONY : Gamelibs/ProgressBar.cpp.s
+
 Gamelibs/SpaceLane.obj: Gamelibs/SpaceLane.cpp.obj
 .PHONY : Gamelibs/SpaceLane.obj
 
@@ -656,30 +680,6 @@ Gamelibs/src/Sprites/UI/GUI/Button.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/GUI/Button.cpp.s
 .PHONY : Gamelibs/src/Sprites/UI/GUI/Button.cpp.s
 
-Gamelibs/src/Sprites/UI/HUD/Shipyard.obj: Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.obj
-.PHONY : Gamelibs/src/Sprites/UI/HUD/Shipyard.obj
-
-# target to build an object file
-Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.obj
-.PHONY : Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.obj
-
-Gamelibs/src/Sprites/UI/HUD/Shipyard.i: Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.i
-.PHONY : Gamelibs/src/Sprites/UI/HUD/Shipyard.i
-
-# target to preprocess a source file
-Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.i
-.PHONY : Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.i
-
-Gamelibs/src/Sprites/UI/HUD/Shipyard.s: Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.s
-.PHONY : Gamelibs/src/Sprites/UI/HUD/Shipyard.s
-
-# target to generate assembly for a file
-Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.s
-.PHONY : Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.s
-
 Gamelibs/src/Sprites/UI/HealthBar.obj: Gamelibs/src/Sprites/UI/HealthBar.cpp.obj
 .PHONY : Gamelibs/src/Sprites/UI/HealthBar.obj
 
@@ -812,6 +812,9 @@ help:
 	@echo ... Game/Game.obj
 	@echo ... Game/Game.i
 	@echo ... Game/Game.s
+	@echo ... Gamelibs/ProgressBar.obj
+	@echo ... Gamelibs/ProgressBar.i
+	@echo ... Gamelibs/ProgressBar.s
 	@echo ... Gamelibs/SpaceLane.obj
 	@echo ... Gamelibs/SpaceLane.i
 	@echo ... Gamelibs/SpaceLane.s
@@ -875,9 +878,6 @@ help:
 	@echo ... Gamelibs/src/Sprites/UI/GUI/Button.obj
 	@echo ... Gamelibs/src/Sprites/UI/GUI/Button.i
 	@echo ... Gamelibs/src/Sprites/UI/GUI/Button.s
-	@echo ... Gamelibs/src/Sprites/UI/HUD/Shipyard.obj
-	@echo ... Gamelibs/src/Sprites/UI/HUD/Shipyard.i
-	@echo ... Gamelibs/src/Sprites/UI/HUD/Shipyard.s
 	@echo ... Gamelibs/src/Sprites/UI/HealthBar.obj
 	@echo ... Gamelibs/src/Sprites/UI/HealthBar.i
 	@echo ... Gamelibs/src/Sprites/UI/HealthBar.s

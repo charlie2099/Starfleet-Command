@@ -16,24 +16,6 @@ bool GameScene::Init()
     InitMainViewBorder();
     InitMinimapBorder();
 
-    _lightFighter = std::make_unique<LightFighter>();
-    _heavyFighter = std::make_unique<HeavyFighter>();
-    _supportShip = std::make_unique<SupportShip>();
-    _destroyer = std::make_unique<Destroyer>();
-    _battleship = std::make_unique<Battleship>();
-
-    _buttonShipDictionary[_shipSpawnerButtons[0].get()] = _lightFighter.get();
-    _buttonShipDictionary[_shipSpawnerButtons[1].get()] = _heavyFighter.get();
-    _buttonShipDictionary[_shipSpawnerButtons[2].get()] = _supportShip.get();
-    _buttonShipDictionary[_shipSpawnerButtons[3].get()] = _destroyer.get();
-    _buttonShipDictionary[_shipSpawnerButtons[4].get()] = _battleship.get();
-
-    for(int i = 0; i < _shipSpawnerButtons.size(); i++)
-    {
-        std::cout << _buttonShipDictionary[_shipSpawnerButtons[i].get()]->GetTrainingSpeed() << std::endl;
-    }
-
-
     for (int i = 0; i < _shipDragSpriteVisuals.size(); ++i)
     {
         _shipDragSpriteVisuals[i].LoadSprite("Resources/Textures/starfleet_ship_" + std::to_string(i) + ".png");
@@ -178,7 +160,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
                 _shipSpawnerButtons[i]->SetColour(HOVER_COLOR);
 
                 // Check if the button is clicked
-                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && !_dragging && !_shipyard.IsTraining())
+                if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && !_dragging && !_shipAssemblyBar.InProgress())
                 {
                     // Set the selected button index and change its color
                     _shipSelectedIndex = i;
@@ -205,11 +187,11 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             if(_spaceLanes[i]->IsCursorHoveredOver())
             {
                 auto& assignedShipToButton = _buttonShipDictionary[_shipSpawnerButtons[_shipSelectedIndex].get()];
-                _shipyard.SetTrainingSpeed(assignedShipToButton->GetTrainingSpeed());
-                _playerCreditsCounter -= static_cast<int>(assignedShipToButton->GetShipCost());
-                _shipyard.SetDeployText("Deploying " + assignedShipToButton->GetShipName());
-                _playerCreditsText.setString("Scrap Metal: " + std::to_string(_playerCreditsCounter));
-                _shipyard.SetTrainingStatus(true);
+                _shipAssemblyBar.SetProgressSpeed(assignedShipToButton->GetTrainingSpeed());
+                _playerScrapCounter -= static_cast<int>(assignedShipToButton->GetShipCost());
+                _shipAssemblyBar.SetProgressText("Deploying " + assignedShipToButton->GetShipName());
+                _playerScrapText.setString("Scrap Metal: " + std::to_string(_playerScrapCounter));
+                _shipAssemblyBar.SetProgressStatus(true);
                 _spaceLaneSelected = i;
                 // TODO: Invoke an agnostic event here notifying subscribers that a ship is currently training?
             }
@@ -287,7 +269,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         // TODO: Clean this up
         if(i < ROW_LENGTH) // Row 1
         {
-            xPos = _mainView.getCenter().x - _shipyard.GetSpriteComponent().GetSprite().getGlobalBounds().width/2.0F + (i * (button_bounds.width+SPACING));
+            xPos = _mainView.getCenter().x - _shipAssemblyBar.GetSize().width/2.0F + (i * (button_bounds.width+SPACING));
             yPos = _mainView.getCenter().y + Constants::WINDOW_HEIGHT/2.75F + SPACING;
         }
         /*else if(i >= ROW_LENGTH) // Row 2
@@ -323,13 +305,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         _shipCostText[i].setPosition(text_xPos, btnPos.y + 5);
     }
 
-    _playerCreditsText.setPosition(_shipSpawnerButtons[0]->GetPos().x, _shipSpawnerButtons[_shipSpawnerButtons.size() - 1]->GetPos().y + _shipSpawnerButtons[_shipSpawnerButtons.size() - 1]->GetBounds().height * 1.1F);
+    _playerScrapText.setPosition(_shipSpawnerButtons[0]->GetPos().x, _shipSpawnerButtons[_shipSpawnerButtons.size() - 1]->GetPos().y + _shipSpawnerButtons[_shipSpawnerButtons.size() - 1]->GetBounds().height * 1.15F);
     _wavesRemainingText.setPosition(_mainView.getCenter().x - _wavesRemainingText.getGlobalBounds().width/2.0F, _mainView.getCenter().y - Constants::WINDOW_WIDTH/4.0F);
     _enemiesRemainingText.setPosition(_wavesRemainingText.getPosition().x + _wavesRemainingText.getGlobalBounds().width/2.0F - _enemiesRemainingText.getGlobalBounds().width/2.0F, _wavesRemainingText.getPosition().y + _wavesRemainingText.getGlobalBounds().height + 5.0F);
-    //_shipyard.SetPosition({_mainView.getCenter().x - _mainView.getSize().x/2.0F + 15.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 15.0F});
-    _shipyard.SetPosition({_shipSpawnerButtons[0]->GetPos().x, _shipSpawnerButtons[0]->GetPos().y - _shipyard.GetSpriteComponent().GetSprite().getGlobalBounds().height*2.75F});
-    //_shipyard.SetPosition({_minimapBorder.getPosition().x + _minimapBorder.getSize().x + 10.0F, _minimapBorder.getPosition().y});
-    _shipyard.Update(window, deltaTime);
+    _shipAssemblyBar.SetPosition({_shipSpawnerButtons[0]->GetPos().x, _shipSpawnerButtons[0]->GetPos().y - _shipAssemblyBar.GetSize().height*2.75F});
+    _shipAssemblyBar.Update(window, deltaTime);
     _cursor.Update(window, deltaTime);
     _cursor.SetCursorPos(window, _mainView);
     _player.Update(window, deltaTime);
@@ -508,13 +488,13 @@ void GameScene::Render(sf::RenderWindow& window)
     {
         window.draw(text);
     }
-    window.draw(_playerCreditsText);
+    window.draw(_playerScrapText);
     window.draw(_wavesRemainingText);
     window.draw(_enemiesRemainingText);
     _player.Render(window);
     _enemy.Render(window);
     //_starship->Render(window);
-    _shipyard.Render(window);
+    _shipAssemblyBar.Render(window);
     window.draw(_minimapBorder);
     for (const auto &lane : _spaceLanes)
     {
@@ -567,47 +547,54 @@ bool GameScene::InitBackground()
 
 bool GameScene::InitShipSpawnerButtons()
 {
-    std::string ship_costs[5] = { "50", "75", "100", "300", "400", };
-    const float NUM_OF_BUTTONS = 5;
-    const float SPACING = 10;
-    const float OFFSET = NUM_OF_BUTTONS * SPACING;
+    _lightFighter = std::make_unique<LightFighter>();
+    _heavyFighter = std::make_unique<HeavyFighter>();
+    _supportShip = std::make_unique<SupportShip>();
+    _destroyer = std::make_unique<Destroyer>();
+    _battleship = std::make_unique<Battleship>();
+
+    std::string ship_costs[5] =
+    {
+            std::to_string(_lightFighter->GetShipCost()),
+            std::to_string(_heavyFighter->GetShipCost()),
+            std::to_string(_supportShip->GetShipCost()),
+            std::to_string(_destroyer->GetShipCost()),
+            std::to_string(_battleship->GetShipCost()),
+    };
+
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
         _shipSpawnerButtons.emplace_back(std::make_unique<Button>("Resources/Textures/command_button_" + std::to_string(i) + ".png"));
         _shipSpawnerButtons[i]->SetColour({255, 255, 255, 100});
         _shipSpawnerButtons[i]->SetScale({0.20F, 0.20F});
 
-        auto btnBounds = _shipSpawnerButtons[i]->GetBounds();
-        auto xPos = (Constants::WINDOW_WIDTH * 0.5f - btnBounds.width * NUM_OF_BUTTONS / 2.0f - OFFSET) + (i * (btnBounds.width + SPACING));
-        auto yPos = Constants::WINDOW_HEIGHT - (btnBounds.height / 2.0f * 3.0f);
-        _shipSpawnerButtons[i]->SetPos({xPos, yPos});
-
-        _shipCostText.emplace_back(sf::Text());
+        _shipCostText.emplace_back();
         _shipCostText[i].setString(ship_costs[i]);
         _shipCostText[i].setFillColor(_predefinedColours.LIGHTBLUE);
-        //_shipCostText[i].setFillColor(sf::Color::Yellow);
         _shipCostText[i].setOutlineColor(sf::Color::Black);
         _shipCostText[i].setOutlineThickness(1.0F);
         _shipCostText[i].setFont(GetRegularFont());
         _shipCostText[i].setCharacterSize(8);
-        auto btnPos = _shipSpawnerButtons[i]->GetPos();
-        auto text_xPos = btnPos.x + btnBounds.width - (_shipCostText[i].getGlobalBounds().width + 2);
-        _shipCostText[i].setPosition(text_xPos, btnPos.y + 5.0F);
     }
+
+    _buttonShipDictionary[_shipSpawnerButtons[0].get()] = _lightFighter.get();
+    _buttonShipDictionary[_shipSpawnerButtons[1].get()] = _heavyFighter.get();
+    _buttonShipDictionary[_shipSpawnerButtons[2].get()] = _supportShip.get();
+    _buttonShipDictionary[_shipSpawnerButtons[3].get()] = _destroyer.get();
+    _buttonShipDictionary[_shipSpawnerButtons[4].get()] = _battleship.get();
 
     return true;
 }
 
 void GameScene::InitPlayerCreditsText()
 {
-    _playerCreditsText.setString("Scrap Metal: " + std::to_string(_playerCreditsCounter));
-    //_playerCreditsText.setFillColor(sf::Color(153, 210, 242));
-    _playerCreditsText.setFillColor(_predefinedColours.LIGHTBLUE);
-    _playerCreditsText.setOutlineColor(sf::Color::Black);
-    _playerCreditsText.setOutlineThickness(1);
-    _playerCreditsText.setFont(GetRegularFont());
-    _playerCreditsText.setCharacterSize(14);
-    _playerCreditsText.setPosition(_shipSpawnerButtons[0]->GetPos().x, Constants::WINDOW_HEIGHT * 0.96F);
+    _playerScrapText.setString("Scrap Metal: " + std::to_string(_playerScrapCounter));
+    //_playerScrapText.setFillColor(sf::Color(153, 210, 242));
+    _playerScrapText.setFillColor(_predefinedColours.LIGHTBLUE);
+    _playerScrapText.setOutlineColor(sf::Color::Black);
+    _playerScrapText.setOutlineThickness(1);
+    _playerScrapText.setFont(GetRegularFont());
+    _playerScrapText.setCharacterSize(14);
 }
 
 void GameScene::InitWavesRemainingText()
@@ -683,7 +670,7 @@ void GameScene::InitSpaceLanes()
         float laneYOffset = (i * (laneHeight + LANE_Y_SPACING)) - (totalLanesHeight / 2.0F);
         sf::Vector2f playerFlagshipPos = _player.GetFlagship()->GetSpriteComponent().GetPos();
         _spaceLanes[i]->SetPos({playerFlagshipPos.x + laneXOffset, playerFlagshipPos.y + laneYOffset});
-        _spaceLanes[i]->SetSize({Constants::LEVEL_WIDTH*0.92F, 50.0F});
+        _spaceLanes[i]->SetSize({Constants::LEVEL_WIDTH*0.91F, 50.0F});
         _spaceLanes[i]->Init();
     }
 
@@ -696,9 +683,9 @@ void GameScene::InitSpaceLanes()
 
 void GameScene::InitEvents()
 {
-    /// Observer to shipyard event
-    auto shipyardCallback = std::bind(&GameScene::SpawnShipFromShipyard, this);
-    _shipyard.AddBasicObserver({Shipyard::TRAINING_COMPLETED, shipyardCallback});
+    /// Observer to ship assembly bar event
+    auto shipAssemblyBarCallback = std::bind(&GameScene::SpawnShipFromShipyard, this);
+    _shipAssemblyBar.AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, shipAssemblyBarCallback}); // TODO: Could be problematic if there is more than 1 progress bar?
 }
 
 void GameScene::InitPlayerFlagship()
@@ -771,5 +758,5 @@ void GameScene::SpawnShipFromShipyard()
     auto ship_xPos = _spaceLanes[_spaceLaneSelected]->GetPos().x + 25.0F;
     auto ship_yPos = _spaceLanes[_spaceLaneSelected]->GetPos().y + _spaceLanes[_spaceLaneSelected]->GetSize().y / 2.0F;
     _player.SetShipPosition(_player.GetShips()[_player.GetShips().size() - 1], {ship_xPos, ship_yPos});
-    _shipyard.SetTrainingCompletedStatus(false);
+    _shipAssemblyBar.ResetProgress();
 }

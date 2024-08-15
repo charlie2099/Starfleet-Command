@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj.d"
+  "CMakeFiles/Starfleet_Command.dir/Gamelibs/ProgressBar.cpp.obj"
+  "CMakeFiles/Starfleet_Command.dir/Gamelibs/ProgressBar.cpp.obj.d"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/SpaceLane.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/SpaceLane.cpp.obj.d"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.obj"
@@ -43,8 +45,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/DamagePopUpEffect.cpp.obj.d"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/GUI/Button.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/GUI/Button.cpp.obj.d"
-  "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.obj"
-  "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/Shipyard.cpp.obj.d"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.obj"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.obj.d"
   "CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Panel.cpp.obj"

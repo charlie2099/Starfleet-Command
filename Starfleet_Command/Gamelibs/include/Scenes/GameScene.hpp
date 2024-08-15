@@ -4,13 +4,12 @@
 #include "Utility/Cursor.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
 #include "Sprites/Player/Player.h"
-#include "Sprites/UI/HUD/Shipyard.hpp"
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 #include <random>
 #include <chrono>
-#include "Sprites/UI/HUD/Shipyard.hpp"
 #include "../../SpaceLane.hpp"
+#include "../../ProgressBar.hpp"
 
 class GameScene : public Scene
 {
@@ -54,11 +53,11 @@ private:
     Chilli::PredefinedColours _predefinedColours;
 
     // HUD
-    Shipyard _shipyard;
-    sf::Text _playerCreditsText;
+    ProgressBar _shipAssemblyBar;
+    sf::Text _playerScrapText;
     sf::Text _wavesRemainingText;
     sf::Text _enemiesRemainingText;
-    int _playerCreditsCounter = 5000;
+    int _playerScrapCounter = 5000;
     int _wavesRemainingCounter = 3;
     int _enemiesRemainingCounter = 100;
 
@@ -94,7 +93,8 @@ private:
     sf::Vector2f _originalMinimapViewCenter;
     std::map<Button*, IStarship*> _buttonShipDictionary;
 
-    // For command buttons
+    // For ship spawner buttons
+    const int NUM_OF_BUTTONS = 5;
     std::unique_ptr<LightFighter> _lightFighter;
     std::unique_ptr<HeavyFighter> _heavyFighter;
     std::unique_ptr<SupportShip> _supportShip;

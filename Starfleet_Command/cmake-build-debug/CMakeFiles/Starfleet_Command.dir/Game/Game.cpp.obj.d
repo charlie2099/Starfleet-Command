@@ -324,6 +324,6 @@ CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj: \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Scenes/GameScene.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Enemy/Enemy.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/Player/Player.h \
- D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Sprites/UI/HUD/Shipyard.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/SpaceLane.hpp \
+ D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/ProgressBar.hpp \
  D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include/Scenes/OptionsScene.hpp
