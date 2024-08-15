@@ -24,29 +24,28 @@ class MenuScene : public Scene
     void InitView();
     bool InitBackground();
     void InitButtonPanels();
-    void InitTitlePanel();
     bool InitMenuTitleIcon();
     void InitBackgroundShips(std::mt19937 &generator);
     void CreateDistribution(const std::string& name, int min, int max);
 
     static const int PLAY_BUTTON = 0;
     static const int OPTIONS_BUTTON = 1;
-    static const int EXIT_BUTTON = 2;
-    static const int BUTTONS = 3;
-    static const int TITLE_PANEL = 5;
+    static const int TUTORIAL_BUTTON= 2;
+    static const int EXIT_BUTTON = 3;
+    static const int NUM_OF_BUTTONS = 4;
     static const int BACKGROUND_SHIPS = 16;
 
     sf::View _worldView{};
     Chilli::Cursor _cursor;
     Chilli::PredefinedColours _predefinedColours;
-    std::array<Panel, 5> _panels;
+    std::array<Panel, NUM_OF_BUTTONS> _panels;
     std::vector<std::unique_ptr<IStarship>> _starship;
     std::vector<std::uniform_int_distribution<int>> _distributions;
 
-    sf::Texture _backgroundTexture;
-    sf::Texture _menuTitleImgTexture;
-
     sf::Sprite _backgroundSprite;
+    sf::Texture _backgroundTexture;
+
     sf::Sprite _menuTitleImgSprite;
+    sf::Texture _menuTitleImgTexture;
 };
 #endif //STARFLEET_COMMAND_MENUSCENE_HPP

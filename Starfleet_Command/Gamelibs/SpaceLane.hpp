@@ -24,7 +24,7 @@ public:
     sf::Vector2f GetSize();
 
 private:
-    sf::RectangleShape laneRect;
+    sf::RectangleShape _laneRect;
     bool _isHoveredOver = false;
 };
 

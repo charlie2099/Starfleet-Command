@@ -3,10 +3,15 @@
 
 bool SpaceLane::Init()
 {
-    laneRect.setOutlineThickness(4.0F);
-    laneRect.setOutlineColor(sf::Color(0,0,255,50));
-    //laneRect.setOutlineColor(sf::Color(252, 162, 66,50));
-    laneRect.setFillColor(sf::Color::Transparent);
+    _laneRect.setOutlineThickness(2.0F);
+    //_laneRect.setOutlineColor(sf::Color(0,0,255,50));
+
+    //_laneRect.setOutlineColor(sf::Color(255,255,255,50));
+
+    _laneRect.setOutlineColor(sf::Color::Transparent);
+
+    //_laneRect.setOutlineColor(sf::Color(252, 162, 66,50));
+    //_laneRect.setFillColor(sf::Color::Transparent);
 
     return true;
 }
@@ -17,52 +22,52 @@ void SpaceLane::Update(sf::RenderWindow& window, sf::Time deltaTime)
     auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse _position translated into world coordinates
 
     // if mouse within button bounds, do something
-    if(laneRect.getGlobalBounds().contains(mouse_pos_world))
+    if(_laneRect.getGlobalBounds().contains(mouse_pos_world))
     {
         _isHoveredOver = true;
-        laneRect.setFillColor(sf::Color(100, 100, 100, 50.0F));
-        //laneRect.setFillColor(sf::Color( 252, 162, 66, 100.0F));
+        _laneRect.setFillColor(sf::Color(100, 100, 100, 50.0F));
+        //_laneRect.setFillColor(sf::Color( 252, 162, 66, 100.0F));
     }
     else
     {
         _isHoveredOver = false;
-        laneRect.setFillColor(sf::Color::Transparent);
+        _laneRect.setFillColor(sf::Color::Transparent);
     }
 }
 
 void SpaceLane::Render(sf::RenderWindow& window)
 {
-    window.draw(laneRect);
+    window.draw(_laneRect);
 }
 
 void SpaceLane::SetPos(sf::Vector2f pos)
 {
-    laneRect.setPosition(pos);
+    _laneRect.setPosition(pos);
 }
 
 void SpaceLane::SetColour(sf::Color colour)
 {
-    laneRect.setOutlineColor(colour);
+    _laneRect.setOutlineColor(colour);
 }
 
 void SpaceLane::SetSize(sf::Vector2f size)
 {
-    laneRect.setSize(size);
+    _laneRect.setSize(size);
 }
 
 sf::Vector2f SpaceLane::GetPos()
 {
-    return laneRect.getPosition();
+    return _laneRect.getPosition();
 }
 
 float SpaceLane::GetCentreYPos()
 {
-    return laneRect.getPosition().y + laneRect.getSize().y/2.0F;
+    return _laneRect.getPosition().y + _laneRect.getSize().y / 2.0F;
 }
 
 sf::Vector2f SpaceLane::GetSize()
 {
-    return laneRect.getSize();
+    return _laneRect.getSize();
 }
 
 
