@@ -61,6 +61,8 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto worldPositionOfMouse = window.mapPixelToCoords(mouse_pos, _mainView); // Mouse position translated into world coordinates
 
+    _player.EventHandler(window, event);
+
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
     {
         _scrollViewLeft = true;

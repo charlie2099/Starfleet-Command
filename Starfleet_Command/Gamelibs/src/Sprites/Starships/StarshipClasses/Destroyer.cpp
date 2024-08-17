@@ -27,7 +27,29 @@ Destroyer::Destroyer()
     _spriteComponent.GetSprite().setOrigin(centered_origin);
 
     //auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
-    //_healthComponent.AddBasicObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc1});
+    //_healthComponent.AddBasicObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc1}); // NOTE: Or handle in Destructor instead of as an event?
+
+    _attackRangeCircle.setRadius(_attackRange);
+    _attackRangeCircle.setFillColor({253, 103, 100, 50});
+    _attackRangeCircle.setOutlineColor(sf::Color::Red);
+    _attackRangeCircle.setOutlineThickness(2.0F);
+    _attackRangeCircle.setOrigin(_attackRangeCircle.getRadius(), _attackRangeCircle.getRadius());
+    _attackRangeCircle.setPosition(_spriteComponent.GetPos());
+}
+
+void Destroyer::EventHandler(sf::RenderWindow &window, sf::Event &event)
+{
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
+    auto worldPositionOfMouse = window.mapPixelToCoords(mouse_pos, window.getView()); // Mouse position translated into world coordinates
+
+    if(Chilli::Vector::BoundsCheck(worldPositionOfMouse, _spriteComponent.GetSprite().getGlobalBounds()))
+    {
+        _isAttackRangeCircleVisible = true;
+    }
+    else
+    {
+        _isAttackRangeCircleVisible = false;
+    }
 }
 
 void Destroyer::Update(sf::RenderWindow &window, sf::Time deltaTime)
@@ -46,14 +68,15 @@ void Destroyer::Update(sf::RenderWindow &window, sf::Time deltaTime)
     _healthBar->Update(window, deltaTime);
     _healthBar->SetPos({xPos, yPos});
 
-    if(_healthBar->GetHealth() < _maxHealth/* && _healthBar->GetHealth() > 0*/)
+    if(_healthBar->GetHealth() < _maxHealth)
     {
         _healthBarIsVisible = true;
     }
-    /* else if(_healthBar->GetHealth() <= 0)
-     {
-         _healthBarIsVisible = false;
-     }*/
+
+    if(_isAttackRangeCircleVisible)
+    {
+        _attackRangeCircle.setPosition(_spriteComponent.GetPos());
+    }
 }
 
 void Destroyer::Render(sf::RenderWindow &window)
@@ -69,6 +92,11 @@ void Destroyer::Render(sf::RenderWindow &window)
     if(_healthBarIsVisible)
     {
         _healthBar->Render(window);
+    }
+
+    if(_isAttackRangeCircleVisible)
+    {
+        window.draw(_attackRangeCircle);
     }
 }
 
@@ -146,6 +174,14 @@ void Destroyer::SetRotation(float rot)
     _spriteComponent.GetSprite().setRotation(rot);
     _rotation = rot;
 }
+
+/*void Destroyer::SetAttackRangeVisibility(bool visibility)
+{
+    _isAttackRangeCircleVisible = visibility;
+}*/
+
+
+
 
 
 

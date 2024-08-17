@@ -11,6 +11,7 @@ public:
     Destroyer();
     ~Destroyer() override = default;
 
+    void EventHandler(sf::RenderWindow &window, sf::Event &event) override;
     void Update(sf::RenderWindow& window, sf::Time deltaTime) override;
     void Render(sf::RenderWindow& window) override;
 
@@ -28,6 +29,7 @@ public:
     void SetColour(sf::Color &colour) override;
     void SetPosition(sf::Vector2f pos) override;
     void SetRotation(float rot) override;
+    //void SetAttackRangeVisibility(bool visibility);
 
     /// Accessors
     SpriteComponent& GetSpriteComponent() override { return _spriteComponent; }

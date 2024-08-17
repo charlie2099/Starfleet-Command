@@ -1,5 +1,13 @@
 #include "Sprites/Player/Player.h"
 
+void Player::EventHandler(sf::RenderWindow &window, sf::Event &event)
+{
+    for (auto& ship : starship)
+    {
+        ship->EventHandler(window, event);
+    }
+}
+
 void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
     for (auto& ship : starship)
@@ -89,6 +97,7 @@ void Player::AddAgnosticObserver(AgnosticPlayerEvent observer)
 {
     _agnosticObservers.insert(observer);
 }
+
 
 
 

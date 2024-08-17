@@ -28,6 +28,28 @@ HeavyFighter::HeavyFighter()
 
     //auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
     //_healthComponent.AddBasicObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc1});
+
+    _attackRangeCircle.setRadius(_attackRange);
+    _attackRangeCircle.setFillColor({253, 103, 100, 50});
+    _attackRangeCircle.setOutlineColor(sf::Color::Red);
+    _attackRangeCircle.setOutlineThickness(2.0F);
+    _attackRangeCircle.setOrigin(_attackRangeCircle.getRadius(), _attackRangeCircle.getRadius());
+    _attackRangeCircle.setPosition(_spriteComponent.GetPos());
+}
+
+void HeavyFighter::EventHandler(sf::RenderWindow &window, sf::Event &event)
+{
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
+    auto worldPositionOfMouse = window.mapPixelToCoords(mouse_pos, window.getView()); // Mouse position translated into world coordinates
+
+    if(Chilli::Vector::BoundsCheck(worldPositionOfMouse, _spriteComponent.GetSprite().getGlobalBounds()))
+    {
+        _isAttackRangeCircleVisible = true;
+    }
+    else
+    {
+        _isAttackRangeCircleVisible = false;
+    }
 }
 
 void HeavyFighter::Update(sf::RenderWindow &window, sf::Time deltaTime)
@@ -54,6 +76,11 @@ void HeavyFighter::Update(sf::RenderWindow &window, sf::Time deltaTime)
      {
          _healthBarIsVisible = false;
      }*/
+
+    if(_isAttackRangeCircleVisible)
+    {
+        _attackRangeCircle.setPosition(_spriteComponent.GetPos());
+    }
 }
 
 void HeavyFighter::Render(sf::RenderWindow &window)
@@ -69,6 +96,11 @@ void HeavyFighter::Render(sf::RenderWindow &window)
     if(_healthBarIsVisible)
     {
         _healthBar->Render(window);
+    }
+
+    if(_isAttackRangeCircleVisible)
+    {
+        window.draw(_attackRangeCircle);
     }
 }
 
@@ -146,6 +178,7 @@ void HeavyFighter::SetRotation(float rot)
     _spriteComponent.GetSprite().setRotation(rot);
     _rotation = rot;
 }
+
 
 
 

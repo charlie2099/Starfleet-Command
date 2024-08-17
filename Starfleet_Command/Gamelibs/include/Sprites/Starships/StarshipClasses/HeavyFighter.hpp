@@ -11,6 +11,7 @@ public:
     HeavyFighter();
     ~HeavyFighter() override = default;
 
+    void EventHandler(sf::RenderWindow &window, sf::Event &event) override;
     void Update(sf::RenderWindow& window, sf::Time deltaTime) override;
     void Render(sf::RenderWindow& window) override;
 

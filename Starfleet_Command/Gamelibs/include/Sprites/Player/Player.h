@@ -16,6 +16,7 @@ public:
 
     Player() = default;
     ~Player() = default;
+    void EventHandler(sf::RenderWindow &window, sf::Event &event);
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 

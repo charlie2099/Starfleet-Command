@@ -14,6 +14,7 @@ class IStarship
 public:
     virtual ~IStarship() = default;
 
+    virtual void EventHandler(sf::RenderWindow& window, sf::Event& event) = 0;
     virtual void Update(sf::RenderWindow& window, sf::Time deltaTime) = 0;
     virtual void Render(sf::RenderWindow& window) = 0;
 
@@ -97,6 +98,8 @@ protected:
     int _shipCost = 100;
     bool _healthBarIsVisible = false;
     float _nextFireTime = 0;
+    sf::CircleShape _attackRangeCircle;
+    bool _isAttackRangeCircleVisible = false;
     sf::Clock _clock;
     Chilli::PredefinedColours _predefinedColours;
 };
