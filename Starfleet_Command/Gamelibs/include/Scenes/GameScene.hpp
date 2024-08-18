@@ -66,10 +66,19 @@ private:
     std::vector<sf::Text> _shipCostText;
 
     // UI
-    std::unique_ptr<sf::Texture> _backgroundTexture;
+    sf::Texture _backgroundTexture;
     sf::Sprite _backgroundSprite;
     sf::RectangleShape _mainViewBorder;
     sf::RectangleShape _minimapBorder;
+    struct ParallaxStar
+    {
+        sf::CircleShape circleShape;
+        sf::Vector2f position;
+        float speed{};
+        float size{};
+    };
+    std::vector<ParallaxStar> _parallaxStars;
+    const int NUM_OF_STARS = 750;
 
     // Sprites
     Player _player;
@@ -94,12 +103,13 @@ private:
     std::map<Button*, IStarship*> _buttonShipDictionary;
 
     // For ship spawner buttons
-    const int NUM_OF_BUTTONS = 5;
+    static const int NUM_OF_BUTTONS = 5;
     std::unique_ptr<LightFighter> _lightFighter;
     std::unique_ptr<HeavyFighter> _heavyFighter;
     std::unique_ptr<SupportShip> _supportShip;
     std::unique_ptr<Destroyer> _destroyer;
     std::unique_ptr<Battleship> _battleship;
+    //std::array<Panel, NUM_OF_BUTTONS> _shipInfoPanels;
 
     // Space Lanes
     std::vector<std::unique_ptr<SpaceLane>> _spaceLanes;

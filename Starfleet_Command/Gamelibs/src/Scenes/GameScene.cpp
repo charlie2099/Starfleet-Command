@@ -205,6 +205,11 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         _isDragVisualVisible = false;
         _dragging = false;
     }
+
+    /*for (auto& shipInfoPanel : _shipInfoPanels)
+    {
+        shipInfoPanel.EventHandler(window, event);
+    }*/
 }
 
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
@@ -475,6 +480,33 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto yPos = worldPositionOfMouse.y - _shipDragSpriteVisuals[_shipSelectedIndex].GetSprite().getGlobalBounds().height / 2.0F;
         _shipDragSpriteVisuals[_shipSelectedIndex].SetPos({xPos, yPos});
     }
+
+    /*for (int i = 0; i < _shipInfoPanels.size(); ++i)
+    {
+        _shipInfoPanels[i].Update(window);
+        _shipInfoPanels[i].SetPosition(_shipSpawnerButtons[i]->GetPos().x, _shipSpawnerButtons[i]->GetPos().y - _shipInfoPanels[i].GetPanelSize().height);
+    }*/
+
+    // Move layers
+    _backgroundSprite.move(-25.0F * deltaTime.asSeconds(), 0);
+
+    // Wrap around logic
+    if(_backgroundSprite.getPosition().x + _backgroundSprite.getGlobalBounds().width/2.0F < 0)
+    {
+        _backgroundSprite.setPosition(0,Constants::LEVEL_HEIGHT/2.0F - Constants::WINDOW_HEIGHT/2.0F);
+    }
+
+    // Update star positions
+    for (auto& star : _parallaxStars)
+    {
+        star.position.x -= star.speed * 100.0F * deltaTime.asSeconds();
+        star.circleShape.setPosition(star.position);
+        if (star.position.x < 0)
+        {
+            star.position.x = Constants::LEVEL_WIDTH;
+            star.position.y = std::rand() % (int)Constants::LEVEL_HEIGHT/2.0F + Constants::WINDOW_HEIGHT/2.0F;
+        }
+    }
 }
 
 void GameScene::Render(sf::RenderWindow& window)
@@ -482,6 +514,10 @@ void GameScene::Render(sf::RenderWindow& window)
     /// Render the main view
     window.setView(_mainView);
     window.draw(_backgroundSprite);
+    for (auto& star : _parallaxStars)
+    {
+        window.draw(star.circleShape);
+    }
     for(auto& button : _shipSpawnerButtons)
     {
         button->Render(window);
@@ -490,6 +526,10 @@ void GameScene::Render(sf::RenderWindow& window)
     {
         window.draw(text);
     }
+    /*for (auto& shipInfoPanel : _shipInfoPanels)
+    {
+        shipInfoPanel.Render(window);
+    }*/
     window.draw(_playerScrapText);
     window.draw(_wavesRemainingText);
     window.draw(_enemiesRemainingText);
@@ -533,16 +573,28 @@ void GameScene::InitRandomDistributions()
 
 bool GameScene::InitBackground()
 {
-    _backgroundTexture = std::make_unique<sf::Texture>();
-    if (!_backgroundTexture->loadFromFile("Resources/Textures/space_nebula.png"))
+    if (!_backgroundTexture.loadFromFile("Resources/Textures/space_nebula_2.png"))
     {
         return false;
     }
 
-    _backgroundTexture->setRepeated(true);
-    _backgroundSprite.setTexture(*_backgroundTexture);
-    _backgroundSprite.setTextureRect(sf::IntRect(0, 0, Constants::LEVEL_WIDTH, Constants::LEVEL_HEIGHT));
-    //_backgroundSprite.scale(0.2F, 0.2F);
+    _backgroundTexture.setRepeated(true);
+    _backgroundSprite.setTexture(_backgroundTexture);
+    _backgroundSprite.setTextureRect(sf::IntRect(0, 0, Constants::LEVEL_WIDTH * 2.0F, Constants::WINDOW_HEIGHT));
+    _backgroundSprite.setPosition(0,Constants::LEVEL_HEIGHT/2.0F - Constants::WINDOW_HEIGHT/2.0F);
+    _backgroundSprite.setColor(sf::Color::Cyan);
+
+    // Initialize stars
+    for (int i = 0; i < NUM_OF_STARS; ++i)
+    {
+        _parallaxStars.emplace_back();
+        _parallaxStars[i].position = sf::Vector2f(std::rand() % (int)Constants::LEVEL_WIDTH, std::rand() % (int)Constants::LEVEL_HEIGHT/2.0F + Constants::WINDOW_HEIGHT/2.0F);
+        _parallaxStars[i].speed = 0.1f + static_cast<float>(std::rand() % 100) / 100.0f; // Speed between 0.1 and 1.0
+        _parallaxStars[i].size = 0.5f + static_cast<float>(std::rand() % 2); // Size between 1 and 3
+        _parallaxStars[i].circleShape.setRadius(_parallaxStars[i].size);
+        //_parallaxStars[i].circleShape.setFillColor(sf::Color::White);
+        _parallaxStars[i].circleShape.setFillColor(_predefinedColours.LIGHTBLUE);
+    }
 
     return true;
 }
@@ -577,6 +629,12 @@ bool GameScene::InitShipSpawnerButtons()
         _shipCostText[i].setOutlineThickness(1.0F);
         _shipCostText[i].setFont(GetRegularFont());
         _shipCostText[i].setCharacterSize(8);
+
+        /*_shipInfoPanels[i].SetText("Name: ");
+        _shipInfoPanels[i].SetTextOffset(Panel::TextAlign::OFFSET, 10);
+        _shipInfoPanels[i].SetTextSize(10);
+        _shipInfoPanels[i].SetSize(15, _shipSpawnerButtons[i]->GetBounds().height*1.0F);
+        _shipInfoPanels[i].SetPanelColour(sf::Color(22, 155, 164, 100));*/
     }
 
     _buttonShipDictionary[_shipSpawnerButtons[0].get()] = _lightFighter.get();
@@ -654,10 +712,11 @@ void GameScene::InitMainViewBorder()
 
 void GameScene::InitMinimapBorder()
 {
-    _minimapBorder.setSize({(Constants::WINDOW_WIDTH*Constants::Minimap::VIEWPORT_WIDTH)*2.0F,(Constants::WINDOW_HEIGHT*Constants::Minimap::VIEWPORT_HEIGHT)/1.5F});
+    //_minimapBorder.setSize({(Constants::WINDOW_WIDTH*Constants::Minimap::VIEWPORT_WIDTH)*2.0F,(Constants::WINDOW_HEIGHT*Constants::Minimap::VIEWPORT_HEIGHT)/1.5F}); // Constants::LEVEL_HEIGHT/2.0F - Constants::WINDOW_HEIGHT/2.0F
+    _minimapBorder.setSize({(Constants::WINDOW_WIDTH*Constants::Minimap::VIEWPORT_WIDTH)*2.0F,(Constants::WINDOW_HEIGHT*Constants::Minimap::VIEWPORT_HEIGHT)/1.5F}); // Constants::LEVEL_HEIGHT/2.0F - Constants::WINDOW_HEIGHT/2.0F
     _minimapBorder.setOutlineThickness(2.0f); // Set the thickness of the border
     _minimapBorder.setOutlineColor(sf::Color(128,128,128)); // Set the color of the border
-    _minimapBorder.setFillColor(sf::Color::Red); // Make the inside of the rectangle transparent
+    _minimapBorder.setFillColor(sf::Color::Black); // Make the inside of the rectangle transparent
 }
 
 void GameScene::InitSpaceLanes()

@@ -45,6 +45,16 @@ class MenuScene : public Scene
     sf::Sprite _backgroundSprite;
     sf::Texture _backgroundTexture;
 
+    struct ParallaxStar
+    {
+        sf::CircleShape circleShape;
+        sf::Vector2f position;
+        float speed{};
+        float size{};
+    };
+    std::vector<ParallaxStar> _parallaxStars;
+    const int NUM_OF_STARS = 300;
+
     sf::Sprite _menuTitleImgSprite;
     sf::Texture _menuTitleImgTexture;
 };

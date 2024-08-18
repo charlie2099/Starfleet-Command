@@ -105,12 +105,39 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             _starship[i]->GetSpriteComponent().SetPos({Constants::WINDOW_WIDTH, _starship[i]->GetSpriteComponent().GetPos().y});
         }
     }
+
+
+
+    // Move layers
+    _backgroundSprite.move(-25.0F * deltaTime.asSeconds(), 0);
+
+    // Wrap around logic
+    if(_backgroundSprite.getPosition().x + _backgroundSprite.getGlobalBounds().width/2.0F < 0)
+    {
+        _backgroundSprite.setPosition(0, 0);
+    }
+
+    // Update star positions
+    for (auto& star : _parallaxStars)
+    {
+        star.position.x -= star.speed * 100.0F * deltaTime.asSeconds();
+        star.circleShape.setPosition(star.position);
+        if (star.position.x < 0)
+        {
+            star.position.x = Constants::WINDOW_WIDTH;
+            star.position.y = std::rand() % (int)Constants::WINDOW_HEIGHT;
+        }
+    }
 }
 
 void MenuScene::Render(sf::RenderWindow& window)
 {
     window.setView(_worldView);
     window.draw(_backgroundSprite);
+    for (auto& star : _parallaxStars)
+    {
+        window.draw(star.circleShape);
+    }
     for (auto & ship : _starship)
     {
         ship->Render(window);
@@ -142,16 +169,25 @@ void MenuScene::InitView()
 
 bool MenuScene::InitBackground()
 {
-    if (!_backgroundTexture.loadFromFile("Resources/Textures/space_nebula.png"))
+    if (!_backgroundTexture.loadFromFile("Resources/Textures/space_nebula_2.png"))
     {
         return false;
     }
     _backgroundTexture.setRepeated(true);
     _backgroundSprite.setTexture(_backgroundTexture);
-    _backgroundSprite.scale(0.2F, 0.2F);
-    auto bTexSizeX = static_cast<int>(_backgroundTexture.getSize().x);
-    auto bTexSizeY = static_cast<int>(_backgroundTexture.getSize().y);
-    _backgroundSprite.setTextureRect(sf::IntRect(0, 0, bTexSizeX * 2, bTexSizeY * 2));
+    _backgroundSprite.setTextureRect(sf::IntRect(0, 0, Constants::WINDOW_WIDTH * 2.0F, Constants::WINDOW_HEIGHT * 2.0F));
+    _backgroundSprite.setColor(sf::Color::Cyan);
+
+    // Initialize stars
+    for (int i = 0; i < NUM_OF_STARS; ++i)
+    {
+        _parallaxStars.emplace_back();
+        _parallaxStars[i].position = sf::Vector2f(std::rand() % (int)Constants::WINDOW_WIDTH, std::rand() % (int)Constants::WINDOW_HEIGHT);
+        _parallaxStars[i].speed = 0.1f + static_cast<float>(std::rand() % 100) / 100.0f; // Speed between 0.1 and 1.0
+        _parallaxStars[i].size = 0.5f + static_cast<float>(std::rand() % 2); // Size between 1 and 3
+        _parallaxStars[i].circleShape.setRadius(_parallaxStars[i].size);
+        _parallaxStars[i].circleShape.setFillColor(_predefinedColours.LIGHTBLUE);
+    }
 
     return true;
 }

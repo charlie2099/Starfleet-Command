@@ -31,7 +31,7 @@ SupportShip::SupportShip()
 
     _attackRangeCircle.setRadius(_attackRange);
     _attackRangeCircle.setFillColor({253, 103, 100, 50});
-    _attackRangeCircle.setOutlineColor(sf::Color::Red);
+    _attackRangeCircle.setOutlineColor(sf::Color(255, 0, 0, 150));
     _attackRangeCircle.setOutlineThickness(2.0F);
     _attackRangeCircle.setOrigin(_attackRangeCircle.getRadius(), _attackRangeCircle.getRadius());
     _attackRangeCircle.setPosition(_spriteComponent.GetPos());
