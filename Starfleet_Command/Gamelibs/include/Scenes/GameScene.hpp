@@ -45,7 +45,7 @@ private:
         SPACELANE = 1,
         ENEMY_SHIP_TYPE = 2,
     };
-    void CreateDistribution(DistributionsEnum distributionsEnum, int min, int max);
+    void CreateDistribution([[maybe_unused]] [[maybe_unused]] DistributionsEnum distributionsEnum, int min, int max);
     static std::mt19937 GetEngine();
 
     // Utility

@@ -11,10 +11,11 @@ struct Constants
 
     struct Minimap
     {
-        static constexpr float VIEWPORT_WIDTH  = 0.25f;                         // original 0.2f
-        static constexpr float VIEWPORT_HEIGHT = 0.25f;                         // original 0.2f
-        static constexpr float VIEWPORT_LEFT   = 0.5f - (VIEWPORT_WIDTH/2.0F)*2.0F;  // original 0.5F - VIEWPORT_WIDTH/2.0F
-        static constexpr float VIEWPORT_TOP    = 0.021f;                        // original 0.01f
+        static constexpr float VIEWPORT_WIDTH  = 0.5F;
+        static constexpr float VIEWPORT_HEIGHT = 0.166F;
+        static constexpr float VIEWPORT_LEFT   = 0.5F - VIEWPORT_WIDTH/2.0F;
+        //static constexpr float VIEWPORT_TOP    = 0.02F;
+        static constexpr float VIEWPORT_TOP    = 0.1F - VIEWPORT_HEIGHT/2.0F;
     };
 };
 

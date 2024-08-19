@@ -29,9 +29,6 @@ bool GameScene::Init()
         //shipDragVisual.GetSprite().setColor({sf::Color::White.r, sf::Color::White.g, sf::Color::White.b, 125});
     }
 
-    sf::Vector2f playerFlagshipPos = _player.GetFlagship()->GetPos();
-    _mainView.setCenter(playerFlagshipPos.x + 350.0F, playerFlagshipPos.y);
-
     InitEvents();
 
     /// StarshipClass newClassType(texture, color, health, damage);
@@ -220,18 +217,27 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     // Thresholds for detecting mouse proximity to window borders
     const float EDGE_OFFSET = 200.0F;
     auto mouseProximityToLeftWindowEdge = EDGE_OFFSET;
-    auto mouseProximityToRightWindowEdge = window.getSize().x - EDGE_OFFSET;
+    auto mouseProximityToRightWindowEdge = (float)window.getSize().x - EDGE_OFFSET;
 
     // Current boundaries of the view in world coordinates
     auto viewportLeftBoundary = _mainView.getCenter().x - _mainView.getSize().x / 2.0F;
     auto viewportRightBoundary = _mainView.getCenter().x + _mainView.getSize().x / 2.0F;
 
     // Viewport movement conditions
-    bool isMouseNearLeftEdge = mousePos.x <= mouseProximityToLeftWindowEdge && mousePos.x > 0;
-    bool isMouseNearRightEdge = mousePos.x >= mouseProximityToRightWindowEdge && mousePos.x < window.getSize().x;
-    bool isViewportLeftEdgeWithinFlagshipFocus = viewportLeftBoundary > _player.GetFlagship()->GetPos().x - _player.GetFlagship()->GetSpriteComponent().GetSprite().getGlobalBounds().width+1.0F;
+    bool isMouseNearLeftEdge = (float)mousePos.x <= mouseProximityToLeftWindowEdge && mousePos.x > 0;
+    bool isMouseNearRightEdge = (float)mousePos.x >= mouseProximityToRightWindowEdge && mousePos.x < window.getSize().x;
+    bool isViewportLeftEdgeWithinFlagshipFocus = viewportLeftBoundary > _player.GetFlagship()->GetPos().x - _player.GetFlagship()->GetSpriteComponent().GetSprite().getGlobalBounds().width; // BUG: Main view stops moves a few pixels too far when scrolling view left
     bool isViewportRightEdgeWithinRightSideOfEnemyFlagship = viewportRightBoundary < _enemy.GetFlagship()->GetPos().x + _enemy.GetFlagshipBounds().width;
     bool isMouseYposWithinWindowBounds = mousePos.y >= 0 and mousePos.y <= window.getSize().y;
+
+    if(viewportLeftBoundary >= _player.GetFlagship()->GetPos().x - _player.GetFlagship()->GetSpriteComponent().GetSprite().getGlobalBounds().width && _scrollViewLeft)
+    {
+        _mainView.move(-VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
+    }
+    else if(_scrollViewRight && isViewportRightEdgeWithinRightSideOfEnemyFlagship)
+    {
+        _mainView.move(VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
+    }
 
     if(isMouseNearLeftEdge and isViewportLeftEdgeWithinFlagshipFocus and isMouseYposWithinWindowBounds)
     {
@@ -241,30 +247,18 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         _mainView.move(VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
     }
+
     // Set main view to focus on the player flagship if the flagship passes a set distance from the left view boundary
-    else if(viewportLeftBoundary < _player.GetFlagship()->GetPos().x - _player.GetFlagship()->GetSpriteComponent().GetSprite().getGlobalBounds().width)
+    if(viewportLeftBoundary < _player.GetFlagship()->GetPos().x - _player.GetFlagship()->GetSpriteComponent().GetSprite().getGlobalBounds().width)
     {
-        auto playerFlagshipBounds = _player.GetFlagship()->GetSpriteComponent().GetSprite().getGlobalBounds();
-        _mainView.setCenter((_player.GetFlagship()->GetPos().x - playerFlagshipBounds.width) + Constants::WINDOW_WIDTH/2.0F, _player.GetFlagship()->GetPos().y);
+        _mainView.move(0,0);
     }
 
 
-
-    if(_scrollViewLeft)
-    {
-        _mainView.move(-VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
-    }
-    else if(_scrollViewRight && isViewportRightEdgeWithinRightSideOfEnemyFlagship)
-    {
-        _mainView.move(VP_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
-    }
-
-
-    _minimapBorder.setPosition(_mainView.getCenter().x - _mainView.getSize().x/4.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 15.0F);
+    _minimapBorder.setPosition(_mainView.getCenter().x - _mainView.getSize().x/4.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 12.1F);
     _mainViewBorder.setPosition(_mainView.getCenter().x - _mainViewBorder.getSize().x/2.0F, _mainView.getCenter().y - _mainViewBorder.getSize().y/2.0F);
 
     // TODO: Clean up
-    const float NUM_OF_BUTTONS = 5;
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
         const float ROW_LENGTH = 5;
@@ -274,9 +268,9 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto yPos = 0.0F;
 
         // TODO: Clean this up
-        if(i < ROW_LENGTH) // Row 1
+        if((float)i < ROW_LENGTH) // Row 1
         {
-            xPos = _mainView.getCenter().x - _shipAssemblyBar.GetSize().width/2.0F + (i * (button_bounds.width+SPACING));
+            xPos = _mainView.getCenter().x - _shipAssemblyBar.GetSize().width/2.0F + ((float)i * (button_bounds.width+SPACING));
             yPos = _mainView.getCenter().y + Constants::WINDOW_HEIGHT/2.75F + SPACING;
         }
         /*else if(i >= ROW_LENGTH) // Row 2
@@ -371,11 +365,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto& enemySprite = _enemy.GetShips()[i]->GetSpriteComponent().GetSprite();
         enemySprite.move(_enemy.GetShips()[i]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
 
-        for(int j = 0; j < _player.GetShips().size(); j++)
+        for(const auto &playerShip : _player.GetShips())
         {
-            if(_player.GetShips()[j] != nullptr)
+            if(playerShip != nullptr)
             {
-                auto& playerSprite = _player.GetShips()[j]->GetSpriteComponent().GetSprite();
+                auto& playerSprite = playerShip->GetSpriteComponent().GetSprite();
 
                 // Move towards and shoot at player ship if less than 400 pixels away from it
                 if(Chilli::Vector::Distance(playerSprite.getPosition(), enemySprite.getPosition()) <= _enemy.GetShips()[i]->GetAttackRange())
@@ -397,9 +391,9 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         //UpdateDistribution("Ship damage", 10, 80);
                         int randDamage = _distributions[SHIP_DAMAGE](_generator);
 
-                        //_enemy.GetShips()[j]->TakeDamage(_player.GetShips()[i]->GetDamage());
-                        _player.GetShips()[j]->GetHealthComponent().TakeDamage(randDamage * _enemy.GetShips()[i]->GetDamageScaleFactor(),
-                                                                              _player.GetShips()[j]->GetSpriteComponent().GetPos());
+                        //_enemy.GetShips()[playerShip]->TakeDamage(_player.GetShips()[i]->GetDamage());
+                        playerShip->GetHealthComponent().TakeDamage((float)randDamage * _enemy.GetShips()[i]->GetDamageScaleFactor(),
+                                                                    playerShip->GetSpriteComponent().GetPos());
                         _enemy.GetShips()[i]->GetProjectile().erase(_enemy.GetShips()[i]->GetProjectile().begin() + k);
                     }
                 }
@@ -426,9 +420,9 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 }
             }
 
-            for(int j = 0; j < _enemy.GetShips().size(); j++)
+            for(const auto &enemyShip : _enemy.GetShips())
             {
-                auto& enemySprite = _enemy.GetShips()[j]->GetSpriteComponent().GetSprite();
+                auto& enemySprite = enemyShip->GetSpriteComponent().GetSprite();
 
                 // Move towards and shoot at enemy ship if less than 400 pixels away from it
                 if(Chilli::Vector::Distance(playerSprite.getPosition(), enemySprite.getPosition()) <= _player.GetShips()[i]->GetAttackRange())
@@ -450,9 +444,9 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         //UpdateDistribution("Ship damage", 10, 80);
                         int randDamage = _distributions[SHIP_DAMAGE](_generator);
 
-                        //_enemy.GetShips()[j]->TakeDamage(_player.GetShips()[i]->GetDamage());
-                        _enemy.GetShips()[j]->GetHealthComponent().TakeDamage(randDamage * _player.GetShips()[i]->GetDamageScaleFactor(),
-                                                                              _enemy.GetShips()[j]->GetSpriteComponent().GetPos());
+                        //_enemy.GetShips()[enemyShip]->TakeDamage(_player.GetShips()[i]->GetDamage());
+                        enemyShip->GetHealthComponent().TakeDamage((float)randDamage * _player.GetShips()[i]->GetDamageScaleFactor(),
+                                                                   enemyShip->GetSpriteComponent().GetPos());
                         _player.GetShips()[i]->GetProjectile().erase(_player.GetShips()[i]->GetProjectile().begin() + k);
                     }
                 }
@@ -466,9 +460,9 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     for (int i = 0; i < NUM_OF_LANES; ++i)
     {
         float laneHeight = _spaceLanes[i]->GetSize().y;
-        float totalLanesHeight = (laneHeight * NUM_OF_LANES) + (LANE_Y_SPACING * (NUM_OF_LANES-1));
+        float totalLanesHeight = (laneHeight * (float)NUM_OF_LANES) + (LANE_Y_SPACING * ((float)NUM_OF_LANES-1));
         float laneXOffset = 75.0F;
-        float laneYOffset = (i * (laneHeight + LANE_Y_SPACING)) - (totalLanesHeight / 2.0F);
+        float laneYOffset = ((float)i * (laneHeight + LANE_Y_SPACING)) - (totalLanesHeight / 2.0F);
         _spaceLanes[i]->SetPos({_player.GetFlagship()->GetPos().x + laneXOffset, _player.GetFlagship()->GetPos().y + laneYOffset});
         _spaceLanes[i]->Update(window, deltaTime);
     }
@@ -681,14 +675,15 @@ void GameScene::InitEnemiesRemainingText()
 
 void GameScene::InitMainView()
 {
-    // Initialise the main view to the size of the window
     _mainView.setSize(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT);
+    auto playerFlagshipBounds = _player.GetFlagship()->GetSpriteComponent().GetSprite().getGlobalBounds();
+    _mainView.setCenter(_player.GetFlagship()->GetPos().x - playerFlagshipBounds.width + Constants::WINDOW_WIDTH/2.0F -1.0F, _player.GetFlagship()->GetPos().y);
 }
 
 void GameScene::InitMinimapView()
 {
     // Initialize the minimap view to the size of the level
-    _minimapView.setSize(Constants::LEVEL_WIDTH,Constants::LEVEL_HEIGHT/3.0F);
+    _minimapView.setSize(Constants::LEVEL_WIDTH,Constants::LEVEL_HEIGHT/3.2F); // Note: Should be 3.0F?
 
     // Focus the view/camera on the centre point of the level
     _minimapView.setCenter(Constants::LEVEL_WIDTH/2.0F,Constants::LEVEL_HEIGHT/2.0F);
@@ -698,25 +693,24 @@ void GameScene::InitMinimapView()
     _minimapView.setViewport(sf::FloatRect(
             Constants::Minimap::VIEWPORT_LEFT,
             Constants::Minimap::VIEWPORT_TOP,
-            Constants::Minimap::VIEWPORT_WIDTH*2.0F,
-            Constants::Minimap::VIEWPORT_HEIGHT/1.5F));
+            Constants::Minimap::VIEWPORT_WIDTH,
+            Constants::Minimap::VIEWPORT_HEIGHT));
 }
 
 void GameScene::InitMainViewBorder()
 {
     _mainViewBorder.setSize({Constants::WINDOW_WIDTH,Constants::WINDOW_HEIGHT});
-    _mainViewBorder.setOutlineThickness(20.0f); // Set the thickness of the border
-    _mainViewBorder.setOutlineColor(sf::Color(128,128,128)); // Set the color of the border
-    _mainViewBorder.setFillColor(sf::Color::Transparent); // Make the inside of the rectangle transparent
+    _mainViewBorder.setOutlineThickness(10.0f);
+    _mainViewBorder.setOutlineColor(_predefinedColours.LIGHTBLUE);
+    _mainViewBorder.setFillColor(sf::Color::Transparent);
 }
 
 void GameScene::InitMinimapBorder()
 {
-    //_minimapBorder.setSize({(Constants::WINDOW_WIDTH*Constants::Minimap::VIEWPORT_WIDTH)*2.0F,(Constants::WINDOW_HEIGHT*Constants::Minimap::VIEWPORT_HEIGHT)/1.5F}); // Constants::LEVEL_HEIGHT/2.0F - Constants::WINDOW_HEIGHT/2.0F
-    _minimapBorder.setSize({(Constants::WINDOW_WIDTH*Constants::Minimap::VIEWPORT_WIDTH)*2.0F,(Constants::WINDOW_HEIGHT*Constants::Minimap::VIEWPORT_HEIGHT)/1.5F}); // Constants::LEVEL_HEIGHT/2.0F - Constants::WINDOW_HEIGHT/2.0F
-    _minimapBorder.setOutlineThickness(2.0f); // Set the thickness of the border
-    _minimapBorder.setOutlineColor(sf::Color(128,128,128)); // Set the color of the border
-    _minimapBorder.setFillColor(sf::Color::Black); // Make the inside of the rectangle transparent
+    _minimapBorder.setSize({Constants::WINDOW_WIDTH * Constants::Minimap::VIEWPORT_WIDTH, Constants::WINDOW_HEIGHT * Constants::Minimap::VIEWPORT_HEIGHT});
+    _minimapBorder.setOutlineThickness(1.0f);
+    _minimapBorder.setOutlineColor({128, 128, 128});
+    _minimapBorder.setFillColor(sf::Color::Red);
 }
 
 void GameScene::InitSpaceLanes()
@@ -726,9 +720,9 @@ void GameScene::InitSpaceLanes()
         _spaceLanes.emplace_back(std::make_unique<SpaceLane>());
 
         float laneHeight = _spaceLanes[i]->GetSize().y;
-        float totalLanesHeight = (laneHeight * NUM_OF_LANES) + (LANE_Y_SPACING * (NUM_OF_LANES-1));
+        float totalLanesHeight = (laneHeight * (float)NUM_OF_LANES) + (LANE_Y_SPACING * ((float)NUM_OF_LANES-1));
         float laneXOffset = 75.0F;
-        float laneYOffset = (i * (laneHeight + LANE_Y_SPACING)) - (totalLanesHeight / 2.0F);
+        float laneYOffset = ((float)i * (laneHeight + LANE_Y_SPACING)) - (totalLanesHeight / 2.0F);
         sf::Vector2f playerFlagshipPos = _player.GetFlagship()->GetSpriteComponent().GetPos();
         _spaceLanes[i]->SetPos({playerFlagshipPos.x + laneXOffset, playerFlagshipPos.y + laneYOffset});
         _spaceLanes[i]->SetSize({Constants::LEVEL_WIDTH*0.91F, 50.0F});
@@ -746,7 +740,7 @@ void GameScene::InitEvents()
 {
     /// Observer to ship assembly bar event
     auto shipAssemblyBarCallback = std::bind(&GameScene::SpawnShipFromShipyard, this);
-    _shipAssemblyBar.AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, shipAssemblyBarCallback}); // TODO: Could be problematic if there is more than 1 progress bar?
+    _shipAssemblyBar.AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, shipAssemblyBarCallback});
 }
 
 void GameScene::InitPlayerFlagship()
@@ -766,7 +760,7 @@ void GameScene::InitEnemyFlagship()
 }
 
 /// \param distributionsEnum - no use in the method, purely for readability
-void GameScene::CreateDistribution(DistributionsEnum distributionsEnum, int min, int max)
+void GameScene::CreateDistribution([[maybe_unused]] DistributionsEnum distributionsEnum, int min, int max)
 {
     std::uniform_int_distribution<int> instance{min, max};
     _distributions.emplace_back(instance);
