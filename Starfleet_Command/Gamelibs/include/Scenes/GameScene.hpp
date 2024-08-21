@@ -8,8 +8,8 @@
 #include "Sprites/Starships/StarshipFactory.hpp"
 #include <random>
 #include <chrono>
-#include "../../SpaceLane.hpp"
-#include "../../ProgressBar.hpp"
+#include "Sprites/SpaceLane.hpp"
+#include "Sprites/UI/HUD/ProgressBar.hpp"
 
 class GameScene : public Scene
 {

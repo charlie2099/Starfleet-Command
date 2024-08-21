@@ -152,53 +152,125 @@ Game/Game.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.s
 .PHONY : Game/Game.cpp.s
 
-Gamelibs/ProgressBar.obj: Gamelibs/ProgressBar.cpp.obj
-.PHONY : Gamelibs/ProgressBar.obj
+Gamelibs/ButtonElement.obj: Gamelibs/ButtonElement.cpp.obj
+.PHONY : Gamelibs/ButtonElement.obj
 
 # target to build an object file
-Gamelibs/ProgressBar.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/ProgressBar.cpp.obj
-.PHONY : Gamelibs/ProgressBar.cpp.obj
+Gamelibs/ButtonElement.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/ButtonElement.cpp.obj
+.PHONY : Gamelibs/ButtonElement.cpp.obj
 
-Gamelibs/ProgressBar.i: Gamelibs/ProgressBar.cpp.i
-.PHONY : Gamelibs/ProgressBar.i
+Gamelibs/ButtonElement.i: Gamelibs/ButtonElement.cpp.i
+.PHONY : Gamelibs/ButtonElement.i
 
 # target to preprocess a source file
-Gamelibs/ProgressBar.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/ProgressBar.cpp.i
-.PHONY : Gamelibs/ProgressBar.cpp.i
+Gamelibs/ButtonElement.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/ButtonElement.cpp.i
+.PHONY : Gamelibs/ButtonElement.cpp.i
 
-Gamelibs/ProgressBar.s: Gamelibs/ProgressBar.cpp.s
-.PHONY : Gamelibs/ProgressBar.s
+Gamelibs/ButtonElement.s: Gamelibs/ButtonElement.cpp.s
+.PHONY : Gamelibs/ButtonElement.s
 
 # target to generate assembly for a file
-Gamelibs/ProgressBar.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/ProgressBar.cpp.s
-.PHONY : Gamelibs/ProgressBar.cpp.s
+Gamelibs/ButtonElement.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/ButtonElement.cpp.s
+.PHONY : Gamelibs/ButtonElement.cpp.s
 
-Gamelibs/SpaceLane.obj: Gamelibs/SpaceLane.cpp.obj
-.PHONY : Gamelibs/SpaceLane.obj
+Gamelibs/ImageElement.obj: Gamelibs/ImageElement.cpp.obj
+.PHONY : Gamelibs/ImageElement.obj
 
 # target to build an object file
-Gamelibs/SpaceLane.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/SpaceLane.cpp.obj
-.PHONY : Gamelibs/SpaceLane.cpp.obj
+Gamelibs/ImageElement.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/ImageElement.cpp.obj
+.PHONY : Gamelibs/ImageElement.cpp.obj
 
-Gamelibs/SpaceLane.i: Gamelibs/SpaceLane.cpp.i
-.PHONY : Gamelibs/SpaceLane.i
+Gamelibs/ImageElement.i: Gamelibs/ImageElement.cpp.i
+.PHONY : Gamelibs/ImageElement.i
 
 # target to preprocess a source file
-Gamelibs/SpaceLane.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/SpaceLane.cpp.i
-.PHONY : Gamelibs/SpaceLane.cpp.i
+Gamelibs/ImageElement.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/ImageElement.cpp.i
+.PHONY : Gamelibs/ImageElement.cpp.i
 
-Gamelibs/SpaceLane.s: Gamelibs/SpaceLane.cpp.s
-.PHONY : Gamelibs/SpaceLane.s
+Gamelibs/ImageElement.s: Gamelibs/ImageElement.cpp.s
+.PHONY : Gamelibs/ImageElement.s
 
 # target to generate assembly for a file
-Gamelibs/SpaceLane.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/SpaceLane.cpp.s
-.PHONY : Gamelibs/SpaceLane.cpp.s
+Gamelibs/ImageElement.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/ImageElement.cpp.s
+.PHONY : Gamelibs/ImageElement.cpp.s
+
+Gamelibs/InfoBoxElement.obj: Gamelibs/InfoBoxElement.cpp.obj
+.PHONY : Gamelibs/InfoBoxElement.obj
+
+# target to build an object file
+Gamelibs/InfoBoxElement.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/InfoBoxElement.cpp.obj
+.PHONY : Gamelibs/InfoBoxElement.cpp.obj
+
+Gamelibs/InfoBoxElement.i: Gamelibs/InfoBoxElement.cpp.i
+.PHONY : Gamelibs/InfoBoxElement.i
+
+# target to preprocess a source file
+Gamelibs/InfoBoxElement.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/InfoBoxElement.cpp.i
+.PHONY : Gamelibs/InfoBoxElement.cpp.i
+
+Gamelibs/InfoBoxElement.s: Gamelibs/InfoBoxElement.cpp.s
+.PHONY : Gamelibs/InfoBoxElement.s
+
+# target to generate assembly for a file
+Gamelibs/InfoBoxElement.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/InfoBoxElement.cpp.s
+.PHONY : Gamelibs/InfoBoxElement.cpp.s
+
+Gamelibs/TextButtonElement.obj: Gamelibs/TextButtonElement.cpp.obj
+.PHONY : Gamelibs/TextButtonElement.obj
+
+# target to build an object file
+Gamelibs/TextButtonElement.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/TextButtonElement.cpp.obj
+.PHONY : Gamelibs/TextButtonElement.cpp.obj
+
+Gamelibs/TextButtonElement.i: Gamelibs/TextButtonElement.cpp.i
+.PHONY : Gamelibs/TextButtonElement.i
+
+# target to preprocess a source file
+Gamelibs/TextButtonElement.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/TextButtonElement.cpp.i
+.PHONY : Gamelibs/TextButtonElement.cpp.i
+
+Gamelibs/TextButtonElement.s: Gamelibs/TextButtonElement.cpp.s
+.PHONY : Gamelibs/TextButtonElement.s
+
+# target to generate assembly for a file
+Gamelibs/TextButtonElement.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/TextButtonElement.cpp.s
+.PHONY : Gamelibs/TextButtonElement.cpp.s
+
+Gamelibs/TextElement.obj: Gamelibs/TextElement.cpp.obj
+.PHONY : Gamelibs/TextElement.obj
+
+# target to build an object file
+Gamelibs/TextElement.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/TextElement.cpp.obj
+.PHONY : Gamelibs/TextElement.cpp.obj
+
+Gamelibs/TextElement.i: Gamelibs/TextElement.cpp.i
+.PHONY : Gamelibs/TextElement.i
+
+# target to preprocess a source file
+Gamelibs/TextElement.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/TextElement.cpp.i
+.PHONY : Gamelibs/TextElement.cpp.i
+
+Gamelibs/TextElement.s: Gamelibs/TextElement.cpp.s
+.PHONY : Gamelibs/TextElement.s
+
+# target to generate assembly for a file
+Gamelibs/TextElement.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/TextElement.cpp.s
+.PHONY : Gamelibs/TextElement.cpp.s
 
 Gamelibs/src/Components/HealthComponent.obj: Gamelibs/src/Components/HealthComponent.cpp.obj
 .PHONY : Gamelibs/src/Components/HealthComponent.obj
@@ -464,6 +536,30 @@ Gamelibs/src/Sprites/Projectiles/Projectile.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projectile.cpp.s
 .PHONY : Gamelibs/src/Sprites/Projectiles/Projectile.cpp.s
 
+Gamelibs/src/Sprites/SpaceLane.obj: Gamelibs/src/Sprites/SpaceLane.cpp.obj
+.PHONY : Gamelibs/src/Sprites/SpaceLane.obj
+
+# target to build an object file
+Gamelibs/src/Sprites/SpaceLane.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/SpaceLane.cpp.obj
+.PHONY : Gamelibs/src/Sprites/SpaceLane.cpp.obj
+
+Gamelibs/src/Sprites/SpaceLane.i: Gamelibs/src/Sprites/SpaceLane.cpp.i
+.PHONY : Gamelibs/src/Sprites/SpaceLane.i
+
+# target to preprocess a source file
+Gamelibs/src/Sprites/SpaceLane.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/SpaceLane.cpp.i
+.PHONY : Gamelibs/src/Sprites/SpaceLane.cpp.i
+
+Gamelibs/src/Sprites/SpaceLane.s: Gamelibs/src/Sprites/SpaceLane.cpp.s
+.PHONY : Gamelibs/src/Sprites/SpaceLane.s
+
+# target to generate assembly for a file
+Gamelibs/src/Sprites/SpaceLane.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/SpaceLane.cpp.s
+.PHONY : Gamelibs/src/Sprites/SpaceLane.cpp.s
+
 Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.obj: Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.obj
 .PHONY : Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.obj
 
@@ -680,53 +776,77 @@ Gamelibs/src/Sprites/UI/GUI/Button.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/GUI/Button.cpp.s
 .PHONY : Gamelibs/src/Sprites/UI/GUI/Button.cpp.s
 
-Gamelibs/src/Sprites/UI/HealthBar.obj: Gamelibs/src/Sprites/UI/HealthBar.cpp.obj
-.PHONY : Gamelibs/src/Sprites/UI/HealthBar.obj
+Gamelibs/src/Sprites/UI/HUD/HealthBar.obj: Gamelibs/src/Sprites/UI/HUD/HealthBar.cpp.obj
+.PHONY : Gamelibs/src/Sprites/UI/HUD/HealthBar.obj
 
 # target to build an object file
-Gamelibs/src/Sprites/UI/HealthBar.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.obj
-.PHONY : Gamelibs/src/Sprites/UI/HealthBar.cpp.obj
+Gamelibs/src/Sprites/UI/HUD/HealthBar.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/HealthBar.cpp.obj
+.PHONY : Gamelibs/src/Sprites/UI/HUD/HealthBar.cpp.obj
 
-Gamelibs/src/Sprites/UI/HealthBar.i: Gamelibs/src/Sprites/UI/HealthBar.cpp.i
-.PHONY : Gamelibs/src/Sprites/UI/HealthBar.i
+Gamelibs/src/Sprites/UI/HUD/HealthBar.i: Gamelibs/src/Sprites/UI/HUD/HealthBar.cpp.i
+.PHONY : Gamelibs/src/Sprites/UI/HUD/HealthBar.i
 
 # target to preprocess a source file
-Gamelibs/src/Sprites/UI/HealthBar.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.i
-.PHONY : Gamelibs/src/Sprites/UI/HealthBar.cpp.i
+Gamelibs/src/Sprites/UI/HUD/HealthBar.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/HealthBar.cpp.i
+.PHONY : Gamelibs/src/Sprites/UI/HUD/HealthBar.cpp.i
 
-Gamelibs/src/Sprites/UI/HealthBar.s: Gamelibs/src/Sprites/UI/HealthBar.cpp.s
-.PHONY : Gamelibs/src/Sprites/UI/HealthBar.s
+Gamelibs/src/Sprites/UI/HUD/HealthBar.s: Gamelibs/src/Sprites/UI/HUD/HealthBar.cpp.s
+.PHONY : Gamelibs/src/Sprites/UI/HUD/HealthBar.s
 
 # target to generate assembly for a file
-Gamelibs/src/Sprites/UI/HealthBar.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.s
-.PHONY : Gamelibs/src/Sprites/UI/HealthBar.cpp.s
+Gamelibs/src/Sprites/UI/HUD/HealthBar.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/HealthBar.cpp.s
+.PHONY : Gamelibs/src/Sprites/UI/HUD/HealthBar.cpp.s
 
-Gamelibs/src/Sprites/UI/Panel.obj: Gamelibs/src/Sprites/UI/Panel.cpp.obj
-.PHONY : Gamelibs/src/Sprites/UI/Panel.obj
+Gamelibs/src/Sprites/UI/HUD/Panel.obj: Gamelibs/src/Sprites/UI/HUD/Panel.cpp.obj
+.PHONY : Gamelibs/src/Sprites/UI/HUD/Panel.obj
 
 # target to build an object file
-Gamelibs/src/Sprites/UI/Panel.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Panel.cpp.obj
-.PHONY : Gamelibs/src/Sprites/UI/Panel.cpp.obj
+Gamelibs/src/Sprites/UI/HUD/Panel.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/Panel.cpp.obj
+.PHONY : Gamelibs/src/Sprites/UI/HUD/Panel.cpp.obj
 
-Gamelibs/src/Sprites/UI/Panel.i: Gamelibs/src/Sprites/UI/Panel.cpp.i
-.PHONY : Gamelibs/src/Sprites/UI/Panel.i
+Gamelibs/src/Sprites/UI/HUD/Panel.i: Gamelibs/src/Sprites/UI/HUD/Panel.cpp.i
+.PHONY : Gamelibs/src/Sprites/UI/HUD/Panel.i
 
 # target to preprocess a source file
-Gamelibs/src/Sprites/UI/Panel.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Panel.cpp.i
-.PHONY : Gamelibs/src/Sprites/UI/Panel.cpp.i
+Gamelibs/src/Sprites/UI/HUD/Panel.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/Panel.cpp.i
+.PHONY : Gamelibs/src/Sprites/UI/HUD/Panel.cpp.i
 
-Gamelibs/src/Sprites/UI/Panel.s: Gamelibs/src/Sprites/UI/Panel.cpp.s
-.PHONY : Gamelibs/src/Sprites/UI/Panel.s
+Gamelibs/src/Sprites/UI/HUD/Panel.s: Gamelibs/src/Sprites/UI/HUD/Panel.cpp.s
+.PHONY : Gamelibs/src/Sprites/UI/HUD/Panel.s
 
 # target to generate assembly for a file
-Gamelibs/src/Sprites/UI/Panel.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Panel.cpp.s
-.PHONY : Gamelibs/src/Sprites/UI/Panel.cpp.s
+Gamelibs/src/Sprites/UI/HUD/Panel.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/Panel.cpp.s
+.PHONY : Gamelibs/src/Sprites/UI/HUD/Panel.cpp.s
+
+Gamelibs/src/Sprites/UI/HUD/ProgressBar.obj: Gamelibs/src/Sprites/UI/HUD/ProgressBar.cpp.obj
+.PHONY : Gamelibs/src/Sprites/UI/HUD/ProgressBar.obj
+
+# target to build an object file
+Gamelibs/src/Sprites/UI/HUD/ProgressBar.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/ProgressBar.cpp.obj
+.PHONY : Gamelibs/src/Sprites/UI/HUD/ProgressBar.cpp.obj
+
+Gamelibs/src/Sprites/UI/HUD/ProgressBar.i: Gamelibs/src/Sprites/UI/HUD/ProgressBar.cpp.i
+.PHONY : Gamelibs/src/Sprites/UI/HUD/ProgressBar.i
+
+# target to preprocess a source file
+Gamelibs/src/Sprites/UI/HUD/ProgressBar.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/ProgressBar.cpp.i
+.PHONY : Gamelibs/src/Sprites/UI/HUD/ProgressBar.cpp.i
+
+Gamelibs/src/Sprites/UI/HUD/ProgressBar.s: Gamelibs/src/Sprites/UI/HUD/ProgressBar.cpp.s
+.PHONY : Gamelibs/src/Sprites/UI/HUD/ProgressBar.s
+
+# target to generate assembly for a file
+Gamelibs/src/Sprites/UI/HUD/ProgressBar.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Starfleet_Command.dir\build.make CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HUD/ProgressBar.cpp.s
+.PHONY : Gamelibs/src/Sprites/UI/HUD/ProgressBar.cpp.s
 
 Gamelibs/src/Utility/Cursor.obj: Gamelibs/src/Utility/Cursor.cpp.obj
 .PHONY : Gamelibs/src/Utility/Cursor.obj
@@ -812,12 +932,21 @@ help:
 	@echo ... Game/Game.obj
 	@echo ... Game/Game.i
 	@echo ... Game/Game.s
-	@echo ... Gamelibs/ProgressBar.obj
-	@echo ... Gamelibs/ProgressBar.i
-	@echo ... Gamelibs/ProgressBar.s
-	@echo ... Gamelibs/SpaceLane.obj
-	@echo ... Gamelibs/SpaceLane.i
-	@echo ... Gamelibs/SpaceLane.s
+	@echo ... Gamelibs/ButtonElement.obj
+	@echo ... Gamelibs/ButtonElement.i
+	@echo ... Gamelibs/ButtonElement.s
+	@echo ... Gamelibs/ImageElement.obj
+	@echo ... Gamelibs/ImageElement.i
+	@echo ... Gamelibs/ImageElement.s
+	@echo ... Gamelibs/InfoBoxElement.obj
+	@echo ... Gamelibs/InfoBoxElement.i
+	@echo ... Gamelibs/InfoBoxElement.s
+	@echo ... Gamelibs/TextButtonElement.obj
+	@echo ... Gamelibs/TextButtonElement.i
+	@echo ... Gamelibs/TextButtonElement.s
+	@echo ... Gamelibs/TextElement.obj
+	@echo ... Gamelibs/TextElement.i
+	@echo ... Gamelibs/TextElement.s
 	@echo ... Gamelibs/src/Components/HealthComponent.obj
 	@echo ... Gamelibs/src/Components/HealthComponent.i
 	@echo ... Gamelibs/src/Components/HealthComponent.s
@@ -851,6 +980,9 @@ help:
 	@echo ... Gamelibs/src/Sprites/Projectiles/Projectile.obj
 	@echo ... Gamelibs/src/Sprites/Projectiles/Projectile.i
 	@echo ... Gamelibs/src/Sprites/Projectiles/Projectile.s
+	@echo ... Gamelibs/src/Sprites/SpaceLane.obj
+	@echo ... Gamelibs/src/Sprites/SpaceLane.i
+	@echo ... Gamelibs/src/Sprites/SpaceLane.s
 	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.obj
 	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.i
 	@echo ... Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.s
@@ -878,12 +1010,15 @@ help:
 	@echo ... Gamelibs/src/Sprites/UI/GUI/Button.obj
 	@echo ... Gamelibs/src/Sprites/UI/GUI/Button.i
 	@echo ... Gamelibs/src/Sprites/UI/GUI/Button.s
-	@echo ... Gamelibs/src/Sprites/UI/HealthBar.obj
-	@echo ... Gamelibs/src/Sprites/UI/HealthBar.i
-	@echo ... Gamelibs/src/Sprites/UI/HealthBar.s
-	@echo ... Gamelibs/src/Sprites/UI/Panel.obj
-	@echo ... Gamelibs/src/Sprites/UI/Panel.i
-	@echo ... Gamelibs/src/Sprites/UI/Panel.s
+	@echo ... Gamelibs/src/Sprites/UI/HUD/HealthBar.obj
+	@echo ... Gamelibs/src/Sprites/UI/HUD/HealthBar.i
+	@echo ... Gamelibs/src/Sprites/UI/HUD/HealthBar.s
+	@echo ... Gamelibs/src/Sprites/UI/HUD/Panel.obj
+	@echo ... Gamelibs/src/Sprites/UI/HUD/Panel.i
+	@echo ... Gamelibs/src/Sprites/UI/HUD/Panel.s
+	@echo ... Gamelibs/src/Sprites/UI/HUD/ProgressBar.obj
+	@echo ... Gamelibs/src/Sprites/UI/HUD/ProgressBar.i
+	@echo ... Gamelibs/src/Sprites/UI/HUD/ProgressBar.s
 	@echo ... Gamelibs/src/Utility/Cursor.obj
 	@echo ... Gamelibs/src/Utility/Cursor.i
 	@echo ... Gamelibs/src/Utility/Cursor.s

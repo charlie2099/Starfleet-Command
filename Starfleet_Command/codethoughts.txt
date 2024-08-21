@@ -36,3 +36,19 @@ __Enemy Spawning__
 - Conditions:
    - If enemy in lane was spawned x amount of time ago, spawn enemy in lane
    - If player has x amount of specific unit types, spawn enemy type
+
+
+__UIElements__
+- TextElement (or just use sf::Text?)
+- ImageElement (or just use sf::Texture?)
+- InfoboxElement (compound UIElement [TextElement + ImageElement])
+- ButtonElement (compound UIElement [TextElement + ImageElement])
+    - 3 Variations
+        - ButtonElement (text and panel button)
+        - TextButtonElement (text only button) (i.e. menu buttons) (toggleable background)
+        - ImageButtonElement (text and image button) (i.e. ship spawner buttons)
+        - TextAndImageButton
+        - InfoboxButtonElement (compound UIElement [TextElement + ImageElement + ButtonElement])
+- ProgressBarElement (compound UIElement [TextElement + ImageElement])
+
+- DraggableSpriteElement : UIElement

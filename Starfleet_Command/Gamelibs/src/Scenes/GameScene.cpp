@@ -226,7 +226,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     // Viewport movement conditions
     bool isMouseNearLeftEdge = (float)mousePos.x <= mouseProximityToLeftWindowEdge && mousePos.x > 0;
     bool isMouseNearRightEdge = (float)mousePos.x >= mouseProximityToRightWindowEdge && mousePos.x < window.getSize().x;
-    bool isViewportLeftEdgeWithinFlagshipFocus = viewportLeftBoundary > _player.GetFlagship()->GetPos().x - _player.GetFlagship()->GetSpriteComponent().GetSprite().getGlobalBounds().width; // BUG: Main view stops moves a few pixels too far when scrolling view left
+    bool isViewportLeftEdgeWithinFlagshipFocus = viewportLeftBoundary > _player.GetFlagship()->GetPos().x - _player.GetFlagship()->GetSpriteComponent().GetSprite().getGlobalBounds().width;
     bool isViewportRightEdgeWithinRightSideOfEnemyFlagship = viewportRightBoundary < _enemy.GetFlagship()->GetPos().x + _enemy.GetFlagshipBounds().width;
     bool isMouseYposWithinWindowBounds = mousePos.y >= 0 and mousePos.y <= window.getSize().y;
 
@@ -701,7 +701,7 @@ void GameScene::InitMainViewBorder()
 {
     _mainViewBorder.setSize({Constants::WINDOW_WIDTH,Constants::WINDOW_HEIGHT});
     _mainViewBorder.setOutlineThickness(10.0f);
-    _mainViewBorder.setOutlineColor(_predefinedColours.LIGHTBLUE);
+    _mainViewBorder.setOutlineColor(sf::Color(128, 128, 128));
     _mainViewBorder.setFillColor(sf::Color::Transparent);
 }
 

@@ -1,5 +1,4 @@
-#include <iostream>
-#include "ProgressBar.hpp"
+#include "Sprites/UI/HUD/ProgressBar.hpp"
 
 ProgressBar::ProgressBar()
 {

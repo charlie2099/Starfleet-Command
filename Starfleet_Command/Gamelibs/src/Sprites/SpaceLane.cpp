@@ -1,5 +1,5 @@
 #include <SFML/Window/Mouse.hpp>
-#include "SpaceLane.hpp"
+#include "Sprites/SpaceLane.hpp"
 
 bool SpaceLane::Init()
 {

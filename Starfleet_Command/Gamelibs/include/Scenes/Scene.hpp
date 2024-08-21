@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Utility/Constants.hpp"
 #include "Utility/PredefinedColours.hpp"
-#include "Sprites/UI/Panel.hpp"
+#include "Sprites/UI/HUD/Panel.hpp"
 
 class Scene
 {

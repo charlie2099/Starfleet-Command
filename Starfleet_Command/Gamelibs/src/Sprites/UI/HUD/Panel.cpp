@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Sprites/UI/Panel.hpp"
+#include "Sprites/UI/HUD/Panel.hpp"
 
 Panel::Panel()
 {

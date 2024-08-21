@@ -3,7 +3,7 @@
 #include "Components/SpriteComponent.hpp"
 #include "Components/HealthComponent.hpp"
 #include "Sprites/Projectiles/Projectile.hpp"
-#include "Sprites/UI/HealthBar.hpp"
+#include "Sprites/UI/HUD/HealthBar.hpp"
 #include "Utility/PredefinedColours.hpp"
 
 /*

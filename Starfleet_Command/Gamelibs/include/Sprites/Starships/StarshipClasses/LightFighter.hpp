@@ -2,7 +2,7 @@
 #define STARFLEET_COMMAND_LIGHTFIGHTER_HPP
 #include <SFML/System/Vector2.hpp>
 #include "Interfaces/IStarship.hpp"
-#include "Sprites/UI/HealthBar.hpp"
+#include "Sprites/UI/HUD/HealthBar.hpp"
 #include "Utility/Vector.hpp"
 
 class LightFighter : public IStarship

@@ -1,4 +1,4 @@
-#include "Sprites/UI/HealthBar.hpp"
+#include "Sprites/UI/HUD/HealthBar.hpp"
 
 HealthBar::HealthBar(HealthComponent& healthComponent)
 {
