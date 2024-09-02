@@ -1,0 +1,92 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class UIElement
+class InfoBoxElement
+class ButtonElement
+class TextButtonElement
+class ImageButtonElement
+class TextAndImageButton
+class InfoBoxButtonElement
+class ProgressBarElement
+
+/'interface IUIElement
+interface IButton
+interface IInfoBox'/
+
+UIElement <|-- InfoBoxElement
+    InfoBoxElement <|-- InfoBoxButtonElement
+UIElement <|-- ProgressBarElement
+UIElement <|-- ButtonElement
+    ButtonElement <|--TextButtonElement
+    ButtonElement <|-- ImageButtonElement
+    ButtonElement <|-- TextAndImageButton
+    ButtonElement <|-- InfoBoxButtonElement
+
+abstract class UIElement
+{
+    #sf::Text text
+    #sf::Texture image
+    +EventHandler()
+    +Update()
+    +Render()
+}
+
+class InfoBoxElement
+{
+
+}
+
+class ProgressBarElement
+{
+
+}
+
+class ButtonElement
+{
+
+}
+
+class TextButtonElement
+{
+
+}
+
+class ImageButtonElement
+{
+
+}
+
+class TextAndImageButton
+{
+
+}
+
+class InfoBoxButtonElement
+{
+
+}
+
+/'enum Alignment
+{
+    TOP
+    BOTTOM
+    LEFT
+    RIGHT
+}'/
+
+/'
++ public
+- private
+# protected
+
+Inheritance: <|-- (is a)
+Composition: *-- (contains)
+Aggregation: o-- (has a)
+Implementation: <|..
+Dependency: <..
+Association: -- (uses))
+Nesting: +--
+'/
+
+@enduml

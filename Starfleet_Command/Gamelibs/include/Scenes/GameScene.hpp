@@ -57,7 +57,7 @@ private:
     sf::Text _playerScrapText;
     sf::Text _wavesRemainingText;
     sf::Text _enemiesRemainingText;
-    int _playerScrapCounter = 5000;
+    int _playerScrapCounter = 250;
     int _wavesRemainingCounter = 3;
     int _enemiesRemainingCounter = 100;
 

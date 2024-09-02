@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface IPerk
+class Perk1
+class Perk2
+class Perk3
+
+IPerk <|-- Perk1
+IPerk <|-- Perk2
+IPerk <|-- Perk3
+
+interface IPerk
+{
+    +Activate() = 0
+}
+
+@enduml

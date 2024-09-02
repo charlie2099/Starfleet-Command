@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class AIDirector
+class RuleEngine
+class RuleCalculator
+interface IRule
+class SomeRule
+
+AIDirector *-- RuleCalculator
+IRule <|-- SomeRule
+
+class AIDirector
+{
+    -RuleCalculator calculator
+}
+
+class RuleEngine
+{
+    -IRule[] rules
+    +RuleEngine(Rules[] rules)
+    +CalculateIntensityPercentage(AIDirector director))
+}
+
+class RuleCalculator
+{
+    -IRule[] rules
+    +RuleCalculator()
+    +CalculateIntensity(AIDirector director)
+}
+
+interface IRule
+{
+    +CalculateIntensity(AIDirector director)
+}
+
+class SomeRule
+{
+    +CalculateIntensity(AIDirector director)
+}
+
+@enduml
