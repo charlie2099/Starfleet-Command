@@ -25,49 +25,21 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         {
             SetScene(Scene::ID::GAME);
         }
-        else if(_panels[TUTORIAL_BUTTON].IsClicked())
-        {
-            SetScene(Scene::ID::TUTORIAL);
-        }
-        else if(_panels[OPTIONS_BUTTON].IsClicked())
+        /*else if(_panels[OPTIONS_BUTTON].IsClicked())
         {
             SetScene(Scene::ID::OPTIONS);
-        }
+        }*/
         else if(_panels[EXIT_BUTTON].IsClicked())
         {
             window.close();
-        }
-    }
-
-    for (int i = 0; i < NUM_OF_BUTTONS; ++i)
-    {
-        if(i < 3) // PLAY, HOW TO PLAY, and OPTIONS buttonS
-        {
-            if(_panels[i].IsHoveredOver())
-            {
-                _panels[i].SetPanelColour(sf::Color(22, 155, 164, 65));
-                _panels[i].SetText(_panels[i].GetText().getString(), sf::Color(22, 155, 164));
-            }
-        }
-        else // EXIT button
-        {
-            _panels[i].SetPanelColour(sf::Color(242, 22, 22, 60));
-            _panels[i].SetText(_panels[i].GetText().getString(), sf::Color::Red);
-        }
-
-        // All Buttons
-        if(!_panels[i].IsHoveredOver())
-        {
-            _panels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
-            _panels[i].SetText(_panels[i].GetText().getString(), sf::Color::White);
         }
     }
 }
 
 void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse _position translated into world coordinates
+    //auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
+    //auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse _position translated into world coordinates
 
     _cursor.Update(window, deltaTime);
     _cursor.SetCursorPos(window, _worldView);
@@ -83,13 +55,13 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     for (int i = 0; i < _starship.size(); ++i)
     {
-        // Ally ships
+        // Player ships movement
         if(i < BACKGROUND_SHIPS/2)
         {
             sf::Vector2f movement(_starship[i]->GetSpeed() * 2, 0.0f);
             _starship[i]->GetSpriteComponent().GetSprite().move(movement * deltaTime.asSeconds());
         }
-        // Enemy ships
+        // Enemy ships movement
         if(i >= BACKGROUND_SHIPS/2)
         {
             sf::Vector2f movement((_starship[i]->GetSpeed() * 2) * -1, 0.0f);
@@ -105,8 +77,6 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             _starship[i]->GetSpriteComponent().SetPos({Constants::WINDOW_WIDTH, _starship[i]->GetSpriteComponent().GetPos().y});
         }
     }
-
-
 
     // Move layers
     _backgroundSprite.move(-25.0F * deltaTime.asSeconds(), 0);
@@ -126,6 +96,39 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         {
             star.position.x = Constants::WINDOW_WIDTH;
             star.position.y = std::rand() % (int)Constants::WINDOW_HEIGHT;
+        }
+    }
+
+    // Button highlighting
+    if(_panels[PLAY_BUTTON].IsHoveredOver())
+    {
+        _panels[PLAY_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
+        _panels[PLAY_BUTTON].SetText(_panels[PLAY_BUTTON].GetText().getString(), sf::Color(22, 155, 164));
+    }
+    /*else if(_panels[OPTIONS_BUTTON].IsHoveredOver())
+    {
+        _panels[OPTIONS_BUTTON].SetPanelColour(sf::Color(150, 150, 150, 60));
+        _panels[OPTIONS_BUTTON].SetText(_panels[OPTIONS_BUTTON].GetText().getString(), sf::Color(150, 150, 150));
+    }*/
+    else if(_panels[EXIT_BUTTON].IsHoveredOver())
+    {
+        _panels[EXIT_BUTTON].SetPanelColour(sf::Color(242, 22, 22, 60));
+        _panels[EXIT_BUTTON].SetText(_panels[EXIT_BUTTON].GetText().getString(), sf::Color::Red);
+    }
+
+    for (int i = 0; i < NUM_OF_BUTTONS; i++)
+    {
+        if(!_panels[i].IsHoveredOver())
+        {
+            if(i == OPTIONS_BUTTON) // TODO: Remove this index skip code once the options menu has been implemented
+            {
+                _panels[OPTIONS_BUTTON].SetPanelColour(sf::Color(150, 150, 150, 50));
+                _panels[OPTIONS_BUTTON].SetText(_panels[OPTIONS_BUTTON].GetText().getString(), sf::Color(150, 150, 150));
+                continue;
+            }
+
+            _panels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
+            _panels[i].SetText(_panels[i].GetText().getString(), sf::Color::White);
         }
     }
 }
@@ -197,7 +200,6 @@ void MenuScene::InitButtonPanels()
     std::array<std::string, NUM_OF_BUTTONS> button_text
     {
         "PLAY",
-        "TUTORIAL",
         "OPTIONS",
         "EXIT"
     };

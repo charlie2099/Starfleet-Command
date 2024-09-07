@@ -30,9 +30,8 @@ class MenuScene : public Scene
 
     static const int PLAY_BUTTON = 0;
     static const int OPTIONS_BUTTON = 1;
-    static const int TUTORIAL_BUTTON= 2;
-    static const int EXIT_BUTTON = 3;
-    static const int NUM_OF_BUTTONS = 4;
+    static const int EXIT_BUTTON = 2;
+    static const int NUM_OF_BUTTONS = 3;
     static const int BACKGROUND_SHIPS = 16;
 
     sf::View _worldView{};

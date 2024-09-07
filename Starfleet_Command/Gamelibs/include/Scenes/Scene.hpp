@@ -14,11 +14,10 @@ class Scene
     enum class ID
     {
         MENU = 0,
-        TUTORIAL = 2,
-        OPTIONS = 3,
-        GAME = 4,
-        WIN = 5,
-        LOSE = 6
+        OPTIONS = 1,
+        GAME = 2,
+        WIN = 3,
+        LOSE = 4
     };
 
     // Pure virtual functions
