@@ -17,6 +17,16 @@
 					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="Starfleet_Command">
 				<Option output="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Starfleet_Command.exe" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command"/>
@@ -72,16 +82,6 @@
 				<Option type="4"/>
 				<MakeCommands>
 					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="rebuild_cache">
-				<Option working_dir="D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
 					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;D:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>

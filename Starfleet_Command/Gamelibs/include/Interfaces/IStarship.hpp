@@ -49,7 +49,7 @@ public:
         }
         else
         {
-            std::cout << "WARNING: Could not locate projectile of the desired colour. Defaulting to BLUE." << std::endl;
+            std::cout << "WARNING: Could not locate projectile of the desired colour. Defaulting to BLUE. (" + _shipName  + ")" << std::endl;
             _projectileColour = Projectile::BLUE;
         }
     };

@@ -44,16 +44,15 @@ std::unique_ptr<IStarship> &Player::GetFlagship()
 
 void Player::CreateShip(StarshipFactory::SHIP_TYPE type)
 {
-    std::unique_ptr<IStarship> starship1 = StarshipFactory::CreateShip(type);
-    starship.emplace_back(std::move(starship1));
-
-    if(!starship.empty())
+    std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(type);
+    bool atLeastOneShipExists = !starship.empty();
+    if(atLeastOneShipExists)
     {
         auto& flagship = starship[0];
-        auto& newestShip = starship[starship.size()-1];
-        newestShip->SetColour(flagship->GetColour());
-        newestShip->SetProjectileColour(flagship->GetColour());
+        newStarship->SetColour(flagship->GetColour());
+        newStarship->SetProjectileColour(flagship->GetColour());
     }
+    starship.emplace_back(std::move(newStarship));
 
     /// SHIP_SPAWNED event is invoked (non-agnostic)
     auto range = _basicObservers.equal_range(EventID::SHIP_SPAWNED);
