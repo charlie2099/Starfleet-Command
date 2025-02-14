@@ -11,7 +11,7 @@ Destroyer::Destroyer()
     _damageScaleFactor = 1.0f;
     _fireRate = 3.0f;
     _attackRange = 800.0F;
-    _shipCost = 1000;
+    _buildCost = 1000;
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
     _shipName = "Destroyer";

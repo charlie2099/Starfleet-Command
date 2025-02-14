@@ -24,7 +24,7 @@ public:
 private:
     void InitRandomDistributions();
     bool InitBackground();
-    bool InitShipSpawnerButtons();
+    bool InitShipBuilderButtons();
     void InitPlayerFlagship();
     void InitEnemyFlagship();
     void InitPlayerCreditsText();
@@ -57,13 +57,16 @@ private:
     sf::Text _playerScrapText;
     sf::Text _wavesRemainingText;
     sf::Text _enemiesRemainingText;
-    int _playerScrapCounter = 250;
+    int _playerScrapCounter = 500;
     int _wavesRemainingCounter = 3;
     int _enemiesRemainingCounter = 100;
 
     // GUI
-    std::vector<std::unique_ptr<Button>> _shipSpawnerButtons;
+    std::vector<std::unique_ptr<Button>> _shipBuilderButtons;
     std::vector<sf::Text> _shipCostText;
+    const sf::Color DEFAULT_BTN_COLOUR = {255, 255, 255, 100};
+    const sf::Color HOVER_BTN_COLOR = _predefinedColours.LIGHTBLUE;
+    const sf::Color SELECTED_BTN_COLOR = {153, 210, 242, 150};
 
     // UI
     sf::Texture _backgroundTexture;
@@ -102,7 +105,7 @@ private:
     sf::Vector2f _originalMinimapViewCenter;
     std::map<Button*, IStarship*> _buttonShipDictionary;
 
-    // For ship spawner buttons
+    // For ship builder buttons
     static const int NUM_OF_BUTTONS = 5;
     std::unique_ptr<LightFighter> _lightFighter;
     std::unique_ptr<HeavyFighter> _heavyFighter;
@@ -130,6 +133,16 @@ private:
     const float VP_SCROLL_SPEED = 300.0F;
     bool _scrollViewLeft = false;
     bool _scrollViewRight = false;
+
+    void HandleViewScrollingKeyboardInput(const sf::Event &event);
+
+    void HandleShipDropperMouseInput(const sf::Event &event);
+
+    void
+    HandleMinimapZoomMouseInput(const sf::RenderWindow &window, const sf::Event &event, const sf::Vector2i &mouse_pos,
+                                const sf::Vector2f &worldPositionOfMouse);
+
+    void UpdateScrapMetal(std::any eventData);
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

@@ -11,7 +11,7 @@ LightFighter::LightFighter()
     _damageScaleFactor = 0.10f;
     _fireRate = 1.0f;
     _attackRange = 400.0F;
-    _shipCost = 100;
+    _buildCost = 100;
     _projectileSize = Projectile::SMALL;
     _projectileColour = Projectile::BLUE;
     _shipName = "Light Fighter";

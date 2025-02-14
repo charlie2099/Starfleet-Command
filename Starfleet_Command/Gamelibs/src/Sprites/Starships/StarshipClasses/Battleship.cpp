@@ -11,7 +11,7 @@ Battleship::Battleship()
     _damageScaleFactor = 0.75f;
     _fireRate = 3.0f;
     _attackRange = 600.0F;
-    _shipCost = 750;
+    _buildCost = 750;
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
     _shipName = "Battleship";

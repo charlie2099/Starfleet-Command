@@ -11,7 +11,7 @@ SupportShip::SupportShip()
     _damageScaleFactor = 0.10f;
     _fireRate = 2.0f;
     _attackRange = 400.0F;
-    _shipCost = 200;
+    _buildCost = 200;
     _projectileSize = Projectile::SMALL;
     _projectileColour = Projectile::BLUE;
     _shipName = "Support Ship";

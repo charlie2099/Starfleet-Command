@@ -11,7 +11,7 @@ HeavyFighter::HeavyFighter()
     _damageScaleFactor = 0.25f;
     _fireRate = 0.25f;
     _attackRange = 300.0F;
-    _shipCost = 250;
+    _buildCost = 250;
     _projectileSize = Projectile::REGULAR;
     _projectileColour = Projectile::BLUE;
     _shipName = "Heavy Fighter";

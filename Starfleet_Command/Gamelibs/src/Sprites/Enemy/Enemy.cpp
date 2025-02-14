@@ -11,6 +11,15 @@ void Enemy::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         if(starship[i]->GetHealthComponent().GetHealth() <= 0)
         {
+            /// Invoke ship destroyed event here? Or within each specific ship classes?
+            /// SHIP_DESTROYED event is invoked (agnostic) // TODO: Encapsulate within a method i.e. InvokeAgnosticEvent (see HealthComponent)
+            auto ag_range = _agnosticObservers.equal_range(EventID::SHIP_DESTROYED);
+            for(auto iter = ag_range.first; iter != ag_range.second; ++iter)
+            {
+                /// subscribed method is called
+                iter->second(starship[i]->GetBuildCost());
+            }
+
             starship.erase(starship.begin() + i);
         }
     }
