@@ -9,14 +9,13 @@ void HealthComponent::TakeDamage(float amount, sf::Vector2f damageLocation)
 {
     _health -= amount;
 
-    //auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<DamagePopUpEffect>(_health, _outsideBarSpriteComponent.GetPos()));
-    auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<DamagePopUpEffect>(amount, damageLocation));
+    //auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<UIPopUpEffect>(_health, _outsideBarSpriteComponent.GetPos()));
+    auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<UIPopUpEffect>(amount, damageLocation));
     if(amount > 60)
     {
         damagePopup->SetColour(sf::Color::Red);
         damagePopup->SetCharSize(15);
     }
-
     InvokeAgnosticEvent(HEALTH_UPDATED, _health);
 }
 
@@ -35,7 +34,7 @@ void HealthComponent::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     if(_health <= 0)
     {
-        InvokeSimpleEvent(HEALTH_DEPLETED);
+        InvokeBasicEvent(HEALTH_DEPLETED);
     }
 
     for(auto& popup : _damagePopUpEffect)
@@ -70,7 +69,7 @@ void HealthComponent::AddAgnosticObserver(AgnosticHealthEvent observer)
     _agnosticObservers.insert(observer);
 }
 
-void HealthComponent::InvokeSimpleEvent(EventID eventId)
+void HealthComponent::InvokeBasicEvent(EventID eventId)
 {
     /// Invokes the callback function assigned to the specified event id?
     auto range = _basicObservers.equal_range(eventId);
@@ -82,7 +81,7 @@ void HealthComponent::InvokeSimpleEvent(EventID eventId)
 
 void HealthComponent::InvokeAgnosticEvent(EventID eventId, const std::any& anyData)
 {
-    /// SHIP_SPAWNED event is invoked (agnostic)
+    /// Invokes the callback function assigned to the specified event id?
     auto ag_range = _agnosticObservers.equal_range(eventId);
     for(auto iter = ag_range.first; iter != ag_range.second; ++iter)
     {

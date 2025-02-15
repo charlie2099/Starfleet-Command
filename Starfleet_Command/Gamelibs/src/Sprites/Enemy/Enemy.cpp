@@ -11,14 +11,10 @@ void Enemy::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         if(starship[i]->GetHealthComponent().GetHealth() <= 0)
         {
-            /// Invoke ship destroyed event here? Or within each specific ship classes?
-            /// SHIP_DESTROYED event is invoked (agnostic) // TODO: Encapsulate within a method i.e. InvokeAgnosticEvent (see HealthComponent)
-            auto ag_range = _agnosticObservers.equal_range(EventID::SHIP_DESTROYED);
-            for(auto iter = ag_range.first; iter != ag_range.second; ++iter)
-            {
-                /// subscribed method is called
-                iter->second(starship[i]->GetBuildCost());
-            }
+            ShipDataToSend dataToSend;
+            dataToSend.DeathLocation = starship[i]->GetPos();
+            dataToSend.BuildCost = starship[i]->GetBuildCost();
+            InvokeAgnosticEvent(SHIP_DESTROYED, dataToSend);
 
             starship.erase(starship.begin() + i);
         }
@@ -44,22 +40,8 @@ void Enemy::CreateShip(StarshipFactory::SHIP_TYPE type)
         newStarship->SetProjectileColour(flagship->GetColour());
     }
     starship.emplace_back(std::move(newStarship));
-
-    /// SHIP_SPAWNED event is invoked (non-agnostic)
-    auto range = _basicObservers.equal_range(EventID::SHIP_SPAWNED);
-    for(auto iter = range.first; iter != range.second; ++iter)
-    {
-        /// subscribed method is called
-        iter->second();
-    }
-
-    /// SHIP_SPAWNED event is invoked (agnostic)
-    auto ag_range = _agnosticObservers.equal_range(EventID::SHIP_SPAWNED);
-    for(auto iter = ag_range.first; iter != ag_range.second; ++iter)
-    {
-        /// subscribed method is called
-        iter->second(this);
-    }
+    InvokeBasicEvent(SHIP_SPAWNED); // QUESTION: Are these both needed? Can just agnostic be used?
+    InvokeAgnosticEvent(SHIP_SPAWNED, this);
 }
 
 void Enemy::PaintFlagship(sf::Color colour)
@@ -98,6 +80,28 @@ void Enemy::AddAgnosticObserver(AgnosticEnemyEvent observer)
     _agnosticObservers.insert(observer);
 }
 
+void Enemy::InvokeBasicEvent(EventID eventId)
+{
+    /// Invokes the callback function assigned to the specified event id?
+    auto range = _basicObservers.equal_range(eventId);
+    for(auto iter = range.first; iter != range.second; ++iter)
+    {
+        // subscribed method is called
+        iter->second();
+    }
+}
+
+void Enemy::InvokeAgnosticEvent(EventID eventId, const std::any& anyData)
+{
+    /// Invokes the callback function assigned to the specified event id?
+    auto ag_range = _agnosticObservers.equal_range(eventId);
+    for(auto iter = ag_range.first; iter != ag_range.second; ++iter)
+    {
+        /// subscribed method is called
+        iter->second(anyData);
+    }
+}
+
 std::vector<std::unique_ptr<IStarship>> &Enemy::GetShips()
 {
     return starship;
@@ -107,3 +111,5 @@ std::unique_ptr<IStarship> &Enemy::GetFlagship()
 {
     return starship[0];
 }
+
+

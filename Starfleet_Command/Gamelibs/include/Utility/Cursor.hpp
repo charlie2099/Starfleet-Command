@@ -26,8 +26,8 @@ namespace Chilli
         void SetCursorType(Type type, sf::Color color);
 
     private:
-        std::array<sf::Texture, Type::ENUM_LENGTH> _cursor_textures;
-        sf::Sprite _cursor_sprite;
+        std::array<sf::Texture, Type::ENUM_LENGTH> _cursorTextures;
+        sf::Sprite _cursorSprite;
         Type _type;
         //int count = Enum.GetValues( typeof( ContentAlignment ) ).Length;
     };

@@ -237,6 +237,18 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
 
 
+    for(auto& popup : _scrapMetalAcquiredPopUpEffect)
+    {
+        popup->Update(window, deltaTime);
+    }
+
+    for (int i = 0; i < _scrapMetalAcquiredPopUpEffect.size(); ++i)
+    {
+        if(_scrapMetalAcquiredPopUpEffect[i]->IsFaded())
+        {
+            _scrapMetalAcquiredPopUpEffect.erase(_scrapMetalAcquiredPopUpEffect.begin() + i);
+        }
+    }
 
 
 
@@ -571,6 +583,10 @@ void GameScene::Render(sf::RenderWindow& window)
     {
         _shipDragSpriteVisuals[_shipSelectedIndex].Render(window);
     }
+    for(auto& popup : _scrapMetalAcquiredPopUpEffect)
+    {
+        popup->Render(window);
+    }
 
     /// Render the minimap
     window.setView(_minimapView);
@@ -583,7 +599,7 @@ void GameScene::Render(sf::RenderWindow& window)
         lane->Render(window);
     }
 
-    /// Draw _cursor over every view
+    /// Draw cursor over every view
     window.setView(_mainView);
     _cursor.Render(window);
 }
@@ -593,7 +609,7 @@ void GameScene::InitRandomDistributions()
     _generator = GetEngine();
     CreateDistribution(SHIP_DAMAGE, 100, 250);
     CreateDistribution(SPACELANE, 0, NUM_OF_LANES-1);
-    CreateDistribution(ENEMY_SHIP_TYPE, 0,  StarshipFactory::SHIP_TYPE::ENUM_COUNT-2);
+    CreateDistribution(ENEMY_SHIP_TYPE, 0,  0); // TODO: Change this back to StarshipFactory::SHIP_TYPE::ENUM_COUNT-2
 }
 
 bool GameScene::InitBackground()
@@ -774,15 +790,21 @@ void GameScene::InitEvents()
     _shipAssemblyBar.AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, shipAssemblyBarCallback});
 
     /// Agnostic observer to enemy ships destroyed event
-    auto enemyShipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal, this, std::placeholders::_1);
+    auto enemyShipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetalOnEnemyShipDestroyed, this, std::placeholders::_1);
     _enemy.AddAgnosticObserver({Enemy::EventID::SHIP_DESTROYED, enemyShipsDestroyedCallback});
 }
 
-void GameScene::UpdateScrapMetal(std::any eventData)
+void GameScene::UpdateScrapMetalOnEnemyShipDestroyed(std::any eventData)
 {
-    auto destroyedEnemyShipsBuildCost = std::any_cast<int>(eventData);
-    _playerScrapCounter += static_cast<int>(destroyedEnemyShipsBuildCost);
+    auto destroyedEnemyShipData = std::any_cast<Enemy::ShipDataToSend>(eventData); // NOTE: Don't know if this is a good way of handling this problem? (making a public struct within enemy class to encapsulate required data)
+    _playerScrapCounter += static_cast<int>(destroyedEnemyShipData.BuildCost);
     _playerScrapText.setString("Scrap Metal: " + std::to_string(_playerScrapCounter));
+
+    auto& scrapMetalPopup = _scrapMetalAcquiredPopUpEffect.emplace_back(std::make_unique<UIPopUpEffect>(destroyedEnemyShipData.BuildCost, destroyedEnemyShipData.DeathLocation));
+    scrapMetalPopup->SetColour(sf::Color(137, 137, 137));
+    scrapMetalPopup->SetCharSize(15);
+    scrapMetalPopup->SetIconImage("Resources/Textures/pixil-frame-0.png");
+    // TODO: Set scrap metal popup icon image size here
 }
 
 void GameScene::InitPlayerFlagship()

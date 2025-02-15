@@ -1,4 +1,4 @@
-#include "Sprites/Player/Player.h"
+#include "Sprites/Player/Player.hpp"
 
 void Player::EventHandler(sf::RenderWindow &window, sf::Event &event)
 {
@@ -53,22 +53,8 @@ void Player::CreateShip(StarshipFactory::SHIP_TYPE type)
         newStarship->SetProjectileColour(flagship->GetColour());
     }
     starship.emplace_back(std::move(newStarship));
-
-    /// SHIP_SPAWNED event is invoked (non-agnostic)
-    auto range = _basicObservers.equal_range(EventID::SHIP_SPAWNED);
-    for(auto iter = range.first; iter != range.second; ++iter)
-    {
-        /// subscribed method is called
-        iter->second();
-    }
-
-    /// SHIP_SPAWNED event is invoked (agnostic)
-    auto ag_range = _agnosticObservers.equal_range(EventID::SHIP_SPAWNED);
-    for(auto iter = ag_range.first; iter != ag_range.second; ++iter)
-    {
-        /// subscribed method is called
-        iter->second(this);
-    }
+    InvokeBasicEvent(SHIP_SPAWNED);
+    InvokeAgnosticEvent(SHIP_SPAWNED, this);
 }
 
 void Player::PaintFlagship(sf::Color colour)
@@ -95,6 +81,28 @@ void Player::AddBasicObserver(BasicPlayerEvent observer)
 void Player::AddAgnosticObserver(AgnosticPlayerEvent observer)
 {
     _agnosticObservers.insert(observer);
+}
+
+void Player::InvokeBasicEvent(EventID eventId)
+{
+    /// Invokes the callback function assigned to the specified event id?
+    auto range = _basicObservers.equal_range(eventId);
+    for(auto iter = range.first; iter != range.second; ++iter)
+    {
+        // subscribed method is called
+        iter->second();
+    }
+}
+
+void Player::InvokeAgnosticEvent(EventID eventId, const std::any& anyData)
+{
+    /// Invokes the callback function assigned to the specified event id?
+    auto ag_range = _agnosticObservers.equal_range(eventId);
+    for(auto iter = ag_range.first; iter != ag_range.second; ++iter)
+    {
+        /// subscribed method is called
+        iter->second(anyData);
+    }
 }
 
 

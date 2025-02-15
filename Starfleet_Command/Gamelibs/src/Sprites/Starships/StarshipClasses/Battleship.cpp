@@ -4,14 +4,14 @@ Battleship::Battleship()
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_4.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-    _healthComponent.SetHealth(2000);
+    _healthComponent.SetHealth(2500);
     _speed = 30;
     _trainingSpeed = 0.3f;
     _damage = 75;
     _damageScaleFactor = 0.75f;
     _fireRate = 3.0f;
     _attackRange = 600.0F;
-    _buildCost = 750;
+    _buildCost = 1500;
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
     _shipName = "Battleship";

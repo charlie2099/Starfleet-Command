@@ -3,7 +3,7 @@
 #include "Scenes/Scene.hpp"
 #include "Utility/Cursor.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
-#include "Sprites/Player/Player.h"
+#include "Sprites/Player/Player.hpp"
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 #include <random>
@@ -142,7 +142,9 @@ private:
     HandleMinimapZoomMouseInput(const sf::RenderWindow &window, const sf::Event &event, const sf::Vector2i &mouse_pos,
                                 const sf::Vector2f &worldPositionOfMouse);
 
-    void UpdateScrapMetal(std::any eventData);
+    void UpdateScrapMetalOnEnemyShipDestroyed(std::any eventData);
+
+    std::vector<std::unique_ptr<UIPopUpEffect>> _scrapMetalAcquiredPopUpEffect;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP
