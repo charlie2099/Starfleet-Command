@@ -10,6 +10,7 @@
 #include <chrono>
 #include "../../SpaceLane.hpp"
 #include "../../ProgressBar.hpp"
+#include "queue"
 
 class GameScene : public Scene
 {
@@ -27,7 +28,7 @@ private:
     bool InitShipBuilderButtons();
     void InitPlayerFlagship();
     void InitEnemyFlagship();
-    void InitPlayerCreditsText();
+    void InitPlayerScrapMetalText();
     void InitWavesRemainingText();
     void InitEnemiesRemainingText();
     void InitMainView();
@@ -38,7 +39,7 @@ private:
     void InitEvents();
     sf::Vector2f ConstrainViewCenter(const sf::Vector2f& proposedCenter) const;
     void ResetMinimapView();
-    void SpawnShipFromShipyard();
+    void SpawnShipFromShipyard_OnStarshipDeploymentComplete();
     enum DistributionsEnum
     {
         SHIP_DAMAGE = 0,
@@ -57,7 +58,7 @@ private:
     sf::Text _playerScrapText;
     sf::Text _wavesRemainingText;
     sf::Text _enemiesRemainingText;
-    int _playerScrapCounter = 500;
+    int _playerScrapCounter = 2500;
     int _wavesRemainingCounter = 3;
     int _enemiesRemainingCounter = 100;
 
@@ -97,7 +98,8 @@ private:
     std::vector<std::uniform_int_distribution<int>> _distributions;
 
     // Other
-    int _shipSelectedIndex = 0;
+    int _shipButtonSelectedIndex = 0;
+    int _shipButtonHoveredOverIndex = 0;
     float _originalZoomLevel = 1.0f;
     float _currentZoomLevel = 1.0f;
     bool _isDragging = false;
@@ -118,7 +120,7 @@ private:
     std::vector<std::unique_ptr<SpaceLane>> _spaceLanes;
     const float LANE_Y_SPACING = 35.0F;
     const int NUM_OF_LANES = 5;
-    int _spaceLaneSelected = 0;
+    int _spaceLaneSelectedIndex = 0;
 
     // Enemy Spawning
     float _enemySpawnTimer = 3.0f;
@@ -142,9 +144,19 @@ private:
     HandleMinimapZoomMouseInput(const sf::RenderWindow &window, const sf::Event &event, const sf::Vector2i &mouse_pos,
                                 const sf::Vector2f &worldPositionOfMouse);
 
-    void UpdateScrapMetalOnEnemyShipDestroyed(std::any eventData);
+    void UpdateScrapMetal_OnEnemyShipDestroyed(std::any eventData);
 
     std::vector<std::unique_ptr<UIPopUpEffect>> _scrapMetalAcquiredPopUpEffect;
+
+    sf::Text _shipNameText;
+
+    std::queue<StarshipFactory::SHIP_TYPE> _shipTypeTrainingQueue;
+    std::queue<int> _spaceLaneShipDeploymentQueue;
+    const int SHIP_QUEUE_SIZE = 5;
+
+    void BeginStarshipDeploymentProcess(int currentSpaceLaneSelectedIndex);
+
+    void StartNextShipDeployment();
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

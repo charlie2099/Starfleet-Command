@@ -34,7 +34,6 @@ void ProgressBar::Update(sf::RenderWindow& window, sf::Time time)
         if(_insideBarSpriteComponent.GetSprite().getScale().x == 0.0F)
         {
             InvokeSimpleEvent(EventID::TASK_STARTED);
-            //std::cout << "TASK STARTED" << std::endl;
         }
 
         if(_insideBarSpriteComponent.GetSprite().getScale().x <= 1.175f)
@@ -48,9 +47,8 @@ void ProgressBar::Update(sf::RenderWindow& window, sf::Time time)
         {
             _insideBarSpriteComponent.GetSprite().setScale(0.0f, 0.125f);
             _taskIsComplete = true;
-            InvokeSimpleEvent(EventID::TASK_COMPLETED);
-            //std::cout << "TASK COMPLETED" << std::endl;
             _taskIsProgressing = false;
+            InvokeSimpleEvent(EventID::TASK_COMPLETED);
         }
     }
 }
@@ -94,6 +92,7 @@ void ProgressBar::SetProgressStatus(bool status)
 void ProgressBar::ResetProgress()
 {
     _taskIsComplete = false;
+    _taskIsProgressing = false;
 }
 
 void ProgressBar::AddBasicObserver(ProgressBar::BasicProgressBarEvent observer)

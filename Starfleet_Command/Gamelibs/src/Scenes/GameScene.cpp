@@ -5,7 +5,14 @@ bool GameScene::Init()
     InitRandomDistributions();
     InitBackground();
     InitShipBuilderButtons();
-    InitPlayerCreditsText();
+    InitPlayerScrapMetalText();
+
+    _shipNameText.setFillColor(_predefinedColours.LIGHTBLUE);
+    _shipNameText.setOutlineColor(sf::Color::Black);
+    _shipNameText.setOutlineThickness(1);
+    _shipNameText.setFont(GetRegularFont());
+    _shipNameText.setCharacterSize(10);
+
     InitWavesRemainingText();
     InitEnemiesRemainingText();
     InitPlayerFlagship();
@@ -69,15 +76,12 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         auto &assignedShipToButton = _buttonShipDictionary[_shipBuilderButtons[i].get()];
         bool shipAffordable = _playerScrapCounter >= assignedShipToButton->GetBuildCost();
 
-        // Check if the cursor is hovering over the button
         if (_shipBuilderButtons[i]->IsCursorHoveredOver() && shipAffordable)
         {
-            // Check if the button is clicked
-            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && !_dragging && !_shipAssemblyBar.InProgress())
+            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && !_dragging && _shipTypeTrainingQueue.size() < SHIP_QUEUE_SIZE /*&& !_shipAssemblyBar.InProgress()*/)
             {
-                // Set the selected button index and change its color
-                _shipSelectedIndex = i;
-                _shipBuilderButtons[_shipSelectedIndex]->SetColour(SELECTED_BTN_COLOR);
+                _shipButtonSelectedIndex = i;
+                //_shipBuilderButtons[_shipButtonSelectedIndex]->SetColour(SELECTED_BTN_COLOR);
                 _isDragVisualVisible = true;
                 _dragging = true;
             }
@@ -156,7 +160,7 @@ void GameScene::HandleMinimapZoomMouseInput(const sf::RenderWindow &window, cons
     }
 }
 
-void GameScene::HandleShipDropperMouseInput(const sf::Event &event)
+void GameScene::HandleShipDropperMouseInput(const sf::Event &event) // TODO: Rename this
 {
     if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && _dragging)
     {
@@ -164,23 +168,45 @@ void GameScene::HandleShipDropperMouseInput(const sf::Event &event)
         {
             if(_spaceLanes[i]->IsCursorHoveredOver())
             {
-                auto& assignedShipToButton = _buttonShipDictionary[_shipBuilderButtons[_shipSelectedIndex].get()];
-                _shipAssemblyBar.SetProgressSpeed(assignedShipToButton->GetTrainingSpeed());
-                _playerScrapCounter -= static_cast<int>(assignedShipToButton->GetBuildCost());
-                _shipAssemblyBar.SetProgressText("Deploying " + assignedShipToButton->GetShipName());
-                _playerScrapText.setString("Scrap Metal: " + std::to_string(_playerScrapCounter));
-                _shipAssemblyBar.SetProgressStatus(true);
-                _spaceLaneSelected = i;
-                // TODO: Invoke an agnostic event here notifying subscribers that a ship is currently training?
+                BeginStarshipDeploymentProcess(i);
             }
         }
 
-        // Revert the selected button color to default
-        _shipBuilderButtons[_shipSelectedIndex]->SetColour(DEFAULT_BTN_COLOUR);
-        _shipDragSpriteVisuals[_shipSelectedIndex].SetPos(_shipBuilderButtons[_shipSelectedIndex]->GetPos());
+        _shipBuilderButtons[_shipButtonSelectedIndex]->SetColour(DEFAULT_BTN_COLOUR);
+        _shipDragSpriteVisuals[_shipButtonSelectedIndex].SetPos(_shipBuilderButtons[_shipButtonSelectedIndex]->GetPos());
         _isDragVisualVisible = false;
         _dragging = false;
     }
+}
+
+void GameScene::BeginStarshipDeploymentProcess(int currentSpaceLaneSelectedIndex)
+{
+    auto& assignedShipToButton = _buttonShipDictionary[_shipBuilderButtons[_shipButtonSelectedIndex].get()];
+    _playerScrapCounter -= static_cast<int>(assignedShipToButton->GetBuildCost());
+    _playerScrapText.setString("Scrap Metal: " + std::to_string(_playerScrapCounter));
+
+    _shipTypeTrainingQueue.push(static_cast<StarshipFactory::SHIP_TYPE>(_shipButtonSelectedIndex));
+    _spaceLaneShipDeploymentQueue.push(currentSpaceLaneSelectedIndex);
+
+    if(!_shipAssemblyBar.InProgress())
+    {
+        StartNextShipDeployment();
+    }
+
+    // TODO: Invoke an agnostic event here notifying subscribers that a ship is currently training?
+}
+
+void GameScene::StartNextShipDeployment()
+{
+    if(_shipTypeTrainingQueue.empty())
+        return;
+
+    auto& assignedShipToButton = _buttonShipDictionary[_shipBuilderButtons[_shipTypeTrainingQueue.front()].get()];
+    _shipAssemblyBar.SetProgressText("Deploying " + assignedShipToButton->GetShipName() + "...");
+    _shipAssemblyBar.SetProgressSpeed(assignedShipToButton->GetTrainingSpeed());
+    _shipAssemblyBar.SetProgressStatus(true);
+
+    _spaceLaneSelectedIndex = _spaceLaneShipDeploymentQueue.front();
 }
 
 void GameScene::HandleViewScrollingKeyboardInput(const sf::Event &event)
@@ -210,11 +236,23 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto &assignedShipToButton = _buttonShipDictionary[_shipBuilderButtons[i].get()];
         bool shipAffordable = _playerScrapCounter >= assignedShipToButton->GetBuildCost();
 
+        if(_shipBuilderButtons[i]->IsCursorHoveredOver() && !_shipAssemblyBar.InProgress())
+        {
+            _shipButtonHoveredOverIndex = i;
+            _shipNameText.setString(assignedShipToButton->GetShipName());
+            _shipNameText.setFillColor(shipAffordable ?  _predefinedColours.LIGHTBLUE : _predefinedColours.LIGHTRED);
+        }
+
+        if(!_shipBuilderButtons[_shipButtonHoveredOverIndex]->IsCursorHoveredOver())
+        {
+            _shipNameText.setString("");
+        }
+
         // Check if the cursor is hovering over the button
         if (_shipBuilderButtons[i]->IsCursorHoveredOver() && shipAffordable)
         {
             // If the button is the currently selected one and dragging, keep it in the selected color
-            if (_dragging && i == _shipSelectedIndex)
+            if (_dragging && i == _shipButtonSelectedIndex)
             {
                 _shipBuilderButtons[i]->SetColour(SELECTED_BTN_COLOR);
             }
@@ -232,6 +270,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         if (!_shipBuilderButtons[i]->IsCursorHoveredOver() && !shipAffordable)
         {
             _shipBuilderButtons[i]->SetColour(_predefinedColours.LIGHTRED);
+        }
+
+        if(_shipTypeTrainingQueue.size() >= SHIP_QUEUE_SIZE)
+        {
+            _shipBuilderButtons[i]->SetColour(_predefinedColours.LIGHTORANGE);
         }
     }
 
@@ -354,6 +397,12 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _enemiesRemainingText.setPosition(_wavesRemainingText.getPosition().x + _wavesRemainingText.getGlobalBounds().width/2.0F - _enemiesRemainingText.getGlobalBounds().width/2.0F, _wavesRemainingText.getPosition().y + _wavesRemainingText.getGlobalBounds().height + 5.0F);
     _shipAssemblyBar.SetPosition({_shipBuilderButtons[0]->GetPos().x, _shipBuilderButtons[0]->GetPos().y - _shipAssemblyBar.GetSize().height*2.75F});
     _shipAssemblyBar.Update(window, deltaTime);
+
+
+    _shipNameText.setPosition(_shipBuilderButtons[_shipButtonHoveredOverIndex]->GetPos().x, _shipBuilderButtons[0]->GetPos().y - 20.0F);
+
+
+
     _cursor.Update(window, deltaTime);
     _cursor.SetCursorPos(window, _mainView);
     _player.Update(window, deltaTime);
@@ -513,9 +562,9 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     // Drag visual
     if(_isDragVisualVisible)
     {
-        auto xPos = worldPositionOfMouse.x - _shipDragSpriteVisuals[_shipSelectedIndex].GetSprite().getGlobalBounds().width / 2.0F;
-        auto yPos = worldPositionOfMouse.y - _shipDragSpriteVisuals[_shipSelectedIndex].GetSprite().getGlobalBounds().height / 2.0F;
-        _shipDragSpriteVisuals[_shipSelectedIndex].SetPos({xPos, yPos});
+        auto xPos = worldPositionOfMouse.x - _shipDragSpriteVisuals[_shipButtonSelectedIndex].GetSprite().getGlobalBounds().width / 2.0F;
+        auto yPos = worldPositionOfMouse.y - _shipDragSpriteVisuals[_shipButtonSelectedIndex].GetSprite().getGlobalBounds().height / 2.0F;
+        _shipDragSpriteVisuals[_shipButtonSelectedIndex].SetPos({xPos, yPos});
     }
 
     /*for (int i = 0; i < _shipInfoPanels.size(); ++i)
@@ -568,6 +617,7 @@ void GameScene::Render(sf::RenderWindow& window)
         shipInfoPanel.Render(window);
     }*/
     window.draw(_playerScrapText);
+    window.draw(_shipNameText);
     window.draw(_wavesRemainingText);
     window.draw(_enemiesRemainingText);
     _player.Render(window);
@@ -581,7 +631,7 @@ void GameScene::Render(sf::RenderWindow& window)
     }
     if(_isDragVisualVisible)
     {
-        _shipDragSpriteVisuals[_shipSelectedIndex].Render(window);
+        _shipDragSpriteVisuals[_shipButtonSelectedIndex].Render(window);
     }
     for(auto& popup : _scrapMetalAcquiredPopUpEffect)
     {
@@ -609,7 +659,7 @@ void GameScene::InitRandomDistributions()
     _generator = GetEngine();
     CreateDistribution(SHIP_DAMAGE, 100, 250);
     CreateDistribution(SPACELANE, 0, NUM_OF_LANES-1);
-    CreateDistribution(ENEMY_SHIP_TYPE, 0,  0); // TODO: Change this back to StarshipFactory::SHIP_TYPE::ENUM_COUNT-2
+    CreateDistribution(ENEMY_SHIP_TYPE, 0,  StarshipFactory::SHIP_TYPE::ENUM_COUNT-2);
 }
 
 bool GameScene::InitBackground()
@@ -687,7 +737,7 @@ bool GameScene::InitShipBuilderButtons()
     return true;
 }
 
-void GameScene::InitPlayerCreditsText()
+void GameScene::InitPlayerScrapMetalText()
 {
     _playerScrapText.setString("Scrap Metal: " + std::to_string(_playerScrapCounter));
     //_playerScrapText.setFillColor(sf::Color(153, 210, 242));
@@ -786,25 +836,24 @@ void GameScene::InitSpaceLanes()
 void GameScene::InitEvents()
 {
     /// Observer to ship assembly bar event
-    auto shipAssemblyBarCallback = std::bind(&GameScene::SpawnShipFromShipyard, this);
+    auto shipAssemblyBarCallback = std::bind(&GameScene::SpawnShipFromShipyard_OnStarshipDeploymentComplete, this);
     _shipAssemblyBar.AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, shipAssemblyBarCallback});
 
     /// Agnostic observer to enemy ships destroyed event
-    auto enemyShipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetalOnEnemyShipDestroyed, this, std::placeholders::_1);
+    auto enemyShipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnEnemyShipDestroyed, this, std::placeholders::_1);
     _enemy.AddAgnosticObserver({Enemy::EventID::SHIP_DESTROYED, enemyShipsDestroyedCallback});
 }
 
-void GameScene::UpdateScrapMetalOnEnemyShipDestroyed(std::any eventData)
+void GameScene::UpdateScrapMetal_OnEnemyShipDestroyed(std::any eventData)
 {
     auto destroyedEnemyShipData = std::any_cast<Enemy::ShipDataToSend>(eventData); // NOTE: Don't know if this is a good way of handling this problem? (making a public struct within enemy class to encapsulate required data)
     _playerScrapCounter += static_cast<int>(destroyedEnemyShipData.BuildCost);
     _playerScrapText.setString("Scrap Metal: " + std::to_string(_playerScrapCounter));
 
     auto& scrapMetalPopup = _scrapMetalAcquiredPopUpEffect.emplace_back(std::make_unique<UIPopUpEffect>(destroyedEnemyShipData.BuildCost, destroyedEnemyShipData.DeathLocation));
-    scrapMetalPopup->SetColour(sf::Color(137, 137, 137));
+    scrapMetalPopup->SetColour(_predefinedColours.LIGHTBLUE);
     scrapMetalPopup->SetCharSize(15);
     scrapMetalPopup->SetIconImage("Resources/Textures/pixil-frame-0.png");
-    // TODO: Set scrap metal popup icon image size here
 }
 
 void GameScene::InitPlayerFlagship()
@@ -871,11 +920,25 @@ void GameScene::ResetMinimapView()
     _currentZoomLevel = _originalZoomLevel;
 }
 
-void GameScene::SpawnShipFromShipyard()
+void GameScene::SpawnShipFromShipyard_OnStarshipDeploymentComplete()
 {
-    _player.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(_shipSelectedIndex));
-    auto ship_xPos = _spaceLanes[_spaceLaneSelected]->GetPos().x + 25.0F;
-    auto ship_yPos = _spaceLanes[_spaceLaneSelected]->GetPos().y + _spaceLanes[_spaceLaneSelected]->GetSize().y / 2.0F;
-    _player.SetShipPosition(_player.GetShips()[_player.GetShips().size() - 1], {ship_xPos, ship_yPos});
+    if(_shipTypeTrainingQueue.empty())
+        return;
+
+    //_player.CreateShip(static_cast<StarshipFactory::SHIP_TYPE>(_shipButtonSelectedIndex));
+    _player.CreateShip(_shipTypeTrainingQueue.front());
+    auto ship_xPos = _spaceLanes[_spaceLaneShipDeploymentQueue.front()]->GetPos().x + 25.0F;
+    auto ship_yPos = _spaceLanes[_spaceLaneShipDeploymentQueue.front()]->GetPos().y +
+                                                 _spaceLanes[_spaceLaneShipDeploymentQueue.front()]->GetSize().y / 2.0F;
+    _player.SetShipPosition(_player.GetShips().back(), {ship_xPos, ship_yPos});
+
+    _shipTypeTrainingQueue.pop();
+    _spaceLaneShipDeploymentQueue.pop();
+
     _shipAssemblyBar.ResetProgress();
+
+    if(!_shipTypeTrainingQueue.empty())
+    {
+        StartNextShipDeployment();
+    }
 }
