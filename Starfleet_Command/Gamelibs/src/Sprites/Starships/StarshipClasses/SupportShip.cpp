@@ -14,7 +14,7 @@ SupportShip::SupportShip()
     _buildCost = 500;
     _projectileSize = Projectile::SMALL;
     _projectileColour = Projectile::BLUE;
-    _shipName = "Support Ship";
+    _starshipName = "Support Ship";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -165,7 +165,7 @@ void SupportShip::SetAttackRange(float range)
 void SupportShip::SetColour(sf::Color &colour)
 {
     _spriteComponent.GetSprite().setColor(colour);
-    _shipColour = colour;
+    _starshipColour = colour;
 }
 
 void SupportShip::SetPosition(sf::Vector2f pos)

@@ -12,7 +12,7 @@
 class StarshipFactory
 {
 public:
-    enum SHIP_TYPE
+    enum STARSHIP_TYPE
     {
         LIGHTFIGHTER,
         HEAVYFIGHTER,
@@ -23,7 +23,7 @@ public:
         ENUM_COUNT
     };
 
-    static std::unique_ptr<IStarship> CreateShip(SHIP_TYPE shipType);
+    static std::unique_ptr<IStarship> CreateShip(STARSHIP_TYPE shipType);
 };
 
 #endif //STARFLEET_COMMAND_STARSHIPFACTORY_HPP

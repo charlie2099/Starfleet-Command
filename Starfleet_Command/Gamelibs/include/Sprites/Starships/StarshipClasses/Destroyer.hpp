@@ -38,8 +38,8 @@ public:
     std::vector<std::unique_ptr<Projectile>>& GetProjectile() override { return _projectile; }
     Projectile::Size GetProjectileSize() override { return _projectileSize; }
     Projectile::Colour GetProjectileColour() override { return _projectileColour; }
-    std::string& GetShipName() override { return _shipName; }
-    sf::Color &GetColour() override { return _shipColour; }
+    std::string& GetStarshipName() override { return _starshipName; }
+    sf::Color &GetColour() override { return _starshipColour; }
     sf::Vector2<float> GetPos() override { return _spriteComponent.GetPos(); }
     float GetRotation() override { return _rotation; }
     float GetHealth() override { return _healthComponent.GetHealth(); }

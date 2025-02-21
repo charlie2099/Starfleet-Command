@@ -11,7 +11,7 @@ Mothership::Mothership()
     _attackRange = 400.0F;
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
-    _shipName = "Mothership";
+    _starshipName = "Mothership";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -162,7 +162,7 @@ void Mothership::SetAttackRange(float range)
 void Mothership::SetColour(sf::Color &colour)
 {
     _spriteComponent.GetSprite().setColor(colour);
-    _shipColour = colour;
+    _starshipColour = colour;
 }
 
 void Mothership::SetPosition(sf::Vector2f pos)

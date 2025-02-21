@@ -1,6 +1,6 @@
 #include "Sprites/Starships/StarshipFactory.hpp"
 
-std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::SHIP_TYPE shipType)
+std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP_TYPE shipType)
 {
     switch (shipType)
     {

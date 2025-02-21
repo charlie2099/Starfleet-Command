@@ -32,7 +32,7 @@ void Player::Render(sf::RenderWindow &window)
     }
 }
 
-std::vector<std::unique_ptr<IStarship>> &Player::GetShips()
+std::vector<std::unique_ptr<IStarship>> &Player::GetStarships()
 {
     return starship;
 }
@@ -42,7 +42,7 @@ std::unique_ptr<IStarship> &Player::GetFlagship()
     return starship[0];
 }
 
-void Player::CreateShip(StarshipFactory::SHIP_TYPE type)
+void Player::CreateStarhip(StarshipFactory::STARSHIP_TYPE type)
 {
     std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(type);
     bool atLeastOneShipExists = !starship.empty();
@@ -68,7 +68,7 @@ void Player::SetFlagshipPosition(sf::Vector2f pos)
     starship[0]->SetPosition(pos);
 }
 
-void Player::SetShipPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f pos)
+void Player::SetStarshipPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f pos)
 {
     ship->SetPosition(pos);
 }

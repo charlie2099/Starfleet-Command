@@ -14,7 +14,7 @@ HeavyFighter::HeavyFighter()
     _buildCost = 250;
     _projectileSize = Projectile::REGULAR;
     _projectileColour = Projectile::BLUE;
-    _shipName = "Heavy Fighter";
+    _starshipName = "Heavy Fighter";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -165,7 +165,7 @@ void HeavyFighter::SetAttackRange(float range)
 void HeavyFighter::SetColour(sf::Color &colour)
 {
     _spriteComponent.GetSprite().setColor(colour);
-    _shipColour = colour;
+    _starshipColour = colour;
 }
 
 void HeavyFighter::SetPosition(sf::Vector2f pos)

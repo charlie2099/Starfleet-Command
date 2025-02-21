@@ -7,7 +7,7 @@
 #include "Utility/PredefinedColours.hpp"
 
 /*
- * Interface that all ships should inherit from
+ * Interface that all starships should inherit from
  */
 class IStarship
 {
@@ -49,7 +49,7 @@ public:
         }
         else
         {
-            std::cout << "WARNING: Could not locate projectile of the desired colour. Defaulting to BLUE. (" + _shipName  + ")" << std::endl;
+            std::cout << "WARNING: Could not locate projectile of the desired colour. Defaulting to BLUE. (" + _starshipName + ")" << std::endl;
             _projectileColour = Projectile::BLUE;
         }
     };
@@ -59,7 +59,7 @@ public:
     virtual HealthComponent& GetHealthComponent() = 0;
     virtual std::unique_ptr<HealthBar>& GetHealthBar() = 0;
     virtual std::vector<std::unique_ptr<Projectile>>& GetProjectile() = 0;
-    virtual std::string& GetShipName() = 0;
+    virtual std::string& GetStarshipName() = 0;
     virtual sf::Color& GetColour() = 0;
     virtual sf::Vector2<float> GetPos() = 0;
     virtual float GetRotation() = 0;
@@ -84,8 +84,8 @@ protected:
     std::vector<std::unique_ptr<Projectile>> _projectile;
     Projectile::Size _projectileSize;
     Projectile::Colour _projectileColour;
-    std::string _shipName;
-    sf::Color _shipColour;
+    std::string _starshipName;
+    sf::Color _starshipColour;
     float _rotation;
     float _maxHealth;
     float _damage;

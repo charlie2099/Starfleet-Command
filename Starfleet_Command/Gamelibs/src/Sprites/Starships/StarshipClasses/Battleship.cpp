@@ -14,7 +14,7 @@ Battleship::Battleship()
     _buildCost = 1500;
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
-    _shipName = "Battleship";
+    _starshipName = "Battleship";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -165,7 +165,7 @@ void Battleship::SetAttackRange(float range)
 void Battleship::SetColour(sf::Color &colour)
 {
     _spriteComponent.GetSprite().setColor(colour);
-    _shipColour = colour;
+    _starshipColour = colour;
 }
 
 void Battleship::SetPosition(sf::Vector2f pos)

@@ -11,10 +11,10 @@ void Enemy::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         if(starship[i]->GetHealthComponent().GetHealth() <= 0)
         {
-            ShipDataToSend dataToSend;
+            StarshipDataToSend dataToSend;
             dataToSend.DeathLocation = starship[i]->GetPos();
             dataToSend.BuildCost = starship[i]->GetBuildCost();
-            InvokeAgnosticEvent(SHIP_DESTROYED, dataToSend);
+            InvokeAgnosticEvent(STARSHIP_DESTROYED, dataToSend);
 
             starship.erase(starship.begin() + i);
         }
@@ -29,7 +29,7 @@ void Enemy::Render(sf::RenderWindow &window)
     }
 }
 
-void Enemy::CreateShip(StarshipFactory::SHIP_TYPE type)
+void Enemy::CreateStarship(StarshipFactory::STARSHIP_TYPE type)
 {
     std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(type);
     bool atLeastOneShipExists = !starship.empty();
@@ -60,12 +60,12 @@ void Enemy::SetFlagshipRotation(float rot)
     starship[0]->SetRotation(rot);
 }
 
-void Enemy::SetShipPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f pos)
+void Enemy::SetStarshipPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f pos)
 {
     ship->SetPosition(pos);
 }
 
-void Enemy::SetShipRotation(std::unique_ptr<IStarship> &ship, float rot)
+void Enemy::SetStarshipRotation(std::unique_ptr<IStarship> &ship, float rot)
 {
     ship->SetRotation(rot);
 }
@@ -102,7 +102,7 @@ void Enemy::InvokeAgnosticEvent(EventID eventId, const std::any& anyData)
     }
 }
 
-std::vector<std::unique_ptr<IStarship>> &Enemy::GetShips()
+std::vector<std::unique_ptr<IStarship>> &Enemy::GetStarships()
 {
     return starship;
 }

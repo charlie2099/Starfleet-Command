@@ -14,7 +14,7 @@ Destroyer::Destroyer()
     _buildCost = 1000;
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
-    _shipName = "Destroyer";
+    _starshipName = "Destroyer";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -161,7 +161,7 @@ void Destroyer::SetAttackRange(float range)
 void Destroyer::SetColour(sf::Color &colour)
 {
     _spriteComponent.GetSprite().setColor(colour);
-    _shipColour = colour;
+    _starshipColour = colour;
 }
 
 void Destroyer::SetPosition(sf::Vector2f pos)

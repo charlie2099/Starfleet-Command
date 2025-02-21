@@ -14,7 +14,7 @@ LightFighter::LightFighter()
     _buildCost = 100;
     _projectileSize = Projectile::SMALL;
     _projectileColour = Projectile::BLUE;
-    _shipName = "Light Fighter";
+    _starshipName = "Light Fighter";
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -165,7 +165,7 @@ void LightFighter::SetAttackRange(float range)
 void LightFighter::SetColour(sf::Color &colour)
 {
     _spriteComponent.GetSprite().setColor(colour);
-    _shipColour = colour;
+    _starshipColour = colour;
 }
 
 void LightFighter::SetPosition(sf::Vector2f pos)
