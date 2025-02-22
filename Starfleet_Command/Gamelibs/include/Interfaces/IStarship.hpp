@@ -47,10 +47,14 @@ public:
         {
             _projectileColour = Projectile::RED;
         }
+        else if(colour == _predefinedColours.ORANGE || colour == _predefinedColours.LIGHTORANGE)
+        {
+            _projectileColour = Projectile::ORANGE;
+        }
         else
         {
-            std::cout << "WARNING: Could not locate projectile of the desired colour. Defaulting to BLUE. (" + _starshipName + ")" << std::endl;
-            _projectileColour = Projectile::BLUE;
+            std::cout << "WARNING: Could not locate projectile of the desired colour. Defaulting to WHITE. (" + _starshipName + ")" << std::endl;
+            _projectileColour = Projectile::WHITE;
         }
     };
 

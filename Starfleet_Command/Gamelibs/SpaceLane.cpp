@@ -18,7 +18,6 @@ void SpaceLane::Update(sf::RenderWindow& window, sf::Time deltaTime)
     auto mouse_pos_relative = sf::Mouse::getPosition(window); // Mouse _position relative to the window
     auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse _position translated into world coordinates
 
-    // if mouse within button bounds, do something
     if(_laneRect.getGlobalBounds().contains(mouse_pos_world))
     {
         _isHoveredOver = true;

@@ -9,8 +9,8 @@ void HealthComponent::TakeDamage(float amount, sf::Vector2f damageLocation)
 {
     _health -= amount;
 
-    //auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<UIPopUpEffect>(_health, _outsideBarSpriteComponent.GetPos()));
-    auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<UIPopUpEffect>(amount, damageLocation));
+    //auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<PopupText>(_health, _outsideBarSpriteComponent.GetPos()));
+    auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<PopupText>(amount, damageLocation));
     if(amount > 60)
     {
         damagePopup->SetColour(sf::Color::Red);

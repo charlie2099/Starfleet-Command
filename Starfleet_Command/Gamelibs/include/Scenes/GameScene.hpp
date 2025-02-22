@@ -9,8 +9,9 @@
 #include <random>
 #include <chrono>
 #include "../../SpaceLane.hpp"
-#include "../../ProgressBar.hpp"
+#include "Sprites/UI/ProgressBar.hpp"
 #include "queue"
+#include "../../Minimap.hpp"
 
 class GameScene : public Scene
 {
@@ -35,16 +36,11 @@ private:
     void InitMainView();
     void InitMinimapView();
     void InitMainViewBorder();
-    void InitMinimapBorder();
     void InitStarshipPreviewSprites();
     void InitEvents();
 
     /// EventHandler functions
     void HandleViewScrollingKeyboardInput(const sf::Event &event);
-    void HandleMinimapInteractionsMouseInput(const sf::RenderWindow &window, const sf::Event &event);
-    void HandleMinimapZooming(const sf::RenderWindow &window, const sf::Event &event, const sf::Vector2i &mouse_pos);
-    void HandleMinimapPanning(const sf::RenderWindow &window, const sf::Event &event, const sf::Vector2i &mouse_pos);
-    void UpdateMinimapPanPosition(const sf::RenderWindow &window);
     void HandleStarshipBuilderButtonsInteractionMouseInput(const sf::Event &event);
     void HandleStarshipPlacementMouseInput(const sf::Event &event);
     void BeginStarshipDeploymentProcess(int currentSpaceLaneSelectedIndex);
@@ -65,9 +61,7 @@ private:
     void SpawnStarshipFromShipyard_OnStarshipDeploymentComplete();
     void UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData);
 
-    /// Other functions
-    sf::Vector2f ClampViewCentreBounds(const sf::Vector2f& proposedCenter) const;
-    void ResetMinimapView();
+    /// Randomness functions
     enum DistributionsEnum{ STARSHIP_DAMAGE = 0, SPACELANE = 1, ENEMY_STARSHIP_TYPE = 2, };
     void CreateDistribution([[maybe_unused]] [[maybe_unused]] DistributionsEnum distributionsEnum, int min, int max);
     static std::mt19937 GetEngine();
@@ -78,13 +72,11 @@ private:
 
     /// HUD
     ProgressBar _starshipAssemblyBar;
-    sf::Text _playerScrapText;
+    sf::Text _playerScrapMetalText;
     sf::Text _starshipNameButtonText;
     std::vector<sf::Text> _starshipCostText;
-    std::vector<std::unique_ptr<UIPopUpEffect>> _scrapMetalAcquiredPopUpEffect;
-    int _playerScrapCounter = 2500;
-    int _wavesRemainingCounter = 3;
-    int _enemiesRemainingCounter = 100;
+    std::vector<std::unique_ptr<PopupText>> _scrapMetalAcquiredPopUpEffect;
+    int _playerScrapMetalCounter = 2500;
 
     /// GUI
     std::vector<std::unique_ptr<Button>> _starshipBuilderButtons;
@@ -122,16 +114,13 @@ private:
     Player _player;
     Enemy _enemy;
 
-    /// Minimap
+    /// Views (Main view & Minimap)
+    std::unique_ptr<Minimap> minimap;
     sf::View _mainView{};
-    sf::View _minimapView{};
-    sf::RectangleShape _mainViewBorder;
-    sf::RectangleShape _minimapBorder;
-    sf::Vector2i _initialMousePosition;
-    sf::Vector2f _originalMinimapViewCenter;
-    float _originalZoomLevel = 1.0f;
-    float _currentZoomLevel = 1.0f;
-    bool _canMinimapViewPan = false;
+    sf::RectangleShape _mainViewBorder; // _minimapActiveArea // NOTE: Contain within Minimap class?
+    const float VIEW_SCROLL_SPEED = 300.0F;
+    bool _scrollViewLeft = false;
+    bool _scrollViewRight = false;
 
     /// Random Distributions
     std::mt19937 _randomGenerator;
@@ -151,11 +140,6 @@ private:
     sf::Clock _enemySpawnTimerClock;
     float _enemySpawnTimer = 3.0f;
     float _enemySpawnRate = 5.0f;
-
-    /// Main view scroll
-    const float VIEW_SCROLL_SPEED = 300.0F;
-    bool _scrollViewLeft = false;
-    bool _scrollViewRight = false;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

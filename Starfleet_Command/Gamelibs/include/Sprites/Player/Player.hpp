@@ -11,19 +11,20 @@ public:
     enum EventID
     {
         SHIP_SPAWNED = 1,
-        SHIP_DESTROYED = 2 // _starship class?
+        SHIP_DESTROYED = 2 /// starship class?
     };
-
     Player() = default;
     ~Player() = default;
     void EventHandler(sf::RenderWindow &window, sf::Event &event);
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
-    void CreateStarhip(StarshipFactory::STARSHIP_TYPE type);
+    void CreateStarship(StarshipFactory::STARSHIP_TYPE type);
     void PaintFlagship(sf::Color colour);
     void SetFlagshipPosition(sf::Vector2f pos);
     void SetStarshipPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
+
+    /// Event handling
     using BasicPlayerEvent = std::pair<EventID, std::function<void()>>;
     using AgnosticPlayerEvent = std::pair<EventID, std::function<void(std::any)>>;
     void AddBasicObserver(BasicPlayerEvent observer);
@@ -31,13 +32,13 @@ public:
 
     std::vector<std::unique_ptr<IStarship>> &GetStarships();
     std::unique_ptr<IStarship> &GetFlagship();
-
 private:
     void InvokeBasicEvent(EventID eventId);
     void InvokeAgnosticEvent(EventID eventId, const std::any& anyData);
     std::vector<std::unique_ptr<IStarship>> starship{};
     std::multimap<EventID, std::function<void()>> _basicObservers{};
     std::multimap<EventID, std::function<void(std::any)>> _agnosticObservers{};
+    // ScrapMetalManager _scrapMetalManager;
 };
 
 #endif //STARFLEET_COMMAND_PLAYER_HPP

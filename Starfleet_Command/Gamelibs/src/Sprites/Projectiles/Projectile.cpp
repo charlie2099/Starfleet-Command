@@ -16,6 +16,12 @@ Projectile::Projectile(Projectile::Size size, Projectile::Colour colour, sf::Vec
                 case RED:
                     _spriteComponent.LoadSprite("Resources/Textures/laser_red.png");
                     break;
+                case ORANGE:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_orange.png");
+                    break;
+                case WHITE:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_white.png");
+                    break;
             }
             _spriteComponent.GetSprite().setScale(0.35F, 0.35F);
             break;
@@ -31,6 +37,12 @@ Projectile::Projectile(Projectile::Size size, Projectile::Colour colour, sf::Vec
                 case RED:
                     _spriteComponent.LoadSprite("Resources/Textures/laser_red.png");
                     break;
+                case ORANGE:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_orange.png");
+                    break;
+                case WHITE:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_white.png");
+                    break;
             }
             _spriteComponent.GetSprite().setScale(0.5F, 0.5F);
             break;
@@ -45,6 +57,12 @@ Projectile::Projectile(Projectile::Size size, Projectile::Colour colour, sf::Vec
                     break;
                 case RED:
                     _spriteComponent.LoadSprite("Resources/Textures/laser_red.png");
+                    break;
+                case ORANGE:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_orange.png");
+                    break;
+                case WHITE:
+                    _spriteComponent.LoadSprite("Resources/Textures/laser_white.png");
                     break;
             }
             _spriteComponent.GetSprite().setScale(0.75F, 0.75F);

@@ -14,7 +14,6 @@ bool GameScene::Init()
     InitMainView();
     InitMinimapView();
     InitMainViewBorder();
-    InitMinimapBorder();
     InitStarshipPreviewSprites();
     InitEvents();
 
@@ -44,7 +43,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     _player.EventHandler(window, event);
     HandleViewScrollingKeyboardInput(event);
-    HandleMinimapInteractionsMouseInput(window, event);
+    minimap->EventHandler(window, event);
     HandleStarshipBuilderButtonsInteractionMouseInput(event);
     HandleStarshipPlacementMouseInput(event);
 
@@ -63,8 +62,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     UpdateStarshipBuilderButtonsHoverStateAndColour();
     UpdateStarshipBuilderButtonPositions(window);
     _mainViewBorder.setPosition(_mainView.getCenter().x - _mainViewBorder.getSize().x/2.0F, _mainView.getCenter().y - _mainViewBorder.getSize().y/2.0F);
-    _minimapBorder.setPosition(_mainView.getCenter().x - _mainView.getSize().x/4.0F, _mainView.getCenter().y - _mainView.getSize().y/2.0F + 12.1F);
-    _playerScrapText.setPosition(_starshipBuilderButtons[0]->GetPos().x, _starshipBuilderButtons[_starshipBuilderButtons.size() - 1]->GetPos().y + _starshipBuilderButtons[_starshipBuilderButtons.size() - 1]->GetBounds().height * 1.15F);
+    minimap->Update(_mainView, window, deltaTime);
+    _playerScrapMetalText.setPosition(_starshipBuilderButtons[0]->GetPos().x, _starshipBuilderButtons[_starshipBuilderButtons.size() - 1]->GetPos().y + _starshipBuilderButtons[_starshipBuilderButtons.size() - 1]->GetBounds().height * 1.15F);
     _starshipAssemblyBar.SetPosition({_starshipBuilderButtons[0]->GetPos().x, _starshipBuilderButtons[0]->GetPos().y - _starshipAssemblyBar.GetSize().height * 2.75F});
     _starshipAssemblyBar.Update(window, deltaTime);
     _starshipNameButtonText.setPosition(_starshipBuilderButtons[_starshipButtonHoveredOverIndex]->GetPos().x, _starshipBuilderButtons[0]->GetPos().y - 20.0F);
@@ -303,7 +302,7 @@ void GameScene::UpdateStarshipBuilderButtonsHoverStateAndColour()
     for (int i = 0; i < _starshipBuilderButtons.size(); i++)
     {
         auto &assignedStarshipToButton = _buttonStarshipDictionary[_starshipBuilderButtons[i].get()];
-        bool starshipAffordable = _playerScrapCounter >= assignedStarshipToButton->GetBuildCost();
+        bool starshipAffordable = _playerScrapMetalCounter >= assignedStarshipToButton->GetBuildCost();
 
         if(_starshipBuilderButtons[i]->IsCursorHoveredOver() && !_starshipAssemblyBar.InProgress())
         {
@@ -431,13 +430,13 @@ void GameScene::Render(sf::RenderWindow& window)
     {
         shipInfoPanel.Render(window);
     }*/
-    window.draw(_playerScrapText);
+    window.draw(_playerScrapMetalText);
     window.draw(_starshipNameButtonText);
     _player.Render(window);
     _enemy.Render(window);
     //_starship->Render(window);
     _starshipAssemblyBar.Render(window);
-    window.draw(_minimapBorder);
+    minimap->Render(window);
     for (const auto &lane : _spaceLanes)
     {
         lane->Render(window);
@@ -452,7 +451,7 @@ void GameScene::Render(sf::RenderWindow& window)
     }
 
     /// Render the minimap
-    window.setView(_minimapView);
+    window.setView(minimap->GetView());
     window.draw(_backgroundSprite);
     window.draw(_mainViewBorder);
     _player.Render(window);
@@ -551,7 +550,7 @@ bool GameScene::InitStarshipBuilderButtons()
 
 void GameScene::InitPlayerFlagship()
 {
-    _player.CreateStarhip(StarshipFactory::STARSHIP_TYPE::FLAGSHIP);
+    _player.CreateStarship(StarshipFactory::STARSHIP_TYPE::FLAGSHIP);
     _player.PaintFlagship(_predefinedColours.LIGHTBLUE);
     _player.SetFlagshipPosition({Constants::WINDOW_WIDTH * 0.085F, Constants::LEVEL_HEIGHT/2.0f});
 }
@@ -567,13 +566,13 @@ void GameScene::InitEnemyFlagship()
 
 void GameScene::InitPlayerScrapMetalText()
 {
-    _playerScrapText.setString("Scrap Metal: " + std::to_string(_playerScrapCounter));
-    //_playerScrapText.setFillColor(sf::Color(153, 210, 242));
-    _playerScrapText.setFillColor(_predefinedColours.LIGHTBLUE);
-    _playerScrapText.setOutlineColor(sf::Color::Black);
-    _playerScrapText.setOutlineThickness(1);
-    _playerScrapText.setFont(GetRegularFont());
-    _playerScrapText.setCharacterSize(14);
+    _playerScrapMetalText.setString("Scrap Metal: " + std::to_string(_playerScrapMetalCounter));
+    //_scrapMetalText.setFillColor(sf::Color(153, 210, 242));
+    _playerScrapMetalText.setFillColor(_predefinedColours.LIGHTBLUE);
+    _playerScrapMetalText.setOutlineColor(sf::Color::Black);
+    _playerScrapMetalText.setOutlineThickness(1);
+    _playerScrapMetalText.setFont(GetRegularFont());
+    _playerScrapMetalText.setCharacterSize(14);
 }
 
 void GameScene::InitMainView()
@@ -585,19 +584,13 @@ void GameScene::InitMainView()
 
 void GameScene::InitMinimapView()
 {
-    // Initialize the minimap view to the size of the level
-    _minimapView.setSize(Constants::LEVEL_WIDTH,Constants::LEVEL_HEIGHT/3.2F); // Note: Should be 3.0F?
-
-    // Focus the view/camera on the centre point of the level
-    _minimapView.setCenter(Constants::LEVEL_WIDTH/2.0F,Constants::LEVEL_HEIGHT/2.0F);
-    _originalMinimapViewCenter = _minimapView.getCenter();
-
-    // Position minimap at top middle of the window and set its size
-    _minimapView.setViewport(sf::FloatRect(
+    minimap = std::make_unique<Minimap>(
+            Constants::LEVEL_WIDTH,
+            Constants::LEVEL_HEIGHT, // Note: Should be 3.0F?)
             Constants::Minimap::VIEWPORT_LEFT,
             Constants::Minimap::VIEWPORT_TOP,
             Constants::Minimap::VIEWPORT_WIDTH,
-            Constants::Minimap::VIEWPORT_HEIGHT));
+            Constants::Minimap::VIEWPORT_HEIGHT);
 }
 
 void GameScene::InitMainViewBorder()
@@ -606,14 +599,6 @@ void GameScene::InitMainViewBorder()
     _mainViewBorder.setOutlineThickness(10.0f);
     _mainViewBorder.setOutlineColor(_predefinedColours.LIGHTBLUE);
     _mainViewBorder.setFillColor(sf::Color::Transparent);
-}
-
-void GameScene::InitMinimapBorder()
-{
-    _minimapBorder.setSize({Constants::WINDOW_WIDTH * Constants::Minimap::VIEWPORT_WIDTH, Constants::WINDOW_HEIGHT * Constants::Minimap::VIEWPORT_HEIGHT});
-    _minimapBorder.setOutlineThickness(1.0f);
-    _minimapBorder.setOutlineColor({128, 128, 128});
-    _minimapBorder.setFillColor(sf::Color::Red);
 }
 
 void GameScene::InitStarshipPreviewSprites()
@@ -675,40 +660,13 @@ void GameScene::InitEvents()
     _enemy.AddAgnosticObserver({Enemy::EventID::STARSHIP_DESTROYED, enemyStarshipsDestroyedCallback});
 }
 
-sf::Vector2f GameScene::ClampViewCentreBounds(const sf::Vector2f& proposedCenter) const
-{
-    sf::FloatRect levelBounds(0, 0, Constants::LEVEL_WIDTH, Constants::LEVEL_HEIGHT); // Example level bounds
-    sf::Vector2f viewSize = _minimapView.getSize();
-    sf::Vector2f halfViewSize = viewSize / 2.0f;
-
-    // Calculate the permissible bounds for the view center
-    float minX = levelBounds.left + halfViewSize.x;
-    float maxX = levelBounds.left + levelBounds.width - halfViewSize.x;
-    float minY = levelBounds.top + halfViewSize.y;
-    float maxY = levelBounds.top + levelBounds.height - halfViewSize.y;
-
-    // Constrain the center within the permissible bounds
-    float constrainedX = std::max(minX, std::min(proposedCenter.x, maxX));
-    float constrainedY = std::max(minY, std::min(proposedCenter.y, maxY));
-
-    return {constrainedX, constrainedY};
-}
-
-void GameScene::ResetMinimapView()
-{
-    _minimapView.setCenter(_originalMinimapViewCenter);
-    float zoomAdjustment = _originalZoomLevel / _currentZoomLevel;
-    _minimapView.setSize(_minimapView.getSize() * zoomAdjustment);
-    _currentZoomLevel = _originalZoomLevel;
-}
-
 void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()
 {
     if(_starshipTypeTrainingQueue.empty())
         return;
 
     //_player.CreateStarship(static_cast<StarshipFactory::STARSHIP_TYPE>(_starshipButtonSelectedIndex));
-    _player.CreateStarhip(_starshipTypeTrainingQueue.front());
+    _player.CreateStarship(_starshipTypeTrainingQueue.front());
     auto starshipXPos = _spaceLanes[_spaceLaneStarshipDeploymentQueue.front()]->GetPos().x + 25.0F;
     auto starshipYPos = _spaceLanes[_spaceLaneStarshipDeploymentQueue.front()]->GetPos().y +
                      _spaceLanes[_spaceLaneStarshipDeploymentQueue.front()]->GetSize().y / 2.0F;
@@ -780,35 +738,12 @@ void GameScene::HandleStarshipPlacementMouseInput(const sf::Event &event)
     }
 }
 
-void GameScene::HandleMinimapInteractionsMouseInput(const sf::RenderWindow &window, const sf::Event &event)
-{
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto worldPositionOfMouse = window.mapPixelToCoords(mouse_pos, _mainView); // Mouse position translated into world coordinates
-    bool isMouseCursorOnMinimap = _minimapBorder.getGlobalBounds().contains(worldPositionOfMouse);
-
-    if(isMouseCursorOnMinimap)
-    {
-        if (event.type == sf::Event::MouseWheelScrolled)
-        {
-            HandleMinimapZooming(window, event, mouse_pos);
-        }
-        if (_currentZoomLevel < 1.0f)
-        {
-            HandleMinimapPanning(window, event, mouse_pos);
-        }
-    }
-    else
-    {
-        ResetMinimapView();
-    }
-}
-
 void GameScene::HandleStarshipBuilderButtonsInteractionMouseInput(const sf::Event &event)
 {
     for (int i = 0; i < _starshipBuilderButtons.size(); i++)
     {
         auto &assignedStarshipToButton = _buttonStarshipDictionary[_starshipBuilderButtons[i].get()];
-        bool starshipAffordable = _playerScrapCounter >= assignedStarshipToButton->GetBuildCost();
+        bool starshipAffordable = _playerScrapMetalCounter >= assignedStarshipToButton->GetBuildCost();
 
         if (_starshipBuilderButtons[i]->IsCursorHoveredOver() && starshipAffordable)
         {
@@ -825,59 +760,11 @@ void GameScene::HandleStarshipBuilderButtonsInteractionMouseInput(const sf::Even
     }
 }
 
-void GameScene::HandleMinimapPanning(const sf::RenderWindow &window, const sf::Event &event, const sf::Vector2i &mouse_pos)
-{
-    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
-    {
-        _canMinimapViewPan = true;
-        _initialMousePosition = mouse_pos;
-    }
-
-    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
-    {
-        _canMinimapViewPan = false;
-    }
-
-    if (event.type == sf::Event::MouseMoved && _canMinimapViewPan)
-    {
-        UpdateMinimapPanPosition(window);
-    }
-}
-
-void GameScene::UpdateMinimapPanPosition(const sf::RenderWindow &window)
-{
-    sf::Vector2i currentMousePosition = sf::Mouse::getPosition(window);
-    sf::Vector2f delta = window.mapPixelToCoords(_initialMousePosition, _minimapView) -
-                         window.mapPixelToCoords(currentMousePosition, _minimapView);
-
-    sf::Vector2f newCenter = _minimapView.getCenter() + delta;
-    _minimapView.setCenter(ClampViewCentreBounds(newCenter));
-    _initialMousePosition = currentMousePosition;
-}
-
-void GameScene::HandleMinimapZooming(const sf::RenderWindow &window, const sf::Event &event, const sf::Vector2i &mouse_pos)
-{
-    float zoomFactor = (event.mouseWheelScroll.delta > 0) ? 0.9f : 1.1f;
-    float newZoomLevel = _currentZoomLevel * zoomFactor;
-    bool isZoomLevelWithinConstraints = newZoomLevel >= 0.15f && newZoomLevel <= 1.0f; // MAX ZOOM | MIN ZOOM
-
-    if (isZoomLevelWithinConstraints)
-    {
-        sf::Vector2f beforeZoom = window.mapPixelToCoords(mouse_pos, _minimapView);
-        _minimapView.zoom(zoomFactor);
-        _currentZoomLevel = newZoomLevel;
-        sf::Vector2f afterZoom = window.mapPixelToCoords(mouse_pos, _minimapView);
-        sf::Vector2f offset = beforeZoom - afterZoom;
-        sf::Vector2f newCenter = _minimapView.getCenter() + offset;
-        _minimapView.setCenter(ClampViewCentreBounds(newCenter));
-    }
-}
-
 void GameScene::BeginStarshipDeploymentProcess(int currentSpaceLaneSelectedIndex)
 {
     auto& assignedStarshipToButton = _buttonStarshipDictionary[_starshipBuilderButtons[_starshipButtonSelectedIndex].get()];
-    _playerScrapCounter -= static_cast<int>(assignedStarshipToButton->GetBuildCost());
-    _playerScrapText.setString("Scrap Metal: " + std::to_string(_playerScrapCounter));
+    _playerScrapMetalCounter -= static_cast<int>(assignedStarshipToButton->GetBuildCost());
+    _playerScrapMetalText.setString("Scrap Metal: " + std::to_string(_playerScrapMetalCounter));
 
     _starshipTypeTrainingQueue.push(static_cast<StarshipFactory::STARSHIP_TYPE>(_starshipButtonSelectedIndex));
     _spaceLaneStarshipDeploymentQueue.push(currentSpaceLaneSelectedIndex);
@@ -904,10 +791,10 @@ void GameScene::StartNextStarshipDeployment()
 void GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData)
 {
     auto destroyedEnemyStarshipData = std::any_cast<Enemy::StarshipDataToSend>(eventData); // NOTE: Don't know if this is a good way of handling this problem? (making a public struct within enemy class to encapsulate required data)
-    _playerScrapCounter += static_cast<int>(destroyedEnemyStarshipData.BuildCost);
-    _playerScrapText.setString("Scrap Metal: " + std::to_string(_playerScrapCounter));
+    _playerScrapMetalCounter += static_cast<int>(destroyedEnemyStarshipData.BuildCost);
+    _playerScrapMetalText.setString("Scrap Metal: " + std::to_string(_playerScrapMetalCounter));
 
-    auto& scrapMetalPopup = _scrapMetalAcquiredPopUpEffect.emplace_back(std::make_unique<UIPopUpEffect>(destroyedEnemyStarshipData.BuildCost, destroyedEnemyStarshipData.DeathLocation));
+    auto& scrapMetalPopup = _scrapMetalAcquiredPopUpEffect.emplace_back(std::make_unique<PopupText>(destroyedEnemyStarshipData.BuildCost, destroyedEnemyStarshipData.DeathLocation));
     scrapMetalPopup->SetColour(_predefinedColours.LIGHTBLUE);
     scrapMetalPopup->SetCharSize(15);
     scrapMetalPopup->SetIconImage("Resources/Textures/pixil-frame-0.png");

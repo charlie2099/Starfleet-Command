@@ -7,7 +7,7 @@
 #include <any>
 #include <memory>
 
-#include "Sprites/UI/Effects/UIPopUpEffect.hpp"
+#include "Sprites/UI/Effects/PopupText.hpp"
 #include "SpriteComponent.hpp"
 
 class HealthComponent
@@ -47,7 +47,7 @@ private:
     void InvokeBasicEvent(EventID eventId);
     void InvokeAgnosticEvent(EventID eventId, const std::any& anyData);
     int _health{};
-    std::vector<std::unique_ptr<UIPopUpEffect>> _damagePopUpEffect;
+    std::vector<std::unique_ptr<PopupText>> _damagePopUpEffect;
     std::multimap<EventID, std::function<void()>> _basicObservers{};
     std::multimap<EventID, std::function<void(std::any)>> _agnosticObservers{};
 };

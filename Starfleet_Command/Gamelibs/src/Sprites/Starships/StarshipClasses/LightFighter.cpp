@@ -9,7 +9,7 @@ LightFighter::LightFighter()
     _trainingSpeed = 0.6f;
     _damage = 10;
     _damageScaleFactor = 0.10f;
-    _fireRate = 1.0f;
+    _fireRate = 0.5f;
     _attackRange = 400.0F;
     _buildCost = 100;
     _projectileSize = Projectile::SMALL;

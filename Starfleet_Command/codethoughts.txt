@@ -9,53 +9,19 @@
 =================PSEUDOCODE==================
 ============================================
 
-__Queuing Ships__
-IF mouseOver shipButtons AND shipsInQueue < 5
-        add ship to queue (or add the type to queue?) (It just needs to know what type of ship it is creating next)
-        Begin deploying
-        IF deploymentComplete
-                create ship (whatever is first in queue)
-                remove from queue
-
-
-shipButtons still need to be draggable while queue < 5
-
-IF after training is complete queue is not empty
-        call ship creation method again until queue is empty
-
-
-IF mouseBtnPressed on shipButton AND not dragging
-        set ship selected index
-        set colour of selected ship button
-        set dragging to true
-
-
-IF shipIsTraining && shipDroppedOnToLane
-        queue that next ship
+__Minimap__
+1.) Minimap no longer smoothly moving when main view is translated? Minimap movement probs need to be updated AFTER the mainview pos has been updated?
+2.) Minimap is completely red?
 
 
 
-IF shipBuilderButton selected
-        set shipButtonSelectedIndex
-
-
-IF shipBuilderButton released AND spaceLaneSelected
-        set spaceLaneSelectedIndex
-        begin starship deployment process
-                IF shipAssemblyInProgress
-                        queue ship
-
-
-
-
-ONLY when the shipAssemblyBar is FINISHED are the queues popped. Meaning, queue.front() won't be updated until AFTER the pop methods are called.
-
-WHILE the StartNextShipDeployment() method is being ran the FIRST time, AND player queues another ship, its simply queued but happens (for now)
-
-WHEN SpawnStarshipFromShipyard_OnStarshipDeploymentComplete() is called after training of the first ship is complete, the queues are popped and the shipAssemblyBar reset. Then StartNextStarshipDeployment() is called again (if queue size > 0, which it is in this case).
-
-NOW, this method SHOULD run correctly because the front of the queues have been updated since they were just popped. However, the shipAssemblyBar does not reappear and the queued ship(s) don't begin training for some reason.
-
+__ScrapMetalManager__
+- AddScrap()
+- RemoveScrap()
+- GetScrap()
+- Text
+- Counter
+- Popup effect
 
 ============================================
 ==============USEFUL INFORMATION===============

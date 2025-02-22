@@ -42,7 +42,7 @@ std::unique_ptr<IStarship> &Player::GetFlagship()
     return starship[0];
 }
 
-void Player::CreateStarhip(StarshipFactory::STARSHIP_TYPE type)
+void Player::CreateStarship(StarshipFactory::STARSHIP_TYPE type)
 {
     std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(type);
     bool atLeastOneShipExists = !starship.empty();

@@ -17,7 +17,9 @@ class Projectile
     {
         BLUE,
         GREEN,
-        RED
+        RED,
+        ORANGE,
+        WHITE
     };
 
  public:
