@@ -10,7 +10,9 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/src/Sprites/UI/ProgressBar.cpp
         Gamelibs/include/Sprites/UI/ProgressBar.hpp
         Gamelibs/Minimap.cpp
-        Gamelibs/Minimap.hpp)
+        Gamelibs/Minimap.hpp
+        Gamelibs/ScrapMetalManager.cpp
+        Gamelibs/ScrapMetalManager.hpp)
 
 include_directories(Gamelibs/include)
 include_directories(Gamelibs/src)

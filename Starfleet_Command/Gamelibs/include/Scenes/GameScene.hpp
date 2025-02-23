@@ -12,6 +12,7 @@
 #include "Sprites/UI/ProgressBar.hpp"
 #include "queue"
 #include "../../Minimap.hpp"
+#include "../../ScrapMetalManager.hpp"
 
 class GameScene : public Scene
 {
@@ -28,7 +29,6 @@ private:
     void InitRandomDistributions();
     bool InitBackground();
     bool InitStarshipBuilderButtons();
-    void InitPlayerScrapMetalText();
     void InitStarshipNameButtonText();
     void InitPlayerFlagship();
     void InitSpaceLanes();
@@ -47,7 +47,6 @@ private:
     void StartNextStarshipDeployment();
 
     /// Update functions
-    void UpdateScrapMetalPopupEffectLifeCycle(sf::RenderWindow &window, sf::Time &deltaTime);
     void UpdateMainViewMovement(const sf::RenderWindow &window, const sf::Time &deltaTime, const sf::Vector2i &mousePos);
     void UpdateStarshipBuilderButtonsHoverStateAndColour();
     void UpdateStarshipBuilderButtonPositions(sf::RenderWindow &window);
@@ -72,11 +71,8 @@ private:
 
     /// HUD
     ProgressBar _starshipAssemblyBar;
-    sf::Text _playerScrapMetalText;
     sf::Text _starshipNameButtonText;
     std::vector<sf::Text> _starshipCostText;
-    std::vector<std::unique_ptr<PopupText>> _scrapMetalAcquiredPopUpEffect;
-    int _playerScrapMetalCounter = 2500;
 
     /// GUI
     std::vector<std::unique_ptr<Button>> _starshipBuilderButtons;
@@ -140,6 +136,9 @@ private:
     sf::Clock _enemySpawnTimerClock;
     float _enemySpawnTimer = 3.0f;
     float _enemySpawnRate = 5.0f;
+
+    /// Other
+    std::unique_ptr<ScrapMetalManager> _scrapMetalManager;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

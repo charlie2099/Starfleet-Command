@@ -11,8 +11,13 @@ class Enemy
 public:
     enum EventID
     {
-        SHIP_SPAWNED = 1,
+        STARSHIP_SPAWNED = 1,
         STARSHIP_DESTROYED = 2 // _starship class?
+    };
+    struct StarshipDestroyedData
+    {
+        sf::Vector2<float> DeathLocation{};
+        int BuildCost{};
     };
 
     Enemy () = default;
@@ -34,13 +39,7 @@ public:
 
     std::vector<std::unique_ptr<IStarship>> &GetStarships();
     std::unique_ptr<IStarship> &GetFlagship();
-    sf::FloatRect  GetFlagshipBounds() const { return starship[0]->GetSpriteComponent().GetSprite().getGlobalBounds(); };
-
-    struct StarshipDataToSend
-    {
-        sf::Vector2<float> DeathLocation{};
-        int BuildCost{};
-    };
+    sf::FloatRect  GetFlagshipBounds() const { return starship[0]->GetSpriteComponent().GetSprite().getGlobalBounds(); }
 
 private:
     void InvokeBasicEvent(EventID eventId);

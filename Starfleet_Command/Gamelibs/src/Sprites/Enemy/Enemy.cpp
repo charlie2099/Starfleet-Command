@@ -11,11 +11,10 @@ void Enemy::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         if(starship[i]->GetHealthComponent().GetHealth() <= 0)
         {
-            StarshipDataToSend dataToSend;
-            dataToSend.DeathLocation = starship[i]->GetPos();
-            dataToSend.BuildCost = starship[i]->GetBuildCost();
-            InvokeAgnosticEvent(STARSHIP_DESTROYED, dataToSend);
-
+            StarshipDestroyedData destroyedStarshipData;
+            destroyedStarshipData.DeathLocation = starship[i]->GetPos();
+            destroyedStarshipData.BuildCost = starship[i]->GetBuildCost();
+            InvokeAgnosticEvent(STARSHIP_DESTROYED, destroyedStarshipData);
             starship.erase(starship.begin() + i);
         }
     }
@@ -40,8 +39,7 @@ void Enemy::CreateStarship(StarshipFactory::STARSHIP_TYPE type)
         newStarship->SetProjectileColour(flagship->GetColour());
     }
     starship.emplace_back(std::move(newStarship));
-    InvokeBasicEvent(SHIP_SPAWNED); // QUESTION: Are these both needed? Can just agnostic be used?
-    InvokeAgnosticEvent(SHIP_SPAWNED, this);
+    InvokeBasicEvent(STARSHIP_SPAWNED);
 }
 
 void Enemy::PaintFlagship(sf::Color colour)

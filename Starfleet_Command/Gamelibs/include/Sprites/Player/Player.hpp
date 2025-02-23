@@ -38,7 +38,6 @@ private:
     std::vector<std::unique_ptr<IStarship>> starship{};
     std::multimap<EventID, std::function<void()>> _basicObservers{};
     std::multimap<EventID, std::function<void(std::any)>> _agnosticObservers{};
-    // ScrapMetalManager _scrapMetalManager;
 };
 
 #endif //STARFLEET_COMMAND_PLAYER_HPP

@@ -6,7 +6,7 @@ bool GameScene::Init()
     InitRandomDistributions();
     InitBackground();
     InitStarshipBuilderButtons();
-    InitPlayerScrapMetalText();
+    _scrapMetalManager = std::make_unique<ScrapMetalManager>(GetRegularFont(), _predefinedColours.LIGHTBLUE, 2500);
     InitStarshipNameButtonText();
     InitPlayerFlagship();
     InitSpaceLanes();
@@ -28,13 +28,13 @@ bool GameScene::Init()
     ///     _starship.Update();
     ///     _starship.Render();
 
-  /*  /// Whenever a SHIP_SPAWNED event occurs, the TestFncForObserverToCall method is called
-    /// A SHIP_SPAWNED event is invoked in the player CreateStarship method.
+  /*  /// Whenever a STARSHIP_SPAWNED event occurs, the TestFncForObserverToCall method is called
+    /// A STARSHIP_SPAWNED event is invoked in the player CreateStarship method.
     auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
-    _player.AddBasicObserver({Player::EventID::SHIP_SPAWNED, callbackFnc1});
+    _player.AddBasicObserver({Player::EventID::STARSHIP_SPAWNED, callbackFnc1});
 
     auto callbackFnc2 = std::bind(&TestClass::OnEvent, testClass, std::placeholders::_1);
-    _player.AddObserver2({Player::EventID::SHIP_SPAWNED, callbackFnc2});*/
+    _player.AddObserver2({Player::EventID::STARSHIP_SPAWNED, callbackFnc2});*/
 
     return true;
 }
@@ -57,13 +57,13 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     auto mousePos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
     auto worldPositionOfMouse = window.mapPixelToCoords(mousePos, _mainView); // Mouse _position translated into world coordinates
-    UpdateScrapMetalPopupEffectLifeCycle(window, deltaTime);
+    _scrapMetalManager->Update(window, deltaTime);
     UpdateMainViewMovement(window, deltaTime, mousePos);
     UpdateStarshipBuilderButtonsHoverStateAndColour();
     UpdateStarshipBuilderButtonPositions(window);
     _mainViewBorder.setPosition(_mainView.getCenter().x - _mainViewBorder.getSize().x/2.0F, _mainView.getCenter().y - _mainViewBorder.getSize().y/2.0F);
     minimap->Update(_mainView, window, deltaTime);
-    _playerScrapMetalText.setPosition(_starshipBuilderButtons[0]->GetPos().x, _starshipBuilderButtons[_starshipBuilderButtons.size() - 1]->GetPos().y + _starshipBuilderButtons[_starshipBuilderButtons.size() - 1]->GetBounds().height * 1.15F);
+    _scrapMetalManager->SetTextPosition(_starshipBuilderButtons[0]->GetPos().x, _starshipBuilderButtons[_starshipBuilderButtons.size() - 1]->GetPos().y + _starshipBuilderButtons[_starshipBuilderButtons.size() - 1]->GetBounds().height * 1.15F);
     _starshipAssemblyBar.SetPosition({_starshipBuilderButtons[0]->GetPos().x, _starshipBuilderButtons[0]->GetPos().y - _starshipAssemblyBar.GetSize().height * 2.75F});
     _starshipAssemblyBar.Update(window, deltaTime);
     _starshipNameButtonText.setPosition(_starshipBuilderButtons[_starshipButtonHoveredOverIndex]->GetPos().x, _starshipBuilderButtons[0]->GetPos().y - 20.0F);
@@ -187,6 +187,59 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     }*/
 }
 
+void GameScene::Render(sf::RenderWindow& window)
+{
+    /// Render the main view
+    window.setView(_mainView);
+    window.draw(_backgroundSprite);
+    for (auto& star : _parallaxStars)
+    {
+        window.draw(star.circleShape);
+    }
+    for(auto& button : _starshipBuilderButtons)
+    {
+        button->Render(window);
+    }
+    for(auto& text : _starshipCostText)
+    {
+        window.draw(text);
+    }
+    /*for (auto& shipInfoPanel : _shipInfoPanels)
+    {
+        shipInfoPanel.Render(window);
+    }*/
+    window.draw(_starshipNameButtonText);
+    _player.Render(window);
+    _enemy.Render(window);
+    //_starship->Render(window);
+    _starshipAssemblyBar.Render(window);
+    minimap->Render(window);
+    for (const auto &lane : _spaceLanes)
+    {
+        lane->Render(window);
+    }
+    if(_isStarshipPreviewSpriteVisible)
+    {
+        _starshipPreviewSprites[_starshipButtonSelectedIndex].Render(window);
+    }
+    _scrapMetalManager->Render(window);
+
+    /// Render the minimap
+    window.setView(minimap->GetView());
+    window.draw(_backgroundSprite);
+    window.draw(_mainViewBorder);
+    _player.Render(window);
+    _enemy.Render(window);
+    for (const auto &lane : _spaceLanes)
+    {
+        lane->Render(window);
+    }
+
+    /// Draw cursor over every view
+    window.setView(_mainView);
+    _cursor.Render(window);
+}
+
 void GameScene::UpdateEnemySpawner()
 {// Initialise enemySpawnTimer to the current elapsed time
     if(_enemySpawnTimer < _enemySpawnTimerClock.getElapsedTime().asSeconds())
@@ -302,7 +355,8 @@ void GameScene::UpdateStarshipBuilderButtonsHoverStateAndColour()
     for (int i = 0; i < _starshipBuilderButtons.size(); i++)
     {
         auto &assignedStarshipToButton = _buttonStarshipDictionary[_starshipBuilderButtons[i].get()];
-        bool starshipAffordable = _playerScrapMetalCounter >= assignedStarshipToButton->GetBuildCost();
+        bool starshipAffordable =
+                _scrapMetalManager->GetCurrentScrapMetalAmount() >= assignedStarshipToButton->GetBuildCost();
 
         if(_starshipBuilderButtons[i]->IsCursorHoveredOver() && !_starshipAssemblyBar.InProgress())
         {
@@ -342,22 +396,6 @@ void GameScene::UpdateStarshipBuilderButtonsHoverStateAndColour()
         if(isQueueFull)
         {
             _starshipBuilderButtons[i]->SetColour(_predefinedColours.LIGHTORANGE);
-        }
-    }
-}
-
-void GameScene::UpdateScrapMetalPopupEffectLifeCycle(sf::RenderWindow &window, sf::Time &deltaTime)
-{
-    for(auto& popup : _scrapMetalAcquiredPopUpEffect)
-    {
-        popup->Update(window, deltaTime);
-    }
-
-    for (int i = 0; i < _scrapMetalAcquiredPopUpEffect.size(); ++i)
-    {
-        if(_scrapMetalAcquiredPopUpEffect[i]->IsFaded())
-        {
-            _scrapMetalAcquiredPopUpEffect.erase(_scrapMetalAcquiredPopUpEffect.begin() + i);
         }
     }
 }
@@ -407,63 +445,6 @@ void GameScene::UpdateBackgroundStarPositions(const sf::Time &deltaTime)
             star.position.y = std::rand() % (int)Constants::LEVEL_HEIGHT/2.0F + Constants::WINDOW_HEIGHT/2.0F;
         }
     }
-}
-
-void GameScene::Render(sf::RenderWindow& window)
-{
-    /// Render the main view
-    window.setView(_mainView);
-    window.draw(_backgroundSprite);
-    for (auto& star : _parallaxStars)
-    {
-        window.draw(star.circleShape);
-    }
-    for(auto& button : _starshipBuilderButtons)
-    {
-        button->Render(window);
-    }
-    for(auto& text : _starshipCostText)
-    {
-        window.draw(text);
-    }
-    /*for (auto& shipInfoPanel : _shipInfoPanels)
-    {
-        shipInfoPanel.Render(window);
-    }*/
-    window.draw(_playerScrapMetalText);
-    window.draw(_starshipNameButtonText);
-    _player.Render(window);
-    _enemy.Render(window);
-    //_starship->Render(window);
-    _starshipAssemblyBar.Render(window);
-    minimap->Render(window);
-    for (const auto &lane : _spaceLanes)
-    {
-        lane->Render(window);
-    }
-    if(_isStarshipPreviewSpriteVisible)
-    {
-        _starshipPreviewSprites[_starshipButtonSelectedIndex].Render(window);
-    }
-    for(auto& popup : _scrapMetalAcquiredPopUpEffect)
-    {
-        popup->Render(window);
-    }
-
-    /// Render the minimap
-    window.setView(minimap->GetView());
-    window.draw(_backgroundSprite);
-    window.draw(_mainViewBorder);
-    _player.Render(window);
-    _enemy.Render(window);
-    for (const auto &lane : _spaceLanes)
-    {
-        lane->Render(window);
-    }
-
-    /// Draw cursor over every view
-    window.setView(_mainView);
-    _cursor.Render(window);
 }
 
 void GameScene::InitRandomDistributions()
@@ -532,7 +513,7 @@ bool GameScene::InitStarshipBuilderButtons()
         _starshipCostText[i].setFont(GetRegularFont());
         _starshipCostText[i].setCharacterSize(8);
 
-        /*_shipInfoPanels[i].SetText("Name: ");
+        /*_shipInfoPanels[i].UpdateScrapText("Name: ");
         _shipInfoPanels[i].SetTextOffset(Panel::TextAlign::OFFSET, 10);
         _shipInfoPanels[i].SetTextSize(10);
         _shipInfoPanels[i].SetSize(15, _starshipBuilderButtons[i]->GetBounds().height*1.0F);
@@ -562,17 +543,6 @@ void GameScene::InitEnemyFlagship()
     auto flagshipXpos = _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x + _enemy.GetFlagshipBounds().width/1.4F;
     _enemy.SetFlagshipPosition({flagshipXpos, Constants::LEVEL_HEIGHT / 2.0f});
     _enemy.SetFlagshipRotation(180);
-}
-
-void GameScene::InitPlayerScrapMetalText()
-{
-    _playerScrapMetalText.setString("Scrap Metal: " + std::to_string(_playerScrapMetalCounter));
-    //_scrapMetalText.setFillColor(sf::Color(153, 210, 242));
-    _playerScrapMetalText.setFillColor(_predefinedColours.LIGHTBLUE);
-    _playerScrapMetalText.setOutlineColor(sf::Color::Black);
-    _playerScrapMetalText.setOutlineThickness(1);
-    _playerScrapMetalText.setFont(GetRegularFont());
-    _playerScrapMetalText.setCharacterSize(14);
 }
 
 void GameScene::InitMainView()
@@ -743,7 +713,7 @@ void GameScene::HandleStarshipBuilderButtonsInteractionMouseInput(const sf::Even
     for (int i = 0; i < _starshipBuilderButtons.size(); i++)
     {
         auto &assignedStarshipToButton = _buttonStarshipDictionary[_starshipBuilderButtons[i].get()];
-        bool starshipAffordable = _playerScrapMetalCounter >= assignedStarshipToButton->GetBuildCost();
+        bool starshipAffordable = _scrapMetalManager->GetCurrentScrapMetalAmount() >= assignedStarshipToButton->GetBuildCost();
 
         if (_starshipBuilderButtons[i]->IsCursorHoveredOver() && starshipAffordable)
         {
@@ -763,8 +733,8 @@ void GameScene::HandleStarshipBuilderButtonsInteractionMouseInput(const sf::Even
 void GameScene::BeginStarshipDeploymentProcess(int currentSpaceLaneSelectedIndex)
 {
     auto& assignedStarshipToButton = _buttonStarshipDictionary[_starshipBuilderButtons[_starshipButtonSelectedIndex].get()];
-    _playerScrapMetalCounter -= static_cast<int>(assignedStarshipToButton->GetBuildCost());
-    _playerScrapMetalText.setString("Scrap Metal: " + std::to_string(_playerScrapMetalCounter));
+    _scrapMetalManager->SpendScrap(static_cast<int>(assignedStarshipToButton->GetBuildCost()));
+    _scrapMetalManager->UpdateScrapText("Scrap Metal: " + std::to_string(_scrapMetalManager->GetCurrentScrapMetalAmount()));
 
     _starshipTypeTrainingQueue.push(static_cast<StarshipFactory::STARSHIP_TYPE>(_starshipButtonSelectedIndex));
     _spaceLaneStarshipDeploymentQueue.push(currentSpaceLaneSelectedIndex);
@@ -790,13 +760,9 @@ void GameScene::StartNextStarshipDeployment()
 
 void GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData)
 {
-    auto destroyedEnemyStarshipData = std::any_cast<Enemy::StarshipDataToSend>(eventData); // NOTE: Don't know if this is a good way of handling this problem? (making a public struct within enemy class to encapsulate required data)
-    _playerScrapMetalCounter += static_cast<int>(destroyedEnemyStarshipData.BuildCost);
-    _playerScrapMetalText.setString("Scrap Metal: " + std::to_string(_playerScrapMetalCounter));
-
-    auto& scrapMetalPopup = _scrapMetalAcquiredPopUpEffect.emplace_back(std::make_unique<PopupText>(destroyedEnemyStarshipData.BuildCost, destroyedEnemyStarshipData.DeathLocation));
-    scrapMetalPopup->SetColour(_predefinedColours.LIGHTBLUE);
-    scrapMetalPopup->SetCharSize(15);
-    scrapMetalPopup->SetIconImage("Resources/Textures/pixil-frame-0.png");
+    auto destroyedEnemyStarshipData = std::any_cast<Enemy::StarshipDestroyedData>(eventData); // NOTE: Don't know if this is a good way of handling this problem? (made a public struct within enemy class to encapsulate required starship data)
+    _scrapMetalManager->CollectScrap(static_cast<int>(destroyedEnemyStarshipData.BuildCost));
+    _scrapMetalManager->UpdateScrapText("Scrap Metal: " + std::to_string(_scrapMetalManager->GetCurrentScrapMetalAmount()));
+    _scrapMetalManager->CreatePopup(destroyedEnemyStarshipData.BuildCost, destroyedEnemyStarshipData.DeathLocation);
 }
 

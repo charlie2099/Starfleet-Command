@@ -9,12 +9,6 @@
 =================PSEUDOCODE==================
 ============================================
 
-__Minimap__
-1.) Minimap no longer smoothly moving when main view is translated? Minimap movement probs need to be updated AFTER the mainview pos has been updated?
-2.) Minimap is completely red?
-
-
-
 __ScrapMetalManager__
 - AddScrap()
 - RemoveScrap()
@@ -22,6 +16,12 @@ __ScrapMetalManager__
 - Text
 - Counter
 - Popup effect
+
+
+player.AddScrapMetal()
+player.GetScrapMetal()
+
+
 
 ============================================
 ==============USEFUL INFORMATION===============
