@@ -32,6 +32,7 @@ class Projectile
     SpriteComponent& GetSpriteComponent();
     Size GetSize() { return _size; }
     Colour GetColour() { return _colour; }
+    sf::Vector2<float> GetPos() { return _spriteComponent.GetPos(); }
 
  private:
     SpriteComponent _spriteComponent;

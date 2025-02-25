@@ -12,7 +12,8 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/Minimap.cpp
         Gamelibs/Minimap.hpp
         Gamelibs/ScrapMetalManager.cpp
-        Gamelibs/ScrapMetalManager.hpp)
+        Gamelibs/ScrapMetalManager.hpp
+)
 
 include_directories(Gamelibs/include)
 include_directories(Gamelibs/src)

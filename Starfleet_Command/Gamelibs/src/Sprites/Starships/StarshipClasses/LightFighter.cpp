@@ -104,16 +104,9 @@ void LightFighter::Render(sf::RenderWindow &window)
     }
 }
 
-void LightFighter::MoveTowards(sf::Vector2f target, sf::Time deltaTime)
+void LightFighter::Move(float xOffset, float yOffset)
 {
-    auto& ship_sprite = _spriteComponent.GetSprite();
-
-    sf::Vector2f ship_dir = Chilli::Vector::Normalize(target - ship_sprite.getPosition());
-    sf::Vector2f ship_move = ship_dir * _speed;
-    float ship_rot = atan2(ship_dir.y, ship_dir.x) * 180 / 3.141;
-
-    ship_sprite.move(ship_move * deltaTime.asSeconds());
-    ship_sprite.setRotation(ship_rot);
+    _spriteComponent.Move(xOffset,  yOffset);
 }
 
 void LightFighter::ShootAt(float fireRate, sf::Vector2f target)
@@ -130,6 +123,16 @@ void LightFighter::ShootAt(float fireRate, sf::Vector2f target)
 
         _nextFireTime += fireRate;
     }
+}
+
+void LightFighter::DestroyProjectile(int projectileIndex)
+{
+    _projectile.erase(_projectile.begin() + projectileIndex);
+}
+
+void LightFighter::TakeDamage(float damageAmount)
+{
+    _healthComponent.TakeDamage(damageAmount, GetPos());
 }
 
 void LightFighter::SetHealth(float health)
@@ -179,21 +182,17 @@ void LightFighter::SetRotation(float rot)
     _rotation = rot;
 }
 
+bool LightFighter::IsProjectileOutOfRange(int projectileIndex)
+{
+    return Chilli::Vector::Distance(GetPos(), _projectile[projectileIndex]->GetPos()) > Constants::WINDOW_WIDTH;
+}
 
+bool LightFighter::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship)
+{
+    return Chilli::Vector::Distance(GetPos(), enemyStarship->GetPos()) <= GetAttackRange();
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+bool LightFighter::CollidesWith(sf::Rect<float> spriteBounds)
+{
+    return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
+}

@@ -74,106 +74,86 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     //_starship->Update(window, deltaTime);
     UpdateEnemySpawner();
 
-    // Move enemy starships, and shoot at player starships when in range
-    for (int i = 1; i < _enemy.GetStarships().size(); ++i)
+    /// Enemy starship movement and shooting
+    for (int i = 1; i < _enemy.GetStarshipCount(); ++i)
     {
-        auto& enemySprite = _enemy.GetStarships()[i]->GetSpriteComponent().GetSprite();
-        enemySprite.move(_enemy.GetStarships()[i]->GetSpeed() * deltaTime.asSeconds() * -1, 0);
+        if(_enemy.GetStarships()[i] == nullptr) return;
+
+        auto& enemyStarship = _enemy.GetStarships()[i];
+        _enemy.MoveStarship(i, {_enemy.GetStarships()[i]->GetSpeed() * deltaTime.asSeconds() * -1, 0});
+
+        for(int j = 0; j < enemyStarship->GetProjectileCount(); j++)
+        {
+            if(enemyStarship->IsProjectileOutOfRange(j))
+            {
+                enemyStarship->DestroyProjectile(j);
+            }
+        }
 
         for(const auto &playerStarship : _player.GetStarships())
         {
-            if(playerStarship != nullptr)
+            auto& playerSprite = playerStarship->GetSpriteComponent().GetSprite();
+            if(enemyStarship->IsEnemyInRange(playerStarship))
             {
-                auto& playerSprite = playerStarship->GetSpriteComponent().GetSprite();
+                _enemy.GetStarships()[i]->SetSpeed(25);
+                enemyStarship->ShootAt(enemyStarship->GetFireRate(), playerSprite.getPosition());
+            }
 
-                // Move towards and shoot at player starship if less than 400 pixels away from it
-                if(Chilli::Vector::Distance(playerSprite.getPosition(), enemySprite.getPosition()) <=
-                        _enemy.GetStarships()[i]->GetAttackRange())
+            for(int k = 0; k < _enemy.GetStarships()[i]->GetProjectileCount(); k++)
+            {
+                auto& enemyBullet = _enemy.GetStarships()[i]->GetProjectile()[k]->GetSpriteComponent();
+                if(playerStarship->CollidesWith(enemyBullet.GetSprite().getGlobalBounds()))
                 {
-                    _enemy.GetStarships()[i]->SetSpeed(25);
-                    //_enemy.GetStarships()[i]->MoveTowards(playerSprite.getPosition(), deltaTime);
-
-                    auto& enemyStarships = _enemy.GetStarships()[i];
-                    enemyStarships->ShootAt(enemyStarships->GetFireRate(), playerSprite.getPosition());
-                }
-
-                for(int k = 0; k < _enemy.GetStarships()[i]->GetProjectile().size(); k++)
-                {
-                    auto& enemyBullet = _enemy.GetStarships()[i]->GetProjectile()[k]->GetSpriteComponent();
-
-                    // Destroy projectiles if collided with enemy starship, and inflict damage to enemy starship
-                    if(playerSprite.getGlobalBounds().intersects(enemyBullet.GetSprite().getGlobalBounds()))
-                    {
-                        //UpdateDistribution("Starship damage", 10, 80);
-                        int randDamage = _randomValueDistributions[STARSHIP_DAMAGE](_randomGenerator);
-
-                        //_enemy.GetStarships()[playerStarship]->TakeDamage(_player.GetStarships()[i]->GetDamage());
-                        playerStarship->GetHealthComponent().TakeDamage((float)randDamage * _enemy.GetStarships()[i]->GetDamageScaleFactor(),
-                                                                        playerStarship->GetSpriteComponent().GetPos());
-                        _enemy.GetStarships()[i]->GetProjectile().erase(
-                                _enemy.GetStarships()[i]->GetProjectile().begin() + k);
-                    }
+                    int randDamage = _randomValueDistributions[STARSHIP_DAMAGE](_randomGenerator);
+                    float scaledDamage = (float)randDamage * _enemy.GetStarships()[i]->GetDamageScaleFactor();
+                    playerStarship->TakeDamage(scaledDamage);
+                    _enemy.GetStarships()[i]->DestroyProjectile(k);
                 }
             }
         }
     }
 
-    // Move player starships, shoot at enemy starships when in range, and destroy player projectiles when too far away
-    for(int i = 1; i < _player.GetStarships().size(); i++)
+    /// Player starship movement and shooting
+    for(int i = 1; i < _player.GetStarshipCount(); i++)
     {
-        // If said player starship hasn't been destroyed
-        if(_player.GetStarships()[i] != nullptr)
+        if(_player.GetStarships()[i] == nullptr) return;
+
+        auto& playerStarship = _player.GetStarships()[i];
+        _player.MoveStarship(i, {playerStarship->GetSpeed() * deltaTime.asSeconds(), 0});
+
+        for(int j = 0; j < playerStarship->GetProjectileCount(); j++)
         {
-            auto& playerSprite = _player.GetStarships()[i]->GetSpriteComponent().GetSprite();
-
-            for(int j = 0; j < _player.GetStarships()[i]->GetProjectile().size(); j++)
+            if(playerStarship->IsProjectileOutOfRange(j))
             {
-                auto& playerBullet = _player.GetStarships()[i]->GetProjectile()[j]->GetSpriteComponent();
+                playerStarship->DestroyProjectile(j);
+            }
+        }
 
-                // Destroy player projectiles when they have travelled too far
-                if(Chilli::Vector::Distance(playerSprite.getPosition(), playerBullet.GetPos()) > Constants::WINDOW_WIDTH)
-                {
-                    _player.GetStarships()[i]->GetProjectile().erase(_player.GetStarships()[i]->GetProjectile().begin() + j);
-                }
+        for(const auto &enemyStarship : _enemy.GetStarships())
+        {
+            auto& enemySprite = enemyStarship->GetSpriteComponent().GetSprite(); // QUESTION: Starship class accessor?
+            if(playerStarship->IsEnemyInRange(enemyStarship))
+            {
+                playerStarship->SetSpeed(25);
+                playerStarship->ShootAt(playerStarship->GetFireRate(), enemySprite.getPosition());
             }
 
-            for(const auto &enemyStarship : _enemy.GetStarships())
+            for(int k = 0; k < playerStarship->GetProjectileCount(); k++)
             {
-                auto& enemySprite = enemyStarship->GetSpriteComponent().GetSprite();
-
-                // Move towards and shoot at enemy starship if less than 400 pixels away from it
-                if(Chilli::Vector::Distance(playerSprite.getPosition(), enemySprite.getPosition()) <=
-                        _player.GetStarships()[i]->GetAttackRange())
+                auto& playerBulletSprite = playerStarship->GetProjectile()[k]->GetSpriteComponent().GetSprite();
+                if(enemyStarship->CollidesWith(playerBulletSprite.getGlobalBounds()))
                 {
-                    _player.GetStarships()[i]->SetSpeed(25);
-                    //_player.GetStarships()[i]->MoveTowards(enemySprite.getPosition(), deltaTime);
-
-                    auto& playerStarships = _player.GetStarships()[i];
-                    playerStarships->ShootAt(playerStarships->GetFireRate(), enemySprite.getPosition());
-                }
-
-                for(int k = 0; k < _player.GetStarships()[i]->GetProjectile().size(); k++)
-                {
-                    auto& playerBullet = _player.GetStarships()[i]->GetProjectile()[k]->GetSpriteComponent();
-
-                    // Destroy projectiles if collided with enemy starship, and inflict damage to enemy starship
-                    if(enemySprite.getGlobalBounds().intersects(playerBullet.GetSprite().getGlobalBounds()))
-                    {
-                        //UpdateDistribution("Starship damage", 10, 80);
-                        int randDamage = _randomValueDistributions[STARSHIP_DAMAGE](_randomGenerator);
-
-                        //_enemy.GetStarships()[enemyStarship]->TakeDamage(_player.GetStarships()[i]->GetDamage());
-                        enemyStarship->GetHealthComponent().TakeDamage((float)randDamage * _player.GetStarships()[i]->GetDamageScaleFactor(),
-                                                                       enemyStarship->GetSpriteComponent().GetPos());
-                        _player.GetStarships()[i]->GetProjectile().erase(
-                                _player.GetStarships()[i]->GetProjectile().begin() + k);
-                    }
+                    int randDamage = _randomValueDistributions[STARSHIP_DAMAGE](_randomGenerator);
+                    float scaledDamage = (float)randDamage * playerStarship->GetDamageScaleFactor();
+                    enemyStarship->TakeDamage(scaledDamage);
+                    playerStarship->DestroyProjectile(k);
                 }
             }
-
-            playerSprite.move(_player.GetStarships()[i]->GetSpeed() * deltaTime.asSeconds(), 0);
         }
     }
+
+
+
 
     UpdateSpaceLanePositionsAndMouseHoverColour(window, deltaTime);
     UpdateStarshipPreviewSpritePosition(worldPositionOfMouse);
@@ -253,7 +233,7 @@ void GameScene::UpdateEnemySpawner()
         {
             int randomStarshipType = _randomValueDistributions[ENEMY_STARSHIP_TYPE](_randomGenerator);
             _enemy.CreateStarship(static_cast<StarshipFactory::STARSHIP_TYPE>(randomStarshipType));
-            auto& newestEnemyStarship = _enemy.GetStarships()[_enemy.GetStarships().size() - 1];
+            auto& newestEnemyStarship = _enemy.GetStarships()[_enemy.GetStarshipCount() - 1];
             int randomLane = _randomValueDistributions[SPACELANE](_randomGenerator);
             auto starshipXPos = _spaceLanes[randomLane]->GetPos().x + _spaceLanes[randomLane]->GetSize().x;
             auto starshipYPos = _spaceLanes[randomLane]->GetPos().y + _spaceLanes[randomLane]->GetSize().y / 2.0F;
@@ -743,8 +723,6 @@ void GameScene::BeginStarshipDeploymentProcess(int currentSpaceLaneSelectedIndex
     {
         StartNextStarshipDeployment();
     }
-
-    // TODO: Invoke an agnostic event here notifying subscribers that a starship is currently training?
 }
 
 void GameScene::StartNextStarshipDeployment()
@@ -760,7 +738,7 @@ void GameScene::StartNextStarshipDeployment()
 
 void GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData)
 {
-    auto destroyedEnemyStarshipData = std::any_cast<Enemy::StarshipDestroyedData>(eventData); // NOTE: Don't know if this is a good way of handling this problem? (made a public struct within enemy class to encapsulate required starship data)
+    auto destroyedEnemyStarshipData = std::any_cast<Enemy::StarshipDestroyedData>(eventData);
     _scrapMetalManager->CollectScrap(static_cast<int>(destroyedEnemyStarshipData.BuildCost));
     _scrapMetalManager->UpdateScrapText("Scrap Metal: " + std::to_string(_scrapMetalManager->GetCurrentScrapMetalAmount()));
     _scrapMetalManager->CreatePopup(destroyedEnemyStarshipData.BuildCost, destroyedEnemyStarshipData.DeathLocation);

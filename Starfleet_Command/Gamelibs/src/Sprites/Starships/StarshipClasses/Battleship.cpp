@@ -104,16 +104,9 @@ void Battleship::Render(sf::RenderWindow &window)
     }
 }
 
-void Battleship::MoveTowards(sf::Vector2f target, sf::Time deltaTime)
+void Battleship::Move(float xOffset, float yOffset)
 {
-    auto& ship_sprite = _spriteComponent.GetSprite();
-
-    sf::Vector2f ship_dir = Chilli::Vector::Normalize(target - ship_sprite.getPosition());
-    sf::Vector2f ship_move = ship_dir * _speed;
-    float ship_rot = atan2(ship_dir.y, ship_dir.x) * 180 / 3.141;
-
-    ship_sprite.move(ship_move * deltaTime.asSeconds());
-    ship_sprite.setRotation(ship_rot);
+    _spriteComponent.Move(xOffset,  yOffset);
 }
 
 void Battleship::ShootAt(float fireRate, sf::Vector2f target)
@@ -130,6 +123,16 @@ void Battleship::ShootAt(float fireRate, sf::Vector2f target)
 
         _nextFireTime += fireRate;
     }
+}
+
+void Battleship::DestroyProjectile(int projectileIndex)
+{
+    _projectile.erase(_projectile.begin() + projectileIndex);
+}
+
+void Battleship::TakeDamage(float damageAmount)
+{
+    _healthComponent.TakeDamage(damageAmount, GetPos());
 }
 
 void Battleship::SetHealth(float health)
@@ -179,6 +182,17 @@ void Battleship::SetRotation(float rot)
     _rotation = rot;
 }
 
+bool Battleship::IsProjectileOutOfRange(int projectileIndex)
+{
+    return Chilli::Vector::Distance(GetPos(), _projectile[projectileIndex]->GetPos()) > Constants::WINDOW_WIDTH;
+}
 
+bool Battleship::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship)
+{
+    return Chilli::Vector::Distance(GetPos(), enemyStarship->GetPos()) <= GetAttackRange();
+}
 
-
+bool Battleship::CollidesWith(sf::Rect<float> spriteBounds)
+{
+    return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
+}

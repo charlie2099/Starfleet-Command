@@ -15,9 +15,10 @@ public:
     void Update(sf::RenderWindow& window, sf::Time deltaTime) override;
     void Render(sf::RenderWindow& window) override;
 
-    /// Behaviours
-    void MoveTowards(sf::Vector2f target, sf::Time deltaTime) override;
+    void Move(float xOffset, float yOffset) override;
     void ShootAt(float fireRate, sf::Vector2f target) override;
+    void DestroyProjectile(int projectileIndex) override;
+    void TakeDamage(float damageAmount) override;
 
     /// Modifiers
     void SetHealth(float health) override;
@@ -35,6 +36,10 @@ public:
     HealthComponent& GetHealthComponent() override { return _healthComponent; }
     std::unique_ptr<HealthBar>& GetHealthBar() override { return _healthBar; }
     std::vector<std::unique_ptr<Projectile>>& GetProjectile() override { return _projectile; }
+    int GetProjectileCount() override { return _projectile.size(); }
+    bool IsProjectileOutOfRange(int projectileIndex) override;
+    bool IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship) override;
+    bool CollidesWith(sf::Rect<float> spriteBounds) override;
     Projectile::Size GetProjectileSize() override { return _projectileSize; }
     Projectile::Colour GetProjectileColour() override { return _projectileColour; }
     std::string& GetStarshipName() override { return _starshipName; }

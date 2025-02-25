@@ -20,26 +20,34 @@ public:
         int BuildCost{};
     };
 
+    /// General
     Enemy () = default;
     ~Enemy() = default;
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
+    /// Behaviours
     void CreateStarship(StarshipFactory::STARSHIP_TYPE type);
     void PaintFlagship(sf::Color colour);
+    void MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset);
+
+    /// Modifiers
     void SetFlagshipPosition(sf::Vector2f pos);
     void SetFlagshipRotation(float rot);
     void SetStarshipPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
     void SetStarshipRotation(std::unique_ptr<IStarship>& ship, float rot);
 
+    /// Accessors
+    std::vector<std::unique_ptr<IStarship>> &GetStarships();
+    std::unique_ptr<IStarship> &GetFlagship();
+    sf::FloatRect  GetFlagshipBounds() const { return starship[0]->GetSpriteComponent().GetSprite().getGlobalBounds(); }
+    int GetStarshipCount() { return starship.size(); }
+
+    /// Event handling
     using BasicEnemyEvent = std::pair<EventID, std::function<void()>>;
     void AddBasicObserver(BasicEnemyEvent observer);
     using AgnosticEnemyEvent = std::pair<EventID, std::function<void(std::any)>>;
     void AddAgnosticObserver(AgnosticEnemyEvent observer);
-
-    std::vector<std::unique_ptr<IStarship>> &GetStarships();
-    std::unique_ptr<IStarship> &GetFlagship();
-    sf::FloatRect  GetFlagshipBounds() const { return starship[0]->GetSpriteComponent().GetSprite().getGlobalBounds(); }
 
 private:
     void InvokeBasicEvent(EventID eventId);

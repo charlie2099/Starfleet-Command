@@ -28,6 +28,11 @@ void Enemy::Render(sf::RenderWindow &window)
     }
 }
 
+void Enemy::MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset)
+{
+    starship[starshipIndex]->Move(positionOffset.x, positionOffset.y);
+}
+
 void Enemy::CreateStarship(StarshipFactory::STARSHIP_TYPE type)
 {
     std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(type);
@@ -109,5 +114,7 @@ std::unique_ptr<IStarship> &Enemy::GetFlagship()
 {
     return starship[0];
 }
+
+
 
 

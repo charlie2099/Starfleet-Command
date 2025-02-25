@@ -5,6 +5,7 @@
 #include "Sprites/Projectiles/Projectile.hpp"
 #include "Sprites/UI/HealthBar.hpp"
 #include "Utility/PredefinedColours.hpp"
+#include "Utility/Constants.hpp"
 
 /*
  * Interface that all starships should inherit from
@@ -14,13 +15,16 @@ class IStarship
 public:
     virtual ~IStarship() = default;
 
+    /// General
     virtual void EventHandler(sf::RenderWindow& window, sf::Event& event) = 0;
     virtual void Update(sf::RenderWindow& window, sf::Time deltaTime) = 0;
     virtual void Render(sf::RenderWindow& window) = 0;
 
     /// Behaviours
-    virtual void MoveTowards(sf::Vector2f target, sf::Time deltaTime) = 0;
+    virtual void Move(float xOffset, float yOffset) = 0;
     virtual void ShootAt(float fireRate, sf::Vector2f target) = 0;
+    virtual void DestroyProjectile(int projectileIndex) = 0;
+    virtual void TakeDamage(float damageAmount) = 0;
 
     /// Modifiers
     virtual void SetHealth(float health) = 0;
@@ -32,7 +36,6 @@ public:
     virtual void SetColour(sf::Color& colour) = 0;
     virtual void SetPosition(sf::Vector2f  pos) = 0;
     virtual void SetRotation(float rot) = 0;
-
     void SetProjectileColour(sf::Color colour)
     {
         if(colour == sf::Color::Cyan || colour == sf::Color::Blue || colour == _predefinedColours.LIGHTBLUE || colour == _predefinedColours.BLUEVIOLET)
@@ -63,6 +66,12 @@ public:
     virtual HealthComponent& GetHealthComponent() = 0;
     virtual std::unique_ptr<HealthBar>& GetHealthBar() = 0;
     virtual std::vector<std::unique_ptr<Projectile>>& GetProjectile() = 0;
+    virtual Projectile::Size GetProjectileSize() = 0;
+    virtual Projectile::Colour GetProjectileColour() = 0;
+    virtual int GetProjectileCount() = 0;
+    virtual bool IsProjectileOutOfRange(int projectileIndex) = 0;
+    virtual bool IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship) = 0;
+    virtual bool CollidesWith(sf::Rect<float> spriteBounds) = 0;
     virtual std::string& GetStarshipName() = 0;
     virtual sf::Color& GetColour() = 0;
     virtual sf::Vector2<float> GetPos() = 0;
@@ -78,8 +87,6 @@ public:
     virtual float GetAttackRange() = 0;
     virtual int GetBuildCost() = 0;
     virtual bool IsHealthBarVisible() = 0;
-    virtual Projectile::Size GetProjectileSize() = 0;
-    virtual Projectile::Colour GetProjectileColour() = 0;
 
 protected:
     SpriteComponent _spriteComponent;

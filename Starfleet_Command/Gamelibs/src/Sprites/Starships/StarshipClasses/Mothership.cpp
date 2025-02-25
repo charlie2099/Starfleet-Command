@@ -101,16 +101,9 @@ void Mothership::Render(sf::RenderWindow &window)
     }
 }
 
-void Mothership::MoveTowards(sf::Vector2f target, sf::Time deltaTime)
+void Mothership::Move(float xOffset, float yOffset)
 {
-    auto& ship_sprite = _spriteComponent.GetSprite();
-
-    sf::Vector2f ship_dir = Chilli::Vector::Normalize(target - ship_sprite.getPosition());
-    sf::Vector2f ship_move = ship_dir * _speed;
-    float ship_rot = atan2(ship_dir.y, ship_dir.x) * 180 / 3.141;
-
-    ship_sprite.move(ship_move * deltaTime.asSeconds());
-    ship_sprite.setRotation(ship_rot);
+    _spriteComponent.Move(xOffset,  yOffset);
 }
 
 void Mothership::ShootAt(float fireRate, sf::Vector2f target)
@@ -127,6 +120,16 @@ void Mothership::ShootAt(float fireRate, sf::Vector2f target)
 
         _nextFireTime += fireRate;
     }
+}
+
+void Mothership::DestroyProjectile(int projectileIndex)
+{
+    _projectile.erase(_projectile.begin() + projectileIndex);
+}
+
+void Mothership::TakeDamage(float damageAmount)
+{
+    _healthComponent.TakeDamage(damageAmount, GetPos());
 }
 
 void Mothership::SetHealth(float health)
@@ -174,6 +177,21 @@ void Mothership::SetRotation(float rot)
 {
     _spriteComponent.GetSprite().setRotation(rot);
     _rotation = rot;
+}
+
+bool Mothership::IsProjectileOutOfRange(int projectileIndex)
+{
+    return Chilli::Vector::Distance(GetPos(), _projectile[projectileIndex]->GetPos()) > Constants::WINDOW_WIDTH;
+}
+
+bool Mothership::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship)
+{
+    return Chilli::Vector::Distance(GetPos(), enemyStarship->GetPos()) <= GetAttackRange();
+}
+
+bool Mothership::CollidesWith(sf::Rect<float> spriteBounds)
+{
+    return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
 }
 
 

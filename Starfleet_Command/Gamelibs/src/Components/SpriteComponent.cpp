@@ -1,5 +1,10 @@
 #include "Components/SpriteComponent.hpp"
 
+void SpriteComponent::Move(float xOffset, float yOffset)
+{
+    _sprite.move(xOffset, yOffset);
+}
+
 void SpriteComponent::LoadSprite(const std::string& texture_filepath)
 {
     _texture.loadFromFile(texture_filepath);

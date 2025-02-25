@@ -10,19 +10,30 @@ class Player
 public:
     enum EventID
     {
-        SHIP_SPAWNED = 1,
-        SHIP_DESTROYED = 2 /// starship class?
+        STARSHIP_SPAWNED = 1,
+        STARSHIP_DESTROYED = 2
     };
-    Player() = default;
+
+    /// General
     ~Player() = default;
+    Player() = default;
     void EventHandler(sf::RenderWindow &window, sf::Event &event);
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
+    /// Behaviours
+    void MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset);
     void CreateStarship(StarshipFactory::STARSHIP_TYPE type);
+
+    /// Modifiers
     void PaintFlagship(sf::Color colour);
     void SetFlagshipPosition(sf::Vector2f pos);
     void SetStarshipPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
+
+    /// Accessors
+    std::vector<std::unique_ptr<IStarship>> &GetStarships() { return starship; }
+    std::unique_ptr<IStarship> &GetFlagship() { return starship[0]; }
+    int GetStarshipCount() { return starship.size(); }
 
     /// Event handling
     using BasicPlayerEvent = std::pair<EventID, std::function<void()>>;
@@ -30,8 +41,6 @@ public:
     void AddBasicObserver(BasicPlayerEvent observer);
     void AddAgnosticObserver(AgnosticPlayerEvent observer);
 
-    std::vector<std::unique_ptr<IStarship>> &GetStarships();
-    std::unique_ptr<IStarship> &GetFlagship();
 private:
     void InvokeBasicEvent(EventID eventId);
     void InvokeAgnosticEvent(EventID eventId, const std::any& anyData);

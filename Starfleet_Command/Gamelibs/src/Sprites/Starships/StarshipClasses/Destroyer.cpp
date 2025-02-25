@@ -100,16 +100,9 @@ void Destroyer::Render(sf::RenderWindow &window)
     }
 }
 
-void Destroyer::MoveTowards(sf::Vector2f target, sf::Time deltaTime)
+void Destroyer::Move(float xOffset, float yOffset)
 {
-    auto& ship_sprite = _spriteComponent.GetSprite();
-
-    sf::Vector2f ship_dir = Chilli::Vector::Normalize(target - ship_sprite.getPosition());
-    sf::Vector2f ship_move = ship_dir * _speed;
-    float ship_rot = atan2(ship_dir.y, ship_dir.x) * 180 / 3.141;
-
-    ship_sprite.move(ship_move * deltaTime.asSeconds());
-    ship_sprite.setRotation(ship_rot);
+    _spriteComponent.Move(xOffset,  yOffset);
 }
 
 void Destroyer::ShootAt(float fireRate, sf::Vector2f target)
@@ -126,6 +119,16 @@ void Destroyer::ShootAt(float fireRate, sf::Vector2f target)
 
         _nextFireTime += fireRate;
     }
+}
+
+void Destroyer::DestroyProjectile(int projectileIndex)
+{
+    _projectile.erase(_projectile.begin() + projectileIndex);
+}
+
+void Destroyer::TakeDamage(float damageAmount)
+{
+    _healthComponent.TakeDamage(damageAmount, GetPos());
 }
 
 void Destroyer::SetHealth(float health)
@@ -173,6 +176,21 @@ void Destroyer::SetRotation(float rot)
 {
     _spriteComponent.GetSprite().setRotation(rot);
     _rotation = rot;
+}
+
+bool Destroyer::IsProjectileOutOfRange(int projectileIndex)
+{
+    return Chilli::Vector::Distance(GetPos(), _projectile[projectileIndex]->GetPos()) > Constants::WINDOW_WIDTH;
+}
+
+bool Destroyer::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship)
+{
+    return Chilli::Vector::Distance(GetPos(), enemyStarship->GetPos()) <= GetAttackRange();
+}
+
+bool Destroyer::CollidesWith(sf::Rect<float> spriteBounds)
+{
+    return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
 }
 
 /*void Destroyer::SetAttackRangeVisibility(bool visibility)

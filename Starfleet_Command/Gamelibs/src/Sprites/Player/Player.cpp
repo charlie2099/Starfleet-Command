@@ -32,14 +32,9 @@ void Player::Render(sf::RenderWindow &window)
     }
 }
 
-std::vector<std::unique_ptr<IStarship>> &Player::GetStarships()
+void Player::MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset)
 {
-    return starship;
-}
-
-std::unique_ptr<IStarship> &Player::GetFlagship()
-{
-    return starship[0];
+    starship[starshipIndex]->Move(positionOffset.x, positionOffset.y);
 }
 
 void Player::CreateStarship(StarshipFactory::STARSHIP_TYPE type)
@@ -53,8 +48,8 @@ void Player::CreateStarship(StarshipFactory::STARSHIP_TYPE type)
         newStarship->SetProjectileColour(flagship->GetColour());
     }
     starship.emplace_back(std::move(newStarship));
-    InvokeBasicEvent(SHIP_SPAWNED);
-    InvokeAgnosticEvent(SHIP_SPAWNED, this);
+    InvokeBasicEvent(STARSHIP_SPAWNED);
+    InvokeAgnosticEvent(STARSHIP_SPAWNED, this);
 }
 
 void Player::PaintFlagship(sf::Color colour)
@@ -104,6 +99,7 @@ void Player::InvokeAgnosticEvent(EventID eventId, const std::any& anyData)
         iter->second(anyData);
     }
 }
+
 
 
 
