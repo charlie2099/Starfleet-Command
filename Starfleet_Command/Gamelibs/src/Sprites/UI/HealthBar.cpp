@@ -3,11 +3,13 @@
 HealthBar::HealthBar(HealthComponent& healthComponent)
 {
     _healthBar.LoadSprite("Resources/Textures/panel_5.png");
-    _healthBar.GetSprite().setScale(0.2f, 0.075f);
+    _healthBar.GetSprite().setScale(0.2F, 0.075F);
     _healthBar.GetSprite().setColor(sf::Color::Green);
 
     _healthBarMask.LoadSprite("Resources/Textures/health_bar_mask.png");
-    _healthBarMask.GetSprite().setScale(0.2f, 0.075f);
+    _healthBarMask.GetSprite().setScale(0.2F, 0.075F);
+
+    _scale = {0.2F, 0.075F};
 
     /// Observer to healthcomponent
     auto healthCallback = std::bind(&HealthBar::UpdateHealth, this, std::placeholders::_1);
@@ -40,6 +42,13 @@ void HealthBar::SetPos(sf::Vector2f pos)
     _position = pos;
 }
 
+void HealthBar::SetScale(float xScale, float yScale)
+{
+    _healthBar.GetSprite().setScale(xScale, yScale);
+    _healthBarMask.GetSprite().setScale(xScale, yScale);
+    _scale = {xScale, yScale};
+}
+
 void HealthBar::SetMaxHealth(float health)
 {
     _maxHealth = health;
@@ -51,7 +60,8 @@ void HealthBar::UpdateHealth(std::any eventData)
     //std::cout << "Health updated: " << std::any_cast<int>(eventData) << std::endl;
     _health = std::any_cast<int>(eventData);
     _healthBar.SetPos({_position.x + _healthBar.GetSprite().getGlobalBounds().width / 2, _position.y});
-    _healthBar.GetSprite().setScale((_health / _maxHealth) * 0.2f, 0.075f);
+    _healthBar.GetSprite().setScale((_health / _maxHealth) * _scale.x, _scale.y);
 }
+
 
 

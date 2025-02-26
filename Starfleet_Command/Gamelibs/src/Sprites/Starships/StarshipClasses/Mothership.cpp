@@ -1,6 +1,6 @@
 #include "Sprites/Starships/StarshipClasses/Mothership.hpp"
 
-Mothership::Mothership()
+Mothership::Mothership(int spacelane)
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_5.png");
     _spriteComponent.GetSprite().scale({0.08F, 0.08F});
@@ -12,6 +12,7 @@ Mothership::Mothership()
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
     _starshipName = "Mothership";
+    _assignedLaneIndex = spacelane;
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -206,7 +207,3 @@ bool Mothership::CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship)
 {
     return this->GetLaneIndex() == enemyStarship->GetLaneIndex();
 }
-
-
-
-

@@ -20,7 +20,7 @@ Minimap::Minimap(float viewWidth, float viewHeight, float viewportLeft, float vi
 
 void Minimap::EventHandler(sf::RenderWindow &window, sf::Event &event)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
+    /*auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
     auto worldPositionOfMouse = window.mapPixelToCoords(mouse_pos, window.getView()); // Mouse position translated into world coordinates
     bool isMouseCursorOnMinimap = _minimapBorder.getGlobalBounds().contains(worldPositionOfMouse);
 
@@ -38,7 +38,7 @@ void Minimap::EventHandler(sf::RenderWindow &window, sf::Event &event)
     else
     {
         ResetMinimapView();
-    }
+    }*/
 }
 
 void Minimap::Update(sf::View& mainView, sf::RenderWindow& window, sf::Time deltatime)

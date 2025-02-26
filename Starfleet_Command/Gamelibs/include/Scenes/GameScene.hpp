@@ -73,6 +73,8 @@ private:
     ProgressBar _starshipAssemblyBar;
     sf::Text _starshipNameButtonText;
     std::vector<sf::Text> _starshipCostText;
+    std::array<sf::Text, 2> _mothershipNameText;
+    std::array<std::unique_ptr<HealthBar>, 2> _mothershipHealthBar;
 
     /// GUI
     std::vector<std::unique_ptr<Button>> _starshipBuilderButtons;

@@ -37,39 +37,12 @@ Destroyer::Destroyer(int spacelane)
     _attackRangeCircle.setOrigin(_attackRangeCircle.getRadius(), _attackRangeCircle.getRadius());
     _attackRangeCircle.setPosition(_spriteComponent.GetPos());
 
-    if(spacelane == 0)
+    const int SPACELANE_COUNT = 4;
+    int minLane = std::max(0, spacelane-2);
+    int maxLane = std::min(SPACELANE_COUNT, spacelane+2);
+    for (int i = minLane; i <= maxLane; ++i)
     {
-        _attackableLanes.emplace_back(spacelane);
-        _attackableLanes.emplace_back(spacelane+1);
-        _attackableLanes.emplace_back(spacelane+2);
-    }
-    if(spacelane == 1)
-    {
-        _attackableLanes.emplace_back(spacelane-1);
-        _attackableLanes.emplace_back(spacelane);
-        _attackableLanes.emplace_back(spacelane+1);
-        _attackableLanes.emplace_back(spacelane+2);
-    }
-    else if(spacelane == 3)
-    {
-        _attackableLanes.emplace_back(spacelane-2);
-        _attackableLanes.emplace_back(spacelane-1);
-        _attackableLanes.emplace_back(spacelane);
-        _attackableLanes.emplace_back(spacelane+1);
-    }
-    else if(spacelane == 4)
-    {
-        _attackableLanes.emplace_back(spacelane-2);
-        _attackableLanes.emplace_back(spacelane-1);
-        _attackableLanes.emplace_back(spacelane);
-    }
-    else
-    {
-        _attackableLanes.emplace_back(spacelane-2);
-        _attackableLanes.emplace_back(spacelane-1);
-        _attackableLanes.emplace_back(spacelane);
-        _attackableLanes.emplace_back(spacelane+1);
-        _attackableLanes.emplace_back(spacelane+2);
+        _attackableLanes.emplace_back(i);
     }
 }
 

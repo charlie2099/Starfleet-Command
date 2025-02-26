@@ -8,7 +8,7 @@
 class Mothership : public IStarship
 {
 public:
-    Mothership();
+    explicit Mothership(int spacelane);
     ~Mothership() override = default;
 
     /// General

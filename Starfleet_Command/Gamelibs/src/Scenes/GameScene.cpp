@@ -6,11 +6,32 @@ bool GameScene::Init()
     InitRandomDistributions();
     InitBackground();
     InitStarshipBuilderButtons();
-    _playerScrapMetalManager = std::make_unique<ScrapMetalManager>(GetRegularFont(), _predefinedColours.LIGHTBLUE, 2500);
     InitStarshipNameButtonText();
     InitPlayerFlagship();
+    _playerScrapMetalManager = std::make_unique<ScrapMetalManager>(GetRegularFont(), _player.GetFlagship()->GetColour(), 2500);
     InitSpaceLanes();
     InitEnemyFlagship();
+    _mothershipHealthBar[0] = std::make_unique<HealthBar>(_player.GetFlagship()->GetHealthComponent());
+    _mothershipHealthBar[0]->SetMaxHealth(_player.GetFlagship()->GetHealth());
+    _mothershipHealthBar[0]->SetScale(0.4F, 0.15F);
+
+    _mothershipHealthBar[1] = std::make_unique<HealthBar>(_enemy.GetFlagship()->GetHealthComponent());
+    _mothershipHealthBar[1]->SetMaxHealth(_enemy.GetFlagship()->GetHealth());
+    _mothershipHealthBar[1]->SetScale(0.4F, 0.15F);
+
+    _mothershipNameText[0].setString("Player Mothership");
+    _mothershipNameText[0].setFillColor(_player.GetFlagship()->GetColour());
+
+    _mothershipNameText[1].setString("Enemy Mothership");
+    _mothershipNameText[1].setFillColor(_enemy.GetFlagship()->GetColour());
+    for (int i = 0; i < 2; ++i)
+    {
+        _mothershipNameText[i].setOutlineColor(sf::Color::Black);
+        _mothershipNameText[i].setOutlineThickness(1);
+        _mothershipNameText[i].setFont(GetRegularFont());
+        _mothershipNameText[i].setCharacterSize(14);
+    }
+
     InitMainView();
     InitMinimapView();
     InitMainViewBorder();
@@ -94,6 +115,16 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _cursor.SetCursorPos(window, _mainView);
     _player.Update(window, deltaTime);
     _enemy.Update(window, deltaTime);
+
+    _mothershipHealthBar[0]->SetPos({_mainView.getCenter().x - _mothershipHealthBar[0]->GetSpriteComponent().GetSprite().getGlobalBounds().width - Constants::WINDOW_WIDTH/3.0F, _mainView.getCenter().y - _mothershipHealthBar[0]->GetSpriteComponent().GetSprite().getGlobalBounds().height/2.0F + Constants::WINDOW_HEIGHT/2.265F});
+    _mothershipHealthBar[1]->SetPos({_mainView.getCenter().x - _mothershipHealthBar[1]->GetSpriteComponent().GetSprite().getGlobalBounds().width + Constants::WINDOW_WIDTH/3.0F, _mainView.getCenter().y - _mothershipHealthBar[1]->GetSpriteComponent().GetSprite().getGlobalBounds().height/2.0F + Constants::WINDOW_HEIGHT/2.265F});
+
+    _mothershipHealthBar[0]->Update(window, deltaTime);
+    _mothershipHealthBar[1]->Update(window, deltaTime);
+
+    _mothershipNameText[0].setPosition(_mothershipHealthBar[0]->GetPos().x + _mothershipHealthBar[0]->GetSpriteComponent().GetSprite().getGlobalBounds().width/2.0F, _mothershipHealthBar[0]->GetPos().y + _mothershipNameText[0].getGlobalBounds().height);
+    _mothershipNameText[1].setPosition(_mothershipHealthBar[1]->GetPos().x + _mothershipHealthBar[1]->GetSpriteComponent().GetSprite().getGlobalBounds().width/2.0F, _mothershipHealthBar[1]->GetPos().y + _mothershipNameText[1].getGlobalBounds().height);
+
     //_starship->Update(window, deltaTime);
     UpdateEnemySpawner();
 
@@ -225,6 +256,11 @@ void GameScene::Render(sf::RenderWindow& window)
         _starshipPreviewSprites[_starshipButtonSelectedIndex].Render(window);
     }
     _playerScrapMetalManager->Render(window);
+    for (int i = 0; i < 2; ++i)
+    {
+        _mothershipHealthBar[i]->Render(window);
+        window.draw(_mothershipNameText[i]);
+    }
 
     /// Render the minimap
     window.setView(minimap->GetView());
@@ -534,14 +570,14 @@ bool GameScene::InitStarshipBuilderButtons()
 
 void GameScene::InitPlayerFlagship()
 {
-    _player.CreateStarship(StarshipFactory::STARSHIP_TYPE::FLAGSHIP, 0);
-    _player.PaintFlagship(_predefinedColours.LIGHTBLUE);
+    _player.CreateStarship(StarshipFactory::STARSHIP_TYPE::FLAGSHIP, 2);
+    _player.PaintFlagship(_predefinedColours.LIGHTORANGE);
     _player.SetFlagshipPosition({Constants::WINDOW_WIDTH * 0.085F, Constants::LEVEL_HEIGHT/2.0f});
 }
 
 void GameScene::InitEnemyFlagship()
 {
-    _enemy.CreateStarship(StarshipFactory::FLAGSHIP, 0);
+    _enemy.CreateStarship(StarshipFactory::FLAGSHIP, 2);
     _enemy.PaintFlagship(_predefinedColours.LIGHTGREEN);
     auto flagshipXpos = _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x + _enemy.GetFlagshipBounds().width/1.4F;
     _enemy.SetFlagshipPosition({flagshipXpos, Constants::LEVEL_HEIGHT / 2.0f});

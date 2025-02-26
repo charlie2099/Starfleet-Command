@@ -22,6 +22,6 @@ std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP
         case SUPPORT: return std::make_unique<SupportShip>(spacelane);
         case DESTROYER: return std::make_unique<Destroyer>(spacelane);
         case BATTLESHIP: return std::make_unique<Battleship>(spacelane);
-        case FLAGSHIP: return std::make_unique<Mothership>();
+        case FLAGSHIP: return std::make_unique<Mothership>(spacelane);
     }
 }
