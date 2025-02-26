@@ -9,16 +9,19 @@ public:
     SpaceLane() = default;
     ~SpaceLane() = default;
 
+    /// General
     bool Init();
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
     bool IsCursorHoveredOver() const { return _isHoveredOver; }
 
+    /// Modifiers
     void SetPos(sf::Vector2f  pos);
     void SetColour(sf::Color colour);
     void SetSize(sf::Vector2f  size);
 
+    /// Accessors
     sf::Vector2f GetPos();
     float GetCentreYPos();
     sf::Vector2f GetSize();

@@ -8,18 +8,25 @@
 class SupportShip : public IStarship
 {
 public:
-    SupportShip();
+    explicit SupportShip(int spacelane);
     ~SupportShip() override = default;
 
+    /// General
     void EventHandler(sf::RenderWindow &window, sf::Event &event) override;
-
     void Update(sf::RenderWindow& window, sf::Time deltaTime) override;
     void Render(sf::RenderWindow& window) override;
 
+    /// Behaviours
     void Move(float xOffset, float yOffset) override;
     void ShootAt(float fireRate, sf::Vector2f target) override;
     void DestroyProjectile(int projectileIndex) override;
     void TakeDamage(float damageAmount) override;
+    bool IsProjectileOutOfRange(int projectileIndex) override;
+    bool IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship) override;
+    bool CollidesWith(sf::Rect<float> spriteBounds) override;
+    bool CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship) override;
+    bool IsHealthBarVisible() override { return _isHealthBarVisible; }
+    bool IsMouseOver() override { return _isMouseOver; };
 
     /// Modifiers
     void SetHealth(float health) override;
@@ -38,9 +45,6 @@ public:
     std::unique_ptr<HealthBar>& GetHealthBar() override { return _healthBar; }
     std::vector<std::unique_ptr<Projectile>>& GetProjectile() override { return _projectile; }
     int GetProjectileCount() override { return _projectile.size(); }
-    bool IsProjectileOutOfRange(int projectileIndex) override;
-    bool IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship) override;
-    bool CollidesWith(sf::Rect<float> spriteBounds) override;
     Projectile::Size GetProjectileSize() override { return _projectileSize; }
     Projectile::Colour GetProjectileColour() override { return _projectileColour; }
     std::string& GetStarshipName() override { return _starshipName; }
@@ -57,7 +61,8 @@ public:
     float GetAcceleration() override { return _acceleration; }
     float GetAttackRange() override { return _attackRange; }
     int GetBuildCost() override { return _buildCost; }
-    bool IsHealthBarVisible() override { return _healthBarIsVisible; }
+    int GetLaneIndex() override { return _assignedLaneIndex; }
+    std::vector<int> GetAttackableLanes() override { return _attackableLanes; }
 };
 
 #endif //STARFLEET_COMMAND_SUPPORTSHIP_HPP

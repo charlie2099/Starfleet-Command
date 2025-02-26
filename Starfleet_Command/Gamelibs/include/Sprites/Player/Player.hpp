@@ -23,7 +23,7 @@ public:
 
     /// Behaviours
     void MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset);
-    void CreateStarship(StarshipFactory::STARSHIP_TYPE type);
+    void CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spacelane);
 
     /// Modifiers
     void PaintFlagship(sf::Color colour);

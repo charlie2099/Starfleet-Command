@@ -37,9 +37,9 @@ void Player::MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset)
     starship[starshipIndex]->Move(positionOffset.x, positionOffset.y);
 }
 
-void Player::CreateStarship(StarshipFactory::STARSHIP_TYPE type)
+void Player::CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spacelane)
 {
-    std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(type);
+    std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(starshipType, spacelane);
     bool atLeastOneShipExists = !starship.empty();
     if(atLeastOneShipExists)
     {

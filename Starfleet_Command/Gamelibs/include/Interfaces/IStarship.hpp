@@ -25,6 +25,12 @@ public:
     virtual void ShootAt(float fireRate, sf::Vector2f target) = 0;
     virtual void DestroyProjectile(int projectileIndex) = 0;
     virtual void TakeDamage(float damageAmount) = 0;
+    virtual bool IsProjectileOutOfRange(int projectileIndex) = 0;
+    virtual bool IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship) = 0;
+    virtual bool CollidesWith(sf::Rect<float> spriteBounds) = 0;
+    virtual bool CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship) = 0;
+    virtual bool IsHealthBarVisible() = 0;
+    virtual bool IsMouseOver() = 0;
 
     /// Modifiers
     virtual void SetHealth(float health) = 0;
@@ -69,9 +75,6 @@ public:
     virtual Projectile::Size GetProjectileSize() = 0;
     virtual Projectile::Colour GetProjectileColour() = 0;
     virtual int GetProjectileCount() = 0;
-    virtual bool IsProjectileOutOfRange(int projectileIndex) = 0;
-    virtual bool IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship) = 0;
-    virtual bool CollidesWith(sf::Rect<float> spriteBounds) = 0;
     virtual std::string& GetStarshipName() = 0;
     virtual sf::Color& GetColour() = 0;
     virtual sf::Vector2<float> GetPos() = 0;
@@ -86,7 +89,8 @@ public:
     virtual float GetAcceleration() = 0;
     virtual float GetAttackRange() = 0;
     virtual int GetBuildCost() = 0;
-    virtual bool IsHealthBarVisible() = 0;
+    virtual int GetLaneIndex() = 0;
+    virtual std::vector<int> GetAttackableLanes() = 0;
 
 protected:
     SpriteComponent _spriteComponent;
@@ -107,12 +111,15 @@ protected:
     float _acceleration = 0.0F;
     float _attackRange = 400.0F;
     int _buildCost = 100;
-    bool _healthBarIsVisible = false;
     float _nextFireTime = 0;
     sf::CircleShape _attackRangeCircle;
     bool _isAttackRangeCircleVisible = false;
+    bool _isHealthBarVisible = false;
     sf::Clock _clock;
     Chilli::PredefinedColours _predefinedColours;
+    int _assignedLaneIndex;
+    bool _isMouseOver = false;
+    std::vector<int> _attackableLanes;
 };
 
 #endif //STARFLEET_COMMAND_ISTARSHIP_HPP

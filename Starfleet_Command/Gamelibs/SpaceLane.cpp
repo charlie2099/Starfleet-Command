@@ -21,13 +21,13 @@ void SpaceLane::Update(sf::RenderWindow& window, sf::Time deltaTime)
     if(_laneRect.getGlobalBounds().contains(mouse_pos_world))
     {
         _isHoveredOver = true;
-        _laneRect.setFillColor(sf::Color(100, 100, 100, 100.0F));
+        //_laneRect.setFillColor(sf::Color(100, 100, 100, 100.0F));
         //_laneRect.setFillColor(sf::Color( 252, 162, 66, 100.0F));
     }
     else
     {
         _isHoveredOver = false;
-        _laneRect.setFillColor(sf::Color(100, 100, 100, 25.0F));
+        //_laneRect.setFillColor(sf::Color(100, 100, 100, 25.0F));
         //_laneRect.setFillColor(sf::Color::Transparent);
     }
 }
@@ -44,7 +44,8 @@ void SpaceLane::SetPos(sf::Vector2f pos)
 
 void SpaceLane::SetColour(sf::Color colour)
 {
-    _laneRect.setOutlineColor(colour);
+    //_laneRect.setOutlineColor(colour);
+    _laneRect.setFillColor(colour);
 }
 
 void SpaceLane::SetSize(sf::Vector2f size)

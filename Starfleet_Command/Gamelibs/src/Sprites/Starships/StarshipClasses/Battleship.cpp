@@ -1,6 +1,6 @@
 #include "Sprites/Starships/StarshipClasses/Battleship.hpp"
 
-Battleship::Battleship()
+Battleship::Battleship(int spacelane)
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_4.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
@@ -15,6 +15,7 @@ Battleship::Battleship()
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
     _starshipName = "Battleship";
+    _assignedLaneIndex = spacelane;
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -35,6 +36,23 @@ Battleship::Battleship()
     _attackRangeCircle.setOutlineThickness(2.0F);
     _attackRangeCircle.setOrigin(_attackRangeCircle.getRadius(), _attackRangeCircle.getRadius());
     _attackRangeCircle.setPosition(_spriteComponent.GetPos());
+
+    if(spacelane == 0)
+    {
+        _attackableLanes.emplace_back(spacelane);
+        _attackableLanes.emplace_back(spacelane+1);
+    }
+    else if(spacelane == 4)
+    {
+        _attackableLanes.emplace_back(spacelane-1);
+        _attackableLanes.emplace_back(spacelane);
+    }
+    else
+    {
+        _attackableLanes.emplace_back(spacelane-1);
+        _attackableLanes.emplace_back(spacelane);
+        _attackableLanes.emplace_back(spacelane+1);
+    }
 }
 
 void Battleship::EventHandler(sf::RenderWindow &window, sf::Event &event)
@@ -44,11 +62,13 @@ void Battleship::EventHandler(sf::RenderWindow &window, sf::Event &event)
 
     if(Chilli::Vector::BoundsCheck(worldPositionOfMouse, _spriteComponent.GetSprite().getGlobalBounds()))
     {
-        _isAttackRangeCircleVisible = true;
+        //_isAttackRangeCircleVisible = true;
+        _isMouseOver = true;
     }
     else
     {
-        _isAttackRangeCircleVisible = false;
+        //_isAttackRangeCircleVisible = false;
+        _isMouseOver = false;
     }
 }
 
@@ -70,11 +90,11 @@ void Battleship::Update(sf::RenderWindow &window, sf::Time deltaTime)
 
     if(_healthBar->GetHealth() < _maxHealth/* && _healthBar->GetHealth() > 0*/)
     {
-        _healthBarIsVisible = true;
+        _isHealthBarVisible = true;
     }
     /* else if(_healthBar->GetHealth() <= 0)
      {
-         _healthBarIsVisible = false;
+         _isHealthBarVisible = false;
      }*/
 
     if(_isAttackRangeCircleVisible)
@@ -93,7 +113,7 @@ void Battleship::Render(sf::RenderWindow &window)
     _spriteComponent.Render(window);
     _healthComponent.Render(window);
 
-    if(_healthBarIsVisible)
+    if(_isHealthBarVisible)
     {
         _healthBar->Render(window);
     }
@@ -142,7 +162,7 @@ void Battleship::SetHealth(float health)
 
 void Battleship::SetHealthBarVisibility(bool visible)
 {
-    _healthBarIsVisible = visible;
+    _isHealthBarVisible = visible;
 }
 
 void Battleship::SetDamage(float damage)
@@ -195,4 +215,15 @@ bool Battleship::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship)
 bool Battleship::CollidesWith(sf::Rect<float> spriteBounds)
 {
     return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
+}
+
+bool Battleship::CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship)
+{
+    if(this->GetLaneIndex() == enemyStarship->GetLaneIndex() - 1 ||
+            this->GetLaneIndex() == enemyStarship->GetLaneIndex() ||
+            this->GetLaneIndex() == enemyStarship->GetLaneIndex() + 1)
+    {
+        return true;
+    }
+    return false;
 }

@@ -1,6 +1,6 @@
 #include "Sprites/Starships/StarshipClasses/HeavyFighter.hpp"
 
-HeavyFighter::HeavyFighter()
+HeavyFighter::HeavyFighter(int spacelane)
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_1.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
@@ -15,6 +15,7 @@ HeavyFighter::HeavyFighter()
     _projectileSize = Projectile::REGULAR;
     _projectileColour = Projectile::BLUE;
     _starshipName = "Heavy Fighter";
+    _assignedLaneIndex = spacelane;
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -35,6 +36,8 @@ HeavyFighter::HeavyFighter()
     _attackRangeCircle.setOutlineThickness(2.0F);
     _attackRangeCircle.setOrigin(_attackRangeCircle.getRadius(), _attackRangeCircle.getRadius());
     _attackRangeCircle.setPosition(_spriteComponent.GetPos());
+
+    _attackableLanes.emplace_back(spacelane);
 }
 
 void HeavyFighter::EventHandler(sf::RenderWindow &window, sf::Event &event)
@@ -44,11 +47,13 @@ void HeavyFighter::EventHandler(sf::RenderWindow &window, sf::Event &event)
 
     if(Chilli::Vector::BoundsCheck(worldPositionOfMouse, _spriteComponent.GetSprite().getGlobalBounds()))
     {
-        _isAttackRangeCircleVisible = true;
+        //_isAttackRangeCircleVisible = true;
+        _isMouseOver = true;
     }
     else
     {
-        _isAttackRangeCircleVisible = false;
+        //_isAttackRangeCircleVisible = false;
+        _isMouseOver = false;
     }
 }
 
@@ -70,11 +75,11 @@ void HeavyFighter::Update(sf::RenderWindow &window, sf::Time deltaTime)
 
     if(_healthBar->GetHealth() < _maxHealth/* && _healthBar->GetHealth() > 0*/)
     {
-        _healthBarIsVisible = true;
+        _isHealthBarVisible = true;
     }
     /* else if(_healthBar->GetHealth() <= 0)
      {
-         _healthBarIsVisible = false;
+         _isHealthBarVisible = false;
      }*/
 
     if(_isAttackRangeCircleVisible)
@@ -93,7 +98,7 @@ void HeavyFighter::Render(sf::RenderWindow &window)
     _spriteComponent.Render(window);
     _healthComponent.Render(window);
 
-    if(_healthBarIsVisible)
+    if(_isHealthBarVisible)
     {
         _healthBar->Render(window);
     }
@@ -142,7 +147,7 @@ void HeavyFighter::SetHealth(float health)
 
 void HeavyFighter::SetHealthBarVisibility(bool visible)
 {
-    _healthBarIsVisible = visible;
+    _isHealthBarVisible = visible;
 }
 
 void HeavyFighter::SetDamage(float damage)
@@ -195,6 +200,11 @@ bool HeavyFighter::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarshi
 bool HeavyFighter::CollidesWith(sf::Rect<float> spriteBounds)
 {
     return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
+}
+
+bool HeavyFighter::CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship)
+{
+    return this->GetLaneIndex() == enemyStarship->GetLaneIndex();
 }
 
 

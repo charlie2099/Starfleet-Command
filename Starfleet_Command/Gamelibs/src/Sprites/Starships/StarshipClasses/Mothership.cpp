@@ -32,6 +32,12 @@ Mothership::Mothership()
     _attackRangeCircle.setOutlineThickness(2.0F);
     _attackRangeCircle.setOrigin(_attackRangeCircle.getRadius(), _attackRangeCircle.getRadius());
     _attackRangeCircle.setPosition(_spriteComponent.GetPos());
+
+    _attackableLanes.emplace_back(0);
+    _attackableLanes.emplace_back(1);
+    _attackableLanes.emplace_back(2);
+    _attackableLanes.emplace_back(3);
+    _attackableLanes.emplace_back(4);
 }
 
 void Mothership::EventHandler(sf::RenderWindow &window, sf::Event &event)
@@ -41,11 +47,13 @@ void Mothership::EventHandler(sf::RenderWindow &window, sf::Event &event)
 
     if(Chilli::Vector::BoundsCheck(worldPositionOfMouse, _spriteComponent.GetSprite().getGlobalBounds()))
     {
-        _isAttackRangeCircleVisible = true;
+        //_isAttackRangeCircleVisible = true;
+        _isMouseOver = true;
     }
     else
     {
-        _isAttackRangeCircleVisible = false;
+        //_isAttackRangeCircleVisible = false;
+        _isMouseOver = false;
     }
 }
 
@@ -67,11 +75,11 @@ void Mothership::Update(sf::RenderWindow &window, sf::Time deltaTime)
 
     if(_healthBar->GetHealth() < _maxHealth/* && _healthBar->GetHealth() > 0*/)
     {
-        _healthBarIsVisible = true;
+        _isHealthBarVisible = true;
     }
     /* else if(_healthBar->GetHealth() <= 0)
      {
-         _healthBarIsVisible = false;
+         _isHealthBarVisible = false;
      }*/
 
     if(_isAttackRangeCircleVisible)
@@ -90,7 +98,7 @@ void Mothership::Render(sf::RenderWindow &window)
     _spriteComponent.Render(window);
     _healthComponent.Render(window);
 
-    if(_healthBarIsVisible)
+    if(_isHealthBarVisible)
     {
         _healthBar->Render(window);
     }
@@ -139,7 +147,7 @@ void Mothership::SetHealth(float health)
 
 void Mothership::SetHealthBarVisibility(bool visible)
 {
-    _healthBarIsVisible = visible;
+    _isHealthBarVisible = visible;
 }
 
 void Mothership::SetDamage(float damage)
@@ -192,6 +200,11 @@ bool Mothership::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship)
 bool Mothership::CollidesWith(sf::Rect<float> spriteBounds)
 {
     return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
+}
+
+bool Mothership::CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship)
+{
+    return this->GetLaneIndex() == enemyStarship->GetLaneIndex();
 }
 
 

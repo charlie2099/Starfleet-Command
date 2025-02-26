@@ -127,7 +127,7 @@ private:
     const float LANE_Y_SPACING = 35.0F;
     const int NUM_OF_LANES = 5;
 
-    /// Player spawning
+    /// Player Spawning
     std::queue<StarshipFactory::STARSHIP_TYPE> _starshipTypeTrainingQueue;
     std::queue<int> _spaceLaneStarshipDeploymentQueue;
     const int STARSHIP_MAX_QUEUE_SIZE = 5;
@@ -137,8 +137,9 @@ private:
     float _enemySpawnTimer = 3.0f;
     float _enemySpawnRate = 5.0f;
 
-    /// Other
-    std::unique_ptr<ScrapMetalManager> _scrapMetalManager;
+    /// Scrap Metal Managers
+    std::unique_ptr<ScrapMetalManager> _playerScrapMetalManager;
+    //std::unique_ptr<ScrapMetalManager> _enemyScrapMetalManager;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

@@ -240,7 +240,7 @@ void MenuScene::InitBackgroundShips(std::mt19937 &generator)
         int rand_x = _distributions[0](generator);
         int rand_y = _distributions[1](generator);
         int rand_ship = _distributions[2](generator);
-        std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(static_cast<StarshipFactory::STARSHIP_TYPE>(rand_ship));
+        std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(static_cast<StarshipFactory::STARSHIP_TYPE>(rand_ship), 0);
         _starship.emplace_back(std::move(newStarship));
         _starship[i]->GetSpriteComponent().SetPos({static_cast<float>(rand_x), static_cast<float>(rand_y)});
         _starship[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);

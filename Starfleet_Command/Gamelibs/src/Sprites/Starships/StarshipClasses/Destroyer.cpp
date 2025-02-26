@@ -1,6 +1,6 @@
 #include "Sprites/Starships/StarshipClasses/Destroyer.hpp"
 
-Destroyer::Destroyer()
+Destroyer::Destroyer(int spacelane)
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_3.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
@@ -15,6 +15,7 @@ Destroyer::Destroyer()
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
     _starshipName = "Destroyer";
+    _assignedLaneIndex = spacelane;
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -35,6 +36,41 @@ Destroyer::Destroyer()
     _attackRangeCircle.setOutlineThickness(2.0F);
     _attackRangeCircle.setOrigin(_attackRangeCircle.getRadius(), _attackRangeCircle.getRadius());
     _attackRangeCircle.setPosition(_spriteComponent.GetPos());
+
+    if(spacelane == 0)
+    {
+        _attackableLanes.emplace_back(spacelane);
+        _attackableLanes.emplace_back(spacelane+1);
+        _attackableLanes.emplace_back(spacelane+2);
+    }
+    if(spacelane == 1)
+    {
+        _attackableLanes.emplace_back(spacelane-1);
+        _attackableLanes.emplace_back(spacelane);
+        _attackableLanes.emplace_back(spacelane+1);
+        _attackableLanes.emplace_back(spacelane+2);
+    }
+    else if(spacelane == 3)
+    {
+        _attackableLanes.emplace_back(spacelane-2);
+        _attackableLanes.emplace_back(spacelane-1);
+        _attackableLanes.emplace_back(spacelane);
+        _attackableLanes.emplace_back(spacelane+1);
+    }
+    else if(spacelane == 4)
+    {
+        _attackableLanes.emplace_back(spacelane-2);
+        _attackableLanes.emplace_back(spacelane-1);
+        _attackableLanes.emplace_back(spacelane);
+    }
+    else
+    {
+        _attackableLanes.emplace_back(spacelane-2);
+        _attackableLanes.emplace_back(spacelane-1);
+        _attackableLanes.emplace_back(spacelane);
+        _attackableLanes.emplace_back(spacelane+1);
+        _attackableLanes.emplace_back(spacelane+2);
+    }
 }
 
 void Destroyer::EventHandler(sf::RenderWindow &window, sf::Event &event)
@@ -44,11 +80,13 @@ void Destroyer::EventHandler(sf::RenderWindow &window, sf::Event &event)
 
     if(Chilli::Vector::BoundsCheck(worldPositionOfMouse, _spriteComponent.GetSprite().getGlobalBounds()))
     {
-        _isAttackRangeCircleVisible = true;
+        //_isAttackRangeCircleVisible = true;
+        _isMouseOver = true;
     }
     else
     {
-        _isAttackRangeCircleVisible = false;
+        //_isAttackRangeCircleVisible = false;
+        _isMouseOver = false;
     }
 }
 
@@ -70,7 +108,7 @@ void Destroyer::Update(sf::RenderWindow &window, sf::Time deltaTime)
 
     if(_healthBar->GetHealth() < _maxHealth)
     {
-        _healthBarIsVisible = true;
+        _isHealthBarVisible = true;
     }
 
     if(_isAttackRangeCircleVisible)
@@ -89,7 +127,7 @@ void Destroyer::Render(sf::RenderWindow &window)
     _spriteComponent.Render(window);
     _healthComponent.Render(window);
 
-    if(_healthBarIsVisible)
+    if(_isHealthBarVisible)
     {
         _healthBar->Render(window);
     }
@@ -138,7 +176,7 @@ void Destroyer::SetHealth(float health)
 
 void Destroyer::SetHealthBarVisibility(bool visible)
 {
-    _healthBarIsVisible = visible;
+    _isHealthBarVisible = visible;
 }
 
 void Destroyer::SetDamage(float damage)
@@ -191,6 +229,19 @@ bool Destroyer::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship)
 bool Destroyer::CollidesWith(sf::Rect<float> spriteBounds)
 {
     return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
+}
+
+bool Destroyer::CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship)
+{
+    if(this->GetLaneIndex() == enemyStarship->GetLaneIndex() - 2 ||
+            this->GetLaneIndex() == enemyStarship->GetLaneIndex() - 1 ||
+            this->GetLaneIndex() == enemyStarship->GetLaneIndex() ||
+            this->GetLaneIndex() == enemyStarship->GetLaneIndex() + 1 ||
+            this->GetLaneIndex() == enemyStarship->GetLaneIndex() + 2)
+    {
+        return true;
+    }
+    return false;
 }
 
 /*void Destroyer::SetAttackRangeVisibility(bool visibility)

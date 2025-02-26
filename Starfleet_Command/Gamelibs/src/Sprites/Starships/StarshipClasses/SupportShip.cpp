@@ -1,6 +1,6 @@
 #include "Sprites/Starships/StarshipClasses/SupportShip.hpp"
 
-SupportShip::SupportShip()
+SupportShip::SupportShip(int spacelane)
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_2.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
@@ -15,6 +15,7 @@ SupportShip::SupportShip()
     _projectileSize = Projectile::SMALL;
     _projectileColour = Projectile::BLUE;
     _starshipName = "Support Ship";
+    _assignedLaneIndex = spacelane;
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
@@ -35,6 +36,8 @@ SupportShip::SupportShip()
     _attackRangeCircle.setOutlineThickness(2.0F);
     _attackRangeCircle.setOrigin(_attackRangeCircle.getRadius(), _attackRangeCircle.getRadius());
     _attackRangeCircle.setPosition(_spriteComponent.GetPos());
+
+    _attackableLanes.emplace_back(spacelane);
 }
 
 void SupportShip::EventHandler(sf::RenderWindow &window, sf::Event &event)
@@ -44,11 +47,13 @@ void SupportShip::EventHandler(sf::RenderWindow &window, sf::Event &event)
 
     if(Chilli::Vector::BoundsCheck(worldPositionOfMouse, _spriteComponent.GetSprite().getGlobalBounds()))
     {
-        _isAttackRangeCircleVisible = true;
+        //_isAttackRangeCircleVisible = true;
+        _isMouseOver = true;
     }
     else
     {
-        _isAttackRangeCircleVisible = false;
+        //_isAttackRangeCircleVisible = false;
+        _isMouseOver = false;
     }
 }
 
@@ -70,11 +75,11 @@ void SupportShip::Update(sf::RenderWindow &window, sf::Time deltaTime)
 
     if(_healthBar->GetHealth() < _maxHealth/* && _healthBar->GetHealth() > 0*/)
     {
-        _healthBarIsVisible = true;
+        _isHealthBarVisible = true;
     }
     /* else if(_healthBar->GetHealth() <= 0)
      {
-         _healthBarIsVisible = false;
+         _isHealthBarVisible = false;
      }*/
 
     if(_isAttackRangeCircleVisible)
@@ -93,7 +98,7 @@ void SupportShip::Render(sf::RenderWindow &window)
     _spriteComponent.Render(window);
     _healthComponent.Render(window);
 
-    if(_healthBarIsVisible)
+    if(_isHealthBarVisible)
     {
         _healthBar->Render(window);
     }
@@ -142,7 +147,7 @@ void SupportShip::SetHealth(float health)
 
 void SupportShip::SetHealthBarVisibility(bool visible)
 {
-    _healthBarIsVisible = visible;
+    _isHealthBarVisible = visible;
 }
 
 void SupportShip::SetDamage(float damage)
@@ -195,6 +200,11 @@ bool SupportShip::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship
 bool SupportShip::CollidesWith(sf::Rect<float> spriteBounds)
 {
     return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
+}
+
+bool SupportShip::CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship)
+{
+    return this->GetLaneIndex() == enemyStarship->GetLaneIndex();
 }
 
 
