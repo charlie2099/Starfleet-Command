@@ -13,6 +13,11 @@ public:
         STARSHIP_SPAWNED = 1,
         STARSHIP_DESTROYED = 2
     };
+    struct StarshipDestroyedData
+    {
+        sf::Vector2<float> DeathLocation{};
+        int BuildCost{};
+    };
 
     /// General
     ~Player() = default;

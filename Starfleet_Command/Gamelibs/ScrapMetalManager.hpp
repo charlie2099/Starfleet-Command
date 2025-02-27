@@ -6,7 +6,7 @@
 class ScrapMetalManager
 {
 public:
-    ScrapMetalManager(sf::Font& font, sf::Color textColour, int startingScrap);
+    ScrapMetalManager(sf::Font& font, sf::Color scrapTextColour, sf::Color popupTextColour, int startingScrap);
     ~ScrapMetalManager() = default;
 
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
@@ -19,6 +19,7 @@ public:
     void SetTextPosition(float xPos, float yPos);
 
     int GetCurrentScrapMetalAmount() const { return _scrapMetalCounter; }
+    sf::Rect<float> GetTextSize() { return _scrapMetalText.getGlobalBounds(); }
 
 private:
     std::vector<std::unique_ptr<PopupText>> _scrapMetalPopupText;

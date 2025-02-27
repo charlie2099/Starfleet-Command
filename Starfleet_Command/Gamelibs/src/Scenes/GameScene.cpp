@@ -8,9 +8,11 @@ bool GameScene::Init()
     InitStarshipBuilderButtons();
     InitStarshipNameButtonText();
     InitPlayerFlagship();
-    _playerScrapMetalManager = std::make_unique<ScrapMetalManager>(GetRegularFont(), _player.GetFlagship()->GetColour(), 2500);
     InitSpaceLanes();
     InitEnemyFlagship();
+    _playerScrapMetalManager = std::make_unique<ScrapMetalManager>(GetRegularFont(), sf::Color(180, 180, 180), _player.GetFlagship()->GetColour(), 2500);
+    _enemyScrapMetalManager = std::make_unique<ScrapMetalManager>(GetRegularFont(), sf::Color(180, 180, 180), _enemy.GetFlagship()->GetColour(), 2500);
+
     _mothershipHealthBar[0] = std::make_unique<HealthBar>(_player.GetFlagship()->GetHealthComponent());
     _mothershipHealthBar[0]->SetMaxHealth(_player.GetFlagship()->GetHealth());
     _mothershipHealthBar[0]->SetScale(0.4F, 0.15F);
@@ -102,12 +104,12 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     auto mousePos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
     auto worldPositionOfMouse = window.mapPixelToCoords(mousePos, _mainView); // Mouse _position translated into world coordinates
     _playerScrapMetalManager->Update(window, deltaTime);
+    _enemyScrapMetalManager ->Update(window, deltaTime);
     UpdateMainViewMovement(window, deltaTime, mousePos);
     UpdateStarshipBuilderButtonsHoverStateAndColour();
     UpdateStarshipBuilderButtonPositions(window);
     _mainViewBorder.setPosition(_mainView.getCenter().x - _mainViewBorder.getSize().x/2.0F, _mainView.getCenter().y - _mainViewBorder.getSize().y/2.0F);
     minimap->Update(_mainView, window, deltaTime);
-    _playerScrapMetalManager->SetTextPosition(_starshipBuilderButtons[0]->GetPos().x, _starshipBuilderButtons[_starshipBuilderButtons.size() - 1]->GetPos().y + _starshipBuilderButtons[_starshipBuilderButtons.size() - 1]->GetBounds().height * 1.15F);
     _starshipAssemblyBar.SetPosition({_starshipBuilderButtons[0]->GetPos().x, _starshipBuilderButtons[0]->GetPos().y - _starshipAssemblyBar.GetSize().height * 2.75F});
     _starshipAssemblyBar.Update(window, deltaTime);
     _starshipNameButtonText.setPosition(_starshipBuilderButtons[_starshipButtonHoveredOverIndex]->GetPos().x, _starshipBuilderButtons[0]->GetPos().y - 20.0F);
@@ -116,14 +118,17 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _player.Update(window, deltaTime);
     _enemy.Update(window, deltaTime);
 
-    _mothershipHealthBar[0]->SetPos({_mainView.getCenter().x - _mothershipHealthBar[0]->GetSpriteComponent().GetSprite().getGlobalBounds().width - Constants::WINDOW_WIDTH/3.0F, _mainView.getCenter().y - _mothershipHealthBar[0]->GetSpriteComponent().GetSprite().getGlobalBounds().height/2.0F + Constants::WINDOW_HEIGHT/2.265F});
-    _mothershipHealthBar[1]->SetPos({_mainView.getCenter().x - _mothershipHealthBar[1]->GetSpriteComponent().GetSprite().getGlobalBounds().width + Constants::WINDOW_WIDTH/3.0F, _mainView.getCenter().y - _mothershipHealthBar[1]->GetSpriteComponent().GetSprite().getGlobalBounds().height/2.0F + Constants::WINDOW_HEIGHT/2.265F});
+    _mothershipHealthBar[0]->SetPos({_mainView.getCenter().x - _mothershipHealthBar[0]->GetSpriteComponent().GetSprite().getGlobalBounds().width - Constants::WINDOW_WIDTH/3.0F, _mainView.getCenter().y - _mothershipHealthBar[0]->GetSpriteComponent().GetSprite().getGlobalBounds().height/2.0F + Constants::WINDOW_HEIGHT/2.6F});
+    _mothershipHealthBar[1]->SetPos({_mainView.getCenter().x - _mothershipHealthBar[1]->GetSpriteComponent().GetSprite().getGlobalBounds().width + Constants::WINDOW_WIDTH/3.0F, _mainView.getCenter().y - _mothershipHealthBar[1]->GetSpriteComponent().GetSprite().getGlobalBounds().height/2.0F + Constants::WINDOW_HEIGHT/2.6F});
 
     _mothershipHealthBar[0]->Update(window, deltaTime);
     _mothershipHealthBar[1]->Update(window, deltaTime);
 
-    _mothershipNameText[0].setPosition(_mothershipHealthBar[0]->GetPos().x + _mothershipHealthBar[0]->GetSpriteComponent().GetSprite().getGlobalBounds().width/2.0F, _mothershipHealthBar[0]->GetPos().y + _mothershipNameText[0].getGlobalBounds().height);
-    _mothershipNameText[1].setPosition(_mothershipHealthBar[1]->GetPos().x + _mothershipHealthBar[1]->GetSpriteComponent().GetSprite().getGlobalBounds().width/2.0F, _mothershipHealthBar[1]->GetPos().y + _mothershipNameText[1].getGlobalBounds().height);
+    _mothershipNameText[0].setPosition(_mothershipHealthBar[0]->GetPos().x + _mothershipHealthBar[0]->GetSpriteComponent().GetSprite().getGlobalBounds().width/2.0F - 5.0F, _mothershipHealthBar[0]->GetPos().y + _mothershipNameText[0].getGlobalBounds().height + 5.0F);
+    _mothershipNameText[1].setPosition(_mothershipHealthBar[1]->GetPos().x + _mothershipHealthBar[1]->GetSpriteComponent().GetSprite().getGlobalBounds().width/2.0F - 5.0F, _mothershipHealthBar[1]->GetPos().y + _mothershipNameText[1].getGlobalBounds().height + 5.0F);
+
+    _playerScrapMetalManager->SetTextPosition(_mothershipNameText[0].getPosition().x + _mothershipNameText[0].getGlobalBounds().width/2.0F - _playerScrapMetalManager->GetTextSize().width/2.0F, _mothershipNameText[0].getPosition().y + _mothershipNameText[0].getGlobalBounds().height + 10.0F);
+    _enemyScrapMetalManager ->SetTextPosition(_mothershipNameText[1].getPosition().x + _mothershipNameText[1].getGlobalBounds().width/2.0F - _enemyScrapMetalManager->GetTextSize().width/2.0F, _mothershipNameText[1].getPosition().y + _mothershipNameText[1].getGlobalBounds().height + 10.0F);
 
     //_starship->Update(window, deltaTime);
     UpdateEnemySpawner();
@@ -134,7 +139,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         if(_enemy.GetStarships()[i] == nullptr) return;
 
         auto& enemyStarship = _enemy.GetStarships()[i];
-        _enemy.MoveStarship(i, {_enemy.GetStarships()[i]->GetSpeed() * deltaTime.asSeconds() * -1, 0});
+        _enemy.MoveStarship(i, {enemyStarship->GetSpeed() * deltaTime.asSeconds() * -1, 0});
 
         for(int j = 0; j < enemyStarship->GetProjectileCount(); j++)
         {
@@ -150,19 +155,19 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             if(enemyStarship->IsEnemyInRange(playerStarship) &&
                enemyStarship->CanAttackEnemy(playerStarship))
             {
-                _enemy.GetStarships()[i]->SetSpeed(25);
+                enemyStarship->SetSpeed(25);
                 enemyStarship->ShootAt(enemyStarship->GetFireRate(), playerSprite.getPosition());
             }
 
-            for(int k = 0; k < _enemy.GetStarships()[i]->GetProjectileCount(); k++)
+            for(int k = 0; k < enemyStarship->GetProjectileCount(); k++)
             {
-                auto& enemyBullet = _enemy.GetStarships()[i]->GetProjectile()[k]->GetSpriteComponent();
+                auto& enemyBullet = enemyStarship->GetProjectile()[k]->GetSpriteComponent();
                 if(playerStarship->CollidesWith(enemyBullet.GetSprite().getGlobalBounds()))
                 {
                     int randDamage = _randomValueDistributions[STARSHIP_DAMAGE](_randomGenerator);
-                    float scaledDamage = (float)randDamage * _enemy.GetStarships()[i]->GetDamageScaleFactor();
+                    float scaledDamage = (float)randDamage * enemyStarship->GetDamageScaleFactor();
                     playerStarship->TakeDamage(scaledDamage);
-                    _enemy.GetStarships()[i]->DestroyProjectile(k);
+                    enemyStarship->DestroyProjectile(k);
                 }
             }
         }
@@ -256,6 +261,7 @@ void GameScene::Render(sf::RenderWindow& window)
         _starshipPreviewSprites[_starshipButtonSelectedIndex].Render(window);
     }
     _playerScrapMetalManager->Render(window);
+    _enemyScrapMetalManager ->Render(window);
     for (int i = 0; i < 2; ++i)
     {
         _mothershipHealthBar[i]->Render(window);
@@ -298,6 +304,8 @@ void GameScene::UpdateEnemySpawner()
             auto starshipYPos = _spaceLanes[randomLane]->GetPos().y + _spaceLanes[randomLane]->GetSize().y / 2.0F;
             _enemy.SetStarshipPosition(newestEnemyStarship, {starshipXPos, starshipYPos});
             _enemy.SetStarshipRotation(newestEnemyStarship, 180);
+            _enemyScrapMetalManager->SpendScrap(newestEnemyStarship->GetBuildCost());
+            _enemyScrapMetalManager->UpdateScrapText("Scrap Metal: " + std::to_string(_enemyScrapMetalManager->GetCurrentScrapMetalAmount()));
         }
         _enemySpawnTimer += _enemySpawnRate;
     }
@@ -394,8 +402,7 @@ void GameScene::UpdateStarshipBuilderButtonsHoverStateAndColour()
     for (int i = 0; i < _starshipBuilderButtons.size(); i++)
     {
         auto &assignedStarshipToButton = _buttonStarshipDictionary[_starshipBuilderButtons[i].get()];
-        bool starshipAffordable =
-                _playerScrapMetalManager->GetCurrentScrapMetalAmount() >= assignedStarshipToButton->GetBuildCost();
+        bool starshipAffordable = _playerScrapMetalManager->GetCurrentScrapMetalAmount() >= assignedStarshipToButton->GetBuildCost();
 
         if(_starshipBuilderButtons[i]->IsCursorHoveredOver() && !_starshipAssemblyBar.InProgress())
         {
@@ -667,6 +674,10 @@ void GameScene::InitEvents()
     /// Agnostic observer to enemy starships destroyed event
     auto enemyStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed, this, std::placeholders::_1);
     _enemy.AddAgnosticObserver({Enemy::EventID::STARSHIP_DESTROYED, enemyStarshipsDestroyedCallback});
+
+    /// Agnostic observer to player starships destroyed event
+    auto playerStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed, this, std::placeholders::_1);
+    _player.AddAgnosticObserver({Player::EventID::STARSHIP_DESTROYED, playerStarshipsDestroyedCallback});
 }
 
 void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()
@@ -797,5 +808,13 @@ void GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData)
     _playerScrapMetalManager->CollectScrap(static_cast<int>(destroyedEnemyStarshipData.BuildCost));
     _playerScrapMetalManager->UpdateScrapText("Scrap Metal: " + std::to_string(_playerScrapMetalManager->GetCurrentScrapMetalAmount()));
     _playerScrapMetalManager->CreatePopup(destroyedEnemyStarshipData.BuildCost, destroyedEnemyStarshipData.DeathLocation);
+}
+
+void GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData)
+{
+    auto destroyedPlayerStarshipData = std::any_cast<Player::StarshipDestroyedData>(eventData);
+    _enemyScrapMetalManager->CollectScrap(static_cast<int>(destroyedPlayerStarshipData.BuildCost));
+    _enemyScrapMetalManager->UpdateScrapText("Scrap Metal: " + std::to_string(_enemyScrapMetalManager->GetCurrentScrapMetalAmount()));
+    _enemyScrapMetalManager->CreatePopup(destroyedPlayerStarshipData.BuildCost, destroyedPlayerStarshipData.DeathLocation);
 }
 

@@ -1,14 +1,14 @@
 #include "ScrapMetalManager.hpp"
 
-ScrapMetalManager::ScrapMetalManager(sf::Font& font, sf::Color textColour, int startingScrap)
+ScrapMetalManager::ScrapMetalManager(sf::Font& font, sf::Color scrapTextColour, sf::Color popupTextColour, int startingScrap)
 {
     _scrapMetalText.setString("Scrap Metal: " + std::to_string(_scrapMetalCounter));
-    _scrapMetalText.setFillColor(textColour);
+    _scrapMetalText.setFillColor(scrapTextColour);
     _scrapMetalText.setOutlineColor(sf::Color::Black);
     _scrapMetalText.setOutlineThickness(1);
     _scrapMetalText.setFont(font);
-    _scrapMetalText.setCharacterSize(14);
-    _popupTextColour = textColour;
+    _scrapMetalText.setCharacterSize(11);
+    _popupTextColour = popupTextColour;
 
     _scrapMetalCounter = startingScrap;
 }

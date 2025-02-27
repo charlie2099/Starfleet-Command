@@ -19,6 +19,10 @@ void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         if(starship[i]->GetHealthComponent().GetHealth() <= 0)
         {
+            StarshipDestroyedData destroyedStarshipData;
+            destroyedStarshipData.DeathLocation = starship[i]->GetPos();
+            destroyedStarshipData.BuildCost = starship[i]->GetBuildCost();
+            InvokeAgnosticEvent(STARSHIP_DESTROYED, destroyedStarshipData);
             starship.erase(starship.begin() + i);
         }
     }
@@ -49,7 +53,6 @@ void Player::CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spa
     }
     starship.emplace_back(std::move(newStarship));
     InvokeBasicEvent(STARSHIP_SPAWNED);
-    InvokeAgnosticEvent(STARSHIP_SPAWNED, this);
 }
 
 void Player::PaintFlagship(sf::Color colour)
