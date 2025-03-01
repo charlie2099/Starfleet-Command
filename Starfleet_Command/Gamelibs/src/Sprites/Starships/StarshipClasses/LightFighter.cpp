@@ -114,19 +114,19 @@ void LightFighter::Move(float xOffset, float yOffset)
     _spriteComponent.Move(xOffset,  yOffset);
 }
 
-void LightFighter::ShootAt(float fireRate, sf::Vector2f target)
+void LightFighter::ShootAt(sf::Vector2f target)
 {
-    if(_nextFireTime < _clock.getElapsedTime().asSeconds())
+    if(_damagingProjectileSpawnTimer < _damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds())
     {
-        _nextFireTime = _clock.getElapsedTime().asSeconds();
+        _damagingProjectileSpawnTimer = _damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds();
     }
 
-    if(_clock.getElapsedTime().asSeconds() >= _nextFireTime)
+    if(_damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds() >= _damagingProjectileSpawnTimer)
     {
         auto spawnPos = _spriteComponent.GetPos();
         _projectile.emplace_back(std::make_unique<Projectile>(_projectileSize, _projectileColour, spawnPos, target));
 
-        _nextFireTime += fireRate;
+        _damagingProjectileSpawnTimer += _fireRate;
     }
 }
 
@@ -138,6 +138,11 @@ void LightFighter::DestroyProjectile(int projectileIndex)
 void LightFighter::TakeDamage(float damageAmount)
 {
     _healthComponent.TakeDamage(damageAmount, GetPos());
+}
+
+void LightFighter::ReplenishHealth(float healthAmount)
+{
+    _healthComponent.ReplenishHealth(_maxHealth, healthAmount, GetPos());
 }
 
 void LightFighter::SetHealth(float health)
@@ -192,9 +197,9 @@ bool LightFighter::IsProjectileOutOfRange(int projectileIndex)
     return Chilli::Vector::Distance(GetPos(), _projectile[projectileIndex]->GetPos()) > Constants::WINDOW_WIDTH;
 }
 
-bool LightFighter::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship)
+bool LightFighter::IsStarshipInRange(const std::unique_ptr<IStarship> &starship)
 {
-    return Chilli::Vector::Distance(GetPos(), enemyStarship->GetPos()) <= GetAttackRange();
+    return Chilli::Vector::Distance(GetPos(), starship->GetPos()) <= GetAttackRange();
 }
 
 bool LightFighter::CollidesWith(sf::Rect<float> spriteBounds)
@@ -202,7 +207,8 @@ bool LightFighter::CollidesWith(sf::Rect<float> spriteBounds)
     return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
 }
 
-bool LightFighter::CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship)
+bool LightFighter::CanEngageWith(const std::unique_ptr<IStarship> &starship)
 {
-    return this->GetLaneIndex() == enemyStarship->GetLaneIndex();
+    return this->GetLaneIndex() == starship->GetLaneIndex();
 }
+

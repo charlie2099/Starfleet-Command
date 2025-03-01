@@ -5,13 +5,13 @@
     _outsideBarSpriteComponent = _outsideBarSpriteComponent;
 }*/
 
-void HealthComponent::TakeDamage(float amount, sf::Vector2f damageLocation)
+void HealthComponent::TakeDamage(float damageAmount, sf::Vector2f damageLocation)
 {
-    _health -= amount;
+    _health -= damageAmount;
 
     //auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<PopupText>(_health, _outsideBarSpriteComponent.GetPos()));
-    auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<PopupText>(amount, damageLocation));
-    if(amount > 60)
+    auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<PopupText>(damageAmount, damageLocation));
+    if(damageAmount > 60)
     {
         damagePopup->SetColour(sf::Color::Red);
         damagePopup->SetCharSize(15);
@@ -19,9 +19,17 @@ void HealthComponent::TakeDamage(float amount, sf::Vector2f damageLocation)
     InvokeAgnosticEvent(HEALTH_UPDATED, _health);
 }
 
-void HealthComponent::ReplenishHealth(float amount)
+void HealthComponent::ReplenishHealth(float maxHealth, float healAmount, sf::Vector2f healLocation)
 {
-    _health += amount;
+    float newHealth = GetHealth() + healAmount;
+    if (newHealth > maxHealth)
+    {
+        newHealth = maxHealth;
+    }
+    _health = newHealth;
+
+    auto& healthPopup = _damagePopUpEffect.emplace_back(std::make_unique<PopupText>(healAmount, healLocation));
+    healthPopup->SetColour(sf::Color::Green);
     InvokeAgnosticEvent(HEALTH_UPDATED, _health);
 }
 

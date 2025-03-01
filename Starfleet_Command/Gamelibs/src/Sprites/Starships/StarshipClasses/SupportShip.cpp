@@ -114,19 +114,33 @@ void SupportShip::Move(float xOffset, float yOffset)
     _spriteComponent.Move(xOffset,  yOffset);
 }
 
-void SupportShip::ShootAt(float fireRate, sf::Vector2f target)
+void SupportShip::ShootAt(sf::Vector2f target)
 {
-    if(_nextFireTime < _clock.getElapsedTime().asSeconds())
+    if(_damagingProjectileSpawnTimer < _damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds())
     {
-        _nextFireTime = _clock.getElapsedTime().asSeconds();
+        _damagingProjectileSpawnTimer = _damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds();
     }
 
-    if(_clock.getElapsedTime().asSeconds() >= _nextFireTime)
+    if(_damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds() >= _damagingProjectileSpawnTimer)
     {
         auto spawnPos = _spriteComponent.GetPos();
         _projectile.emplace_back(std::make_unique<Projectile>(_projectileSize, _projectileColour, spawnPos, target));
+        _damagingProjectileSpawnTimer += _fireRate;
+    }
+}
 
-        _nextFireTime += fireRate;
+void SupportShip::ShootHealAt(const std::unique_ptr<IStarship> &friendlyStarship)
+{
+    if(_healingProjectileSpawnTimer < _healingProjectileSpawnTimerClock.getElapsedTime().asSeconds())
+    {
+        _healingProjectileSpawnTimer = _healingProjectileSpawnTimerClock.getElapsedTime().asSeconds();
+    }
+
+    if(_healingProjectileSpawnTimerClock.getElapsedTime().asSeconds() >= _healingProjectileSpawnTimer)
+    {
+        auto spawnPos = _spriteComponent.GetPos();
+        _projectile.emplace_back(std::make_unique<Projectile>(_projectileSize, Projectile::Colour::GREEN, spawnPos, friendlyStarship->GetPos()));
+        _healingProjectileSpawnTimer += (_fireRate/2.0F);
     }
 }
 
@@ -138,6 +152,11 @@ void SupportShip::DestroyProjectile(int projectileIndex)
 void SupportShip::TakeDamage(float damageAmount)
 {
     _healthComponent.TakeDamage(damageAmount, GetPos());
+}
+
+void SupportShip::ReplenishHealth(float healthAmount)
+{
+    _healthComponent.ReplenishHealth(_maxHealth, healthAmount, GetPos());
 }
 
 void SupportShip::SetHealth(float health)
@@ -192,9 +211,9 @@ bool SupportShip::IsProjectileOutOfRange(int projectileIndex)
     return Chilli::Vector::Distance(GetPos(), _projectile[projectileIndex]->GetPos()) > Constants::WINDOW_WIDTH;
 }
 
-bool SupportShip::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship)
+bool SupportShip::IsStarshipInRange(const std::unique_ptr<IStarship> &starship)
 {
-    return Chilli::Vector::Distance(GetPos(), enemyStarship->GetPos()) <= GetAttackRange();
+    return Chilli::Vector::Distance(GetPos(), starship->GetPos()) <= GetAttackRange();
 }
 
 bool SupportShip::CollidesWith(sf::Rect<float> spriteBounds)
@@ -202,10 +221,11 @@ bool SupportShip::CollidesWith(sf::Rect<float> spriteBounds)
     return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
 }
 
-bool SupportShip::CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship)
+bool SupportShip::CanEngageWith(const std::unique_ptr<IStarship> &starship)
 {
-    return this->GetLaneIndex() == enemyStarship->GetLaneIndex();
+    return this->GetLaneIndex() == starship->GetLaneIndex();
 }
+
 
 
 

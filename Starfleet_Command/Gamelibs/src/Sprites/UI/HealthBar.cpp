@@ -21,7 +21,11 @@ void HealthBar::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _healthBar.SetPos({_position.x + _healthBar.GetSprite().getGlobalBounds().width / 2, _position.y});
     _healthBarMask.SetPos({_healthBar.GetPos().x, _healthBar.GetPos().y });
 
-    if(_health <= _maxHealth/2 && _health >= _maxHealth/3)
+    if(_health > _maxHealth/2)
+    {
+        _healthBar.GetSprite().setColor(sf::Color::Green);
+    }
+    else if(_health <= _maxHealth/2 && _health >= _maxHealth/3)
     {
         _healthBar.GetSprite().setColor(sf::Color(255, 215, 0));
     }
@@ -60,6 +64,7 @@ void HealthBar::UpdateHealth(std::any eventData)
     //std::cout << "Health updated: " << std::any_cast<int>(eventData) << std::endl;
     _health = std::any_cast<int>(eventData);
     _healthBar.SetPos({_position.x + _healthBar.GetSprite().getGlobalBounds().width / 2, _position.y});
+    _healthBarMask.SetPos({_healthBar.GetPos().x, _healthBar.GetPos().y });
     _healthBar.GetSprite().setScale((_health / _maxHealth) * _scale.x, _scale.y);
 }
 

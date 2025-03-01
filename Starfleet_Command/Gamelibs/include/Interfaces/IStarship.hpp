@@ -22,13 +22,14 @@ public:
 
     /// Behaviours
     virtual void Move(float xOffset, float yOffset) = 0;
-    virtual void ShootAt(float fireRate, sf::Vector2f target) = 0;
+    virtual void ShootAt(sf::Vector2f target) = 0;
     virtual void DestroyProjectile(int projectileIndex) = 0;
     virtual void TakeDamage(float damageAmount) = 0;
+    virtual void ReplenishHealth(float healthAmount) = 0;
     virtual bool IsProjectileOutOfRange(int projectileIndex) = 0;
-    virtual bool IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship) = 0;
+    virtual bool IsStarshipInRange(const std::unique_ptr<IStarship> &starship) = 0;
+    virtual bool CanEngageWith(const std::unique_ptr<IStarship> &starship)  = 0;
     virtual bool CollidesWith(sf::Rect<float> spriteBounds) = 0;
-    virtual bool CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship) = 0;
     virtual bool IsHealthBarVisible() = 0;
     virtual bool IsMouseOver() = 0;
 
@@ -111,11 +112,11 @@ protected:
     float _acceleration = 0.0F;
     float _attackRange = 400.0F;
     int _buildCost = 100;
-    float _nextFireTime = 0;
     sf::CircleShape _attackRangeCircle;
     bool _isAttackRangeCircleVisible = false;
     bool _isHealthBarVisible = false;
-    sf::Clock _clock;
+    float _damagingProjectileSpawnTimer = 0;
+    sf::Clock _damagingProjectileSpawnTimerClock;
     Chilli::PredefinedColours _predefinedColours;
     int _assignedLaneIndex;
     bool _isMouseOver = false;

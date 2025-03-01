@@ -30,8 +30,8 @@ public:
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
-    void TakeDamage(float amount, sf::Vector2f damageLocation); // TODO: Remove 2nd argument
-    void ReplenishHealth(float amount);
+    void TakeDamage(float damageAmount, sf::Vector2f damageLocation); // TODO: Remove 2nd argument?
+    void ReplenishHealth(float maxHealth, float healAmount, sf::Vector2f healLocation);
 
     void SetHealth(int health);
     int GetHealth() const { return _health; }

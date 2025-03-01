@@ -115,19 +115,19 @@ void Mothership::Move(float xOffset, float yOffset)
     _spriteComponent.Move(xOffset,  yOffset);
 }
 
-void Mothership::ShootAt(float fireRate, sf::Vector2f target)
+void Mothership::ShootAt(sf::Vector2f target)
 {
-    if(_nextFireTime < _clock.getElapsedTime().asSeconds())
+    if(_damagingProjectileSpawnTimer < _damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds())
     {
-        _nextFireTime = _clock.getElapsedTime().asSeconds();
+        _damagingProjectileSpawnTimer = _damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds();
     }
 
-    if(_clock.getElapsedTime().asSeconds() >= _nextFireTime)
+    if(_damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds() >= _damagingProjectileSpawnTimer)
     {
         auto spawnPos = _spriteComponent.GetPos();
         _projectile.emplace_back(std::make_unique<Projectile>(_projectileSize, _projectileColour, spawnPos, target));
 
-        _nextFireTime += fireRate;
+        _damagingProjectileSpawnTimer += _fireRate;
     }
 }
 
@@ -139,6 +139,11 @@ void Mothership::DestroyProjectile(int projectileIndex)
 void Mothership::TakeDamage(float damageAmount)
 {
     _healthComponent.TakeDamage(damageAmount, GetPos());
+}
+
+void Mothership::ReplenishHealth(float healthAmount)
+{
+    _healthComponent.ReplenishHealth(_maxHealth, healthAmount, GetPos());
 }
 
 void Mothership::SetHealth(float health)
@@ -193,9 +198,9 @@ bool Mothership::IsProjectileOutOfRange(int projectileIndex)
     return Chilli::Vector::Distance(GetPos(), _projectile[projectileIndex]->GetPos()) > Constants::WINDOW_WIDTH;
 }
 
-bool Mothership::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship)
+bool Mothership::IsStarshipInRange(const std::unique_ptr<IStarship> &starship)
 {
-    return Chilli::Vector::Distance(GetPos(), enemyStarship->GetPos()) <= GetAttackRange();
+    return Chilli::Vector::Distance(GetPos(), starship->GetPos()) <= GetAttackRange();
 }
 
 bool Mothership::CollidesWith(sf::Rect<float> spriteBounds)
@@ -203,7 +208,7 @@ bool Mothership::CollidesWith(sf::Rect<float> spriteBounds)
     return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
 }
 
-bool Mothership::CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship)
+bool Mothership::CanEngageWith(const std::unique_ptr<IStarship> &starship)
 {
-    return this->GetLaneIndex() == enemyStarship->GetLaneIndex();
+    return this->GetLaneIndex() == starship->GetLaneIndex();
 }

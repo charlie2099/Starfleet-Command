@@ -120,19 +120,19 @@ void Battleship::Move(float xOffset, float yOffset)
     _spriteComponent.Move(xOffset,  yOffset);
 }
 
-void Battleship::ShootAt(float fireRate, sf::Vector2f target)
+void Battleship::ShootAt(sf::Vector2f target)
 {
-    if(_nextFireTime < _clock.getElapsedTime().asSeconds())
+    if(_damagingProjectileSpawnTimer < _damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds())
     {
-        _nextFireTime = _clock.getElapsedTime().asSeconds();
+        _damagingProjectileSpawnTimer = _damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds();
     }
 
-    if(_clock.getElapsedTime().asSeconds() >= _nextFireTime)
+    if(_damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds() >= _damagingProjectileSpawnTimer)
     {
         auto spawnPos = _spriteComponent.GetPos();
         _projectile.emplace_back(std::make_unique<Projectile>(_projectileSize, _projectileColour, spawnPos, target));
 
-        _nextFireTime += fireRate;
+        _damagingProjectileSpawnTimer += _fireRate;
     }
 }
 
@@ -144,6 +144,11 @@ void Battleship::DestroyProjectile(int projectileIndex)
 void Battleship::TakeDamage(float damageAmount)
 {
     _healthComponent.TakeDamage(damageAmount, GetPos());
+}
+
+void Battleship::ReplenishHealth(float healthAmount)
+{
+    _healthComponent.ReplenishHealth(_maxHealth, healthAmount, GetPos());
 }
 
 void Battleship::SetHealth(float health)
@@ -198,9 +203,9 @@ bool Battleship::IsProjectileOutOfRange(int projectileIndex)
     return Chilli::Vector::Distance(GetPos(), _projectile[projectileIndex]->GetPos()) > Constants::WINDOW_WIDTH;
 }
 
-bool Battleship::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship)
+bool Battleship::IsStarshipInRange(const std::unique_ptr<IStarship> &starship)
 {
-    return Chilli::Vector::Distance(GetPos(), enemyStarship->GetPos()) <= GetAttackRange();
+    return Chilli::Vector::Distance(GetPos(), starship->GetPos()) <= GetAttackRange();
 }
 
 bool Battleship::CollidesWith(sf::Rect<float> spriteBounds)
@@ -208,11 +213,11 @@ bool Battleship::CollidesWith(sf::Rect<float> spriteBounds)
     return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
 }
 
-bool Battleship::CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship)
+bool Battleship::CanEngageWith(const std::unique_ptr<IStarship> &starship)
 {
-    if(this->GetLaneIndex() == enemyStarship->GetLaneIndex() - 1 ||
-            this->GetLaneIndex() == enemyStarship->GetLaneIndex() ||
-            this->GetLaneIndex() == enemyStarship->GetLaneIndex() + 1)
+    if(this->GetLaneIndex() == starship->GetLaneIndex() - 1 ||
+            this->GetLaneIndex() == starship->GetLaneIndex() ||
+            this->GetLaneIndex() == starship->GetLaneIndex() + 1)
     {
         return true;
     }

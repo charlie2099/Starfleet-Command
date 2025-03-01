@@ -116,19 +116,19 @@ void Destroyer::Move(float xOffset, float yOffset)
     _spriteComponent.Move(xOffset,  yOffset);
 }
 
-void Destroyer::ShootAt(float fireRate, sf::Vector2f target)
+void Destroyer::ShootAt(sf::Vector2f target)
 {
-    if(_nextFireTime < _clock.getElapsedTime().asSeconds())
+    if(_damagingProjectileSpawnTimer < _damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds())
     {
-        _nextFireTime = _clock.getElapsedTime().asSeconds();
+        _damagingProjectileSpawnTimer = _damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds();
     }
 
-    if(_clock.getElapsedTime().asSeconds() >= _nextFireTime)
+    if(_damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds() >= _damagingProjectileSpawnTimer)
     {
         auto spawnPos = _spriteComponent.GetPos();
         _projectile.emplace_back(std::make_unique<Projectile>(_projectileSize, _projectileColour, spawnPos, target));
 
-        _nextFireTime += fireRate;
+        _damagingProjectileSpawnTimer += _fireRate;
     }
 }
 
@@ -140,6 +140,11 @@ void Destroyer::DestroyProjectile(int projectileIndex)
 void Destroyer::TakeDamage(float damageAmount)
 {
     _healthComponent.TakeDamage(damageAmount, GetPos());
+}
+
+void Destroyer::ReplenishHealth(float healthAmount)
+{
+    _healthComponent.ReplenishHealth(_maxHealth, healthAmount, GetPos());
 }
 
 void Destroyer::SetHealth(float health)
@@ -194,9 +199,9 @@ bool Destroyer::IsProjectileOutOfRange(int projectileIndex)
     return Chilli::Vector::Distance(GetPos(), _projectile[projectileIndex]->GetPos()) > Constants::WINDOW_WIDTH;
 }
 
-bool Destroyer::IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship)
+bool Destroyer::IsStarshipInRange(const std::unique_ptr<IStarship> &starship)
 {
-    return Chilli::Vector::Distance(GetPos(), enemyStarship->GetPos()) <= GetAttackRange();
+    return Chilli::Vector::Distance(GetPos(), starship->GetPos()) <= GetAttackRange();
 }
 
 bool Destroyer::CollidesWith(sf::Rect<float> spriteBounds)
@@ -204,13 +209,13 @@ bool Destroyer::CollidesWith(sf::Rect<float> spriteBounds)
     return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
 }
 
-bool Destroyer::CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship)
+bool Destroyer::CanEngageWith(const std::unique_ptr<IStarship> &starship)
 {
-    if(this->GetLaneIndex() == enemyStarship->GetLaneIndex() - 2 ||
-            this->GetLaneIndex() == enemyStarship->GetLaneIndex() - 1 ||
-            this->GetLaneIndex() == enemyStarship->GetLaneIndex() ||
-            this->GetLaneIndex() == enemyStarship->GetLaneIndex() + 1 ||
-            this->GetLaneIndex() == enemyStarship->GetLaneIndex() + 2)
+    if(this->GetLaneIndex() == starship->GetLaneIndex() - 2 ||
+            this->GetLaneIndex() == starship->GetLaneIndex() - 1 ||
+            this->GetLaneIndex() == starship->GetLaneIndex() ||
+            this->GetLaneIndex() == starship->GetLaneIndex() + 1 ||
+            this->GetLaneIndex() == starship->GetLaneIndex() + 2)
     {
         return true;
     }

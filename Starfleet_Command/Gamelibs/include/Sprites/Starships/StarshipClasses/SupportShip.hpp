@@ -18,13 +18,15 @@ public:
 
     /// Behaviours
     void Move(float xOffset, float yOffset) override;
-    void ShootAt(float fireRate, sf::Vector2f target) override;
+    void ShootAt(sf::Vector2f target) override;
+    void ShootHealAt(const std::unique_ptr<IStarship> &friendlyStarship);
     void DestroyProjectile(int projectileIndex) override;
     void TakeDamage(float damageAmount) override;
+    void ReplenishHealth(float healthAmount) override;
     bool IsProjectileOutOfRange(int projectileIndex) override;
-    bool IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship) override;
+    bool IsStarshipInRange(const std::unique_ptr<IStarship> &starship) override;
     bool CollidesWith(sf::Rect<float> spriteBounds) override;
-    bool CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship) override;
+    bool CanEngageWith(const std::unique_ptr<IStarship> &starship) override;
     bool IsHealthBarVisible() override { return _isHealthBarVisible; }
     bool IsMouseOver() override { return _isMouseOver; };
 
@@ -63,6 +65,10 @@ public:
     int GetBuildCost() override { return _buildCost; }
     int GetLaneIndex() override { return _assignedLaneIndex; }
     std::vector<int> GetAttackableLanes() override { return _attackableLanes; }
+
+private:
+    sf::Clock _healingProjectileSpawnTimerClock;
+    float _healingProjectileSpawnTimer = 0;
 };
 
 #endif //STARFLEET_COMMAND_SUPPORTSHIP_HPP

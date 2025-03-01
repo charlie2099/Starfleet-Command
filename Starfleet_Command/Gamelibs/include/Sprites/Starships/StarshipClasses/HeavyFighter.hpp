@@ -18,13 +18,14 @@ public:
 
     /// Behaviours
     void Move(float xOffset, float yOffset) override;
-    void ShootAt(float fireRate, sf::Vector2f target) override;
+    void ShootAt(sf::Vector2f target) override;
     void DestroyProjectile(int projectileIndex) override;
     void TakeDamage(float damageAmount) override;
+    void ReplenishHealth(float healthAmount) override;
     bool IsProjectileOutOfRange(int projectileIndex) override;
-    bool IsEnemyInRange(const std::unique_ptr<IStarship> &enemyStarship) override;
+    bool IsStarshipInRange(const std::unique_ptr<IStarship> &starship) override;
     bool CollidesWith(sf::Rect<float> spriteBounds) override;
-    bool CanAttackEnemy(const std::unique_ptr<IStarship> &enemyStarship) override;
+    bool CanEngageWith(const std::unique_ptr<IStarship> &starship) override;
     bool IsHealthBarVisible() override { return _isHealthBarVisible; }
     bool IsMouseOver() override { return _isMouseOver; };
 

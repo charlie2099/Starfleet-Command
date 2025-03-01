@@ -152,11 +152,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         for(const auto &playerStarship : _player.GetStarships())
         {
             auto& playerSprite = playerStarship->GetSpriteComponent().GetSprite();
-            if(enemyStarship->IsEnemyInRange(playerStarship) &&
-               enemyStarship->CanAttackEnemy(playerStarship))
+            if(enemyStarship->IsStarshipInRange(playerStarship) &&
+                    enemyStarship->CanEngageWith(playerStarship))
             {
                 enemyStarship->SetSpeed(25);
-                enemyStarship->ShootAt(enemyStarship->GetFireRate(), playerSprite.getPosition());
+                enemyStarship->ShootAt(playerSprite.getPosition());
             }
 
             for(int k = 0; k < enemyStarship->GetProjectileCount(); k++)
@@ -168,6 +168,32 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                     float scaledDamage = (float)randDamage * enemyStarship->GetDamageScaleFactor();
                     playerStarship->TakeDamage(scaledDamage);
                     enemyStarship->DestroyProjectile(k);
+                }
+            }
+        }
+
+        auto* supportShip = dynamic_cast<SupportShip*>(_enemy.GetStarships()[i].get());
+        if(supportShip)
+        {
+            for (int j = 0; j < _enemy.GetStarshipCount(); ++j)
+            {
+                auto& friendlyStarship = _enemy.GetStarships()[j];
+                if(_enemy.GetStarships()[i] != friendlyStarship)
+                {
+                    if(supportShip->IsStarshipInRange(friendlyStarship) && supportShip->CanEngageWith(friendlyStarship))
+                    {
+                        supportShip->ShootHealAt(friendlyStarship);
+                    }
+
+                    for(int k = 0; k < supportShip->GetProjectileCount(); k++)
+                    {
+                        auto& friendlyProjectile = supportShip->GetProjectile()[k]->GetSpriteComponent();
+                        if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
+                        {
+                            friendlyStarship->ReplenishHealth(100);
+                            supportShip->DestroyProjectile(k);
+                        }
+                    }
                 }
             }
         }
@@ -192,11 +218,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         for(const auto &enemyStarship : _enemy.GetStarships())
         {
             auto& enemySprite = enemyStarship->GetSpriteComponent().GetSprite(); // QUESTION: Starship class accessor?
-            if(playerStarship->IsEnemyInRange(enemyStarship) &&
-               playerStarship->CanAttackEnemy(enemyStarship))
+            if(playerStarship->IsStarshipInRange(enemyStarship) &&
+                    playerStarship->CanEngageWith(enemyStarship))
             {
                 playerStarship->SetSpeed(25);
-                playerStarship->ShootAt(playerStarship->GetFireRate(), enemySprite.getPosition());
+                playerStarship->ShootAt(enemySprite.getPosition());
             }
 
             for(int k = 0; k < playerStarship->GetProjectileCount(); k++)
@@ -208,6 +234,32 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                     float scaledDamage = (float)randDamage * playerStarship->GetDamageScaleFactor();
                     enemyStarship->TakeDamage(scaledDamage);
                     playerStarship->DestroyProjectile(k);
+                }
+            }
+        }
+
+        auto* supportShip = dynamic_cast<SupportShip*>(_player.GetStarships()[i].get());
+        if(supportShip)
+        {
+            for (int j = 0; j < _player.GetStarshipCount(); ++j)
+            {
+                auto& friendlyStarship = _player.GetStarships()[j];
+                if(_player.GetStarships()[i] != friendlyStarship)
+                {
+                    if(supportShip->IsStarshipInRange(friendlyStarship) && supportShip->CanEngageWith(friendlyStarship))
+                    {
+                        supportShip->ShootHealAt(friendlyStarship);
+                    }
+
+                    for(int k = 0; k < supportShip->GetProjectileCount(); k++)
+                    {
+                        auto& friendlyProjectile = supportShip->GetProjectile()[k]->GetSpriteComponent();
+                        if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
+                        {
+                            friendlyStarship->ReplenishHealth(100);
+                            supportShip->DestroyProjectile(k);
+                        }
+                    }
                 }
             }
         }
