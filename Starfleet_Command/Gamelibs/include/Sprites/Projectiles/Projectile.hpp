@@ -23,7 +23,7 @@ class Projectile
     };
 
  public:
-    Projectile(Size size, Colour colour, sf::Vector2f spawn_pos, sf::Vector2f target_pos);
+    Projectile(Size size, Colour colour, sf::Vector2f spawnPos, sf::Vector2f targetPos);
     ~Projectile() = default;
 
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
@@ -37,6 +37,7 @@ class Projectile
  private:
     SpriteComponent _spriteComponent;
     sf::Vector2<float> _direction;
+    sf::Vector2f _spawnPos;
     Size _size;
     Colour _colour;
 };

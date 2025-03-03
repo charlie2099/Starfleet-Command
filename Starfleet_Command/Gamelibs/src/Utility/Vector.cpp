@@ -22,3 +22,8 @@ bool Chilli::Vector::BoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect spr
     mouse_vec.x < sprite_bounds.left + sprite_bounds.width &&
     mouse_vec.y < sprite_bounds.top + sprite_bounds.height);
 }
+
+float Chilli::Vector::DotProduct(sf::Vector2f v1, sf::Vector2f v2)
+{
+    return v1.x * v2.x + v1.y * v2.y;
+}

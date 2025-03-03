@@ -1,6 +1,6 @@
 #include "Sprites/Projectiles/Projectile.hpp"
 
-Projectile::Projectile(Projectile::Size size, Projectile::Colour colour, sf::Vector2f spawn_pos, sf::Vector2f target_pos)
+Projectile::Projectile(Projectile::Size size, Projectile::Colour colour, sf::Vector2f spawnPos, sf::Vector2f targetPos)
 {
     switch (size)
     {
@@ -69,29 +69,29 @@ Projectile::Projectile(Projectile::Size size, Projectile::Colour colour, sf::Vec
             break;
     }
 
-    _spriteComponent.SetPos(spawn_pos);
+    _spriteComponent.SetPos(spawnPos);
 
     // Set rotation
     const float PI = 3.14159265;
-    float dx = spawn_pos.x - target_pos.x;
-    float dy = spawn_pos.y - target_pos.y;
+    float dx = spawnPos.x - targetPos.x;
+    float dy = spawnPos.y - targetPos.y;
     float rotation = (atan2(dy, dx)) * 180 / PI;
     _spriteComponent.GetSprite().setRotation(rotation + 180);
 
     // Set direction
-    auto angleX = target_pos.x - _spriteComponent.GetPos().x;
-    auto angleY = target_pos.y - _spriteComponent.GetPos().y;
+    auto angleX = targetPos.x - _spriteComponent.GetPos().x;
+    auto angleY = targetPos.y - _spriteComponent.GetPos().y;
     float vectorLength = sqrt(angleX*angleX + angleY*angleY);
     _direction.x = angleX / vectorLength;
     _direction.y = angleY / vectorLength;
 
     _size = size;
     _colour = colour;
+    _spawnPos = spawnPos;
 }
 
 void Projectile::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    // Shoot projectile towards _position of mouse click
     float speed = 500.0F;
     sf::Vector2f movement = _direction * speed;
     _spriteComponent.GetSprite().move(movement * deltaTime.asSeconds());

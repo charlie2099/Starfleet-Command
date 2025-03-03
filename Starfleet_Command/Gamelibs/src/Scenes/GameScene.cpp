@@ -10,8 +10,8 @@ bool GameScene::Init()
     InitPlayerFlagship();
     InitSpaceLanes();
     InitEnemyFlagship();
-    _playerScrapMetalManager = std::make_unique<ScrapMetalManager>(GetRegularFont(), sf::Color(180, 180, 180), _player.GetFlagship()->GetColour(), 2500);
-    _enemyScrapMetalManager = std::make_unique<ScrapMetalManager>(GetRegularFont(), sf::Color(180, 180, 180), _enemy.GetFlagship()->GetColour(), 2500);
+    _playerScrapMetalManager = std::make_unique<ScrapMetalManager>(GetRegularFont(), _predefinedColours.GRAY, _player.GetFlagship()->GetColour(), STARTING_SCRAP_METAL);
+    _enemyScrapMetalManager = std::make_unique<ScrapMetalManager>(GetRegularFont(), _predefinedColours.GRAY, _enemy.GetFlagship()->GetColour(), STARTING_SCRAP_METAL);
 
     _mothershipHealthBar[0] = std::make_unique<HealthBar>(_player.GetFlagship()->GetHealthComponent());
     _mothershipHealthBar[0]->SetMaxHealth(_player.GetFlagship()->GetHealth());
@@ -133,6 +133,10 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     //_starship->Update(window, deltaTime);
     UpdateEnemySpawner();
 
+
+
+
+
     /// Enemy starship movement and shooting
     for (int i = 1; i < _enemy.GetStarshipCount(); ++i)
     {
@@ -141,24 +145,36 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto& enemyStarship = _enemy.GetStarships()[i];
         _enemy.MoveStarship(i, {enemyStarship->GetSpeed() * deltaTime.asSeconds() * -1, 0});
 
-        for(int j = 0; j < enemyStarship->GetProjectileCount(); j++)
+        /// Enemy starship alignment with other friendly starships
+        for (int j = 1; j < _enemy.GetStarshipCount(); ++j)
         {
-            if(enemyStarship->IsProjectileOutOfRange(j))
+            auto &friendlyStarship = _enemy.GetStarships()[j];
+            if (_enemy.GetStarships()[i] != friendlyStarship)
             {
-                enemyStarship->DestroyProjectile(j);
+                if (enemyStarship->IsInSameLaneAs(friendlyStarship) &&
+                    enemyStarship->IsFriendlyStarshipAhead(friendlyStarship))
+                {
+                    enemyStarship->SetSpeed(friendlyStarship->GetSpeed());
+                }
             }
         }
 
         for(const auto &playerStarship : _player.GetStarships())
         {
-            auto& playerSprite = playerStarship->GetSpriteComponent().GetSprite();
-            if(enemyStarship->IsStarshipInRange(playerStarship) &&
-                    enemyStarship->CanEngageWith(playerStarship))
+            /// Enemy  starship enemy engagement
+            if(enemyStarship->IsEnemyInRange(playerStarship) &&
+                enemyStarship->CanEngageWith(playerStarship))
             {
-                enemyStarship->SetSpeed(25);
-                enemyStarship->ShootAt(playerSprite.getPosition());
+                enemyStarship->ShootAt(playerStarship->GetPos());
+
+                if(enemyStarship->IsInSameLaneAs(playerStarship) &&
+                   enemyStarship->IsEnemyStarshipAhead(playerStarship))
+                {
+                    enemyStarship->SetSpeed(0);
+                }
             }
 
+            /// Enemy projectile collision handling
             for(int k = 0; k < enemyStarship->GetProjectileCount(); k++)
             {
                 auto& enemyBullet = enemyStarship->GetProjectile()[k]->GetSpriteComponent();
@@ -175,12 +191,13 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto* supportShip = dynamic_cast<SupportShip*>(_enemy.GetStarships()[i].get());
         if(supportShip)
         {
-            for (int j = 0; j < _enemy.GetStarshipCount(); ++j)
+            for (int j = 1; j < _enemy.GetStarshipCount(); ++j)
             {
                 auto& friendlyStarship = _enemy.GetStarships()[j];
                 if(_enemy.GetStarships()[i] != friendlyStarship)
                 {
-                    if(supportShip->IsStarshipInRange(friendlyStarship) && supportShip->CanEngageWith(friendlyStarship))
+                    if(supportShip->IsInSameLaneAs(friendlyStarship) &&
+                            supportShip->IsFriendlyStarshipAhead(friendlyStarship))
                     {
                         supportShip->ShootHealAt(friendlyStarship);
                     }
@@ -190,7 +207,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         auto& friendlyProjectile = supportShip->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
-                            friendlyStarship->ReplenishHealth(100);
+                            int randHealAmount = _randomValueDistributions[STARSHIP_HEALING](_randomGenerator);
+                            friendlyStarship->ReplenishHealth(randHealAmount);
                             supportShip->DestroyProjectile(k);
                         }
                     }
@@ -198,6 +216,10 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             }
         }
     }
+
+
+
+
 
     /// Player starship movement and shooting
     for(int i = 1; i < _player.GetStarshipCount(); i++)
@@ -207,24 +229,36 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto& playerStarship = _player.GetStarships()[i];
         _player.MoveStarship(i, {playerStarship->GetSpeed() * deltaTime.asSeconds(), 0});
 
-        for(int j = 0; j < playerStarship->GetProjectileCount(); j++)
+        /// Player starship alignment with other friendly starships
+        for (int j = 1; j < _player.GetStarshipCount(); ++j)
         {
-            if(playerStarship->IsProjectileOutOfRange(j))
+            auto &friendlyStarship = _player.GetStarships()[j];
+            if (_player.GetStarships()[i] != friendlyStarship)
             {
-                playerStarship->DestroyProjectile(j);
+                if (playerStarship->IsInSameLaneAs(friendlyStarship) &&
+                    playerStarship->IsFriendlyStarshipAhead(friendlyStarship))
+                {
+                    playerStarship->SetSpeed(friendlyStarship->GetSpeed());
+                }
             }
         }
 
         for(const auto &enemyStarship : _enemy.GetStarships())
         {
-            auto& enemySprite = enemyStarship->GetSpriteComponent().GetSprite(); // QUESTION: Starship class accessor?
-            if(playerStarship->IsStarshipInRange(enemyStarship) &&
-                    playerStarship->CanEngageWith(enemyStarship))
+            /// Player starship enemy engagement
+            if(playerStarship->IsEnemyInRange(enemyStarship) &&
+               playerStarship->CanEngageWith(enemyStarship))
             {
-                playerStarship->SetSpeed(25);
-                playerStarship->ShootAt(enemySprite.getPosition());
+                playerStarship->ShootAt(enemyStarship->GetPos());
+
+                if(playerStarship->IsInSameLaneAs(enemyStarship) &&
+                    playerStarship->IsEnemyStarshipAhead(enemyStarship))
+                {
+                    playerStarship->SetSpeed(0);
+                }
             }
 
+            /// Player projectile collision handling
             for(int k = 0; k < playerStarship->GetProjectileCount(); k++)
             {
                 auto& playerBulletSprite = playerStarship->GetProjectile()[k]->GetSpriteComponent().GetSprite();
@@ -241,14 +275,15 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto* supportShip = dynamic_cast<SupportShip*>(_player.GetStarships()[i].get());
         if(supportShip)
         {
-            for (int j = 0; j < _player.GetStarshipCount(); ++j)
+            for (int j = 1; j < _player.GetStarshipCount(); ++j)
             {
                 auto& friendlyStarship = _player.GetStarships()[j];
                 if(_player.GetStarships()[i] != friendlyStarship)
                 {
-                    if(supportShip->IsStarshipInRange(friendlyStarship) && supportShip->CanEngageWith(friendlyStarship))
+                    if(supportShip->IsInSameLaneAs(friendlyStarship) &&
+                        supportShip->IsFriendlyStarshipAhead(friendlyStarship))
                     {
-                        supportShip->ShootHealAt(friendlyStarship);
+                            supportShip->ShootHealAt(friendlyStarship);
                     }
 
                     for(int k = 0; k < supportShip->GetProjectileCount(); k++)
@@ -256,7 +291,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         auto& friendlyProjectile = supportShip->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
-                            friendlyStarship->ReplenishHealth(100);
+                            int randHealAmount = _randomValueDistributions[STARSHIP_HEALING](_randomGenerator);
+                            friendlyStarship->ReplenishHealth(randHealAmount);
                             supportShip->DestroyProjectile(k);
                         }
                     }
@@ -264,6 +300,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             }
         }
     }
+
+
 
     UpdateSpaceLanePositionsAndMouseHoverColour(window, deltaTime);
     UpdateStarshipPreviewSpritePosition(worldPositionOfMouse);
@@ -551,6 +589,7 @@ void GameScene::InitRandomDistributions()
     CreateDistribution(STARSHIP_DAMAGE, 100, 250);
     CreateDistribution(SPACELANE, 0, NUM_OF_LANES-1);
     CreateDistribution(ENEMY_STARSHIP_TYPE, 0, StarshipFactory::STARSHIP_TYPE::ENUM_COUNT - 2);
+    CreateDistribution(STARSHIP_HEALING, 50, 100);
 }
 
 bool GameScene::InitBackground()
@@ -860,6 +899,15 @@ void GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData)
     _playerScrapMetalManager->CollectScrap(static_cast<int>(destroyedEnemyStarshipData.BuildCost));
     _playerScrapMetalManager->UpdateScrapText("Scrap Metal: " + std::to_string(_playerScrapMetalManager->GetCurrentScrapMetalAmount()));
     _playerScrapMetalManager->CreatePopup(destroyedEnemyStarshipData.BuildCost, destroyedEnemyStarshipData.DeathLocation);
+
+    for (int i = 1; i < _player.GetStarshipCount(); ++i)
+    {
+        auto& playerStarship = _player.GetStarships()[i];
+        if (playerStarship->GetSpeed() == 0)
+        {
+            playerStarship->SetSpeed(playerStarship->GetStartingSpeed());
+        }
+    }
 }
 
 void GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData)
@@ -868,5 +916,14 @@ void GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData)
     _enemyScrapMetalManager->CollectScrap(static_cast<int>(destroyedPlayerStarshipData.BuildCost));
     _enemyScrapMetalManager->UpdateScrapText("Scrap Metal: " + std::to_string(_enemyScrapMetalManager->GetCurrentScrapMetalAmount()));
     _enemyScrapMetalManager->CreatePopup(destroyedPlayerStarshipData.BuildCost, destroyedPlayerStarshipData.DeathLocation);
+
+    for (int i = 1; i < _enemy.GetStarshipCount(); ++i)
+    {
+        auto& enemyStarship = _enemy.GetStarships()[i];
+        if (enemyStarship->GetSpeed() == 0)
+        {
+            enemyStarship->SetSpeed(enemyStarship->GetStartingSpeed());
+        }
+    }
 }
 

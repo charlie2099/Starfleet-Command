@@ -6,6 +6,7 @@ HeavyFighter::HeavyFighter(int spacelane)
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
     _healthComponent.SetHealth(300);
     _speed = 80;
+    _startSpeed = _speed;
     _trainingSpeed = 0.4f;
     _damage = 20;
     _damageScaleFactor = 0.25f;
@@ -64,6 +65,14 @@ void HeavyFighter::Update(sf::RenderWindow &window, sf::Time deltaTime)
         projectiles->Update(window, deltaTime);
     }
 
+    for (int i = 0; i < _projectile.size(); ++i)
+    {
+        if(Chilli::Vector::Distance(GetPos(), _projectile[i]->GetPos()) > Constants::WINDOW_WIDTH)
+        {
+            _projectile.erase(_projectile.begin() + i);
+        }
+    }
+
     _healthComponent.Update(window, deltaTime);
 
     auto ship_bounds = _spriteComponent.GetSprite().getGlobalBounds();
@@ -77,10 +86,6 @@ void HeavyFighter::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         _isHealthBarVisible = true;
     }
-    /* else if(_healthBar->GetHealth() <= 0)
-     {
-         _isHealthBarVisible = false;
-     }*/
 
     if(_isAttackRangeCircleVisible)
     {
@@ -192,14 +197,31 @@ void HeavyFighter::SetRotation(float rot)
     _rotation = rot;
 }
 
-bool HeavyFighter::IsProjectileOutOfRange(int projectileIndex)
-{
-    return Chilli::Vector::Distance(GetPos(), _projectile[projectileIndex]->GetPos()) > Constants::WINDOW_WIDTH;
-}
-
-bool HeavyFighter::IsStarshipInRange(const std::unique_ptr<IStarship> &starship)
+bool HeavyFighter::IsEnemyInRange(const std::unique_ptr<IStarship> &starship)
 {
     return Chilli::Vector::Distance(GetPos(), starship->GetPos()) <= GetAttackRange();
+}
+
+bool HeavyFighter::IsFriendlyStarshipAhead(const std::unique_ptr<IStarship> &starship)
+{
+    bool isAhead;
+
+    if(starship->GetRotation() == 180) // Starships traveling left
+    {
+        isAhead = starship->GetPos().x < this->GetPos().x;
+    }
+    else // Starships traveling right
+    {
+        isAhead = starship->GetPos().x > this->GetPos().x;
+    }
+
+    float distance = std::abs(starship->GetPos().x - this->GetPos().x);
+    return isAhead && distance < 100.0F;
+}
+
+bool HeavyFighter::IsEnemyStarshipAhead(const std::unique_ptr<IStarship> &enemyStarship)
+{
+    return Chilli::Vector::Distance(this->GetPos(), enemyStarship->GetPos()) < 100;
 }
 
 bool HeavyFighter::CollidesWith(sf::Rect<float> spriteBounds)

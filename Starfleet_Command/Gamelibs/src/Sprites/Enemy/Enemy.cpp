@@ -9,7 +9,7 @@ void Enemy::Update(sf::RenderWindow &window, sf::Time deltaTime)
 
     for (int i = 0; i < starship.size(); i++)
     {
-        if(starship[i]->GetHealthComponent().GetHealth() <= 0)
+        if(starship[i]->GetHealth() <= 0)
         {
             StarshipDestroyedData destroyedStarshipData;
             destroyedStarshipData.DeathLocation = starship[i]->GetPos();

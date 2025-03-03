@@ -62,7 +62,7 @@ private:
     void UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData);
 
     /// Randomness functions
-    enum DistributionsEnum{ STARSHIP_DAMAGE = 0, SPACELANE = 1, ENEMY_STARSHIP_TYPE = 2, };
+    enum DistributionsEnum{ STARSHIP_DAMAGE = 0, SPACELANE = 1, ENEMY_STARSHIP_TYPE = 2, STARSHIP_HEALING =3 };
     void CreateDistribution([[maybe_unused]] [[maybe_unused]] DistributionsEnum distributionsEnum, int min, int max);
     static std::mt19937 GetEngine();
 
@@ -143,6 +143,7 @@ private:
     /// Scrap Metal Managers
     std::unique_ptr<ScrapMetalManager> _playerScrapMetalManager;
     std::unique_ptr<ScrapMetalManager> _enemyScrapMetalManager;
+    const int STARTING_SCRAP_METAL = 25000;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

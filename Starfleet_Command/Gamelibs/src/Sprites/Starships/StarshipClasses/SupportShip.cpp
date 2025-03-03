@@ -6,6 +6,7 @@ SupportShip::SupportShip(int spacelane)
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
     _healthComponent.SetHealth(500);
     _speed = 70;
+    _startSpeed = _speed;
     _trainingSpeed = 0.5f;
     _damage = 0;
     _damageScaleFactor = 0.10f;
@@ -64,6 +65,14 @@ void SupportShip::Update(sf::RenderWindow &window, sf::Time deltaTime)
         projectiles->Update(window, deltaTime);
     }
 
+    for (int i = 0; i < _projectile.size(); ++i)
+    {
+        if(Chilli::Vector::Distance(GetPos(), _projectile[i]->GetPos()) > Constants::WINDOW_WIDTH)
+        {
+            _projectile.erase(_projectile.begin() + i);
+        }
+    }
+
     _healthComponent.Update(window, deltaTime);
 
     auto ship_bounds = _spriteComponent.GetSprite().getGlobalBounds();
@@ -77,10 +86,6 @@ void SupportShip::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         _isHealthBarVisible = true;
     }
-    /* else if(_healthBar->GetHealth() <= 0)
-     {
-         _isHealthBarVisible = false;
-     }*/
 
     if(_isAttackRangeCircleVisible)
     {
@@ -206,14 +211,31 @@ void SupportShip::SetRotation(float rot)
     _rotation = rot;
 }
 
-bool SupportShip::IsProjectileOutOfRange(int projectileIndex)
-{
-    return Chilli::Vector::Distance(GetPos(), _projectile[projectileIndex]->GetPos()) > Constants::WINDOW_WIDTH;
-}
-
-bool SupportShip::IsStarshipInRange(const std::unique_ptr<IStarship> &starship)
+bool SupportShip::IsEnemyInRange(const std::unique_ptr<IStarship> &starship)
 {
     return Chilli::Vector::Distance(GetPos(), starship->GetPos()) <= GetAttackRange();
+}
+
+bool SupportShip::IsFriendlyStarshipAhead(const std::unique_ptr<IStarship> &starship)
+{
+    bool isAhead;
+
+    if(starship->GetRotation() == 180) // Starships traveling left (Enemy starships)
+    {
+        isAhead = starship->GetPos().x < this->GetPos().x;
+    }
+    else // Starships traveling right (Player starships)
+    {
+        isAhead = starship->GetPos().x > this->GetPos().x;
+    }
+
+    float distance = std::abs(starship->GetPos().x - this->GetPos().x);
+    return isAhead && distance < 100.0F;
+}
+
+bool SupportShip::IsEnemyStarshipAhead(const std::unique_ptr<IStarship> &enemyStarship)
+{
+    return Chilli::Vector::Distance(this->GetPos(), enemyStarship->GetPos()) < 100;
 }
 
 bool SupportShip::CollidesWith(sf::Rect<float> spriteBounds)
@@ -225,6 +247,7 @@ bool SupportShip::CanEngageWith(const std::unique_ptr<IStarship> &starship)
 {
     return this->GetLaneIndex() == starship->GetLaneIndex();
 }
+
 
 
 

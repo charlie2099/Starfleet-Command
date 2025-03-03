@@ -6,6 +6,7 @@ Destroyer::Destroyer(int spacelane)
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
     _healthComponent.SetHealth(1500);
     _speed = 40;
+    _startSpeed = _speed;
     _trainingSpeed = 0.2f;
     _damage = 150;
     _damageScaleFactor = 1.0f;
@@ -68,6 +69,14 @@ void Destroyer::Update(sf::RenderWindow &window, sf::Time deltaTime)
     for(auto& projectiles : _projectile)
     {
         projectiles->Update(window, deltaTime);
+    }
+
+    for (int i = 0; i < _projectile.size(); ++i)
+    {
+        if(Chilli::Vector::Distance(GetPos(), _projectile[i]->GetPos()) > Constants::WINDOW_WIDTH)
+        {
+            _projectile.erase(_projectile.begin() + i);
+        }
     }
 
     _healthComponent.Update(window, deltaTime);
@@ -194,14 +203,31 @@ void Destroyer::SetRotation(float rot)
     _rotation = rot;
 }
 
-bool Destroyer::IsProjectileOutOfRange(int projectileIndex)
-{
-    return Chilli::Vector::Distance(GetPos(), _projectile[projectileIndex]->GetPos()) > Constants::WINDOW_WIDTH;
-}
-
-bool Destroyer::IsStarshipInRange(const std::unique_ptr<IStarship> &starship)
+bool Destroyer::IsEnemyInRange(const std::unique_ptr<IStarship> &starship)
 {
     return Chilli::Vector::Distance(GetPos(), starship->GetPos()) <= GetAttackRange();
+}
+
+bool Destroyer::IsFriendlyStarshipAhead(const std::unique_ptr<IStarship> &starship)
+{
+    bool isAhead;
+
+    if(starship->GetRotation() == 180) // Starships traveling left
+    {
+        isAhead = starship->GetPos().x < this->GetPos().x;
+    }
+    else // Starships traveling right
+    {
+        isAhead = starship->GetPos().x > this->GetPos().x;
+    }
+
+    float distance = std::abs(starship->GetPos().x - this->GetPos().x);
+    return isAhead && distance < 100.0F;
+}
+
+bool Destroyer::IsEnemyStarshipAhead(const std::unique_ptr<IStarship> &enemyStarship)
+{
+    return Chilli::Vector::Distance(this->GetPos(), enemyStarship->GetPos()) < 100;
 }
 
 bool Destroyer::CollidesWith(sf::Rect<float> spriteBounds)

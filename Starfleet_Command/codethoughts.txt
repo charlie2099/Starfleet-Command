@@ -9,27 +9,9 @@
 =================PSEUDOCODE==================
 ============================================
 
-
-for each starship in player starship collection
-        if supportship
-                if(supportship in range of friendly starship)
-                        supportship.repairship(friendly starship)
-                        /// Every few seconds shoot a projectile at friendly unit
-                        /// Instead of dealing damage, heal hp instead
-
-
-healthbar COLOUR needs to be updated back
-
-
-
-
-
-Combat Rules
-- Lightfighters have low range, medium attack rate, low damage, and low health
-- Heavyfighters have low range, high attack rate, low damage, and low health
-- Supportships have low range, low heal rate, low heal, and low health
-- Destroyers have high range, low attack rate, high damage, and medium health
-- Battleships have medium range, low attack rate, medium damage, and high health
+BUG:
+If a starship begins engaging an enemy but another starship
+comes up behind it (not already following) then it will overlap it?
 
 ============================================
 ==============USEFUL INFORMATION===============
@@ -49,6 +31,13 @@ Combat Rules
 - Currently the background image for the level is WAY TOO LARGE. However, it looks good.
 
 - Dimensions of background need to change. Should be wider in width.
+
+Combat Rules
+- Lightfighters have low range, medium attack rate, low damage, and low health
+- Heavyfighters have low range, high attack rate, low damage, and low health
+- Supportships have low range, low heal rate, low heal, and low health
+- Destroyers have high range, low attack rate, high damage, and medium health
+- Battleships have medium range, low attack rate, medium damage, and high health
 
 ============================================
 ================ENEMY SPAWNING===============

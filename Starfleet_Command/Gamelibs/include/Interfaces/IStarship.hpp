@@ -10,7 +10,7 @@
 /*
  * Interface that all starships should inherit from
  */
-class IStarship
+class IStarship // TODO: Make functions that are virtual but don't have different implementations non-virtual
 {
 public:
     virtual ~IStarship() = default;
@@ -26,8 +26,10 @@ public:
     virtual void DestroyProjectile(int projectileIndex) = 0;
     virtual void TakeDamage(float damageAmount) = 0;
     virtual void ReplenishHealth(float healthAmount) = 0;
-    virtual bool IsProjectileOutOfRange(int projectileIndex) = 0;
-    virtual bool IsStarshipInRange(const std::unique_ptr<IStarship> &starship) = 0;
+    virtual bool IsEnemyInRange(const std::unique_ptr<IStarship> &starship) = 0;
+    virtual bool IsFriendlyStarshipAhead(const std::unique_ptr<IStarship> &starship) = 0;
+    virtual bool IsEnemyStarshipAhead(const std::unique_ptr<IStarship> &starship) = 0;
+    bool IsInSameLaneAs(const std::unique_ptr<IStarship> &starship) { return this->GetLaneIndex() == starship->GetLaneIndex(); }
     virtual bool CanEngageWith(const std::unique_ptr<IStarship> &starship)  = 0;
     virtual bool CollidesWith(sf::Rect<float> spriteBounds) = 0;
     virtual bool IsHealthBarVisible() = 0;
@@ -85,6 +87,7 @@ public:
     virtual float GetDamage() = 0;
     virtual float GetDamageScaleFactor() = 0;
     virtual float GetSpeed() = 0;
+    float GetStartingSpeed() const { return _startSpeed; }
     virtual float GetTrainingSpeed() = 0;
     virtual float GetFireRate() = 0;
     virtual float GetAcceleration() = 0;
@@ -107,6 +110,7 @@ protected:
     float _damage;
     float _damageScaleFactor = 1.0F;
     float _speed = 1.0F;
+    float _startSpeed = 1.0F;
     float _trainingSpeed = 0.5f;
     float _fireRate = 1.0F;
     float _acceleration = 0.0F;

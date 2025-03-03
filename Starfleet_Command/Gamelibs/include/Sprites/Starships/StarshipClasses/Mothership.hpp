@@ -22,8 +22,9 @@ public:
     void DestroyProjectile(int projectileIndex) override;
     void TakeDamage(float damageAmount) override;
     void ReplenishHealth(float healthAmount) override;
-    bool IsProjectileOutOfRange(int projectileIndex) override;
-    bool IsStarshipInRange(const std::unique_ptr<IStarship> &starship) override;
+    bool IsEnemyInRange(const std::unique_ptr<IStarship> &starship) override;
+    bool IsFriendlyStarshipAhead(const std::unique_ptr<IStarship> &starship) override;
+    bool IsEnemyStarshipAhead(const std::unique_ptr<IStarship> &starship) override;
     bool CollidesWith(sf::Rect<float> spriteBounds) override;
     bool CanEngageWith(const std::unique_ptr<IStarship> &starship) override;
     bool IsHealthBarVisible() override { return _isHealthBarVisible; }

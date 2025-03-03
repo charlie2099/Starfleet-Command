@@ -13,6 +13,7 @@ namespace Chilli
         sf::Color ORANGE {252, 162, 66};
         sf::Color LIGHTORANGE {253, 172, 101};
         sf::Color YELLOW {255, 249, 77};
+        sf::Color GRAY {180, 180, 180};
     };
 }
 
