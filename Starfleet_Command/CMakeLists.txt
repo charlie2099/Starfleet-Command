@@ -13,6 +13,12 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/Minimap.hpp
         Gamelibs/ScrapMetalManager.cpp
         Gamelibs/ScrapMetalManager.hpp
+        Gamelibs/ParallaxBackground.cpp
+        Gamelibs/ParallaxBackground.hpp
+        Gamelibs/GameHUD.cpp
+        Gamelibs/GameHUD.hpp
+        Gamelibs/GameUI.cpp
+        Gamelibs/GameUI.hpp
 )
 
 include_directories(Gamelibs/include)

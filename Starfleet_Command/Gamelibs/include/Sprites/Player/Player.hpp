@@ -31,13 +31,13 @@ public:
     void CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spacelane);
 
     /// Modifiers
-    void PaintFlagship(sf::Color colour);
-    void SetFlagshipPosition(sf::Vector2f pos);
+    void PaintMothership(sf::Color colour);
+    void SetMothershipPosition(sf::Vector2f pos);
     void SetStarshipPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
 
     /// Accessors
     std::vector<std::unique_ptr<IStarship>> &GetStarships() { return starship; }
-    std::unique_ptr<IStarship> &GetFlagship() { return starship[0]; }
+    std::unique_ptr<IStarship> &GetMothership() { return starship[0]; }
     int GetStarshipCount() { return starship.size(); }
 
     /// Event handling

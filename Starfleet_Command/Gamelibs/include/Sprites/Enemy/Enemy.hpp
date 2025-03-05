@@ -28,19 +28,19 @@ public:
 
     /// Behaviours
     void CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spacelane);
-    void PaintFlagship(sf::Color colour);
+    void PaintMothership(sf::Color colour);
     void MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset);
 
     /// Modifiers
-    void SetFlagshipPosition(sf::Vector2f pos);
-    void SetFlagshipRotation(float rot);
+    void SetMothershipPosition(sf::Vector2f pos);
+    void SetMothershipRotation(float rot);
     void SetStarshipPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
     void SetStarshipRotation(std::unique_ptr<IStarship>& ship, float rot);
 
     /// Accessors
     std::vector<std::unique_ptr<IStarship>> &GetStarships();
-    std::unique_ptr<IStarship> &GetFlagship();
-    sf::FloatRect  GetFlagshipBounds() const { return starship[0]->GetSpriteComponent().GetSprite().getGlobalBounds(); }
+    std::unique_ptr<IStarship> &GetMothership();
+    sf::FloatRect  GetMothershipBounds() const { return starship[0]->GetSpriteComponent().GetSprite().getGlobalBounds(); }
     int GetStarshipCount() { return starship.size(); }
 
     /// Event handling

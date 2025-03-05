@@ -2,15 +2,15 @@
 
 ScrapMetalManager::ScrapMetalManager(sf::Font& font, sf::Color scrapTextColour, sf::Color popupTextColour, int startingScrap)
 {
+    _scrapMetalCounter = startingScrap;
+    _popupTextColour = popupTextColour;
+
     _scrapMetalText.setString("Scrap Metal: " + std::to_string(_scrapMetalCounter));
     _scrapMetalText.setFillColor(scrapTextColour);
     _scrapMetalText.setOutlineColor(sf::Color::Black);
     _scrapMetalText.setOutlineThickness(1);
     _scrapMetalText.setFont(font);
     _scrapMetalText.setCharacterSize(11);
-    _popupTextColour = popupTextColour;
-
-    _scrapMetalCounter = startingScrap;
 }
 
 void ScrapMetalManager::Update(sf::RenderWindow &window, sf::Time deltaTime)

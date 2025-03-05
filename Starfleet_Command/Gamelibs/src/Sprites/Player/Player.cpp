@@ -55,13 +55,13 @@ void Player::CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spa
     InvokeBasicEvent(STARSHIP_SPAWNED);
 }
 
-void Player::PaintFlagship(sf::Color colour)
+void Player::PaintMothership(sf::Color colour)
 {
     starship[0]->SetColour(colour);
     starship[0]->SetProjectileColour(colour);
 }
 
-void Player::SetFlagshipPosition(sf::Vector2f pos)
+void Player::SetMothershipPosition(sf::Vector2f pos)
 {
     starship[0]->SetPosition(pos);
 }

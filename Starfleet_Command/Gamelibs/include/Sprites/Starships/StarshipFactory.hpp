@@ -19,7 +19,7 @@ public:
         SUPPORT,
         DESTROYER,
         BATTLESHIP,
-        FLAGSHIP,
+        MOTHERSHIP,
         ENUM_COUNT
     };
 

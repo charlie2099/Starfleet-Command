@@ -47,18 +47,18 @@ void Enemy::CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spac
     InvokeBasicEvent(STARSHIP_SPAWNED);
 }
 
-void Enemy::PaintFlagship(sf::Color colour)
+void Enemy::PaintMothership(sf::Color colour)
 {
     starship[0]->SetColour(colour);
     starship[0]->SetProjectileColour(colour);
 }
 
-void Enemy::SetFlagshipPosition(sf::Vector2f pos)
+void Enemy::SetMothershipPosition(sf::Vector2f pos)
 {
     starship[0]->SetPosition(pos);
 }
 
-void Enemy::SetFlagshipRotation(float rot)
+void Enemy::SetMothershipRotation(float rot)
 {
     starship[0]->SetRotation(rot);
 }
@@ -110,7 +110,7 @@ std::vector<std::unique_ptr<IStarship>> &Enemy::GetStarships()
     return starship;
 }
 
-std::unique_ptr<IStarship> &Enemy::GetFlagship()
+std::unique_ptr<IStarship> &Enemy::GetMothership()
 {
     return starship[0];
 }

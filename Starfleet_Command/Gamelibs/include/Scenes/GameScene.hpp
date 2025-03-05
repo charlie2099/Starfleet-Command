@@ -13,6 +13,8 @@
 #include "queue"
 #include "../../Minimap.hpp"
 #include "../../ScrapMetalManager.hpp"
+#include "../../ParallaxBackground.hpp"
+#include "../../GameHUD.hpp"
 
 class GameScene : public Scene
 {
@@ -27,12 +29,10 @@ public:
 private:
     /// Init functions
     void InitRandomDistributions();
-    bool InitBackground();
     bool InitStarshipBuilderButtons();
-    void InitStarshipNameButtonText();
-    void InitPlayerFlagship();
+    void InitPlayerMothership();
     void InitSpaceLanes();
-    void InitEnemyFlagship();
+    void InitEnemyMothership();
     void InitMainView();
     void InitMinimapView();
     void InitMainViewBorder();
@@ -53,8 +53,6 @@ private:
     void UpdateEnemySpawner();
     void UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &window, sf::Time &deltaTime);
     void UpdateStarshipPreviewSpritePosition(const sf::Vector2f &worldPositionOfMouse);
-    void UpdateBackgroundLayerMovementAndPosition(const sf::Time &deltaTime);
-    void UpdateBackgroundStarPositions(const sf::Time &deltaTime);
 
     /// Event callback functions
     void SpawnStarshipFromShipyard_OnStarshipDeploymentComplete();
@@ -71,11 +69,7 @@ private:
     Chilli::PredefinedColours _predefinedColours;
 
     /// HUD
-    ProgressBar _starshipAssemblyBar;
-    sf::Text _starshipNameButtonText;
-    std::vector<sf::Text> _starshipCostText;
-    std::array<sf::Text, 2> _mothershipNameText;
-    std::array<std::unique_ptr<HealthBar>, 2> _mothershipHealthBar;
+    std::unique_ptr<GameHUD> gameHud;
 
     /// GUI
     std::vector<std::unique_ptr<Button>> _starshipBuilderButtons;
@@ -96,17 +90,8 @@ private:
     bool _isPlacingStarship = false;
     bool _isStarshipPreviewSpriteVisible = false;
 
-    /// UI
-    sf::Texture _backgroundTexture;
-    sf::Sprite _backgroundSprite;
-    struct ParallaxStar
-    {
-        sf::CircleShape circleShape;
-        sf::Vector2f position;
-        float speed{};
-        float size{};
-    };
-    std::vector<ParallaxStar> _parallaxStars;
+    /// Background Parallax
+    std::unique_ptr<ParallaxBackground> backgroundParallax;
     const int NUM_OF_STARS = 750;
 
     /// Sprites
@@ -117,6 +102,7 @@ private:
     std::unique_ptr<Minimap> minimap;
     sf::View _mainView{};
     sf::RectangleShape _mainViewBorder; // _minimapActiveArea // NOTE: Contain within Minimap class?
+    sf::Text _mainViewBorderText;
     const float VIEW_SCROLL_SPEED = 300.0F;
     bool _scrollViewLeft = false;
     bool _scrollViewRight = false;
@@ -135,7 +121,7 @@ private:
     std::queue<int> _spaceLaneStarshipDeploymentQueue;
     const int STARSHIP_MAX_QUEUE_SIZE = 5;
 
-    /// Enemy Spawning
+    /// Enemy Spawning TODO: Enemy spawner class
     sf::Clock _enemySpawnTimerClock;
     float _enemySpawnTimer = 3.0f;
     float _enemySpawnRate = 5.0f;
