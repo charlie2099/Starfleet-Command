@@ -20,7 +20,7 @@ class GameScene : public Scene
 {
 public:
     GameScene() = default;
-    ~GameScene() override = default;
+    ~GameScene() = default;
     bool Init() override;
     void EventHandler(sf::RenderWindow& window, sf::Event& event) override;
     void Update(sf::RenderWindow &window, sf::Time deltaTime) override;

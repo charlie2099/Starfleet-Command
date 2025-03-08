@@ -1,6 +1,7 @@
 #include "Minimap.hpp"
 
-Minimap::Minimap(float viewWidth, float viewHeight, float viewportLeft, float viewportTop, float viewportWidth, float viewportHeight)
+Minimap::Minimap(float viewWidth, float viewHeight, float viewportLeft, float viewportTop, float viewportWidth, float viewportHeight, sf::View& displayView)
+: _displayView(displayView)
 {
     // Initialize the minimap view to the size of the level
     _minimapView.setSize(viewWidth, viewHeight/3.2F);
@@ -41,9 +42,9 @@ void Minimap::EventHandler(sf::RenderWindow &window, sf::Event &event)
     }*/
 }
 
-void Minimap::Update(sf::View& mainView, sf::RenderWindow& window, sf::Time deltatime)
+void Minimap::Update(sf::RenderWindow& window, sf::Time deltatime)
 {
-    _minimapBorder.setPosition(mainView.getCenter().x - mainView.getSize().x/4.0F, mainView.getCenter().y - mainView.getSize().y/2.0F + 12.1F);
+    _minimapBorder.setPosition(_displayView.getCenter().x - _displayView.getSize().x/4.0F, _displayView.getCenter().y - _displayView.getSize().y/2.0F + 12.1F);
 }
 
 void Minimap::Render(sf::RenderWindow &window)

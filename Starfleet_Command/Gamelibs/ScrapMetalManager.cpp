@@ -1,6 +1,6 @@
 #include "ScrapMetalManager.hpp"
 
-ScrapMetalManager::ScrapMetalManager(sf::Font& font, sf::Color scrapTextColour, sf::Color popupTextColour, int startingScrap)
+ScrapMetalManager::ScrapMetalManager(sf::Color scrapTextColour, sf::Color popupTextColour, int startingScrap)
 {
     _scrapMetalCounter = startingScrap;
     _popupTextColour = popupTextColour;
@@ -9,7 +9,7 @@ ScrapMetalManager::ScrapMetalManager(sf::Font& font, sf::Color scrapTextColour, 
     _scrapMetalText.setFillColor(scrapTextColour);
     _scrapMetalText.setOutlineColor(sf::Color::Black);
     _scrapMetalText.setOutlineThickness(1);
-    _scrapMetalText.setFont(font);
+    _scrapMetalText.setFont(Chilli::CustomFonts::GetRegularFont());
     _scrapMetalText.setCharacterSize(11);
 }
 

@@ -9,10 +9,10 @@
 class Minimap
 {
 public:
-    Minimap(float viewWidth, float viewHeight, float viewportLeft, float viewportTop, float viewportWidth, float viewportHeight);
+    Minimap(float viewWidth, float viewHeight, float viewportLeft, float viewportTop, float viewportWidth, float viewportHeight, sf::View& displayView);
     ~Minimap() = default;
     void EventHandler(sf::RenderWindow& window, sf::Event& event);
-    void Update(sf::View& mainView, sf::RenderWindow& window, sf::Time deltaTime);
+    void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
     const sf::View& GetView() const { return _minimapView; }
 
@@ -23,6 +23,7 @@ private:
     void ResetMinimapView();
     sf::Vector2f ClampViewCentreBounds(const sf::Vector2f& proposedCenter) const;
     sf::View _minimapView{};
+    sf::View& _displayView;
     sf::RectangleShape _minimapBorder;
     sf::Vector2i _initialMousePosition;
     sf::Vector2f _originalViewCenter;

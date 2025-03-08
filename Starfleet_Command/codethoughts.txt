@@ -13,6 +13,14 @@ BUG:
 If a starship begins engaging an enemy but another starship
 comes up behind it (not already following) then it will overlap it?
 
+NOTE:
+HUD elements
+- Player Mothership text, healthbar, and scrap amount
+- Enemy Mothership text, healthbar, and scrap amount
+
+TODO:
+- Create a class that encapsulates the above elements? (MothershipStatusDisplay?)
+
 ============================================
 ==============USEFUL INFORMATION===============
 ============================================

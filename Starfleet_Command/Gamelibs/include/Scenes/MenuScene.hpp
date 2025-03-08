@@ -12,7 +12,7 @@ class MenuScene : public Scene
 {
  public:
     MenuScene() = default;
-    ~MenuScene() override = default;
+    ~MenuScene() = default;
 
     bool Init() override;
     void EventHandler(sf::RenderWindow& window, sf::Event& event) override;

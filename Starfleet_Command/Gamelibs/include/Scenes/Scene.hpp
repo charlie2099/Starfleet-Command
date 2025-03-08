@@ -4,13 +4,11 @@
 #include "Utility/Constants.hpp"
 #include "Utility/PredefinedColours.hpp"
 #include "Sprites/UI/Panel.hpp"
+#include "Utility/CustomFonts.hpp"
 
 class Scene
 {
  public:
-    Scene();
-    virtual ~Scene() = default;
-
     enum class ID
     {
         MENU = 0,
@@ -29,14 +27,8 @@ class Scene
     void SetScene(Scene::ID scene) { scene_id = scene; }
     [[nodiscard]] ID GetScene() const { return scene_id; }
 
-    sf::Font& GetRegularFont() { return game_font_r; };
-    sf::Font& GetBoldFont() { return game_font_b; };
-
  private:
-    bool LoadFont();
     ID scene_id{};
-    sf::Font game_font_r;
-    sf::Font game_font_b;
 };
 
 

@@ -2,11 +2,12 @@
 #define STARFLEET_COMMAND_SCRAPMETALMANAGER_HPP
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "Sprites/UI/Effects/PopupText.hpp"
+#include "Utility/CustomFonts.hpp"
 
 class ScrapMetalManager
 {
 public:
-    ScrapMetalManager(sf::Font& font, sf::Color scrapTextColour, sf::Color popupTextColour, int startingScrap);
+    ScrapMetalManager(sf::Color scrapTextColour, sf::Color popupTextColour, int startingScrap);
     ~ScrapMetalManager() = default;
 
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
