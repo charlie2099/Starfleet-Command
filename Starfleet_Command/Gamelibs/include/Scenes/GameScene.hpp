@@ -15,6 +15,8 @@
 #include "../../ScrapMetalManager.hpp"
 #include "../../ParallaxBackground.hpp"
 #include "../../GameHUD.hpp"
+#include "../../StarshipDeploymentButton.hpp"
+#include "../../StarshipDeploymentManager.hpp"
 
 class GameScene : public Scene
 {
@@ -29,30 +31,22 @@ public:
 private:
     /// Init functions
     void InitRandomDistributions();
-    bool InitStarshipBuilderButtons();
     void InitPlayerMothership();
     void InitSpaceLanes();
     void InitEnemyMothership();
     void InitMainView();
     void InitMinimapView();
     void InitMainViewBorder();
-    void InitStarshipPreviewSprites();
     void InitEvents();
 
     /// EventHandler functions
     void HandleViewScrollingKeyboardInput(const sf::Event &event);
-    void HandleStarshipBuilderButtonsInteractionMouseInput(const sf::Event &event);
-    void HandleStarshipPlacementMouseInput(const sf::Event &event);
-    void BeginStarshipDeploymentProcess(int currentSpaceLaneSelectedIndex);
     void StartNextStarshipDeployment();
 
     /// Update functions
     void UpdateMainViewMovement(const sf::RenderWindow &window, const sf::Time &deltaTime, const sf::Vector2i &mousePos);
-    void UpdateStarshipBuilderButtonsHoverStateAndColour();
-    void UpdateStarshipBuilderButtonPositions(sf::RenderWindow &window);
     void UpdateEnemySpawner();
     void UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &window, sf::Time &deltaTime);
-    void UpdateStarshipPreviewSpritePosition(const sf::Vector2f &worldPositionOfMouse);
 
     /// Event callback functions
     void SpawnStarshipFromShipyard_OnStarshipDeploymentComplete();
@@ -72,23 +66,8 @@ private:
     std::unique_ptr<GameHUD> gameHud;
 
     /// GUI
-    std::vector<std::unique_ptr<Button>> _starshipBuilderButtons;
-    std::array<SpriteComponent, StarshipFactory::STARSHIP_TYPE::ENUM_COUNT - 1> _starshipPreviewSprites;
-    std::map<Button*, IStarship*> _buttonStarshipDictionary;
-    std::unique_ptr<LightFighter> _lightFighter;
-    std::unique_ptr<HeavyFighter> _heavyFighter;
-    std::unique_ptr<SupportShip> _supportShip;
-    std::unique_ptr<Destroyer> _destroyer;
-    std::unique_ptr<Battleship> _battleship;
-    const sf::Color DEFAULT_BTN_COLOUR = {255, 255, 255, 100};
-    const sf::Color HOVER_BTN_COLOR = _predefinedColours.LIGHTBLUE;
-    const sf::Color SELECTED_BTN_COLOR = {153, 210, 242, 150};
-    static const int NUM_OF_BUTTONS = 5;
-    //std::array<Panel, NUM_OF_BUTTONS> _shipInfoPanels;
-    int _starshipButtonSelectedIndex = 0;
-    int _starshipButtonHoveredOverIndex = 0;
-    bool _isPlacingStarship = false;
-    bool _isStarshipPreviewSpriteVisible = false;
+    // std::unique_ptr<GameUI> gameUI;
+    std::unique_ptr<StarshipDeploymentButton> _starshipDeploymentButton;
 
     /// Background Parallax
     std::unique_ptr<ParallaxBackground> backgroundParallax;
@@ -117,8 +96,7 @@ private:
     const int NUM_OF_LANES = 5;
 
     /// Player Spawning
-    std::queue<StarshipFactory::STARSHIP_TYPE> _starshipTypeTrainingQueue;
-    std::queue<int> _spaceLaneStarshipDeploymentQueue;
+    StarshipDeploymentManager _starshipDeploymentManager;
     const int STARSHIP_MAX_QUEUE_SIZE = 5;
 
     /// Enemy Spawning TODO: Enemy spawner class

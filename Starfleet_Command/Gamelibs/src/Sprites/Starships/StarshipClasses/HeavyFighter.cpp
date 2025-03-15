@@ -17,6 +17,7 @@ HeavyFighter::HeavyFighter(int spacelane)
     _projectileColour = Projectile::BLUE;
     _starshipName = "Heavy Fighter";
     _assignedLaneIndex = spacelane;
+    _starshipIndex = 1;
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());

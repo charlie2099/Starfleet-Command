@@ -17,6 +17,7 @@ Destroyer::Destroyer(int spacelane)
     _projectileColour = Projectile::BLUE;
     _starshipName = "Destroyer";
     _assignedLaneIndex = spacelane;
+    _starshipIndex = 3;
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());

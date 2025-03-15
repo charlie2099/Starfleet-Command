@@ -23,6 +23,10 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/MothershipStatusDisplay.hpp
         Gamelibs/src/Utility/CustomFonts.cpp
         Gamelibs/include/Utility/CustomFonts.hpp
+        Gamelibs/StarshipDeploymentButton.cpp
+        Gamelibs/StarshipDeploymentButton.hpp
+        Gamelibs/StarshipDeploymentManager.cpp
+        Gamelibs/StarshipDeploymentManager.hpp
 )
 
 include_directories(Gamelibs/include)

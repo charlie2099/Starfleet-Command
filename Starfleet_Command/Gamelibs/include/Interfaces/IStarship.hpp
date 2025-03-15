@@ -88,13 +88,14 @@ public:
     virtual float GetDamageScaleFactor() = 0;
     virtual float GetSpeed() = 0;
     float GetStartingSpeed() const { return _startSpeed; }
-    virtual float GetTrainingSpeed() = 0;
+    virtual float GetDeploymentSpeed() = 0;
     virtual float GetFireRate() = 0;
     virtual float GetAcceleration() = 0;
     virtual float GetAttackRange() = 0;
     virtual int GetBuildCost() = 0;
     virtual int GetLaneIndex() = 0;
     virtual std::vector<int> GetAttackableLanes() = 0;
+    virtual int GetStarshipIndex() = 0;
 
 protected:
     SpriteComponent _spriteComponent;
@@ -125,6 +126,7 @@ protected:
     int _assignedLaneIndex;
     bool _isMouseOver = false;
     std::vector<int> _attackableLanes;
+    int _starshipIndex;
 };
 
 #endif //STARFLEET_COMMAND_ISTARSHIP_HPP

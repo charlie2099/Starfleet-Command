@@ -9,10 +9,10 @@
 class GameHUD
 {
 public:
-    GameHUD(std::unique_ptr<IStarship>& playerMothership, std::unique_ptr<IStarship>& enemyMothership, std::basic_string<char> *starshipCosts, sf::View& displayView);
+    GameHUD(std::unique_ptr<IStarship>& playerMothership, std::unique_ptr<IStarship>& enemyMothership, sf::View& displayView);
     ~GameHUD() = default;
 
-    void Update(sf::RenderWindow &window, sf::Time deltaTime, sf::Vector2<float> starshipBuilderButton1Pos, sf::Vector2<float> hoveredOverStarshipBuilderButton);
+    void Update(sf::RenderWindow &window, sf::Time deltaTime, sf::Vector2<float> starshipBuilderButton1Pos);
     void Render(sf::RenderWindow& window);
 
     void Show();
@@ -22,17 +22,11 @@ public:
     sf::Rect<float> GetPlayerMothershipTextBounds() { return mothershipStatusDisplay->GetPlayerMothershipTextBounds(); }
     sf::Vector2<float> GetEnemyMothershipTextPos() { return mothershipStatusDisplay->GetEnemyMothershipTextPos(); }
     sf::Rect<float> GetEnemyMothershipTextBounds() { return mothershipStatusDisplay->GetEnemyMothershipTextBounds(); }
-
-    sf::Text& GetStarshipNameButtonText() { return _starshipNameButtonText; }
-    std::vector<sf::Text>& GetStarshipCostText() { return _starshipCostText; }
     ProgressBar& GetStarshipDeploymentBar() { return _starshipDeploymentBar; }
 
 private:
-    void InitStarshipNameButtonText(sf::Color playerMothershipColour);
     std::unique_ptr<MothershipStatusDisplay> mothershipStatusDisplay;
     ProgressBar _starshipDeploymentBar;
-    sf::Text _starshipNameButtonText;
-    std::vector<sf::Text> _starshipCostText;
     bool _isVisible = true;
 };
 

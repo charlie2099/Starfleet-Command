@@ -4,7 +4,6 @@ bool GameScene::Init()
 {
     InitRandomDistributions();
     backgroundParallax = std::make_unique<ParallaxBackground>("Resources/Textures/space_nebula_2.png", sf::Color::Cyan, NUM_OF_STARS, _predefinedColours.LIGHTBLUE);
-    InitStarshipBuilderButtons();
     InitPlayerMothership();
     InitSpaceLanes();
     InitEnemyMothership();
@@ -17,40 +16,12 @@ bool GameScene::Init()
 
     InitMainView();
 
-    std::string starshipCosts[5] =
-    {
-            std::to_string(_lightFighter->GetBuildCost()),
-            std::to_string(_heavyFighter->GetBuildCost()),
-            std::to_string(_supportShip->GetBuildCost()),
-            std::to_string(_destroyer->GetBuildCost()),
-            std::to_string(_battleship->GetBuildCost()),
-    };
-
-    gameHud = std::make_unique<GameHUD>(playerMothership, enemyMothership, starshipCosts, _mainView);
+    gameHud = std::make_unique<GameHUD>(playerMothership, enemyMothership, _mainView);
+    _starshipDeploymentButton = std::make_unique<StarshipDeploymentButton>(StarshipFactory::STARSHIP_TYPE::LIGHTFIGHTER, playerMothership->GetColour(), _playerScrapMetalManager);
 
     InitMinimapView();
     InitMainViewBorder();
-    InitStarshipPreviewSprites();
     InitEvents();
-
-    /// StarshipClass newClassType(texture, color, health, damage);
-    /// Starship newShip(newClassType);
-    /// starshipFighter.AddBehaviour(ChaseBehaviour());
-    /// starshipFighter.AddBehaviour(FleeBehaviour());
-    /// starshipFighter.AddWeapon(PlasmaCannonWeapon());
-    /// starshipFighter.AddWeapon(TorpedoLauncherWeapon());
-    ///
-    /// for(auto& _starship : starships)
-    ///     _starship.Update();
-    ///     _starship.Render();
-
-  /*  /// Whenever a STARSHIP_SPAWNED event occurs, the TestFncForObserverToCall method is called
-    /// A STARSHIP_SPAWNED event is invoked in the player CreateStarship method.
-    auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
-    _player.AddBasicObserver({Player::EventID::STARSHIP_SPAWNED, callbackFnc1});
-
-    auto callbackFnc2 = std::bind(&TestClass::OnEvent, testClass, std::placeholders::_1);
-    _player.AddObserver2({Player::EventID::STARSHIP_SPAWNED, callbackFnc2});*/
 
     return true;
 }
@@ -60,8 +31,36 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     _player.EventHandler(window, event);
     HandleViewScrollingKeyboardInput(event);
     minimap->EventHandler(window, event);
-    HandleStarshipBuilderButtonsInteractionMouseInput(event);
-    HandleStarshipPlacementMouseInput(event);
+    _starshipDeploymentButton->EventHandler(window, event);
+
+
+
+
+
+    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && _starshipDeploymentButton->IsPlacingStarship())
+    {
+        for (int i = 0; i < _spaceLanes.size(); ++i)
+        {
+            if(_spaceLanes[i]->IsCursorHoveredOver())
+            {
+                _playerScrapMetalManager->SpendScrap(static_cast<int>(_starshipDeploymentButton->GetBuildCost()));
+                _playerScrapMetalManager->UpdateScrapText("Scrap Metal: " + std::to_string(_playerScrapMetalManager->GetCurrentScrapMetalAmount()));
+
+                _starshipDeploymentManager.AddStarshipToQueue(_starshipDeploymentButton->GetStarshipType(), i);
+
+                // !_starshipDeploymentManager.IsCurrentlyDeploying()
+                if(!gameHud->GetStarshipDeploymentBar().InProgress())
+                {
+                    StartNextStarshipDeployment();
+                }
+            }
+        }
+
+        _starshipDeploymentButton->ResetAfterStarshipPlacement();
+    }
+
+
+
 
     for (const auto & _spaceLane : _spaceLanes)
     {
@@ -85,21 +84,20 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             }
         }
     }
-
-    /*for (auto& shipInfoPanel : _shipInfoPanels)
-    {
-        shipInfoPanel.EventHandler(window, event);
-    }*/
 }
 
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     auto mousePos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto worldPositionOfMouse = window.mapPixelToCoords(mousePos, _mainView); // Mouse _position translated into world coordinates
     UpdateMainViewMovement(window, deltaTime, mousePos);
-    UpdateStarshipBuilderButtonsHoverStateAndColour();
-    UpdateStarshipBuilderButtonPositions(window);
-    gameHud->Update(window, deltaTime, _starshipBuilderButtons[0]->GetPos(), _starshipBuilderButtons[_starshipButtonHoveredOverIndex]->GetPos());
+
+    auto xPos = _mainView.getCenter().x - gameHud->GetStarshipDeploymentBar().GetSize().width / 2.0F + _starshipDeploymentButton->GetBounds().width;
+    auto yPos = _mainView.getCenter().y + Constants::WINDOW_HEIGHT / 2.75F;
+    _starshipDeploymentButton->SetPos({xPos, yPos});
+    _starshipDeploymentButton->Update(window, deltaTime);
+
+    gameHud->Update(window, deltaTime, _starshipDeploymentButton->GetPos());
+
     _playerScrapMetalManager->Update(window, deltaTime);
     _enemyScrapMetalManager ->Update(window, deltaTime);
     _playerScrapMetalManager->SetTextPosition(gameHud->GetPlayerMothershipTextPos().x + gameHud->GetPlayerMothershipTextBounds().width/2.0F - _playerScrapMetalManager->GetTextSize().width/2.0F, gameHud->GetPlayerMothershipTextPos().y + gameHud->GetPlayerMothershipTextBounds().height + 10.0F);
@@ -111,7 +109,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _cursor.SetCursorPos(window, _mainView);
     _player.Update(window, deltaTime);
     _enemy.Update(window, deltaTime);
-    //_starship->Update(window, deltaTime);
     UpdateEnemySpawner();
 
 
@@ -283,14 +280,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     }
 
     UpdateSpaceLanePositionsAndMouseHoverColour(window, deltaTime);
-    UpdateStarshipPreviewSpritePosition(worldPositionOfMouse);
+    //UpdateStarshipPreviewSpritePosition(worldPositionOfMouse);
     backgroundParallax->Update(window, deltaTime);
-
-    /*for (int i = 0; i < _shipInfoPanels.size(); ++i)
-    {
-        _shipInfoPanels[i].Update(window);
-        _shipInfoPanels[i].SetPosition(_starshipBuilderButtons[i]->GetPos().x, _starshipBuilderButtons[i]->GetPos().y - _shipInfoPanels[i].GetPanelSize().height);
-    }*/
 }
 
 void GameScene::Render(sf::RenderWindow& window)
@@ -298,10 +289,6 @@ void GameScene::Render(sf::RenderWindow& window)
     /// Render the main view
     window.setView(_mainView);
     backgroundParallax->Render(window);
-    for(auto& button : _starshipBuilderButtons)
-    {
-        button->Render(window);
-    }
     _player.Render(window);
     _enemy.Render(window);
     //_starship->Render(window);
@@ -310,13 +297,10 @@ void GameScene::Render(sf::RenderWindow& window)
     {
         lane->Render(window);
     }
-    if(_isStarshipPreviewSpriteVisible)
-    {
-        _starshipPreviewSprites[_starshipButtonSelectedIndex].Render(window);
-    }
     _playerScrapMetalManager->Render(window);
     _enemyScrapMetalManager ->Render(window);
     gameHud->Render(window);
+    _starshipDeploymentButton->Render(window);
 
     /// Render the minimap
     window.setView(minimap->GetView());
@@ -406,97 +390,6 @@ void GameScene::UpdateMainViewMovement(const sf::RenderWindow &window, const sf:
     }
 }
 
-void GameScene::UpdateStarshipBuilderButtonPositions(sf::RenderWindow &window)
-{
-    for (int i = 0; i < NUM_OF_BUTTONS; ++i)
-    {
-        const float ROW_LENGTH = 5;
-        const float SPACING = 10;
-        auto button_bounds = _starshipBuilderButtons[i]->GetBounds();
-        auto xPos = 0.0F;
-        auto yPos = 0.0F;
-
-        if((float)i < ROW_LENGTH) // Row 1
-        {
-            xPos = _mainView.getCenter().x - gameHud->GetStarshipDeploymentBar().GetSize().width / 2.0F + ((float)i * (button_bounds.width + SPACING));
-            yPos = _mainView.getCenter().y + Constants::WINDOW_HEIGHT / 2.75F + SPACING;
-        }
-        /*else if(i >= ROW_LENGTH) // Row 2
-        {
-            xPos = _mainView.getCenter().x + ((i-ROW_LENGTH) * (button_bounds.width+SPACING));
-            yPos = _mainView.getCenter().y + Constants::WINDOW_HEIGHT/3.4F + button_bounds.height + (SPACING*2.0F);
-        }*/
-        /*else if(i >= 2 && i < 4) // Row 2
-        {
-            xPos = _minimapBorder.getPosition().x + ((i-2) * (button_bounds.width+SPACING));
-            yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + button_bounds.height + (SPACING*2.0F);
-        }
-        else if(i >= 4) // Row 3
-        {
-            xPos = _minimapBorder.getPosition().x + ((i-4) * (button_bounds.width+SPACING));
-            yPos = _minimapBorder.getPosition().y + _minimapBorder.getSize().y + (button_bounds.height*2.0F) + (SPACING*3.0F);
-        }*/
-
-        _starshipBuilderButtons[i]->SetPos({xPos, yPos});
-        _starshipBuilderButtons[i]->Update(window);
-
-        // Starship cost _text alignment to command buttons
-        auto btnPos = _starshipBuilderButtons[i]->GetPos();
-        auto btnBounds = _starshipBuilderButtons[i]->GetBounds();
-        auto text_xPos = btnPos.x + btnBounds.width - (gameHud->GetStarshipCostText()[i].getGlobalBounds().width + 2);
-        gameHud->GetStarshipCostText()[i].setPosition(text_xPos, btnPos.y + 5);
-    }
-}
-
-void GameScene::UpdateStarshipBuilderButtonsHoverStateAndColour()
-{
-    for (int i = 0; i < _starshipBuilderButtons.size(); i++)
-    {
-        auto &assignedStarshipToButton = _buttonStarshipDictionary[_starshipBuilderButtons[i].get()];
-        bool starshipAffordable = _playerScrapMetalManager->GetCurrentScrapMetalAmount() >= assignedStarshipToButton->GetBuildCost();
-
-        if(_starshipBuilderButtons[i]->IsCursorHoveredOver() && !gameHud->GetStarshipDeploymentBar().InProgress())
-        {
-            _starshipButtonHoveredOverIndex = i;
-            gameHud->GetStarshipNameButtonText().setString(assignedStarshipToButton->GetStarshipName());
-            gameHud->GetStarshipNameButtonText().setFillColor(starshipAffordable ? _player.GetMothership()->GetColour() : _predefinedColours.LIGHTRED);
-        }
-
-        if(!_starshipBuilderButtons[_starshipButtonHoveredOverIndex]->IsCursorHoveredOver())
-        {
-            gameHud->GetStarshipNameButtonText().setString("");
-        }
-
-        if (_starshipBuilderButtons[i]->IsCursorHoveredOver() && starshipAffordable)
-        {
-            if (_isPlacingStarship && i == _starshipButtonSelectedIndex)
-            {
-                _starshipBuilderButtons[i]->SetColour(SELECTED_BTN_COLOR);
-            }
-            else
-            {
-                _starshipBuilderButtons[i]->SetColour(HOVER_BTN_COLOR);
-            }
-        }
-
-        if (!_starshipBuilderButtons[i]->IsCursorHoveredOver() && starshipAffordable)
-        {
-            _starshipBuilderButtons[i]->SetColour(DEFAULT_BTN_COLOUR);
-        }
-
-        if (!_starshipBuilderButtons[i]->IsCursorHoveredOver() && !starshipAffordable)
-        {
-            _starshipBuilderButtons[i]->SetColour(_predefinedColours.LIGHTRED);
-        }
-
-        bool isQueueFull = _starshipTypeTrainingQueue.size() >= STARSHIP_MAX_QUEUE_SIZE;
-        if(isQueueFull)
-        {
-            _starshipBuilderButtons[i]->SetColour(_predefinedColours.LIGHTORANGE);
-        }
-    }
-}
-
 void GameScene::UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &window, sf::Time &deltaTime)
 {
     for (int i = 0; i < NUM_OF_LANES; ++i)
@@ -511,16 +404,6 @@ void GameScene::UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &wi
     }
 }
 
-void GameScene::UpdateStarshipPreviewSpritePosition(const sf::Vector2f &worldPositionOfMouse)
-{
-    if(_isStarshipPreviewSpriteVisible)
-    {
-        auto xPos = worldPositionOfMouse.x - _starshipPreviewSprites[_starshipButtonSelectedIndex].GetSprite().getGlobalBounds().width / 2.0F;
-        auto yPos = worldPositionOfMouse.y - _starshipPreviewSprites[_starshipButtonSelectedIndex].GetSprite().getGlobalBounds().height / 2.0F;
-        _starshipPreviewSprites[_starshipButtonSelectedIndex].SetPos({xPos, yPos});
-    }
-}
-
 void GameScene::InitRandomDistributions()
 {
     _randomGenerator = GetEngine();
@@ -528,30 +411,6 @@ void GameScene::InitRandomDistributions()
     CreateDistribution(SPACELANE, 0, NUM_OF_LANES-1);
     CreateDistribution(ENEMY_STARSHIP_TYPE, 0, StarshipFactory::STARSHIP_TYPE::ENUM_COUNT - 2);
     CreateDistribution(STARSHIP_HEALING, 50, 100);
-}
-
-bool GameScene::InitStarshipBuilderButtons()
-{
-    _lightFighter = std::make_unique<LightFighter>(0);
-    _heavyFighter = std::make_unique<HeavyFighter>(0);
-    _supportShip = std::make_unique<SupportShip>(0);
-    _destroyer = std::make_unique<Destroyer>(0);
-    _battleship = std::make_unique<Battleship>(0);
-
-    for (int i = 0; i < NUM_OF_BUTTONS; ++i)
-    {
-        _starshipBuilderButtons.emplace_back(std::make_unique<Button>("Resources/Textures/command_button_" + std::to_string(i) + ".png"));
-        _starshipBuilderButtons[i]->SetColour(DEFAULT_BTN_COLOUR);
-        _starshipBuilderButtons[i]->SetScale({0.20F, 0.20F});
-    }
-
-    _buttonStarshipDictionary[_starshipBuilderButtons[0].get()] = _lightFighter.get();
-    _buttonStarshipDictionary[_starshipBuilderButtons[1].get()] = _heavyFighter.get();
-    _buttonStarshipDictionary[_starshipBuilderButtons[2].get()] = _supportShip.get();
-    _buttonStarshipDictionary[_starshipBuilderButtons[3].get()] = _destroyer.get();
-    _buttonStarshipDictionary[_starshipBuilderButtons[4].get()] = _battleship.get();
-
-    return true;
 }
 
 void GameScene::InitPlayerMothership()
@@ -603,22 +462,6 @@ void GameScene::InitMainViewBorder()
     _mainViewBorderText.setOutlineColor(sf::Color::Black);
 }
 
-void GameScene::InitStarshipPreviewSprites()
-{
-    for (int i = 0; i < _starshipPreviewSprites.size(); ++i)
-    {
-        _starshipPreviewSprites[i].LoadSprite("Resources/Textures/starfleet_ship_" + std::to_string(i) + ".png");
-        _starshipPreviewSprites[i].GetSprite().scale({0.05F, 0.05F});
-    }
-
-    for (auto& starshipPreviewSprite : _starshipPreviewSprites)
-    {
-        auto playerStarshipColour = _player.GetStarships()[0]->GetColour();
-        starshipPreviewSprite.GetSprite().setColor({playerStarshipColour.r, playerStarshipColour.g, playerStarshipColour.b, 125});
-        //starshipPreviewSprite.GetSprite().setColor({sf::Color::White.r, sf::Color::White.g, sf::Color::White.b, 125});
-    }
-}
-
 void GameScene::InitSpaceLanes()
 {
     for (int i = 0; i < NUM_OF_LANES; ++i)
@@ -659,18 +502,20 @@ void GameScene::InitEvents()
 
 void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()
 {
-    if(_starshipTypeTrainingQueue.empty())
+    if(_starshipDeploymentManager.IsQueueEmpty())
         return;
 
-    _player.CreateStarship(_starshipTypeTrainingQueue.front(), _spaceLaneStarshipDeploymentQueue.front());
-    auto starshipXPos = _spaceLanes[_spaceLaneStarshipDeploymentQueue.front()]->GetPos().x + 25.0F;
-    auto starshipYPos = _spaceLanes[_spaceLaneStarshipDeploymentQueue.front()]->GetPos().y + _spaceLanes[_spaceLaneStarshipDeploymentQueue.front()]->GetSize().y / 2.0F;
+    int nextSpacelaneInQueue = _starshipDeploymentManager.GetNextSpacelaneInQueue();
+    _player.CreateStarship(_starshipDeploymentManager.GetNextStarshipTypeInQueue(), nextSpacelaneInQueue);
+
+    auto starshipXPos = _spaceLanes[nextSpacelaneInQueue]->GetPos().x + 25.0F;
+    auto starshipYPos = _spaceLanes[nextSpacelaneInQueue]->GetPos().y + _spaceLanes[nextSpacelaneInQueue]->GetSize().y / 2.0F;
     _player.SetStarshipPosition(_player.GetStarships().back(), {starshipXPos, starshipYPos});
-    _starshipTypeTrainingQueue.pop();
-    _spaceLaneStarshipDeploymentQueue.pop();
+
+    _starshipDeploymentManager.RemoveFirstStarshipInQueue();
     gameHud->GetStarshipDeploymentBar().ResetProgress();
 
-    if(!_starshipTypeTrainingQueue.empty())
+    if(!_starshipDeploymentManager.IsQueueEmpty())
     {
         StartNextStarshipDeployment();
     }
@@ -712,70 +557,13 @@ void GameScene::HandleViewScrollingKeyboardInput(const sf::Event &event)
     }
 }
 
-void GameScene::HandleStarshipPlacementMouseInput(const sf::Event &event)
-{
-    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && _isPlacingStarship)
-    {
-        for (int i = 0; i < _spaceLanes.size(); ++i)
-        {
-            if(_spaceLanes[i]->IsCursorHoveredOver())
-            {
-                BeginStarshipDeploymentProcess(i);
-            }
-        }
-
-        _starshipBuilderButtons[_starshipButtonSelectedIndex]->SetColour(DEFAULT_BTN_COLOUR);
-        _starshipPreviewSprites[_starshipButtonSelectedIndex].SetPos(_starshipBuilderButtons[_starshipButtonSelectedIndex]->GetPos());
-        _isStarshipPreviewSpriteVisible = false;
-        _isPlacingStarship = false;
-    }
-}
-
-void GameScene::HandleStarshipBuilderButtonsInteractionMouseInput(const sf::Event &event)
-{
-    for (int i = 0; i < _starshipBuilderButtons.size(); i++)
-    {
-        auto &assignedStarshipToButton = _buttonStarshipDictionary[_starshipBuilderButtons[i].get()];
-        bool starshipAffordable = _playerScrapMetalManager->GetCurrentScrapMetalAmount() >= assignedStarshipToButton->GetBuildCost();
-
-        if (_starshipBuilderButtons[i]->IsCursorHoveredOver() && starshipAffordable)
-        {
-            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
-            {
-                if(!_isPlacingStarship && _starshipTypeTrainingQueue.size() < STARSHIP_MAX_QUEUE_SIZE)
-                {
-                    _starshipButtonSelectedIndex = i;
-                    _isStarshipPreviewSpriteVisible = true;
-                    _isPlacingStarship = true;
-                }
-            }
-        }
-    }
-}
-
-void GameScene::BeginStarshipDeploymentProcess(int currentSpaceLaneSelectedIndex)
-{
-    auto& assignedStarshipToButton = _buttonStarshipDictionary[_starshipBuilderButtons[_starshipButtonSelectedIndex].get()];
-    _playerScrapMetalManager->SpendScrap(static_cast<int>(assignedStarshipToButton->GetBuildCost()));
-    _playerScrapMetalManager->UpdateScrapText("Scrap Metal: " + std::to_string(_playerScrapMetalManager->GetCurrentScrapMetalAmount()));
-
-    _starshipTypeTrainingQueue.push(static_cast<StarshipFactory::STARSHIP_TYPE>(_starshipButtonSelectedIndex));
-    _spaceLaneStarshipDeploymentQueue.push(currentSpaceLaneSelectedIndex);
-
-    if(!gameHud->GetStarshipDeploymentBar().InProgress())
-    {
-        StartNextStarshipDeployment();
-    }
-}
-
 void GameScene::StartNextStarshipDeployment()
 {
-    if(_starshipTypeTrainingQueue.empty())
+    if(_starshipDeploymentManager.IsQueueEmpty())
         return;
 
-    auto& assignedStarshipToButton = _buttonStarshipDictionary[_starshipBuilderButtons[_starshipTypeTrainingQueue.front()].get()];
-    gameHud->GetStarshipDeploymentBar().SetProgressText("Deploying " + assignedStarshipToButton->GetStarshipName() + "...");
-    gameHud->GetStarshipDeploymentBar().SetProgressSpeed(assignedStarshipToButton->GetTrainingSpeed());
+    gameHud->GetStarshipDeploymentBar().SetProgressText("Deploying " + _starshipDeploymentButton->GetStarshipName() + "...");
+    gameHud->GetStarshipDeploymentBar().SetProgressSpeed( _starshipDeploymentButton->GetStarshipDeploymentSpeed());
     gameHud->GetStarshipDeploymentBar().SetProgressStatus(true);
 }
 
