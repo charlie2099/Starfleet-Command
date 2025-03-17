@@ -1,11 +1,11 @@
 #include "StarshipDeploymentButton.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 
-StarshipDeploymentButton::StarshipDeploymentButton(StarshipFactory::STARSHIP_TYPE starshipTypeToBeDeployed, sf::Color teamColour, std::unique_ptr<ScrapMetalManager> &playerScrapMetalManager)
-: _playerScrapMetalManager(playerScrapMetalManager)
+StarshipDeploymentButton::StarshipDeploymentButton(StarshipFactory::STARSHIP_TYPE starshipTypeToBeDeployed, sf::Color hoverColour)
+: _teamColour(hoverColour)
 {
     _starshipTemplateToBeDeployed = StarshipFactory::CreateShip(starshipTypeToBeDeployed, 0); // NOTE: Useless 2nd argument | TODO: Create an overloaded function with just the first parameter/argument
-    _starshipTemplateToBeDeployed->SetColour(teamColour);
+    _starshipTemplateToBeDeployed->SetColour(hoverColour);
     _starshipType = starshipTypeToBeDeployed;
 
     _button = std::make_unique<Button>("Resources/Textures/command_button_" + std::to_string(_starshipTemplateToBeDeployed->GetStarshipIndex()) + ".png");
@@ -13,7 +13,7 @@ StarshipDeploymentButton::StarshipDeploymentButton(StarshipFactory::STARSHIP_TYP
     _button->SetScale({0.20F, 0.20F});
 
     _costText.setString(std::to_string(_starshipTemplateToBeDeployed->GetBuildCost()));
-    _costText.setFillColor(_starshipTemplateToBeDeployed->GetColour());
+    _costText.setFillColor(hoverColour);
     _costText.setOutlineColor(sf::Color::Black);
     _costText.setOutlineThickness(1.0F);
     _costText.setFont(Chilli::CustomFonts::GetBoldFont());
@@ -22,7 +22,7 @@ StarshipDeploymentButton::StarshipDeploymentButton(StarshipFactory::STARSHIP_TYP
     _cost = _starshipTemplateToBeDeployed->GetBuildCost();
 
     _nameText.setString(static_cast<std::string>(_starshipTemplateToBeDeployed->GetStarshipName()));
-    _nameText.setFillColor(_starshipTemplateToBeDeployed->GetColour());
+    _nameText.setFillColor(hoverColour);
     _nameText.setOutlineColor(sf::Color::Black);
     _nameText.setOutlineThickness(1);
     _nameText.setFont(Chilli::CustomFonts::GetBoldFont());
@@ -30,15 +30,12 @@ StarshipDeploymentButton::StarshipDeploymentButton(StarshipFactory::STARSHIP_TYP
 
    _previewStarshipSprite.LoadSprite("Resources/Textures/starfleet_ship_" + std::to_string(_starshipTemplateToBeDeployed->GetStarshipIndex()) + ".png");
    _previewStarshipSprite.GetSprite().scale({0.05F, 0.05F});
-   auto starshipToBeDeployedColour = _starshipTemplateToBeDeployed->GetColour();
-   _previewStarshipSprite.GetSprite().setColor({starshipToBeDeployedColour.r, starshipToBeDeployedColour.g, starshipToBeDeployedColour.b, 125});
+   _previewStarshipSprite.GetSprite().setColor({hoverColour.r, hoverColour.g, hoverColour.b, 125});
 }
 
 void StarshipDeploymentButton::EventHandler(sf::RenderWindow &window, sf::Event &event)
 {
-    bool starshipIsAffordable = _playerScrapMetalManager->GetCurrentScrapMetalAmount() >= _starshipTemplateToBeDeployed->GetBuildCost();
-
-    if (_button->IsCursorHoveredOver() && starshipIsAffordable)
+    if (_button->IsCursorHoveredOver() && _isAffordable)
     {
         if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
         {
@@ -49,31 +46,14 @@ void StarshipDeploymentButton::EventHandler(sf::RenderWindow &window, sf::Event 
             }
         }
     }
-
-    /*if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && _isPlacingStarship)
-    {
-        *//*for (int i = 0; i < _spaceLanes.size(); ++i)
-        {
-            if(_spaceLanes[i]->IsCursorHoveredOver())
-            {
-                BeginStarshipDeploymentProcess(i); // TODO: Handle this in GameScene class? Instead set a bool or fire off an event?
-            }
-        }*//*
-
-        _button->SetColour(DEFAULT_BTN_COLOUR);
-        _previewStarshipSprite.SetPos(_button->GetPos());
-        _isStarshipPreviewSpriteVisible = false;
-        _isPlacingStarship = false;
-    }*/
 }
 
 void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    bool starshipIsAffordable = _playerScrapMetalManager->GetCurrentScrapMetalAmount() >= _starshipTemplateToBeDeployed->GetBuildCost();
-    if(_button->IsCursorHoveredOver() /*&& !gameHud->GetStarshipDeploymentBar().InProgress()*/) // TODO: Hide name if starship deployment in progress | Get a ref to GameHUD through constructor?
+    if(_button->IsCursorHoveredOver() /*&& !_gameHud->GetStarshipDeploymentBar().InProgress()*/) // TODO: Hide name if starship deployment in progress | Get a ref to GameHUD through constructor?
     {
         _isNameVisible = true;
-        _nameText.setFillColor(starshipIsAffordable ? _starshipTemplateToBeDeployed->GetColour() : _predefinedColours.LIGHTRED);
+        _nameText.setFillColor(_isAffordable ? _teamColour : _predefinedColours.LIGHTRED);
     }
 
     if(!_button->IsCursorHoveredOver())
@@ -81,7 +61,7 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
         _isNameVisible = false;
     }
 
-    if (_button->IsCursorHoveredOver() && starshipIsAffordable)
+    if (_button->IsCursorHoveredOver() && _isAffordable)
     {
         if (_isPlacingStarship)
         {
@@ -93,12 +73,12 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
         }
     }
 
-    if (!_button->IsCursorHoveredOver() && starshipIsAffordable)
+    if (!_button->IsCursorHoveredOver() && _isAffordable)
     {
         _button->SetColour(DEFAULT_BTN_COLOUR);
     }
 
-    if (!_button->IsCursorHoveredOver() && !starshipIsAffordable)
+    if (!_button->IsCursorHoveredOver() && !_isAffordable)
     {
         _button->SetColour(_predefinedColours.LIGHTRED);
     }
@@ -110,7 +90,7 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
     }*/
 
     auto mousePos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto worldPositionOfMouse = window.mapPixelToCoords(mousePos, window.getView()); // Mouse _position translated into world coordinates // TODO: Replace with _mainView?
+    auto worldPositionOfMouse = window.mapPixelToCoords(mousePos, window.getView()); // Mouse _position translated into world coordinates // TODO: Replace with _gameplayView?
 
     _button->Update(window);
     _button->SetPos(_position);

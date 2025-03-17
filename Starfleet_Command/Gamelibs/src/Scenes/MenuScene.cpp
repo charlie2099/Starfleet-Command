@@ -108,7 +108,7 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     /*else if(_panels[OPTIONS_BUTTON].IsHoveredOver())
     {
         _panels[OPTIONS_BUTTON].SetPanelColour(sf::Color(150, 150, 150, 60));
-        _panels[OPTIONS_BUTTON].UpdateScrapText(_panels[OPTIONS_BUTTON].GetText().getString(), sf::Color(150, 150, 150));
+        _panels[OPTIONS_BUTTON].SetScrapText(_panels[OPTIONS_BUTTON].GetText().getString(), sf::Color(150, 150, 150));
     }*/
     else if(_panels[EXIT_BUTTON].IsHoveredOver())
     {

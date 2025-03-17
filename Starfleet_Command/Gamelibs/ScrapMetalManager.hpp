@@ -16,11 +16,13 @@ public:
     void CollectScrap(int amount);
     void SpendScrap(int amount);
     void CreatePopup(int buildCost, sf::Vector2<float> popupPosition);
-    void UpdateScrapText(const std::string& scrapMetalText);
+    void SetScrapText(const std::string& scrapMetalText);
     void SetTextPosition(float xPos, float yPos);
 
     int GetCurrentScrapMetalAmount() const { return _scrapMetalCounter; }
     sf::Rect<float> GetTextSize() { return _scrapMetalText.getGlobalBounds(); }
+
+    //bool IsAffordable(int cost) const { return _scrapMetalCounter >= cost; }
 
 private:
     std::vector<std::unique_ptr<PopupText>> _scrapMetalPopupText;

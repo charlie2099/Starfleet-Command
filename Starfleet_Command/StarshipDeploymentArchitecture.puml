@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class GameScene
+class StarshipDeploymentManager
+class StarshipDeploymentButton
+
+/'AIDirector *-- RuleCalculator'/
+
+class GameScene
+{
+    ScrapMetalManager _playerScrapMetalManager
+    StarshipDeploymentManager _starshipDeploymentManager
+}
+
+class ScrapMetalManager
+{
+    enum Events { SCRAP_COLLECTED, SCRAP_SPENT };
+    AddObserver()
+}
+
+class StarshipDeploymentManager
+{
+    /'Observe for scrapMetalManager events'/
+    /'auto scrapMetalSpentCallback = std::bind(methodToCall, this)
+    _playerScrapMetalManager.AddObserver(SCRAP_SPENT, scrapMetalSpentCallback)'/
+    array<StarshipDeploymentButton, 5> _deploymentButtons
+}
+
+class StarshipDeploymentButton
+{
+    StarshipDeploymentButton(Starship type)
+}
+
+@enduml

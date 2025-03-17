@@ -9,7 +9,7 @@
 class StarshipDeploymentButton // TODO: Create a higher level StarshipDeploymentConsole/Dashboard class that encapsulates this class and the starship deployment bar? // Put an array of  this in GameUI class?
 {
 public:
-    StarshipDeploymentButton(StarshipFactory::STARSHIP_TYPE starshipTypeToBeDeployed, sf::Color teamColour, std::unique_ptr<ScrapMetalManager> &playerScrapMetalManager);
+    StarshipDeploymentButton(StarshipFactory::STARSHIP_TYPE starshipTypeToBeDeployed, sf::Color hoverColour);
     ~StarshipDeploymentButton() = default;
 
     void EventHandler(sf::RenderWindow& window, sf::Event& event);
@@ -19,6 +19,7 @@ public:
     void ResetAfterStarshipPlacement();
 
     void SetPos(sf::Vector2<float> pos);
+    void SetAffordable(bool affordable) { _isAffordable = affordable; }
 
     std::string GetStarshipName() { return _starshipTemplateToBeDeployed->GetStarshipName(); }
     int GetBuildCost() const { return _cost; }
@@ -26,8 +27,8 @@ public:
     StarshipFactory::STARSHIP_TYPE GetStarshipType() { return _starshipType; }
     sf::Vector2<float> GetPos() { return _button->GetPos(); }
     sf::Rect<float> GetBounds() { return _button->GetBounds(); }
-
     bool IsPlacingStarship() const { return _isPlacingStarship; }
+    bool IsAffordable() const { return _isAffordable; }
 
 private:
     std::unique_ptr<Button> _button;
@@ -40,12 +41,13 @@ private:
     bool _isStarshipPreviewSpriteVisible = false;
     bool _isPlacingStarship = false;
     bool _isNameVisible = false;
+    bool _isAffordable = false;
     StarshipFactory::STARSHIP_TYPE _starshipType;
     Chilli::PredefinedColours _predefinedColours;
-    std::unique_ptr<ScrapMetalManager>& _playerScrapMetalManager;
+    sf::Color _teamColour;
     const sf::Color DEFAULT_BTN_COLOUR = {255, 255, 255, 100};
-    const sf::Color HOVER_BTN_COLOR = {153, 210, 242, 255};
-    const sf::Color SELECTED_BTN_COLOR = {153, 210, 242, 150};
+    const sf::Color HOVER_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 255};
+    const sf::Color SELECTED_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 150};
 };
 
 #endif //STARFLEET_COMMAND_STARSHIPDEPLOYMENTBUTTON_HPP
