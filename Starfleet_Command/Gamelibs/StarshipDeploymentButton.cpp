@@ -4,7 +4,7 @@
 StarshipDeploymentButton::StarshipDeploymentButton(StarshipFactory::STARSHIP_TYPE starshipTypeToBeDeployed, sf::Color hoverColour)
 : _teamColour(hoverColour)
 {
-    _starshipTemplateToBeDeployed = StarshipFactory::CreateShip(starshipTypeToBeDeployed, 0); // NOTE: Useless 2nd argument | TODO: Create an overloaded function with just the first parameter/argument
+    _starshipTemplateToBeDeployed = StarshipFactory::CreateShip(starshipTypeToBeDeployed);
     _starshipTemplateToBeDeployed->SetColour(hoverColour);
     _starshipType = starshipTypeToBeDeployed;
 
@@ -33,13 +33,13 @@ StarshipDeploymentButton::StarshipDeploymentButton(StarshipFactory::STARSHIP_TYP
    _previewStarshipSprite.GetSprite().setColor({hoverColour.r, hoverColour.g, hoverColour.b, 125});
 }
 
-void StarshipDeploymentButton::EventHandler(sf::RenderWindow &window, sf::Event &event)
+void StarshipDeploymentButton::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     if (_button->IsCursorHoveredOver() && _isAffordable)
     {
         if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
         {
-            if(!_isPlacingStarship/* && _starshipTypeDeploymentQueue.size() < STARSHIP_MAX_QUEUE_SIZE*/)
+            if(not _isPlacingStarship)
             {
                 _isStarshipPreviewSpriteVisible = true;
                 _isPlacingStarship = true;
@@ -50,13 +50,13 @@ void StarshipDeploymentButton::EventHandler(sf::RenderWindow &window, sf::Event 
 
 void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    if(_button->IsCursorHoveredOver() /*&& !_gameHud->GetStarshipDeploymentBar().InProgress()*/) // TODO: Hide name if starship deployment in progress | Get a ref to GameHUD through constructor?
+    if(_button->IsCursorHoveredOver())
     {
         _isNameVisible = true;
         _nameText.setFillColor(_isAffordable ? _teamColour : _predefinedColours.LIGHTRED);
     }
 
-    if(!_button->IsCursorHoveredOver())
+    if(not _button->IsCursorHoveredOver())
     {
         _isNameVisible = false;
     }
@@ -73,30 +73,24 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
         }
     }
 
-    if (!_button->IsCursorHoveredOver() && _isAffordable)
+    if (not _button->IsCursorHoveredOver() && _isAffordable)
     {
         _button->SetColour(DEFAULT_BTN_COLOUR);
     }
 
-    if (!_button->IsCursorHoveredOver() && !_isAffordable)
+    if (not _button->IsCursorHoveredOver() && not _isAffordable)
     {
         _button->SetColour(_predefinedColours.LIGHTRED);
     }
 
-    /*bool isQueueFull = _starshipTypeDeploymentQueue.size() >= STARSHIP_MAX_QUEUE_SIZE;
-    if(isQueueFull)
-    {
-        _button->SetColour(_predefinedColours.LIGHTORANGE);
-    }*/
-
-    auto mousePos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto worldPositionOfMouse = window.mapPixelToCoords(mousePos, window.getView()); // Mouse _position translated into world coordinates // TODO: Replace with _gameplayView?
+    auto mousePos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
+    auto worldPositionOfMouse = window.mapPixelToCoords(mousePos, window.getView()); // Mouse _innerPosition translated into world coordinates // TODO: Replace with _gameplayView?
 
     _button->Update(window);
     _button->SetPos(_position);
 
     _nameText.setPosition(_button->GetPos().x, _button->GetPos().y - 15.0F);
-    _costText.setPosition({_button->GetPos().x + _button->GetBounds().width - _costText.getGlobalBounds().width - 2.5F, _button->GetPos().y + 2.0F});
+    _costText.setPosition({_button->GetPos().x + _button->GetBounds().width - _costText.getGlobalBounds().width - 2.5F, _button->GetPos().y + 5.0F});
 
     if(_isStarshipPreviewSpriteVisible)
     {
@@ -126,6 +120,11 @@ void StarshipDeploymentButton::ResetAfterStarshipPlacement()
     _previewStarshipSprite.SetPos(_button->GetPos());
     _isStarshipPreviewSpriteVisible = false;
     _isPlacingStarship = false;
+}
+
+void StarshipDeploymentButton::SetColour(sf::Color colour)
+{
+    _button->SetColour(colour);
 }
 
 void StarshipDeploymentButton::SetPos(sf::Vector2<float> pos)

@@ -13,8 +13,8 @@ Chilli::Cursor::Cursor()
 
 void Chilli::Cursor::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-//    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-//    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse _position translated into world coordinates
+//    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
+//    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse _innerPosition translated into world coordinates
 //
 //    _cursorSprite.setPosition(mousePosWorldCoords.x - _cursorSprite.getGlobalBounds().width/2,
 //                               mousePosWorldCoords.y - _cursorSprite.getGlobalBounds().height/2);
@@ -27,8 +27,8 @@ void Chilli::Cursor::Render(sf::RenderWindow &window)
 
 void Chilli::Cursor::SetCursorPos(sf::RenderWindow &window, sf::View& view)
 {
-    //auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    //auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, view); // Mouse _position translated into world coordinates
+    //auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
+    //auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, view); // Mouse _innerPosition translated into world coordinates
 
     sf::Vector2f mouse_pos = window.mapPixelToCoords(sf::Mouse::getPosition(window), view);
 

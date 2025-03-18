@@ -14,12 +14,12 @@ Minimap::Minimap(float viewWidth, float viewHeight, float viewportLeft, float vi
     _minimapView.setViewport(sf::FloatRect(viewportLeft,viewportTop,viewportWidth,viewportHeight));
 
     _minimapBorder.setSize({Constants::WINDOW_WIDTH * viewportWidth, Constants::WINDOW_HEIGHT * viewportHeight});
-    _minimapBorder.setOutlineThickness(1.0f);
+    _minimapBorder.setOutlineThickness(1.0F);
     _minimapBorder.setOutlineColor({128, 128, 128});
     _minimapBorder.setFillColor(sf::Color::Transparent);
 
     _minimapGameplayBoundary.setSize({Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT});
-    _minimapGameplayBoundary.setOutlineThickness(10.0f);
+    _minimapGameplayBoundary.setOutlineThickness(5.0F);
     _minimapGameplayBoundary.setOutlineColor(_predefinedColours.GRAY);
     _minimapGameplayBoundary.setFillColor(sf::Color::Transparent);
 

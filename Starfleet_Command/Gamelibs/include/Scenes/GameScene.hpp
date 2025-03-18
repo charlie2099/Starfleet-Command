@@ -6,17 +6,17 @@
 #include "Sprites/Player/Player.hpp"
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
-#include <random>
-#include <chrono>
 #include "../../SpaceLane.hpp"
 #include "Sprites/UI/ProgressBar.hpp"
-#include "queue"
 #include "../../Minimap.hpp"
 #include "../../ScrapMetalManager.hpp"
 #include "../../ParallaxBackground.hpp"
 #include "../../StarshipDeploymentButton.hpp"
 #include "../../StarshipDeploymentManager.hpp"
 #include "../../MothershipStatusDisplay.hpp"
+#include <random>
+#include <chrono>
+#include "queue"
 
 class GameScene : public Scene
 {
@@ -47,7 +47,7 @@ private:
     void UpdateEnemySpawner();
     void UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &window, sf::Time &deltaTime);
 
-    // Render functions
+    /// Render functions
     void RenderGameplayViewSprites(sf::RenderWindow &window);
     void RenderMinimapSprites(sf::RenderWindow &window);
 
@@ -69,10 +69,9 @@ private:
     std::unique_ptr<MothershipStatusDisplay> _mothershipStatusDisplay;
 
     /// GUI
-    // std::unique_ptr<GameUI> gameUI;
-    std::unique_ptr<StarshipDeploymentButton> _starshipDeploymentButton;
-    //static const int NUM_OF_BUTTONS = 5;
-    //std::array<std::unique_ptr<StarshipDeploymentButton>, NUM_OF_BUTTONS> _starshipDeploymentButtons;
+    static const int NUM_OF_BUTTONS = 5;
+    std::array<std::unique_ptr<StarshipDeploymentButton>, NUM_OF_BUTTONS> _starshipDeploymentButtons;
+    int selectedDeploymentButtonIndex = 0;
 
     /// Background Parallax
     std::unique_ptr<ParallaxBackground> _backgroundParallax;
@@ -99,7 +98,7 @@ private:
     const int NUM_OF_LANES = 5;
 
     /// Player Spawning
-    StarshipDeploymentManager _starshipDeploymentManager;
+    std::unique_ptr<StarshipDeploymentManager> _starshipDeploymentManager;
     const int STARSHIP_MAX_QUEUE_SIZE = 5;
 
     /// Enemy Spawning TODO: Enemy spawner class
@@ -110,7 +109,7 @@ private:
     /// Scrap Metal Managers
     std::unique_ptr<ScrapMetalManager> _playerScrapMetalManager;
     std::unique_ptr<ScrapMetalManager> _enemyScrapMetalManager;
-    const int STARTING_SCRAP_METAL = 2500;
+    const int STARTING_SCRAP_METAL = 5000;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

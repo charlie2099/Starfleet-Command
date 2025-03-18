@@ -6,7 +6,7 @@
 #include "ScrapMetalManager.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 
-class StarshipDeploymentButton // TODO: Create a higher level StarshipDeploymentConsole/Dashboard class that encapsulates this class and the starship deployment bar? // Put an array of  this in GameUI class?
+class StarshipDeploymentButton // TODO: Create a higher level StarshipDeploymentConsole/Dashboard class that encapsulates this class and the starship deployment bar? // Integrate within StarshipDeploymentManager?
 {
 public:
     StarshipDeploymentButton(StarshipFactory::STARSHIP_TYPE starshipTypeToBeDeployed, sf::Color hoverColour);
@@ -18,6 +18,7 @@ public:
 
     void ResetAfterStarshipPlacement();
 
+    void SetColour(sf::Color colour);
     void SetPos(sf::Vector2<float> pos);
     void SetAffordable(bool affordable) { _isAffordable = affordable; }
 

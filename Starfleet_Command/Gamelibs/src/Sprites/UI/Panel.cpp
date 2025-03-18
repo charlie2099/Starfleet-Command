@@ -12,8 +12,8 @@ Panel::Panel()
 
 void Panel::EventHandler(sf::RenderWindow &window, sf::Event &event)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse _position translated into world coordinates
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
+    auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse _innerPosition translated into world coordinates
 
     if (event.type == sf::Event::MouseButtonPressed && _isHoveredOver/* && event.mouseButton.button == sf::Mouse::Left*/)
     {
@@ -27,8 +27,8 @@ void Panel::EventHandler(sf::RenderWindow &window, sf::Event &event)
 
 void Panel::Update(sf::RenderWindow &window)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse _position translated into world coordinates
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
+    auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse _innerPosition translated into world coordinates
 
     if(_panel.getGlobalBounds().contains(translated_pos))
     {
@@ -191,7 +191,7 @@ sf::FloatRect Panel::GetTextSize()
 
 sf::Vector2f Panel::GetTextPosition()
 {
-    /// Panels follow _text _position
+    /// Panels follow _text _innerPosition
     return _text.getPosition();
 }
 
@@ -203,7 +203,7 @@ sf::FloatRect Panel::GetPanelSize()
 
 sf::Vector2f Panel::GetPanelPosition()
 {
-    /// Panels follow _text _position
+    /// Panels follow _text _innerPosition
     return _panel.getPosition();
 }
 

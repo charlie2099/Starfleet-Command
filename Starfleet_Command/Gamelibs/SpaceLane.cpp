@@ -15,8 +15,8 @@ bool SpaceLane::Init()
 
 void SpaceLane::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    auto mouse_pos_relative = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse _position translated into world coordinates
+    auto mouse_pos_relative = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
+    auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse _innerPosition translated into world coordinates
 
     if(_laneRect.getGlobalBounds().contains(mouse_pos_world))
     {
