@@ -26,7 +26,6 @@ public:
         bool boolData;
     };*/
 
-    //explicit HealthComponent(SpriteComponent& _outsideBarSpriteComponent);
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 

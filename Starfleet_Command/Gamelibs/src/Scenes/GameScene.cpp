@@ -135,6 +135,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     UpdateEnemySpawner();
 
+
+
+
+
+
     /// Enemy starship movement and shooting
     for (int i = 1; i < _enemy.GetStarshipCount(); ++i)
     {
@@ -147,7 +152,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         for (int j = 1; j < _enemy.GetStarshipCount(); ++j)
         {
             auto &friendlyStarship = _enemy.GetStarships()[j];
-            if (_enemy.GetStarships()[i] != friendlyStarship)
+            if (enemyStarship != friendlyStarship)
             {
                 if (enemyStarship->IsInSameLaneAs(friendlyStarship) &&
                     enemyStarship->IsFriendlyStarshipAhead(friendlyStarship))
@@ -155,6 +160,13 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                     enemyStarship->SetSpeed(friendlyStarship->GetSpeed());
                 }
             }
+        }
+
+        /// Enemy starship self-destruction when reaching end of it's lane
+        if(enemyStarship->GetPos().x < _spaceLanes[0]->GetPos().x) // NOTE: Doesn't matter which lane as they all have the same xPos
+        {
+            enemyStarship->TakeDamage(enemyStarship->GetMaxHealth());
+            _player.GetMothership()->TakeDamage(enemyStarship->GetMaxHealth());
         }
 
         for(const auto &playerStarship : _player.GetStarships())
@@ -186,17 +198,20 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             }
         }
 
-        auto* supportShip = dynamic_cast<SupportShip*>(_enemy.GetStarships()[i].get());
+        auto* supportShip = dynamic_cast<SupportShip*>(enemyStarship.get());
         if(supportShip)
         {
             for (int j = 1; j < _enemy.GetStarshipCount(); ++j)
             {
                 auto& friendlyStarship = _enemy.GetStarships()[j];
-                if(_enemy.GetStarships()[i] != friendlyStarship)
+                if(enemyStarship != friendlyStarship)
                 {
                     if(supportShip->IsInSameLaneAs(friendlyStarship) &&
                             supportShip->IsFriendlyStarshipAhead(friendlyStarship))
                     {
+                        if(friendlyStarship->GetHealth() >= friendlyStarship->GetMaxHealth())
+                            break;
+
                         supportShip->ShootHealAt(friendlyStarship);
                     }
 
@@ -241,6 +256,13 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             }
         }
 
+        /// Player starship self-destruction when reaching end of it's lane
+        if(playerStarship->GetPos().x > _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x) // NOTE: Doesn't matter which lane as they all have the same xPos
+        {
+            playerStarship->TakeDamage(playerStarship->GetMaxHealth());
+            _enemy.GetMothership()->TakeDamage(playerStarship->GetMaxHealth());
+        }
+
         for(const auto &enemyStarship : _enemy.GetStarships())
         {
             /// Player starship enemy engagement
@@ -281,7 +303,10 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                     if(supportShip->IsInSameLaneAs(friendlyStarship) &&
                         supportShip->IsFriendlyStarshipAhead(friendlyStarship))
                     {
-                            supportShip->ShootHealAt(friendlyStarship);
+                        if(friendlyStarship->GetHealth() >= friendlyStarship->GetMaxHealth())
+                            break;
+
+                        supportShip->ShootHealAt(friendlyStarship);
                     }
 
                     for(int k = 0; k < supportShip->GetProjectileCount(); k++)
@@ -298,6 +323,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             }
         }
     }
+
+
+
+
+
 
     UpdateSpaceLanePositionsAndMouseHoverColour(window, deltaTime);
     //UpdateStarshipPreviewSpritePosition(worldPositionOfMouse);
@@ -604,8 +634,7 @@ void GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData)
 {
     auto destroyedPlayerStarshipData = std::any_cast<Player::StarshipDestroyedData>(eventData);
     _enemyScrapMetalManager->CollectScrap(static_cast<int>(destroyedPlayerStarshipData.BuildCost));
-    _enemyScrapMetalManager->SetScrapText(
-            "Scrap Metal: " + std::to_string(_enemyScrapMetalManager->GetCurrentScrapMetalAmount()));
+    _enemyScrapMetalManager->SetScrapText("Scrap Metal: " + std::to_string(_enemyScrapMetalManager->GetCurrentScrapMetalAmount()));
     _enemyScrapMetalManager->CreatePopup(destroyedPlayerStarshipData.BuildCost, destroyedPlayerStarshipData.DeathLocation);
 
     for (int i = 1; i < _enemy.GetStarshipCount(); ++i)

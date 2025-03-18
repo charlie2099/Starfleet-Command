@@ -26,6 +26,7 @@ class MenuScene : public Scene
     void InitButtonPanels();
     bool InitMenuTitleIcon();
     void InitBackgroundShips(std::mt19937 &generator);
+    void InitGameVersionText();
     void CreateDistribution(const std::string& name, int min, int max);
 
     static const int PLAY_BUTTON = 0;
@@ -56,5 +57,7 @@ class MenuScene : public Scene
 
     sf::Sprite _menuTitleImgSprite;
     sf::Texture _menuTitleImgTexture;
+
+    sf::Text _gameVersionText;
 };
 #endif //STARFLEET_COMMAND_MENUSCENE_HPP

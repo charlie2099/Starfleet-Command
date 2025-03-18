@@ -8,6 +8,7 @@ bool MenuScene::Init()
     InitButtonPanels();
     InitMenuTitleIcon();
     InitBackgroundShips(generator);
+    InitGameVersionText();
 
     return true;
 }
@@ -150,6 +151,7 @@ void MenuScene::Render(sf::RenderWindow& window)
     {
         panel.Render(window);
     }
+    window.draw(_gameVersionText);
     _cursor.Render(window);
 }
 
@@ -288,10 +290,21 @@ void MenuScene::InitBackgroundShips(std::mt19937 &generator)
     }
 }
 
+void MenuScene::InitGameVersionText()
+{
+    _gameVersionText.setFont(Chilli::CustomFonts::GetRegularFont());
+    _gameVersionText.setString("PRE-ALPHA BUILD v0.0.1");
+    _gameVersionText.setCharacterSize(12);
+    _gameVersionText.setFillColor(sf::Color::White);
+    _gameVersionText.setOutlineColor(sf::Color::Black);
+    _gameVersionText.setPosition(Constants::WINDOW_WIDTH - (_gameVersionText.getGlobalBounds().width + 20.0F), Constants::WINDOW_HEIGHT - (_gameVersionText.getGlobalBounds().height + 20.0F));
+}
+
 void MenuScene::CreateDistribution(const std::string& name, int min, int max)
 {
     std::uniform_int_distribution<int> instance{min, max};
     _distributions.emplace_back(instance);
 }
+
 
 

@@ -3,29 +3,28 @@
 PopupText::PopupText(int value, sf::Vector2f pos)
 {
     InitFont();
-    text.setString(std::to_string(value));
-    text.setFont(font);
-    text.setCharacterSize(12.5f);
+    _text.setString(std::to_string(value));
+    _text.setFont(_font);
+    _text.setCharacterSize(12.5F);
 
-    generator = GetEngine();
-    std::uniform_int_distribution<int> dist_x {static_cast<int>(pos.x-30),static_cast<int>(pos.x+30)};
-    int rand_xPos = dist_x(generator);
-    text.setPosition(rand_xPos, pos.y);
+    _generator = GetEngine();
+    std::uniform_int_distribution<int> dist_x {static_cast<int>(pos.x-30.0F),static_cast<int>(pos.x+30.0F)};
+    int randXPos = dist_x(_generator);
+    _text.setPosition(randXPos, pos.y);
 }
 
 void PopupText::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    _color = text.getFillColor();
-    m_timePassed += 1.0f * deltaTime.asSeconds();
-    //std::cout << "Time passed: " << m_timePassed << std::endl;
+    _color = _text.getFillColor();
+    _timePassed += 1.0f * deltaTime.asSeconds();
 
     float moveSpeed = 25.0f;
-    text.setPosition(text.getPosition().x, text.getPosition().y - moveSpeed * deltaTime.asSeconds());
+    _text.setPosition(_text.getPosition().x, _text.getPosition().y - moveSpeed * deltaTime.asSeconds());
 
-    if(_color.a > 0 /*&& m_timePassed > 3*/)
+    if(_color.a > 0 /*&& _timePassed > 3*/)
     {
         float disappearSpeed = 10;
-        text.setFillColor(sf::Color(_color.r, _color.g, _color.b, _color.a - disappearSpeed * deltaTime.asSeconds()));
+        _text.setFillColor(sf::Color(_color.r, _color.g, _color.b, _color.a - disappearSpeed * deltaTime.asSeconds()));
     }
     else
     {
@@ -34,13 +33,13 @@ void PopupText::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     if(_isIconEnabled)
     {
-        _iconSprite.setPosition(text.getPosition().x - _iconSprite.getGlobalBounds().width - 3.0F, text.getPosition().y + 3.5F);
+        _iconSprite.setPosition(_text.getPosition().x - _iconSprite.getGlobalBounds().width - 3.0F, _text.getPosition().y + 3.5F);
     }
 }
 
 void PopupText::Render(sf::RenderWindow &window)
 {
-    window.draw(text);
+    window.draw(_text);
     if(_isIconEnabled)
     {
         window.draw(_iconSprite);
@@ -49,7 +48,7 @@ void PopupText::Render(sf::RenderWindow &window)
 
 bool PopupText::InitFont()
 {
-    if(!font.loadFromFile("Resources/Fonts/Orbitron/Orbitron-Regular.ttf"))
+    if(!_font.loadFromFile("Resources/Fonts/Orbitron/Orbitron-Regular.ttf"))
     {
         return false;
     }
@@ -68,13 +67,13 @@ std::mt19937 PopupText::GetEngine()
 
 void PopupText::SetColour(sf::Color color)
 {
-    text.setFillColor(color);
+    _text.setFillColor(color);
 }
 
 void PopupText::SetCharSize(int size)
 {
-    text.setCharacterSize(size);
-    text.setStyle(sf::Text::Style::Bold);
+    _text.setCharacterSize(size);
+    _text.setStyle(sf::Text::Style::Bold);
 }
 
 void PopupText::SetIconImage(const std::string& iconImageFileName)

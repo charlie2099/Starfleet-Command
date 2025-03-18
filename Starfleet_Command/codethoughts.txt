@@ -1,9 +1,20 @@
 ============================================
 ===============WORK PHILOSOPHY================
 ============================================
+
 1) Make it work
 2) Make it right
 3) Make it fast
+
+============================================
+==============DEVELOPMENT PHASES===============
+============================================
+
+- Pre-alpha: Early development, prototyping, not yet playable
+- Alpha: First complete playable version with core features implemented, but likely with bugs and missing content
+- Beta: Feature complete, focusing on fixing bugs and polish
+- Release Candidate: Nearly ready for release, final testing
+- Release/Gold: Final product ready for distribution
 
 ============================================
 =================PSEUDOCODE==================

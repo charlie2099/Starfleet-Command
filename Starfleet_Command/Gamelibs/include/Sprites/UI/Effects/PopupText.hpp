@@ -22,13 +22,13 @@ public:
 private:
     bool InitFont();
     static std::mt19937 GetEngine();
-    std::mt19937 generator;
-    sf::Text text;
+    std::mt19937 _generator;
+    sf::Text _text;
     sf::Color _color;
-    sf::Font font;
+    sf::Font _font;
     sf::Texture _iconTexture;
     sf::Sprite _iconSprite;
-    float m_timePassed = 0;
+    float _timePassed = 0;
     bool _isFaded = false;
     bool _isIconEnabled = false;
 };
