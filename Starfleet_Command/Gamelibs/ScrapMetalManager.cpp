@@ -56,7 +56,7 @@ void ScrapMetalManager::CreatePopup(int buildCost, sf::Vector2<float> popupPosit
     popupText->SetIconImage("Resources/Textures/pixil-frame-0.png");
 }
 
-void ScrapMetalManager::UpdateScrapText(const std::string& scrapMetalText)
+void ScrapMetalManager::SetScrapText(const std::string& scrapMetalText)
 {
     _scrapMetalText.setString(scrapMetalText);
 }

@@ -23,7 +23,7 @@ public:
         ENUM_COUNT
     };
 
-    //static std::unique_ptr<IStarship> CreateShip(STARSHIP_TYPE shipType);
+    static std::unique_ptr<IStarship> CreateShip(STARSHIP_TYPE shipType);
     static std::unique_ptr<IStarship> CreateShip(STARSHIP_TYPE shipType, int spacelane);
 };
 

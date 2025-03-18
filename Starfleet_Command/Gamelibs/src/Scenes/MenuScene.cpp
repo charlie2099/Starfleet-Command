@@ -38,8 +38,8 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    //auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    //auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse _position translated into world coordinates
+    //auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
+    //auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos, _worldView); // Mouse _innerPosition translated into world coordinates
 
     _cursor.Update(window, deltaTime);
     _cursor.SetCursorPos(window, _worldView);
@@ -108,7 +108,7 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     /*else if(_panels[OPTIONS_BUTTON].IsHoveredOver())
     {
         _panels[OPTIONS_BUTTON].SetPanelColour(sf::Color(150, 150, 150, 60));
-        _panels[OPTIONS_BUTTON].UpdateScrapText(_panels[OPTIONS_BUTTON].GetText().getString(), sf::Color(150, 150, 150));
+        _panels[OPTIONS_BUTTON].SetScrapText(_panels[OPTIONS_BUTTON].GetText().getString(), sf::Color(150, 150, 150));
     }*/
     else if(_panels[EXIT_BUTTON].IsHoveredOver())
     {

@@ -1,7 +1,7 @@
 #include "Minimap.hpp"
 
-Minimap::Minimap(float viewWidth, float viewHeight, float viewportLeft, float viewportTop, float viewportWidth, float viewportHeight, sf::View& displayView)
-: _displayView(displayView)
+Minimap::Minimap(float viewWidth, float viewHeight, float viewportLeft, float viewportTop, float viewportWidth, float viewportHeight, sf::View& gameplayView)
+: _gameplayView(gameplayView)
 {
     // Initialize the minimap view to the size of the level
     _minimapView.setSize(viewWidth, viewHeight/3.2F);
@@ -14,9 +14,20 @@ Minimap::Minimap(float viewWidth, float viewHeight, float viewportLeft, float vi
     _minimapView.setViewport(sf::FloatRect(viewportLeft,viewportTop,viewportWidth,viewportHeight));
 
     _minimapBorder.setSize({Constants::WINDOW_WIDTH * viewportWidth, Constants::WINDOW_HEIGHT * viewportHeight});
-    _minimapBorder.setOutlineThickness(1.0f);
+    _minimapBorder.setOutlineThickness(1.0F);
     _minimapBorder.setOutlineColor({128, 128, 128});
     _minimapBorder.setFillColor(sf::Color::Transparent);
+
+    _minimapGameplayBoundary.setSize({Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT});
+    _minimapGameplayBoundary.setOutlineThickness(5.0F);
+    _minimapGameplayBoundary.setOutlineColor(_predefinedColours.GRAY);
+    _minimapGameplayBoundary.setFillColor(sf::Color::Transparent);
+
+    _minimapGameplayBoundaryText.setFont(Chilli::CustomFonts::GetBoldFont());
+    _minimapGameplayBoundaryText.setString("Gameplay View");
+    _minimapGameplayBoundaryText.setCharacterSize(56);
+    _minimapGameplayBoundaryText.setFillColor(sf::Color::White);
+    _minimapGameplayBoundaryText.setOutlineColor(sf::Color::Black);
 }
 
 void Minimap::EventHandler(sf::RenderWindow &window, sf::Event &event)
@@ -44,12 +55,20 @@ void Minimap::EventHandler(sf::RenderWindow &window, sf::Event &event)
 
 void Minimap::Update(sf::RenderWindow& window, sf::Time deltatime)
 {
-    _minimapBorder.setPosition(_displayView.getCenter().x - _displayView.getSize().x/4.0F, _displayView.getCenter().y - _displayView.getSize().y/2.0F + 12.1F);
+    _minimapGameplayBoundary.setPosition(_gameplayView.getCenter().x - _minimapGameplayBoundary.getSize().x / 2.0F, _gameplayView.getCenter().y - _minimapGameplayBoundary.getSize().y / 2.0F);
+    _minimapGameplayBoundaryText.setPosition(_minimapGameplayBoundary.getPosition().x + 25.0F, _minimapGameplayBoundary.getPosition().y + 10.0F);
+    _minimapBorder.setPosition(_gameplayView.getCenter().x - _gameplayView.getSize().x / 4.0F, _gameplayView.getCenter().y - _gameplayView.getSize().y / 2.0F + 12.1F);
 }
 
 void Minimap::Render(sf::RenderWindow &window)
 {
     window.draw(_minimapBorder);
+}
+
+void Minimap::RenderGameplayView(sf::RenderWindow &window)
+{
+    window.draw(_minimapGameplayBoundary);
+    window.draw(_minimapGameplayBoundaryText);
 }
 
 void Minimap::HandleMinimapZooming(const sf::RenderWindow &window, const sf::Event &event, const sf::Vector2i &mouse_pos)

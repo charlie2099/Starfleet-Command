@@ -14,6 +14,7 @@ Mothership::Mothership(int spacelane)
     _projectileColour = Projectile::BLUE;
     _starshipName = "Mothership";
     _assignedLaneIndex = spacelane;
+    _starshipIndex = 5;
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());

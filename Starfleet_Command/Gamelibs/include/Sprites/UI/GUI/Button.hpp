@@ -20,7 +20,7 @@ class Button
     bool IsCursorHoveredOver() const { return _isHoveredOver; }
 
     sf::Vector2f GetPos() { return _spriteComponent.GetPos(); }
-    sf::FloatRect GetBounds() { return _spriteComponent.GetSprite().getGlobalBounds(); }
+    sf::Rect<float> GetBounds() { return _spriteComponent.GetSprite().getGlobalBounds(); }
 
  private:
     SpriteComponent _spriteComponent;

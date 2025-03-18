@@ -17,6 +17,7 @@ SupportShip::SupportShip(int spacelane)
     _projectileColour = Projectile::BLUE;
     _starshipName = "Support Ship";
     _assignedLaneIndex = spacelane;
+    _starshipIndex = 2;
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());

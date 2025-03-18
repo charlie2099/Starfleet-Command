@@ -10,14 +10,14 @@ bool OptionsScene::Init()
 
 void OptionsScene::EventHandler(sf::RenderWindow &window, sf::Event &event)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse _position translated into world coordinates
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse _innerPosition translated into world coordinates
 }
 
 void OptionsScene::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _position relative to the window
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse _position translated into world coordinates
+    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
+    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse _innerPosition translated into world coordinates
 
     _cursor.Update(window, deltaTime);
 }

@@ -1,6 +1,6 @@
 #include "Sprites/Starships/StarshipFactory.hpp"
 
-/*std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP_TYPE shipType)
+std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP_TYPE shipType)
 {
     switch (shipType)
     {
@@ -9,9 +9,9 @@
         case SUPPORT: return std::make_unique<SupportShip>(0);
         case DESTROYER: return std::make_unique<Destroyer>(0);
         case BATTLESHIP: return std::make_unique<Battleship>(0);
-        case MOTHERSHIP: return std::make_unique<Mothership>();
+        case MOTHERSHIP: return std::make_unique<Mothership>(0);
     }
-}*/
+}
 
 std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP_TYPE shipType, int spacelane)
 {

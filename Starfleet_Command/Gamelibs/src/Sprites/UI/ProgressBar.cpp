@@ -3,26 +3,27 @@
 
 ProgressBar::ProgressBar()
 {
-    _outsideBarSpriteComponent.LoadSprite("Resources/Textures/panel_image.png");
+    _outsideBarSpriteComponent.LoadSprite("Resources/Textures/panel_image2.png"); // TODO: Replace with sf::RectangleShape
     _outsideBarSpriteComponent.GetSprite().setScale(1.20f, 0.20f);
-    _outsideBarSpriteComponent.GetSprite().setColor(sf::Color::White);
+    _outsideBarSpriteComponent.GetSprite().setColor({50,50, 50, 125});
     _outsideBarSpriteComponent.SetPos({25, 25});
+    _outerPosition = _outsideBarSpriteComponent.GetPos();
 
-    _font.loadFromFile("Resources/Fonts/Orbitron/Orbitron-Regular.ttf");
     _text.setString("Task In Progress...");
-    _text.setFont(_font);
+    _text.setFont(Chilli::CustomFonts::GetBoldFont());
     _text.setCharacterSize(12);
     _text.setPosition(_outsideBarSpriteComponent.GetPos().x + 6, _outsideBarSpriteComponent.GetPos().y + _outsideBarSpriteComponent.GetSprite().getGlobalBounds().height + 5);
+    _text.setOutlineColor(sf::Color::Black);
 
-    _insideBarSpriteComponent.LoadSprite("Resources/Textures/panel_image.png");
+    _insideBarSpriteComponent.LoadSprite("Resources/Textures/panel_image2.png"); // TODO: Replace with sf::RectangleShape
     _insideBarSpriteComponent.GetSprite().setScale(1.175f, 0.125f);
     _insideBarSpriteComponent.GetSprite().setColor(sf::Color::Cyan);
     _insideBarSpriteComponent.GetSprite().setOrigin(0, 0);
     //auto xPos = _outsideBarSpriteComponent.GetPos().x + _outsideBarSpriteComponent.GetSprite().getGlobalBounds().width/2 - spriteComponent2.GetSprite().getGlobalBounds().width/2;
-    auto xPos = _outsideBarSpriteComponent.GetPos().x + 5;
+    auto xPos = _outsideBarSpriteComponent.GetPos().x;
     auto yPos = _outsideBarSpriteComponent.GetPos().y + _outsideBarSpriteComponent.GetSprite().getGlobalBounds().height / 2 - _insideBarSpriteComponent.GetSprite().getGlobalBounds().height / 2;
     _insideBarSpriteComponent.SetPos({xPos, yPos});
-    _position = _insideBarSpriteComponent.GetPos();
+    _innerPosition = _insideBarSpriteComponent.GetPos();
 
     _insideBarSpriteComponent.GetSprite().setScale(0.0f, 0.125f);
 }
@@ -38,7 +39,7 @@ void ProgressBar::Update(sf::RenderWindow& window, sf::Time time)
 
         if(_insideBarSpriteComponent.GetSprite().getScale().x <= 1.175f)
         {
-            _insideBarSpriteComponent.SetPos({_position.x, _position.y});
+            _insideBarSpriteComponent.SetPos({_innerPosition.x, _innerPosition.y});
             auto scale_x = _insideBarSpriteComponent.GetSprite().getScale().x + _progressSpeed * time.asSeconds();
             auto scale_y = 0.125f;
             _insideBarSpriteComponent.GetSprite().setScale(scale_x, scale_y);
@@ -57,21 +58,28 @@ void ProgressBar::Render(sf::RenderWindow &window)
 {
     if(_taskIsProgressing)
     {
-        window.draw(_outsideBarSpriteComponent.GetSprite());
+        window.draw(_outsideBarSpriteComponent.GetSprite()); // QUESTION: Better with or without outer bar?
         window.draw(_insideBarSpriteComponent.GetSprite());
         window.draw(_text);
     }
 }
 
+void ProgressBar::SetColour(sf::Color colour)
+{
+    _insideBarSpriteComponent.GetSprite().setColor(colour);
+    _text.setFillColor(colour);
+}
+
 void ProgressBar::SetPosition(sf::Vector2<float> pos)
 {
     _outsideBarSpriteComponent.SetPos(pos);
-    _text.setPosition(_outsideBarSpriteComponent.GetPos().x + 6, _outsideBarSpriteComponent.GetPos().y + _outsideBarSpriteComponent.GetSprite().getGlobalBounds().height + 5);
+    _text.setPosition(_outsideBarSpriteComponent.GetPos().x + 6, _outsideBarSpriteComponent.GetPos().y + _outsideBarSpriteComponent.GetSprite().getGlobalBounds().height + 5.0F);
     //auto xPos = _outsideBarSpriteComponent.GetPos().x + _outsideBarSpriteComponent.GetSprite().getGlobalBounds().width/2 - spriteComponent2.GetSprite().getGlobalBounds().width/2;
     auto xPos = _outsideBarSpriteComponent.GetPos().x + 5;
     auto yPos = _outsideBarSpriteComponent.GetPos().y + _outsideBarSpriteComponent.GetSprite().getGlobalBounds().height / 2 - _insideBarSpriteComponent.GetSprite().getGlobalBounds().height / 2;
     _insideBarSpriteComponent.SetPos({xPos, yPos});
-    _position = _insideBarSpriteComponent.GetPos();
+    _innerPosition = _insideBarSpriteComponent.GetPos();
+    _outerPosition = _outsideBarSpriteComponent.GetPos();
 }
 
 void ProgressBar::SetProgressSpeed(float speed)
