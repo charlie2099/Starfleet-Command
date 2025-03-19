@@ -1,5 +1,10 @@
 #include "Scenes/OptionsScene.hpp"
 
+OptionsScene::~OptionsScene()
+{
+
+}
+
 bool OptionsScene::Init()
 {
     InitBackground();
@@ -58,3 +63,5 @@ bool OptionsScene::InitBackground()
 
     return true;
 }
+
+

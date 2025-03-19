@@ -22,7 +22,7 @@ class GameScene : public Scene
 {
 public:
     GameScene() = default;
-    ~GameScene() = default;
+    ~GameScene() override;
     bool Init() override;
     void EventHandler(sf::RenderWindow& window, sf::Event& event) override;
     void Update(sf::RenderWindow &window, sf::Time deltaTime) override;
@@ -110,6 +110,8 @@ private:
     std::unique_ptr<ScrapMetalManager> _playerScrapMetalManager;
     std::unique_ptr<ScrapMetalManager> _enemyScrapMetalManager;
     const int STARTING_SCRAP_METAL = 5000;
+
+    sf::Music _gameMusic;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

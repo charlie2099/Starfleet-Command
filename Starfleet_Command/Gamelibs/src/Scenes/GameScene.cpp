@@ -1,5 +1,13 @@
 #include "Scenes/GameScene.hpp"
 
+GameScene::~GameScene()
+{
+    if(_gameMusic.getStatus() == sf::SoundSource::Playing)
+    {
+        _gameMusic.stop();
+    }
+}
+
 bool GameScene::Init()
 {
     InitRandomDistributions();
@@ -27,6 +35,18 @@ bool GameScene::Init()
 
     InitMinimapView();
     InitEvents();
+
+    if(!_gameMusic.openFromFile("Resources/Audio/Rise_Above_Darkness_225bpm_131s.wav"))
+    {
+        std::cout << "Failed to to load menu soundtrack (Rise_Above_Darkness_225bpm_131s)" << std::endl;
+        return false;
+    }
+    else
+    {
+        _gameMusic.play();
+        //_gameMusic.setPlayingOffset(sf::seconds(2.0F));
+        _gameMusic.setLoop(true);
+    }
 
     return true;
 }
@@ -646,4 +666,6 @@ void GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData)
         }
     }
 }
+
+
 

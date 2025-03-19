@@ -7,7 +7,7 @@ class OptionsScene : public Scene
 {
 public:
     OptionsScene() = default;
-    ~OptionsScene() = default;
+    ~OptionsScene() override;
 
     bool Init() override;
     void EventHandler(sf::RenderWindow& window, sf::Event& event) override;

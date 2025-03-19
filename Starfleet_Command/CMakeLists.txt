@@ -30,8 +30,8 @@ include_directories(Gamelibs/src)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR "C:/Libraries/SFML/lib/cmake/SFML")
-find_package(SFML 2.5 COMPONENTS graphics)
-target_link_libraries(Starfleet_Command sfml-graphics)
+find_package(SFML 2.5 COMPONENTS graphics window audio network system REQUIRED)
+target_link_libraries(Starfleet_Command PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 
 #[[
 set(SFML_STATIC_LIBRARIES TRUE)

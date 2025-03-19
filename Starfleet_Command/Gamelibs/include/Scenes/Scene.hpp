@@ -5,6 +5,8 @@
 #include "Utility/PredefinedColours.hpp"
 #include "Sprites/UI/Panel.hpp"
 #include "Utility/CustomFonts.hpp"
+#include "../Utility/CustomFonts.hpp"
+#include <SFML/Audio.hpp>
 
 class Scene
 {
@@ -17,6 +19,8 @@ class Scene
         WIN = 3,
         LOSE = 4
     };
+
+    virtual ~Scene()  = default;
 
     // Pure virtual functions
     virtual bool Init() = 0;

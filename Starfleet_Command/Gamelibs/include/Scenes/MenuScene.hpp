@@ -12,7 +12,7 @@ class MenuScene : public Scene
 {
  public:
     MenuScene() = default;
-    ~MenuScene() = default;
+    ~MenuScene() override;
 
     bool Init() override;
     void EventHandler(sf::RenderWindow& window, sf::Event& event) override;
@@ -59,5 +59,7 @@ class MenuScene : public Scene
     sf::Texture _menuTitleImgTexture;
 
     sf::Text _gameVersionText;
+
+    sf::Music _menuMusic;
 };
 #endif //STARFLEET_COMMAND_MENUSCENE_HPP

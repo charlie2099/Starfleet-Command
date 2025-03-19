@@ -1,5 +1,13 @@
 #include "Scenes/MenuScene.hpp"
 
+MenuScene::~MenuScene()
+{
+    if(_menuMusic.getStatus() == sf::SoundSource::Playing)
+    {
+        _menuMusic.stop();
+    }
+}
+
 bool MenuScene::Init()
 {
     std::mt19937 generator = GetEngine();
@@ -9,6 +17,18 @@ bool MenuScene::Init()
     InitMenuTitleIcon();
     InitBackgroundShips(generator);
     InitGameVersionText();
+
+    if(!_menuMusic.openFromFile("Resources/Audio/United_Against_Evil_175bpm_136s.wav"))
+    {
+        std::cout << "Failed to to load menu soundtrack (United_Against_Evil_175bpm_136s)" << std::endl;
+        return false;
+    }
+    else
+    {
+        _menuMusic.play();
+        //_menuMusic.setPlayingOffset(sf::seconds(2.0F));
+        _menuMusic.setLoop(true);
+    }
 
     return true;
 }
@@ -305,6 +325,8 @@ void MenuScene::CreateDistribution(const std::string& name, int min, int max)
     std::uniform_int_distribution<int> instance{min, max};
     _distributions.emplace_back(instance);
 }
+
+
 
 
 

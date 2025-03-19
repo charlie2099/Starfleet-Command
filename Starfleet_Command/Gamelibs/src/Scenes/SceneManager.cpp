@@ -27,7 +27,7 @@ void SceneManager::Render(sf::RenderWindow& window)
 
 void SceneManager::ChangeScene(Scene::ID id)
 {
-    current_scene = nullptr;
+    current_scene.reset();
     current_ID    = id;
 
     switch (id)
@@ -45,6 +45,7 @@ void SceneManager::ChangeScene(Scene::ID id)
     current_scene->SetScene(id);
     current_scene->Init();
 }
+
 
 
 
