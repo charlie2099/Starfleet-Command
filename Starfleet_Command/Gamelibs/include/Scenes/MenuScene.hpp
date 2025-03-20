@@ -1,7 +1,7 @@
 #ifndef STARFLEET_COMMAND_MENUSCENE_HPP
 #define STARFLEET_COMMAND_MENUSCENE_HPP
 #include "Scenes/Scene.hpp"
-#include "Utility/Cursor.hpp"
+#include "Cursor.hpp"
 #include "Utility/Vector.hpp"
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
@@ -61,5 +61,9 @@ class MenuScene : public Scene
     sf::Text _gameVersionText;
 
     sf::Music _menuMusic;
+    std::array<std::unique_ptr<Button>, 2> _musicIconButtons;
+    bool _isMusicOn = true;
+    static const int MUSIC_ON_BUTTON = 0;
+    static const int MUSIC_OFF_BUTTON = 1;
 };
 #endif //STARFLEET_COMMAND_MENUSCENE_HPP

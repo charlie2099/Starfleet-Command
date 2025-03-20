@@ -1,19 +1,19 @@
 #ifndef STARFLEET_COMMAND_GAMESCENE_HPP
 #define STARFLEET_COMMAND_GAMESCENE_HPP
 #include "Scenes/Scene.hpp"
-#include "Utility/Cursor.hpp"
+#include "Cursor.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
 #include "Sprites/Player/Player.hpp"
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
-#include "../../SpaceLane.hpp"
+#include "SpaceLane.hpp"
 #include "Sprites/UI/ProgressBar.hpp"
-#include "../../Minimap.hpp"
-#include "../../ScrapMetalManager.hpp"
-#include "../../ParallaxBackground.hpp"
-#include "../../StarshipDeploymentButton.hpp"
-#include "../../StarshipDeploymentManager.hpp"
-#include "../../MothershipStatusDisplay.hpp"
+#include "Minimap.hpp"
+#include "ScrapMetalManager.hpp"
+#include "ParallaxBackground.hpp"
+#include "StarshipDeploymentButton.hpp"
+#include "StarshipDeploymentManager.hpp"
+#include "MothershipStatusDisplay.hpp"
 #include <random>
 #include <chrono>
 #include "queue"
@@ -71,7 +71,6 @@ private:
     /// GUI
     static const int NUM_OF_BUTTONS = 5;
     std::array<std::unique_ptr<StarshipDeploymentButton>, NUM_OF_BUTTONS> _starshipDeploymentButtons;
-    int selectedDeploymentButtonIndex = 0;
 
     /// Background Parallax
     std::unique_ptr<ParallaxBackground> _backgroundParallax;
@@ -112,6 +111,11 @@ private:
     const int STARTING_SCRAP_METAL = 5000;
 
     sf::Music _gameMusic;
+    std::array<std::unique_ptr<Button>, 2> _musicIconButtons;
+    //std::unique_ptr<Button> _nextMusicTrackButton;
+    bool _isMusicOn = true;
+    static const int MUSIC_ON_BUTTON = 0;
+    static const int MUSIC_OFF_BUTTON = 1;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

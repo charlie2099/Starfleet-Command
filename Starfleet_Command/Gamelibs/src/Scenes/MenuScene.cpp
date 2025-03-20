@@ -2,7 +2,7 @@
 
 MenuScene::~MenuScene()
 {
-    if(_menuMusic.getStatus() == sf::SoundSource::Playing)
+    if(_menuMusic.getStatus() == sf::Music::Playing)
     {
         _menuMusic.stop();
     }
@@ -25,9 +25,20 @@ bool MenuScene::Init()
     }
     else
     {
-        _menuMusic.play();
+        if(_isMusicOn)
+        {
+            _menuMusic.play();
+        }
         //_menuMusic.setPlayingOffset(sf::seconds(2.0F));
         _menuMusic.setLoop(true);
+    }
+
+    _musicIconButtons[MUSIC_ON_BUTTON] = std::make_unique<Button>("Resources/Textures/musicOn.png");
+    _musicIconButtons[MUSIC_OFF_BUTTON] = std::make_unique<Button>("Resources/Textures/musicOff.png");
+    for (int i = 0; i < 2; ++i)
+    {
+        _musicIconButtons[i]->SetPos({10, 10});
+        _musicIconButtons[i]->SetColour(sf::Color(22, 155, 164, 100));
     }
 
     return true;
@@ -53,6 +64,22 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         else if(_panels[EXIT_BUTTON].IsClicked())
         {
             window.close();
+        }
+    }
+
+    if(_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->IsCursorHoveredOver())
+    {
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        {
+            if (_isMusicOn)
+            {
+                _menuMusic.pause();
+            }
+            else
+            {
+                _menuMusic.play();
+            }
+            _isMusicOn = !_isMusicOn;
         }
     }
 }
@@ -152,6 +179,23 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             _panels[i].SetText(_panels[i].GetText().getString(), sf::Color::White);
         }
     }
+
+    for (const auto & _musicIconButton : _musicIconButtons)
+    {
+        _musicIconButton->Update(window);
+    }
+
+    for (const auto & musicIconButton : _musicIconButtons)
+    {
+        if(musicIconButton->IsCursorHoveredOver())
+        {
+            musicIconButton->SetColour(_predefinedColours.LIGHTBLUE);
+        }
+        else
+        {
+            musicIconButton->SetColour(sf::Color(22, 155, 164, 100));
+        }
+    }
 }
 
 void MenuScene::Render(sf::RenderWindow& window)
@@ -172,6 +216,7 @@ void MenuScene::Render(sf::RenderWindow& window)
         panel.Render(window);
     }
     window.draw(_gameVersionText);
+    _musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
     _cursor.Render(window);
 }
 

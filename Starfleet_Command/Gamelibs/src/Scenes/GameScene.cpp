@@ -2,7 +2,7 @@
 
 GameScene::~GameScene()
 {
-    if(_gameMusic.getStatus() == sf::SoundSource::Playing)
+    if(_gameMusic.getStatus() == sf::Music::Playing)
     {
         _gameMusic.stop();
     }
@@ -43,10 +43,24 @@ bool GameScene::Init()
     }
     else
     {
-        _gameMusic.play();
+        if(_isMusicOn)
+        {
+            _gameMusic.play();
+        }
         //_gameMusic.setPlayingOffset(sf::seconds(2.0F));
         _gameMusic.setLoop(true);
     }
+
+    _musicIconButtons[MUSIC_ON_BUTTON] = std::make_unique<Button>("Resources/Textures/musicOn.png");
+    _musicIconButtons[MUSIC_OFF_BUTTON] = std::make_unique<Button>("Resources/Textures/musicOff.png");
+    for (int i = 0; i < 2; ++i)
+    {
+        _musicIconButtons[i]->SetColour(sf::Color(22, 155, 164, 100));
+    }
+
+    /*_nextMusicTrackButton = std::make_unique<Button>("Resources/Textures/next.png");
+    _nextMusicTrackButton->SetColour(sf::Color(22, 155, 164, 100));
+    _nextMusicTrackButton->SetScale({0.65F, 0.65F});*/
 
     return true;
 }
@@ -74,8 +88,6 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             {
                 if(_spaceLanes[j]->IsCursorHoveredOver())
                 {
-                    selectedDeploymentButtonIndex = i;
-
                     _playerScrapMetalManager->SpendScrap(_starshipDeploymentButtons[i]->GetBuildCost());
                     _playerScrapMetalManager->SetScrapText("Scrap Metal: " + std::to_string(_playerScrapMetalManager->GetCurrentScrapMetalAmount()));
 
@@ -117,6 +129,36 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             }
         }
     }
+
+
+
+
+    if(_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->IsCursorHoveredOver())
+    {
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        {
+            if (_isMusicOn)
+            {
+                _gameMusic.pause();
+            }
+            else
+            {
+                _gameMusic.play();
+            }
+            _isMusicOn = !_isMusicOn;
+        }
+    }
+
+    /*if(_nextMusicTrackButton->IsCursorHoveredOver())
+    {
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        {
+            if(_isMusicOn)
+            {
+                // increment track counter
+            }
+        }
+    }*/
 }
 
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
@@ -352,6 +394,40 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     UpdateSpaceLanePositionsAndMouseHoverColour(window, deltaTime);
     //UpdateStarshipPreviewSpritePosition(worldPositionOfMouse);
     _backgroundParallax->Update(window, deltaTime);
+
+
+
+
+
+    for (const auto & _musicIconButton : _musicIconButtons)
+    {
+        _musicIconButton->Update(window);
+        _musicIconButton->SetPos({_gameplayView.getCenter().x - Constants::WINDOW_WIDTH/2.0F + 10.0F, _gameplayView.getCenter().y - Constants::WINDOW_HEIGHT/2.0F + 10.0F});
+    }
+
+    for (const auto & musicIconButton : _musicIconButtons)
+    {
+        if(musicIconButton->IsCursorHoveredOver())
+        {
+            musicIconButton->SetColour(_predefinedColours.LIGHTBLUE);
+        }
+        else
+        {
+            musicIconButton->SetColour(sf::Color(22, 155, 164, 100));
+        }
+    }
+
+    /*_nextMusicTrackButton->Update(window);
+    _nextMusicTrackButton->SetPos({_musicIconButtons[MUSIC_ON_BUTTON]->GetPos().x +_nextMusicTrackButton->GetBounds().width + 10.0F, _musicIconButtons[MUSIC_ON_BUTTON]->GetPos().y + 10.0F});
+
+    if(_nextMusicTrackButton->IsCursorHoveredOver())
+    {
+        _nextMusicTrackButton->SetColour(_predefinedColours.LIGHTBLUE);
+    }
+    else
+    {
+        _nextMusicTrackButton->SetColour(sf::Color(22, 155, 164, 100));
+    }*/
 }
 
 void GameScene::Render(sf::RenderWindow& window)
@@ -396,6 +472,8 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
     {
         deploymentButton->Render(window);
     }
+    _musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
+    //_nextMusicTrackButton->Render(window);
 }
 
 void GameScene::UpdateEnemySpawner()
@@ -628,8 +706,8 @@ void GameScene::StartNextStarshipDeployment()
     if(_starshipDeploymentManager->IsQueueEmpty())
         return;
 
-    _starshipDeploymentManager->GetDeploymentBar().SetProgressText("Deploying " + _starshipDeploymentButtons[selectedDeploymentButtonIndex]->GetStarshipName() + "...");
-    _starshipDeploymentManager->GetDeploymentBar().SetProgressSpeed(_starshipDeploymentButtons[selectedDeploymentButtonIndex]->GetStarshipDeploymentSpeed());
+    _starshipDeploymentManager->GetDeploymentBar().SetProgressText("Deploying " + _starshipDeploymentButtons[static_cast<int>(_starshipDeploymentManager->GetNextStarshipTypeInQueue())]->GetStarshipName() + "...");
+    _starshipDeploymentManager->GetDeploymentBar().SetProgressSpeed(_starshipDeploymentButtons[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipDeploymentSpeed());
     _starshipDeploymentManager->GetDeploymentBar().SetProgressStatus(true);
 }
 
