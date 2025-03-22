@@ -5,6 +5,7 @@
 #include "Utility/Vector.hpp"
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
+#include "../../RNG.hpp"
 #include <random>
 #include <chrono>
 
@@ -20,14 +21,12 @@ class MenuScene : public Scene
     void Render(sf::RenderWindow& window) override;
 
  private:
-    static std::mt19937 GetEngine();
     void InitView();
     bool InitBackground();
     void InitButtonPanels();
     bool InitMenuTitleIcon();
-    void InitBackgroundShips(std::mt19937 &generator);
+    void InitBackgroundShips();
     void InitGameVersionText();
-    void CreateDistribution(const std::string& name, int min, int max);
 
     static const int PLAY_BUTTON = 0;
     static const int OPTIONS_BUTTON = 1;
@@ -38,13 +37,12 @@ class MenuScene : public Scene
     sf::View _worldView{};
     Chilli::Cursor _cursor;
     Chilli::PredefinedColours _predefinedColours;
-    std::array<Panel, NUM_OF_BUTTONS> _panels;
+    std::array<Panel, NUM_OF_BUTTONS> _buttonPanels;
     std::vector<std::unique_ptr<IStarship>> _starship;
-    std::vector<std::uniform_int_distribution<int>> _distributions;
 
+    ///TODO: Replace with ParallaxBackground class
     sf::Sprite _backgroundSprite;
     sf::Texture _backgroundTexture;
-
     struct ParallaxStar
     {
         sf::CircleShape circleShape;

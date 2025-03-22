@@ -10,12 +10,11 @@ MenuScene::~MenuScene()
 
 bool MenuScene::Init()
 {
-    std::mt19937 generator = GetEngine();
     InitView();
     InitBackground();
     InitButtonPanels();
     InitMenuTitleIcon();
-    InitBackgroundShips(generator);
+    InitBackgroundShips();
     InitGameVersionText();
 
     if(!_menuMusic.openFromFile("Resources/Audio/United_Against_Evil_175bpm_136s.wav"))
@@ -48,20 +47,20 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
-        _panels[i].EventHandler(window, event);
+        _buttonPanels[i].EventHandler(window, event);
     }
 
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        if(_panels[PLAY_BUTTON].IsClicked())
+        if(_buttonPanels[PLAY_BUTTON].IsClicked())
         {
             SetScene(Scene::ID::GAME);
         }
-        /*else if(_panels[OPTIONS_BUTTON].IsClicked())
+        /*else if(_buttonPanels[OPTIONS_BUTTON].IsClicked())
         {
             SetScene(Scene::ID::OPTIONS);
         }*/
-        else if(_panels[EXIT_BUTTON].IsClicked())
+        else if(_buttonPanels[EXIT_BUTTON].IsClicked())
         {
             window.close();
         }
@@ -94,7 +93,7 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
-        _panels[i].Update(window);
+        _buttonPanels[i].Update(window);
     }
     for (auto & ship : _starship)
     {
@@ -148,35 +147,35 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     }
 
     // Button highlighting
-    if(_panels[PLAY_BUTTON].IsHoveredOver())
+    if(_buttonPanels[PLAY_BUTTON].IsHoveredOver())
     {
-        _panels[PLAY_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
-        _panels[PLAY_BUTTON].SetText(_panels[PLAY_BUTTON].GetText().getString(), sf::Color(22, 155, 164));
+        _buttonPanels[PLAY_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
+        _buttonPanels[PLAY_BUTTON].SetText(_buttonPanels[PLAY_BUTTON].GetText().getString(), sf::Color(22, 155, 164));
     }
-    /*else if(_panels[OPTIONS_BUTTON].IsHoveredOver())
+    /*else if(_buttonPanels[OPTIONS_BUTTON].IsHoveredOver())
     {
-        _panels[OPTIONS_BUTTON].SetPanelColour(sf::Color(150, 150, 150, 60));
-        _panels[OPTIONS_BUTTON].SetScrapText(_panels[OPTIONS_BUTTON].GetText().getString(), sf::Color(150, 150, 150));
+        _buttonPanels[OPTIONS_BUTTON].SetPanelColour(sf::Color(150, 150, 150, 60));
+        _buttonPanels[OPTIONS_BUTTON].SetScrapText(_buttonPanels[OPTIONS_BUTTON].GetText().getString(), sf::Color(150, 150, 150));
     }*/
-    else if(_panels[EXIT_BUTTON].IsHoveredOver())
+    else if(_buttonPanels[EXIT_BUTTON].IsHoveredOver())
     {
-        _panels[EXIT_BUTTON].SetPanelColour(sf::Color(242, 22, 22, 60));
-        _panels[EXIT_BUTTON].SetText(_panels[EXIT_BUTTON].GetText().getString(), sf::Color::Red);
+        _buttonPanels[EXIT_BUTTON].SetPanelColour(sf::Color(242, 22, 22, 60));
+        _buttonPanels[EXIT_BUTTON].SetText(_buttonPanels[EXIT_BUTTON].GetText().getString(), sf::Color::Red);
     }
 
     for (int i = 0; i < NUM_OF_BUTTONS; i++)
     {
-        if(!_panels[i].IsHoveredOver())
+        if(!_buttonPanels[i].IsHoveredOver())
         {
             if(i == OPTIONS_BUTTON) // TODO: Remove this index skip code once the options menu has been implemented
             {
-                _panels[OPTIONS_BUTTON].SetPanelColour(sf::Color(150, 150, 150, 50));
-                _panels[OPTIONS_BUTTON].SetText(_panels[OPTIONS_BUTTON].GetText().getString(), sf::Color(150, 150, 150));
+                _buttonPanels[OPTIONS_BUTTON].SetPanelColour(sf::Color(150, 150, 150, 50));
+                _buttonPanels[OPTIONS_BUTTON].SetText(_buttonPanels[OPTIONS_BUTTON].GetText().getString(), sf::Color(150, 150, 150));
                 continue;
             }
 
-            _panels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
-            _panels[i].SetText(_panels[i].GetText().getString(), sf::Color::White);
+            _buttonPanels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
+            _buttonPanels[i].SetText(_buttonPanels[i].GetText().getString(), sf::Color::White);
         }
     }
 
@@ -211,22 +210,13 @@ void MenuScene::Render(sf::RenderWindow& window)
         ship->Render(window);
     }
     window.draw(_menuTitleImgSprite);
-    for (auto & panel : _panels)
+    for (auto & panel : _buttonPanels)
     {
         panel.Render(window);
     }
     window.draw(_gameVersionText);
     _musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
     _cursor.Render(window);
-}
-
-std::mt19937 MenuScene::GetEngine()
-{
-    std::random_device eng;
-    std::mt19937 generator(eng());
-    unsigned long int time = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-    generator.seed(time);
-    return generator;
 }
 
 void MenuScene::InitView()
@@ -273,12 +263,12 @@ void MenuScene::InitButtonPanels()
 
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
-        _panels[i].SetText(button_text[i]);
-        _panels[i].SetTextSize(20);
-        _panels[i].SetSize(25, 20);
-        _panels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
-        _panels[i].SetPosition(Constants::WINDOW_WIDTH * 0.185F,
-                              (Constants::WINDOW_HEIGHT * 0.57F) + static_cast<float>((i * (_panels[i].GetPanelSize().height + 10))));
+        _buttonPanels[i].SetText(button_text[i]);
+        _buttonPanels[i].SetTextSize(20);
+        _buttonPanels[i].SetSize(25, 20);
+        _buttonPanels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
+        _buttonPanels[i].SetPosition(Constants::WINDOW_WIDTH * 0.185F,
+                              (Constants::WINDOW_HEIGHT * 0.57F) + static_cast<float>((i * (_buttonPanels[i].GetPanelSize().height + 10))));
     }
 }
 
@@ -296,61 +286,26 @@ bool MenuScene::InitMenuTitleIcon()
     return true;
 }
 
-void MenuScene::InitBackgroundShips(std::mt19937 &generator)
+void MenuScene::InitBackgroundShips()
 {
-    CreateDistribution("Ship xpos", 0, Constants::WINDOW_WIDTH);
-    CreateDistribution("Ship ypos", 45, 675);
-    CreateDistribution("Ship class", 0, 5);
+    RNG starshipXPosRNG {0,static_cast<int>(Constants::WINDOW_WIDTH)};
+    RNG starshipYPosRNG {45, 675};
+    RNG starshipTypeRNG {0,4};
 
     for (int i = 0; i < BACKGROUND_SHIPS; ++i)
     {
-        int rand_x = _distributions[0](generator);
-        int rand_y = _distributions[1](generator);
-        int rand_ship = _distributions[2](generator);
-        std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(static_cast<StarshipFactory::STARSHIP_TYPE>(rand_ship), 0);
+        int rand_x = starshipXPosRNG.GenerateValue();
+        int rand_y = starshipYPosRNG.GenerateValue();
+        int rand_ship = starshipTypeRNG.GenerateValue();
+        std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(static_cast<StarshipFactory::STARSHIP_TYPE>(rand_ship));
         _starship.emplace_back(std::move(newStarship));
-        _starship[i]->GetSpriteComponent().SetPos({static_cast<float>(rand_x), static_cast<float>(rand_y)});
-        _starship[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
-
-        /*if(i < 2)
-        {
-            _starship[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
-        }
-        else if (i >= 2 && i < 4)
-        {
-            _starship[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTBLUE);
-        }
-        else if (i >= 4 && i < 6)
-        {
-            _starship[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTRED);
-        }
-        else
-        {
-            _starship[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.ORANGE);
-        }*/
-
+        _starship[i]->SetPosition({static_cast<float>(rand_x), static_cast<float>(rand_y)});
+        _starship[i]->SetColour(_predefinedColours.LIGHTBLUE);
 
         if(i >= BACKGROUND_SHIPS/2)
         {
-            _starship[i]->GetSpriteComponent().GetSprite().setRotation(180);
-            _starship[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.LIGHTGREEN);
-
-            /*if(i < 10)
-            {
-                _starship[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.YELLOW);
-            }
-            else if (i >= 10 && i < 12)
-            {
-                _starship[i]->GetSpriteComponent().GetSprite().setColor(_predefinedColours.BLUEVIOLET);
-            }
-            else if (i >= 12 && i < 14)
-            {
-                _starship[i]->GetSpriteComponent().GetSprite().setColor(sf::Color::White);
-            }
-            else
-            {
-                _starship[i]->GetSpriteComponent().GetSprite().setColor(sf::Color::Magenta);
-            }*/
+            _starship[i]->SetRotation(180);
+            _starship[i]->SetColour(_predefinedColours.LIGHTGREEN);
         }
     }
 }
@@ -358,18 +313,13 @@ void MenuScene::InitBackgroundShips(std::mt19937 &generator)
 void MenuScene::InitGameVersionText()
 {
     _gameVersionText.setFont(Chilli::CustomFonts::GetRegularFont());
-    _gameVersionText.setString("PRE-ALPHA BUILD v0.0.1");
+    _gameVersionText.setString("PRE-ALPHA BUILD v0.0.4");
     _gameVersionText.setCharacterSize(12);
     _gameVersionText.setFillColor(sf::Color::White);
     _gameVersionText.setOutlineColor(sf::Color::Black);
     _gameVersionText.setPosition(Constants::WINDOW_WIDTH - (_gameVersionText.getGlobalBounds().width + 20.0F), Constants::WINDOW_HEIGHT - (_gameVersionText.getGlobalBounds().height + 20.0F));
 }
 
-void MenuScene::CreateDistribution(const std::string& name, int min, int max)
-{
-    std::uniform_int_distribution<int> instance{min, max};
-    _distributions.emplace_back(instance);
-}
 
 
 

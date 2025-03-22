@@ -15,7 +15,7 @@ struct ParallaxStar
     float size{};
 };
 
-class ParallaxBackground
+class ParallaxBackground // TODO: Needs to be repurposed so that it works for the menu scene as well
 {
 public:
     explicit ParallaxBackground(const std::string& backgroundImagePath, sf::Color backgroundColour, int numParallaxStars, sf::Color parallaxStarColour);

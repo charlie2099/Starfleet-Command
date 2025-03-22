@@ -10,7 +10,6 @@ GameScene::~GameScene()
 
 bool GameScene::Init()
 {
-    InitRandomDistributions();
     _backgroundParallax = std::make_unique<ParallaxBackground>("Resources/Textures/space_nebula_2.png", sf::Color::Cyan, NUM_OF_STARS, _predefinedColours.LIGHTBLUE);
     InitPlayerMothership();
     InitSpaceLanes();
@@ -78,7 +77,6 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
         deploymentButton->EventHandler(window, event);
     }
-
 
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
@@ -252,7 +250,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& enemyBullet = enemyStarship->GetProjectile()[k]->GetSpriteComponent();
                 if(playerStarship->CollidesWith(enemyBullet.GetSprite().getGlobalBounds()))
                 {
-                    int randDamage = _randomValueDistributions[STARSHIP_DAMAGE](_randomGenerator);
+                    int randDamage = _starshipDamageRNG.GenerateValue();
                     float scaledDamage = (float)randDamage * enemyStarship->GetDamageScaleFactor();
                     playerStarship->TakeDamage(scaledDamage);
                     enemyStarship->DestroyProjectile(k);
@@ -282,7 +280,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         auto& friendlyProjectile = supportShip->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
-                            int randHealAmount = _randomValueDistributions[STARSHIP_HEALING](_randomGenerator);
+                            int randHealAmount = _starshipHealRNG.GenerateValue();
                             friendlyStarship->ReplenishHealth(randHealAmount);
                             supportShip->DestroyProjectile(k);
                         }
@@ -346,7 +344,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& playerBulletSprite = playerStarship->GetProjectile()[k]->GetSpriteComponent().GetSprite();
                 if(enemyStarship->CollidesWith(playerBulletSprite.getGlobalBounds()))
                 {
-                    int randDamage = _randomValueDistributions[STARSHIP_DAMAGE](_randomGenerator);
+                    int randDamage = _starshipDamageRNG.GenerateValue();
                     float scaledDamage = (float)randDamage * playerStarship->GetDamageScaleFactor();
                     enemyStarship->TakeDamage(scaledDamage);
                     playerStarship->DestroyProjectile(k);
@@ -376,7 +374,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         auto& friendlyProjectile = supportShip->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
-                            int randHealAmount = _randomValueDistributions[STARSHIP_HEALING](_randomGenerator);
+                            int randHealAmount = _starshipHealRNG.GenerateValue();
                             friendlyStarship->ReplenishHealth(randHealAmount);
                             supportShip->DestroyProjectile(k);
                         }
@@ -488,8 +486,8 @@ void GameScene::UpdateEnemySpawner()
     {
         for (int i = 0; i < 1; ++i)
         {
-            int randomStarshipType = _randomValueDistributions[ENEMY_STARSHIP_TYPE](_randomGenerator);
-            int randomLane = _randomValueDistributions[SPACELANE](_randomGenerator);
+            int randomStarshipType = _enemyStarshipTypeRNG.GenerateValue();
+            int randomLane = _spacelaneSpawnRNG.GenerateValue();
             _enemy.CreateStarship(static_cast<StarshipFactory::STARSHIP_TYPE>(randomStarshipType), randomLane);
             auto& newestEnemyStarship = _enemy.GetStarships()[_enemy.GetStarshipCount() - 1];
             auto starshipXPos = _spaceLanes[randomLane]->GetPos().x + _spaceLanes[randomLane]->GetSize().x;
@@ -560,15 +558,6 @@ void GameScene::UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &wi
                                 _player.GetMothership()->GetPos().y + laneYOffset});
         _spaceLanes[i]->Update(window, deltaTime);
     }
-}
-
-void GameScene::InitRandomDistributions()
-{
-    _randomGenerator = GetEngine();
-    CreateDistribution(STARSHIP_DAMAGE, 100, 250);
-    CreateDistribution(SPACELANE, 0, NUM_OF_LANES-1);
-    CreateDistribution(ENEMY_STARSHIP_TYPE, 0, StarshipFactory::STARSHIP_TYPE::ENUM_COUNT - 2);
-    CreateDistribution(STARSHIP_HEALING, 50, 100);
 }
 
 void GameScene::InitPlayerMothership()
@@ -663,22 +652,6 @@ void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()
     {
         StartNextStarshipDeployment();
     }
-}
-
-/// \param distributionsEnum - no use in the method, purely for readability
-void GameScene::CreateDistribution([[maybe_unused]] DistributionsEnum distributionsEnum, int min, int max)
-{
-    std::uniform_int_distribution<int> instance{min, max};
-    _randomValueDistributions.emplace_back(instance);
-}
-
-std::mt19937 GameScene::GetEngine()
-{
-    std::random_device eng;
-    std::mt19937 generator(eng());
-    unsigned long int time = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-    generator.seed(time);
-    return generator;
 }
 
 void GameScene::HandleViewScrollingKeyboardInput(const sf::Event &event)

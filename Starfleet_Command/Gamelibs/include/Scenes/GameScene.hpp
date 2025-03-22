@@ -17,6 +17,7 @@
 #include <random>
 #include <chrono>
 #include "queue"
+#include "../../RNG.hpp"
 
 class GameScene : public Scene
 {
@@ -30,7 +31,6 @@ public:
 
 private:
     /// Init functions
-    void InitRandomDistributions();
     void InitPlayerMothership();
     void InitSpaceLanes();
     void InitEnemyMothership();
@@ -56,66 +56,62 @@ private:
     void UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData);
     void UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData);
 
-    /// Randomness functions
-    enum DistributionsEnum { STARSHIP_DAMAGE = 0, SPACELANE = 1, ENEMY_STARSHIP_TYPE = 2, STARSHIP_HEALING =3 };
-    void CreateDistribution([[maybe_unused]] [[maybe_unused]] DistributionsEnum distributionsEnum, int min, int max);
-    static std::mt19937 GetEngine();
-
-    ///Utility
+    /// Utility
     Chilli::Cursor _cursor;
     Chilli::PredefinedColours _predefinedColours;
 
     /// HUD
     std::unique_ptr<MothershipStatusDisplay> _mothershipStatusDisplay;
 
-    /// GUI
-    static const int NUM_OF_BUTTONS = 5;
-    std::array<std::unique_ptr<StarshipDeploymentButton>, NUM_OF_BUTTONS> _starshipDeploymentButtons;
-
     /// Background Parallax
-    std::unique_ptr<ParallaxBackground> _backgroundParallax;
     const int NUM_OF_STARS = 750;
+    std::unique_ptr<ParallaxBackground> _backgroundParallax;
 
     /// Sprites
     Player _player;
     Enemy _enemy;
 
     /// Views (Main view & Minimap)
-    sf::View _gameplayView{};
-    std::unique_ptr<Minimap> _minimap;
     bool _scrollViewLeft = false;
     bool _scrollViewRight = false;
     const float VIEW_SCROLL_SPEED = 300.0F;
-
-    /// Random Distributions
-    std::mt19937 _randomGenerator;
-    std::vector<std::uniform_int_distribution<int>> _randomValueDistributions;
+    sf::View _gameplayView{};
+    std::unique_ptr<Minimap> _minimap;
 
     /// Space Lanes
-    std::vector<std::unique_ptr<SpaceLane>> _spaceLanes;
     const float LANE_ROW_SPACING = 35.0F;
     const int NUM_OF_LANES = 5;
+    std::vector<std::unique_ptr<SpaceLane>> _spaceLanes;
 
     /// Player Spawning
-    std::unique_ptr<StarshipDeploymentManager> _starshipDeploymentManager;
     const int STARSHIP_MAX_QUEUE_SIZE = 5;
+    static const int NUM_OF_BUTTONS = 5;
+    std::unique_ptr<StarshipDeploymentManager> _starshipDeploymentManager;
+    std::array<std::unique_ptr<StarshipDeploymentButton>, NUM_OF_BUTTONS> _starshipDeploymentButtons;
 
     /// Enemy Spawning TODO: Enemy spawner class
-    sf::Clock _enemySpawnTimerClock;
     float _enemySpawnTimer = 3.0f;
     float _enemySpawnRate = 5.0f;
+    sf::Clock _enemySpawnTimerClock;
 
     /// Scrap Metal Managers
+    const int STARTING_SCRAP_METAL = 5000;
     std::unique_ptr<ScrapMetalManager> _playerScrapMetalManager;
     std::unique_ptr<ScrapMetalManager> _enemyScrapMetalManager;
-    const int STARTING_SCRAP_METAL = 5000;
 
-    sf::Music _gameMusic;
-    std::array<std::unique_ptr<Button>, 2> _musicIconButtons;
-    //std::unique_ptr<Button> _nextMusicTrackButton;
+    /// Music & Sound Effects
     bool _isMusicOn = true;
     static const int MUSIC_ON_BUTTON = 0;
     static const int MUSIC_OFF_BUTTON = 1;
+    sf::Music _gameMusic;
+    std::array<std::unique_ptr<Button>, 2> _musicIconButtons;
+    //std::unique_ptr<Button> _nextMusicTrackButton;
+
+    /// Random Distributions
+    RNG _starshipDamageRNG {100, 250};
+    RNG _starshipHealRNG {50, 100};
+    RNG _enemyStarshipTypeRNG {0, StarshipFactory::STARSHIP_TYPE::ENUM_COUNT - 2};
+    RNG _spacelaneSpawnRNG {0, NUM_OF_LANES - 1};
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

@@ -23,6 +23,8 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/StarshipDeploymentButton.hpp
         Gamelibs/src/StarshipDeploymentManager.cpp
         Gamelibs/include/StarshipDeploymentManager.hpp
+        Gamelibs/RNG.cpp
+        Gamelibs/RNG.hpp
 )
 
 include_directories(Gamelibs/include)
