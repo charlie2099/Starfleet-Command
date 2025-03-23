@@ -1,7 +1,7 @@
 #ifndef STARFLEET_COMMAND_GAMESCENE_HPP
 #define STARFLEET_COMMAND_GAMESCENE_HPP
 #include "Scenes/Scene.hpp"
-#include "Cursor.hpp"
+#include "Utility/Cursor.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
 #include "Sprites/Player/Player.hpp"
 #include "Interfaces/IStarship.hpp"
@@ -17,7 +17,8 @@
 #include <random>
 #include <chrono>
 #include "queue"
-#include "../../RNG.hpp"
+#include "Utility/RNG.hpp"
+#include "AIDirector/AiDirector.hpp"
 
 class GameScene : public Scene
 {
@@ -70,6 +71,10 @@ private:
     /// Sprites
     Player _player;
     Enemy _enemy;
+
+    /// Enemy AI
+
+    AiDirector _aiDirector;
 
     /// Views (Main view & Minimap)
     bool _scrollViewLeft = false;

@@ -195,6 +195,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     UpdateEnemySpawner();
 
+    _aiDirector.Update(deltaTime);
+
 
 
 
