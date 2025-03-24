@@ -73,8 +73,7 @@ private:
     Enemy _enemy;
 
     /// Enemy AI
-
-    AiDirector _aiDirector;
+    std::unique_ptr<AiDirector> _aiDirector;
 
     /// Views (Main view & Minimap)
     bool _scrollViewLeft = false;
@@ -86,6 +85,8 @@ private:
     /// Space Lanes
     const float LANE_ROW_SPACING = 35.0F;
     const int NUM_OF_LANES = 5;
+    const sf::Color HIGHLIGHT_LANE_COLOUR = sf::Color(100, 100, 100, 100.0F);
+    const sf::Color DEFAULT_LANE_COLOUR = sf::Color(100, 100, 100, 25.0F);
     std::vector<std::unique_ptr<SpaceLane>> _spaceLanes;
 
     /// Player Spawning

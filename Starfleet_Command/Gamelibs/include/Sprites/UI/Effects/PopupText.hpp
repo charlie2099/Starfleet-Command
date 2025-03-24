@@ -18,6 +18,7 @@ public:
     void SetColour(sf::Color color);
     void SetCharSize(int size);
     void SetIconImage(const std::string& iconImageFileName);
+    void SetText(const std::string& text);
 
 private:
     bool InitFont();
@@ -28,6 +29,7 @@ private:
     sf::Font _font;
     sf::Texture _iconTexture;
     sf::Sprite _iconSprite;
+    int _popupValue;
     float _timePassed = 0;
     bool _isFaded = false;
     bool _isIconEnabled = false;

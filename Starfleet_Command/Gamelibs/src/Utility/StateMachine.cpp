@@ -29,5 +29,5 @@ void StateMachine::ChangeState(std::type_index newState)
 
     _currentState = _availableStates[newState];
     _currentState->OnStateEnter();
-    // invoke event
+    // TODO: invoke state change event here
 }

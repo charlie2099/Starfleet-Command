@@ -38,6 +38,7 @@ public:
     /// Accessors
     std::vector<std::unique_ptr<IStarship>> &GetStarships() { return starship; }
     std::unique_ptr<IStarship> &GetMothership() { return starship[0]; }
+    sf::FloatRect  GetMothershipBounds() const { return starship[0]->GetSpriteComponent().GetSprite().getGlobalBounds(); }
     int GetStarshipCount() { return starship.size(); }
 
     /// Event handling

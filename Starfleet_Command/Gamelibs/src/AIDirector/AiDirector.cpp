@@ -1,7 +1,7 @@
 #include "AIDirector/AiDirector.hpp"
 
-AiDirector::AiDirector()
-: _intensityCalculator(std::make_unique<DirectorIntensityCalculator>())
+AiDirector::AiDirector(Player& player, Enemy& enemy)
+: _player(player), _enemy(enemy), _intensityCalculator(std::make_unique<DirectorIntensityCalculator>())
 {
     std::unordered_map<std::type_index, std::shared_ptr<IState>> cachedStates =
     {
@@ -24,13 +24,19 @@ void AiDirector::IncreasePerceivedIntensity(sf::Time deltaTime)
     float intensity = _intensityCalculator->CalculatePerceivedIntensityOutput(*this);
     _perceivedIntensity += intensity * deltaTime.asSeconds();
 
-    if(_perceivedIntensity > 100)
+    if(_perceivedIntensity >= 100)
     {
         _perceivedIntensity = 100;
     }
 }
 
-void AiDirector::DecreasePerceivedIntensity()
+void AiDirector::DecreasePerceivedIntensity(sf::Time deltaTime)
 {
+    float intensity = _intensityCalculator->CalculatePerceivedIntensityOutput(*this);
+    _perceivedIntensity -= intensity * deltaTime.asSeconds();
 
+    if(_perceivedIntensity <= 0)
+    {
+        _perceivedIntensity = 0;
+    }
 }

@@ -313,7 +313,7 @@ void MenuScene::InitBackgroundShips()
 void MenuScene::InitGameVersionText()
 {
     _gameVersionText.setFont(Chilli::CustomFonts::GetRegularFont());
-    _gameVersionText.setString("PRE-ALPHA BUILD v0.0.4");
+    _gameVersionText.setString("PRE-ALPHA BUILD v0.1.0");
     _gameVersionText.setCharacterSize(12);
     _gameVersionText.setFillColor(sf::Color::White);
     _gameVersionText.setOutlineColor(sf::Color::Black);

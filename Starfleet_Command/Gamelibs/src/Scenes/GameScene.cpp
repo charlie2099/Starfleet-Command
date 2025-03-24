@@ -14,6 +14,7 @@ bool GameScene::Init()
     InitPlayerMothership();
     InitSpaceLanes();
     InitEnemyMothership();
+    _aiDirector = std::make_unique<AiDirector>(_player, _enemy);
 
     auto& playerMothership = _player.GetMothership();
     auto& enemyMothership = _enemy.GetMothership();
@@ -107,15 +108,10 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     for (const auto & _spaceLane : _spaceLanes)
     {
-        if(_spaceLane->IsCursorHoveredOver())
-        {
-            _spaceLane->SetColour(sf::Color(100, 100, 100, 100.0F));
-        }
-        else
-        {
-            _spaceLane->SetColour(sf::Color(100, 100, 100, 25.0F));
-        }
+        _spaceLane->SetColour(_spaceLane->IsCursorHoveredOver() ? HIGHLIGHT_LANE_COLOUR : DEFAULT_LANE_COLOUR);
     }
+
+
 
     for (int i = 0; i < _player.GetStarshipCount(); ++i)
     {
@@ -195,14 +191,64 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     UpdateEnemySpawner();
 
-    _aiDirector.Update(deltaTime);
+    _aiDirector->Update(deltaTime);
 
 
 
 
 
 
-    /// Enemy starship movement and shooting
+
+    auto* playerMothership = dynamic_cast<Mothership*>(_player.GetMothership().get());
+    if(playerMothership)
+    {
+        playerMothership->SetDamageLocation({
+            _mothershipStatusDisplay->GetPlayerMothershipTextPos().x + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().width/2.0F,
+            _mothershipStatusDisplay->GetPlayerMothershipTextPos().y - _mothershipStatusDisplay->GetPlayerMothershipTextBounds().height*2.5F});
+    }
+
+    auto* enemyMothership = dynamic_cast<Mothership*>(_enemy.GetMothership().get());
+    if(enemyMothership)
+    {
+        enemyMothership->SetDamageLocation({
+            _mothershipStatusDisplay->GetEnemyMothershipTextPos().x + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().width/2.0F,
+            _mothershipStatusDisplay->GetEnemyMothershipTextPos().y - _mothershipStatusDisplay->GetEnemyMothershipTextBounds().height*2.5F});
+    }
+
+
+    /*for (int i = 1; i < _enemy.GetStarshipCount(); ++i)
+    {
+        if (_enemy.GetStarships()[i] == nullptr) return;
+
+        auto &enemyStarship = _enemy.GetStarships()[i];
+        auto &playerMothershipp = _player.GetMothership();
+
+
+        /// Enemy  starship enemy engagement
+        *//*enemyStarship->IsEnemyInRange(playerMothershipp)*//*
+        if(Chilli::Vector::Distance(enemyStarship->GetPos(), playerMothershipp->GetPos()) <=(enemyStarship->GetAttackRange()*2.0F))
+        {
+            enemyStarship->ShootAt(playerMothershipp->GetPos());
+        }
+
+        /// Enemy projectile collision handling
+        for(int k = 0; k < enemyStarship->GetProjectileCount(); k++)
+        {
+            auto& enemyBullet = enemyStarship->GetProjectile()[k]->GetSpriteComponent();
+            if(playerMothershipp->CollidesWith(enemyBullet.GetSprite().getGlobalBounds()))
+            {
+                int randDamage = _starshipDamageRNG.GenerateValue();
+                float scaledDamage = (float)randDamage * enemyStarship->GetDamageScaleFactor();
+                playerMothershipp->TakeDamage(scaledDamage);
+                enemyStarship->DestroyProjectile(k);
+            }
+        }
+    }*/
+
+
+
+
+        /// Enemy starship movement and shooting
     for (int i = 1; i < _enemy.GetStarshipCount(); ++i)
     {
         if(_enemy.GetStarships()[i] == nullptr) return;
@@ -518,16 +564,15 @@ void GameScene::UpdateGameplayViewMovement(const sf::RenderWindow &window, const
     // Viewport movement conditions
     bool isMouseNearLeftEdge = (float)mousePos.x <= mouseProximityToLeftWindowEdge && mousePos.x > 0;
     bool isMouseNearRightEdge = (float)mousePos.x >= mouseProximityToRightWindowEdge && mousePos.x < window.getSize().x;
-    bool isViewportLeftEdgeWithinMothershipFocus = viewportLeftBoundary > _player.GetMothership()->GetPos().x - _player.GetMothership()->GetSpriteComponent().GetSprite().getGlobalBounds().width; // BUG: Gameplay view stops moving a few pixels too far when scrolling view left
-    bool isViewportRightEdgeWithinRightSideOfEnemyMothership = viewportRightBoundary < _enemy.GetMothership()->GetPos().x + _enemy.GetMothershipBounds().width;
+    bool isViewportLeftEdgeWithinMothershipFocus = viewportLeftBoundary > 0;
+    bool isViewportRightEdgeWithinRightSideOfEnemyMothership = viewportRightBoundary < _enemy.GetMothership()->GetPos().x + 60.0F;
     bool isMouseYposWithinWindowBounds = mousePos.y >= 0 and mousePos.y <= window.getSize().y;
 
-    if(viewportLeftBoundary >= _player.GetMothership()->GetPos().x - _player.GetMothership()->GetSpriteComponent().GetSprite().getGlobalBounds().width &&
-       _scrollViewLeft)
+    if(viewportLeftBoundary >= 0 and _scrollViewLeft)
     {
         _gameplayView.move(-VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
     }
-    else if(_scrollViewRight && isViewportRightEdgeWithinRightSideOfEnemyMothership)
+    else if(_scrollViewRight and isViewportRightEdgeWithinRightSideOfEnemyMothership)
     {
         _gameplayView.move(VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
     }
@@ -552,12 +597,17 @@ void GameScene::UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &wi
 {
     for (int i = 0; i < NUM_OF_LANES; ++i)
     {
-        float laneHeight = _spaceLanes[i]->GetSize().y;
+       /* float laneHeight = _spaceLanes[i]->GetSize().y;
         float totalLanesHeight = (laneHeight * (float) NUM_OF_LANES) + (LANE_ROW_SPACING * ((float) NUM_OF_LANES - 1));
         float laneXOffset = 75.0F;
         float laneYOffset = ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
-        _spaceLanes[i]->SetPos({_player.GetMothership()->GetPos().x + laneXOffset,
-                                _player.GetMothership()->GetPos().y + laneYOffset});
+        _spaceLanes[i]->SetPos({_player.GetMothership()->GetPos().x + laneXOffset,_player.GetMothership()->GetPos().y + laneYOffset});*/
+        float laneHeight = _spaceLanes[i]->GetSize().y;
+        float totalLanesHeight = (laneHeight * (float)NUM_OF_LANES) + (LANE_ROW_SPACING * ((float)NUM_OF_LANES - 1));
+        sf::Vector2f playerMothershipPos = _player.GetMothership()->GetPos();
+        float spacelaneXPos = playerMothershipPos.x + _player.GetMothershipBounds().width/1.8F;
+        float spacelaneYPos = playerMothershipPos.y + ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
+        _spaceLanes[i]->SetPos({spacelaneXPos, spacelaneYPos});
         _spaceLanes[i]->Update(window, deltaTime);
     }
 }
@@ -566,15 +616,16 @@ void GameScene::InitPlayerMothership()
 {
     _player.CreateStarship(StarshipFactory::STARSHIP_TYPE::MOTHERSHIP, 2);
     _player.PaintMothership(_predefinedColours.LIGHTBLUE);
-    _player.SetMothershipPosition({Constants::WINDOW_WIDTH * 0.085F, Constants::LEVEL_HEIGHT / 2.0f});
+    _player.SetMothershipPosition({60.0F, Constants::LEVEL_HEIGHT / 2.0F});
 }
 
 void GameScene::InitEnemyMothership()
 {
     _enemy.CreateStarship(StarshipFactory::MOTHERSHIP, 2);
     _enemy.PaintMothership(_predefinedColours.LIGHTGREEN);
-    auto mothershipXpos = _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x + _enemy.GetMothershipBounds().width / 1.4F;
-    _enemy.SetMothershipPosition({mothershipXpos, Constants::LEVEL_HEIGHT / 2.0f});
+    auto mothershipXpos = _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x + _enemy.GetMothershipBounds().width/2.25F;
+    auto mothershipYpos = Constants::LEVEL_HEIGHT / 2.0F;
+    _enemy.SetMothershipPosition({mothershipXpos, mothershipYpos});
     _enemy.SetMothershipRotation(180);
 }
 
@@ -582,7 +633,7 @@ void GameScene::InitGameplayView()
 {
     _gameplayView.setSize(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT);
     auto playerMothershipBounds = _player.GetMothership()->GetSpriteComponent().GetSprite().getGlobalBounds();
-    _gameplayView.setCenter(_player.GetMothership()->GetPos().x - playerMothershipBounds.width + Constants::WINDOW_WIDTH / 2.0F - 1.0F, _player.GetMothership()->GetPos().y);
+    _gameplayView.setCenter(_player.GetMothership()->GetPos().x + playerMothershipBounds.width - 60.0F, _player.GetMothership()->GetPos().y);
 }
 
 void GameScene::InitMinimapView()
@@ -605,11 +656,13 @@ void GameScene::InitSpaceLanes()
 
         float laneHeight = _spaceLanes[i]->GetSize().y;
         float totalLanesHeight = (laneHeight * (float)NUM_OF_LANES) + (LANE_ROW_SPACING * ((float)NUM_OF_LANES - 1));
-        float laneXOffset = 75.0F;
-        float laneYOffset = ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
-        sf::Vector2f playerMothershipPos = _player.GetMothership()->GetSpriteComponent().GetPos();
-        _spaceLanes[i]->SetPos({playerMothershipPos.x + laneXOffset, playerMothershipPos.y + laneYOffset});
-        _spaceLanes[i]->SetSize({Constants::LEVEL_WIDTH*0.91F, 50.0F});
+        sf::Vector2f playerMothershipPos = _player.GetMothership()->GetPos();
+        float spacelaneXPos = playerMothershipPos.x + _player.GetMothershipBounds().width/1.5F;
+        float spacelaneYPos = playerMothershipPos.y + ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
+        float spacelaneXSize = Constants::LEVEL_WIDTH*0.8F;
+        float spacelaneYSize = 50.0F;
+        _spaceLanes[i]->SetPos({spacelaneXPos, spacelaneYPos});
+        _spaceLanes[i]->SetSize({spacelaneXSize, spacelaneYSize});
         _spaceLanes[i]->Init();
     }
 

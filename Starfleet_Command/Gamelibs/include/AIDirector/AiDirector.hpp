@@ -6,14 +6,15 @@
 #include "AIDirector/DirectorPeakState.hpp"
 #include "AIDirector/DirectorPeakFadeState.hpp"
 #include "AIDirector/DirectorRespiteState.hpp"
-#include <SFML/System/Time.hpp>
+#include "Sprites/Player/Player.hpp"
+#include "Sprites/Enemy/Enemy.hpp"
 
 class AiDirector
 {
 public:
     //static AiDirector Instance;
 
-    AiDirector();
+    AiDirector(Player& player, Enemy& enemy);
 
     void Update(sf::Time deltaTime);
 
@@ -26,15 +27,21 @@ public:
     };
 
     void IncreasePerceivedIntensity(sf::Time deltaTime);
-    void DecreasePerceivedIntensity();
+    void DecreasePerceivedIntensity(sf::Time deltaTime);
+
+    float GetPerceivedIntensity() const  { return _perceivedIntensity; }
+    float GetPeakIntensityThreshold() const { return PEAK_INTENSITY_MAX; }
+    float GetEnemyMothershipHealth() { return _enemy.GetMothership()->GetHealth(); }
 
 private:
     std::unique_ptr<DirectorIntensityCalculator> _intensityCalculator;
     StateMachine _stateMachine;
-    // std::vector<std::unique_ptr<IStarship>> _enemyStarships;
+    Player& _player;
+    Enemy& _enemy;
     float _perceivedIntensity = 0;
     float _peakDuration = 5.0F;
     float _respiteDuration = 10.0F;
+    const float PEAK_INTENSITY_MAX = 100.0F;
 };
 
 #endif //STARFLEET_COMMAND_AIDIRECTOR_HPP

@@ -4,7 +4,10 @@ DirectorRespiteState::DirectorRespiteState(AiDirector& director, StateMachine& s
 : _aiDirector(director), _stateMachine(stateMachine)
 {}
 
-void DirectorRespiteState::OnStateEnter() {}
+void DirectorRespiteState::OnStateEnter()
+{
+    std::cout << "RESPITE STATE" << std::endl;
+}
 
 void DirectorRespiteState::OnStateUpdate(sf::Time deltaTime) {}
 

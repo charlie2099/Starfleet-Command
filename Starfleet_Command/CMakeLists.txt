@@ -33,8 +33,8 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/AIDirector/IDirectorIntensityRule.hpp
         Gamelibs/src/AIDirector/DirectorIntensityRuleEngine.cpp
         Gamelibs/include/AIDirector/DirectorIntensityRuleEngine.hpp
-        Gamelibs/src/AIDirector/MothershipHealthLowRule.cpp
-        Gamelibs/include/AIDirector/MothershipHealthLowRule.hpp
+        Gamelibs/src/AIDirector/EnemyMothershipHealthLowRule.cpp
+        Gamelibs/include/AIDirector/EnemyMothershipHealthLowRule.hpp
         Gamelibs/include/AIDirector/DirectorEventBus.hpp
         Gamelibs/src/AIDirector/DirectorEventBus.cpp
         Gamelibs/src/Utility/StateMachine.cpp

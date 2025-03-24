@@ -6,6 +6,7 @@ void HealthComponent::TakeDamage(float damageAmount, sf::Vector2f damageLocation
 
     //auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<PopupText>(_health, _outsideBarSpriteComponent.GetPos()));
     auto& damagePopup = _damagePopUpEffect.emplace_back(std::make_unique<PopupText>(damageAmount, damageLocation));
+    damagePopup->SetText("-");
     if(damageAmount > 200) // NOTE: Check if damage dealt is more than 75% of the max damage a starship can deal
     {
         damagePopup->SetColour(sf::Color::Red);
@@ -24,6 +25,7 @@ void HealthComponent::ReplenishHealth(float maxHealth, float healAmount, sf::Vec
     _health = newHealth;
 
     auto& healthPopup = _damagePopUpEffect.emplace_back(std::make_unique<PopupText>(healAmount, healLocation));
+    healthPopup->SetText("+");
     healthPopup->SetColour(sf::Color::Green);
     healthPopup->SetCharSize(15);
     InvokeAgnosticEvent(HEALTH_UPDATED, _health);

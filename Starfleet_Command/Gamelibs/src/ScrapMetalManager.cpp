@@ -50,10 +50,11 @@ void ScrapMetalManager::SpendScrap(int amount)
 
 void ScrapMetalManager::CreatePopup(int buildCost, sf::Vector2<float> popupPosition)
 {
-    auto& popupText = _scrapMetalPopupText.emplace_back(std::make_unique<PopupText>(buildCost, popupPosition));
-    popupText->SetColour(_popupTextColour);
-    popupText->SetCharSize(15);
-    popupText->SetIconImage("Resources/Textures/pixil-frame-0.png");
+    auto& scrapPopupText = _scrapMetalPopupText.emplace_back(std::make_unique<PopupText>(buildCost, popupPosition));
+    scrapPopupText->SetColour(_popupTextColour);
+    scrapPopupText->SetCharSize(15);
+    scrapPopupText->SetIconImage("Resources/Textures/pixil-frame-0.png");
+    scrapPopupText->SetText("+");
 }
 
 void ScrapMetalManager::SetScrapText(const std::string& scrapMetalText)

@@ -3,7 +3,7 @@
 Mothership::Mothership(int spacelane)
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_5.png");
-    _spriteComponent.GetSprite().scale({0.08F, 0.08F});
+    _spriteComponent.GetSprite().scale({0.5F, 0.5F});
     _healthComponent.SetHealth(10000);
     _speed = 10;
     _startSpeed = _speed;
@@ -144,7 +144,7 @@ void Mothership::DestroyProjectile(int projectileIndex)
 
 void Mothership::TakeDamage(float damageAmount)
 {
-    _healthComponent.TakeDamage(damageAmount, GetPos());
+    _healthComponent.TakeDamage(damageAmount, _damageLocation);
 }
 
 void Mothership::ReplenishHealth(float healthAmount)

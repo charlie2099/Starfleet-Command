@@ -4,7 +4,10 @@ DirectorPeakState::DirectorPeakState(AiDirector& director, StateMachine& stateMa
         : _aiDirector(director), _stateMachine(stateMachine)
 {}
 
-void DirectorPeakState::OnStateEnter() {}
+void DirectorPeakState::OnStateEnter()
+{
+    std::cout << "PEAK STATE" << std::endl;
+}
 
 void DirectorPeakState::OnStateUpdate(sf::Time deltaTime) {}
 

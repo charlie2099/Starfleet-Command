@@ -2,8 +2,10 @@
 
 PopupText::PopupText(int value, sf::Vector2f pos)
 {
+    _popupValue = value;
+
     InitFont();
-    _text.setString(std::to_string(value));
+    _text.setString(std::to_string(_popupValue));
     _text.setFont(_font);
     _text.setCharacterSize(12.5F);
 
@@ -89,4 +91,9 @@ void PopupText::SetIconImage(const std::string& iconImageFileName)
     //_iconTexture.loadFromFile(iconImageFileName);
     _iconSprite.setTexture(_iconTexture);
     _iconSprite.scale(1, 1);
+}
+
+void PopupText::SetText(const std::string& text)
+{
+    _text.setString(text + std::to_string(_popupValue));
 }
