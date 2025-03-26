@@ -14,7 +14,7 @@ bool GameScene::Init()
     InitPlayerMothership();
     InitSpaceLanes();
     InitEnemyMothership();
-    _aiDirector = std::make_unique<AiDirector>(_player, _enemy);
+    _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spaceLanes);
 
     auto& playerMothership = _player.GetMothership();
     auto& enemyMothership = _enemy.GetMothership();
@@ -189,7 +189,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _player.Update(window, deltaTime);
     _enemy.Update(window, deltaTime);
 
-    UpdateEnemySpawner();
+    //UpdateEnemySpawner();
 
     _aiDirector->Update(deltaTime);
 
@@ -237,7 +237,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             auto& enemyBullet = enemyStarship->GetProjectile()[k]->GetSpriteComponent();
             if(playerMothershipp->CollidesWith(enemyBullet.GetSprite().getGlobalBounds()))
             {
-                int randDamage = _starshipDamageRNG.GenerateValue();
+                int randDamage = _starshipDamageRNG.GenerateNumber();
                 float scaledDamage = (float)randDamage * enemyStarship->GetDamageScaleFactor();
                 playerMothershipp->TakeDamage(scaledDamage);
                 enemyStarship->DestroyProjectile(k);
@@ -298,7 +298,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& enemyBullet = enemyStarship->GetProjectile()[k]->GetSpriteComponent();
                 if(playerStarship->CollidesWith(enemyBullet.GetSprite().getGlobalBounds()))
                 {
-                    int randDamage = _starshipDamageRNG.GenerateValue();
+                    int randDamage = _starshipDamageRNG.GenerateNumber();
                     float scaledDamage = (float)randDamage * enemyStarship->GetDamageScaleFactor();
                     playerStarship->TakeDamage(scaledDamage);
                     enemyStarship->DestroyProjectile(k);
@@ -328,7 +328,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         auto& friendlyProjectile = supportShip->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
-                            int randHealAmount = _starshipHealRNG.GenerateValue();
+                            int randHealAmount = _starshipHealRNG.GenerateNumber();
                             friendlyStarship->ReplenishHealth(randHealAmount);
                             supportShip->DestroyProjectile(k);
                         }
@@ -392,7 +392,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& playerBulletSprite = playerStarship->GetProjectile()[k]->GetSpriteComponent().GetSprite();
                 if(enemyStarship->CollidesWith(playerBulletSprite.getGlobalBounds()))
                 {
-                    int randDamage = _starshipDamageRNG.GenerateValue();
+                    int randDamage = _starshipDamageRNG.GenerateNumber();
                     float scaledDamage = (float)randDamage * playerStarship->GetDamageScaleFactor();
                     enemyStarship->TakeDamage(scaledDamage);
                     playerStarship->DestroyProjectile(k);
@@ -422,7 +422,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         auto& friendlyProjectile = supportShip->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
-                            int randHealAmount = _starshipHealRNG.GenerateValue();
+                            int randHealAmount = _starshipHealRNG.GenerateNumber();
                             friendlyStarship->ReplenishHealth(randHealAmount);
                             supportShip->DestroyProjectile(k);
                         }
@@ -534,8 +534,8 @@ void GameScene::UpdateEnemySpawner()
     {
         for (int i = 0; i < 1; ++i)
         {
-            int randomStarshipType = _enemyStarshipTypeRNG.GenerateValue();
-            int randomLane = _spacelaneSpawnRNG.GenerateValue();
+            int randomStarshipType = _enemyStarshipTypeRNG.GenerateNumber();
+            int randomLane = _spacelaneSpawnRNG.GenerateNumber();
             _enemy.CreateStarship(static_cast<StarshipFactory::STARSHIP_TYPE>(randomStarshipType), randomLane);
             auto& newestEnemyStarship = _enemy.GetStarships()[_enemy.GetStarshipCount() - 1];
             auto starshipXPos = _spaceLanes[randomLane]->GetPos().x + _spaceLanes[randomLane]->GetSize().x;

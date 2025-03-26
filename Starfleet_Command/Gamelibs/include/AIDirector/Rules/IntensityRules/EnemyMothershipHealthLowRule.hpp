@@ -6,7 +6,6 @@ class EnemyMothershipHealthLowRule : public IDirectorIntensityRule
 {
 public:
     EnemyMothershipHealthLowRule(float lowHealthThreshold, float intensityRating);
-
     float CalculatePerceivedIntensity(AiDirector& director) override;
 
 private:

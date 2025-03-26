@@ -1,7 +1,8 @@
-#include "AIDirector/DirectorIntensityCalculator.hpp"
+#include "AIDirector/RuleCalculator/DirectorIntensityCalculator.hpp"
 
 DirectorIntensityCalculator::DirectorIntensityCalculator()
 {
+    AddRule(std::make_shared<PlayerMothershipHealthLowRule>(2000.0F, 25.0F));
     AddRule(std::make_shared<EnemyMothershipHealthLowRule>(2000.0F, 25.0F));
 }
 

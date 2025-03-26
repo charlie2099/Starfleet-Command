@@ -20,17 +20,27 @@
 =================PSEUDOCODE==================
 ============================================
 
-BUG:
-If a starship begins engaging an enemy but another starship
-comes up behind it (not already following) then it will overlap it?
+___AI DIRECTOR___
+- BUILD-UP (default spawn rate, default spawn chance of starship types, default lane spawn chance)
+- PEAK (increased spawn rate, increased spawn chance of stronger starship types, increased chance of better lane spawning)
 
-NOTE:
-HUD elements
-- Player Mothership text, healthbar, and scrap amount
-- Enemy Mothership text, healthbar, and scrap amount
+director.SpawnEnemy(TYPE, LANE)
+director.SetEnemySpawnFrequency()
 
-TODO:
-- Create a class that encapsulates the above elements? (MothershipStatusDisplay?)
+SpacelaneUnderDefendedRule
+SpacelaneOverDefendedRule
+DestroyerSpawnRule
+BattleshipSpawnRule
+BattleshipSupportHeavyStrategyRule
+Reward&PerkSystemRule
+
+When to trigger behaviour calculator events
+- Every time the director changes state (i.e. build-up, peak, etc)
+- Every x amount of seconds?
+- When a behaviour rule condition is met? (subscribe to a behaviour calculator callback that is invoked when a rule condition is satisfied?)
+- Based on priority? first in first out?
+- Based on intensity?
+
 
 ============================================
 ==============USEFUL INFORMATION===============

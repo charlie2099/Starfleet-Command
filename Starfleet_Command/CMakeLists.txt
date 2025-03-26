@@ -27,26 +27,36 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/Utility/RNG.hpp
         Gamelibs/src/AIDirector/AiDirector.cpp
         Gamelibs/include/AIDirector/AiDirector.hpp
-        Gamelibs/src/AIDirector/DirectorIntensityCalculator.cpp
-        Gamelibs/include/AIDirector/DirectorIntensityCalculator.hpp
-        Gamelibs/src/AIDirector/IDirectorIntensityRule.cpp
-        Gamelibs/include/AIDirector/IDirectorIntensityRule.hpp
-        Gamelibs/src/AIDirector/DirectorIntensityRuleEngine.cpp
-        Gamelibs/include/AIDirector/DirectorIntensityRuleEngine.hpp
-        Gamelibs/src/AIDirector/EnemyMothershipHealthLowRule.cpp
-        Gamelibs/include/AIDirector/EnemyMothershipHealthLowRule.hpp
+        Gamelibs/src/AIDirector/RuleCalculator/DirectorIntensityCalculator.cpp
+        Gamelibs/include/AIDirector/RuleCalculator/DirectorIntensityCalculator.hpp
+        Gamelibs/include/AIDirector/Rules/IntensityRules/IDirectorIntensityRule.hpp
+        Gamelibs/src/AIDirector/RuleEngine/DirectorIntensityRuleEngine.cpp
+        Gamelibs/include/AIDirector/RuleEngine/DirectorIntensityRuleEngine.hpp
+        Gamelibs/src/AIDirector/Rules/IntensityRules/EnemyMothershipHealthLowRule.cpp
+        Gamelibs/include/AIDirector/Rules/IntensityRules/EnemyMothershipHealthLowRule.hpp
         Gamelibs/include/AIDirector/DirectorEventBus.hpp
         Gamelibs/src/AIDirector/DirectorEventBus.cpp
         Gamelibs/src/Utility/StateMachine.cpp
         Gamelibs/include/Utility/StateMachine.hpp
-        Gamelibs/src/AIDirector/DirectorRespiteState.cpp
-        Gamelibs/include/AIDirector/DirectorRespiteState.hpp
-        Gamelibs/src/AIDirector/DirectorBuildUpState.cpp
-        Gamelibs/include/AIDirector/DirectorBuildUpState.hpp
-        Gamelibs/src/AIDirector/DirectorPeakState.cpp
-        Gamelibs/include/AIDirector/DirectorPeakState.hpp
-        Gamelibs/src/AIDirector/DirectorPeakFadeState.cpp
-        Gamelibs/include/AIDirector/DirectorPeakFadeState.hpp
+        Gamelibs/src/AIDirector/States/DirectorRespiteState.cpp
+        Gamelibs/include/AIDirector/States/DirectorRespiteState.hpp
+        Gamelibs/src/AIDirector/States/DirectorBuildUpState.cpp
+        Gamelibs/include/AIDirector/States/DirectorBuildUpState.hpp
+        Gamelibs/src/AIDirector/States/DirectorPeakState.cpp
+        Gamelibs/include/AIDirector/States/DirectorPeakState.hpp
+        Gamelibs/src/AIDirector/States/DirectorPeakFadeState.cpp
+        Gamelibs/include/AIDirector/States/DirectorPeakFadeState.hpp
+        Gamelibs/include/AIDirector/Rules/IntensityRules/PlayerMothershipHealthLowRule.hpp
+        Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerMothershipHealthLowRule.cpp
+        Gamelibs/include/AIDirector/Rules/BehaviourRules/IDirectorBehaviourRule.hpp
+        Gamelibs/src/AIDirector/RuleCalculator/DirectorBehaviourCalculator.cpp
+        Gamelibs/include/AIDirector/RuleCalculator/DirectorBehaviourCalculator.hpp
+        Gamelibs/src/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.cpp
+        Gamelibs/include/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.hpp
+        Gamelibs/include/AIDirector/Rules/BehaviourRules/TestBehaviourRule.cpp
+        Gamelibs/include/AIDirector/Rules/BehaviourRules/TestBehaviourRule.hpp
+        Gamelibs/include/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStartRule.cpp
+        Gamelibs/include/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStartRule.hpp
 )
 
 include_directories(Gamelibs/include)

@@ -7,7 +7,7 @@ class RNG
 {
 public:
     RNG(int min, int max);
-    int GenerateValue();
+    int GenerateNumber();
 
 private:
     static std::mt19937 GetEngine();

@@ -1,9 +1,9 @@
 #ifndef STARFLEET_COMMAND_IDIRECTORINTENSITYRULE_HPP
 #define STARFLEET_COMMAND_IDIRECTORINTENSITYRULE_HPP
 
-// Forward declaration to avoid circular dependency issue
 class AiDirector;
 
+// Rules that determine how intense the player might be finding the game, and dictate when the director should change state
 class IDirectorIntensityRule
 {
 public:

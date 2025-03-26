@@ -1,4 +1,4 @@
-#include "AIDirector/EnemyMothershipHealthLowRule.hpp"
+#include "AIDirector/Rules/IntensityRules/EnemyMothershipHealthLowRule.hpp"
 #include "AIDirector/AiDirector.hpp"
 
 EnemyMothershipHealthLowRule::EnemyMothershipHealthLowRule(float lowHealthThreshold, float intensityRating)

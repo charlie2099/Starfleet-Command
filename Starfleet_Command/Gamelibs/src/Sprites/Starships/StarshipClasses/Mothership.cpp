@@ -93,6 +93,17 @@ void Mothership::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         _attackRangeCircle.setPosition(_spriteComponent.GetPos());
     }
+
+    if(_isDamaged)
+    {
+        _damageTimer -= deltaTime.asSeconds();
+
+        if(_damageTimer <= 0.0F)
+        {
+            _spriteComponent.GetSprite().setColor(_starshipColour);
+            _isDamaged = false;
+        }
+    }
 }
 
 void Mothership::Render(sf::RenderWindow &window)
@@ -145,6 +156,9 @@ void Mothership::DestroyProjectile(int projectileIndex)
 void Mothership::TakeDamage(float damageAmount)
 {
     _healthComponent.TakeDamage(damageAmount, _damageLocation);
+    _spriteComponent.GetSprite().setColor(sf::Color::Red);
+    _isDamaged = true;
+    _damageTimer = 0.05F;
 }
 
 void Mothership::ReplenishHealth(float healthAmount)

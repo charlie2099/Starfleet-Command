@@ -27,15 +27,17 @@ void PopupText::Update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         float disappearSpeed = 10;
         _text.setFillColor(sf::Color(_color.r, _color.g, _color.b, _color.a - disappearSpeed * deltaTime.asSeconds()));
+
+        if(_isIconEnabled)
+        {
+            auto iconSpriteColour = _iconSprite.getColor();
+            _iconSprite.setColor(sf::Color(iconSpriteColour.r, iconSpriteColour.g, iconSpriteColour.b, iconSpriteColour.a - disappearSpeed * deltaTime.asSeconds()));
+            _iconSprite.setPosition(_text.getPosition().x - _iconSprite.getGlobalBounds().width - 3.0F, _text.getPosition().y + 3.5F);
+        }
     }
     else
     {
         _isFaded = true;
-    }
-
-    if(_isIconEnabled)
-    {
-        _iconSprite.setPosition(_text.getPosition().x - _iconSprite.getGlobalBounds().width - 3.0F, _text.getPosition().y + 3.5F);
     }
 }
 

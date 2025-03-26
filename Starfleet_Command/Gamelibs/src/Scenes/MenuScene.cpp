@@ -294,9 +294,9 @@ void MenuScene::InitBackgroundShips()
 
     for (int i = 0; i < BACKGROUND_SHIPS; ++i)
     {
-        int rand_x = starshipXPosRNG.GenerateValue();
-        int rand_y = starshipYPosRNG.GenerateValue();
-        int rand_ship = starshipTypeRNG.GenerateValue();
+        int rand_x = starshipXPosRNG.GenerateNumber();
+        int rand_y = starshipYPosRNG.GenerateNumber();
+        int rand_ship = starshipTypeRNG.GenerateNumber();
         std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(static_cast<StarshipFactory::STARSHIP_TYPE>(rand_ship));
         _starship.emplace_back(std::move(newStarship));
         _starship[i]->SetPosition({static_cast<float>(rand_x), static_cast<float>(rand_y)});

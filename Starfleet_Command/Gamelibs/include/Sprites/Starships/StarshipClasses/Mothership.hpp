@@ -40,7 +40,7 @@ public:
     void SetColour(sf::Color &colour) override;
     void SetPosition(sf::Vector2f pos) override;
     void SetRotation(float rot) override;
-    void SetDamageLocation(sf::Vector2<float> location) { _damageLocation = location; }; /// Make this a virtual method in IStarship
+    void SetDamageLocation(sf::Vector2<float> location) { _damageLocation = location; }; /// Make this a virtual method in IStarship?
 
     /// Accessors
     SpriteComponent& GetSpriteComponent() override { return _spriteComponent; }
@@ -68,6 +68,8 @@ public:
     std::vector<int> GetAttackableLanes() override { return _attackableLanes; }
     int GetStarshipIndex() override { return _starshipIndex; }
     sf::Vector2<float> _damageLocation;
+    bool _isDamaged = false;
+    float _damageTimer = 0.0F;
 };
 
 #endif //STARFLEET_COMMAND_MOTHERSHIP_HPP

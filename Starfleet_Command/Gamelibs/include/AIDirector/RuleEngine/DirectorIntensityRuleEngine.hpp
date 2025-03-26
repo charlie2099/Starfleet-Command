@@ -1,10 +1,9 @@
 #ifndef STARFLEET_COMMAND_DIRECTORINTENSITYRULEENGINE_HPP
 #define STARFLEET_COMMAND_DIRECTORINTENSITYRULEENGINE_HPP
-#include "IDirectorIntensityRule.hpp"
+#include "AIDirector/Rules/IntensityRules/IDirectorIntensityRule.hpp"
 #include <memory>
 #include <vector>
 
-// Forward declaration to avoid circular dependency issue
 class AiDirector;
 
 class DirectorIntensityRuleEngine

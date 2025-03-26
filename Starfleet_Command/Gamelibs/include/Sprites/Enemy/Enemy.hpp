@@ -27,7 +27,7 @@ public:
     void Render(sf::RenderWindow& window);
 
     /// Behaviours
-    void CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spacelane);
+    void CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spaceLane);
     void PaintMothership(sf::Color colour);
     void MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset);
 

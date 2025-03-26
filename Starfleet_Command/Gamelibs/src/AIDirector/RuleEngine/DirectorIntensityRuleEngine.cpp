@@ -1,4 +1,4 @@
-#include "AIDirector/DirectorIntensityRuleEngine.hpp"
+#include "AIDirector/RuleEngine/DirectorIntensityRuleEngine.hpp"
 
 DirectorIntensityRuleEngine::DirectorIntensityRuleEngine(std::vector<std::shared_ptr<IDirectorIntensityRule>> &rules)
 : _rules(rules) {}

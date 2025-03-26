@@ -1,4 +1,4 @@
-#include "AIDirector/DirectorPeakFadeState.hpp"
+#include "AIDirector/States/DirectorPeakFadeState.hpp"
 
 DirectorPeakFadeState::DirectorPeakFadeState(AiDirector& director, StateMachine& stateMachine)
         : _aiDirector(director), _stateMachine(stateMachine)
@@ -6,6 +6,8 @@ DirectorPeakFadeState::DirectorPeakFadeState(AiDirector& director, StateMachine&
 
 void DirectorPeakFadeState::OnStateEnter()
 {
+    DirectorEventBus::Publish(DirectorEventBus::DirectorEvent::EnteredPeakFadeState);
+    DirectorEventBus::Publish(DirectorEventBus::DirectorEvent::EnteredNewState);
     std::cout << "PEAK FADE STATE" << std::endl;
 }
 

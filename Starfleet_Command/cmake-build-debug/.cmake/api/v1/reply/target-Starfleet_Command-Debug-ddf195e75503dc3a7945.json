@@ -43,13 +43,13 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 58,
+				"line" : 68,
 				"parent" : 0
 			},
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 57,
+				"line" : 67,
 				"parent" : 0
 			},
 			{
@@ -175,13 +175,13 @@
 			{
 				"command" : 7,
 				"file" : 0,
-				"line" : 52,
+				"line" : 62,
 				"parent" : 0
 			},
 			{
 				"command" : 7,
 				"file" : 0,
-				"line" : 53,
+				"line" : 63,
 				"parent" : 0
 			}
 		]
@@ -265,15 +265,19 @@
 				69,
 				71,
 				73,
-				75,
-				77,
-				79,
+				76,
+				78,
+				81,
 				82,
-				83,
-				85,
-				87,
-				89,
-				91
+				84,
+				86,
+				88,
+				90,
+				93,
+				95,
+				97,
+				99,
+				101
 			]
 		}
 	],
@@ -421,15 +425,19 @@
 				69,
 				71,
 				73,
-				75,
-				77,
-				79,
+				76,
+				78,
+				81,
 				82,
-				83,
-				85,
-				87,
-				89,
-				91
+				84,
+				86,
+				88,
+				90,
+				93,
+				95,
+				97,
+				99,
+				101
 			]
 		},
 		{
@@ -475,15 +483,21 @@
 				70,
 				72,
 				74,
-				76,
-				78,
+				75,
+				77,
+				79,
 				80,
-				81,
-				84,
-				86,
-				88,
-				90,
-				92
+				83,
+				85,
+				87,
+				89,
+				91,
+				92,
+				94,
+				96,
+				98,
+				100,
+				102
 			]
 		}
 	],
@@ -892,45 +906,39 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/AIDirector/DirectorIntensityCalculator.cpp",
+			"path" : "Gamelibs/src/AIDirector/RuleCalculator/DirectorIntensityCalculator.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Gamelibs/include/AIDirector/DirectorIntensityCalculator.hpp",
+			"path" : "Gamelibs/include/AIDirector/RuleCalculator/DirectorIntensityCalculator.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Gamelibs/include/AIDirector/Rules/IntensityRules/IDirectorIntensityRule.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/AIDirector/IDirectorIntensityRule.cpp",
+			"path" : "Gamelibs/src/AIDirector/RuleEngine/DirectorIntensityRuleEngine.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Gamelibs/include/AIDirector/IDirectorIntensityRule.hpp",
+			"path" : "Gamelibs/include/AIDirector/RuleEngine/DirectorIntensityRuleEngine.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/AIDirector/DirectorIntensityRuleEngine.cpp",
+			"path" : "Gamelibs/src/AIDirector/Rules/IntensityRules/EnemyMothershipHealthLowRule.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Gamelibs/include/AIDirector/DirectorIntensityRuleEngine.hpp",
-			"sourceGroupIndex" : 1
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/AIDirector/EnemyMothershipHealthLowRule.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "Gamelibs/include/AIDirector/EnemyMothershipHealthLowRule.hpp",
+			"path" : "Gamelibs/include/AIDirector/Rules/IntensityRules/EnemyMothershipHealthLowRule.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{
@@ -958,45 +966,105 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/AIDirector/DirectorRespiteState.cpp",
+			"path" : "Gamelibs/src/AIDirector/States/DirectorRespiteState.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Gamelibs/include/AIDirector/DirectorRespiteState.hpp",
+			"path" : "Gamelibs/include/AIDirector/States/DirectorRespiteState.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/AIDirector/DirectorBuildUpState.cpp",
+			"path" : "Gamelibs/src/AIDirector/States/DirectorBuildUpState.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Gamelibs/include/AIDirector/DirectorBuildUpState.hpp",
+			"path" : "Gamelibs/include/AIDirector/States/DirectorBuildUpState.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/AIDirector/DirectorPeakState.cpp",
+			"path" : "Gamelibs/src/AIDirector/States/DirectorPeakState.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Gamelibs/include/AIDirector/DirectorPeakState.hpp",
+			"path" : "Gamelibs/include/AIDirector/States/DirectorPeakState.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "Gamelibs/src/AIDirector/DirectorPeakFadeState.cpp",
+			"path" : "Gamelibs/src/AIDirector/States/DirectorPeakFadeState.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Gamelibs/include/AIDirector/DirectorPeakFadeState.hpp",
+			"path" : "Gamelibs/include/AIDirector/States/DirectorPeakFadeState.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Gamelibs/include/AIDirector/Rules/IntensityRules/PlayerMothershipHealthLowRule.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerMothershipHealthLowRule.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Gamelibs/include/AIDirector/Rules/BehaviourRules/IDirectorBehaviourRule.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Gamelibs/src/AIDirector/RuleCalculator/DirectorBehaviourCalculator.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Gamelibs/include/AIDirector/RuleCalculator/DirectorBehaviourCalculator.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Gamelibs/src/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Gamelibs/include/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Gamelibs/include/AIDirector/Rules/BehaviourRules/TestBehaviourRule.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Gamelibs/include/AIDirector/Rules/BehaviourRules/TestBehaviourRule.hpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Gamelibs/include/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStartRule.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Gamelibs/include/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStartRule.hpp",
 			"sourceGroupIndex" : 1
 		}
 	],

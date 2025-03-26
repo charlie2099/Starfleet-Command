@@ -1,11 +1,11 @@
 #ifndef STARFLEET_COMMAND_DIRECTORINTENSITYCALCULATOR_HPP
 #define STARFLEET_COMMAND_DIRECTORINTENSITYCALCULATOR_HPP
-#include "DirectorIntensityRuleEngine.hpp"
-#include "EnemyMothershipHealthLowRule.hpp"
+#include "AIDirector/RuleEngine/DirectorIntensityRuleEngine.hpp"
+#include "AIDirector/Rules/IntensityRules/EnemyMothershipHealthLowRule.hpp"
+#include "AIDirector/Rules/IntensityRules/PlayerMothershipHealthLowRule.hpp"
 #include <memory>
 #include <vector>
 
-// Forward declaration to avoid circular dependency issue
 class AiDirector;
 
 class DirectorIntensityCalculator
