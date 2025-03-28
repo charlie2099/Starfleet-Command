@@ -7,7 +7,7 @@ HeavyFighter::HeavyFighter(int spacelane)
     _healthComponent.SetHealth(300);
     _speed = 80;
     _startSpeed = _speed;
-    _trainingSpeed = 0.4f;
+    _deployTimeSpeed = 3.0F;
     _damage = 20;
     _damageScaleFactor = 0.25f;
     _fireRate = 0.25f;

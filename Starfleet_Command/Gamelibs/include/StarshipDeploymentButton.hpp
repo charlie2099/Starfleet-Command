@@ -24,7 +24,7 @@ public:
 
     std::string GetStarshipName() { return _starshipTemplateToBeDeployed->GetStarshipName(); }
     int GetBuildCost() const { return _cost; }
-    float GetStarshipDeploymentSpeed() { return _starshipTemplateToBeDeployed->GetDeploymentSpeed(); }
+    float GetStarshipDeploymentSpeed() { return _starshipTemplateToBeDeployed->GetDeploymentTime(); }
     StarshipFactory::STARSHIP_TYPE GetStarshipType() { return _starshipType; }
     sf::Vector2<float> GetPos() { return _button->GetPos(); }
     sf::Rect<float> GetBounds() { return _button->GetBounds(); }

@@ -10,6 +10,7 @@
 #include "Sprites/Player/Player.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
 #include "SpaceLane.hpp"
+#include "StarshipDeploymentManager.hpp"
 #include <queue>
 
 class AiDirector
@@ -18,9 +19,9 @@ public:
     //static AiDirector Instance;
 
     AiDirector(Player& player, Enemy& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes);
-    void Update(sf::Time deltaTime);
+    void Update(sf::RenderWindow& window, sf::Time deltaTime);
+    void Render(sf::RenderWindow& window);
 
-    void SpawnEnemy(StarshipFactory::STARSHIP_TYPE starshipType, int spawnLane);
     void QueueEnemy(StarshipFactory::STARSHIP_TYPE starshipType, int spawnLane);
     void IncreasePerceivedIntensity(sf::Time deltaTime);
     void DecreasePerceivedIntensity(sf::Time deltaTime);
@@ -32,17 +33,20 @@ public:
     float GetEnemyMothershipHealth() { return _enemy.GetMothership()->GetHealth(); }
     float GetElapsedGameTime() { return _gameClock.getElapsedTime().asSeconds(); }
 
+    bool IsQueueEmpty() { return _starshipDeploymentManager->IsQueueEmpty(); };
+    bool IsCurrentlyDeployingEnemy() { return _starshipDeploymentManager->IsCurrentlyDeploying(); };
+
 private:
+    void SpawnEnemy();
     std::unique_ptr<DirectorIntensityCalculator> _intensityCalculator;
     std::unique_ptr<DirectorBehaviourCalculator> _behaviourCalculator;
     StateMachine _stateMachine;
     Player& _player;
     Enemy& _enemy;
     std::vector<std::unique_ptr<SpaceLane>>& _spacelanes;
-    //std::pair< std::queue<int>,  std::queue<int>> _enemyStarshipDeploymentQueue;
-    //std::array<std::unique_ptr<IStarship>, StarshipFactory::ENUM_COUNT-2> _starshipTemplateToBeDeployed;
+    std::unique_ptr<StarshipDeploymentManager> _starshipDeploymentManager;
+    std::array<std::unique_ptr<IStarship>, 5> _starshipTemplateToBeDeployed;
     sf::Clock _gameClock;
-    //float _deploymentTimer = 0;
     float _perceivedIntensity = 0;
     const float PEAK_INTENSITY_MAX = 100.0F;
 };

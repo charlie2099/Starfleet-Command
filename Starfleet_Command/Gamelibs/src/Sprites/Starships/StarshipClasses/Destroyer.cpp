@@ -7,7 +7,7 @@ Destroyer::Destroyer(int spacelane)
     _healthComponent.SetHealth(1500);
     _speed = 40;
     _startSpeed = _speed;
-    _trainingSpeed = 0.2f;
+    _deployTimeSpeed = 10.0F;
     _damage = 150;
     _damageScaleFactor = 1.0f;
     _fireRate = 3.0f;

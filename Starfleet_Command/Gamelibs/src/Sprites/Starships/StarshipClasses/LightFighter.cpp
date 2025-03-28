@@ -7,7 +7,7 @@ LightFighter::LightFighter(int spacelane)
     _healthComponent.SetHealth(150);
     _speed = 100;
     _startSpeed = _speed;
-    _trainingSpeed = 0.6f;
+    _deployTimeSpeed = 2.0F;
     _damage = 10;
     _damageScaleFactor = 0.10f;
     _fireRate = 0.5f;

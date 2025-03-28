@@ -9,16 +9,19 @@ class StarshipDeploymentManager
 public:
     StarshipDeploymentManager(int maxQueueSize, sf::Color deploymentBarColour);
     ~StarshipDeploymentManager() = default;
-
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
     void AddStarshipToQueue(StarshipFactory::STARSHIP_TYPE starshipType, int selectedSpacelane);
     void RemoveFirstStarshipInQueue();
 
-    void SetDeploymentBarPos(sf::Vector2<float> pos);
+    void ResetDeploymentBar();
 
-    ProgressBar& GetDeploymentBar() { return _starshipDeploymentBar; }
+    void SetDeploymentBarPos(sf::Vector2<float> pos);
+    void SetDeploymentBarText(const std::string& text);
+    void SetDeploymentTime(float time);
+    void SetDeploymentStatus(bool status);
+
     StarshipFactory::STARSHIP_TYPE GetNextStarshipTypeInQueue() {  return _starshipTypeDeploymentQueue.front(); }
     int GetNextSpacelaneInQueue() { return _spacelaneStarshipDeploymentQueue.front(); }
 
@@ -26,7 +29,7 @@ public:
     bool IsQueueFull() { return _starshipTypeDeploymentQueue.size() >= _maxQueueSize; }
     bool IsQueueEmpty() { return _starshipTypeDeploymentQueue.empty(); }
 
-    //void AddBasicObserver();
+    void AddBasicObserver(const std::pair<ProgressBar::EventID, std::function<void()>>& observer);
 
 private:
     ProgressBar _starshipDeploymentBar;

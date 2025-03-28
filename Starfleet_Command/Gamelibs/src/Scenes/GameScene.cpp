@@ -177,7 +177,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     }
 
     _mothershipStatusDisplay->Update(window, deltaTime);
-    _starshipDeploymentManager->SetDeploymentBarPos({_starshipDeploymentButtons[0]->GetPos().x, _starshipDeploymentButtons[0]->GetPos().y - _starshipDeploymentManager->GetDeploymentBar().GetSize().height * 3.5F});
+    //_starshipDeploymentManager->SetDeploymentBarPos({_starshipDeploymentButtons[0]->GetPos().x, _starshipDeploymentButtons[0]->GetPos().y - 55.0F});
+    _starshipDeploymentManager->SetDeploymentBarPos({_starshipDeploymentButtons[0]->GetPos().x, _starshipDeploymentButtons[0]->GetPos().y - 55.0F});
     _starshipDeploymentManager->Update(window, deltaTime);
     _playerScrapMetalManager->Update(window, deltaTime);
     _enemyScrapMetalManager ->Update(window, deltaTime);
@@ -191,7 +192,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     //UpdateEnemySpawner();
 
-    _aiDirector->Update(deltaTime);
+    _aiDirector->Update(window, deltaTime);
 
 
 
@@ -488,18 +489,6 @@ void GameScene::Render(sf::RenderWindow& window)
     _cursor.Render(window);
 }
 
-void GameScene::RenderMinimapSprites(sf::RenderWindow &window)
-{
-    _backgroundParallax->RenderBackground(window);
-    _minimap->RenderGameplayView(window);
-    _player.Render(window);
-    _enemy.Render(window);
-    for (const auto &lane : _spaceLanes)
-    {
-        lane->Render(window);
-    }
-}
-
 void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
 {
     _backgroundParallax->Render(window);
@@ -519,7 +508,20 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
         deploymentButton->Render(window);
     }
     _musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
+    _aiDirector->Render(window);
     //_nextMusicTrackButton->Render(window);
+}
+
+void GameScene::RenderMinimapSprites(sf::RenderWindow &window)
+{
+    _backgroundParallax->RenderBackground(window);
+    _minimap->RenderGameplayView(window);
+    _player.Render(window);
+    _enemy.Render(window);
+    for (const auto &lane : _spaceLanes)
+    {
+        lane->Render(window);
+    }
 }
 
 void GameScene::UpdateEnemySpawner()
@@ -677,7 +679,7 @@ void GameScene::InitEvents()
 {
     /// Observer to starship deployment bar event
     auto starshipDeploymentBarCallback = std::bind(&GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete, this);
-    _starshipDeploymentManager->GetDeploymentBar().AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentBarCallback});
+    _starshipDeploymentManager->AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentBarCallback});
 
     /// Agnostic observer to enemy starships destroyed event
     auto enemyStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed, this, std::placeholders::_1);
@@ -701,7 +703,7 @@ void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()
     _player.SetStarshipPosition(_player.GetStarships().back(), {starshipXPos, starshipYPos});
 
     _starshipDeploymentManager->RemoveFirstStarshipInQueue();
-    _starshipDeploymentManager->GetDeploymentBar().ResetProgress();
+    _starshipDeploymentManager->ResetDeploymentBar();
 
     if(not _starshipDeploymentManager->IsQueueEmpty())
     {
@@ -734,9 +736,9 @@ void GameScene::StartNextStarshipDeployment()
     if(_starshipDeploymentManager->IsQueueEmpty())
         return;
 
-    _starshipDeploymentManager->GetDeploymentBar().SetProgressText("Deploying " + _starshipDeploymentButtons[static_cast<int>(_starshipDeploymentManager->GetNextStarshipTypeInQueue())]->GetStarshipName() + "...");
-    _starshipDeploymentManager->GetDeploymentBar().SetProgressSpeed(_starshipDeploymentButtons[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipDeploymentSpeed());
-    _starshipDeploymentManager->GetDeploymentBar().SetProgressStatus(true);
+    _starshipDeploymentManager->SetDeploymentBarText("Deploying " + _starshipDeploymentButtons[static_cast<int>(_starshipDeploymentManager->GetNextStarshipTypeInQueue())]->GetStarshipName() + "...");
+    _starshipDeploymentManager->SetDeploymentTime(_starshipDeploymentButtons[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipDeploymentSpeed());
+    _starshipDeploymentManager->SetDeploymentStatus(true);
 }
 
 void GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData)

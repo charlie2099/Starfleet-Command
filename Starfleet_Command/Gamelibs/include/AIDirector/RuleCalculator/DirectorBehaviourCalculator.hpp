@@ -2,7 +2,6 @@
 #define STARFLEET_COMMAND_DIRECTORBEHAVIOURCALCULATOR_HPP
 #include "AIDirector/RuleEngine/DirectorBehaviourRuleEngine.hpp"
 #include "AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStartRule.hpp"
-#include "AIDirector/Rules/BehaviourRules/TestBehaviourRule.hpp"
 #include <memory>
 #include <vector>
 

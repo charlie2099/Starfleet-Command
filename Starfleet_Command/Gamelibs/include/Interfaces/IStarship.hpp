@@ -88,7 +88,7 @@ public:
     virtual float GetDamageScaleFactor() = 0;
     virtual float GetSpeed() = 0;
     float GetStartingSpeed() const { return _startSpeed; }
-    virtual float GetDeploymentSpeed() = 0;
+    virtual float GetDeploymentTime() = 0;
     virtual float GetFireRate() = 0;
     virtual float GetAcceleration() = 0;
     virtual float GetAttackRange() = 0;
@@ -112,7 +112,7 @@ protected:
     float _damageScaleFactor = 1.0F;
     float _speed = 1.0F;
     float _startSpeed = 1.0F;
-    float _trainingSpeed = 0.5f;
+    float _deployTimeSpeed = 3.0F;
     float _fireRate = 1.0F;
     float _acceleration = 0.0F;
     float _attackRange = 400.0F;

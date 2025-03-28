@@ -106,7 +106,7 @@ private:
     std::unique_ptr<ScrapMetalManager> _enemyScrapMetalManager;
 
     /// Music & Sound Effects
-    bool _isMusicOn = true;
+    bool _isMusicOn = false;
     static const int MUSIC_ON_BUTTON = 0;
     static const int MUSIC_OFF_BUTTON = 1;
     sf::Music _gameMusic;

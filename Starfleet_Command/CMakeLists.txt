@@ -53,9 +53,7 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/AIDirector/RuleCalculator/DirectorBehaviourCalculator.hpp
         Gamelibs/src/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.cpp
         Gamelibs/include/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.hpp
-        Gamelibs/include/AIDirector/Rules/BehaviourRules/TestBehaviourRule.cpp
-        Gamelibs/include/AIDirector/Rules/BehaviourRules/TestBehaviourRule.hpp
-        Gamelibs/include/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStartRule.cpp
+        Gamelibs/src/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStartRule.cpp
         Gamelibs/include/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStartRule.hpp
 )
 

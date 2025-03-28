@@ -7,7 +7,7 @@ SupportShip::SupportShip(int spacelane)
     _healthComponent.SetHealth(500);
     _speed = 70;
     _startSpeed = _speed;
-    _trainingSpeed = 0.5f;
+    _deployTimeSpeed = 3.0F;
     _damage = 0;
     _damageScaleFactor = 0.10f;
     _fireRate = 2.0f;

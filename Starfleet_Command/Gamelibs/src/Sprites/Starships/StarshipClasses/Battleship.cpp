@@ -7,7 +7,7 @@ Battleship::Battleship(int spacelane)
     _healthComponent.SetHealth(2500);
     _speed = 30;
     _startSpeed = _speed;
-    _trainingSpeed = 0.3f;
+    _deployTimeSpeed = 5.0F;
     _damage = 75;
     _damageScaleFactor = 0.75f;
     _fireRate = 3.0f;

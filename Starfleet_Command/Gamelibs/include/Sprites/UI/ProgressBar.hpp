@@ -20,10 +20,10 @@ public:
 
     void SetColour(sf::Color colour);
     void SetPosition(sf::Vector2<float> pos);
-    void SetProgressSpeed(float speed);
-    void SetProgressText(const std::string& text);
-    void SetProgressStatus(bool status);
-    void ResetProgress();
+    void SetTimeToCompleteTask(float timeInSeconds);
+    void SetProgressBarText(const std::string& text);
+    void SetProgressBarStatus(bool status);
+    void ResetProgressBar();
 
     using BasicProgressBarEvent = std::pair<EventID, std::function<void()>>;
     void AddBasicObserver(BasicProgressBarEvent observer);
@@ -40,9 +40,10 @@ private:
     sf::Vector2f _innerPosition;
     sf::Vector2f _outerPosition;
     std::multimap<EventID, std::function<void()>> _basicObservers{};
-    float _progressSpeed = 0.2f;
+    float _timeToCompleteTask = 5.0F;
     bool _taskIsProgressing = false;
     bool _taskIsComplete = false;
+    float _elapsedTime = 0.0F;
 };
 
 #endif //STARFLEET_COMMAND_PROGRESSBAR_HPP

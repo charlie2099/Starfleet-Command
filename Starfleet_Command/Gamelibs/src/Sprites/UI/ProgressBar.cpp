@@ -32,23 +32,26 @@ void ProgressBar::Update(sf::RenderWindow& window, sf::Time time)
 {
     if(_taskIsProgressing)
     {
-        if(_insideBarSpriteComponent.GetSprite().getScale().x == 0.0F)
+        if(_elapsedTime == 0.0F)
         {
             InvokeSimpleEvent(EventID::TASK_STARTED);
         }
 
-        if(_insideBarSpriteComponent.GetSprite().getScale().x <= 1.175f)
+        _elapsedTime += time.asSeconds();
+
+        // Calculate progress based on elapsed time and total deployment time
+        float progress = std::min(1.175f, (_elapsedTime / _timeToCompleteTask) * 1.175f);
+
+        _insideBarSpriteComponent.SetPos({_innerPosition.x, _innerPosition.y});
+        _insideBarSpriteComponent.GetSprite().setScale(progress, 0.125f);
+
+        if(_elapsedTime >= _timeToCompleteTask)
         {
-            _insideBarSpriteComponent.SetPos({_innerPosition.x, _innerPosition.y});
-            auto scale_x = _insideBarSpriteComponent.GetSprite().getScale().x + _progressSpeed * time.asSeconds();
-            auto scale_y = 0.125f;
-            _insideBarSpriteComponent.GetSprite().setScale(scale_x, scale_y);
-        }
-        else
-        {
+            _insideBarSpriteComponent.GetSprite().setScale(1.175F, 0.125F);
             _insideBarSpriteComponent.GetSprite().setScale(0.0f, 0.125f);
             _taskIsComplete = true;
             _taskIsProgressing = false;
+            _elapsedTime = 0.0F;
             InvokeSimpleEvent(EventID::TASK_COMPLETED);
         }
     }
@@ -82,22 +85,22 @@ void ProgressBar::SetPosition(sf::Vector2<float> pos)
     _outerPosition = _outsideBarSpriteComponent.GetPos();
 }
 
-void ProgressBar::SetProgressSpeed(float speed)
+void ProgressBar::SetTimeToCompleteTask(float timeInSeconds)
 {
-    _progressSpeed = speed;
+    _timeToCompleteTask = timeInSeconds;
 }
 
-void ProgressBar::SetProgressText(const std::string& text)
+void ProgressBar::SetProgressBarText(const std::string& text)
 {
     _text.setString(text);
 }
 
-void ProgressBar::SetProgressStatus(bool status)
+void ProgressBar::SetProgressBarStatus(bool status)
 {
     _taskIsProgressing = status;
 }
 
-void ProgressBar::ResetProgress()
+void ProgressBar::ResetProgressBar()
 {
     _taskIsComplete = false;
     _taskIsProgressing = false;

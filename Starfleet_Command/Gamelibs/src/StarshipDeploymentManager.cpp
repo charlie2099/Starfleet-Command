@@ -76,7 +76,32 @@ void StarshipDeploymentManager::RemoveFirstStarshipInQueue()
     _starshipQueueBoxIconSprites.erase(_starshipQueueBoxIconSprites.begin());
 }
 
+void StarshipDeploymentManager::ResetDeploymentBar()
+{
+    _starshipDeploymentBar.ResetProgressBar();
+}
+
 void StarshipDeploymentManager::SetDeploymentBarPos(sf::Vector2<float> pos)
 {
     _deploymentBarPosition = pos;
+}
+
+void StarshipDeploymentManager::SetDeploymentBarText(const std::string &text)
+{
+    _starshipDeploymentBar.SetProgressBarText(text);
+}
+
+void StarshipDeploymentManager::SetDeploymentTime(float time)
+{
+    _starshipDeploymentBar.SetTimeToCompleteTask(time);
+}
+
+void StarshipDeploymentManager::SetDeploymentStatus(bool status)
+{
+    _starshipDeploymentBar.SetProgressBarStatus(status);
+}
+
+void StarshipDeploymentManager::AddBasicObserver(const std::pair<ProgressBar::EventID, std::function<void()>>& observer)
+{
+    _starshipDeploymentBar.AddBasicObserver(observer);
 }

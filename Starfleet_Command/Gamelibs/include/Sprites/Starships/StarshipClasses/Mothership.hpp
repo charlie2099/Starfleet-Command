@@ -59,7 +59,7 @@ public:
     float GetDamage() override { return _damage; }
     float GetDamageScaleFactor() override { return _damageScaleFactor; }
     float GetSpeed() override { return _speed; }
-    float GetDeploymentSpeed() override { return _trainingSpeed; }
+    float GetDeploymentTime() override { return _deployTimeSpeed; }
     float GetFireRate() override { return _fireRate; }
     float GetAcceleration() override { return _acceleration; }
     float GetAttackRange() override { return _attackRange; }

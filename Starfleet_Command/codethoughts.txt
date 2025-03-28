@@ -42,6 +42,13 @@ When to trigger behaviour calculator events
 - Based on intensity?
 
 
+What do I want?
+- Start of the game, spawn some weaker starships. Do this for a bit? or just once? While intensity below a certain threshold?
+- If the player starts doing really well, spawn some stronger units, utilise different strategies
+- If the player starts really struggled, spawn some weaker units or halt on spawning any more units until intensity reaches a certain threshold?
+
+
+
 ============================================
 ==============USEFUL INFORMATION===============
 ============================================
