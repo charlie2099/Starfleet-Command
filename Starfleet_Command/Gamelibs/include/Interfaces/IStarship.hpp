@@ -47,19 +47,19 @@ public:
     virtual void SetRotation(float rot) = 0;
     void SetProjectileColour(sf::Color colour)
     {
-        if(colour == sf::Color::Cyan || colour == sf::Color::Blue || colour == _predefinedColours.LIGHTBLUE || colour == _predefinedColours.BLUEVIOLET)
+        if(colour == sf::Color::Cyan or colour == sf::Color::Blue or colour == _predefinedColours.LIGHTBLUE or colour == _predefinedColours.BLUEVIOLET)
         {
             _projectileColour = Projectile::BLUE;
         }
-        else if(colour == sf::Color::Green || colour == _predefinedColours.LIGHTGREEN)
+        else if(colour == sf::Color::Green or colour == _predefinedColours.LIGHTGREEN)
         {
             _projectileColour = Projectile::GREEN;
         }
-        else if(colour == sf::Color::Red || colour == _predefinedColours.LIGHTRED)
+        else if(colour == sf::Color::Red or colour == _predefinedColours.LIGHTRED)
         {
             _projectileColour = Projectile::RED;
         }
-        else if(colour == _predefinedColours.ORANGE || colour == _predefinedColours.LIGHTORANGE)
+        else if(colour == _predefinedColours.ORANGE or colour == _predefinedColours.LIGHTORANGE)
         {
             _projectileColour = Projectile::ORANGE;
         }

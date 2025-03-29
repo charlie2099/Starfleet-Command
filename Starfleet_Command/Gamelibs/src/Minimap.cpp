@@ -75,7 +75,7 @@ void Minimap::HandleMinimapZooming(const sf::RenderWindow &window, const sf::Eve
 {
     float zoomFactor = (event.mouseWheelScroll.delta > 0) ? 0.9f : 1.1f;
     float newZoomLevel = _currentZoomLevel * zoomFactor;
-    bool isZoomLevelWithinConstraints = newZoomLevel >= 0.15f && newZoomLevel <= 1.0f; // MAX ZOOM | MIN ZOOM
+    bool isZoomLevelWithinConstraints = newZoomLevel >= 0.15f and newZoomLevel <= 1.0f; // MAX ZOOM | MIN ZOOM
 
     if (isZoomLevelWithinConstraints)
     {
@@ -91,18 +91,18 @@ void Minimap::HandleMinimapZooming(const sf::RenderWindow &window, const sf::Eve
 
 void Minimap::HandleMinimapPanning(const sf::RenderWindow &window, const sf::Event &event, const sf::Vector2i &mouse_pos)
 {
-    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
     {
         _canViewPan = true;
         _initialMousePosition = mouse_pos;
     }
 
-    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+    if (event.type == sf::Event::MouseButtonReleased and event.mouseButton.button == sf::Mouse::Left)
     {
         _canViewPan = false;
     }
 
-    if (event.type == sf::Event::MouseMoved && _canViewPan)
+    if (event.type == sf::Event::MouseMoved and _canViewPan)
     {
         UpdateMinimapPanPosition(window);
     }

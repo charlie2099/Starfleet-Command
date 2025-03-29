@@ -9,20 +9,21 @@ class HealthBar
 {
 public:
     /// General
-    explicit HealthBar(HealthComponent& healthComponent);
+    HealthBar(HealthComponent& healthComponent, bool isRotated);
     ~HealthBar() = default;
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
     /// Modifiers
     void SetPos(sf::Vector2f pos);
+    void SetRot(float rot);
     void SetScale(float xScale, float yScale);
     void SetMaxHealth(float health);
 
     /// Accessors
-    SpriteComponent& GetSpriteComponent() { return _healthBar; };
-    float GetHealth() const { return _health; };
-    sf::Vector2f GetPos() const { return _position; };
+    SpriteComponent& GetSpriteComponent() { return _healthBar; }
+    float GetHealth() const { return _health; }
+    sf::Vector2f GetPos() const { return _position; }
 
 private:
     void UpdateHealth(std::any eventData);
@@ -31,6 +32,7 @@ private:
     float _maxHealth = 100;
     float _health = _maxHealth;
     sf::Vector2f _position;
+    float _rotation{};
     sf::Vector2f  _scale;
 };
 

@@ -81,6 +81,10 @@ private:
     const float VIEW_SCROLL_SPEED = 300.0F;
     sf::View _gameplayView{};
     std::unique_ptr<Minimap> _minimap;
+    sf::RectangleShape boundaryEdgeHighlighterBox;
+    const float MOUSE_WINDOW_EDGE_OFFSET_PCT = 0.10F; // 10% of window size
+    const float MOUSE_WINDOW_TOP_OFFSET_PCT = 0.20F;
+    const float MOUSE_WINDOW_BOTTOM_OFFSET_PCT = 0.21F;
 
     /// Space Lanes
     const float LANE_ROW_SPACING = 35.0F;

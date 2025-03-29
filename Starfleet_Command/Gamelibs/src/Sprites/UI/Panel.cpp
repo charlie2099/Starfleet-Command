@@ -15,11 +15,11 @@ void Panel::EventHandler(sf::RenderWindow &window, sf::Event &event)
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
     auto translated_pos = window.mapPixelToCoords(mouse_pos); // Mouse _innerPosition translated into world coordinates
 
-    if (event.type == sf::Event::MouseButtonPressed && _isHoveredOver/* && event.mouseButton.button == sf::Mouse::Left*/)
+    if (event.type == sf::Event::MouseButtonPressed and _isHoveredOver/* and event.mouseButton.button == sf::Mouse::Left*/)
     {
         _isClicked = true;
     }
-    else if (event.type == sf::Event::MouseButtonReleased/* && event.mouseButton.button == sf::Mouse::Left*/)
+    else if (event.type == sf::Event::MouseButtonReleased/* and event.mouseButton.button == sf::Mouse::Left*/)
     {
         _isClicked = false;
     }

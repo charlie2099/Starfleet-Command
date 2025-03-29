@@ -14,7 +14,6 @@ bool GameScene::Init()
     InitPlayerMothership();
     InitSpaceLanes();
     InitEnemyMothership();
-    _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spaceLanes);
 
     auto& playerMothership = _player.GetMothership();
     auto& enemyMothership = _enemy.GetMothership();
@@ -23,6 +22,8 @@ bool GameScene::Init()
     _enemyScrapMetalManager = std::make_unique<ScrapMetalManager>(_predefinedColours.GRAY,enemyMothership->GetColour(), STARTING_SCRAP_METAL);
 
     InitGameplayView();
+
+    _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spaceLanes, _gameplayView);
 
     _mothershipStatusDisplay = std::make_unique<MothershipStatusDisplay>(playerMothership, enemyMothership, _gameplayView);
 
@@ -81,7 +82,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
-        if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && _starshipDeploymentButtons[i]->IsPlacingStarship())
+        if (event.type == sf::Event::MouseButtonReleased and event.mouseButton.button == sf::Mouse::Left and _starshipDeploymentButtons[i]->IsPlacingStarship())
         {
             for (int j = 0; j < _spaceLanes.size(); ++j)
             {
@@ -129,7 +130,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     if(_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->IsCursorHoveredOver())
     {
-        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
         {
             if (_isMusicOn)
             {
@@ -145,7 +146,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     /*if(_nextMusicTrackButton->IsCursorHoveredOver())
     {
-        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
         {
             if(_isMusicOn)
             {
@@ -158,14 +159,16 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     auto mousePos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
+
     UpdateGameplayViewMovement(window, deltaTime, mousePos);
+
+    _mothershipStatusDisplay->Update(window, deltaTime);
 
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
-        auto column_spacing = 10.0F;
-        //auto xPos = _gameplayView.getCenter().x - _starshipDeploymentButtons[0]->GetBounds().width / 2.0F - Constants::WINDOW_WIDTH / 8.0F + (i * (_starshipDeploymentButtons[0]->GetBounds().width + column_spacing));
-        auto xPos = _gameplayView.getCenter().x - (_starshipDeploymentButtons[i]->GetBounds().width/2.0F * NUM_OF_BUTTONS + (column_spacing/2.0F * NUM_OF_BUTTONS))  + (i * (_starshipDeploymentButtons[0]->GetBounds().width + column_spacing));
-        auto yPos = _gameplayView.getCenter().y + Constants::WINDOW_HEIGHT * 0.4F;
+        auto column_spacing = 5.0F;
+        auto xPos = _mothershipStatusDisplay->GetPlayerMothershipTextPos().x + (i * (_starshipDeploymentButtons[0]->GetBounds().width + column_spacing));
+        auto yPos = _mothershipStatusDisplay->GetPlayerMothershipTextPos().y + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().height*3.75F;
         _starshipDeploymentButtons[i]->SetPos({xPos, yPos});
         _starshipDeploymentButtons[i]->SetAffordable(_playerScrapMetalManager->GetCurrentScrapMetalAmount() >= _starshipDeploymentButtons[i]->GetBuildCost()); // NOTE: Unsure about this
         _starshipDeploymentButtons[i]->Update(window, deltaTime);
@@ -176,14 +179,15 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
     }
 
-    _mothershipStatusDisplay->Update(window, deltaTime);
     //_starshipDeploymentManager->SetDeploymentBarPos({_starshipDeploymentButtons[0]->GetPos().x, _starshipDeploymentButtons[0]->GetPos().y - 55.0F});
-    _starshipDeploymentManager->SetDeploymentBarPos({_starshipDeploymentButtons[0]->GetPos().x, _starshipDeploymentButtons[0]->GetPos().y - 55.0F});
+    _starshipDeploymentManager->SetDeploymentBarPos({_starshipDeploymentButtons[0]->GetPos().x, _starshipDeploymentButtons[0]->GetPos().y + 45.0F});
     _starshipDeploymentManager->Update(window, deltaTime);
     _playerScrapMetalManager->Update(window, deltaTime);
     _enemyScrapMetalManager ->Update(window, deltaTime);
-    _playerScrapMetalManager->SetTextPosition(_mothershipStatusDisplay->GetPlayerMothershipTextPos().x + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().width / 2.0F - _playerScrapMetalManager->GetTextSize().width / 2.0F, _mothershipStatusDisplay->GetPlayerMothershipTextPos().y + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().height + 10.0F);
-    _enemyScrapMetalManager ->SetTextPosition(_mothershipStatusDisplay->GetEnemyMothershipTextPos().x + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().width / 2.0F - _enemyScrapMetalManager->GetTextSize().width / 2.0F, _mothershipStatusDisplay->GetEnemyMothershipTextPos().y + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().height + 10.0F);
+    _playerScrapMetalManager->SetTextPosition(_mothershipStatusDisplay->GetPlayerMothershipTextPos().x, _mothershipStatusDisplay->GetPlayerMothershipTextPos().y + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().height + 5.0F);
+    _enemyScrapMetalManager ->SetTextPosition(_mothershipStatusDisplay->GetEnemyMothershipTextPos().x + 15.0F, _mothershipStatusDisplay->GetEnemyMothershipTextPos().y + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().height + 5.0F);
+    //_enemyScrapMetalManager ->SetTextPosition(_mothershipStatusDisplay->GetEnemyMothershipTextPos().x + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().width / 2.0F - _enemyScrapMetalManager->GetTextSize().width / 2.0F, _mothershipStatusDisplay->GetEnemyMothershipTextPos().y + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().height + 10.0F);
+
     _minimap->Update(window, deltaTime);
     _cursor.Update(window, deltaTime);
     _cursor.SetCursorPos(window, _gameplayView);
@@ -191,7 +195,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _enemy.Update(window, deltaTime);
 
     //UpdateEnemySpawner();
-
     _aiDirector->Update(window, deltaTime);
 
 
@@ -263,7 +266,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             auto &friendlyStarship = _enemy.GetStarships()[j];
             if (enemyStarship != friendlyStarship)
             {
-                if (enemyStarship->IsInSameLaneAs(friendlyStarship) &&
+                if (enemyStarship->IsInSameLaneAs(friendlyStarship) and
                     enemyStarship->IsFriendlyStarshipAhead(friendlyStarship))
                 {
                     enemyStarship->SetSpeed(friendlyStarship->GetSpeed());
@@ -281,12 +284,12 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         for(const auto &playerStarship : _player.GetStarships())
         {
             /// Enemy  starship enemy engagement
-            if(enemyStarship->IsEnemyInRange(playerStarship) &&
+            if(enemyStarship->IsEnemyInRange(playerStarship) and
                 enemyStarship->CanEngageWith(playerStarship))
             {
                 enemyStarship->ShootAt(playerStarship->GetPos());
 
-                if(enemyStarship->IsInSameLaneAs(playerStarship) &&
+                if(enemyStarship->IsInSameLaneAs(playerStarship) and
                    enemyStarship->IsEnemyStarshipAhead(playerStarship))
                 {
                     enemyStarship->SetSpeed(0);
@@ -315,7 +318,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& friendlyStarship = _enemy.GetStarships()[j];
                 if(enemyStarship != friendlyStarship)
                 {
-                    if(supportShip->IsInSameLaneAs(friendlyStarship) &&
+                    if(supportShip->IsInSameLaneAs(friendlyStarship) and
                             supportShip->IsFriendlyStarshipAhead(friendlyStarship))
                     {
                         if(friendlyStarship->GetHealth() >= friendlyStarship->GetMaxHealth())
@@ -357,7 +360,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             auto &friendlyStarship = _player.GetStarships()[j];
             if (_player.GetStarships()[i] != friendlyStarship)
             {
-                if (playerStarship->IsInSameLaneAs(friendlyStarship) &&
+                if (playerStarship->IsInSameLaneAs(friendlyStarship) and
                     playerStarship->IsFriendlyStarshipAhead(friendlyStarship))
                 {
                     playerStarship->SetSpeed(friendlyStarship->GetSpeed());
@@ -375,12 +378,12 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         for(const auto &enemyStarship : _enemy.GetStarships())
         {
             /// Player starship enemy engagement
-            if(playerStarship->IsEnemyInRange(enemyStarship) &&
+            if(playerStarship->IsEnemyInRange(enemyStarship) and
                playerStarship->CanEngageWith(enemyStarship))
             {
                 playerStarship->ShootAt(enemyStarship->GetPos());
 
-                if(playerStarship->IsInSameLaneAs(enemyStarship) &&
+                if(playerStarship->IsInSameLaneAs(enemyStarship) and
                     playerStarship->IsEnemyStarshipAhead(enemyStarship))
                 {
                     playerStarship->SetSpeed(0);
@@ -409,7 +412,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& friendlyStarship = _player.GetStarships()[j];
                 if(_player.GetStarships()[i] != friendlyStarship)
                 {
-                    if(supportShip->IsInSameLaneAs(friendlyStarship) &&
+                    if(supportShip->IsInSameLaneAs(friendlyStarship) and
                         supportShip->IsFriendlyStarshipAhead(friendlyStarship))
                     {
                         if(friendlyStarship->GetHealth() >= friendlyStarship->GetMaxHealth())
@@ -509,6 +512,7 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
     }
     _musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
     _aiDirector->Render(window);
+    window.draw(boundaryEdgeHighlighterBox);
     //_nextMusicTrackButton->Render(window);
 }
 
@@ -554,21 +558,50 @@ void GameScene::UpdateEnemySpawner()
 
 void GameScene::UpdateGameplayViewMovement(const sf::RenderWindow &window, const sf::Time &deltaTime, const sf::Vector2i &mousePos)
 {
-    // Thresholds for detecting mouse proximity to window borders
-    const float EDGE_OFFSET = 200.0F;
-    auto mouseProximityToLeftWindowEdge = EDGE_OFFSET;
-    auto mouseProximityToRightWindowEdge = (float)window.getSize().x - EDGE_OFFSET;
+    /*for (int i = 0; i < _starshipDeploymentButtons.size(); ++i)
+    {
+        if(_starshipDeploymentButtons[i]->IsPlacingStarship())
+        {
+            return;
+        }
+    }*/
+
+    float windowWidth = static_cast<float>(window.getSize().x);
+    float windowHeight = static_cast<float>(window.getSize().y);
+
+    // Calculate edge offsets based on window size
+    float edgeOffset = windowWidth * MOUSE_WINDOW_EDGE_OFFSET_PCT;
+    float topOffset = windowHeight * MOUSE_WINDOW_TOP_OFFSET_PCT;
+    float bottomOffset = windowHeight * MOUSE_WINDOW_BOTTOM_OFFSET_PCT;
+
+    // Calculate the view-to-window ratios
+    float viewToWindowRatioX = _gameplayView.getSize().x / windowWidth;
+    float viewToWindowRatioY = _gameplayView.getSize().y / windowHeight;
+
+    // Convert to view coordinates
+    float edgeOffsetInViewCoords = edgeOffset * viewToWindowRatioX;
+    float topOffsetInViewCoords = topOffset * viewToWindowRatioY;
+    float bottomOffsetInViewCoords = bottomOffset * viewToWindowRatioY;
+
+    // Set the highlighter box size in view coordinates
+    boundaryEdgeHighlighterBox.setSize({edgeOffsetInViewCoords,
+                                        _gameplayView.getSize().y - topOffsetInViewCoords - bottomOffsetInViewCoords});
+
+    // Thresholds for detecting mouse proximity to window borders (in window coordinates)
+    float mouseProximityToLeftWindowEdge = edgeOffset;
+    float mouseProximityToRightWindowEdge = windowWidth - edgeOffset;
 
     // Current boundaries of the view in world coordinates
-    auto viewportLeftBoundary = _gameplayView.getCenter().x - _gameplayView.getSize().x / 2.0F;
-    auto viewportRightBoundary = _gameplayView.getCenter().x + _gameplayView.getSize().x / 2.0F;
+    float viewportLeftBoundary = _gameplayView.getCenter().x - _gameplayView.getSize().x / 2.0F;
+    float viewportRightBoundary = _gameplayView.getCenter().x + _gameplayView.getSize().x / 2.0F;
 
     // Viewport movement conditions
-    bool isMouseNearLeftEdge = (float)mousePos.x <= mouseProximityToLeftWindowEdge && mousePos.x > 0;
-    bool isMouseNearRightEdge = (float)mousePos.x >= mouseProximityToRightWindowEdge && mousePos.x < window.getSize().x;
+    bool isMouseNearLeftEdge = static_cast<float>(mousePos.x) <= mouseProximityToLeftWindowEdge and mousePos.x > 0;
+    bool isMouseNearRightEdge = static_cast<float>(mousePos.x) >= mouseProximityToRightWindowEdge and mousePos.x < windowWidth;
     bool isViewportLeftEdgeWithinMothershipFocus = viewportLeftBoundary > 0;
     bool isViewportRightEdgeWithinRightSideOfEnemyMothership = viewportRightBoundary < _enemy.GetMothership()->GetPos().x + 60.0F;
-    bool isMouseYposWithinWindowBounds = mousePos.y >= 0 and mousePos.y <= window.getSize().y;
+    bool isMouseYposWithinWindowBounds = static_cast<float>(mousePos.y) >= topOffset and
+                                         static_cast<float>(mousePos.y) <= windowHeight - bottomOffset;
 
     if(viewportLeftBoundary >= 0 and _scrollViewLeft)
     {
@@ -581,17 +614,21 @@ void GameScene::UpdateGameplayViewMovement(const sf::RenderWindow &window, const
 
     if(isMouseNearLeftEdge and isViewportLeftEdgeWithinMothershipFocus and isMouseYposWithinWindowBounds)
     {
+        boundaryEdgeHighlighterBox.setPosition({viewportLeftBoundary,
+                                                _gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
+        boundaryEdgeHighlighterBox.setFillColor({100, 100, 100, 25});
         _gameplayView.move(-VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
     }
     else if(isMouseNearRightEdge and isViewportRightEdgeWithinRightSideOfEnemyMothership and isMouseYposWithinWindowBounds)
     {
+        boundaryEdgeHighlighterBox.setPosition({viewportRightBoundary - boundaryEdgeHighlighterBox.getSize().x,
+                                                _gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
+        boundaryEdgeHighlighterBox.setFillColor({100, 100, 100, 25});
         _gameplayView.move(VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
     }
-
-    // Set gameplay view to focus on the player mothership if the mothership passes a set distance from the left view boundary
-    if(viewportLeftBoundary < _player.GetMothership()->GetPos().x - _player.GetMothership()->GetSpriteComponent().GetSprite().getGlobalBounds().width)
+    else
     {
-        _gameplayView.move(0, 0);
+        boundaryEdgeHighlighterBox.setFillColor(sf::Color::Transparent);
     }
 }
 
@@ -713,19 +750,19 @@ void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()
 
 void GameScene::HandleViewScrollingKeyboardInput(const sf::Event &event)
 {
-    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
+    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::A)
     {
         _scrollViewLeft = true;
     }
-    else if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::A)
+    else if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::A)
     {
         _scrollViewLeft = false;
     }
-    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::D)
+    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::D)
     {
         _scrollViewRight = true;
     }
-    else  if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::D)
+    else  if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::D)
     {
         _scrollViewRight = false;
     }

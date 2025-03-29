@@ -35,7 +35,7 @@ void Game::ProcessEvents(sf::Event& event)
     {
         scene_manager->EventHandler(window, event);
 
-        if(event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed &&
+        if(event.type == sf::Event::Closed or event.type == sf::Event::KeyPressed and
         event.key.code == sf::Keyboard::Escape)
         {
             window.close();

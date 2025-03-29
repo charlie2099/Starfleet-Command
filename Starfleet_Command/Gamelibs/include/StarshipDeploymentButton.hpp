@@ -23,7 +23,7 @@ public:
     void SetAffordable(bool affordable) { _isAffordable = affordable; }
 
     std::string GetStarshipName() { return _starshipTemplateToBeDeployed->GetStarshipName(); }
-    int GetBuildCost() const { return _cost; }
+    int GetBuildCost() const { return _starshipTemplateToBeDeployed->GetBuildCost(); }
     float GetStarshipDeploymentSpeed() { return _starshipTemplateToBeDeployed->GetDeploymentTime(); }
     StarshipFactory::STARSHIP_TYPE GetStarshipType() { return _starshipType; }
     sf::Vector2<float> GetPos() { return _button->GetPos(); }
@@ -34,8 +34,6 @@ public:
 private:
     std::unique_ptr<Button> _button;
     sf::Text _nameText;
-    sf::Text _costText;
-    int _cost;
     sf::Vector2<float> _position;
     std::unique_ptr<IStarship> _starshipTemplateToBeDeployed;
     SpriteComponent _previewStarshipSprite;

@@ -9,7 +9,7 @@ ScrapMetalManager::ScrapMetalManager(sf::Color scrapTextColour, sf::Color popupT
     _scrapMetalText.setFillColor(scrapTextColour);
     _scrapMetalText.setOutlineColor(sf::Color::Black);
     _scrapMetalText.setOutlineThickness(1);
-    _scrapMetalText.setFont(Chilli::CustomFonts::GetRegularFont());
+    _scrapMetalText.setFont(Chilli::CustomFonts::GetBoldFont());
     _scrapMetalText.setCharacterSize(11);
 }
 

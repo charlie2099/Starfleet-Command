@@ -4,6 +4,8 @@ StarshipDeploymentManager::StarshipDeploymentManager(int maxQueueSize, sf::Color
 {
     _maxQueueSize = maxQueueSize;
     _starshipDeploymentBar.SetColour(deploymentBarColour);
+    _starshipDeploymentBar.SetProgressBarText("Awaiting orders");
+    _starshipDeploymentBar.SetProgressBarWaitingText("Awaiting orders");
     _starshipQueueBoxTexture.loadFromFile("Resources/Textures/starfleet_selection_crosshairs.png");
 
     for (int i = 0; i < _maxQueueSize; ++i)
@@ -45,8 +47,8 @@ void StarshipDeploymentManager::Render(sf::RenderWindow &window)
 {
     _starshipDeploymentBar.Render(window);
 
-    if(not _starshipDeploymentBar.InProgress())
-        return;
+    /*if(not _starshipDeploymentBar.InProgress())
+        return;*/
 
     for (int i = 0; i < _maxQueueSize; ++i)
     {

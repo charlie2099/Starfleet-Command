@@ -23,7 +23,7 @@ void PopupText::Update(sf::RenderWindow& window, sf::Time deltaTime)
     float moveSpeed = 25.0f;
     _text.setPosition(_text.getPosition().x, _text.getPosition().y - moveSpeed * deltaTime.asSeconds());
 
-    if(_color.a > 0 /*&& _timePassed > 3*/)
+    if(_color.a > 0 /*and _timePassed > 3*/)
     {
         float disappearSpeed = 10;
         _text.setFillColor(sf::Color(_color.r, _color.g, _color.b, _color.a - disappearSpeed * deltaTime.asSeconds()));

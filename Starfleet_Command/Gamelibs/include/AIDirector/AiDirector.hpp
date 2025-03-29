@@ -18,7 +18,7 @@ class AiDirector
 public:
     //static AiDirector Instance;
 
-    AiDirector(Player& player, Enemy& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes);
+    AiDirector(Player& player, Enemy& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes, sf::View &displayView);
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
@@ -49,6 +49,7 @@ private:
     sf::Clock _gameClock;
     float _perceivedIntensity = 0;
     const float PEAK_INTENSITY_MAX = 100.0F;
+    sf::View& _displayView;
 };
 
 #endif //STARFLEET_COMMAND_AIDIRECTOR_HPP

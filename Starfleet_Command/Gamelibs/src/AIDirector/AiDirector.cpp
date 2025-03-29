@@ -1,7 +1,7 @@
 #include "AIDirector/AiDirector.hpp"
 
-AiDirector::AiDirector(Player& player, Enemy& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes)
-: _player(player), _enemy(enemy), _spacelanes(spacelanes), _intensityCalculator(std::make_unique<DirectorIntensityCalculator>()), _behaviourCalculator(std::make_unique<DirectorBehaviourCalculator>())
+AiDirector::AiDirector(Player& player, Enemy& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes, sf::View &displayView)
+: _player(player), _enemy(enemy), _spacelanes(spacelanes), _displayView(displayView), _intensityCalculator(std::make_unique<DirectorIntensityCalculator>()), _behaviourCalculator(std::make_unique<DirectorBehaviourCalculator>())
 {
     std::unordered_map<std::type_index, std::shared_ptr<IState>> cachedStates =
     {
@@ -13,14 +13,14 @@ AiDirector::AiDirector(Player& player, Enemy& enemy, std::vector<std::unique_ptr
     _stateMachine.SetStates(cachedStates);
     _stateMachine.ChangeState(typeid(DirectorBuildUpState));
 
-    // TODO: Subscribe to StateMachine OnStateChanged event and call behaviourCalculator.ApplyBehaviourOutput()
+    // TODO: Subscribe to StateMachine OnStateChanged event and call behaviourCalculator.ApplyBehaviourOutput()?
 
     DirectorEventBus::Subscribe(DirectorEventBus::DirectorEvent::EnteredNewState, [this]() { PerformBehaviour(); });
 
     _starshipDeploymentManager = std::make_unique<StarshipDeploymentManager>(5/*STARSHIP_MAX_QUEUE_SIZE*/, _enemy.GetMothership()->GetColour());
 
     /// Observer to starship deployment bar event
-    auto starshipDeploymentBarCallback = std::bind(&AiDirector::SpawnEnemy, this);
+    auto starshipDeploymentBarCallback = [this] { SpawnEnemy(); };
     _starshipDeploymentManager->AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentBarCallback});
 
     for (int i = 0; i < _starshipTemplateToBeDeployed.size(); ++i)
@@ -33,8 +33,13 @@ void AiDirector::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     _stateMachine.Update(deltaTime);
 
-    _starshipDeploymentManager->SetDeploymentBarPos({window.getView().getCenter().x + 250.0F, window.getView().getCenter().y + 225.0F});
+    _starshipDeploymentManager->SetDeploymentBarPos({_displayView.getCenter().x + 272.0F, _displayView.getCenter().y + 312.5F}); // TODO: Use a setter method to set this relative to the enemy mothership health bar and player deployment bar position
     _starshipDeploymentManager->Update(window, deltaTime);
+}
+
+void AiDirector::Render(sf::RenderWindow &window)
+{
+    _starshipDeploymentManager->Render(window);
 }
 
 void AiDirector::SpawnEnemy()
@@ -100,7 +105,3 @@ void AiDirector::PerformBehaviour()
     _behaviourCalculator->ApplyBehaviourOutput(*this);
 }
 
-void AiDirector::Render(sf::RenderWindow &window)
-{
-    _starshipDeploymentManager->Render(window);
-}

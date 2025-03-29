@@ -9,11 +9,13 @@ ProgressBar::ProgressBar()
     _outsideBarSpriteComponent.SetPos({25, 25});
     _outerPosition = _outsideBarSpriteComponent.GetPos();
 
-    _text.setString("Task In Progress...");
+    _text.setString("");
     _text.setFont(Chilli::CustomFonts::GetBoldFont());
     _text.setCharacterSize(12);
     _text.setPosition(_outsideBarSpriteComponent.GetPos().x + 6, _outsideBarSpriteComponent.GetPos().y + _outsideBarSpriteComponent.GetSprite().getGlobalBounds().height + 5);
     _text.setOutlineColor(sf::Color::Black);
+
+    _waitingForNextTaskText.setString("Waiting for next task");
 
     _insideBarSpriteComponent.LoadSprite("Resources/Textures/panel_image2.png"); // TODO: Replace with sf::RectangleShape
     _insideBarSpriteComponent.GetSprite().setScale(1.175f, 0.125f);
@@ -52,6 +54,7 @@ void ProgressBar::Update(sf::RenderWindow& window, sf::Time time)
             _taskIsComplete = true;
             _taskIsProgressing = false;
             _elapsedTime = 0.0F;
+            _text.setString(_waitingForNextTaskText.getString());
             InvokeSimpleEvent(EventID::TASK_COMPLETED);
         }
     }
@@ -59,11 +62,11 @@ void ProgressBar::Update(sf::RenderWindow& window, sf::Time time)
 
 void ProgressBar::Render(sf::RenderWindow &window)
 {
+    window.draw(_outsideBarSpriteComponent.GetSprite()); // QUESTION: Better with or without outer bar?
+    window.draw(_insideBarSpriteComponent.GetSprite());
+    window.draw(_text);
     if(_taskIsProgressing)
     {
-        window.draw(_outsideBarSpriteComponent.GetSprite()); // QUESTION: Better with or without outer bar?
-        window.draw(_insideBarSpriteComponent.GetSprite());
-        window.draw(_text);
     }
 }
 
@@ -93,6 +96,11 @@ void ProgressBar::SetTimeToCompleteTask(float timeInSeconds)
 void ProgressBar::SetProgressBarText(const std::string& text)
 {
     _text.setString(text);
+}
+
+void ProgressBar::SetProgressBarWaitingText(const std::string &text)
+{
+    _waitingForNextTaskText.setString(text);
 }
 
 void ProgressBar::SetProgressBarStatus(bool status)

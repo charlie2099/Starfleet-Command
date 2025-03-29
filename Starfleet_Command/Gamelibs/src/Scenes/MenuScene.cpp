@@ -68,7 +68,7 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     if(_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->IsCursorHoveredOver())
     {
-        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
         {
             if (_isMusicOn)
             {

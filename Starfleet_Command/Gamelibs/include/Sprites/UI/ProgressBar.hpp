@@ -22,6 +22,7 @@ public:
     void SetPosition(sf::Vector2<float> pos);
     void SetTimeToCompleteTask(float timeInSeconds);
     void SetProgressBarText(const std::string& text);
+    void SetProgressBarWaitingText(const std::string& text);
     void SetProgressBarStatus(bool status);
     void ResetProgressBar();
 
@@ -37,6 +38,7 @@ private:
     SpriteComponent _outsideBarSpriteComponent;
     SpriteComponent _insideBarSpriteComponent;
     sf::Text _text;
+    sf::Text _waitingForNextTaskText;
     sf::Vector2f _innerPosition;
     sf::Vector2f _outerPosition;
     std::multimap<EventID, std::function<void()>> _basicObservers{};
