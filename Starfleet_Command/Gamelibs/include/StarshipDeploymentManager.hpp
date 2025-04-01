@@ -19,11 +19,13 @@ public:
 
     void SetDeploymentBarPos(sf::Vector2<float> pos);
     void SetDeploymentBarText(const std::string& text);
+    void SetDeploymentBarWaitingText(const std::string& text);
     void SetDeploymentTime(float time);
     void SetDeploymentStatus(bool status);
 
     StarshipFactory::STARSHIP_TYPE GetNextStarshipTypeInQueue() {  return _starshipTypeDeploymentQueue.front(); }
     int GetNextSpacelaneInQueue() { return _spacelaneStarshipDeploymentQueue.front(); }
+    sf::Vector2<float> GetDeploymentBarPos() { return _deploymentBarPosition; }
 
     bool IsCurrentlyDeploying() { return _starshipDeploymentBar.InProgress(); }
     bool IsQueueFull() { return _starshipTypeDeploymentQueue.size() >= _maxQueueSize; }

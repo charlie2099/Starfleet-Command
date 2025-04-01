@@ -3,11 +3,11 @@
 DirectorBehaviourRuleEngine::DirectorBehaviourRuleEngine(std::vector<std::shared_ptr<IDirectorBehaviourRule>> &rules)
         : _rules(rules) {}
 
-void DirectorBehaviourRuleEngine::ApplyBehaviourOutput(AiDirector &director)
+void DirectorBehaviourRuleEngine::EvaluateBehaviourOutput(AiDirector &director)
 {
     for (auto & _rule : _rules)
     {
-        // Applies every rule when their conditions are met
+        // Applies all rules where their conditions have been met
         _rule->ApplyBehaviour(director);
     }
 }

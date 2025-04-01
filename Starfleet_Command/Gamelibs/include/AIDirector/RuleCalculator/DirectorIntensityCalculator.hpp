@@ -1,8 +1,10 @@
 #ifndef STARFLEET_COMMAND_DIRECTORINTENSITYCALCULATOR_HPP
 #define STARFLEET_COMMAND_DIRECTORINTENSITYCALCULATOR_HPP
 #include "AIDirector/RuleEngine/DirectorIntensityRuleEngine.hpp"
-#include "AIDirector/Rules/IntensityRules/EnemyMothershipHealthLowRule.hpp"
-#include "AIDirector/Rules/IntensityRules/PlayerMothershipHealthLowRule.hpp"
+#include "AIDirector/Rules/IntensityRules/EnemyMothershipHealthLow_IntensityRule.hpp"
+#include "AIDirector/Rules/IntensityRules/PlayerMothershipHealthLow_IntensityRule.hpp"
+#include "AIDirector/Rules/IntensityRules/EnemyStarshipsInPlay_IntensityRule.hpp"
+#include "AIDirector/Rules/IntensityRules/PlayerStarshipsInPlay_IntensityRule.hpp"
 #include <memory>
 #include <vector>
 

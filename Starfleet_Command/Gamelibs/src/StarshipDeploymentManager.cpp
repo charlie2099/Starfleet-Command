@@ -93,6 +93,12 @@ void StarshipDeploymentManager::SetDeploymentBarText(const std::string &text)
     _starshipDeploymentBar.SetProgressBarText(text);
 }
 
+void StarshipDeploymentManager::SetDeploymentBarWaitingText(const std::string &text)
+{
+    _starshipDeploymentBar.SetProgressBarText(text);
+    _starshipDeploymentBar.SetProgressBarWaitingText(text);
+}
+
 void StarshipDeploymentManager::SetDeploymentTime(float time)
 {
     _starshipDeploymentBar.SetTimeToCompleteTask(time);

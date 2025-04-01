@@ -16,28 +16,28 @@
 class AiDirector
 {
 public:
-    //static AiDirector Instance;
-
-    AiDirector(Player& player, Enemy& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes, sf::View &displayView);
+    AiDirector(Player& player, Enemy& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes, sf::View &displayView, bool isDebugOn = false);
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
     void QueueEnemy(StarshipFactory::STARSHIP_TYPE starshipType, int spawnLane);
-    void IncreasePerceivedIntensity(sf::Time deltaTime);
-    void DecreasePerceivedIntensity(sf::Time deltaTime);
-    void PerformBehaviour();
+    void UpdatePerceivedIntensity(sf::Time deltaTime);
 
     float GetPerceivedIntensity() const  { return _perceivedIntensity; }
     float GetPeakIntensityThreshold() const { return PEAK_INTENSITY_MAX; }
     float GetPlayerMothershipHealth() { return _player.GetMothership()->GetHealth(); }
     float GetEnemyMothershipHealth() { return _enemy.GetMothership()->GetHealth(); }
+    int GetPlayerPopulation() { return _player.GetStarshipCount(); }
+    int GetEnemyPopulation() { return _enemy.GetStarshipCount(); }
+    //int GetPlayerScrapAmount() { return _player.ScrapAmount(); }
     float GetElapsedGameTime() { return _gameClock.getElapsedTime().asSeconds(); }
 
-    bool IsQueueEmpty() { return _starshipDeploymentManager->IsQueueEmpty(); };
-    bool IsCurrentlyDeployingEnemy() { return _starshipDeploymentManager->IsCurrentlyDeploying(); };
+    bool IsQueueEmpty() { return _starshipDeploymentManager->IsQueueEmpty(); }
+    bool IsCurrentlyDeployingEnemy() { return _starshipDeploymentManager->IsCurrentlyDeploying(); }
 
 private:
     void SpawnEnemy();
+    void PerformBehaviour_OnDirectorStateChange();
     std::unique_ptr<DirectorIntensityCalculator> _intensityCalculator;
     std::unique_ptr<DirectorBehaviourCalculator> _behaviourCalculator;
     StateMachine _stateMachine;
@@ -47,9 +47,14 @@ private:
     std::unique_ptr<StarshipDeploymentManager> _starshipDeploymentManager;
     std::array<std::unique_ptr<IStarship>, 5> _starshipTemplateToBeDeployed;
     sf::Clock _gameClock;
+    float _behaviourUpdateTimer = 5.0F;
+    const float BEHAVIOUR_UPDATE_RATE = 5.0F; // NOTE: Periodically runs the behaviour calculator to see if any behavioural conditions have been met TODO: pick behaviours based on priority instead?
     float _perceivedIntensity = 0;
     const float PEAK_INTENSITY_MAX = 100.0F;
     sf::View& _displayView;
+    bool _isDebugOn = false;
+    sf::Text _debugDirectorStateText;
+    sf::Text _debugPerceivedIntensityText;
 };
 
 #endif //STARFLEET_COMMAND_AIDIRECTOR_HPP

@@ -2,13 +2,13 @@
 
 DirectorBehaviourCalculator::DirectorBehaviourCalculator()
 {
-    AddRule(std::make_shared<SpawnWeakStarshipsAtStartRule>(3));
+    AddRule(std::make_shared<SpawnWeakStarshipsAtStart_BehaviourRule>(10, 5));
 }
 
-void DirectorBehaviourCalculator::ApplyBehaviourOutput(AiDirector &director)
+void DirectorBehaviourCalculator::EvaluateBehaviourOutput(AiDirector &director)
 {
     DirectorBehaviourRuleEngine engine(_rules);
-    return engine.ApplyBehaviourOutput(director);
+    return engine.EvaluateBehaviourOutput(director);
 }
 
 void DirectorBehaviourCalculator::AddRule(const std::shared_ptr<IDirectorBehaviourRule>& rule)

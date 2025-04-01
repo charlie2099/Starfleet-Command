@@ -32,8 +32,8 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/AIDirector/Rules/IntensityRules/IDirectorIntensityRule.hpp
         Gamelibs/src/AIDirector/RuleEngine/DirectorIntensityRuleEngine.cpp
         Gamelibs/include/AIDirector/RuleEngine/DirectorIntensityRuleEngine.hpp
-        Gamelibs/src/AIDirector/Rules/IntensityRules/EnemyMothershipHealthLowRule.cpp
-        Gamelibs/include/AIDirector/Rules/IntensityRules/EnemyMothershipHealthLowRule.hpp
+        Gamelibs/src/AIDirector/Rules/IntensityRules/EnemyMothershipHealthLow_IntensityRule.cpp
+        Gamelibs/include/AIDirector/Rules/IntensityRules/EnemyMothershipHealthLow_IntensityRule.hpp
         Gamelibs/include/AIDirector/DirectorEventBus.hpp
         Gamelibs/src/AIDirector/DirectorEventBus.cpp
         Gamelibs/src/Utility/StateMachine.cpp
@@ -46,15 +46,21 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/AIDirector/States/DirectorPeakState.hpp
         Gamelibs/src/AIDirector/States/DirectorPeakFadeState.cpp
         Gamelibs/include/AIDirector/States/DirectorPeakFadeState.hpp
-        Gamelibs/include/AIDirector/Rules/IntensityRules/PlayerMothershipHealthLowRule.hpp
-        Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerMothershipHealthLowRule.cpp
+        Gamelibs/include/AIDirector/Rules/IntensityRules/PlayerMothershipHealthLow_IntensityRule.hpp
+        Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerMothershipHealthLow_IntensityRule.cpp
         Gamelibs/include/AIDirector/Rules/BehaviourRules/IDirectorBehaviourRule.hpp
         Gamelibs/src/AIDirector/RuleCalculator/DirectorBehaviourCalculator.cpp
         Gamelibs/include/AIDirector/RuleCalculator/DirectorBehaviourCalculator.hpp
         Gamelibs/src/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.cpp
         Gamelibs/include/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.hpp
-        Gamelibs/src/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStartRule.cpp
-        Gamelibs/include/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStartRule.hpp
+        Gamelibs/src/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStart_BehaviourRule.cpp
+        Gamelibs/include/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStart_BehaviourRule.hpp
+        Gamelibs/src/AIDirector/Rules/IntensityRules/EnemyStarshipsInPlay_IntensityRule.cpp
+        Gamelibs/include/AIDirector/Rules/IntensityRules/EnemyStarshipsInPlay_IntensityRule.hpp
+        Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerStarshipsInPlay_IntensityRule.cpp
+        Gamelibs/include/AIDirector/Rules/IntensityRules/PlayerStarshipsInPlay_IntensityRule.hpp
+        Gamelibs/src/AIDirector/RuleCalculator/PlayerScrapSurplus_IntensityRule.cpp
+        Gamelibs/src/AIDirector/RuleCalculator/PlayerScrapSurplus_IntensityRule.hpp
 )
 
 include_directories(Gamelibs/include)

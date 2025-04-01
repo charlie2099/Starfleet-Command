@@ -11,6 +11,7 @@ public:
     void OnStateEnter() override;
     void OnStateUpdate(sf::Time deltaTime) override;
     void OnStateExit() override;
+    std::string GetStateName() override { return "Respite"; }
 
 private:
     AiDirector& _aiDirector;

@@ -23,7 +23,7 @@ bool GameScene::Init()
 
     InitGameplayView();
 
-    _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spaceLanes, _gameplayView);
+    _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spaceLanes, _gameplayView, true);
 
     _mothershipStatusDisplay = std::make_unique<MothershipStatusDisplay>(playerMothership, enemyMothership, _gameplayView);
 

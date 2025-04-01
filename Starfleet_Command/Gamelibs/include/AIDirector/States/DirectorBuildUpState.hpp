@@ -11,6 +11,8 @@ public:
     void OnStateEnter() override;
     void OnStateUpdate(sf::Time deltaTime) override;
     void OnStateExit() override;
+    std::string GetStateName() override { return "BuildUp"; }
+
 
 private:
     AiDirector& _aiDirector;

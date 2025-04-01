@@ -8,13 +8,14 @@ void DirectorBuildUpState::OnStateEnter()
 {
     DirectorEventBus::Publish(DirectorEventBus::DirectorEvent::EnteredBuildUpState);
     DirectorEventBus::Publish(DirectorEventBus::DirectorEvent::EnteredNewState);
-    std::cout << "BUILD UP STATE" << std::endl;
+    // TODO: Call or perform BuildUp state specific behaviour here?
+    //_aiDirector.PerformBehaviour_OnDirectorStateChange();
+    //_aiDirector.QueueEnemy()
 }
 
 void DirectorBuildUpState::OnStateUpdate(sf::Time deltaTime)
 {
-    _aiDirector.IncreasePerceivedIntensity(deltaTime);
-    //std::cout << "Intensity: " << _aiDirector.GetPerceivedIntensity() << std::endl;
+    _aiDirector.UpdatePerceivedIntensity(deltaTime);
 
     if(_aiDirector.GetPerceivedIntensity() >= _aiDirector.GetPeakIntensityThreshold())
     {

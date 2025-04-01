@@ -27,13 +27,6 @@ ___AI DIRECTOR___
 director.SpawnEnemy(TYPE, LANE)
 director.SetEnemySpawnFrequency()
 
-SpacelaneUnderDefendedRule
-SpacelaneOverDefendedRule
-DestroyerSpawnRule
-BattleshipSpawnRule
-BattleshipSupportHeavyStrategyRule
-Reward&PerkSystemRule
-
 When to trigger behaviour calculator events
 - Every time the director changes state (i.e. build-up, peak, etc)
 - Every x amount of seconds?

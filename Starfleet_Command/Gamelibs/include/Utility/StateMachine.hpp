@@ -11,6 +11,7 @@ public:
     virtual void OnStateEnter() = 0;
     virtual void OnStateUpdate(sf::Time deltaTime) = 0;
     virtual void OnStateExit() = 0;
+    virtual std::string GetStateName() = 0;
 };
 
 class StateMachine
@@ -21,6 +22,7 @@ public:
     void SetStates(std::unordered_map<std::type_index, std::shared_ptr<IState>> statesDict);
     void ChangeState(std::type_index newState);
     std::shared_ptr<IState>& GetCurrentState() { return _currentState; }
+    std::string GetCurrentStateName() { return _currentState->GetStateName(); }
 
 private:
     std::shared_ptr<IState> _currentState;

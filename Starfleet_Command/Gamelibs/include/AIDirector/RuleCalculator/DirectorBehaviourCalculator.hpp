@@ -1,7 +1,7 @@
 #ifndef STARFLEET_COMMAND_DIRECTORBEHAVIOURCALCULATOR_HPP
 #define STARFLEET_COMMAND_DIRECTORBEHAVIOURCALCULATOR_HPP
 #include "AIDirector/RuleEngine/DirectorBehaviourRuleEngine.hpp"
-#include "AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStartRule.hpp"
+#include "AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStart_BehaviourRule.hpp"
 #include <memory>
 #include <vector>
 
@@ -11,7 +11,7 @@ class DirectorBehaviourCalculator
 {
 public:
     DirectorBehaviourCalculator();
-    void ApplyBehaviourOutput(AiDirector& director);
+    void EvaluateBehaviourOutput(AiDirector& director);
 
 private:
     void AddRule(const std::shared_ptr<IDirectorBehaviourRule>& rule);
