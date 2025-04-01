@@ -59,8 +59,8 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/AIDirector/Rules/IntensityRules/EnemyStarshipsInPlay_IntensityRule.hpp
         Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerStarshipsInPlay_IntensityRule.cpp
         Gamelibs/include/AIDirector/Rules/IntensityRules/PlayerStarshipsInPlay_IntensityRule.hpp
-        Gamelibs/src/AIDirector/RuleCalculator/PlayerScrapSurplus_IntensityRule.cpp
-        Gamelibs/src/AIDirector/RuleCalculator/PlayerScrapSurplus_IntensityRule.hpp
+        Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerScrapSurplus_IntensityRule.cpp
+        Gamelibs/include/AIDirector/Rules/IntensityRules/PlayerScrapSurplus_IntensityRule.hpp
 )
 
 include_directories(Gamelibs/include)

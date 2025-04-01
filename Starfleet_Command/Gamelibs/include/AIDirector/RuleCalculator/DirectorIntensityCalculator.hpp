@@ -5,6 +5,7 @@
 #include "AIDirector/Rules/IntensityRules/PlayerMothershipHealthLow_IntensityRule.hpp"
 #include "AIDirector/Rules/IntensityRules/EnemyStarshipsInPlay_IntensityRule.hpp"
 #include "AIDirector/Rules/IntensityRules/PlayerStarshipsInPlay_IntensityRule.hpp"
+#include "AIDirector/Rules/IntensityRules/PlayerScrapSurplus_IntensityRule.hpp"
 #include <memory>
 #include <vector>
 

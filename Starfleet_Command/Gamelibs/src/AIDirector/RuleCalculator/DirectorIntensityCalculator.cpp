@@ -5,7 +5,7 @@ DirectorIntensityCalculator::DirectorIntensityCalculator()
     // Positive intensity factors
     AddRule(std::make_shared<PlayerMothershipHealthLow_IntensityRule>(2000.0F, 25.0F));
     AddRule(std::make_shared<EnemyStarshipsInPlay_IntensityRule>(0.25F));
-    //AddRule(std::make_shared<PlayerScrapSurplus_IntensityRule>(2000, 1.0F));
+    AddRule(std::make_shared<PlayerScrapSurplus_IntensityRule>(5000, 10.0F));
 
     // Negative intensity factors
     AddRule(std::make_shared<EnemyMothershipHealthLow_IntensityRule>(2000.0F, -25.0F));

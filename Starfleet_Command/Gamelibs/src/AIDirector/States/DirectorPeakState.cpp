@@ -13,7 +13,12 @@ void DirectorPeakState::OnStateEnter()
 
 void DirectorPeakState::OnStateUpdate(sf::Time deltaTime)
 {
-    
+    /*_aiDirector.UpdatePerceivedIntensity(deltaTime);
+
+    if(_aiDirector.GetPerceivedIntensity() >= _aiDirector.GetPeakIntensityThreshold())
+    {
+        _stateMachine.ChangeState(typeid(DirectorPeakFadeState));
+    }*/
 }
 
 void DirectorPeakState::OnStateExit() {}

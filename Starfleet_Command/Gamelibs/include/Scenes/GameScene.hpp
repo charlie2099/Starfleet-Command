@@ -68,11 +68,12 @@ private:
     const int NUM_OF_STARS = 750;
     std::unique_ptr<ParallaxBackground> _backgroundParallax;
 
-    /// Sprites
-    Player _player;
-    Enemy _enemy;
+    /// Teams
+    std::unique_ptr<Player> _player;
+    std::unique_ptr<Enemy> _enemy;
+    const int STARTING_SCRAP_METAL = 2500;
 
-    /// Enemy AI
+    /// Ai Director
     std::unique_ptr<AiDirector> _aiDirector;
 
     /// Views (Main view & Minimap)
@@ -99,15 +100,10 @@ private:
     std::unique_ptr<StarshipDeploymentManager> _starshipDeploymentManager;
     std::array<std::unique_ptr<StarshipDeploymentButton>, NUM_OF_BUTTONS> _starshipDeploymentButtons;
 
-    /// Enemy Spawning TODO: Enemy spawner class
-    float _enemySpawnTimer = 3.0f;
-    float _enemySpawnRate = 5.0f;
+    /// Enemy Spawning TODO: Enemy spawner class?
+    float _enemySpawnTimer = 3.0F;
+    float _enemySpawnRate = 5.0F;
     sf::Clock _enemySpawnTimerClock;
-
-    /// Scrap Metal Managers
-    const int STARTING_SCRAP_METAL = 5000;
-    std::unique_ptr<ScrapMetalManager> _playerScrapMetalManager;
-    std::unique_ptr<ScrapMetalManager> _enemyScrapMetalManager;
 
     /// Music & Sound Effects
     bool _isMusicOn = false;

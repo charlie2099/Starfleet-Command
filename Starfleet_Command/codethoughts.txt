@@ -24,7 +24,7 @@ ___AI DIRECTOR___
 - BUILD-UP (default spawn rate, default spawn chance of starship types, default lane spawn chance)
 - PEAK (increased spawn rate, increased spawn chance of stronger starship types, increased chance of better lane spawning)
 
-director.SpawnEnemy(TYPE, LANE)
+director.SpawnEnemy_OnDeploymentCompleted(TYPE, LANE)
 director.SetEnemySpawnFrequency()
 
 When to trigger behaviour calculator events

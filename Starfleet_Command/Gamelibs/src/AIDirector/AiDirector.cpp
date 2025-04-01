@@ -1,6 +1,6 @@
 #include "AIDirector/AiDirector.hpp"
 
-AiDirector::AiDirector(Player& player, Enemy& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes, sf::View &displayView, bool isDebugOn)
+AiDirector::AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes, sf::View &displayView, bool isDebugOn)
 : _player(player), _enemy(enemy), _spacelanes(spacelanes), _displayView(displayView), _isDebugOn(isDebugOn), _intensityCalculator(std::make_unique<DirectorIntensityCalculator>()), _behaviourCalculator(std::make_unique<DirectorBehaviourCalculator>())
 {
     std::unordered_map<std::type_index, std::shared_ptr<IState>> cachedStates =
@@ -16,12 +16,16 @@ AiDirector::AiDirector(Player& player, Enemy& enemy, std::vector<std::unique_ptr
     // TODO: Subscribe to StateMachine OnStateChanged event and call behaviourCalculator.EvaluateBehaviourOutput()?
     DirectorEventBus::Subscribe(DirectorEventBus::DirectorEvent::EnteredNewState, [this]() { PerformBehaviour_OnDirectorStateChange(); });
 
-    _starshipDeploymentManager = std::make_unique<StarshipDeploymentManager>(5/*STARSHIP_MAX_QUEUE_SIZE*/, _enemy.GetMothership()->GetColour());
+    _starshipDeploymentManager = std::make_unique<StarshipDeploymentManager>(5/*STARSHIP_MAX_QUEUE_SIZE*/, _enemy->GetMothership()->GetColour());
     _starshipDeploymentManager->SetDeploymentBarWaitingText("The Director is analysing...");
 
     /// Observer to starship deployment bar event
-    auto starshipDeploymentBarCallback = [this] { SpawnEnemy(); };
-    _starshipDeploymentManager->AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentBarCallback});
+    auto starshipDeploymentBegunCallback = [this] { UpdateDeploymentStatus_OnDeploymentBegun(); };
+    _starshipDeploymentManager->AddBasicObserver({ProgressBar::TASK_STARTED, starshipDeploymentBegunCallback});
+
+    /// Observer to starship deployment bar event
+    auto starshipDeploymentCompletedCallback = [this] { SpawnEnemy_OnDeploymentCompleted(); };
+    _starshipDeploymentManager->AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentCompletedCallback});
 
     for (int i = 0; i < _starshipTemplateToBeDeployed.size(); ++i)
     {
@@ -29,12 +33,10 @@ AiDirector::AiDirector(Player& player, Enemy& enemy, std::vector<std::unique_ptr
     }
 
     _debugDirectorStateText.setString("Director State: " + _stateMachine.GetCurrentStateName());
-
     _debugDirectorStateText.setFont(Chilli::CustomFonts::GetBoldFont());
     _debugDirectorStateText.setCharacterSize(11.0F);
 
     _debugPerceivedIntensityText.setString("Perceived Intensity: " + std::to_string(static_cast<int>(_perceivedIntensity)));
-
     _debugPerceivedIntensityText.setFont(Chilli::CustomFonts::GetBoldFont());
     _debugPerceivedIntensityText.setCharacterSize(11.0F);
 }
@@ -45,12 +47,6 @@ void AiDirector::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     _starshipDeploymentManager->SetDeploymentBarPos({_displayView.getCenter().x + 272.0F, _displayView.getCenter().y + 312.5F}); // TODO: Use a setter method to set this relative to the enemy mothership health bar and player deployment bar position
     _starshipDeploymentManager->Update(window, deltaTime);
-
-    if(_starshipDeploymentManager->IsCurrentlyDeploying())
-    {
-        _starshipDeploymentManager->SetDeploymentBarText("Deploying " + _starshipTemplateToBeDeployed[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipName());
-        _starshipDeploymentManager->SetDeploymentTime(_starshipTemplateToBeDeployed[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetDeploymentTime());
-    }
 
     if(_gameClock.getElapsedTime().asSeconds() >= _behaviourUpdateTimer)
     {
@@ -77,30 +73,6 @@ void AiDirector::Render(sf::RenderWindow &window)
     }
 }
 
-void AiDirector::SpawnEnemy()
-{
-    // TODO: Deduct scrap metal cost OR invoke event saying a ship has spawned and have the scrap metal manager listen out for that?
-    /*_enemyScrapMetalManager->SpendScrap(newestEnemyStarship->GetBuildCost());
-    _enemyScrapMetalManager->SetScrapText("Scrap Metal: " + std::to_string(_enemyScrapMetalManager->GetCurrentScrapMetalAmount()));*/
-
-    std::cout << "SPAWN ENEMY" << std::endl;
-
-    auto queuedStarship = _starshipDeploymentManager->GetNextStarshipTypeInQueue();
-    auto spawnLane = _starshipDeploymentManager->GetNextSpacelaneInQueue();
-
-    _enemy.CreateStarship(queuedStarship, spawnLane);
-    _enemy.SetStarshipPosition(_enemy.GetStarships()[_enemy.GetStarshipCount() - 1], {_spacelanes[spawnLane]->GetPos().x + _spacelanes[spawnLane]->GetSize().x, _spacelanes[spawnLane]->GetPos().y + _spacelanes[spawnLane]->GetSize().y / 2.0F});
-    _enemy.SetStarshipRotation(_enemy.GetStarships()[_enemy.GetStarshipCount() - 1], 180);
-
-    _starshipDeploymentManager->RemoveFirstStarshipInQueue();
-    _starshipDeploymentManager->ResetDeploymentBar();
-
-    if(not _starshipDeploymentManager->IsQueueEmpty())
-    {
-        _starshipDeploymentManager->SetDeploymentStatus(true);
-    }
-}
-
 void AiDirector::QueueEnemy(StarshipFactory::STARSHIP_TYPE starshipType, int spawnLane)
 {
     _starshipDeploymentManager->AddStarshipToQueue(starshipType, spawnLane);
@@ -112,13 +84,41 @@ void AiDirector::UpdatePerceivedIntensity(sf::Time deltaTime)
     float intensity = _intensityCalculator->CalculatePerceivedIntensityOutput(*this);
     _perceivedIntensity += intensity * deltaTime.asSeconds();
 
-    if(_perceivedIntensity >= 100)
+    if(_perceivedIntensity >= PEAK_INTENSITY_MAX)
     {
-        _perceivedIntensity = 100;
+        _perceivedIntensity = PEAK_INTENSITY_MAX;
     }
     if(_perceivedIntensity <= 0)
     {
         _perceivedIntensity = 0;
+    }
+}
+
+void AiDirector::UpdateDeploymentStatus_OnDeploymentBegun()
+{
+    _starshipDeploymentManager->SetDeploymentBarText("Deploying " + _starshipTemplateToBeDeployed[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipName());
+    _starshipDeploymentManager->SetDeploymentTime(_starshipTemplateToBeDeployed[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetDeploymentTime());
+
+    _enemy->SpendScrap(_starshipTemplateToBeDeployed[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetBuildCost());
+    _enemy->SetScrapText("Scrap Metal: " + std::to_string(_enemy->GetCurrentScrapAmount()));
+}
+
+void AiDirector::SpawnEnemy_OnDeploymentCompleted()
+{
+    std::cout << "SPAWN ENEMY" << std::endl;
+
+    auto queuedStarship = _starshipDeploymentManager->GetNextStarshipTypeInQueue();
+    auto spawnLane = _starshipDeploymentManager->GetNextSpacelaneInQueue();
+    _enemy->CreateStarship(queuedStarship, spawnLane);
+    _enemy->SetStarshipPosition(_enemy->GetStarships()[_enemy->GetStarshipCount() - 1], {_spacelanes[spawnLane]->GetPos().x + _spacelanes[spawnLane]->GetSize().x, _spacelanes[spawnLane]->GetPos().y + _spacelanes[spawnLane]->GetSize().y / 2.0F});
+    _enemy->SetStarshipRotation(_enemy->GetStarships()[_enemy->GetStarshipCount() - 1], 180);
+
+    _starshipDeploymentManager->RemoveFirstStarshipInQueue();
+    _starshipDeploymentManager->ResetDeploymentBar();
+
+    if(not _starshipDeploymentManager->IsQueueEmpty())
+    {
+        _starshipDeploymentManager->SetDeploymentStatus(true);
     }
 }
 

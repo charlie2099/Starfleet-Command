@@ -1,7 +1,16 @@
 #include "Sprites/Enemy/Enemy.hpp"
 
+Enemy::Enemy(int startingScrapAmount, sf::Color teamColour)
+{
+    _scrapMetalManager = std::make_unique<ScrapMetalManager>(_predefinedColours.GRAY, teamColour, startingScrapAmount);
+    _teamColour = teamColour;
+}
+
 void Enemy::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
+    _scrapMetalManager->Update(window, deltaTime);
+    _scrapMetalManager->SetTextPosition(_scrapTextPos.x, _scrapTextPos.y);
+
     for (auto& ship : starship)
     {
         ship->Update(window, deltaTime);
@@ -26,6 +35,7 @@ void Enemy::Render(sf::RenderWindow &window)
     {
         ship->Render(window);
     }
+    _scrapMetalManager->Render(window);
 }
 
 void Enemy::MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset)
@@ -33,24 +43,18 @@ void Enemy::MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset)
     starship[starshipIndex]->Move(positionOffset.x, positionOffset.y);
 }
 
-void Enemy::CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spaceLane)
+void Enemy::CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spacelane)
 {
-    std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(starshipType, spaceLane);
-    bool atLeastOneShipExists = !starship.empty();
-    if(atLeastOneShipExists)
-    {
-        auto& flagship = starship[0];
-        newStarship->SetColour(flagship->GetColour());
-        newStarship->SetProjectileColour(flagship->GetColour());
-    }
+    std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(starshipType, spacelane);
+    newStarship->SetColour(_teamColour);
+    newStarship->SetProjectileColour(_teamColour);
     starship.emplace_back(std::move(newStarship));
     InvokeBasicEvent(STARSHIP_SPAWNED);
 }
 
-void Enemy::PaintMothership(sf::Color colour)
+void Enemy::CreateScrapPopup(int scrapAmount, sf::Vector2<float> pos)
 {
-    starship[0]->SetColour(colour);
-    starship[0]->SetProjectileColour(colour);
+    _scrapMetalManager->CreatePopup(scrapAmount, pos);
 }
 
 void Enemy::SetMothershipPosition(sf::Vector2f pos)
@@ -71,6 +75,26 @@ void Enemy::SetStarshipPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f p
 void Enemy::SetStarshipRotation(std::unique_ptr<IStarship> &ship, float rot)
 {
     ship->SetRotation(rot);
+}
+
+void Enemy::SpendScrap(int buildCost)
+{
+    _scrapMetalManager->SpendScrap(buildCost);
+}
+
+void Enemy::CollectScrap(int scrapAmount)
+{
+    _scrapMetalManager->CollectScrap(scrapAmount);
+}
+
+void Enemy::SetScrapText(const std::string& scrapText)
+{
+    _scrapMetalManager->SetScrapText(scrapText);
+}
+
+void Enemy::SetScrapTextPosition(sf::Vector2<float> pos)
+{
+    _scrapTextPos = pos;
 }
 
 void Enemy::AddBasicObserver(BasicEnemyEvent observer)
@@ -105,15 +129,6 @@ void Enemy::InvokeAgnosticEvent(EventID eventId, const std::any& anyData)
     }
 }
 
-std::vector<std::unique_ptr<IStarship>> &Enemy::GetStarships()
-{
-    return starship;
-}
-
-std::unique_ptr<IStarship> &Enemy::GetMothership()
-{
-    return starship[0];
-}
 
 
 

@@ -16,7 +16,7 @@
 class AiDirector
 {
 public:
-    AiDirector(Player& player, Enemy& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes, sf::View &displayView, bool isDebugOn = false);
+    AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes, sf::View &displayView, bool isDebugOn = false);
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
@@ -25,24 +25,26 @@ public:
 
     float GetPerceivedIntensity() const  { return _perceivedIntensity; }
     float GetPeakIntensityThreshold() const { return PEAK_INTENSITY_MAX; }
-    float GetPlayerMothershipHealth() { return _player.GetMothership()->GetHealth(); }
-    float GetEnemyMothershipHealth() { return _enemy.GetMothership()->GetHealth(); }
-    int GetPlayerPopulation() { return _player.GetStarshipCount(); }
-    int GetEnemyPopulation() { return _enemy.GetStarshipCount(); }
-    //int GetPlayerScrapAmount() { return _player.ScrapAmount(); }
+    float GetPlayerMothershipHealth() { return _player->GetMothership()->GetHealth(); }
+    float GetEnemyMothershipHealth() { return _enemy->GetMothership()->GetHealth(); }
+    int GetPlayerPopulation() { return _player->GetStarshipCount(); }
+    int GetEnemyPopulation() { return _enemy->GetStarshipCount(); }
+    int GetPlayerScrapAmount() { return _player->GetCurrentScrapAmount(); }
+    int GetEnemyScrapAmount() { return _enemy->GetCurrentScrapAmount(); }
     float GetElapsedGameTime() { return _gameClock.getElapsedTime().asSeconds(); }
 
     bool IsQueueEmpty() { return _starshipDeploymentManager->IsQueueEmpty(); }
     bool IsCurrentlyDeployingEnemy() { return _starshipDeploymentManager->IsCurrentlyDeploying(); }
 
 private:
-    void SpawnEnemy();
+    void UpdateDeploymentStatus_OnDeploymentBegun();
+    void SpawnEnemy_OnDeploymentCompleted();
     void PerformBehaviour_OnDirectorStateChange();
     std::unique_ptr<DirectorIntensityCalculator> _intensityCalculator;
     std::unique_ptr<DirectorBehaviourCalculator> _behaviourCalculator;
     StateMachine _stateMachine;
-    Player& _player;
-    Enemy& _enemy;
+    std::unique_ptr<Player>& _player;
+    std::unique_ptr<Enemy>& _enemy;
     std::vector<std::unique_ptr<SpaceLane>>& _spacelanes;
     std::unique_ptr<StarshipDeploymentManager> _starshipDeploymentManager;
     std::array<std::unique_ptr<IStarship>, 5> _starshipTemplateToBeDeployed;
