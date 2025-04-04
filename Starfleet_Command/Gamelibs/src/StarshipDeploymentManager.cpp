@@ -78,6 +78,20 @@ void StarshipDeploymentManager::RemoveFirstStarshipInQueue()
     _starshipQueueBoxIconSprites.erase(_starshipQueueBoxIconSprites.begin());
 }
 
+bool StarshipDeploymentManager::IsStarshipTypeInQueue(StarshipFactory::STARSHIP_TYPE starshipType)
+{
+    std::queue<StarshipFactory::STARSHIP_TYPE> tempStarshipQueue = _starshipTypeDeploymentQueue;
+    std::vector<StarshipFactory::STARSHIP_TYPE> starshipVector;
+
+    while (not tempStarshipQueue.empty())
+    {
+        starshipVector.push_back(tempStarshipQueue.front());
+        tempStarshipQueue.pop();
+    }
+
+    return std::find(starshipVector.begin(), starshipVector.end(), starshipType) != starshipVector.end();
+}
+
 void StarshipDeploymentManager::ResetDeploymentBar()
 {
     _starshipDeploymentBar.ResetProgressBar();

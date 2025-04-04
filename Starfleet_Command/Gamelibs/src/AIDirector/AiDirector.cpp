@@ -50,7 +50,6 @@ void AiDirector::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     if(_gameClock.getElapsedTime().asSeconds() >= _behaviourUpdateTimer)
     {
-        std::cout << "TIME CHECK: " << _behaviourUpdateTimer << " seconds passed" << std::endl;
         _behaviourCalculator->EvaluateBehaviourOutput(*this);
         _behaviourUpdateTimer += BEHAVIOUR_UPDATE_RATE;
     }
@@ -79,6 +78,11 @@ void AiDirector::QueueEnemy(StarshipFactory::STARSHIP_TYPE starshipType, int spa
     _starshipDeploymentManager->SetDeploymentStatus(true);
 }
 
+bool AiDirector::IsEnemyStarshipTypeInQueue(StarshipFactory::STARSHIP_TYPE starshipType)
+{
+    return _starshipDeploymentManager->IsStarshipTypeInQueue(starshipType);
+}
+
 void AiDirector::UpdatePerceivedIntensity(sf::Time deltaTime)
 {
     float intensity = _intensityCalculator->CalculatePerceivedIntensityOutput(*this);
@@ -105,8 +109,6 @@ void AiDirector::UpdateDeploymentStatus_OnDeploymentBegun()
 
 void AiDirector::SpawnEnemy_OnDeploymentCompleted()
 {
-    std::cout << "SPAWN ENEMY" << std::endl;
-
     auto queuedStarship = _starshipDeploymentManager->GetNextStarshipTypeInQueue();
     auto spawnLane = _starshipDeploymentManager->GetNextSpacelaneInQueue();
     _enemy->CreateStarship(queuedStarship, spawnLane);
@@ -124,8 +126,66 @@ void AiDirector::SpawnEnemy_OnDeploymentCompleted()
 
 void AiDirector::PerformBehaviour_OnDirectorStateChange()
 {
-    std::cout << "Applying Behaviour Output on Director State change" << std::endl;
     _behaviourCalculator->EvaluateBehaviourOutput(*this);
     _debugDirectorStateText.setString("Director State: " + _stateMachine.GetCurrentStateName());
 }
+
+int AiDirector::GetNumOfPlayerUnitsInSpacelane(int spacelaneIndex)
+{
+    auto unitsInLane = 0;
+    for (int i = 1; i < _player->GetStarshipCount(); ++i)
+    {
+        if(_player->GetStarships()[i]->GetLaneIndex() == spacelaneIndex)
+        {
+            unitsInLane++;
+        }
+    }
+    return unitsInLane;
+}
+
+int AiDirector::GetNumOfEnemyUnitsInSpacelane(int spacelaneIndex)
+{
+    auto unitsInLane = 0;
+    for (int i = 1; i < _enemy->GetStarshipCount(); ++i)
+    {
+        if(_enemy->GetStarships()[i]->GetLaneIndex() == spacelaneIndex)
+        {
+            unitsInLane++;
+        }
+    }
+    return unitsInLane;
+}
+
+int AiDirector::GetNumOfPlayerUnitTypesInSpacelane(int spacelaneIndex, StarshipFactory::STARSHIP_TYPE starshipType)
+{
+    auto unitTypesInLane = 0;
+    for (int i = 1; i < _player->GetStarshipCount(); ++i)
+    {
+        if(_player->GetStarships()[i]->GetLaneIndex() == spacelaneIndex)
+        {
+            if(StarshipFactory::GetStarshipType(_player->GetStarships()[i]) == starshipType)
+            {
+                unitTypesInLane++;
+            }
+        }
+    }
+    return unitTypesInLane;
+}
+
+int AiDirector::GetNumOfEnemyUnitTypesInSpacelane(int spacelaneIndex, StarshipFactory::STARSHIP_TYPE starshipType)
+{
+    auto unitTypesInLane = 0;
+    for (int i = 1; i < _enemy->GetStarshipCount(); ++i)
+    {
+        if(_enemy->GetStarships()[i]->GetLaneIndex() == spacelaneIndex)
+        {
+            if(StarshipFactory::GetStarshipType(_enemy->GetStarships()[i]) == starshipType)
+            {
+                unitTypesInLane++;
+            }
+        }
+    }
+    return unitTypesInLane;
+}
+
 

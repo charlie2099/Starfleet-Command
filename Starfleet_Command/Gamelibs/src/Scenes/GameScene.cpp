@@ -14,7 +14,6 @@ bool GameScene::Init()
     InitPlayerMothership();
     InitSpaceLanes();
     InitEnemyMothership();
-
     InitGameplayView();
 
     _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spaceLanes, _gameplayView, true);
@@ -110,7 +109,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 
 
-    for (int i = 0; i < _player->GetStarshipCount(); ++i)
+    for (int i = 1; i < _player->GetStarshipCount(); ++i)
     {
         if (_player->GetStarships()[i]->IsMouseOver())
         {
@@ -517,33 +516,6 @@ void GameScene::RenderMinimapSprites(sf::RenderWindow &window)
     for (const auto &lane : _spaceLanes)
     {
         lane->Render(window);
-    }
-}
-
-void GameScene::UpdateEnemySpawner()
-{
-    // Initialise enemySpawnTimer to the current elapsed time
-    if(_enemySpawnTimer < _enemySpawnTimerClock.getElapsedTime().asSeconds())
-    {
-        _enemySpawnTimer = _enemySpawnTimerClock.getElapsedTime().asSeconds();
-    }
-    // If current elapsed time has reached enemySpawnTimer, spawn new enemy
-    if(_enemySpawnTimerClock.getElapsedTime().asSeconds() >= _enemySpawnTimer)
-    {
-        for (int i = 0; i < 1; ++i)
-        {
-            int randomStarshipType = _enemyStarshipTypeRNG.GenerateNumber();
-            int randomLane = _spacelaneSpawnRNG.GenerateNumber();
-            _enemy->CreateStarship(static_cast<StarshipFactory::STARSHIP_TYPE>(randomStarshipType), randomLane);
-            auto& newestEnemyStarship = _enemy->GetStarships()[_enemy->GetStarshipCount() - 1];
-            auto starshipXPos = _spaceLanes[randomLane]->GetPos().x + _spaceLanes[randomLane]->GetSize().x;
-            auto starshipYPos = _spaceLanes[randomLane]->GetPos().y + _spaceLanes[randomLane]->GetSize().y / 2.0F;
-            _enemy->SetStarshipPosition(newestEnemyStarship, {starshipXPos, starshipYPos});
-            _enemy->SetStarshipRotation(newestEnemyStarship, 180);
-            _enemy->SpendScrap(newestEnemyStarship->GetBuildCost());
-            _enemy->SetScrapText("Scrap Metal: " + std::to_string(_enemy->GetCurrentScrapAmount()));
-        }
-        _enemySpawnTimer += _enemySpawnRate;
     }
 }
 

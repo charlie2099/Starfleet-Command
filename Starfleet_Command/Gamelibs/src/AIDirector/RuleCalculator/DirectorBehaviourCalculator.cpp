@@ -2,7 +2,17 @@
 
 DirectorBehaviourCalculator::DirectorBehaviourCalculator()
 {
-    AddRule(std::make_shared<SpawnWeakStarshipsAtStart_BehaviourRule>(10, 5));
+    AddRule(std::make_shared<SpawnWeakStarshipsAtStart_BehaviourRule>(10, 2));
+
+    AddRule(std::make_shared<CounterAttack_BehaviourRule>(
+            StarshipFactory::BATTLESHIP,
+            std::vector<StarshipFactory::STARSHIP_TYPE>
+            {
+                StarshipFactory::BATTLESHIP,
+                StarshipFactory::SUPPORT,
+                StarshipFactory::LIGHTFIGHTER
+            }));
+    AddRule(std::make_shared<PlayerSpacelaneDominance_BehaviourRule>(2, 1));
 }
 
 void DirectorBehaviourCalculator::EvaluateBehaviourOutput(AiDirector &director)

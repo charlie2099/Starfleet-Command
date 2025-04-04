@@ -30,6 +30,7 @@ public:
     bool IsCurrentlyDeploying() { return _starshipDeploymentBar.InProgress(); }
     bool IsQueueFull() { return _starshipTypeDeploymentQueue.size() >= _maxQueueSize; }
     bool IsQueueEmpty() { return _starshipTypeDeploymentQueue.empty(); }
+    bool IsStarshipTypeInQueue(StarshipFactory::STARSHIP_TYPE starshipType);
 
     void AddBasicObserver(const std::pair<ProgressBar::EventID, std::function<void()>>& observer);
 

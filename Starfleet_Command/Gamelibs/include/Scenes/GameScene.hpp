@@ -45,7 +45,6 @@ private:
 
     /// Update functions
     void UpdateGameplayViewMovement(const sf::RenderWindow &window, const sf::Time &deltaTime, const sf::Vector2i &mousePos);
-    void UpdateEnemySpawner();
     void UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &window, sf::Time &deltaTime);
 
     /// Render functions
@@ -71,7 +70,7 @@ private:
     /// Teams
     std::unique_ptr<Player> _player;
     std::unique_ptr<Enemy> _enemy;
-    const int STARTING_SCRAP_METAL = 2500;
+    const int STARTING_SCRAP_METAL = 4000;
 
     /// Ai Director
     std::unique_ptr<AiDirector> _aiDirector;

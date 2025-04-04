@@ -7,7 +7,7 @@
 #include <cmath>
 #include <functional>
 
-class Enemy
+class Enemy // TODO: Combine the Player and Enemy class into a single Player class? Both contain identical code!
 {
 public:
     enum EventID

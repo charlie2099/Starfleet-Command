@@ -25,3 +25,31 @@ std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP
         case MOTHERSHIP: return std::make_unique<Mothership>(spacelane);
     }
 }
+
+StarshipFactory::STARSHIP_TYPE StarshipFactory::GetStarshipType(std::unique_ptr<IStarship>& starship)
+{
+    if(starship.get() == dynamic_cast<LightFighter*>(starship.get()))
+    {
+        return STARSHIP_TYPE::LIGHTFIGHTER;
+    }
+    else if(starship.get() == dynamic_cast<HeavyFighter*>(starship.get()))
+    {
+        return STARSHIP_TYPE::HEAVYFIGHTER;
+    }
+    else if(starship.get() == dynamic_cast<SupportShip*>(starship.get()))
+    {
+        return STARSHIP_TYPE::SUPPORT;
+    }
+    else if(starship.get() == dynamic_cast<Destroyer*>(starship.get()))
+    {
+        return STARSHIP_TYPE::DESTROYER;
+    }
+    else if(starship.get() == dynamic_cast<Battleship*>(starship.get()))
+    {
+        return STARSHIP_TYPE::BATTLESHIP;
+    }
+    else if(starship.get() == dynamic_cast<Mothership*>(starship.get()))
+    {
+        return STARSHIP_TYPE::MOTHERSHIP;
+    }
+}

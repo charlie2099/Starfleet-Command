@@ -2,6 +2,8 @@
 #define STARFLEET_COMMAND_DIRECTORBEHAVIOURCALCULATOR_HPP
 #include "AIDirector/RuleEngine/DirectorBehaviourRuleEngine.hpp"
 #include "AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStart_BehaviourRule.hpp"
+#include "AIDirector/Rules/BehaviourRules/CounterAttack_BehaviourRule.hpp"
+#include "AIDirector/Rules/BehaviourRules/PlayerSpacelaneDominance_BehaviourRule.hpp"
 #include <memory>
 #include <vector>
 

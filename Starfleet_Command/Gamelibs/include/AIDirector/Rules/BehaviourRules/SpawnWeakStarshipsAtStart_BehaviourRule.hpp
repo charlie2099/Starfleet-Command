@@ -6,11 +6,11 @@
 class SpawnWeakStarshipsAtStart_BehaviourRule : public IDirectorBehaviourRule
 {
 public:
-    explicit SpawnWeakStarshipsAtStart_BehaviourRule(float timePassedUntilSpawn, int spawnCount);
+    explicit SpawnWeakStarshipsAtStart_BehaviourRule(float timePassedUntilSpawn, int maxSpawnCount);
     void ApplyBehaviour(AiDirector& director) override;
 
 private:
-    int _spawnCount;
+    int _maxSpawnCount;
     float _timePassedUntilSpawn;
     RNG _randomWeakStarship { 0, 1 };
     RNG _randomLane { 0, 4 };

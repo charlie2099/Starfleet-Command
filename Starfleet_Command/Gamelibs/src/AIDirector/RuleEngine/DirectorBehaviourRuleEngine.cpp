@@ -9,5 +9,7 @@ void DirectorBehaviourRuleEngine::EvaluateBehaviourOutput(AiDirector &director)
     {
         // Applies all rules where their conditions have been met
         _rule->ApplyBehaviour(director);
+
+        //auto choice = std::min(_rule, _rule.priority)
     }
 }

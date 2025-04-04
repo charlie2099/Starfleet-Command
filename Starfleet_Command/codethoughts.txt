@@ -41,6 +41,11 @@ What do I want?
 - If the player starts really struggled, spawn some weaker units or halt on spawning any more units until intensity reaches a certain threshold?
 
 
+___Game Flow___
+- Early game: Start with deploying weaker enemy units
+- Mid game: After the player has deployed x amount of ships or of a certain type, the director should start deploying counter attacks, deploying stronger units
+- Late game: Ai becomes even more aggressive, deploying stronger units and focusing on specific lanes
+
 
 ============================================
 ==============USEFUL INFORMATION===============

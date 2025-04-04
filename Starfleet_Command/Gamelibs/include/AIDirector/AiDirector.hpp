@@ -32,8 +32,17 @@ public:
     int GetPlayerScrapAmount() { return _player->GetCurrentScrapAmount(); }
     int GetEnemyScrapAmount() { return _enemy->GetCurrentScrapAmount(); }
     float GetElapsedGameTime() { return _gameClock.getElapsedTime().asSeconds(); }
+    std::unique_ptr<Player>& GetPlayer() { return _player; }
+    std::unique_ptr<Enemy>& GetEnemy() { return _enemy; }
+    int GetSpacelaneCount() { return _spacelanes.size(); }
+    int GetNumOfPlayerUnitsInSpacelane(int spacelaneIndex);
+    int GetNumOfEnemyUnitsInSpacelane(int spacelaneIndex);
+    int GetNumOfPlayerUnitTypesInSpacelane(int spacelaneIndex, StarshipFactory::STARSHIP_TYPE starshipType);
+    int GetNumOfEnemyUnitTypesInSpacelane(int spacelaneIndex, StarshipFactory::STARSHIP_TYPE starshipType);
 
+    bool IsQueueFull() { return _starshipDeploymentManager->IsQueueFull(); }
     bool IsQueueEmpty() { return _starshipDeploymentManager->IsQueueEmpty(); }
+    bool IsEnemyStarshipTypeInQueue(StarshipFactory::STARSHIP_TYPE starshipType);
     bool IsCurrentlyDeployingEnemy() { return _starshipDeploymentManager->IsCurrentlyDeploying(); }
 
 private:
