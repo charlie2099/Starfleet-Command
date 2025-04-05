@@ -48,7 +48,7 @@ public:
 private:
     void UpdateDeploymentStatus_OnDeploymentBegun();
     void SpawnEnemy_OnDeploymentCompleted();
-    void PerformBehaviour_OnDirectorStateChange();
+    void EvaluateBehaviourRules_OnDirectorStateChange();
     std::unique_ptr<DirectorIntensityCalculator> _intensityCalculator;
     std::unique_ptr<DirectorBehaviourCalculator> _behaviourCalculator;
     StateMachine _stateMachine;

@@ -46,6 +46,14 @@ void SceneManager::ChangeScene(Scene::ID id)
     current_scene->Init();
 }
 
+void SceneManager::SetPaused(bool paused)
+{
+    if(current_scene)
+    {
+        current_scene->SetPaused(paused);
+    }
+}
+
 
 
 

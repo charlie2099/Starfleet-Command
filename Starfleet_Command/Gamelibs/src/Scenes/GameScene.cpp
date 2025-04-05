@@ -16,6 +16,22 @@ bool GameScene::Init()
     InitEnemyMothership();
     InitGameplayView();
 
+    _pauseOverlayTexture.loadFromFile("Resources/Textures/square.png");
+    _pauseOverlaySprite.setTexture(_pauseOverlayTexture);
+    _pauseOverlaySprite.setScale(_gameplayView.getSize().x / _pauseOverlaySprite.getGlobalBounds().width, _gameplayView.getSize().y / _pauseOverlaySprite.getGlobalBounds().height);
+    _pauseOverlaySprite.setColor({sf::Color::Black.r, sf::Color::Black.g, sf::Color::Black.b, 125});
+
+    _pauseIconTexture.loadFromFile("Resources/Textures/pause.png");
+    _pauseIconSprite.setTexture(_pauseIconTexture);
+    _pauseIconSprite.setScale(0.8F, 0.8F);
+    _pauseIconSprite.setColor(_predefinedColours.LIGHTBLUE);
+
+    _pauseText.setFont(Chilli::CustomFonts::GetBoldFont());
+    _pauseText.setString("GAME PAUSED");
+    _pauseText.setCharacterSize(14.0F);
+    _pauseText.setFillColor(_predefinedColours.LIGHTBLUE);
+    _pauseText.setOutlineColor(sf::Color::Black);
+
     _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spaceLanes, _gameplayView, true);
 
     auto& playerMothership = _player->GetMothership();
@@ -63,6 +79,11 @@ bool GameScene::Init()
 
 void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
+    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)
+    {
+        SetPaused(not IsPaused());
+    }
+
     _player->EventHandler(window, event);
     HandleViewScrollingKeyboardInput(event);
     _minimap->EventHandler(window, event);
@@ -155,6 +176,18 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     auto mousePos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
 
+    _cursor.Update(window, deltaTime);
+    _cursor.SetCursorPos(window, _gameplayView);
+
+    _pauseIconSprite.setPosition(_gameplayView.getCenter().x - _pauseIconSprite.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseIconSprite.getGlobalBounds().height/2.0F);
+    _pauseText.setPosition(_gameplayView.getCenter().x - _pauseText.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseText.getGlobalBounds().height/2.0F + 40.0F);
+
+    if(IsPaused())
+    {
+        _pauseOverlaySprite.setPosition(_gameplayView.getCenter().x - _pauseOverlaySprite.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseOverlaySprite.getGlobalBounds().height/2.0F);
+        return;
+    }
+
     UpdateGameplayViewMovement(window, deltaTime, mousePos);
 
     _mothershipStatusDisplay->Update(window, deltaTime);
@@ -174,20 +207,13 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
     }
 
-    //_starshipDeploymentManager->SetDeploymentBarPos({_starshipDeploymentButtons[0]->GetPos().x, _starshipDeploymentButtons[0]->GetPos().y - 55.0F});
     _starshipDeploymentManager->SetDeploymentBarPos({_starshipDeploymentButtons[0]->GetPos().x, _starshipDeploymentButtons[0]->GetPos().y + 45.0F});
     _starshipDeploymentManager->Update(window, deltaTime);
     _enemy->SetScrapTextPosition({_mothershipStatusDisplay->GetEnemyMothershipTextPos().x + 15.0F, _mothershipStatusDisplay->GetEnemyMothershipTextPos().y + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().height + 5.0F});
-    //_enemyScrapMetalManager ->SetTextPosition(_mothershipStatusDisplay->GetEnemyMothershipTextPos().x + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().width / 2.0F - _enemyScrapMetalManager->GetTextSize().width / 2.0F, _mothershipStatusDisplay->GetEnemyMothershipTextPos().y + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().height + 10.0F);
-
     _minimap->Update(window, deltaTime);
-    _cursor.Update(window, deltaTime);
-    _cursor.SetCursorPos(window, _gameplayView);
     _player->SetScrapTextPosition({_mothershipStatusDisplay->GetPlayerMothershipTextPos().x, _mothershipStatusDisplay->GetPlayerMothershipTextPos().y + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().height + 5.0F});
     _player->Update(window, deltaTime);
     _enemy->Update(window, deltaTime);
-
-    //UpdateEnemySpawner();
     _aiDirector->Update(window, deltaTime);
 
 
@@ -483,13 +509,19 @@ void GameScene::Render(sf::RenderWindow& window)
 
     window.setView(_gameplayView);
     _cursor.Render(window);
+    if(IsPaused())
+    {
+        window.draw(_pauseOverlaySprite);
+        window.draw(_pauseIconSprite);
+        window.draw(_pauseText);
+    }
 }
 
 void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
 {
     _backgroundParallax->Render(window);
-    _player->Render(window);
-    _enemy->Render(window);
+    _player->RenderGameplaySprites(window);
+    _enemy->RenderGameplaySprites(window);
     _minimap->Render(window);
     for (const auto &lane : _spaceLanes)
     {
@@ -511,8 +543,8 @@ void GameScene::RenderMinimapSprites(sf::RenderWindow &window)
 {
     _backgroundParallax->RenderBackground(window);
     _minimap->RenderGameplayView(window);
-    _player->Render(window);
-    _enemy->Render(window);
+    _player->RenderMinimapSprites(window);
+    _enemy->RenderMinimapSprites(window);
     for (const auto &lane : _spaceLanes)
     {
         lane->Render(window);
@@ -563,8 +595,7 @@ void GameScene::UpdateGameplayViewMovement(const sf::RenderWindow &window, const
     bool isMouseNearRightEdge = static_cast<float>(mousePos.x) >= mouseProximityToRightWindowEdge and mousePos.x < windowWidth;
     bool isViewportLeftEdgeWithinMothershipFocus = viewportLeftBoundary > 0;
     bool isViewportRightEdgeWithinRightSideOfEnemyMothership = viewportRightBoundary < _enemy->GetMothership()->GetPos().x + 60.0F;
-    bool isMouseYposWithinWindowBounds = static_cast<float>(mousePos.y) >= topOffset and
-                                         static_cast<float>(mousePos.y) <= windowHeight - bottomOffset;
+    bool isMouseYposWithinWindowBounds = static_cast<float>(mousePos.y) >= topOffset and static_cast<float>(mousePos.y) <= windowHeight - bottomOffset;
 
     if(viewportLeftBoundary >= 0 and _scrollViewLeft)
     {
@@ -577,17 +608,27 @@ void GameScene::UpdateGameplayViewMovement(const sf::RenderWindow &window, const
 
     if(isMouseNearLeftEdge and isViewportLeftEdgeWithinMothershipFocus and isMouseYposWithinWindowBounds)
     {
-        boundaryEdgeHighlighterBox.setPosition({viewportLeftBoundary,
-                                                _gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
+        boundaryEdgeHighlighterBox.setPosition({viewportLeftBoundary,_gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
         boundaryEdgeHighlighterBox.setFillColor({100, 100, 100, 25});
-        _gameplayView.move(-VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
+        //_gameplayView.move(-VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
+
+        float distanceToLeftEdge = mousePos.x;
+        float speedFactor = 1.0F - (distanceToLeftEdge / edgeOffset);
+        speedFactor = std::max(0.0F, std::min(1.0F, speedFactor));
+        float adjustedScrollSpeed = VIEW_SCROLL_SPEED * speedFactor;
+        _gameplayView.move(-adjustedScrollSpeed * deltaTime.asSeconds(), 0.0F);
+
     }
     else if(isMouseNearRightEdge and isViewportRightEdgeWithinRightSideOfEnemyMothership and isMouseYposWithinWindowBounds)
     {
-        boundaryEdgeHighlighterBox.setPosition({viewportRightBoundary - boundaryEdgeHighlighterBox.getSize().x,
-                                                _gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
+        boundaryEdgeHighlighterBox.setPosition({viewportRightBoundary - boundaryEdgeHighlighterBox.getSize().x,_gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
         boundaryEdgeHighlighterBox.setFillColor({100, 100, 100, 25});
-        _gameplayView.move(VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
+
+        float distanceToRightEdge = windowWidth - mousePos.x;
+        float speedFactor = 1.0F - (distanceToRightEdge / edgeOffset);
+        speedFactor = std::max(0.0F, std::min(1.0F, speedFactor));
+        float adjustedScrollSpeed = VIEW_SCROLL_SPEED * speedFactor;
+        _gameplayView.move(adjustedScrollSpeed * deltaTime.asSeconds(), 0.0F);
     }
     else
     {

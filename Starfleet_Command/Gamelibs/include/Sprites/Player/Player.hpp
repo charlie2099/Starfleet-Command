@@ -25,7 +25,8 @@ public:
    ~Player() = default;
     void EventHandler(sf::RenderWindow &window, sf::Event &event);
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
-    void Render(sf::RenderWindow& window);
+    void RenderGameplaySprites(sf::RenderWindow& window);
+    void RenderMinimapSprites(sf::RenderWindow& window);
 
     /// Behaviours
     void MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset);

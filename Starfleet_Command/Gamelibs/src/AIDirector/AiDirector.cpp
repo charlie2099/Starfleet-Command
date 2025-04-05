@@ -14,7 +14,7 @@ AiDirector::AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& 
     _stateMachine.ChangeState(typeid(DirectorBuildUpState));
 
     // TODO: Subscribe to StateMachine OnStateChanged event and call behaviourCalculator.EvaluateBehaviourOutput()?
-    DirectorEventBus::Subscribe(DirectorEventBus::DirectorEvent::EnteredNewState, [this]() { PerformBehaviour_OnDirectorStateChange(); });
+    DirectorEventBus::Subscribe(DirectorEventBus::DirectorEvent::EnteredNewState, [this]() { EvaluateBehaviourRules_OnDirectorStateChange(); });
 
     _starshipDeploymentManager = std::make_unique<StarshipDeploymentManager>(5/*STARSHIP_MAX_QUEUE_SIZE*/, _enemy->GetMothership()->GetColour());
     _starshipDeploymentManager->SetDeploymentBarWaitingText("The Director is analysing...");
@@ -124,7 +124,7 @@ void AiDirector::SpawnEnemy_OnDeploymentCompleted()
     }
 }
 
-void AiDirector::PerformBehaviour_OnDirectorStateChange()
+void AiDirector::EvaluateBehaviourRules_OnDirectorStateChange()
 {
     _behaviourCalculator->EvaluateBehaviourOutput(*this);
     _debugDirectorStateText.setString("Director State: " + _stateMachine.GetCurrentStateName());

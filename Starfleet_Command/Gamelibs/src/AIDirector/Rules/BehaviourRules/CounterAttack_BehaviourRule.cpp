@@ -22,7 +22,7 @@ void CounterAttack_BehaviourRule::ApplyBehaviour(AiDirector &director)
 
     for (int spacelane = 0; spacelane < director.GetSpacelaneCount(); ++spacelane)
     {
-        if(director.GetNumOfPlayerUnitTypesInSpacelane(spacelane, _starshipTypeToCounter) > 0 &&
+        if(director.GetNumOfPlayerUnitTypesInSpacelane(spacelane, _starshipTypeToCounter) > 0 and
            director.GetNumOfEnemyUnitTypesInSpacelane(spacelane, _counterStarshipTypes[0]) < director.GetNumOfPlayerUnitTypesInSpacelane(spacelane, _starshipTypeToCounter))
         {
             for (auto & counterStarshipType : _counterStarshipTypes)

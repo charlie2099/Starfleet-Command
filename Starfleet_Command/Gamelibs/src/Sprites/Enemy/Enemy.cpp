@@ -29,13 +29,21 @@ void Enemy::Update(sf::RenderWindow &window, sf::Time deltaTime)
     }
 }
 
-void Enemy::Render(sf::RenderWindow &window)
+void Enemy::RenderGameplaySprites(sf::RenderWindow &window)
 {
     for (auto& ship : starship)
     {
         ship->Render(window);
     }
     _scrapMetalManager->Render(window);
+}
+
+void Enemy::RenderMinimapSprites(sf::RenderWindow &window)
+{
+    for (auto& ship : starship)
+    {
+        ship->Render(window);
+    }
 }
 
 void Enemy::MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset)

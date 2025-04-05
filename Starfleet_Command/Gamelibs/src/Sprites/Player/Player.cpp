@@ -37,13 +37,21 @@ void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
     }
 }
 
-void Player::Render(sf::RenderWindow &window)
+void Player::RenderGameplaySprites(sf::RenderWindow &window)
 {
     for (auto& ship : starship)
     {
         ship->Render(window);
     }
     _scrapMetalManager->Render(window);
+}
+
+void Player::RenderMinimapSprites(sf::RenderWindow &window)
+{
+    for (auto& ship : starship)
+    {
+        ship->Render(window);
+    }
 }
 
 void Player::MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset)

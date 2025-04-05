@@ -9,7 +9,7 @@ void DirectorBuildUpState::OnStateEnter()
     DirectorEventBus::Publish(DirectorEventBus::DirectorEvent::EnteredBuildUpState);
     DirectorEventBus::Publish(DirectorEventBus::DirectorEvent::EnteredNewState);
     // TODO: Call or perform BuildUp state specific behaviour here?
-    //_aiDirector.PerformBehaviour_OnDirectorStateChange();
+    //_aiDirector.EvaluateBehaviourRules_OnDirectorStateChange();
     //_aiDirector.QueueEnemy()
 }
 
