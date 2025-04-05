@@ -4,6 +4,8 @@ StarshipDeploymentManager::StarshipDeploymentManager(int maxQueueSize, sf::Color
 {
     _maxQueueSize = maxQueueSize;
     _starshipDeploymentBar.SetColour(deploymentBarColour);
+    _starshipDeploymentBar.SetProgressBarText("Awaiting orders");
+    _starshipDeploymentBar.SetProgressBarWaitingText("Awaiting orders");
     _starshipQueueBoxTexture.loadFromFile("Resources/Textures/starfleet_selection_crosshairs.png");
 
     for (int i = 0; i < _maxQueueSize; ++i)
@@ -45,8 +47,8 @@ void StarshipDeploymentManager::Render(sf::RenderWindow &window)
 {
     _starshipDeploymentBar.Render(window);
 
-    if(not _starshipDeploymentBar.InProgress())
-        return;
+    /*if(not _starshipDeploymentBar.InProgress())
+        return;*/
 
     for (int i = 0; i < _maxQueueSize; ++i)
     {
@@ -76,7 +78,52 @@ void StarshipDeploymentManager::RemoveFirstStarshipInQueue()
     _starshipQueueBoxIconSprites.erase(_starshipQueueBoxIconSprites.begin());
 }
 
+bool StarshipDeploymentManager::IsStarshipTypeInQueue(StarshipFactory::STARSHIP_TYPE starshipType)
+{
+    std::queue<StarshipFactory::STARSHIP_TYPE> tempStarshipQueue = _starshipTypeDeploymentQueue;
+    std::vector<StarshipFactory::STARSHIP_TYPE> starshipVector;
+
+    while (not tempStarshipQueue.empty())
+    {
+        starshipVector.push_back(tempStarshipQueue.front());
+        tempStarshipQueue.pop();
+    }
+
+    return std::find(starshipVector.begin(), starshipVector.end(), starshipType) != starshipVector.end();
+}
+
+void StarshipDeploymentManager::ResetDeploymentBar()
+{
+    _starshipDeploymentBar.ResetProgressBar();
+}
+
 void StarshipDeploymentManager::SetDeploymentBarPos(sf::Vector2<float> pos)
 {
     _deploymentBarPosition = pos;
+}
+
+void StarshipDeploymentManager::SetDeploymentBarText(const std::string &text)
+{
+    _starshipDeploymentBar.SetProgressBarText(text);
+}
+
+void StarshipDeploymentManager::SetDeploymentBarWaitingText(const std::string &text)
+{
+    _starshipDeploymentBar.SetProgressBarText(text);
+    _starshipDeploymentBar.SetProgressBarWaitingText(text);
+}
+
+void StarshipDeploymentManager::SetDeploymentTime(float time)
+{
+    _starshipDeploymentBar.SetTimeToCompleteTask(time);
+}
+
+void StarshipDeploymentManager::SetDeploymentStatus(bool status)
+{
+    _starshipDeploymentBar.SetProgressBarStatus(status);
+}
+
+void StarshipDeploymentManager::AddBasicObserver(const std::pair<ProgressBar::EventID, std::function<void()>>& observer)
+{
+    _starshipDeploymentBar.AddBasicObserver(observer);
 }

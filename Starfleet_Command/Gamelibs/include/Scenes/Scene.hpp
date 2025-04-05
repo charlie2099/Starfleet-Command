@@ -31,8 +31,12 @@ class Scene
     void SetScene(Scene::ID scene) { scene_id = scene; }
     [[nodiscard]] ID GetScene() const { return scene_id; }
 
- private:
+    void SetPaused(bool paused) { _isPaused = paused; }
+    bool IsPaused() const { return _isPaused; }
+
+private:
     ID scene_id{};
+    bool _isPaused = false;
 };
 
 

@@ -7,7 +7,7 @@ Battleship::Battleship(int spacelane)
     _healthComponent.SetHealth(2500);
     _speed = 30;
     _startSpeed = _speed;
-    _trainingSpeed = 0.3f;
+    _deployTimeSpeed = 5.0F;
     _damage = 75;
     _damageScaleFactor = 0.75f;
     _fireRate = 3.0f;
@@ -19,7 +19,7 @@ Battleship::Battleship(int spacelane)
     _assignedLaneIndex = spacelane;
     _starshipIndex = 4;
 
-    _healthBar = std::make_unique<HealthBar>(_healthComponent);
+    _healthBar = std::make_unique<HealthBar>(_healthComponent, false);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
     _maxHealth = _healthComponent.GetHealth();
 
@@ -89,7 +89,7 @@ void Battleship::Update(sf::RenderWindow &window, sf::Time deltaTime)
     _healthBar->Update(window, deltaTime);
     _healthBar->SetPos({xPos, yPos});
 
-    if(_healthBar->GetHealth() < _maxHealth/* && _healthBar->GetHealth() > 0*/)
+    if(_healthBar->GetHealth() < _maxHealth/* and _healthBar->GetHealth() > 0*/)
     {
         _isHealthBarVisible = true;
     }
@@ -223,7 +223,7 @@ bool Battleship::IsFriendlyStarshipAhead(const std::unique_ptr<IStarship> &stars
     }
 
     float distance = std::abs(starship->GetPos().x - this->GetPos().x);
-    return isAhead && distance < 100.0F;
+    return isAhead and distance < 100.0F;
 }
 
 bool Battleship::IsEnemyStarshipAhead(const std::unique_ptr<IStarship> &enemyStarship)
@@ -238,8 +238,8 @@ bool Battleship::CollidesWith(sf::Rect<float> spriteBounds)
 
 bool Battleship::CanEngageWith(const std::unique_ptr<IStarship> &starship)
 {
-    if(this->GetLaneIndex() == starship->GetLaneIndex() - 1 ||
-            this->GetLaneIndex() == starship->GetLaneIndex() ||
+    if(this->GetLaneIndex() == starship->GetLaneIndex() - 1 or
+            this->GetLaneIndex() == starship->GetLaneIndex() or
             this->GetLaneIndex() == starship->GetLaneIndex() + 1)
     {
         return true;

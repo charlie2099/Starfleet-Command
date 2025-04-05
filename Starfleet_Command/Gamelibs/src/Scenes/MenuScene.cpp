@@ -68,7 +68,7 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     if(_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->IsCursorHoveredOver())
     {
-        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
         {
             if (_isMusicOn)
             {
@@ -294,9 +294,9 @@ void MenuScene::InitBackgroundShips()
 
     for (int i = 0; i < BACKGROUND_SHIPS; ++i)
     {
-        int rand_x = starshipXPosRNG.GenerateValue();
-        int rand_y = starshipYPosRNG.GenerateValue();
-        int rand_ship = starshipTypeRNG.GenerateValue();
+        int rand_x = starshipXPosRNG.GenerateNumber();
+        int rand_y = starshipYPosRNG.GenerateNumber();
+        int rand_ship = starshipTypeRNG.GenerateNumber();
         std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(static_cast<StarshipFactory::STARSHIP_TYPE>(rand_ship));
         _starship.emplace_back(std::move(newStarship));
         _starship[i]->SetPosition({static_cast<float>(rand_x), static_cast<float>(rand_y)});
@@ -313,7 +313,7 @@ void MenuScene::InitBackgroundShips()
 void MenuScene::InitGameVersionText()
 {
     _gameVersionText.setFont(Chilli::CustomFonts::GetRegularFont());
-    _gameVersionText.setString("PRE-ALPHA BUILD v0.0.4");
+    _gameVersionText.setString("PRE-ALPHA BUILD v0.1.0");
     _gameVersionText.setCharacterSize(12);
     _gameVersionText.setFillColor(sf::Color::White);
     _gameVersionText.setOutlineColor(sf::Color::Black);

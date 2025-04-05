@@ -10,18 +10,9 @@ StarshipDeploymentButton::StarshipDeploymentButton(StarshipFactory::STARSHIP_TYP
 
     _button = std::make_unique<Button>("Resources/Textures/command_button_" + std::to_string(_starshipTemplateToBeDeployed->GetStarshipIndex()) + ".png");
     _button->SetColour(DEFAULT_BTN_COLOUR);
-    _button->SetScale({0.20F, 0.20F});
+    _button->SetScale({0.15F, 0.15F});
 
-    _costText.setString(std::to_string(_starshipTemplateToBeDeployed->GetBuildCost()));
-    _costText.setFillColor(hoverColour);
-    _costText.setOutlineColor(sf::Color::Black);
-    _costText.setOutlineThickness(1.0F);
-    _costText.setFont(Chilli::CustomFonts::GetBoldFont());
-    _costText.setCharacterSize(8);
-
-    _cost = _starshipTemplateToBeDeployed->GetBuildCost();
-
-    _nameText.setString(static_cast<std::string>(_starshipTemplateToBeDeployed->GetStarshipName()));
+    _nameText.setString(static_cast<std::string>(_starshipTemplateToBeDeployed->GetStarshipName() + " - " + std::to_string(_starshipTemplateToBeDeployed->GetBuildCost())));
     _nameText.setFillColor(hoverColour);
     _nameText.setOutlineColor(sf::Color::Black);
     _nameText.setOutlineThickness(1);
@@ -35,9 +26,9 @@ StarshipDeploymentButton::StarshipDeploymentButton(StarshipFactory::STARSHIP_TYP
 
 void StarshipDeploymentButton::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
-    if (_button->IsCursorHoveredOver() && _isAffordable)
+    if (_button->IsCursorHoveredOver() and _isAffordable)
     {
-        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
         {
             if(not _isPlacingStarship)
             {
@@ -61,7 +52,7 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
         _isNameVisible = false;
     }
 
-    if (_button->IsCursorHoveredOver() && _isAffordable)
+    if (_button->IsCursorHoveredOver() and _isAffordable)
     {
         if (_isPlacingStarship)
         {
@@ -73,12 +64,12 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
         }
     }
 
-    if (not _button->IsCursorHoveredOver() && _isAffordable)
+    if (not _button->IsCursorHoveredOver() and _isAffordable)
     {
         _button->SetColour(DEFAULT_BTN_COLOUR);
     }
 
-    if (not _button->IsCursorHoveredOver() && not _isAffordable)
+    if (not _button->IsCursorHoveredOver() and not _isAffordable)
     {
         _button->SetColour(_predefinedColours.LIGHTRED);
     }
@@ -90,7 +81,6 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
     _button->SetPos(_position);
 
     _nameText.setPosition(_button->GetPos().x, _button->GetPos().y - 15.0F);
-    _costText.setPosition({_button->GetPos().x + _button->GetBounds().width - _costText.getGlobalBounds().width - 2.5F, _button->GetPos().y + 5.0F});
 
     if(_isStarshipPreviewSpriteVisible)
     {
@@ -103,7 +93,6 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
 void StarshipDeploymentButton::Render(sf::RenderWindow &window)
 {
     _button->Render(window);
-    window.draw(_costText);
     if(_isNameVisible)
     {
         window.draw(_nameText);

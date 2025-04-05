@@ -17,6 +17,7 @@ class SceneManager
     void Render(sf::RenderWindow& window);
 
     void ChangeScene(Scene::ID id);
+    void SetPaused(bool paused);
 
  private:
     std::unique_ptr<Scene> current_scene;

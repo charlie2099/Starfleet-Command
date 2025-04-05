@@ -9,11 +9,13 @@ ProgressBar::ProgressBar()
     _outsideBarSpriteComponent.SetPos({25, 25});
     _outerPosition = _outsideBarSpriteComponent.GetPos();
 
-    _text.setString("Task In Progress...");
+    _text.setString("");
     _text.setFont(Chilli::CustomFonts::GetBoldFont());
     _text.setCharacterSize(12);
     _text.setPosition(_outsideBarSpriteComponent.GetPos().x + 6, _outsideBarSpriteComponent.GetPos().y + _outsideBarSpriteComponent.GetSprite().getGlobalBounds().height + 5);
     _text.setOutlineColor(sf::Color::Black);
+
+    _waitingForNextTaskText.setString("Waiting for next task");
 
     _insideBarSpriteComponent.LoadSprite("Resources/Textures/panel_image2.png"); // TODO: Replace with sf::RectangleShape
     _insideBarSpriteComponent.GetSprite().setScale(1.175f, 0.125f);
@@ -32,23 +34,27 @@ void ProgressBar::Update(sf::RenderWindow& window, sf::Time time)
 {
     if(_taskIsProgressing)
     {
-        if(_insideBarSpriteComponent.GetSprite().getScale().x == 0.0F)
+        if(_elapsedTime == 0.0F)
         {
             InvokeSimpleEvent(EventID::TASK_STARTED);
         }
 
-        if(_insideBarSpriteComponent.GetSprite().getScale().x <= 1.175f)
+        _elapsedTime += time.asSeconds();
+
+        // Calculate progress based on elapsed time and total deployment time
+        float progress = std::min(1.175f, (_elapsedTime / _timeToCompleteTask) * 1.175f);
+
+        _insideBarSpriteComponent.SetPos({_innerPosition.x, _innerPosition.y});
+        _insideBarSpriteComponent.GetSprite().setScale(progress, 0.125f);
+
+        if(_elapsedTime >= _timeToCompleteTask)
         {
-            _insideBarSpriteComponent.SetPos({_innerPosition.x, _innerPosition.y});
-            auto scale_x = _insideBarSpriteComponent.GetSprite().getScale().x + _progressSpeed * time.asSeconds();
-            auto scale_y = 0.125f;
-            _insideBarSpriteComponent.GetSprite().setScale(scale_x, scale_y);
-        }
-        else
-        {
+            _insideBarSpriteComponent.GetSprite().setScale(1.175F, 0.125F);
             _insideBarSpriteComponent.GetSprite().setScale(0.0f, 0.125f);
             _taskIsComplete = true;
             _taskIsProgressing = false;
+            _elapsedTime = 0.0F;
+            _text.setString(_waitingForNextTaskText.getString());
             InvokeSimpleEvent(EventID::TASK_COMPLETED);
         }
     }
@@ -56,11 +62,11 @@ void ProgressBar::Update(sf::RenderWindow& window, sf::Time time)
 
 void ProgressBar::Render(sf::RenderWindow &window)
 {
+    window.draw(_outsideBarSpriteComponent.GetSprite()); // QUESTION: Better with or without outer bar?
+    window.draw(_insideBarSpriteComponent.GetSprite());
+    window.draw(_text);
     if(_taskIsProgressing)
     {
-        window.draw(_outsideBarSpriteComponent.GetSprite()); // QUESTION: Better with or without outer bar?
-        window.draw(_insideBarSpriteComponent.GetSprite());
-        window.draw(_text);
     }
 }
 
@@ -82,22 +88,27 @@ void ProgressBar::SetPosition(sf::Vector2<float> pos)
     _outerPosition = _outsideBarSpriteComponent.GetPos();
 }
 
-void ProgressBar::SetProgressSpeed(float speed)
+void ProgressBar::SetTimeToCompleteTask(float timeInSeconds)
 {
-    _progressSpeed = speed;
+    _timeToCompleteTask = timeInSeconds;
 }
 
-void ProgressBar::SetProgressText(const std::string& text)
+void ProgressBar::SetProgressBarText(const std::string& text)
 {
     _text.setString(text);
 }
 
-void ProgressBar::SetProgressStatus(bool status)
+void ProgressBar::SetProgressBarWaitingText(const std::string &text)
+{
+    _waitingForNextTaskText.setString(text);
+}
+
+void ProgressBar::SetProgressBarStatus(bool status)
 {
     _taskIsProgressing = status;
 }
 
-void ProgressBar::ResetProgress()
+void ProgressBar::ResetProgressBar()
 {
     _taskIsComplete = false;
     _taskIsProgressing = false;

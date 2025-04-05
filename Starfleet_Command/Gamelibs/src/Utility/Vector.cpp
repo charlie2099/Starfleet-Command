@@ -17,9 +17,9 @@ double Chilli::Vector::Distance(sf::Vector2f a, sf::Vector2f b)
 
 bool Chilli::Vector::BoundsCheck(sf::Vector2<float> mouse_vec, sf::FloatRect sprite_bounds)
 {
-    return (mouse_vec.x > sprite_bounds.left &&
-    mouse_vec.y > sprite_bounds.top &&
-    mouse_vec.x < sprite_bounds.left + sprite_bounds.width &&
+    return (mouse_vec.x > sprite_bounds.left and
+    mouse_vec.y > sprite_bounds.top and
+    mouse_vec.x < sprite_bounds.left + sprite_bounds.width and
     mouse_vec.y < sprite_bounds.top + sprite_bounds.height);
 }
 

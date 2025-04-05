@@ -1,7 +1,7 @@
 #ifndef STARFLEET_COMMAND_OPTIONSSCENE_HPP
 #define STARFLEET_COMMAND_OPTIONSSCENE_HPP
 #include "Scenes/Scene.hpp"
-#include "Cursor.hpp"
+#include "Utility/Cursor.hpp"
 
 class OptionsScene : public Scene
 {

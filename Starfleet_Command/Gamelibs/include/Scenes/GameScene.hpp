@@ -1,7 +1,7 @@
 #ifndef STARFLEET_COMMAND_GAMESCENE_HPP
 #define STARFLEET_COMMAND_GAMESCENE_HPP
 #include "Scenes/Scene.hpp"
-#include "Cursor.hpp"
+#include "Utility/Cursor.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
 #include "Sprites/Player/Player.hpp"
 #include "Interfaces/IStarship.hpp"
@@ -17,7 +17,8 @@
 #include <random>
 #include <chrono>
 #include "queue"
-#include "../../RNG.hpp"
+#include "Utility/RNG.hpp"
+#include "AIDirector/AiDirector.hpp"
 
 class GameScene : public Scene
 {
@@ -44,7 +45,6 @@ private:
 
     /// Update functions
     void UpdateGameplayViewMovement(const sf::RenderWindow &window, const sf::Time &deltaTime, const sf::Vector2i &mousePos);
-    void UpdateEnemySpawner();
     void UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &window, sf::Time &deltaTime);
 
     /// Render functions
@@ -67,20 +67,37 @@ private:
     const int NUM_OF_STARS = 750;
     std::unique_ptr<ParallaxBackground> _backgroundParallax;
 
-    /// Sprites
-    Player _player;
-    Enemy _enemy;
+    /// Teams
+    std::unique_ptr<Player> _player;
+    std::unique_ptr<Enemy> _enemy;
+    const int STARTING_SCRAP_METAL = 4000;
+
+    /// Ai Director
+    std::unique_ptr<AiDirector> _aiDirector;
 
     /// Views (Main view & Minimap)
     bool _scrollViewLeft = false;
     bool _scrollViewRight = false;
-    const float VIEW_SCROLL_SPEED = 300.0F;
+    const float VIEW_SCROLL_SPEED = 600.0F;
     sf::View _gameplayView{};
     std::unique_ptr<Minimap> _minimap;
+    sf::RectangleShape boundaryEdgeHighlighterBox;
+    const float MOUSE_WINDOW_EDGE_OFFSET_PCT = 0.10F; // 10% of window size
+    const float MOUSE_WINDOW_TOP_OFFSET_PCT = 0.20F;
+    const float MOUSE_WINDOW_BOTTOM_OFFSET_PCT = 0.21F;
+
+    /// Pause
+    sf::Texture _pauseIconTexture;
+    sf::Sprite _pauseIconSprite;
+    sf::Texture _pauseOverlayTexture;
+    sf::Sprite _pauseOverlaySprite;
+    sf::Text _pauseText;
 
     /// Space Lanes
     const float LANE_ROW_SPACING = 35.0F;
     const int NUM_OF_LANES = 5;
+    const sf::Color HIGHLIGHT_LANE_COLOUR = sf::Color(100, 100, 100, 100.0F);
+    const sf::Color DEFAULT_LANE_COLOUR = sf::Color(100, 100, 100, 25.0F);
     std::vector<std::unique_ptr<SpaceLane>> _spaceLanes;
 
     /// Player Spawning
@@ -89,18 +106,13 @@ private:
     std::unique_ptr<StarshipDeploymentManager> _starshipDeploymentManager;
     std::array<std::unique_ptr<StarshipDeploymentButton>, NUM_OF_BUTTONS> _starshipDeploymentButtons;
 
-    /// Enemy Spawning TODO: Enemy spawner class
-    float _enemySpawnTimer = 3.0f;
-    float _enemySpawnRate = 5.0f;
+    /// Enemy Spawning TODO: Enemy spawner class?
+    float _enemySpawnTimer = 3.0F;
+    float _enemySpawnRate = 5.0F;
     sf::Clock _enemySpawnTimerClock;
 
-    /// Scrap Metal Managers
-    const int STARTING_SCRAP_METAL = 5000;
-    std::unique_ptr<ScrapMetalManager> _playerScrapMetalManager;
-    std::unique_ptr<ScrapMetalManager> _enemyScrapMetalManager;
-
     /// Music & Sound Effects
-    bool _isMusicOn = true;
+    bool _isMusicOn = false;
     static const int MUSIC_ON_BUTTON = 0;
     static const int MUSIC_OFF_BUTTON = 1;
     sf::Music _gameMusic;

@@ -7,7 +7,7 @@ Destroyer::Destroyer(int spacelane)
     _healthComponent.SetHealth(1500);
     _speed = 40;
     _startSpeed = _speed;
-    _trainingSpeed = 0.2f;
+    _deployTimeSpeed = 10.0F;
     _damage = 150;
     _damageScaleFactor = 1.0f;
     _fireRate = 3.0f;
@@ -19,7 +19,7 @@ Destroyer::Destroyer(int spacelane)
     _assignedLaneIndex = spacelane;
     _starshipIndex = 3;
 
-    _healthBar = std::make_unique<HealthBar>(_healthComponent);
+    _healthBar = std::make_unique<HealthBar>(_healthComponent, false);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
     _maxHealth = _healthComponent.GetHealth();
 
@@ -223,7 +223,7 @@ bool Destroyer::IsFriendlyStarshipAhead(const std::unique_ptr<IStarship> &starsh
     }
 
     float distance = std::abs(starship->GetPos().x - this->GetPos().x);
-    return isAhead && distance < 100.0F;
+    return isAhead and distance < 100.0F;
 }
 
 bool Destroyer::IsEnemyStarshipAhead(const std::unique_ptr<IStarship> &enemyStarship)
@@ -238,10 +238,10 @@ bool Destroyer::CollidesWith(sf::Rect<float> spriteBounds)
 
 bool Destroyer::CanEngageWith(const std::unique_ptr<IStarship> &starship)
 {
-    if(this->GetLaneIndex() == starship->GetLaneIndex() - 2 ||
-            this->GetLaneIndex() == starship->GetLaneIndex() - 1 ||
-            this->GetLaneIndex() == starship->GetLaneIndex() ||
-            this->GetLaneIndex() == starship->GetLaneIndex() + 1 ||
+    if(this->GetLaneIndex() == starship->GetLaneIndex() - 2 or
+            this->GetLaneIndex() == starship->GetLaneIndex() - 1 or
+            this->GetLaneIndex() == starship->GetLaneIndex() or
+            this->GetLaneIndex() == starship->GetLaneIndex() + 1 or
             this->GetLaneIndex() == starship->GetLaneIndex() + 2)
     {
         return true;

@@ -19,7 +19,7 @@ public:
     void SetScrapText(const std::string& scrapMetalText);
     void SetTextPosition(float xPos, float yPos);
 
-    int GetCurrentScrapMetalAmount() const { return _scrapMetalCounter; }
+    int GetCurrentScrapAmount() const { return _scrapMetalCounter; }
     sf::Rect<float> GetTextSize() { return _scrapMetalText.getGlobalBounds(); }
 
     //bool IsAffordable(int cost) const { return _scrapMetalCounter >= cost; }

@@ -14,22 +14,35 @@ bool GameScene::Init()
     InitPlayerMothership();
     InitSpaceLanes();
     InitEnemyMothership();
-
-    auto& playerMothership = _player.GetMothership();
-    auto& enemyMothership = _enemy.GetMothership();
-
-    _playerScrapMetalManager = std::make_unique<ScrapMetalManager>(_predefinedColours.GRAY,playerMothership->GetColour(), STARTING_SCRAP_METAL);
-    _enemyScrapMetalManager = std::make_unique<ScrapMetalManager>(_predefinedColours.GRAY,enemyMothership->GetColour(), STARTING_SCRAP_METAL);
-
     InitGameplayView();
 
+    _pauseOverlayTexture.loadFromFile("Resources/Textures/square.png");
+    _pauseOverlaySprite.setTexture(_pauseOverlayTexture);
+    _pauseOverlaySprite.setScale(_gameplayView.getSize().x / _pauseOverlaySprite.getGlobalBounds().width, _gameplayView.getSize().y / _pauseOverlaySprite.getGlobalBounds().height);
+    _pauseOverlaySprite.setColor({sf::Color::Black.r, sf::Color::Black.g, sf::Color::Black.b, 125});
+
+    _pauseIconTexture.loadFromFile("Resources/Textures/pause.png");
+    _pauseIconSprite.setTexture(_pauseIconTexture);
+    _pauseIconSprite.setScale(0.8F, 0.8F);
+    _pauseIconSprite.setColor(_predefinedColours.LIGHTBLUE);
+
+    _pauseText.setFont(Chilli::CustomFonts::GetBoldFont());
+    _pauseText.setString("GAME PAUSED");
+    _pauseText.setCharacterSize(14.0F);
+    _pauseText.setFillColor(_predefinedColours.LIGHTBLUE);
+    _pauseText.setOutlineColor(sf::Color::Black);
+
+    _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spaceLanes, _gameplayView, true);
+
+    auto& playerMothership = _player->GetMothership();
+    auto& enemyMothership = _enemy->GetMothership();
     _mothershipStatusDisplay = std::make_unique<MothershipStatusDisplay>(playerMothership, enemyMothership, _gameplayView);
 
-    _starshipDeploymentManager = std::make_unique<StarshipDeploymentManager>(STARSHIP_MAX_QUEUE_SIZE, playerMothership->GetColour());
+    _starshipDeploymentManager = std::make_unique<StarshipDeploymentManager>(STARSHIP_MAX_QUEUE_SIZE, _player->GetTeamColour());
 
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
-        _starshipDeploymentButtons[i] = std::make_unique<StarshipDeploymentButton>(static_cast<StarshipFactory::STARSHIP_TYPE>(i), playerMothership->GetColour());;
+        _starshipDeploymentButtons[i] = std::make_unique<StarshipDeploymentButton>(static_cast<StarshipFactory::STARSHIP_TYPE>(i), _player->GetTeamColour());
     }
 
     InitMinimapView();
@@ -66,7 +79,12 @@ bool GameScene::Init()
 
 void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
-    _player.EventHandler(window, event);
+    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)
+    {
+        SetPaused(not IsPaused());
+    }
+
+    _player->EventHandler(window, event);
     HandleViewScrollingKeyboardInput(event);
     _minimap->EventHandler(window, event);
 
@@ -80,14 +98,14 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
-        if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && _starshipDeploymentButtons[i]->IsPlacingStarship())
+        if (event.type == sf::Event::MouseButtonReleased and event.mouseButton.button == sf::Mouse::Left and _starshipDeploymentButtons[i]->IsPlacingStarship())
         {
             for (int j = 0; j < _spaceLanes.size(); ++j)
             {
                 if(_spaceLanes[j]->IsCursorHoveredOver())
                 {
-                    _playerScrapMetalManager->SpendScrap(_starshipDeploymentButtons[i]->GetBuildCost());
-                    _playerScrapMetalManager->SetScrapText("Scrap Metal: " + std::to_string(_playerScrapMetalManager->GetCurrentScrapMetalAmount()));
+                    _player->SpendScrap(_starshipDeploymentButtons[i]->GetBuildCost());
+                    _player->SetScrapText("Scrap Metal: " + std::to_string(_player->GetCurrentScrapAmount()));
 
                     _starshipDeploymentManager->AddStarshipToQueue(_starshipDeploymentButtons[i]->GetStarshipType(), j);
 
@@ -107,23 +125,18 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     for (const auto & _spaceLane : _spaceLanes)
     {
-        if(_spaceLane->IsCursorHoveredOver())
-        {
-            _spaceLane->SetColour(sf::Color(100, 100, 100, 100.0F));
-        }
-        else
-        {
-            _spaceLane->SetColour(sf::Color(100, 100, 100, 25.0F));
-        }
+        _spaceLane->SetColour(_spaceLane->IsCursorHoveredOver() ? HIGHLIGHT_LANE_COLOUR : DEFAULT_LANE_COLOUR);
     }
 
-    for (int i = 0; i < _player.GetStarshipCount(); ++i)
+
+
+    for (int i = 1; i < _player->GetStarshipCount(); ++i)
     {
-        if (_player.GetStarships()[i]->IsMouseOver())
+        if (_player->GetStarships()[i]->IsMouseOver())
         {
-            for (int j = 0; j < _player.GetStarships()[i]->GetAttackableLanes().size(); ++j)
+            for (int j = 0; j < _player->GetStarships()[i]->GetAttackableLanes().size(); ++j)
             {
-                _spaceLanes[_player.GetStarships()[i]->GetAttackableLanes()[j]]->SetColour(sf::Color(_predefinedColours.LIGHTGREEN.r, _predefinedColours.LIGHTGREEN.g, _predefinedColours.LIGHTGREEN.b, 50.0F));
+                _spaceLanes[_player->GetStarships()[i]->GetAttackableLanes()[j]]->SetColour(sf::Color(_predefinedColours.LIGHTGREEN.r, _predefinedColours.LIGHTGREEN.g, _predefinedColours.LIGHTGREEN.b, 50.0F));
             }
         }
     }
@@ -133,7 +146,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     if(_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->IsCursorHoveredOver())
     {
-        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
         {
             if (_isMusicOn)
             {
@@ -149,7 +162,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     /*if(_nextMusicTrackButton->IsCursorHoveredOver())
     {
-        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
         {
             if(_isMusicOn)
             {
@@ -162,16 +175,30 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     auto mousePos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
+
+    _cursor.Update(window, deltaTime);
+    _cursor.SetCursorPos(window, _gameplayView);
+
+    _pauseIconSprite.setPosition(_gameplayView.getCenter().x - _pauseIconSprite.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseIconSprite.getGlobalBounds().height/2.0F);
+    _pauseText.setPosition(_gameplayView.getCenter().x - _pauseText.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseText.getGlobalBounds().height/2.0F + 40.0F);
+
+    if(IsPaused())
+    {
+        _pauseOverlaySprite.setPosition(_gameplayView.getCenter().x - _pauseOverlaySprite.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseOverlaySprite.getGlobalBounds().height/2.0F);
+        return;
+    }
+
     UpdateGameplayViewMovement(window, deltaTime, mousePos);
+
+    _mothershipStatusDisplay->Update(window, deltaTime);
 
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
-        auto column_spacing = 10.0F;
-        //auto xPos = _gameplayView.getCenter().x - _starshipDeploymentButtons[0]->GetBounds().width / 2.0F - Constants::WINDOW_WIDTH / 8.0F + (i * (_starshipDeploymentButtons[0]->GetBounds().width + column_spacing));
-        auto xPos = _gameplayView.getCenter().x - (_starshipDeploymentButtons[i]->GetBounds().width/2.0F * NUM_OF_BUTTONS + (column_spacing/2.0F * NUM_OF_BUTTONS))  + (i * (_starshipDeploymentButtons[0]->GetBounds().width + column_spacing));
-        auto yPos = _gameplayView.getCenter().y + Constants::WINDOW_HEIGHT * 0.4F;
+        auto column_spacing = 5.0F;
+        auto xPos = _mothershipStatusDisplay->GetPlayerMothershipTextPos().x + (i * (_starshipDeploymentButtons[0]->GetBounds().width + column_spacing));
+        auto yPos = _mothershipStatusDisplay->GetPlayerMothershipTextPos().y + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().height*3.75F;
         _starshipDeploymentButtons[i]->SetPos({xPos, yPos});
-        _starshipDeploymentButtons[i]->SetAffordable(_playerScrapMetalManager->GetCurrentScrapMetalAmount() >= _starshipDeploymentButtons[i]->GetBuildCost()); // NOTE: Unsure about this
+        _starshipDeploymentButtons[i]->SetAffordable(_player->GetCurrentScrapAmount() >= _starshipDeploymentButtons[i]->GetBuildCost()); // NOTE: Unsure about this
         _starshipDeploymentButtons[i]->Update(window, deltaTime);
 
         if(_starshipDeploymentManager->IsQueueFull())
@@ -180,41 +207,85 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
     }
 
-    _mothershipStatusDisplay->Update(window, deltaTime);
-    _starshipDeploymentManager->SetDeploymentBarPos({_starshipDeploymentButtons[0]->GetPos().x, _starshipDeploymentButtons[0]->GetPos().y - _starshipDeploymentManager->GetDeploymentBar().GetSize().height * 3.5F});
+    _starshipDeploymentManager->SetDeploymentBarPos({_starshipDeploymentButtons[0]->GetPos().x, _starshipDeploymentButtons[0]->GetPos().y + 45.0F});
     _starshipDeploymentManager->Update(window, deltaTime);
-    _playerScrapMetalManager->Update(window, deltaTime);
-    _enemyScrapMetalManager ->Update(window, deltaTime);
-    _playerScrapMetalManager->SetTextPosition(_mothershipStatusDisplay->GetPlayerMothershipTextPos().x + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().width / 2.0F - _playerScrapMetalManager->GetTextSize().width / 2.0F, _mothershipStatusDisplay->GetPlayerMothershipTextPos().y + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().height + 10.0F);
-    _enemyScrapMetalManager ->SetTextPosition(_mothershipStatusDisplay->GetEnemyMothershipTextPos().x + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().width / 2.0F - _enemyScrapMetalManager->GetTextSize().width / 2.0F, _mothershipStatusDisplay->GetEnemyMothershipTextPos().y + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().height + 10.0F);
+    _enemy->SetScrapTextPosition({_mothershipStatusDisplay->GetEnemyMothershipTextPos().x + 15.0F, _mothershipStatusDisplay->GetEnemyMothershipTextPos().y + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().height + 5.0F});
     _minimap->Update(window, deltaTime);
-    _cursor.Update(window, deltaTime);
-    _cursor.SetCursorPos(window, _gameplayView);
-    _player.Update(window, deltaTime);
-    _enemy.Update(window, deltaTime);
-
-    UpdateEnemySpawner();
+    _player->SetScrapTextPosition({_mothershipStatusDisplay->GetPlayerMothershipTextPos().x, _mothershipStatusDisplay->GetPlayerMothershipTextPos().y + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().height + 5.0F});
+    _player->Update(window, deltaTime);
+    _enemy->Update(window, deltaTime);
+    _aiDirector->Update(window, deltaTime);
 
 
 
 
 
 
-    /// Enemy starship movement and shooting
-    for (int i = 1; i < _enemy.GetStarshipCount(); ++i)
+
+    auto* playerMothership = dynamic_cast<Mothership*>(_player->GetMothership().get());
+    if(playerMothership)
     {
-        if(_enemy.GetStarships()[i] == nullptr) return;
+        playerMothership->SetDamageLocation({
+            _mothershipStatusDisplay->GetPlayerMothershipTextPos().x + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().width/2.0F,
+            _mothershipStatusDisplay->GetPlayerMothershipTextPos().y - _mothershipStatusDisplay->GetPlayerMothershipTextBounds().height*2.5F});
+    }
 
-        auto& enemyStarship = _enemy.GetStarships()[i];
-        _enemy.MoveStarship(i, {enemyStarship->GetSpeed() * deltaTime.asSeconds() * -1, 0});
+    auto* enemyMothership = dynamic_cast<Mothership*>(_enemy->GetMothership().get());
+    if(enemyMothership)
+    {
+        enemyMothership->SetDamageLocation({
+            _mothershipStatusDisplay->GetEnemyMothershipTextPos().x + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().width/2.0F,
+            _mothershipStatusDisplay->GetEnemyMothershipTextPos().y - _mothershipStatusDisplay->GetEnemyMothershipTextBounds().height*2.5F});
+    }
+
+
+    /*for (int i = 1; i < _enemy->GetStarshipCount(); ++i)
+    {
+        if (_enemy->GetStarships()[i] == nullptr) return;
+
+        auto &enemyStarship = _enemy->GetStarships()[i];
+        auto &playerMothershipp = _player->GetMothership();
+
+
+        /// Enemy  starship enemy engagement
+        *//*enemyStarship->IsEnemyInRange(playerMothershipp)*//*
+        if(Chilli::Vector::Distance(enemyStarship->GetPos(), playerMothershipp->GetPos()) <=(enemyStarship->GetAttackRange()*2.0F))
+        {
+            enemyStarship->ShootAt(playerMothershipp->GetPos());
+        }
+
+        /// Enemy projectile collision handling
+        for(int k = 0; k < enemyStarship->GetProjectileCount(); k++)
+        {
+            auto& enemyBullet = enemyStarship->GetProjectile()[k]->GetSpriteComponent();
+            if(playerMothershipp->CollidesWith(enemyBullet.GetSprite().getGlobalBounds()))
+            {
+                int randDamage = _starshipDamageRNG.GenerateNumber();
+                float scaledDamage = (float)randDamage * enemyStarship->GetDamageScaleFactor();
+                playerMothershipp->TakeDamage(scaledDamage);
+                enemyStarship->DestroyProjectile(k);
+            }
+        }
+    }*/
+
+
+
+
+        /// Enemy starship movement and shooting
+    for (int i = 1; i < _enemy->GetStarshipCount(); ++i)
+    {
+        if(_enemy->GetStarships()[i] == nullptr) return;
+
+        auto& enemyStarship = _enemy->GetStarships()[i];
+        _enemy->MoveStarship(i, {enemyStarship->GetSpeed() * deltaTime.asSeconds() * -1, 0});
 
         /// Enemy starship alignment with other friendly starships
-        for (int j = 1; j < _enemy.GetStarshipCount(); ++j)
+        for (int j = 1; j < _enemy->GetStarshipCount(); ++j)
         {
-            auto &friendlyStarship = _enemy.GetStarships()[j];
+            auto &friendlyStarship = _enemy->GetStarships()[j];
             if (enemyStarship != friendlyStarship)
             {
-                if (enemyStarship->IsInSameLaneAs(friendlyStarship) &&
+                if (enemyStarship->IsInSameLaneAs(friendlyStarship) and
                     enemyStarship->IsFriendlyStarshipAhead(friendlyStarship))
                 {
                     enemyStarship->SetSpeed(friendlyStarship->GetSpeed());
@@ -226,18 +297,18 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         if(enemyStarship->GetPos().x < _spaceLanes[0]->GetPos().x) // NOTE: Doesn't matter which lane as they all have the same xPos
         {
             enemyStarship->TakeDamage(enemyStarship->GetMaxHealth());
-            _player.GetMothership()->TakeDamage(enemyStarship->GetMaxHealth());
+            _player->GetMothership()->TakeDamage(enemyStarship->GetMaxHealth());
         }
 
-        for(const auto &playerStarship : _player.GetStarships())
+        for(const auto &playerStarship : _player->GetStarships())
         {
             /// Enemy  starship enemy engagement
-            if(enemyStarship->IsEnemyInRange(playerStarship) &&
+            if(enemyStarship->IsEnemyInRange(playerStarship) and
                 enemyStarship->CanEngageWith(playerStarship))
             {
                 enemyStarship->ShootAt(playerStarship->GetPos());
 
-                if(enemyStarship->IsInSameLaneAs(playerStarship) &&
+                if(enemyStarship->IsInSameLaneAs(playerStarship) and
                    enemyStarship->IsEnemyStarshipAhead(playerStarship))
                 {
                     enemyStarship->SetSpeed(0);
@@ -250,7 +321,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& enemyBullet = enemyStarship->GetProjectile()[k]->GetSpriteComponent();
                 if(playerStarship->CollidesWith(enemyBullet.GetSprite().getGlobalBounds()))
                 {
-                    int randDamage = _starshipDamageRNG.GenerateValue();
+                    int randDamage = _starshipDamageRNG.GenerateNumber();
                     float scaledDamage = (float)randDamage * enemyStarship->GetDamageScaleFactor();
                     playerStarship->TakeDamage(scaledDamage);
                     enemyStarship->DestroyProjectile(k);
@@ -261,12 +332,12 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto* supportShip = dynamic_cast<SupportShip*>(enemyStarship.get());
         if(supportShip)
         {
-            for (int j = 1; j < _enemy.GetStarshipCount(); ++j)
+            for (int j = 1; j < _enemy->GetStarshipCount(); ++j)
             {
-                auto& friendlyStarship = _enemy.GetStarships()[j];
+                auto& friendlyStarship = _enemy->GetStarships()[j];
                 if(enemyStarship != friendlyStarship)
                 {
-                    if(supportShip->IsInSameLaneAs(friendlyStarship) &&
+                    if(supportShip->IsInSameLaneAs(friendlyStarship) and
                             supportShip->IsFriendlyStarshipAhead(friendlyStarship))
                     {
                         if(friendlyStarship->GetHealth() >= friendlyStarship->GetMaxHealth())
@@ -280,7 +351,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         auto& friendlyProjectile = supportShip->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
-                            int randHealAmount = _starshipHealRNG.GenerateValue();
+                            int randHealAmount = _starshipHealRNG.GenerateNumber();
                             friendlyStarship->ReplenishHealth(randHealAmount);
                             supportShip->DestroyProjectile(k);
                         }
@@ -295,20 +366,20 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
 
     /// Player starship movement and shooting
-    for(int i = 1; i < _player.GetStarshipCount(); i++)
+    for(int i = 1; i < _player->GetStarshipCount(); i++)
     {
-        if(_player.GetStarships()[i] == nullptr) return;
+        if(_player->GetStarships()[i] == nullptr) return;
 
-        auto& playerStarship = _player.GetStarships()[i];
-        _player.MoveStarship(i, {playerStarship->GetSpeed() * deltaTime.asSeconds(), 0});
+        auto& playerStarship = _player->GetStarships()[i];
+        _player->MoveStarship(i, {playerStarship->GetSpeed() * deltaTime.asSeconds(), 0});
 
         /// Player starship alignment with other friendly starships
-        for (int j = 1; j < _player.GetStarshipCount(); ++j)
+        for (int j = 1; j < _player->GetStarshipCount(); ++j)
         {
-            auto &friendlyStarship = _player.GetStarships()[j];
-            if (_player.GetStarships()[i] != friendlyStarship)
+            auto &friendlyStarship = _player->GetStarships()[j];
+            if (_player->GetStarships()[i] != friendlyStarship)
             {
-                if (playerStarship->IsInSameLaneAs(friendlyStarship) &&
+                if (playerStarship->IsInSameLaneAs(friendlyStarship) and
                     playerStarship->IsFriendlyStarshipAhead(friendlyStarship))
                 {
                     playerStarship->SetSpeed(friendlyStarship->GetSpeed());
@@ -320,18 +391,18 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         if(playerStarship->GetPos().x > _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x) // NOTE: Doesn't matter which lane as they all have the same xPos
         {
             playerStarship->TakeDamage(playerStarship->GetMaxHealth());
-            _enemy.GetMothership()->TakeDamage(playerStarship->GetMaxHealth());
+            _enemy->GetMothership()->TakeDamage(playerStarship->GetMaxHealth());
         }
 
-        for(const auto &enemyStarship : _enemy.GetStarships())
+        for(const auto &enemyStarship : _enemy->GetStarships())
         {
             /// Player starship enemy engagement
-            if(playerStarship->IsEnemyInRange(enemyStarship) &&
+            if(playerStarship->IsEnemyInRange(enemyStarship) and
                playerStarship->CanEngageWith(enemyStarship))
             {
                 playerStarship->ShootAt(enemyStarship->GetPos());
 
-                if(playerStarship->IsInSameLaneAs(enemyStarship) &&
+                if(playerStarship->IsInSameLaneAs(enemyStarship) and
                     playerStarship->IsEnemyStarshipAhead(enemyStarship))
                 {
                     playerStarship->SetSpeed(0);
@@ -344,7 +415,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& playerBulletSprite = playerStarship->GetProjectile()[k]->GetSpriteComponent().GetSprite();
                 if(enemyStarship->CollidesWith(playerBulletSprite.getGlobalBounds()))
                 {
-                    int randDamage = _starshipDamageRNG.GenerateValue();
+                    int randDamage = _starshipDamageRNG.GenerateNumber();
                     float scaledDamage = (float)randDamage * playerStarship->GetDamageScaleFactor();
                     enemyStarship->TakeDamage(scaledDamage);
                     playerStarship->DestroyProjectile(k);
@@ -352,15 +423,15 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             }
         }
 
-        auto* supportShip = dynamic_cast<SupportShip*>(_player.GetStarships()[i].get());
+        auto* supportShip = dynamic_cast<SupportShip*>(_player->GetStarships()[i].get());
         if(supportShip)
         {
-            for (int j = 1; j < _player.GetStarshipCount(); ++j)
+            for (int j = 1; j < _player->GetStarshipCount(); ++j)
             {
-                auto& friendlyStarship = _player.GetStarships()[j];
-                if(_player.GetStarships()[i] != friendlyStarship)
+                auto& friendlyStarship = _player->GetStarships()[j];
+                if(_player->GetStarships()[i] != friendlyStarship)
                 {
-                    if(supportShip->IsInSameLaneAs(friendlyStarship) &&
+                    if(supportShip->IsInSameLaneAs(friendlyStarship) and
                         supportShip->IsFriendlyStarshipAhead(friendlyStarship))
                     {
                         if(friendlyStarship->GetHealth() >= friendlyStarship->GetMaxHealth())
@@ -374,7 +445,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         auto& friendlyProjectile = supportShip->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
-                            int randHealAmount = _starshipHealRNG.GenerateValue();
+                            int randHealAmount = _starshipHealRNG.GenerateNumber();
                             friendlyStarship->ReplenishHealth(randHealAmount);
                             supportShip->DestroyProjectile(k);
                         }
@@ -438,32 +509,24 @@ void GameScene::Render(sf::RenderWindow& window)
 
     window.setView(_gameplayView);
     _cursor.Render(window);
-}
-
-void GameScene::RenderMinimapSprites(sf::RenderWindow &window)
-{
-    _backgroundParallax->RenderBackground(window);
-    _minimap->RenderGameplayView(window);
-    _player.Render(window);
-    _enemy.Render(window);
-    for (const auto &lane : _spaceLanes)
+    if(IsPaused())
     {
-        lane->Render(window);
+        window.draw(_pauseOverlaySprite);
+        window.draw(_pauseIconSprite);
+        window.draw(_pauseText);
     }
 }
 
 void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
 {
     _backgroundParallax->Render(window);
-    _player.Render(window);
-    _enemy.Render(window);
+    _player->RenderGameplaySprites(window);
+    _enemy->RenderGameplaySprites(window);
     _minimap->Render(window);
     for (const auto &lane : _spaceLanes)
     {
         lane->Render(window);
     }
-    _playerScrapMetalManager->Render(window);
-    _enemyScrapMetalManager->Render(window);
     _mothershipStatusDisplay->Render(window);
     _starshipDeploymentManager->Render(window);
     for (auto& deploymentButton : _starshipDeploymentButtons)
@@ -471,78 +534,105 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
         deploymentButton->Render(window);
     }
     _musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
+    _aiDirector->Render(window);
+    window.draw(boundaryEdgeHighlighterBox);
     //_nextMusicTrackButton->Render(window);
 }
 
-void GameScene::UpdateEnemySpawner()
+void GameScene::RenderMinimapSprites(sf::RenderWindow &window)
 {
-    // Initialise enemySpawnTimer to the current elapsed time
-    if(_enemySpawnTimer < _enemySpawnTimerClock.getElapsedTime().asSeconds())
+    _backgroundParallax->RenderBackground(window);
+    _minimap->RenderGameplayView(window);
+    _player->RenderMinimapSprites(window);
+    _enemy->RenderMinimapSprites(window);
+    for (const auto &lane : _spaceLanes)
     {
-        _enemySpawnTimer = _enemySpawnTimerClock.getElapsedTime().asSeconds();
-    }
-    // If current elapsed time has reached enemySpawnTimer, spawn new enemy
-    if(_enemySpawnTimerClock.getElapsedTime().asSeconds() >= _enemySpawnTimer)
-    {
-        for (int i = 0; i < 1; ++i)
-        {
-            int randomStarshipType = _enemyStarshipTypeRNG.GenerateValue();
-            int randomLane = _spacelaneSpawnRNG.GenerateValue();
-            _enemy.CreateStarship(static_cast<StarshipFactory::STARSHIP_TYPE>(randomStarshipType), randomLane);
-            auto& newestEnemyStarship = _enemy.GetStarships()[_enemy.GetStarshipCount() - 1];
-            auto starshipXPos = _spaceLanes[randomLane]->GetPos().x + _spaceLanes[randomLane]->GetSize().x;
-            auto starshipYPos = _spaceLanes[randomLane]->GetPos().y + _spaceLanes[randomLane]->GetSize().y / 2.0F;
-            _enemy.SetStarshipPosition(newestEnemyStarship, {starshipXPos, starshipYPos});
-            _enemy.SetStarshipRotation(newestEnemyStarship, 180);
-            _enemyScrapMetalManager->SpendScrap(newestEnemyStarship->GetBuildCost());
-            _enemyScrapMetalManager->SetScrapText(
-                    "Scrap Metal: " + std::to_string(_enemyScrapMetalManager->GetCurrentScrapMetalAmount()));
-        }
-        _enemySpawnTimer += _enemySpawnRate;
+        lane->Render(window);
     }
 }
 
 void GameScene::UpdateGameplayViewMovement(const sf::RenderWindow &window, const sf::Time &deltaTime, const sf::Vector2i &mousePos)
 {
-    // Thresholds for detecting mouse proximity to window borders
-    const float EDGE_OFFSET = 200.0F;
-    auto mouseProximityToLeftWindowEdge = EDGE_OFFSET;
-    auto mouseProximityToRightWindowEdge = (float)window.getSize().x - EDGE_OFFSET;
+    /*for (int i = 0; i < _starshipDeploymentButtons.size(); ++i)
+    {
+        if(_starshipDeploymentButtons[i]->IsPlacingStarship())
+        {
+            return;
+        }
+    }*/
+
+    float windowWidth = static_cast<float>(window.getSize().x);
+    float windowHeight = static_cast<float>(window.getSize().y);
+
+    // Calculate edge offsets based on window size
+    float edgeOffset = windowWidth * MOUSE_WINDOW_EDGE_OFFSET_PCT;
+    float topOffset = windowHeight * MOUSE_WINDOW_TOP_OFFSET_PCT;
+    float bottomOffset = windowHeight * MOUSE_WINDOW_BOTTOM_OFFSET_PCT;
+
+    // Calculate the view-to-window ratios
+    float viewToWindowRatioX = _gameplayView.getSize().x / windowWidth;
+    float viewToWindowRatioY = _gameplayView.getSize().y / windowHeight;
+
+    // Convert to view coordinates
+    float edgeOffsetInViewCoords = edgeOffset * viewToWindowRatioX;
+    float topOffsetInViewCoords = topOffset * viewToWindowRatioY;
+    float bottomOffsetInViewCoords = bottomOffset * viewToWindowRatioY;
+
+    // Set the highlighter box size in view coordinates
+    boundaryEdgeHighlighterBox.setSize({edgeOffsetInViewCoords,
+                                        _gameplayView.getSize().y - topOffsetInViewCoords - bottomOffsetInViewCoords});
+
+    // Thresholds for detecting mouse proximity to window borders (in window coordinates)
+    float mouseProximityToLeftWindowEdge = edgeOffset;
+    float mouseProximityToRightWindowEdge = windowWidth - edgeOffset;
 
     // Current boundaries of the view in world coordinates
-    auto viewportLeftBoundary = _gameplayView.getCenter().x - _gameplayView.getSize().x / 2.0F;
-    auto viewportRightBoundary = _gameplayView.getCenter().x + _gameplayView.getSize().x / 2.0F;
+    float viewportLeftBoundary = _gameplayView.getCenter().x - _gameplayView.getSize().x / 2.0F;
+    float viewportRightBoundary = _gameplayView.getCenter().x + _gameplayView.getSize().x / 2.0F;
 
     // Viewport movement conditions
-    bool isMouseNearLeftEdge = (float)mousePos.x <= mouseProximityToLeftWindowEdge && mousePos.x > 0;
-    bool isMouseNearRightEdge = (float)mousePos.x >= mouseProximityToRightWindowEdge && mousePos.x < window.getSize().x;
-    bool isViewportLeftEdgeWithinMothershipFocus = viewportLeftBoundary > _player.GetMothership()->GetPos().x - _player.GetMothership()->GetSpriteComponent().GetSprite().getGlobalBounds().width; // BUG: Gameplay view stops moving a few pixels too far when scrolling view left
-    bool isViewportRightEdgeWithinRightSideOfEnemyMothership = viewportRightBoundary < _enemy.GetMothership()->GetPos().x + _enemy.GetMothershipBounds().width;
-    bool isMouseYposWithinWindowBounds = mousePos.y >= 0 and mousePos.y <= window.getSize().y;
+    bool isMouseNearLeftEdge = static_cast<float>(mousePos.x) <= mouseProximityToLeftWindowEdge and mousePos.x > 0;
+    bool isMouseNearRightEdge = static_cast<float>(mousePos.x) >= mouseProximityToRightWindowEdge and mousePos.x < windowWidth;
+    bool isViewportLeftEdgeWithinMothershipFocus = viewportLeftBoundary > 0;
+    bool isViewportRightEdgeWithinRightSideOfEnemyMothership = viewportRightBoundary < _enemy->GetMothership()->GetPos().x + 60.0F;
+    bool isMouseYposWithinWindowBounds = static_cast<float>(mousePos.y) >= topOffset and static_cast<float>(mousePos.y) <= windowHeight - bottomOffset;
 
-    if(viewportLeftBoundary >= _player.GetMothership()->GetPos().x - _player.GetMothership()->GetSpriteComponent().GetSprite().getGlobalBounds().width &&
-       _scrollViewLeft)
+    if(viewportLeftBoundary >= 0 and _scrollViewLeft)
     {
         _gameplayView.move(-VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
     }
-    else if(_scrollViewRight && isViewportRightEdgeWithinRightSideOfEnemyMothership)
+    else if(_scrollViewRight and isViewportRightEdgeWithinRightSideOfEnemyMothership)
     {
         _gameplayView.move(VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
     }
 
     if(isMouseNearLeftEdge and isViewportLeftEdgeWithinMothershipFocus and isMouseYposWithinWindowBounds)
     {
-        _gameplayView.move(-VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
+        boundaryEdgeHighlighterBox.setPosition({viewportLeftBoundary,_gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
+        boundaryEdgeHighlighterBox.setFillColor({100, 100, 100, 25});
+        //_gameplayView.move(-VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
+
+        float distanceToLeftEdge = mousePos.x;
+        float speedFactor = 1.0F - (distanceToLeftEdge / edgeOffset);
+        speedFactor = std::max(0.0F, std::min(1.0F, speedFactor));
+        float adjustedScrollSpeed = VIEW_SCROLL_SPEED * speedFactor;
+        _gameplayView.move(-adjustedScrollSpeed * deltaTime.asSeconds(), 0.0F);
+
     }
     else if(isMouseNearRightEdge and isViewportRightEdgeWithinRightSideOfEnemyMothership and isMouseYposWithinWindowBounds)
     {
-        _gameplayView.move(VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
-    }
+        boundaryEdgeHighlighterBox.setPosition({viewportRightBoundary - boundaryEdgeHighlighterBox.getSize().x,_gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
+        boundaryEdgeHighlighterBox.setFillColor({100, 100, 100, 25});
 
-    // Set gameplay view to focus on the player mothership if the mothership passes a set distance from the left view boundary
-    if(viewportLeftBoundary < _player.GetMothership()->GetPos().x - _player.GetMothership()->GetSpriteComponent().GetSprite().getGlobalBounds().width)
+        float distanceToRightEdge = windowWidth - mousePos.x;
+        float speedFactor = 1.0F - (distanceToRightEdge / edgeOffset);
+        speedFactor = std::max(0.0F, std::min(1.0F, speedFactor));
+        float adjustedScrollSpeed = VIEW_SCROLL_SPEED * speedFactor;
+        _gameplayView.move(adjustedScrollSpeed * deltaTime.asSeconds(), 0.0F);
+    }
+    else
     {
-        _gameplayView.move(0, 0);
+        boundaryEdgeHighlighterBox.setFillColor(sf::Color::Transparent);
     }
 }
 
@@ -551,36 +641,37 @@ void GameScene::UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &wi
     for (int i = 0; i < NUM_OF_LANES; ++i)
     {
         float laneHeight = _spaceLanes[i]->GetSize().y;
-        float totalLanesHeight = (laneHeight * (float) NUM_OF_LANES) + (LANE_ROW_SPACING * ((float) NUM_OF_LANES - 1));
-        float laneXOffset = 75.0F;
-        float laneYOffset = ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
-        _spaceLanes[i]->SetPos({_player.GetMothership()->GetPos().x + laneXOffset,
-                                _player.GetMothership()->GetPos().y + laneYOffset});
+        float totalLanesHeight = (laneHeight * (float)NUM_OF_LANES) + (LANE_ROW_SPACING * ((float)NUM_OF_LANES - 1));
+        sf::Vector2f playerMothershipPos = _player->GetMothershipPos();
+        float spacelaneXPos = playerMothershipPos.x + _player->GetMothershipBounds().width/1.8F;
+        float spacelaneYPos = playerMothershipPos.y + ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
+        _spaceLanes[i]->SetPos({spacelaneXPos, spacelaneYPos});
         _spaceLanes[i]->Update(window, deltaTime);
     }
 }
 
 void GameScene::InitPlayerMothership()
 {
-    _player.CreateStarship(StarshipFactory::STARSHIP_TYPE::MOTHERSHIP, 2);
-    _player.PaintMothership(_predefinedColours.LIGHTBLUE);
-    _player.SetMothershipPosition({Constants::WINDOW_WIDTH * 0.085F, Constants::LEVEL_HEIGHT / 2.0f});
+    _player = std::make_unique<Player>(STARTING_SCRAP_METAL, _predefinedColours.LIGHTBLUE);
+    _player->CreateStarship(StarshipFactory::STARSHIP_TYPE::MOTHERSHIP, 2);
+    _player->SetMothershipPosition({60.0F, Constants::LEVEL_HEIGHT / 2.0F});
 }
 
 void GameScene::InitEnemyMothership()
 {
-    _enemy.CreateStarship(StarshipFactory::MOTHERSHIP, 2);
-    _enemy.PaintMothership(_predefinedColours.LIGHTGREEN);
-    auto mothershipXpos = _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x + _enemy.GetMothershipBounds().width / 1.4F;
-    _enemy.SetMothershipPosition({mothershipXpos, Constants::LEVEL_HEIGHT / 2.0f});
-    _enemy.SetMothershipRotation(180);
+    _enemy = std::make_unique<Enemy>(STARTING_SCRAP_METAL, _predefinedColours.LIGHTGREEN);
+    _enemy->CreateStarship(StarshipFactory::MOTHERSHIP, 2);
+    auto mothershipXpos = _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x + _enemy->GetMothershipBounds().width/2.25F;
+    auto mothershipYpos = Constants::LEVEL_HEIGHT / 2.0F;
+    _enemy->SetMothershipPosition({mothershipXpos, mothershipYpos});
+    _enemy->SetMothershipRotation(180);
 }
 
 void GameScene::InitGameplayView()
 {
     _gameplayView.setSize(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT);
-    auto playerMothershipBounds = _player.GetMothership()->GetSpriteComponent().GetSprite().getGlobalBounds();
-    _gameplayView.setCenter(_player.GetMothership()->GetPos().x - playerMothershipBounds.width + Constants::WINDOW_WIDTH / 2.0F - 1.0F, _player.GetMothership()->GetPos().y);
+    auto playerMothershipBounds = _player->GetMothershipBounds();
+    _gameplayView.setCenter(_player->GetMothershipPos().x + playerMothershipBounds.width - 60.0F, _player->GetMothershipPos().y);
 }
 
 void GameScene::InitMinimapView()
@@ -603,11 +694,13 @@ void GameScene::InitSpaceLanes()
 
         float laneHeight = _spaceLanes[i]->GetSize().y;
         float totalLanesHeight = (laneHeight * (float)NUM_OF_LANES) + (LANE_ROW_SPACING * ((float)NUM_OF_LANES - 1));
-        float laneXOffset = 75.0F;
-        float laneYOffset = ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
-        sf::Vector2f playerMothershipPos = _player.GetMothership()->GetSpriteComponent().GetPos();
-        _spaceLanes[i]->SetPos({playerMothershipPos.x + laneXOffset, playerMothershipPos.y + laneYOffset});
-        _spaceLanes[i]->SetSize({Constants::LEVEL_WIDTH*0.91F, 50.0F});
+        sf::Vector2f playerMothershipPos = _player->GetMothershipPos();
+        float spacelaneXPos = playerMothershipPos.x + _player->GetMothershipBounds().width/1.5F;
+        float spacelaneYPos = playerMothershipPos.y + ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
+        float spacelaneXSize = Constants::LEVEL_WIDTH*0.8F;
+        float spacelaneYSize = 50.0F;
+        _spaceLanes[i]->SetPos({spacelaneXPos, spacelaneYPos});
+        _spaceLanes[i]->SetSize({spacelaneXSize, spacelaneYSize});
         _spaceLanes[i]->Init();
     }
 
@@ -622,15 +715,15 @@ void GameScene::InitEvents()
 {
     /// Observer to starship deployment bar event
     auto starshipDeploymentBarCallback = std::bind(&GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete, this);
-    _starshipDeploymentManager->GetDeploymentBar().AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentBarCallback});
+    _starshipDeploymentManager->AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentBarCallback});
 
     /// Agnostic observer to enemy starships destroyed event
     auto enemyStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed, this, std::placeholders::_1);
-    _enemy.AddAgnosticObserver({Enemy::EventID::STARSHIP_DESTROYED, enemyStarshipsDestroyedCallback});
+    _enemy->AddAgnosticObserver({Enemy::EventID::STARSHIP_DESTROYED, enemyStarshipsDestroyedCallback});
 
     /// Agnostic observer to player starships destroyed event
     auto playerStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed, this, std::placeholders::_1);
-    _player.AddAgnosticObserver({Player::EventID::STARSHIP_DESTROYED, playerStarshipsDestroyedCallback});
+    _player->AddAgnosticObserver({Player::EventID::STARSHIP_DESTROYED, playerStarshipsDestroyedCallback});
 }
 
 void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()
@@ -639,14 +732,14 @@ void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()
         return;
 
     int nextSpacelaneInQueue = _starshipDeploymentManager->GetNextSpacelaneInQueue();
-    _player.CreateStarship(_starshipDeploymentManager->GetNextStarshipTypeInQueue(), nextSpacelaneInQueue);
+    _player->CreateStarship(_starshipDeploymentManager->GetNextStarshipTypeInQueue(), nextSpacelaneInQueue);
 
     auto starshipXPos = _spaceLanes[nextSpacelaneInQueue]->GetPos().x + 25.0F;
     auto starshipYPos = _spaceLanes[nextSpacelaneInQueue]->GetPos().y + _spaceLanes[nextSpacelaneInQueue]->GetSize().y / 2.0F;
-    _player.SetStarshipPosition(_player.GetStarships().back(), {starshipXPos, starshipYPos});
+    _player->SetStarshipPosition(_player->GetStarships().back(), {starshipXPos, starshipYPos});
 
     _starshipDeploymentManager->RemoveFirstStarshipInQueue();
-    _starshipDeploymentManager->GetDeploymentBar().ResetProgress();
+    _starshipDeploymentManager->ResetDeploymentBar();
 
     if(not _starshipDeploymentManager->IsQueueEmpty())
     {
@@ -656,19 +749,19 @@ void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()
 
 void GameScene::HandleViewScrollingKeyboardInput(const sf::Event &event)
 {
-    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
+    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::A)
     {
         _scrollViewLeft = true;
     }
-    else if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::A)
+    else if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::A)
     {
         _scrollViewLeft = false;
     }
-    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::D)
+    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::D)
     {
         _scrollViewRight = true;
     }
-    else  if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::D)
+    else  if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::D)
     {
         _scrollViewRight = false;
     }
@@ -679,21 +772,21 @@ void GameScene::StartNextStarshipDeployment()
     if(_starshipDeploymentManager->IsQueueEmpty())
         return;
 
-    _starshipDeploymentManager->GetDeploymentBar().SetProgressText("Deploying " + _starshipDeploymentButtons[static_cast<int>(_starshipDeploymentManager->GetNextStarshipTypeInQueue())]->GetStarshipName() + "...");
-    _starshipDeploymentManager->GetDeploymentBar().SetProgressSpeed(_starshipDeploymentButtons[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipDeploymentSpeed());
-    _starshipDeploymentManager->GetDeploymentBar().SetProgressStatus(true);
+    _starshipDeploymentManager->SetDeploymentBarText("Deploying " + _starshipDeploymentButtons[static_cast<int>(_starshipDeploymentManager->GetNextStarshipTypeInQueue())]->GetStarshipName() + "...");
+    _starshipDeploymentManager->SetDeploymentTime(_starshipDeploymentButtons[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipDeploymentSpeed());
+    _starshipDeploymentManager->SetDeploymentStatus(true);
 }
 
 void GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData)
 {
     auto destroyedEnemyStarshipData = std::any_cast<Enemy::StarshipDestroyedData>(eventData);
-    _playerScrapMetalManager->CollectScrap(static_cast<int>(destroyedEnemyStarshipData.BuildCost));
-    _playerScrapMetalManager->SetScrapText("Scrap Metal: " + std::to_string(_playerScrapMetalManager->GetCurrentScrapMetalAmount()));
-    _playerScrapMetalManager->CreatePopup(destroyedEnemyStarshipData.BuildCost, destroyedEnemyStarshipData.DeathLocation);
+    _player->CollectScrap(static_cast<int>(destroyedEnemyStarshipData.BuildCost));
+    _player->SetScrapText("Scrap Metal: " + std::to_string(_player->GetCurrentScrapAmount()));
+    _player->CreateScrapPopup(destroyedEnemyStarshipData.BuildCost, destroyedEnemyStarshipData.DeathLocation);
 
-    for (int i = 1; i < _player.GetStarshipCount(); ++i)
+    for (int i = 1; i < _player->GetStarshipCount(); ++i)
     {
-        auto& playerStarship = _player.GetStarships()[i];
+        auto& playerStarship = _player->GetStarships()[i];
         if (playerStarship->GetSpeed() == 0)
         {
             playerStarship->SetSpeed(playerStarship->GetStartingSpeed());
@@ -704,13 +797,13 @@ void GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData)
 void GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData)
 {
     auto destroyedPlayerStarshipData = std::any_cast<Player::StarshipDestroyedData>(eventData);
-    _enemyScrapMetalManager->CollectScrap(static_cast<int>(destroyedPlayerStarshipData.BuildCost));
-    _enemyScrapMetalManager->SetScrapText("Scrap Metal: " + std::to_string(_enemyScrapMetalManager->GetCurrentScrapMetalAmount()));
-    _enemyScrapMetalManager->CreatePopup(destroyedPlayerStarshipData.BuildCost, destroyedPlayerStarshipData.DeathLocation);
+    _enemy->CollectScrap(static_cast<int>(destroyedPlayerStarshipData.BuildCost));
+    _enemy->SetScrapText("Scrap Metal: " + std::to_string(_enemy->GetCurrentScrapAmount()));
+    _enemy->CreateScrapPopup(destroyedPlayerStarshipData.BuildCost, destroyedPlayerStarshipData.DeathLocation);
 
-    for (int i = 1; i < _enemy.GetStarshipCount(); ++i)
+    for (int i = 1; i < _enemy->GetStarshipCount(); ++i)
     {
-        auto& enemyStarship = _enemy.GetStarships()[i];
+        auto& enemyStarship = _enemy->GetStarships()[i];
         if (enemyStarship->GetSpeed() == 0)
         {
             enemyStarship->SetSpeed(enemyStarship->GetStartingSpeed());

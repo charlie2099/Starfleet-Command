@@ -1,11 +1,11 @@
 #ifndef STARFLEET_COMMAND_MENUSCENE_HPP
 #define STARFLEET_COMMAND_MENUSCENE_HPP
 #include "Scenes/Scene.hpp"
-#include "Cursor.hpp"
+#include "Utility/Cursor.hpp"
 #include "Utility/Vector.hpp"
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
-#include "../../RNG.hpp"
+#include "Utility/RNG.hpp"
 #include <random>
 #include <chrono>
 
@@ -60,7 +60,7 @@ class MenuScene : public Scene
 
     sf::Music _menuMusic;
     std::array<std::unique_ptr<Button>, 2> _musicIconButtons;
-    bool _isMusicOn = true;
+    bool _isMusicOn = false;
     static const int MUSIC_ON_BUTTON = 0;
     static const int MUSIC_OFF_BUTTON = 1;
 };

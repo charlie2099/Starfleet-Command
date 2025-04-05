@@ -4,12 +4,8 @@
 bool SpaceLane::Init()
 {
     _laneRect.setOutlineThickness(2.0F);
-
-    //_laneRect.setOutlineColor(sf::Color(255,255,255,50));
-
     _laneRect.setOutlineColor(sf::Color::Transparent);
     _laneRect.setFillColor(sf::Color(100, 100, 100, 50.0F));
-
     return true;
 }
 

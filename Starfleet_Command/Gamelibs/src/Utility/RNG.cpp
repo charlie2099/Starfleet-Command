@@ -1,9 +1,9 @@
-#include "RNG.hpp"
+#include "Utility/RNG.hpp"
 
 RNG::RNG(int min, int max)
 : _randomGenerator(GetEngine()), _uniformIntDistribution(min, max) {}
 
-int RNG::GenerateValue()
+int RNG::GenerateNumber()
 {
     return _uniformIntDistribution(_randomGenerator);
 }

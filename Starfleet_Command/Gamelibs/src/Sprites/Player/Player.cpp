@@ -1,5 +1,11 @@
 #include "Sprites/Player/Player.hpp"
 
+Player::Player(int startingScrapAmount, sf::Color teamColour)
+{
+    _scrapMetalManager = std::make_unique<ScrapMetalManager>(_predefinedColours.GRAY, teamColour, startingScrapAmount);
+    _teamColour = teamColour;
+}
+
 void Player::EventHandler(sf::RenderWindow &window, sf::Event &event)
 {
     for (auto& ship : starship)
@@ -10,6 +16,9 @@ void Player::EventHandler(sf::RenderWindow &window, sf::Event &event)
 
 void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
+    _scrapMetalManager->Update(window, deltaTime);
+    _scrapMetalManager->SetTextPosition(_scrapTextPos.x, _scrapTextPos.y);
+
     for (auto& ship : starship)
     {
         ship->Update(window, deltaTime);
@@ -28,7 +37,16 @@ void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
     }
 }
 
-void Player::Render(sf::RenderWindow &window)
+void Player::RenderGameplaySprites(sf::RenderWindow &window)
+{
+    for (auto& ship : starship)
+    {
+        ship->Render(window);
+    }
+    _scrapMetalManager->Render(window);
+}
+
+void Player::RenderMinimapSprites(sf::RenderWindow &window)
 {
     for (auto& ship : starship)
     {
@@ -44,21 +62,15 @@ void Player::MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset)
 void Player::CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spacelane)
 {
     std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(starshipType, spacelane);
-    bool atLeastOneShipExists = !starship.empty();
-    if(atLeastOneShipExists)
-    {
-        auto& flagship = starship[0];
-        newStarship->SetColour(flagship->GetColour());
-        newStarship->SetProjectileColour(flagship->GetColour());
-    }
+    newStarship->SetColour(_teamColour);
+    newStarship->SetProjectileColour(_teamColour);
     starship.emplace_back(std::move(newStarship));
     InvokeBasicEvent(STARSHIP_SPAWNED);
 }
 
-void Player::PaintMothership(sf::Color colour)
+void Player::CreateScrapPopup(int scrapAmount, sf::Vector2<float> pos)
 {
-    starship[0]->SetColour(colour);
-    starship[0]->SetProjectileColour(colour);
+    _scrapMetalManager->CreatePopup(scrapAmount, pos);
 }
 
 void Player::SetMothershipPosition(sf::Vector2f pos)
@@ -69,6 +81,26 @@ void Player::SetMothershipPosition(sf::Vector2f pos)
 void Player::SetStarshipPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f pos)
 {
     ship->SetPosition(pos);
+}
+
+void Player::SpendScrap(int buildCost)
+{
+    _scrapMetalManager->SpendScrap(buildCost);
+}
+
+void Player::CollectScrap(int scrapAmount)
+{
+    _scrapMetalManager->CollectScrap(scrapAmount);
+}
+
+void Player::SetScrapText(const std::string& scrapText)
+{
+    _scrapMetalManager->SetScrapText(scrapText);
+}
+
+void Player::SetScrapTextPosition(sf::Vector2<float> pos)
+{
+    _scrapTextPos = pos;
 }
 
 void Player::AddBasicObserver(BasicPlayerEvent observer)
@@ -102,6 +134,7 @@ void Player::InvokeAgnosticEvent(EventID eventId, const std::any& anyData)
         iter->second(anyData);
     }
 }
+
 
 
 

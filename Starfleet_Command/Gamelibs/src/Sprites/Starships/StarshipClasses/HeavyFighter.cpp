@@ -7,7 +7,7 @@ HeavyFighter::HeavyFighter(int spacelane)
     _healthComponent.SetHealth(300);
     _speed = 80;
     _startSpeed = _speed;
-    _trainingSpeed = 0.4f;
+    _deployTimeSpeed = 3.0F;
     _damage = 20;
     _damageScaleFactor = 0.25f;
     _fireRate = 0.25f;
@@ -19,7 +19,7 @@ HeavyFighter::HeavyFighter(int spacelane)
     _assignedLaneIndex = spacelane;
     _starshipIndex = 1;
 
-    _healthBar = std::make_unique<HealthBar>(_healthComponent);
+    _healthBar = std::make_unique<HealthBar>(_healthComponent, false);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
     _maxHealth = _healthComponent.GetHealth();
 
@@ -83,7 +83,7 @@ void HeavyFighter::Update(sf::RenderWindow &window, sf::Time deltaTime)
     _healthBar->Update(window, deltaTime);
     _healthBar->SetPos({xPos, yPos});
 
-    if(_healthBar->GetHealth() < _maxHealth/* && _healthBar->GetHealth() > 0*/)
+    if(_healthBar->GetHealth() < _maxHealth/* and _healthBar->GetHealth() > 0*/)
     {
         _isHealthBarVisible = true;
     }
@@ -217,7 +217,7 @@ bool HeavyFighter::IsFriendlyStarshipAhead(const std::unique_ptr<IStarship> &sta
     }
 
     float distance = std::abs(starship->GetPos().x - this->GetPos().x);
-    return isAhead && distance < 100.0F;
+    return isAhead and distance < 100.0F;
 }
 
 bool HeavyFighter::IsEnemyStarshipAhead(const std::unique_ptr<IStarship> &enemyStarship)

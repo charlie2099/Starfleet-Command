@@ -3,10 +3,11 @@
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 #include "Utility/PredefinedColours.hpp"
+#include "ScrapMetalManager.hpp"
 #include <cmath>
 #include <functional>
 
-class Enemy
+class Enemy // TODO: Combine the Player and Enemy class into a single Player class? Both contain identical code!
 {
 public:
     enum EventID
@@ -21,27 +22,35 @@ public:
     };
 
     /// General
-    Enemy () = default;
+    Enemy(int startingScrapAmount, sf::Color teamColour);
     ~Enemy() = default;
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
-    void Render(sf::RenderWindow& window);
+    void RenderGameplaySprites(sf::RenderWindow& window);
+    void RenderMinimapSprites(sf::RenderWindow& window);
 
     /// Behaviours
-    void CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spacelane);
-    void PaintMothership(sf::Color colour);
     void MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset);
+    void CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spacelane);
+    void CreateScrapPopup(int scrapAmount, sf::Vector2<float> pos);
 
     /// Modifiers
     void SetMothershipPosition(sf::Vector2f pos);
-    void SetMothershipRotation(float rot);
     void SetStarshipPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
+    void SetMothershipRotation(float rot);
     void SetStarshipRotation(std::unique_ptr<IStarship>& ship, float rot);
+    void SpendScrap(int buildCost);
+    void CollectScrap(int scrapAmount);
+    void SetScrapText(const std::string& scrapText);
+    void SetScrapTextPosition(sf::Vector2<float> pos);
 
     /// Accessors
-    std::vector<std::unique_ptr<IStarship>> &GetStarships();
-    std::unique_ptr<IStarship> &GetMothership();
+    std::vector<std::unique_ptr<IStarship>> &GetStarships() { return starship; }
+    std::unique_ptr<IStarship> &GetMothership() { return starship[0]; }
     sf::FloatRect  GetMothershipBounds() const { return starship[0]->GetSpriteComponent().GetSprite().getGlobalBounds(); }
+    sf::Vector2<float> GetMothershipPos() { return starship[0]->GetPos(); }
     int GetStarshipCount() { return starship.size(); }
+    int GetCurrentScrapAmount() { return _scrapMetalManager->GetCurrentScrapAmount(); }
+    sf::Color GetTeamColour() { return _teamColour; }
 
     /// Event handling
     using BasicEnemyEvent = std::pair<EventID, std::function<void()>>;
@@ -53,10 +62,12 @@ private:
     void InvokeBasicEvent(EventID eventId);
     void InvokeAgnosticEvent(EventID eventId, const std::any& anyData);
     std::vector<std::unique_ptr<IStarship>> starship{};
+    std::unique_ptr<ScrapMetalManager> _scrapMetalManager;
+    sf::Vector2<float> _scrapTextPos;
+    sf::Color _teamColour;
     std::multimap<EventID, std::function<void()>> _basicObservers{};
     std::multimap<EventID, std::function<void(std::any)>> _agnosticObservers{};
-   Chilli::PredefinedColours _predefinedColours;
-   //sf::Color _teamColour;
+    Chilli::PredefinedColours _predefinedColours;
 };
 
 #endif //STARFLEET_COMMAND_ENEMY_HPP

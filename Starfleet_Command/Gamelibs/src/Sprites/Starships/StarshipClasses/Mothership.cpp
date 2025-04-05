@@ -3,7 +3,7 @@
 Mothership::Mothership(int spacelane)
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_5.png");
-    _spriteComponent.GetSprite().scale({0.08F, 0.08F});
+    _spriteComponent.GetSprite().scale({0.5F, 0.5F});
     _healthComponent.SetHealth(10000);
     _speed = 10;
     _startSpeed = _speed;
@@ -16,7 +16,7 @@ Mothership::Mothership(int spacelane)
     _assignedLaneIndex = spacelane;
     _starshipIndex = 5;
 
-    _healthBar = std::make_unique<HealthBar>(_healthComponent);
+    _healthBar = std::make_unique<HealthBar>(_healthComponent, false);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
     _maxHealth = _healthComponent.GetHealth();
 
@@ -84,7 +84,7 @@ void Mothership::Update(sf::RenderWindow &window, sf::Time deltaTime)
     _healthBar->Update(window, deltaTime);
     _healthBar->SetPos({xPos, yPos});
 
-    if(_healthBar->GetHealth() < _maxHealth/* && _healthBar->GetHealth() > 0*/)
+    if(_healthBar->GetHealth() < _maxHealth/* and _healthBar->GetHealth() > 0*/)
     {
         _isHealthBarVisible = true;
     }
@@ -92,6 +92,17 @@ void Mothership::Update(sf::RenderWindow &window, sf::Time deltaTime)
     if(_isAttackRangeCircleVisible)
     {
         _attackRangeCircle.setPosition(_spriteComponent.GetPos());
+    }
+
+    if(_isDamaged)
+    {
+        _damageTimer -= deltaTime.asSeconds();
+
+        if(_damageTimer <= 0.0F)
+        {
+            _spriteComponent.GetSprite().setColor(_starshipColour);
+            _isDamaged = false;
+        }
     }
 }
 
@@ -144,7 +155,10 @@ void Mothership::DestroyProjectile(int projectileIndex)
 
 void Mothership::TakeDamage(float damageAmount)
 {
-    _healthComponent.TakeDamage(damageAmount, GetPos());
+    _healthComponent.TakeDamage(damageAmount, _damageLocation);
+    _spriteComponent.GetSprite().setColor(sf::Color::Red);
+    _isDamaged = true;
+    _damageTimer = 0.05F;
 }
 
 void Mothership::ReplenishHealth(float healthAmount)
@@ -218,7 +232,7 @@ bool Mothership::IsFriendlyStarshipAhead(const std::unique_ptr<IStarship> &stars
     }
 
     float distance = std::abs(starship->GetPos().x - this->GetPos().x);
-    return isAhead && distance < 100.0F;
+    return isAhead and distance < 100.0F;
 }
 
 bool Mothership::IsEnemyStarshipAhead(const std::unique_ptr<IStarship> &enemyStarship)

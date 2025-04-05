@@ -47,19 +47,19 @@ public:
     virtual void SetRotation(float rot) = 0;
     void SetProjectileColour(sf::Color colour)
     {
-        if(colour == sf::Color::Cyan || colour == sf::Color::Blue || colour == _predefinedColours.LIGHTBLUE || colour == _predefinedColours.BLUEVIOLET)
+        if(colour == sf::Color::Cyan or colour == sf::Color::Blue or colour == _predefinedColours.LIGHTBLUE or colour == _predefinedColours.BLUEVIOLET)
         {
             _projectileColour = Projectile::BLUE;
         }
-        else if(colour == sf::Color::Green || colour == _predefinedColours.LIGHTGREEN)
+        else if(colour == sf::Color::Green or colour == _predefinedColours.LIGHTGREEN)
         {
             _projectileColour = Projectile::GREEN;
         }
-        else if(colour == sf::Color::Red || colour == _predefinedColours.LIGHTRED)
+        else if(colour == sf::Color::Red or colour == _predefinedColours.LIGHTRED)
         {
             _projectileColour = Projectile::RED;
         }
-        else if(colour == _predefinedColours.ORANGE || colour == _predefinedColours.LIGHTORANGE)
+        else if(colour == _predefinedColours.ORANGE or colour == _predefinedColours.LIGHTORANGE)
         {
             _projectileColour = Projectile::ORANGE;
         }
@@ -88,7 +88,7 @@ public:
     virtual float GetDamageScaleFactor() = 0;
     virtual float GetSpeed() = 0;
     float GetStartingSpeed() const { return _startSpeed; }
-    virtual float GetDeploymentSpeed() = 0;
+    virtual float GetDeploymentTime() = 0;
     virtual float GetFireRate() = 0;
     virtual float GetAcceleration() = 0;
     virtual float GetAttackRange() = 0;
@@ -112,7 +112,7 @@ protected:
     float _damageScaleFactor = 1.0F;
     float _speed = 1.0F;
     float _startSpeed = 1.0F;
-    float _trainingSpeed = 0.5f;
+    float _deployTimeSpeed = 3.0F;
     float _fireRate = 1.0F;
     float _acceleration = 0.0F;
     float _attackRange = 400.0F;

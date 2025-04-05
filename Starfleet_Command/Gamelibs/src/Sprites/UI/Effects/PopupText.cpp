@@ -2,8 +2,10 @@
 
 PopupText::PopupText(int value, sf::Vector2f pos)
 {
+    _popupValue = value;
+
     InitFont();
-    _text.setString(std::to_string(value));
+    _text.setString(std::to_string(_popupValue));
     _text.setFont(_font);
     _text.setCharacterSize(12.5F);
 
@@ -21,19 +23,21 @@ void PopupText::Update(sf::RenderWindow& window, sf::Time deltaTime)
     float moveSpeed = 25.0f;
     _text.setPosition(_text.getPosition().x, _text.getPosition().y - moveSpeed * deltaTime.asSeconds());
 
-    if(_color.a > 0 /*&& _timePassed > 3*/)
+    if(_color.a > 0 /*and _timePassed > 3*/)
     {
         float disappearSpeed = 10;
         _text.setFillColor(sf::Color(_color.r, _color.g, _color.b, _color.a - disappearSpeed * deltaTime.asSeconds()));
+
+        if(_isIconEnabled)
+        {
+            auto iconSpriteColour = _iconSprite.getColor();
+            _iconSprite.setColor(sf::Color(iconSpriteColour.r, iconSpriteColour.g, iconSpriteColour.b, iconSpriteColour.a - disappearSpeed * deltaTime.asSeconds()));
+            _iconSprite.setPosition(_text.getPosition().x - _iconSprite.getGlobalBounds().width - 3.0F, _text.getPosition().y + 3.5F);
+        }
     }
     else
     {
         _isFaded = true;
-    }
-
-    if(_isIconEnabled)
-    {
-        _iconSprite.setPosition(_text.getPosition().x - _iconSprite.getGlobalBounds().width - 3.0F, _text.getPosition().y + 3.5F);
     }
 }
 
@@ -89,4 +93,9 @@ void PopupText::SetIconImage(const std::string& iconImageFileName)
     //_iconTexture.loadFromFile(iconImageFileName);
     _iconSprite.setTexture(_iconTexture);
     _iconSprite.scale(1, 1);
+}
+
+void PopupText::SetText(const std::string& text)
+{
+    _text.setString(text + std::to_string(_popupValue));
 }
