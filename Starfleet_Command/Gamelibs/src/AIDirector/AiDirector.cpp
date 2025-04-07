@@ -112,7 +112,7 @@ void AiDirector::SpawnEnemy_OnDeploymentCompleted()
     auto queuedStarship = _starshipDeploymentManager->GetNextStarshipTypeInQueue();
     auto spawnLane = _starshipDeploymentManager->GetNextSpacelaneInQueue();
     _enemy->CreateStarship(queuedStarship, spawnLane);
-    _enemy->SetStarshipPosition(_enemy->GetStarships()[_enemy->GetStarshipCount() - 1], {_spacelanes[spawnLane]->GetPos().x + _spacelanes[spawnLane]->GetSize().x, _spacelanes[spawnLane]->GetPos().y + _spacelanes[spawnLane]->GetSize().y / 2.0F});
+    _enemy->SetStarshipPosition(_enemy->GetStarships()[_enemy->GetStarshipCount() - 1], {_spacelanes[spawnLane]->GetPos().x + _spacelanes[spawnLane]->GetSize().x - 25.0F, _spacelanes[spawnLane]->GetPos().y + _spacelanes[spawnLane]->GetSize().y / 2.0F});
     _enemy->SetStarshipRotation(_enemy->GetStarships()[_enemy->GetStarshipCount() - 1], 180);
 
     _starshipDeploymentManager->RemoveFirstStarshipInQueue();

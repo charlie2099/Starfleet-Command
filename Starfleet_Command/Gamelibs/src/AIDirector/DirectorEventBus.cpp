@@ -28,3 +28,12 @@ void DirectorEventBus::Publish(DirectorEvent event)
         }
     }
 }
+
+void DirectorEventBus::ClearAllSubscribers()
+{
+    for (auto& subscriber : _subscribers)
+    {
+        Unsubscribe(subscriber.first);
+    }
+    _subscribers.clear();
+}

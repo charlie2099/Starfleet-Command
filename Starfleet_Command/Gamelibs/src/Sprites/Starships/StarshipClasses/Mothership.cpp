@@ -7,7 +7,7 @@ Mothership::Mothership(int spacelane)
     _healthComponent.SetHealth(10000);
     _speed = 10;
     _startSpeed = _speed;
-    _damage = 50;
+    _maximumDamage = 50;
     _fireRate = 1.0f;
     _attackRange = 400.0F;
     _projectileSize = Projectile::LARGE;
@@ -18,7 +18,7 @@ Mothership::Mothership(int spacelane)
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent, false);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
-    _maxHealth = _healthComponent.GetHealth();
+    _maximumHealth = _healthComponent.GetHealth();
 
     /// Change default origin to center
     sf::Vector2<float> centered_origin;
@@ -84,7 +84,7 @@ void Mothership::Update(sf::RenderWindow &window, sf::Time deltaTime)
     _healthBar->Update(window, deltaTime);
     _healthBar->SetPos({xPos, yPos});
 
-    if(_healthBar->GetHealth() < _maxHealth/* and _healthBar->GetHealth() > 0*/)
+    if(_healthBar->GetHealth() < _maximumHealth/* and _healthBar->GetHealth() > 0*/)
     {
         _isHealthBarVisible = true;
     }
@@ -163,7 +163,7 @@ void Mothership::TakeDamage(float damageAmount)
 
 void Mothership::ReplenishHealth(float healthAmount)
 {
-    _healthComponent.ReplenishHealth(_maxHealth, healthAmount, GetPos());
+    _healthComponent.ReplenishHealth(_maximumHealth, healthAmount, GetPos());
 }
 
 void Mothership::SetHealth(float health)
@@ -178,7 +178,7 @@ void Mothership::SetHealthBarVisibility(bool visible)
 
 void Mothership::SetDamage(float damage)
 {
-    _damage = damage;
+    _maximumDamage = damage;
 }
 
 void Mothership::SetSpeed(float speed)

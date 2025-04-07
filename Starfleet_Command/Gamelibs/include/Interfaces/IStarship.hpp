@@ -84,7 +84,7 @@ public:
     virtual float GetRotation() = 0;
     virtual float GetHealth() = 0;
     virtual float GetMaxHealth() = 0;
-    virtual float GetDamage() = 0;
+    virtual float GetMaxDamage() = 0;
     virtual float GetDamageScaleFactor() = 0;
     virtual float GetSpeed() = 0;
     float GetStartingSpeed() const { return _startSpeed; }
@@ -107,8 +107,8 @@ protected:
     std::string _starshipName;
     sf::Color _starshipColour;
     float _rotation;
-    float _maxHealth;
-    float _damage;
+    float _maximumHealth;
+    float _maximumDamage;
     float _damageScaleFactor = 1.0F;
     float _speed = 1.0F;
     float _startSpeed = 1.0F;

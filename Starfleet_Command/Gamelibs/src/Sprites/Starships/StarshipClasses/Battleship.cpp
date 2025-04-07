@@ -8,8 +8,8 @@ Battleship::Battleship(int spacelane)
     _speed = 30;
     _startSpeed = _speed;
     _deployTimeSpeed = 5.0F;
-    _damage = 75;
-    _damageScaleFactor = 0.75f;
+    _maximumDamage = 100;
+    _damageScaleFactor = 1.0F;
     _fireRate = 3.0f;
     _attackRange = 600.0F;
     _buildCost = 1500;
@@ -21,7 +21,7 @@ Battleship::Battleship(int spacelane)
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent, false);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
-    _maxHealth = _healthComponent.GetHealth();
+    _maximumHealth = _healthComponent.GetHealth();
 
     /// Change default origin to center
     sf::Vector2<float> centered_origin;
@@ -89,7 +89,7 @@ void Battleship::Update(sf::RenderWindow &window, sf::Time deltaTime)
     _healthBar->Update(window, deltaTime);
     _healthBar->SetPos({xPos, yPos});
 
-    if(_healthBar->GetHealth() < _maxHealth/* and _healthBar->GetHealth() > 0*/)
+    if(_healthBar->GetHealth() < _maximumHealth/* and _healthBar->GetHealth() > 0*/)
     {
         _isHealthBarVisible = true;
     }
@@ -154,7 +154,7 @@ void Battleship::TakeDamage(float damageAmount)
 
 void Battleship::ReplenishHealth(float healthAmount)
 {
-    _healthComponent.ReplenishHealth(_maxHealth, healthAmount, GetPos());
+    _healthComponent.ReplenishHealth(_maximumHealth, healthAmount, GetPos());
 }
 
 void Battleship::SetHealth(float health)
@@ -169,7 +169,7 @@ void Battleship::SetHealthBarVisibility(bool visible)
 
 void Battleship::SetDamage(float damage)
 {
-    _damage = damage;
+    _maximumDamage = damage;
 }
 
 void Battleship::SetSpeed(float speed)

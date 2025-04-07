@@ -6,6 +6,10 @@ GameScene::~GameScene()
     {
         _gameMusic.stop();
     }
+
+    _spaceLanes.clear();
+
+    DirectorEventBus::ClearAllSubscribers();
 }
 
 bool GameScene::Init()
@@ -148,14 +152,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     {
         if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
         {
-            if (_isMusicOn)
-            {
-                _gameMusic.pause();
-            }
-            else
-            {
-                _gameMusic.play();
-            }
+            _isMusicOn ? _gameMusic.pause() : _gameMusic.play();
             _isMusicOn = !_isMusicOn;
         }
     }
@@ -215,9 +212,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _player->Update(window, deltaTime);
     _enemy->Update(window, deltaTime);
     _aiDirector->Update(window, deltaTime);
-
-
-
 
 
 
@@ -321,39 +315,40 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& enemyBullet = enemyStarship->GetProjectile()[k]->GetSpriteComponent();
                 if(playerStarship->CollidesWith(enemyBullet.GetSprite().getGlobalBounds()))
                 {
+                    RNG _starshipDamageRNG {static_cast<int>(playerStarship->GetMaxDamage() * 0.9F), static_cast<int>(playerStarship->GetMaxDamage())};
                     int randDamage = _starshipDamageRNG.GenerateNumber();
-                    float scaledDamage = (float)randDamage * enemyStarship->GetDamageScaleFactor();
+                    int scaledDamage = randDamage * enemyStarship->GetDamageScaleFactor();
                     playerStarship->TakeDamage(scaledDamage);
                     enemyStarship->DestroyProjectile(k);
                 }
             }
         }
 
-        auto* supportShip = dynamic_cast<SupportShip*>(enemyStarship.get());
-        if(supportShip)
+        auto* supportFrigate = dynamic_cast<SupportFrigate*>(enemyStarship.get());
+        if(supportFrigate)
         {
             for (int j = 1; j < _enemy->GetStarshipCount(); ++j)
             {
                 auto& friendlyStarship = _enemy->GetStarships()[j];
                 if(enemyStarship != friendlyStarship)
                 {
-                    if(supportShip->IsInSameLaneAs(friendlyStarship) and
-                            supportShip->IsFriendlyStarshipAhead(friendlyStarship))
+                    if(supportFrigate->IsInSameLaneAs(friendlyStarship) and
+                            supportFrigate->IsFriendlyStarshipAhead(friendlyStarship))
                     {
                         if(friendlyStarship->GetHealth() >= friendlyStarship->GetMaxHealth())
                             break;
 
-                        supportShip->ShootHealAt(friendlyStarship);
+                        supportFrigate->ShootHealAt(friendlyStarship);
                     }
 
-                    for(int k = 0; k < supportShip->GetProjectileCount(); k++)
+                    for(int k = 0; k < supportFrigate->GetProjectileCount(); k++)
                     {
-                        auto& friendlyProjectile = supportShip->GetProjectile()[k]->GetSpriteComponent();
+                        auto& friendlyProjectile = supportFrigate->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
                             int randHealAmount = _starshipHealRNG.GenerateNumber();
                             friendlyStarship->ReplenishHealth(randHealAmount);
-                            supportShip->DestroyProjectile(k);
+                            supportFrigate->DestroyProjectile(k);
                         }
                     }
                 }
@@ -415,39 +410,40 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& playerBulletSprite = playerStarship->GetProjectile()[k]->GetSpriteComponent().GetSprite();
                 if(enemyStarship->CollidesWith(playerBulletSprite.getGlobalBounds()))
                 {
-                    int randDamage = _starshipDamageRNG.GenerateNumber();
-                    float scaledDamage = (float)randDamage * playerStarship->GetDamageScaleFactor();
+                    RNG _starshipDamageRNG {static_cast<int>(playerStarship->GetMaxDamage() * 0.9F), static_cast<int>(playerStarship->GetMaxDamage())};
+                    int randDamage =  _starshipDamageRNG.GenerateNumber();
+                    int scaledDamage = randDamage * playerStarship->GetDamageScaleFactor();
                     enemyStarship->TakeDamage(scaledDamage);
                     playerStarship->DestroyProjectile(k);
                 }
             }
         }
 
-        auto* supportShip = dynamic_cast<SupportShip*>(_player->GetStarships()[i].get());
-        if(supportShip)
+        auto* supportFrigate = dynamic_cast<SupportFrigate*>(_player->GetStarships()[i].get());
+        if(supportFrigate)
         {
             for (int j = 1; j < _player->GetStarshipCount(); ++j)
             {
                 auto& friendlyStarship = _player->GetStarships()[j];
                 if(_player->GetStarships()[i] != friendlyStarship)
                 {
-                    if(supportShip->IsInSameLaneAs(friendlyStarship) and
-                        supportShip->IsFriendlyStarshipAhead(friendlyStarship))
+                    if(supportFrigate->IsInSameLaneAs(friendlyStarship) and
+                        supportFrigate->IsFriendlyStarshipAhead(friendlyStarship))
                     {
                         if(friendlyStarship->GetHealth() >= friendlyStarship->GetMaxHealth())
                             break;
 
-                        supportShip->ShootHealAt(friendlyStarship);
+                        supportFrigate->ShootHealAt(friendlyStarship);
                     }
 
-                    for(int k = 0; k < supportShip->GetProjectileCount(); k++)
+                    for(int k = 0; k < supportFrigate->GetProjectileCount(); k++)
                     {
-                        auto& friendlyProjectile = supportShip->GetProjectile()[k]->GetSpriteComponent();
+                        auto& friendlyProjectile = supportFrigate->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
                             int randHealAmount = _starshipHealRNG.GenerateNumber();
                             friendlyStarship->ReplenishHealth(randHealAmount);
-                            supportShip->DestroyProjectile(k);
+                            supportFrigate->DestroyProjectile(k);
                         }
                     }
                 }
@@ -484,6 +480,16 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         {
             musicIconButton->SetColour(sf::Color(22, 155, 164, 100));
         }
+    }
+
+
+    if (_enemy->GetMothership()->GetHealth() <= 0)
+    {
+        SetScene(Scene::ID::WIN);
+    }
+    else if (_player->GetMothership()->GetHealth() <= 0)
+    {
+        SetScene(Scene::ID::LOSE);
     }
 
     /*_nextMusicTrackButton->Update(window);

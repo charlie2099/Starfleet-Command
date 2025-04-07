@@ -155,7 +155,7 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     /*else if(_buttonPanels[OPTIONS_BUTTON].IsHoveredOver())
     {
         _buttonPanels[OPTIONS_BUTTON].SetPanelColour(sf::Color(150, 150, 150, 60));
-        _buttonPanels[OPTIONS_BUTTON].SetScrapText(_buttonPanels[OPTIONS_BUTTON].GetText().getString(), sf::Color(150, 150, 150));
+        _buttonPanels[OPTIONS_BUTTON].SetText(_buttonPanels[OPTIONS_BUTTON].GetText().getString(), sf::Color(150, 150, 150));
     }*/
     else if(_buttonPanels[EXIT_BUTTON].IsHoveredOver())
     {
@@ -313,7 +313,7 @@ void MenuScene::InitBackgroundShips()
 void MenuScene::InitGameVersionText()
 {
     _gameVersionText.setFont(Chilli::CustomFonts::GetRegularFont());
-    _gameVersionText.setString("PRE-ALPHA BUILD v0.1.0");
+    _gameVersionText.setString("PRE-ALPHA BUILD v0.2.0"); // Early Alpha = v0.5.0, Early Beta = v0.8.0, Release = v1.0.0
     _gameVersionText.setCharacterSize(12);
     _gameVersionText.setFillColor(sf::Color::White);
     _gameVersionText.setOutlineColor(sf::Color::Black);

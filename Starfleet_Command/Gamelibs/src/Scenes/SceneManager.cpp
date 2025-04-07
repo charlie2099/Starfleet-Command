@@ -28,7 +28,7 @@ void SceneManager::Render(sf::RenderWindow& window)
 void SceneManager::ChangeScene(Scene::ID id)
 {
     current_scene.reset();
-    current_ID    = id;
+    current_ID = id;
 
     switch (id)
     {
@@ -40,6 +40,12 @@ void SceneManager::ChangeScene(Scene::ID id)
             break;
         case Scene::ID::OPTIONS:
             current_scene = std::make_unique<OptionsScene>();
+            break;
+        case Scene::ID::WIN:
+            current_scene = std::make_unique<WinScene>();
+            break;
+        case Scene::ID::LOSE:
+            current_scene = std::make_unique<LoseScene>();
             break;
     }
     current_scene->SetScene(id);

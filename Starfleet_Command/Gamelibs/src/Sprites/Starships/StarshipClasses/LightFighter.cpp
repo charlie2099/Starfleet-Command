@@ -8,8 +8,8 @@ LightFighter::LightFighter(int spacelane)
     _speed = 100;
     _startSpeed = _speed;
     _deployTimeSpeed = 2.0F;
-    _damage = 10;
-    _damageScaleFactor = 0.10f;
+    _maximumDamage = 25;
+    _damageScaleFactor = 1.0F;
     _fireRate = 0.5f;
     _attackRange = 400.0F;
     _buildCost = 100;
@@ -21,7 +21,7 @@ LightFighter::LightFighter(int spacelane)
 
     _healthBar = std::make_unique<HealthBar>(_healthComponent, false);
     _healthBar->SetMaxHealth(_healthComponent.GetHealth());
-    _maxHealth = _healthComponent.GetHealth();
+    _maximumHealth = _healthComponent.GetHealth();
 
     /// Change default origin to center
     sf::Vector2<float> centered_origin;
@@ -83,7 +83,7 @@ void LightFighter::Update(sf::RenderWindow &window, sf::Time deltaTime)
     _healthBar->Update(window, deltaTime);
     _healthBar->SetPos({xPos, yPos});
 
-    if(_healthBar->GetHealth() < _maxHealth/* and _healthBar->GetHealth() > 0*/)
+    if(_healthBar->GetHealth() < _maximumHealth/* and _healthBar->GetHealth() > 0*/)
     {
         _isHealthBarVisible = true;
     }
@@ -148,7 +148,7 @@ void LightFighter::TakeDamage(float damageAmount)
 
 void LightFighter::ReplenishHealth(float healthAmount)
 {
-    _healthComponent.ReplenishHealth(_maxHealth, healthAmount, GetPos());
+    _healthComponent.ReplenishHealth(_maximumHealth, healthAmount, GetPos());
 }
 
 void LightFighter::SetHealth(float health)
@@ -163,7 +163,7 @@ void LightFighter::SetHealthBarVisibility(bool visible)
 
 void LightFighter::SetDamage(float damage)
 {
-    _damage = damage;
+    _maximumDamage = damage;
 }
 
 void LightFighter::SetSpeed(float speed)

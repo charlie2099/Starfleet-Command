@@ -1,6 +1,6 @@
 #include "AIDirector/RuleEngine/DirectorIntensityRuleEngine.hpp"
 
-DirectorIntensityRuleEngine::DirectorIntensityRuleEngine(std::vector<std::shared_ptr<IDirectorIntensityRule>> &rules)
+DirectorIntensityRuleEngine::DirectorIntensityRuleEngine(const std::vector<std::shared_ptr<IDirectorIntensityRule>> &rules)
 : _rules(rules) {}
 
 float DirectorIntensityRuleEngine::CalculatePerceivedIntensityPercentage(AiDirector &director)

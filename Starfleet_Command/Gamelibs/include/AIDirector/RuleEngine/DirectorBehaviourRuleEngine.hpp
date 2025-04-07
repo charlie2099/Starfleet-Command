@@ -9,7 +9,7 @@ class AiDirector;
 class DirectorBehaviourRuleEngine
 {
 public:
-    explicit DirectorBehaviourRuleEngine(std::vector<std::shared_ptr<IDirectorBehaviourRule>>& rules);
+    DirectorBehaviourRuleEngine(const std::vector<std::shared_ptr<IDirectorBehaviourRule>>& rules);
     void EvaluateBehaviourOutput(AiDirector& director);
 
 private:

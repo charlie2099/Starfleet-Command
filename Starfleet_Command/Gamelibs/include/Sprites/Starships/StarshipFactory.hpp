@@ -3,8 +3,8 @@
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipClasses/LightFighter.hpp"
 #include "Sprites/Starships/StarshipClasses/HeavyFighter.hpp"
-#include "Sprites/Starships/StarshipClasses/SupportShip.hpp"
-#include "Sprites/Starships/StarshipClasses/Destroyer.hpp"
+#include "Sprites/Starships/StarshipClasses/SupportFrigate.hpp"
+#include "Sprites/Starships/StarshipClasses/Dreadnought.hpp"
 #include "Sprites/Starships/StarshipClasses/Battleship.hpp"
 #include "Sprites/Starships/StarshipClasses/Mothership.hpp"
 #include <memory>
@@ -16,8 +16,8 @@ public:
     {
         LIGHTFIGHTER,
         HEAVYFIGHTER,
-        SUPPORT,
-        DESTROYER,
+        SUPPORT_FRIGATE,
+        DREADNOUGHT,
         BATTLESHIP,
         MOTHERSHIP,
         ENUM_COUNT

@@ -6,8 +6,8 @@ std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP
     {
         case LIGHTFIGHTER: return std::make_unique<LightFighter>(0);
         case HEAVYFIGHTER: return std::make_unique<HeavyFighter>(0);
-        case SUPPORT: return std::make_unique<SupportShip>(0);
-        case DESTROYER: return std::make_unique<Destroyer>(0);
+        case SUPPORT_FRIGATE: return std::make_unique<SupportFrigate>(0);
+        case DREADNOUGHT: return std::make_unique<Dreadnought>(0);
         case BATTLESHIP: return std::make_unique<Battleship>(0);
         case MOTHERSHIP: return std::make_unique<Mothership>(0);
     }
@@ -19,8 +19,8 @@ std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP
     {
         case LIGHTFIGHTER: return std::make_unique<LightFighter>(spacelane);
         case HEAVYFIGHTER: return std::make_unique<HeavyFighter>(spacelane);
-        case SUPPORT: return std::make_unique<SupportShip>(spacelane);
-        case DESTROYER: return std::make_unique<Destroyer>(spacelane);
+        case SUPPORT_FRIGATE: return std::make_unique<SupportFrigate>(spacelane);
+        case DREADNOUGHT: return std::make_unique<Dreadnought>(spacelane);
         case BATTLESHIP: return std::make_unique<Battleship>(spacelane);
         case MOTHERSHIP: return std::make_unique<Mothership>(spacelane);
     }
@@ -36,13 +36,13 @@ StarshipFactory::STARSHIP_TYPE StarshipFactory::GetStarshipType(std::unique_ptr<
     {
         return STARSHIP_TYPE::HEAVYFIGHTER;
     }
-    else if(starship.get() == dynamic_cast<SupportShip*>(starship.get()))
+    else if(starship.get() == dynamic_cast<SupportFrigate*>(starship.get()))
     {
-        return STARSHIP_TYPE::SUPPORT;
+        return STARSHIP_TYPE::SUPPORT_FRIGATE;
     }
-    else if(starship.get() == dynamic_cast<Destroyer*>(starship.get()))
+    else if(starship.get() == dynamic_cast<Dreadnought*>(starship.get()))
     {
-        return STARSHIP_TYPE::DESTROYER;
+        return STARSHIP_TYPE::DREADNOUGHT;
     }
     else if(starship.get() == dynamic_cast<Battleship*>(starship.get()))
     {

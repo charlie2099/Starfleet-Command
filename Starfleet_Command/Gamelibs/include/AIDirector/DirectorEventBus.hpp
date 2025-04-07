@@ -24,6 +24,7 @@ public:
     static void Subscribe(DirectorEvent event, const EventCallback& callback);
     static void Unsubscribe(DirectorEvent event);
     static void Publish(DirectorEvent event);
+    static void ClearAllSubscribers();
 
 private:
     static std::map<DirectorEvent, std::vector<EventCallback>> _subscribers;

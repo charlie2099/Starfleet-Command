@@ -4,6 +4,8 @@
 #include "MenuScene.hpp"
 #include "GameScene.hpp"
 #include "OptionsScene.hpp"
+#include "WinScene.hpp"
+#include "LoseScene.hpp"
 
 class SceneManager
 {
@@ -16,10 +18,10 @@ class SceneManager
     void Update(sf::RenderWindow &window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
-    void ChangeScene(Scene::ID id);
     void SetPaused(bool paused);
 
  private:
+    void ChangeScene(Scene::ID id);
     std::unique_ptr<Scene> current_scene;
     Scene::ID current_ID{};
 

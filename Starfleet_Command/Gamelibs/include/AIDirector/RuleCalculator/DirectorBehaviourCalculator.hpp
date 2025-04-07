@@ -13,6 +13,7 @@ class DirectorBehaviourCalculator
 {
 public:
     DirectorBehaviourCalculator();
+    ~DirectorBehaviourCalculator();
     void EvaluateBehaviourOutput(AiDirector& director);
 
 private:

@@ -54,8 +54,8 @@ public:
     sf::Vector2<float> GetPos() override { return _spriteComponent.GetPos(); }
     float GetRotation() override { return _rotation; }
     float GetHealth() override { return _healthComponent.GetHealth(); }
-    float GetMaxHealth() override { return _maxHealth; }
-    float GetDamage() override { return _damage; }
+    float GetMaxHealth() override { return _maximumHealth; }
+    float GetMaxDamage() override { return _maximumDamage; }
     float GetDamageScaleFactor() override { return _damageScaleFactor; }
     float GetSpeed() override { return _speed; }
     float GetDeploymentTime() override { return _deployTimeSpeed; }

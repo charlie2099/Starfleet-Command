@@ -120,7 +120,6 @@ private:
     //std::unique_ptr<Button> _nextMusicTrackButton;
 
     /// Random Distributions
-    RNG _starshipDamageRNG {100, 250};
     RNG _starshipHealRNG {50, 100};
     RNG _enemyStarshipTypeRNG {0, StarshipFactory::STARSHIP_TYPE::ENUM_COUNT - 2};
     RNG _spacelaneSpawnRNG {0, NUM_OF_LANES - 1};
