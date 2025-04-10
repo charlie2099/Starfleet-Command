@@ -16,6 +16,7 @@ LightFighter::LightFighter(int spacelane)
     _projectileSize = Projectile::SMALL;
     _projectileColour = Projectile::BLUE;
     _starshipName = "Light Fighter";
+    _starshipAbbreviation = "LF";
     _assignedLaneIndex = spacelane;
     _starshipIndex = 0;
 

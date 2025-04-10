@@ -16,6 +16,7 @@ Dreadnought::Dreadnought(int spacelane)
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
     _starshipName = "Dreadnought";
+    _starshipAbbreviation = "DRN";
     _assignedLaneIndex = spacelane;
     _starshipIndex = 3;
 

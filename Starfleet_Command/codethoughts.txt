@@ -41,6 +41,29 @@ What do I want?
 - If the player starts really struggled, spawn some weaker units or halt on spawning any more units until intensity reaches a certain threshold?
 
 
+__Behaviour Rules__ (Name rules according to their actions, rather than their conditions? I.e. SomeAction instead of PlayerSpacelaneDominance?)
+- CounterAttack
+- FlankManeuver
+- TankStrategy
+- DamageStrategy
+- StrongInitialAttack
+- AttackMothership
+- AllOutAttack
+- AllOutDefence
+- Reinforcement(DirectorState::PEAK)
+- LaneRotation
+- LaneConcentratedAttack
+- DiversionAttack
+- PriorityTarget
+
+__Intensity Rules__ (Name rules according to their conditions, rather than their actions?)
+- ScrapAbundance(scrapSurplusAmount, intensityRating)
+- SpacelaneDominance
+- StarshipDominance
+- StarshipTypeDominance
+- MothershipDistress
+-
+
 ___Game Flow___
 - Early game: Start with deploying weaker enemy units
 - Mid game: After the player has deployed x amount of ships or of a certain type, the director should start deploying counter attacks, deploying stronger units

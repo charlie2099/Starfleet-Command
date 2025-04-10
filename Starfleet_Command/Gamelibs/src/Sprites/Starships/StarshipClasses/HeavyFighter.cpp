@@ -16,6 +16,7 @@ HeavyFighter::HeavyFighter(int spacelane)
     _projectileSize = Projectile::REGULAR;
     _projectileColour = Projectile::BLUE;
     _starshipName = "Heavy Fighter";
+    _starshipAbbreviation = "HF";
     _assignedLaneIndex = spacelane;
     _starshipIndex = 1;
 

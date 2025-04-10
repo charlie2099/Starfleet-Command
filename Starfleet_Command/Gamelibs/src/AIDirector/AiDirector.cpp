@@ -39,6 +39,16 @@ AiDirector::AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& 
     _debugPerceivedIntensityText.setString("Perceived Intensity: " + std::to_string(static_cast<int>(_perceivedIntensity)));
     _debugPerceivedIntensityText.setFont(Chilli::CustomFonts::GetBoldFont());
     _debugPerceivedIntensityText.setCharacterSize(11.0F);
+
+    _enemySpawnLaneIndicatorTexture.loadFromFile("Resources/Textures/left.png");
+    _enemySpawnLaneIndicatorSprite.setTexture(_enemySpawnLaneIndicatorTexture);
+    _enemySpawnLaneIndicatorSprite.setColor(sf::Color(253, 103, 100));
+
+    /*_enemySpawnLaneIndicatorText.setFont(Chilli::CustomFonts::GetBoldFont());
+    _enemySpawnLaneIndicatorText.setCharacterSize(7.0F);
+    _enemySpawnLaneIndicatorText.setFillColor(sf::Color::White);
+    _enemySpawnLaneIndicatorText.setOutlineColor(sf::Color::Black);
+    _enemySpawnLaneIndicatorText.setOutlineThickness(1.0F);*/
 }
 
 void AiDirector::Update(sf::RenderWindow& window, sf::Time deltaTime)
@@ -52,6 +62,45 @@ void AiDirector::Update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         _behaviourCalculator->EvaluateBehaviourOutput(*this);
         _behaviourUpdateTimer += BEHAVIOUR_UPDATE_RATE;
+    }
+
+    if(not _starshipDeploymentManager->IsQueueEmpty())
+    {
+        auto endOfLanePos = _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetPos().x + _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetSize().x + 60.0F;
+        auto xPos = 0;
+        float yPos = _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetCentreYPos();
+        if(_displayView.getCenter().x + _displayView.getSize().x/2.0F <= endOfLanePos)
+        {
+            xPos = _displayView.getCenter().x + _displayView.getSize().x / 2.0F - 25.0F; // padding from right
+        }
+        else
+        {
+            xPos = _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetPos().x + _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetSize().x + 15.0F;
+        }
+        _enemySpawnLaneIndicatorSprite.setPosition(xPos, yPos);
+
+        //_enemySpawnLaneIndicatorText.setString(_starshipTemplateToBeDeployed[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipAbbreviation());
+        //_enemySpawnLaneIndicatorText.setPosition(_enemySpawnLaneIndicatorSprite.getPosition().x - _enemySpawnLaneIndicatorText.getGlobalBounds().width/4.0F, _enemySpawnLaneIndicatorSprite.getPosition().y - _enemySpawnLaneIndicatorText.getGlobalBounds().height/2.0F);
+
+
+        float time = _gameClock.getElapsedTime().asSeconds();
+
+        // Sine wave from 0 to 1
+        float pulse = (std::sin(time * 6.0F) + 1.0F) / 2.0F; // 3.0F = speed
+
+        sf::Uint8 alpha = static_cast<sf::Uint8>(100 + pulse * 155);
+
+        sf::Color colour = _enemySpawnLaneIndicatorSprite.getColor();
+        colour.a = alpha;
+        _enemySpawnLaneIndicatorSprite.setColor(colour);
+
+        // --- Scale (size pulsation) ---
+        float scale = 0.40F + pulse * 0.10f; // 1.0 → 1.10
+        _enemySpawnLaneIndicatorSprite.setScale(scale, scale);
+
+        // Optional: make sure origin is centered so scaling pulses evenly
+        sf::FloatRect bounds = _enemySpawnLaneIndicatorSprite.getLocalBounds();
+        _enemySpawnLaneIndicatorSprite.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
     }
 
     if(not _isDebugOn)
@@ -69,6 +118,12 @@ void AiDirector::Render(sf::RenderWindow &window)
     {
         window.draw(_debugDirectorStateText);
         window.draw(_debugPerceivedIntensityText);
+    }
+
+    if(not _starshipDeploymentManager->IsQueueEmpty())
+    {
+        window.draw(_enemySpawnLaneIndicatorSprite);
+        //window.draw(_enemySpawnLaneIndicatorText);
     }
 }
 
@@ -105,6 +160,10 @@ void AiDirector::UpdateDeploymentStatus_OnDeploymentBegun()
 
     _enemy->SpendScrap(_starshipTemplateToBeDeployed[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetBuildCost());
     _enemy->SetScrapText("Scrap Metal: " + std::to_string(_enemy->GetCurrentScrapAmount()));
+
+    /*_enemySpawnLaneIndicatorSprite.setPosition(
+            _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetPos().x + _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetSize().x - 10.0F,
+            _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetPos().y);*/
 }
 
 void AiDirector::SpawnEnemy_OnDeploymentCompleted()

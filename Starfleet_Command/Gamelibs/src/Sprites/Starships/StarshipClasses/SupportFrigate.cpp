@@ -16,6 +16,7 @@ SupportFrigate::SupportFrigate(int spacelane)
     _projectileSize = Projectile::SMALL;
     _projectileColour = Projectile::BLUE;
     _starshipName = "Support Frigate";
+    _starshipAbbreviation = "SF";
     _assignedLaneIndex = spacelane;
     _starshipIndex = 2;
 

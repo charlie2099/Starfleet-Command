@@ -16,6 +16,7 @@ Battleship::Battleship(int spacelane)
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
     _starshipName = "Battleship";
+    _starshipAbbreviation = "BS";
     _assignedLaneIndex = spacelane;
     _starshipIndex = 4;
 

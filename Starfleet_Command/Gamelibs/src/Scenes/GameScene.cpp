@@ -315,7 +315,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& enemyBullet = enemyStarship->GetProjectile()[k]->GetSpriteComponent();
                 if(playerStarship->CollidesWith(enemyBullet.GetSprite().getGlobalBounds()))
                 {
-                    RNG _starshipDamageRNG {static_cast<int>(playerStarship->GetMaxDamage() * 0.9F), static_cast<int>(playerStarship->GetMaxDamage())};
+                    RNG _starshipDamageRNG {static_cast<int>(enemyStarship->GetMaxDamage() * 0.9F), static_cast<int>(enemyStarship->GetMaxDamage())};
                     int randDamage = _starshipDamageRNG.GenerateNumber();
                     int scaledDamage = randDamage * enemyStarship->GetDamageScaleFactor();
                     playerStarship->TakeDamage(scaledDamage);

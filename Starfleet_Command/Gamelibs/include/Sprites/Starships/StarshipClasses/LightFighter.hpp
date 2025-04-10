@@ -50,6 +50,7 @@ public:
     Projectile::Size GetProjectileSize() override { return _projectileSize; }
     Projectile::Colour GetProjectileColour() override { return _projectileColour; }
     std::string& GetStarshipName() override { return _starshipName; }
+    std::string& GetStarshipAbbreviation() override { return _starshipAbbreviation; }
     sf::Color &GetColour() override { return _starshipColour; }
     sf::Vector2<float> GetPos() override { return _spriteComponent.GetPos(); }
     float GetRotation() override { return _rotation; }

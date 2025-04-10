@@ -66,6 +66,9 @@ private:
     bool _isDebugOn = false;
     sf::Text _debugDirectorStateText;
     sf::Text _debugPerceivedIntensityText;
+    sf::Texture _enemySpawnLaneIndicatorTexture;
+    sf::Sprite _enemySpawnLaneIndicatorSprite;
+    //sf::Text _enemySpawnLaneIndicatorText;
 };
 
 #endif //STARFLEET_COMMAND_AIDIRECTOR_HPP

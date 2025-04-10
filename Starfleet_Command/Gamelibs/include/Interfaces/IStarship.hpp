@@ -79,6 +79,7 @@ public:
     virtual Projectile::Colour GetProjectileColour() = 0;
     virtual int GetProjectileCount() = 0;
     virtual std::string& GetStarshipName() = 0;
+    virtual std::string& GetStarshipAbbreviation() = 0;
     virtual sf::Color& GetColour() = 0;
     virtual sf::Vector2<float> GetPos() = 0;
     virtual float GetRotation() = 0;
@@ -105,6 +106,7 @@ protected:
     Projectile::Size _projectileSize;
     Projectile::Colour _projectileColour;
     std::string _starshipName;
+    std::string _starshipAbbreviation;
     sf::Color _starshipColour;
     float _rotation;
     float _maximumHealth;
