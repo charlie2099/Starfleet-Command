@@ -6,6 +6,7 @@ class EnemyStarshipsInPlay_IntensityRule : public IDirectorIntensityRule
 {
 public:
     explicit EnemyStarshipsInPlay_IntensityRule(float intensityRatingPerStarship);
+    bool IsValid(AiDirector& director) override;
     float CalculatePerceivedIntensity(AiDirector& director) override;
 
 private:

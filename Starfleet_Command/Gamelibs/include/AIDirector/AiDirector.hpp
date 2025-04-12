@@ -1,7 +1,7 @@
 #ifndef STARFLEET_COMMAND_AIDIRECTOR_HPP
 #define STARFLEET_COMMAND_AIDIRECTOR_HPP
-#include "AIDirector/RuleCalculator/DirectorIntensityCalculator.hpp"
-#include "AIDirector/RuleCalculator/DirectorBehaviourCalculator.hpp"
+#include "AIDirector/RuleCalculator/DirectorIntensityRulesCalculator.hpp"
+#include "AIDirector/RuleCalculator/DirectorBehaviourRulesEvaluator.hpp"
 #include "Utility/StateMachine.hpp"
 #include "AIDirector/States/DirectorBuildUpState.hpp"
 #include "AIDirector/States/DirectorPeakState.hpp"
@@ -49,8 +49,8 @@ private:
     void UpdateDeploymentStatus_OnDeploymentBegun();
     void SpawnEnemy_OnDeploymentCompleted();
     void EvaluateBehaviourRules_OnDirectorStateChange();
-    std::unique_ptr<DirectorIntensityCalculator> _intensityCalculator;
-    std::unique_ptr<DirectorBehaviourCalculator> _behaviourCalculator;
+    std::unique_ptr<DirectorIntensityRulesCalculator> _intensityCalculator;
+    std::unique_ptr<DirectorBehaviourRulesEvaluator> _behaviourCalculator;
     StateMachine _stateMachine;
     std::unique_ptr<Player>& _player;
     std::unique_ptr<Enemy>& _enemy;

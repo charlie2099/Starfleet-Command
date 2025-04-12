@@ -7,11 +7,12 @@ EnemyMothershipHealthLow_IntensityRule::EnemyMothershipHealthLow_IntensityRule(f
     std::cout << "[EnemyMothershipHealthLow_IntensityRule]: ACTIVE" << std::endl;
 }
 
+bool EnemyMothershipHealthLow_IntensityRule::IsValid(AiDirector &director)
+{
+    return director.GetEnemyMothershipHealth() <= _lowHealthThreshold;
+}
+
 float EnemyMothershipHealthLow_IntensityRule::CalculatePerceivedIntensity(AiDirector &director)
 {
-    if(director.GetEnemyMothershipHealth() <= _lowHealthThreshold)
-    {
-        return _intensityOutput;
-    }
-    return 0;
+    return _intensityOutput;
 }

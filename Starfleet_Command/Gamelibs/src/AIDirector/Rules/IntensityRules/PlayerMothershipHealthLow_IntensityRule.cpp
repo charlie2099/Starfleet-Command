@@ -7,11 +7,12 @@ PlayerMothershipHealthLow_IntensityRule::PlayerMothershipHealthLow_IntensityRule
     std::cout << "[PlayerMothershipHealthLow_IntensityRule]: ACTIVE" << std::endl;
 }
 
+bool PlayerMothershipHealthLow_IntensityRule::IsValid(AiDirector &director)
+{
+    return director.GetPlayerMothershipHealth() <= _lowHealthThreshold;
+}
+
 float PlayerMothershipHealthLow_IntensityRule::CalculatePerceivedIntensity(AiDirector &director)
 {
-    if(director.GetPlayerMothershipHealth() <= _lowHealthThreshold)
-    {
-        return _intensityOutput;
-    }
-    return 0;
+    return _intensityOutput;
 }

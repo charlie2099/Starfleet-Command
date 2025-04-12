@@ -1,4 +1,3 @@
-#include <iostream>
 #include "AIDirector/RuleEngine/DirectorBehaviourRuleEngine.hpp"
 
 DirectorBehaviourRuleEngine::DirectorBehaviourRuleEngine(const std::vector<std::shared_ptr<IDirectorBehaviourRule>>& rules)
@@ -6,16 +5,12 @@ DirectorBehaviourRuleEngine::DirectorBehaviourRuleEngine(const std::vector<std::
 
 void DirectorBehaviourRuleEngine::EvaluateBehaviourOutput(AiDirector &director)
 {
-    for (auto & _rule : _rules)
+    for (auto & rule : _rules)
     {
-        if(_rule == nullptr)
+        if(rule->IsValid(director))
         {
-            std::cout << "Error: Null rule encountered!" << std::endl;
-            return;
+            rule->Execute(director);
         }
-
-        // Applies all rules where their conditions have been met
-        _rule->ApplyBehaviour(director);
 
         //auto choice = std::min(_rule, _rule.priority)
     }

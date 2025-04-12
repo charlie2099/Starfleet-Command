@@ -119,8 +119,6 @@ protected:
     float _acceleration = 0.0F;
     float _attackRange = 400.0F;
     int _buildCost = 100;
-    sf::CircleShape _attackRangeCircle;
-    bool _isAttackRangeCircleVisible = false;
     bool _isHealthBarVisible = false;
     float _damagingProjectileSpawnTimer = 0;
     sf::Clock _damagingProjectileSpawnTimerClock;

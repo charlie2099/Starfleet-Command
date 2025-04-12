@@ -1,7 +1,7 @@
 #include "AIDirector/AiDirector.hpp"
 
 AiDirector::AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes, sf::View &displayView, bool isDebugOn)
-: _player(player), _enemy(enemy), _spacelanes(spacelanes), _displayView(displayView), _isDebugOn(isDebugOn), _intensityCalculator(std::make_unique<DirectorIntensityCalculator>()), _behaviourCalculator(std::make_unique<DirectorBehaviourCalculator>())
+: _player(player), _enemy(enemy), _spacelanes(spacelanes), _displayView(displayView), _isDebugOn(isDebugOn), _intensityCalculator(std::make_unique<DirectorIntensityRulesCalculator>()), _behaviourCalculator(std::make_unique<DirectorBehaviourRulesEvaluator>())
 {
     std::unordered_map<std::type_index, std::shared_ptr<IState>> cachedStates =
     {

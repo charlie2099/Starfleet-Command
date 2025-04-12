@@ -27,8 +27,8 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/Utility/RNG.hpp
         Gamelibs/src/AIDirector/AiDirector.cpp
         Gamelibs/include/AIDirector/AiDirector.hpp
-        Gamelibs/src/AIDirector/RuleCalculator/DirectorIntensityCalculator.cpp
-        Gamelibs/include/AIDirector/RuleCalculator/DirectorIntensityCalculator.hpp
+        Gamelibs/src/AIDirector/RuleCalculator/DirectorIntensityRulesCalculator.cpp
+        Gamelibs/include/AIDirector/RuleCalculator/DirectorIntensityRulesCalculator.hpp
         Gamelibs/include/AIDirector/Rules/IntensityRules/IDirectorIntensityRule.hpp
         Gamelibs/src/AIDirector/RuleEngine/DirectorIntensityRuleEngine.cpp
         Gamelibs/include/AIDirector/RuleEngine/DirectorIntensityRuleEngine.hpp
@@ -49,8 +49,8 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/AIDirector/Rules/IntensityRules/PlayerMothershipHealthLow_IntensityRule.hpp
         Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerMothershipHealthLow_IntensityRule.cpp
         Gamelibs/include/AIDirector/Rules/BehaviourRules/IDirectorBehaviourRule.hpp
-        Gamelibs/src/AIDirector/RuleCalculator/DirectorBehaviourCalculator.cpp
-        Gamelibs/include/AIDirector/RuleCalculator/DirectorBehaviourCalculator.hpp
+        Gamelibs/src/AIDirector/RuleCalculator/DirectorBehaviourRulesEvaluator.cpp
+        Gamelibs/include/AIDirector/RuleCalculator/DirectorBehaviourRulesEvaluator.hpp
         Gamelibs/src/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.cpp
         Gamelibs/include/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.hpp
         Gamelibs/src/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStart_BehaviourRule.cpp
@@ -65,10 +65,10 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/AIDirector/Rules/BehaviourRules/CounterAttack_BehaviourRule.hpp
         Gamelibs/src/AIDirector/Rules/BehaviourRules/PlayerSpacelaneDominance_BehaviourRule.cpp
         Gamelibs/include/AIDirector/Rules/BehaviourRules/PlayerSpacelaneDominance_BehaviourRule.hpp
-        Gamelibs/include/Scenes/WinScene.hpp
-        Gamelibs/include/Scenes/LoseScene.hpp
-        Gamelibs/src/Scenes/WinScene.cpp
-        Gamelibs/src/Scenes/LoseScene.cpp
+        Gamelibs/include/Scenes/VictoryScene.hpp
+        Gamelibs/include/Scenes/DefeatScene.hpp
+        Gamelibs/src/Scenes/VictoryScene.cpp
+        Gamelibs/src/Scenes/DefeatScene.cpp
 )
 
 include_directories(Gamelibs/include)

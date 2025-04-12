@@ -9,13 +9,15 @@ SpawnWeakStarshipsAtStart_BehaviourRule::SpawnWeakStarshipsAtStart_BehaviourRule
     _maxSpawnCount = _randomSpawnCount.GenerateNumber();
 }
 
-void SpawnWeakStarshipsAtStart_BehaviourRule::ApplyBehaviour(AiDirector &director)
+bool SpawnWeakStarshipsAtStart_BehaviourRule::IsValid(AiDirector &director)
 {
-    if(director.GetElapsedGameTime() <= _timePassedUntilSpawn) // NOTE: Make sure time passed is above the director's calculation rate?
+    return director.GetElapsedGameTime() <= _timePassedUntilSpawn; // NOTE: Make sure time passed is above the director's calculation rate?
+}
+
+void SpawnWeakStarshipsAtStart_BehaviourRule::Execute(AiDirector &director)
+{
+    for (int i = 0; i < _maxSpawnCount; ++i)
     {
-        for (int i = 0; i < _maxSpawnCount; ++i)
-        {
-            director.QueueEnemy(StarshipFactory::STARSHIP_TYPE(_randomWeakStarship.GenerateNumber()), _randomLane.GenerateNumber());
-        }
+        director.QueueEnemy(StarshipFactory::STARSHIP_TYPE(_randomWeakStarship.GenerateNumber()), _randomLane.GenerateNumber());
     }
 }

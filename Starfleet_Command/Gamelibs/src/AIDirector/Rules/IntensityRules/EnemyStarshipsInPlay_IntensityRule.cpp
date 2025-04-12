@@ -7,11 +7,12 @@ EnemyStarshipsInPlay_IntensityRule::EnemyStarshipsInPlay_IntensityRule(float int
     std::cout << "[EnemyStarshipsInPlay_IntensityRule]: ACTIVE" << std::endl;
 }
 
+bool EnemyStarshipsInPlay_IntensityRule::IsValid(AiDirector &director)
+{
+    return director.GetEnemyPopulation() > 1;
+}
+
 float EnemyStarshipsInPlay_IntensityRule::CalculatePerceivedIntensity(AiDirector &director)
 {
-    if(director.GetEnemyPopulation() > 1)
-    {
-        return _intensityOutput * (director.GetEnemyPopulation()-1.0F); // NOTE: Accounting for the enemy's mothership
-    }
-    return 0;
+    return _intensityOutput * (director.GetEnemyPopulation()-1.0F); // NOTE: Accounting for the enemy's mothership
 }

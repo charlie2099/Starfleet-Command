@@ -17,7 +17,7 @@ bool MenuScene::Init()
     InitBackgroundShips();
     InitGameVersionText();
 
-    if(!_menuMusic.openFromFile("Resources/Audio/United_Against_Evil_175bpm_136s.wav"))
+    if(!_menuMusic.openFromFile("Resources/Audio/MenuTheme/United_Against_Evil_175bpm_136s.wav"))
     {
         std::cout << "Failed to to load menu soundtrack (United_Against_Evil_175bpm_136s)" << std::endl;
         return false;
@@ -36,7 +36,7 @@ bool MenuScene::Init()
     _musicIconButtons[MUSIC_OFF_BUTTON] = std::make_unique<Button>("Resources/Textures/musicOff.png");
     for (int i = 0; i < 2; ++i)
     {
-        _musicIconButtons[i]->SetPos({10, 10});
+        _musicIconButtons[i]->SetPos({20, 20});
         _musicIconButtons[i]->SetColour(sf::Color(22, 155, 164, 100));
     }
 

@@ -6,6 +6,7 @@ class PlayerMothershipHealthLow_IntensityRule : public IDirectorIntensityRule
 {
 public:
     PlayerMothershipHealthLow_IntensityRule(float lowHealthThreshold, float intensityRating);
+    bool IsValid(AiDirector& director) override;
     float CalculatePerceivedIntensity(AiDirector& director) override;
 
 private:

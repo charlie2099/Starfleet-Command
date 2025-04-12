@@ -8,6 +8,7 @@ class IDirectorIntensityRule
 {
 public:
     virtual ~IDirectorIntensityRule() = default;
+    virtual bool IsValid(AiDirector& director) = 0;
     virtual float CalculatePerceivedIntensity(AiDirector& director) = 0;
 };
 

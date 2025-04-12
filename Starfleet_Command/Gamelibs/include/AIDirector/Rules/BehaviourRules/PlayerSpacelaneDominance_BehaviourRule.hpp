@@ -1,16 +1,20 @@
 #ifndef STARFLEET_COMMAND_PLAYERSPACELANEDOMINANCE_BEHAVIOURRULE_HPP
 #define STARFLEET_COMMAND_PLAYERSPACELANEDOMINANCE_BEHAVIOURRULE_HPP
 #include "IDirectorBehaviourRule.hpp"
+#include <vector>
 
 class PlayerSpacelaneDominance_BehaviourRule : public IDirectorBehaviourRule
 {
 public:
     explicit PlayerSpacelaneDominance_BehaviourRule(int maxPlayerStarshipsInLane, int maxSpawnCount);
-    void ApplyBehaviour(AiDirector& director) override;
+    bool IsValid(AiDirector& director) override;
+    void Execute(AiDirector& director) override;
 
 private:
-    int _maxPlayerStarshipsInLane;
+    int _numOfPlayerStarshipsInLaneThreshold;
+    std::vector<int> _validLanes;
     int _maxSpawnCount;
+    int _targetSpacelane;
     //RNG _randomWeakStarship { 0, 1 };
     //RNG _randomLane { 0, 4 };
 };

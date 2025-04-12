@@ -33,13 +33,6 @@ Battleship::Battleship(int spacelane)
     //auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
     //_healthComponent.AddBasicObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc1});
 
-    _attackRangeCircle.setRadius(_attackRange);
-    _attackRangeCircle.setFillColor({253, 103, 100, 50});
-    _attackRangeCircle.setOutlineColor(sf::Color(255, 0, 0, 150));
-    _attackRangeCircle.setOutlineThickness(2.0F);
-    _attackRangeCircle.setOrigin(_attackRangeCircle.getRadius(), _attackRangeCircle.getRadius());
-    _attackRangeCircle.setPosition(_spriteComponent.GetPos());
-
     const int SPACELANE_COUNT = 4;
     int minLane = std::max(0, spacelane-1);
     int maxLane = std::min(SPACELANE_COUNT, spacelane+1);
@@ -94,11 +87,6 @@ void Battleship::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         _isHealthBarVisible = true;
     }
-
-    if(_isAttackRangeCircleVisible)
-    {
-        _attackRangeCircle.setPosition(_spriteComponent.GetPos());
-    }
 }
 
 void Battleship::Render(sf::RenderWindow &window)
@@ -114,11 +102,6 @@ void Battleship::Render(sf::RenderWindow &window)
     if(_isHealthBarVisible)
     {
         _healthBar->Render(window);
-    }
-
-    if(_isAttackRangeCircleVisible)
-    {
-        window.draw(_attackRangeCircle);
     }
 }
 

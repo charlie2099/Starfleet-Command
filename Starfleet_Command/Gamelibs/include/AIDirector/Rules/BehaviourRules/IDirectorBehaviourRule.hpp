@@ -8,7 +8,8 @@ class IDirectorBehaviourRule
 {
 public:
     virtual ~IDirectorBehaviourRule() = default;
-    virtual void ApplyBehaviour(AiDirector& director) = 0;
+    virtual bool IsValid(AiDirector& director) = 0;
+    virtual void Execute(AiDirector& director) = 0;
 };
 
 #endif //STARFLEET_COMMAND_IDIRECTORBEHAVIOURRULE_HPP

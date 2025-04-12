@@ -7,29 +7,46 @@ CounterAttack_BehaviourRule::CounterAttack_BehaviourRule(StarshipFactory::STARSH
     std::cout << "[CounterAttack_BehaviourRule]: ACTIVE" << std::endl;
 }
 
-void CounterAttack_BehaviourRule::ApplyBehaviour(AiDirector &director)
+bool CounterAttack_BehaviourRule::IsValid(AiDirector &director)
 {
     if(director.IsQueueFull())
     {
-        return;
+        return false;
     }
 
-    // NOTE: if the behaviour calculation check is called again before a battleship has finished spawning, it will spawn another! This prevents this.
-    if(director.IsEnemyStarshipTypeInQueue(_counterStarshipTypes[0]))
+    bool isCounterStarshipAlreadyQueued = director.IsEnemyStarshipTypeInQueue(_counterStarshipTypes[0]);
+    if(isCounterStarshipAlreadyQueued)
     {
-        return;
+        return false;
     }
 
     for (int spacelane = 0; spacelane < director.GetSpacelaneCount(); ++spacelane)
     {
-        if(director.GetNumOfPlayerUnitTypesInSpacelane(spacelane, _starshipTypeToCounter) > 0 and
-           director.GetNumOfEnemyUnitTypesInSpacelane(spacelane, _counterStarshipTypes[0]) < director.GetNumOfPlayerUnitTypesInSpacelane(spacelane, _starshipTypeToCounter))
+        int numOfPlayerUnitTypesInLane = director.GetNumOfPlayerUnitTypesInSpacelane(spacelane, _starshipTypeToCounter);
+        int numOfEnemyUnitTypesInLane = director.GetNumOfEnemyUnitTypesInSpacelane(spacelane, _counterStarshipTypes[0]);
+
+        bool isTargetShipsToCounter = numOfPlayerUnitTypesInLane > 0;
+        if(not isTargetShipsToCounter)
         {
-            for (auto & counterStarshipType : _counterStarshipTypes)
-            {
-                director.QueueEnemy(counterStarshipType, spacelane);
-            }
+            continue; // Skip to next iteration in loop
         }
+
+        bool isNumOfEnemyUnitTypesLessThanPlayersInLane = numOfEnemyUnitTypesInLane < numOfPlayerUnitTypesInLane;
+        if(isNumOfEnemyUnitTypesLessThanPlayersInLane)
+        {
+            _targetSpacelane = spacelane;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void CounterAttack_BehaviourRule::Execute(AiDirector &director)
+{
+    for (auto & counterStarshipType : _counterStarshipTypes)
+    {
+        director.QueueEnemy(counterStarshipType, _targetSpacelane);
     }
 }
 

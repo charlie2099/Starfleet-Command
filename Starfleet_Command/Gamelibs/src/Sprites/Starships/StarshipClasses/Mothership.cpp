@@ -30,13 +30,6 @@ Mothership::Mothership(int spacelane)
     //auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
     //_healthComponent.AddBasicObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc1});
 
-    _attackRangeCircle.setRadius(_attackRange);
-    _attackRangeCircle.setFillColor({253, 103, 100, 50});
-    _attackRangeCircle.setOutlineColor(sf::Color::Red);
-    _attackRangeCircle.setOutlineThickness(2.0F);
-    _attackRangeCircle.setOrigin(_attackRangeCircle.getRadius(), _attackRangeCircle.getRadius());
-    _attackRangeCircle.setPosition(_spriteComponent.GetPos());
-
     _attackableLanes.emplace_back(0);
     _attackableLanes.emplace_back(1);
     _attackableLanes.emplace_back(2);
@@ -90,11 +83,6 @@ void Mothership::Update(sf::RenderWindow &window, sf::Time deltaTime)
         _isHealthBarVisible = true;
     }
 
-    if(_isAttackRangeCircleVisible)
-    {
-        _attackRangeCircle.setPosition(_spriteComponent.GetPos());
-    }
-
     if(_isDamaged)
     {
         _damageTimer -= deltaTime.asSeconds();
@@ -120,11 +108,6 @@ void Mothership::Render(sf::RenderWindow &window)
     if(_isHealthBarVisible)
     {
         _healthBar->Render(window);
-    }
-
-    if(_isAttackRangeCircleVisible)
-    {
-        window.draw(_attackRangeCircle);
     }
 }
 

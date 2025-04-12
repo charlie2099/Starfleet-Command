@@ -7,7 +7,8 @@ class SpawnWeakStarshipsAtStart_BehaviourRule : public IDirectorBehaviourRule
 {
 public:
     explicit SpawnWeakStarshipsAtStart_BehaviourRule(float timePassedUntilSpawn, int maxSpawnCount);
-    void ApplyBehaviour(AiDirector& director) override;
+    bool IsValid(AiDirector& director) override;
+    void Execute(AiDirector& director) override;
 
 private:
     int _maxSpawnCount;

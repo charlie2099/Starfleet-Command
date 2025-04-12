@@ -42,10 +42,10 @@ void SceneManager::ChangeScene(Scene::ID id)
             current_scene = std::make_unique<OptionsScene>();
             break;
         case Scene::ID::WIN:
-            current_scene = std::make_unique<WinScene>();
+            current_scene = std::make_unique<VictoryScene>();
             break;
         case Scene::ID::LOSE:
-            current_scene = std::make_unique<LoseScene>();
+            current_scene = std::make_unique<DefeatScene>();
             break;
     }
     current_scene->SetScene(id);

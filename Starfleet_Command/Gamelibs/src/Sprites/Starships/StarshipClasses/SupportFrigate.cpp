@@ -33,13 +33,6 @@ SupportFrigate::SupportFrigate(int spacelane)
     //auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
     //_healthComponent.AddBasicObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc1});
 
-    _attackRangeCircle.setRadius(_attackRange);
-    _attackRangeCircle.setFillColor({253, 103, 100, 50});
-    _attackRangeCircle.setOutlineColor(sf::Color(255, 0, 0, 150));
-    _attackRangeCircle.setOutlineThickness(2.0F);
-    _attackRangeCircle.setOrigin(_attackRangeCircle.getRadius(), _attackRangeCircle.getRadius());
-    _attackRangeCircle.setPosition(_spriteComponent.GetPos());
-
     _attackableLanes.emplace_back(spacelane);
 }
 
@@ -88,11 +81,6 @@ void SupportFrigate::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         _isHealthBarVisible = true;
     }
-
-    if(_isAttackRangeCircleVisible)
-    {
-        _attackRangeCircle.setPosition(_spriteComponent.GetPos());
-    }
 }
 
 void SupportFrigate::Render(sf::RenderWindow &window)
@@ -108,11 +96,6 @@ void SupportFrigate::Render(sf::RenderWindow &window)
     if(_isHealthBarVisible)
     {
         _healthBar->Render(window);
-    }
-
-    if(_isAttackRangeCircleVisible)
-    {
-        window.draw(_attackRangeCircle);
     }
 }
 

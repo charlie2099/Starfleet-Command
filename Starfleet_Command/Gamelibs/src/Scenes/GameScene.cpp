@@ -2,9 +2,9 @@
 
 GameScene::~GameScene()
 {
-    if(_gameMusic.getStatus() == sf::Music::Playing)
+    if(_gameMusic[_currentMusicTrackIndex].getStatus() == sf::Music::Playing)
     {
-        _gameMusic.stop();
+        _gameMusic[_currentMusicTrackIndex].stop();
     }
 
     _spaceLanes.clear();
@@ -52,20 +52,16 @@ bool GameScene::Init()
     InitMinimapView();
     InitEvents();
 
-    if(!_gameMusic.openFromFile("Resources/Audio/Rise_Above_Darkness_225bpm_131s.wav"))
+    _gameMusic[0].openFromFile("Resources/Audio/GameThemes/Rise_Above_Darkness_225bpm_131s.wav");
+    _gameMusic[1].openFromFile("Resources/Audio/GameThemes/Dangerous_Dark_Disaster_143bpm_148s.wav");
+    _gameMusic[2].openFromFile("Resources/Audio/GameThemes/Future_Shock_Fears_155bpm_120s.wav");
+    _gameMusic[3].openFromFile("Resources/Audio/GameThemes/Triumph_Over_Terror_125bpm_153s.wav");
+
+    if(_isMusicOn)
     {
-        std::cout << "Failed to to load menu soundtrack (Rise_Above_Darkness_225bpm_131s)" << std::endl;
-        return false;
+        _gameMusic[_currentMusicTrackIndex].play();
     }
-    else
-    {
-        if(_isMusicOn)
-        {
-            _gameMusic.play();
-        }
-        //_gameMusic.setPlayingOffset(sf::seconds(2.0F));
-        _gameMusic.setLoop(true);
-    }
+    //_gameMusic.setPlayingOffset(sf::seconds(2.0F));
 
     _musicIconButtons[MUSIC_ON_BUTTON] = std::make_unique<Button>("Resources/Textures/musicOn.png");
     _musicIconButtons[MUSIC_OFF_BUTTON] = std::make_unique<Button>("Resources/Textures/musicOff.png");
@@ -74,9 +70,9 @@ bool GameScene::Init()
         _musicIconButtons[i]->SetColour(sf::Color(22, 155, 164, 100));
     }
 
-    /*_nextMusicTrackButton = std::make_unique<Button>("Resources/Textures/next.png");
+    _nextMusicTrackButton = std::make_unique<Button>("Resources/Textures/next.png");
     _nextMusicTrackButton->SetColour(sf::Color(22, 155, 164, 100));
-    _nextMusicTrackButton->SetScale({0.65F, 0.65F});*/
+    _nextMusicTrackButton->SetScale({0.80F, 0.80F});
 
     return true;
 }
@@ -152,21 +148,28 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     {
         if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
         {
-            _isMusicOn ? _gameMusic.pause() : _gameMusic.play();
+            _isMusicOn ? _gameMusic[_currentMusicTrackIndex].pause() : _gameMusic[_currentMusicTrackIndex].play();
             _isMusicOn = !_isMusicOn;
         }
     }
 
-    /*if(_nextMusicTrackButton->IsCursorHoveredOver())
+    if(_nextMusicTrackButton->IsCursorHoveredOver())
     {
         if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
         {
-            if(_isMusicOn)
+            _gameMusic[_currentMusicTrackIndex].stop();
+
+            if(_currentMusicTrackIndex < 3)
             {
-                // increment track counter
+                _currentMusicTrackIndex++;
             }
+            else
+            {
+                _currentMusicTrackIndex = 0;
+            }
+            _gameMusic[_currentMusicTrackIndex].play();
         }
-    }*/
+    }
 }
 
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
@@ -233,39 +236,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     }
 
 
-    /*for (int i = 1; i < _enemy->GetStarshipCount(); ++i)
-    {
-        if (_enemy->GetStarships()[i] == nullptr) return;
-
-        auto &enemyStarship = _enemy->GetStarships()[i];
-        auto &playerMothershipp = _player->GetMothership();
-
-
-        /// Enemy  starship enemy engagement
-        *//*enemyStarship->IsEnemyInRange(playerMothershipp)*//*
-        if(Chilli::Vector::Distance(enemyStarship->GetPos(), playerMothershipp->GetPos()) <=(enemyStarship->GetAttackRange()*2.0F))
-        {
-            enemyStarship->ShootAt(playerMothershipp->GetPos());
-        }
-
-        /// Enemy projectile collision handling
-        for(int k = 0; k < enemyStarship->GetProjectileCount(); k++)
-        {
-            auto& enemyBullet = enemyStarship->GetProjectile()[k]->GetSpriteComponent();
-            if(playerMothershipp->CollidesWith(enemyBullet.GetSprite().getGlobalBounds()))
-            {
-                int randDamage = _starshipDamageRNG.GenerateNumber();
-                float scaledDamage = (float)randDamage * enemyStarship->GetDamageScaleFactor();
-                playerMothershipp->TakeDamage(scaledDamage);
-                enemyStarship->DestroyProjectile(k);
-            }
-        }
-    }*/
 
 
 
 
-        /// Enemy starship movement and shooting
+    /// Enemy starship movement and shooting
     for (int i = 1; i < _enemy->GetStarshipCount(); ++i)
     {
         if(_enemy->GetStarships()[i] == nullptr) return;
@@ -467,7 +442,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     for (const auto & _musicIconButton : _musicIconButtons)
     {
         _musicIconButton->Update(window);
-        _musicIconButton->SetPos({_gameplayView.getCenter().x - Constants::WINDOW_WIDTH/2.0F + 10.0F, _gameplayView.getCenter().y - Constants::WINDOW_HEIGHT/2.0F + 10.0F});
+        _musicIconButton->SetPos({_gameplayView.getCenter().x - Constants::WINDOW_WIDTH/2.0F + 20.0F, _gameplayView.getCenter().y - Constants::WINDOW_HEIGHT/2.0F + 20.0F});
     }
 
     for (const auto & musicIconButton : _musicIconButtons)
@@ -492,8 +467,8 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         SetScene(Scene::ID::LOSE);
     }
 
-    /*_nextMusicTrackButton->Update(window);
-    _nextMusicTrackButton->SetPos({_musicIconButtons[MUSIC_ON_BUTTON]->GetPos().x +_nextMusicTrackButton->GetBounds().width + 10.0F, _musicIconButtons[MUSIC_ON_BUTTON]->GetPos().y + 10.0F});
+    _nextMusicTrackButton->Update(window);
+    _nextMusicTrackButton->SetPos({_musicIconButtons[MUSIC_ON_BUTTON]->GetPos().x +_nextMusicTrackButton->GetBounds().width + 20.0F, _musicIconButtons[MUSIC_ON_BUTTON]->GetPos().y + 2.5F});
 
     if(_nextMusicTrackButton->IsCursorHoveredOver())
     {
@@ -502,7 +477,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     else
     {
         _nextMusicTrackButton->SetColour(sf::Color(22, 155, 164, 100));
-    }*/
+    }
 }
 
 void GameScene::Render(sf::RenderWindow& window)
@@ -542,7 +517,10 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
     _musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
     _aiDirector->Render(window);
     window.draw(boundaryEdgeHighlighterBox);
-    //_nextMusicTrackButton->Render(window);
+    if(_isMusicOn)
+    {
+        _nextMusicTrackButton->Render(window);
+    }
 }
 
 void GameScene::RenderMinimapSprites(sf::RenderWindow &window)

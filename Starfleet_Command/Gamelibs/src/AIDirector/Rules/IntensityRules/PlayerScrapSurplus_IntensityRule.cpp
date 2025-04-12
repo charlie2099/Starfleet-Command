@@ -7,11 +7,12 @@ PlayerScrapSurplus_IntensityRule::PlayerScrapSurplus_IntensityRule(int scrapAmou
     std::cout << "[PlayerScrapSurplus_IntensityRule_IntensityRule]: ACTIVE" << std::endl;
 }
 
+bool PlayerScrapSurplus_IntensityRule::IsValid(AiDirector &director)
+{
+    return director.GetPlayerScrapAmount() >= _scrapAmount;
+}
+
 float PlayerScrapSurplus_IntensityRule::CalculatePerceivedIntensity(AiDirector &director)
 {
-    if(director.GetPlayerScrapAmount() >= _scrapAmount)
-    {
-        return _intensityOutput;
-    }
-    return 0;
+    return _intensityOutput;
 }

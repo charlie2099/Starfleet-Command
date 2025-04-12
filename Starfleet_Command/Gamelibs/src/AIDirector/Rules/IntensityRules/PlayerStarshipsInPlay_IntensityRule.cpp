@@ -7,11 +7,12 @@ PlayerStarshipsInPlay_IntensityRule::PlayerStarshipsInPlay_IntensityRule(float i
     std::cout << "[PlayerStarshipsInPlay_IntensityRule]: ACTIVE" << std::endl;
 }
 
+bool PlayerStarshipsInPlay_IntensityRule::IsValid(AiDirector &director)
+{
+    return director.GetPlayerPopulation() > 1;
+}
+
 float PlayerStarshipsInPlay_IntensityRule::CalculatePerceivedIntensity(AiDirector &director)
 {
-    if(director.GetPlayerPopulation() > 1)
-    {
-        return _intensityOutput * (director.GetPlayerPopulation()-1.0F); // NOTE: Accounting for the player's mothership
-    }
-    return 0;
+    return _intensityOutput * (director.GetPlayerPopulation()-1.0F); // NOTE: Accounting for the player's mothership
 }

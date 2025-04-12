@@ -9,8 +9,8 @@ class AiDirector;
 class DirectorIntensityRuleEngine
 {
 public:
-    DirectorIntensityRuleEngine(const std::vector<std::shared_ptr<IDirectorIntensityRule>>& rules);
-    float CalculatePerceivedIntensityPercentage(AiDirector& director);
+    explicit DirectorIntensityRuleEngine(const std::vector<std::shared_ptr<IDirectorIntensityRule>>& rules);
+    float CalculatePerceivedIntensitySum(AiDirector& director);
 
 private:
     std::vector<std::shared_ptr<IDirectorIntensityRule>> _rules;

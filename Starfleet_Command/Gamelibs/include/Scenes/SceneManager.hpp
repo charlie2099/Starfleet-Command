@@ -4,8 +4,8 @@
 #include "MenuScene.hpp"
 #include "GameScene.hpp"
 #include "OptionsScene.hpp"
-#include "WinScene.hpp"
-#include "LoseScene.hpp"
+#include "VictoryScene.hpp"
+#include "DefeatScene.hpp"
 
 class SceneManager
 {

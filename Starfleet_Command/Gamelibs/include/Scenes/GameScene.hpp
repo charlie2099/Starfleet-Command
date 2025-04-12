@@ -115,9 +115,10 @@ private:
     bool _isMusicOn = false;
     static const int MUSIC_ON_BUTTON = 0;
     static const int MUSIC_OFF_BUTTON = 1;
-    sf::Music _gameMusic;
+    std::array<sf::Music, 4> _gameMusic;
     std::array<std::unique_ptr<Button>, 2> _musicIconButtons;
-    //std::unique_ptr<Button> _nextMusicTrackButton;
+    std::unique_ptr<Button> _nextMusicTrackButton;
+    int _currentMusicTrackIndex = 0;
 
     /// Random Distributions
     RNG _starshipHealRNG {50, 100};
