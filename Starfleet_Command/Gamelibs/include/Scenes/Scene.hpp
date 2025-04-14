@@ -16,8 +16,8 @@ class Scene
         MENU = 0,
         OPTIONS = 1,
         GAME = 2,
-        WIN = 3,
-        LOSE = 4
+        VICTORY = 3,
+        DEFEAT = 4
     };
 
     virtual ~Scene()  = default;

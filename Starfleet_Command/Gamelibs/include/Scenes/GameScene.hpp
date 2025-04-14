@@ -19,6 +19,7 @@
 #include "queue"
 #include "Utility/RNG.hpp"
 #include "AIDirector/AiDirector.hpp"
+#include "../../UpgradeScrapCollectionButton.hpp"
 
 class GameScene : public Scene
 {
@@ -70,7 +71,13 @@ private:
     /// Teams
     std::unique_ptr<Player> _player;
     std::unique_ptr<Enemy> _enemy;
-    const int STARTING_SCRAP_METAL = 4000;
+    const int STARTING_SCRAP_METAL = 7000;
+
+    /// Scrap Collector
+    std::unique_ptr<UpgradeScrapCollectionButton> _upgradePlayerScrapCollectionButton;
+    const float PLAYER_SCRAP_ACCUMULATION_RATE = 5.0F;
+    float _playerScrapAccumulationTimer = PLAYER_SCRAP_ACCUMULATION_RATE;
+    sf::Clock _playerScrapAccumulationTimerClock;
 
     /// Ai Director
     std::unique_ptr<AiDirector> _aiDirector;
@@ -105,11 +112,6 @@ private:
     static const int NUM_OF_BUTTONS = 5;
     std::unique_ptr<StarshipDeploymentManager> _starshipDeploymentManager;
     std::array<std::unique_ptr<StarshipDeploymentButton>, NUM_OF_BUTTONS> _starshipDeploymentButtons;
-
-    /// Enemy Spawning TODO: Enemy spawner class?
-    float _enemySpawnTimer = 3.0F;
-    float _enemySpawnRate = 5.0F;
-    sf::Clock _enemySpawnTimerClock;
 
     /// Music & Sound Effects
     bool _isMusicOn = false;

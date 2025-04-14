@@ -12,7 +12,7 @@ Battleship::Battleship(int spacelane)
     _damageScaleFactor = 1.0F;
     _fireRate = 3.0f;
     _attackRange = 600.0F;
-    _buildCost = 1500;
+    _buildCost = 3000;
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
     _starshipName = "Battleship";

@@ -12,7 +12,7 @@ Dreadnought::Dreadnought(int spacelane)
     _damageScaleFactor = 1.0F;
     _fireRate = 3.0f;
     _attackRange = 800.0F;
-    _buildCost = 1000;
+    _buildCost = 2000;
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
     _starshipName = "Dreadnought";

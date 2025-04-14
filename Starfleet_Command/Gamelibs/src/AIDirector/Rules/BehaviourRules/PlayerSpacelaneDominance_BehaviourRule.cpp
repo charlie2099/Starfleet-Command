@@ -36,9 +36,35 @@ bool PlayerSpacelaneDominance_BehaviourRule::IsValid(AiDirector &director)
 
 void PlayerSpacelaneDominance_BehaviourRule::Execute(AiDirector &director)
 {
-    for (int _validLane : _validLanes)
+    RNG spacelaneDominanceRNG;
+    auto roll = spacelaneDominanceRNG.GenerateRandomRoll();
+
+    switch (roll)
     {
-        director.QueueEnemy(StarshipFactory::LIGHTFIGHTER, _validLane);
+        case RNG::PERFECT_ROLL:
+        {
+            for (int _validLane : _validLanes)
+            {
+                director.QueueEnemy(StarshipFactory::LIGHTFIGHTER, _validLane);
+            }
+        }
+        break;
+        case RNG::COMMON_ROLL:
+        {
+            for (int _validLane : _validLanes)
+            {
+                director.QueueEnemy(StarshipFactory::LIGHTFIGHTER, _validLane);
+            }
+        }
+        break;
+        case RNG::POOR_ROLL:
+        {
+            for (int _validLane : _validLanes)
+            {
+                director.QueueEnemy(StarshipFactory::LIGHTFIGHTER, _validLane);
+            }
+        }
+        break;
     }
     _validLanes.clear();
 }

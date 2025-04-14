@@ -14,7 +14,7 @@ DirectorBehaviourRulesEvaluator::DirectorBehaviourRulesEvaluator()
     AddRule(std::make_shared<CounterAttack_BehaviourRule>(starshipToCounter, counterStarships));
 
     auto starshipToCounter2 = StarshipFactory::DREADNOUGHT;
-    auto counterStarships2 = std::vector<StarshipFactory::STARSHIP_TYPE> { StarshipFactory::DREADNOUGHT, StarshipFactory::SUPPORT_FRIGATE};
+    auto counterStarships2 = std::vector<StarshipFactory::STARSHIP_TYPE> { StarshipFactory::DREADNOUGHT, StarshipFactory::SUPPORT_FRIGATE };
     AddRule(std::make_shared<CounterAttack_BehaviourRule>(starshipToCounter2, counterStarships2));
 
     AddRule(std::make_shared<PlayerSpacelaneDominance_BehaviourRule>(2, 1));

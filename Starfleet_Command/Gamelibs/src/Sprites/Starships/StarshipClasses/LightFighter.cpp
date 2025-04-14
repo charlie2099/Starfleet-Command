@@ -5,14 +5,14 @@ LightFighter::LightFighter(int spacelane)
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_0.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
     _healthComponent.SetHealth(150);
-    _speed = 100;
+    _speed = 160;
     _startSpeed = _speed;
     _deployTimeSpeed = 2.0F;
     _maximumDamage = 25;
     _damageScaleFactor = 1.0F;
     _fireRate = 0.5f;
     _attackRange = 400.0F;
-    _buildCost = 100;
+    _buildCost = 50;
     _projectileSize = Projectile::SMALL;
     _projectileColour = Projectile::BLUE;
     _starshipName = "Light Fighter";

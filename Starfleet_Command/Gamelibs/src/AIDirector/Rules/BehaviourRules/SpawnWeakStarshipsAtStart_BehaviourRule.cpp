@@ -16,6 +16,28 @@ bool SpawnWeakStarshipsAtStart_BehaviourRule::IsValid(AiDirector &director)
 
 void SpawnWeakStarshipsAtStart_BehaviourRule::Execute(AiDirector &director)
 {
+    /*RNG weakStarshipsRNG;
+    auto roll = weakStarshipsRNG.GenerateRandomRoll();
+
+    switch (roll)
+    {
+        case RNG::PERFECT_ROLL:
+        {
+
+        }
+        break;
+        case RNG::COMMON_ROLL:
+        {
+
+        }
+        break;
+        case RNG::POOR_ROLL:
+        {
+
+        }
+        break;
+    }*/
+
     for (int i = 0; i < _maxSpawnCount; ++i)
     {
         director.QueueEnemy(StarshipFactory::STARSHIP_TYPE(_randomWeakStarship.GenerateNumber()), _randomLane.GenerateNumber());

@@ -44,9 +44,37 @@ bool CounterAttack_BehaviourRule::IsValid(AiDirector &director)
 
 void CounterAttack_BehaviourRule::Execute(AiDirector &director)
 {
-    for (auto & counterStarshipType : _counterStarshipTypes)
+    RNG counterAttackRNG;
+    auto roll = counterAttackRNG.GenerateRandomRoll();
+
+    switch (roll)
     {
-        director.QueueEnemy(counterStarshipType, _targetSpacelane);
+        case RNG::PERFECT_ROLL:
+        {
+            for (int i = 0; i < _counterStarshipTypes.size(); ++i)
+            {
+                director.QueueEnemy(_counterStarshipTypes[i], _targetSpacelane);
+            }
+        }
+        break;
+        case RNG::COMMON_ROLL:
+        {
+            int shipsToSpawn = std::max(0, static_cast<int>(_counterStarshipTypes.size() * 0.75F));
+            for (int i = 0; i < shipsToSpawn; ++i)
+            {
+                director.QueueEnemy(_counterStarshipTypes[i], _targetSpacelane);
+            }
+        }
+        break;
+        case RNG::POOR_ROLL:
+        {
+            int shipsToSpawn = std::max(0, static_cast<int>(_counterStarshipTypes.size() * 0.50));
+            for (int i = 0; i < shipsToSpawn; ++i)
+            {
+                director.QueueEnemy(_counterStarshipTypes[i], _targetSpacelane);
+            }
+        }
+        break;
     }
 }
 

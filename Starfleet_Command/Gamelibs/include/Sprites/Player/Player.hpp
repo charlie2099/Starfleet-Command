@@ -47,6 +47,7 @@ public:
     sf::FloatRect  GetMothershipBounds() const { return starship[0]->GetSpriteComponent().GetSprite().getGlobalBounds(); }
     sf::Vector2<float> GetMothershipPos() { return starship[0]->GetPos(); }
     int GetStarshipCount() { return starship.size(); }
+    std::unique_ptr<ScrapMetalManager>& GetScrapMetalManager() { return _scrapMetalManager; }
     int GetCurrentScrapAmount() { return _scrapMetalManager->GetCurrentScrapAmount(); }
     sf::Color GetTeamColour() { return _teamColour; }
 

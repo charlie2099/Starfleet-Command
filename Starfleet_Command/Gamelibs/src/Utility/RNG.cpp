@@ -1,11 +1,38 @@
 #include "Utility/RNG.hpp"
+#include <iostream>
+
+RNG::RNG()
+: _randomGenerator(GetEngine()), _uniformRealDistribution(0.0, 1.0)
+{}
 
 RNG::RNG(int min, int max)
-: _randomGenerator(GetEngine()), _uniformIntDistribution(min, max) {}
+: _randomGenerator(GetEngine()), _uniformIntDistribution(min, max)
+{}
 
 int RNG::GenerateNumber()
 {
     return _uniformIntDistribution(_randomGenerator);
+}
+
+RNG::RollQuality RNG::GenerateRandomRoll()
+{
+    double roll = _uniformRealDistribution(_randomGenerator);
+
+    if(roll < PERFECT_THRESHOLD)
+    {
+        std::cout << "PERFECT ROLL" << std::endl;
+        return PERFECT_ROLL;
+    }
+    else if(roll < COMMON_THRESHOLD)
+    {
+        std::cout << "COMMON ROLL" << std::endl;
+        return COMMON_ROLL;
+    }
+    else
+    {
+        std::cout << "POOR ROLL" << std::endl;
+        return POOR_ROLL;
+    }
 }
 
 std::mt19937 RNG::GetEngine()

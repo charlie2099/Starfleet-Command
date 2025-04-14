@@ -69,6 +69,8 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/Scenes/DefeatScene.hpp
         Gamelibs/src/Scenes/VictoryScene.cpp
         Gamelibs/src/Scenes/DefeatScene.cpp
+        Gamelibs/UpgradeScrapCollectionButton.cpp
+        Gamelibs/UpgradeScrapCollectionButton.hpp
 )
 
 include_directories(Gamelibs/include)

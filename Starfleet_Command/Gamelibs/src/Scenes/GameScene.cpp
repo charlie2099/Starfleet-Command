@@ -49,6 +49,8 @@ bool GameScene::Init()
         _starshipDeploymentButtons[i] = std::make_unique<StarshipDeploymentButton>(static_cast<StarshipFactory::STARSHIP_TYPE>(i), _player->GetTeamColour());
     }
 
+    _upgradePlayerScrapCollectionButton = std::make_unique<UpgradeScrapCollectionButton>(_player->GetScrapMetalManager(), _player->GetTeamColour());
+
     InitMinimapView();
     InitEvents();
 
@@ -95,6 +97,8 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
         deploymentButton->EventHandler(window, event);
     }
+
+    _upgradePlayerScrapCollectionButton->EventHandler(window, event);
 
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
@@ -215,6 +219,21 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _player->Update(window, deltaTime);
     _enemy->Update(window, deltaTime);
     _aiDirector->Update(window, deltaTime);
+
+
+
+
+    _upgradePlayerScrapCollectionButton->SetPos({_starshipDeploymentButtons[4]->GetPos().x + _starshipDeploymentButtons[4]->GetBounds().width + 96.0F, _starshipDeploymentButtons[0]->GetPos().y});
+    _upgradePlayerScrapCollectionButton->SetAffordable(_player->GetCurrentScrapAmount() >= _upgradePlayerScrapCollectionButton->GetUpgradeCost()); // NOTE: Unsure about this
+    _upgradePlayerScrapCollectionButton->Update(window, deltaTime);
+
+    /// Passive scrap metal accumulation
+    if(_playerScrapAccumulationTimerClock.getElapsedTime().asSeconds() >= _playerScrapAccumulationTimer)
+    {
+        _player->CollectScrap(25 * _upgradePlayerScrapCollectionButton->GetUpgradeLevel());
+        _player->SetScrapText("Scrap Metal: " + std::to_string(_player->GetCurrentScrapAmount()));
+        _playerScrapAccumulationTimer += PLAYER_SCRAP_ACCUMULATION_RATE;
+    }
 
 
 
@@ -460,11 +479,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     if (_enemy->GetMothership()->GetHealth() <= 0)
     {
-        SetScene(Scene::ID::WIN);
+        SetScene(Scene::ID::VICTORY);
     }
     else if (_player->GetMothership()->GetHealth() <= 0)
     {
-        SetScene(Scene::ID::LOSE);
+        SetScene(Scene::ID::DEFEAT);
     }
 
     _nextMusicTrackButton->Update(window);
@@ -489,13 +508,13 @@ void GameScene::Render(sf::RenderWindow& window)
     RenderMinimapSprites(window);
 
     window.setView(_gameplayView);
-    _cursor.Render(window);
     if(IsPaused())
     {
         window.draw(_pauseOverlaySprite);
         window.draw(_pauseIconSprite);
         window.draw(_pauseText);
     }
+    _cursor.Render(window);
 }
 
 void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
@@ -514,6 +533,7 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
     {
         deploymentButton->Render(window);
     }
+    _upgradePlayerScrapCollectionButton->Render(window);
     _musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
     _aiDirector->Render(window);
     window.draw(boundaryEdgeHighlighterBox);
