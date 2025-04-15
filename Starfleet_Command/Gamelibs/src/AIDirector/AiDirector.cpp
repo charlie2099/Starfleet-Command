@@ -34,18 +34,18 @@ AiDirector::AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& 
 
     _debugDirectorStateText.setString("Director State: " + _stateMachine.GetCurrentStateName());
     _debugDirectorStateText.setFont(Chilli::CustomFonts::GetBoldFont());
-    _debugDirectorStateText.setCharacterSize(11.0F);
+    _debugDirectorStateText.setCharacterSize(11);
 
     _debugPerceivedIntensityText.setString("Perceived Intensity: " + std::to_string(static_cast<int>(_perceivedIntensity)));
     _debugPerceivedIntensityText.setFont(Chilli::CustomFonts::GetBoldFont());
-    _debugPerceivedIntensityText.setCharacterSize(11.0F);
+    _debugPerceivedIntensityText.setCharacterSize(11);
 
     _enemySpawnLaneIndicatorTexture.loadFromFile("Resources/Textures/left.png");
     _enemySpawnLaneIndicatorSprite.setTexture(_enemySpawnLaneIndicatorTexture);
     _enemySpawnLaneIndicatorSprite.setColor(sf::Color(253, 103, 100));
 
     /*_enemySpawnLaneIndicatorText.setFont(Chilli::CustomFonts::GetBoldFont());
-    _enemySpawnLaneIndicatorText.setCharacterSize(7.0F);
+    _enemySpawnLaneIndicatorText.setCharacterSize(7);
     _enemySpawnLaneIndicatorText.setFillColor(sf::Color::White);
     _enemySpawnLaneIndicatorText.setOutlineColor(sf::Color::Black);
     _enemySpawnLaneIndicatorText.setOutlineThickness(1.0F);*/

@@ -11,7 +11,6 @@ void Button::Update(sf::RenderWindow &window)
     auto mouse_pos_relative = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
     auto mouse_pos_world = window.mapPixelToCoords(mouse_pos_relative); // Mouse _innerPosition translated into world coordinates
 
-    // if mouse within button bounds, do something
     if(_spriteComponent.GetSprite().getGlobalBounds().contains(mouse_pos_world))
     {
         _isHoveredOver = true;

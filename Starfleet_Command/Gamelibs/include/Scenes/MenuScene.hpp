@@ -31,7 +31,8 @@ class MenuScene : public Scene
     static const int PLAY_BUTTON = 0;
     static const int OPTIONS_BUTTON = 1;
     static const int EXIT_BUTTON = 2;
-    static const int NUM_OF_BUTTONS = 3;
+    static const int BACK_BUTTON = 3;
+    static const int NUM_OF_BUTTONS = 4;
     static const int BACKGROUND_SHIPS = 16;
 
     sf::View _worldView{};
@@ -52,12 +53,42 @@ class MenuScene : public Scene
     };
     std::vector<ParallaxStar> _parallaxStars;
     const int NUM_OF_STARS = 300;
+    sf::Texture _backgroundPlayerPlanetTexture;
+    sf::Sprite _backgroundPlayerPlanetSprite;
+    sf::Texture _backgroundEnemyPlanetTexture;
+    sf::Sprite _backgroundEnemyPlanetSprite;
 
     sf::Sprite _menuTitleImgSprite;
     sf::Texture _menuTitleImgTexture;
 
+    /// Game Settings
+    bool _isGameSettingsEnabled = false;
+    sf::RectangleShape _gameSettingsOverlayWindow;
+    sf::Text _gameSettingsTitleText;
+
+    const static int NUM_OF_SETTINGS_ELEMENTS = 6;
+    /*enum SettingsType
+    {
+        TOGGLE,
+        COLOUR_PICKER
+    };*/
+    struct SettingsElement
+    {
+        sf::Text nameText;
+        sf::Text statusText;
+        bool isEnabled{};
+        //SettingsType type;
+    };
+    std::array<SettingsElement, NUM_OF_SETTINGS_ELEMENTS> _gameSettingsMenuElements;
+    std::array<sf::Sprite, NUM_OF_SETTINGS_ELEMENTS> _gameSettingsLeftArrowSprite;
+    std::array<sf::Sprite, NUM_OF_SETTINGS_ELEMENTS> _gameSettingsRightArrowSprite;
+    sf::Texture _gameSettingsLeftArrowTexture;
+    sf::Texture _gameSettingsRightArrowTexture;
+
+    /// Game Version
     sf::Text _gameVersionText;
 
+    /// Music
     sf::Music _menuMusic;
     std::array<std::unique_ptr<Button>, 2> _musicIconButtons;
     bool _isMusicOn = false;

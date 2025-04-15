@@ -32,7 +32,7 @@ bool GameScene::Init()
 
     _pauseText.setFont(Chilli::CustomFonts::GetBoldFont());
     _pauseText.setString("GAME PAUSED");
-    _pauseText.setCharacterSize(14.0F);
+    _pauseText.setCharacterSize(14);
     _pauseText.setFillColor(_predefinedColours.LIGHTBLUE);
     _pauseText.setOutlineColor(sf::Color::Black);
 
@@ -75,6 +75,8 @@ bool GameScene::Init()
     _nextMusicTrackButton = std::make_unique<Button>("Resources/Textures/next.png");
     _nextMusicTrackButton->SetColour(sf::Color(22, 155, 164, 100));
     _nextMusicTrackButton->SetScale({0.80F, 0.80F});
+
+    _cursor.SetColour(_player->GetTeamColour());
 
     return true;
 }
@@ -127,6 +129,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 
 
+    // QUESTION: Move to Update method?
     for (const auto & _spaceLane : _spaceLanes)
     {
         _spaceLane->SetColour(_spaceLane->IsCursorHoveredOver() ? HIGHLIGHT_LANE_COLOUR : DEFAULT_LANE_COLOUR);
@@ -134,6 +137,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 
 
+    // QUESTION: Move to Update method?
     for (int i = 1; i < _player->GetStarshipCount(); ++i)
     {
         if (_player->GetStarships()[i]->IsMouseOver())
@@ -451,7 +455,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
 
     UpdateSpaceLanePositionsAndMouseHoverColour(window, deltaTime);
-    //UpdateStarshipPreviewSpritePosition(worldPositionOfMouse);
     _backgroundParallax->Update(window, deltaTime);
 
 
@@ -477,6 +480,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     }
 
 
+
     if (_enemy->GetMothership()->GetHealth() <= 0)
     {
         SetScene(Scene::ID::VICTORY);
@@ -496,6 +500,41 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     else
     {
         _nextMusicTrackButton->SetColour(sf::Color(22, 155, 164, 100));
+    }
+
+
+
+
+    if(_musicIconButtons[_isMusicOn]->IsCursorHoveredOver() ||
+       _nextMusicTrackButton->IsCursorHoveredOver() ||
+       _upgradePlayerScrapCollectionButton->IsCursorHoveredOver())
+    {
+        _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
+    }
+    else
+    {
+        bool buttonHoveredOver = false;
+
+        for(int i = 0; i < NUM_OF_BUTTONS; i++)
+        {
+            if(_starshipDeploymentButtons[i]->IsCursorHoveredOver())
+            {
+                _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
+                buttonHoveredOver = true;
+                break;
+            }
+            else if(_starshipDeploymentButtons[i]->IsPlacingStarship())
+            {
+                _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED);
+                buttonHoveredOver = true;
+                break;
+            }
+        }
+
+        if(not buttonHoveredOver)
+        {
+            _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
+        }
     }
 }
 
@@ -583,8 +622,7 @@ void GameScene::UpdateGameplayViewMovement(const sf::RenderWindow &window, const
     float bottomOffsetInViewCoords = bottomOffset * viewToWindowRatioY;
 
     // Set the highlighter box size in view coordinates
-    boundaryEdgeHighlighterBox.setSize({edgeOffsetInViewCoords,
-                                        _gameplayView.getSize().y - topOffsetInViewCoords - bottomOffsetInViewCoords});
+    boundaryEdgeHighlighterBox.setSize({edgeOffsetInViewCoords,_gameplayView.getSize().y - topOffsetInViewCoords - bottomOffsetInViewCoords});
 
     // Thresholds for detecting mouse proximity to window borders (in window coordinates)
     float mouseProximityToLeftWindowEdge = edgeOffset;
@@ -612,27 +650,25 @@ void GameScene::UpdateGameplayViewMovement(const sf::RenderWindow &window, const
 
     if(isMouseNearLeftEdge and isViewportLeftEdgeWithinMothershipFocus and isMouseYposWithinWindowBounds)
     {
-        boundaryEdgeHighlighterBox.setPosition({viewportLeftBoundary,_gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
-        boundaryEdgeHighlighterBox.setFillColor({100, 100, 100, 25});
-        //_gameplayView.move(-VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
-
         float distanceToLeftEdge = mousePos.x;
         float speedFactor = 1.0F - (distanceToLeftEdge / edgeOffset);
         speedFactor = std::max(0.0F, std::min(1.0F, speedFactor));
         float adjustedScrollSpeed = VIEW_SCROLL_SPEED * speedFactor;
         _gameplayView.move(-adjustedScrollSpeed * deltaTime.asSeconds(), 0.0F);
 
+        boundaryEdgeHighlighterBox.setPosition({viewportLeftBoundary,_gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
+        boundaryEdgeHighlighterBox.setFillColor({100, 100, 100, 25});
     }
     else if(isMouseNearRightEdge and isViewportRightEdgeWithinRightSideOfEnemyMothership and isMouseYposWithinWindowBounds)
     {
-        boundaryEdgeHighlighterBox.setPosition({viewportRightBoundary - boundaryEdgeHighlighterBox.getSize().x,_gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
-        boundaryEdgeHighlighterBox.setFillColor({100, 100, 100, 25});
-
         float distanceToRightEdge = windowWidth - mousePos.x;
         float speedFactor = 1.0F - (distanceToRightEdge / edgeOffset);
         speedFactor = std::max(0.0F, std::min(1.0F, speedFactor));
         float adjustedScrollSpeed = VIEW_SCROLL_SPEED * speedFactor;
         _gameplayView.move(adjustedScrollSpeed * deltaTime.asSeconds(), 0.0F);
+
+        boundaryEdgeHighlighterBox.setPosition({viewportRightBoundary - boundaryEdgeHighlighterBox.getSize().x,_gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
+        boundaryEdgeHighlighterBox.setFillColor({100, 100, 100, 25});
     }
     else
     {

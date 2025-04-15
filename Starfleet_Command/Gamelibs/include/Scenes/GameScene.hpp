@@ -71,7 +71,7 @@ private:
     /// Teams
     std::unique_ptr<Player> _player;
     std::unique_ptr<Enemy> _enemy;
-    const int STARTING_SCRAP_METAL = 7000;
+    const int STARTING_SCRAP_METAL = 500;
 
     /// Scrap Collector
     std::unique_ptr<UpgradeScrapCollectionButton> _upgradePlayerScrapCollectionButton;

@@ -31,6 +31,8 @@ public:
     bool IsPlacingStarship() const { return _isPlacingStarship; }
     bool IsAffordable() const { return _isAffordable; }
 
+    bool IsCursorHoveredOver() const { return _button->IsCursorHoveredOver(); }
+
 private:
     std::unique_ptr<Button> _button;
     sf::Text _nameText;

@@ -32,14 +32,14 @@ void SceneManager::ChangeScene(Scene::ID id)
 
     switch (id)
     {
+        case Scene::ID::SPLASH:
+            current_scene = std::make_unique<SplashScene>();
+            break;
         case Scene::ID::MENU:
             current_scene = std::make_unique<MenuScene>();
             break;
         case Scene::ID::GAME:
             current_scene = std::make_unique<GameScene>();
-            break;
-        case Scene::ID::OPTIONS:
-            current_scene = std::make_unique<OptionsScene>();
             break;
         case Scene::ID::VICTORY:
             current_scene = std::make_unique<VictoryScene>();

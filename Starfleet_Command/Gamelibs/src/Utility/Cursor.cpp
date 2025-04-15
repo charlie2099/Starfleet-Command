@@ -13,11 +13,11 @@ Chilli::Cursor::Cursor()
 
 void Chilli::Cursor::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-//    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
-//    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse _innerPosition translated into world coordinates
-//
-//    _cursorSprite.setPosition(mousePosWorldCoords.x - _cursorSprite.getGlobalBounds().width/2,
-//                               mousePosWorldCoords.y - _cursorSprite.getGlobalBounds().height/2);
+    //    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
+    //    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos); // Mouse _innerPosition translated into world coordinates
+    //
+    //    _cursorSprite.setPosition(mousePosWorldCoords.x - _cursorSprite.getGlobalBounds().width/2,
+    //                               mousePosWorldCoords.y - _cursorSprite.getGlobalBounds().height/2);
 }
 
 void Chilli::Cursor::Render(sf::RenderWindow &window)
@@ -38,11 +38,15 @@ void Chilli::Cursor::SetCursorPos(sf::RenderWindow &window, sf::View& view)
     _cursorSprite.setPosition(mouse_pos.x - 3.0F, mouse_pos.y - 1.0F);
 }
 
-void Chilli::Cursor::SetCursorType(Chilli::Cursor::Type type, sf::Color color)
+void Chilli::Cursor::SetCursorType(Chilli::Cursor::Type type)
 {
     _type = type;
     _cursorSprite.setTexture(_cursorTextures[_type]);
-    _cursorSprite.setColor(color);
+}
+
+void Chilli::Cursor::SetColour(sf::Color colour)
+{
+    _cursorSprite.setColor(colour);
 }
 
 

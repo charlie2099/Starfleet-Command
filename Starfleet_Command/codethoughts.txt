@@ -20,6 +20,43 @@
 =================PSEUDOCODE==================
 ============================================
 
+
+__AI Director Behaviour Rules__
+Build-up - MaxEnemyPop(10), MaxLightFighters(4), etc,
+Peak - MaxEnemyPop(20), etc
+PeakFade - MaxEnemyPop(5), etc
+Respite - MaxEnemyPop(0), etc
+
+Build-up - Max enemy population, restricted starship type spawns, default director calculation speed
+Peak - Sustain max enemy population, unrestricted starship type spawns, special events?, enhanced director calculation speed (director at it's most analytic, and reactive state. Faster decision-making abilities.)
+PeakFade - Minimum enemy population
+Respite - Redundant state, remove entirely?
+
+CounterAttack_BehaviourRule(DirectorState::BUILD_UP, ...)
+CounterAttack_BehaviourRule(DirectorState::PEAK, ...)
+
+
+array for options elements
+
+struct SettingsElement
+{
+    text settingsItemName
+    text settingsItemActive
+}
+std::pair<SettingsElement, bool> _settingsElementPair
+
+
+MUSIC                                                 ON
+SPACELANES                                      ON
+BACKGROUND COLOUR                  CYAN
+BACKGROUND STARS COLOUR     LIGHTBLUE
+PLAYER TEAM COLOUR                   LIGHTBLUE
+ENEMY TEAM COLOUR                    LIGHTGREEN
+DIRECTOR DIFFICULTY                     EASY                        (modifies calculation rate, max enemy pop, etc)
+
+
+
+
 __BUTTON INTERFACES__
 IInteractable
 IButton

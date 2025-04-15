@@ -9,7 +9,7 @@ UpgradeScrapCollectionButton::UpgradeScrapCollectionButton(std::unique_ptr<Scrap
     _button->SetColour(DEFAULT_BTN_COLOUR);
     _button->SetScale({0.15F, 0.15F});
 
-    _nameText.setString("Upgrade Scrap Collection Service - " + std::to_string(_upgradeCost));
+    _nameText.setString("Upgrade Scrap Collection Service? - " + std::to_string(_upgradeCost));
     _nameText.setFillColor(hoverColour);
     _nameText.setOutlineColor(sf::Color::Black);
     _nameText.setOutlineThickness(1);
@@ -29,7 +29,7 @@ void UpgradeScrapCollectionButton::EventHandler(sf::RenderWindow &window, sf::Ev
 
             _upgradeLevel++;
             _upgradeCost *= 2;
-            _nameText.setString("Upgrade Scrap Collection Service - " + std::to_string(_upgradeCost));
+            _nameText.setString("Upgrade Scrap Collection Service? - " + std::to_string(_upgradeCost));
             // invoke upgrade purchase valid event?
         }
     }

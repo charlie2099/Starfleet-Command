@@ -3,7 +3,7 @@
 #include "Scene.hpp"
 #include "MenuScene.hpp"
 #include "GameScene.hpp"
-#include "OptionsScene.hpp"
+#include "SplashScene.hpp"
 #include "VictoryScene.hpp"
 #include "DefeatScene.hpp"
 

@@ -50,11 +50,17 @@ void DefeatScene::Update(sf::RenderWindow &window, sf::Time deltaTime)
     {
         _buttonPanels[PLAY_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
         _buttonPanels[PLAY_BUTTON].SetText(_buttonPanels[PLAY_BUTTON].GetText().getString(), sf::Color(22, 155, 164));
+        _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
     }
     else if(_buttonPanels[MENU_BUTTON].IsHoveredOver())
     {
         _buttonPanels[MENU_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
         _buttonPanels[MENU_BUTTON].SetText(_buttonPanels[MENU_BUTTON].GetText().getString(), sf::Color(22, 155, 164));
+        _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
+    }
+    else
+    {
+        _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
     }
 
     for (int i = 0; i < NUM_OF_BUTTONS; i++)

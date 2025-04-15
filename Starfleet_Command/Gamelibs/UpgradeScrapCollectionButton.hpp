@@ -26,6 +26,8 @@ public:
     int GetUpgradeCost() { return _upgradeCost; }
     int GetUpgradeLevel(){ return _upgradeLevel; }
 
+    bool IsCursorHoveredOver() const { return _button->IsCursorHoveredOver(); }
+
 private:
     std::unique_ptr<ScrapMetalManager>& _scrapMetalManager;
     std::unique_ptr<Button> _button;

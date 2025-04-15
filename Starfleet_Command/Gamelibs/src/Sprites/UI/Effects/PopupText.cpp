@@ -7,7 +7,7 @@ PopupText::PopupText(int value, sf::Vector2f pos)
     InitFont();
     _text.setString(std::to_string(_popupValue));
     _text.setFont(_font);
-    _text.setCharacterSize(12.5F);
+    _text.setCharacterSize(12);
 
     _generator = GetEngine();
     std::uniform_int_distribution<int> dist_x {static_cast<int>(pos.x-30.0F),static_cast<int>(pos.x+30.0F)};

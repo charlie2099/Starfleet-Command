@@ -11,9 +11,9 @@ namespace Chilli
         enum Type
         {
             DEFAULT = 0,
-            SELECTED = 1,
-            /*LOCK_ON,*/
-            ENUM_LENGTH = 2
+            HOVER = 1,
+            SELECTED = 2,
+            ENUM_LENGTH = 3
         };
 
     public:
@@ -23,13 +23,13 @@ namespace Chilli
         void Render(sf::RenderWindow& window);
 
         void SetCursorPos(sf::RenderWindow &window, sf::View& view);
-        void SetCursorType(Type type, sf::Color color);
+        void SetCursorType(Type type);
+        void SetColour(sf::Color colour);
 
     private:
         std::array<sf::Texture, Type::ENUM_LENGTH> _cursorTextures;
         sf::Sprite _cursorSprite;
         Type _type;
-        //int count = Enum.GetValues( typeof( ContentAlignment ) ).Length;
     };
 }
 

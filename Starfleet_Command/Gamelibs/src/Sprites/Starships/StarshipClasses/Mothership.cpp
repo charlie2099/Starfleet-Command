@@ -4,7 +4,7 @@ Mothership::Mothership(int spacelane)
 {
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_5.png");
     _spriteComponent.GetSprite().scale({0.5F, 0.5F});
-    _healthComponent.SetHealth(10000);
+    _healthComponent.SetHealth(1);
     _speed = 10;
     _startSpeed = _speed;
     _maximumDamage = 50;

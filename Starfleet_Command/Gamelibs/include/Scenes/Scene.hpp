@@ -13,8 +13,8 @@ class Scene
  public:
     enum class ID
     {
-        MENU = 0,
-        OPTIONS = 1,
+        SPLASH = 0,
+        MENU = 1,
         GAME = 2,
         VICTORY = 3,
         DEFEAT = 4
