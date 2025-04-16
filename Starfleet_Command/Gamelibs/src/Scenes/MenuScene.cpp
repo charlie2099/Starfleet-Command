@@ -17,7 +17,7 @@ bool MenuScene::Init()
     InitBackgroundShips();
     InitGameVersionText();
 
-    _gameSettingsOverlayWindow.setSize({300.0F, 260.0F});
+    _gameSettingsOverlayWindow.setSize({400.0F, 260.0F});
     _gameSettingsOverlayWindow.setFillColor(sf::Color(0, 0, 0, 125));
     _gameSettingsOverlayWindow.setOutlineColor(_predefinedColours.LIGHTBLUE);
     _gameSettingsOverlayWindow.setOutlineThickness(1.0F);
@@ -34,44 +34,63 @@ bool MenuScene::Init()
     for (int i = 0; i < NUM_OF_SETTINGS_ELEMENTS; ++i)
     {
         _gameSettingsLeftArrowSprite[i].setTexture(_gameSettingsLeftArrowTexture);
-        _gameSettingsLeftArrowSprite[i].scale(0.2F, 0.2F);
+        _gameSettingsLeftArrowSprite[i].scale(0.25F, 0.25F);
         _gameSettingsLeftArrowSprite[i].setColor(_predefinedColours.LIGHTBLUE);
 
         _gameSettingsRightArrowSprite[i].setTexture(_gameSettingsRightArrowTexture);
-        _gameSettingsRightArrowSprite[i].scale(0.2F, 0.2F);
+        _gameSettingsRightArrowSprite[i].scale(0.25F, 0.25F);
         _gameSettingsRightArrowSprite[i].setColor(_predefinedColours.LIGHTBLUE);
     }
 
     // TODO: Create method CreateMenuElement("Music", false);
     _gameSettingsMenuElements[0].nameText.setString("Music"); // TODO: Pass in GameSettings.json data
     //_gameSettingsMenuElements[0].type = SettingsType::TOGGLE;
-    _gameSettingsMenuElements[0].statusText.setString("ON"); // TODO: Pass in GameSettings.json data
-    _gameSettingsMenuElements[0].isEnabled = true; // TODO: Pass in GameSettings.json data
+    _gameSettingsMenuElements[0].subElementIndex = 1;
+    _gameSettingsMenuElements[0].subElementNames.emplace_back("OFF");
+    _gameSettingsMenuElements[0].subElementNames.emplace_back("ON");
+    _gameSettingsMenuElements[0].statusText.setString(_gameSettingsMenuElements[0].subElementNames[_gameSettingsMenuElements[0].subElementIndex]);
 
     _gameSettingsMenuElements[1].nameText.setString("Spacelanes");
     //_gameSettingsMenuElements[1].type = SettingsType::TOGGLE;
-    _gameSettingsMenuElements[1].statusText.setString("ON");
-    _gameSettingsMenuElements[1].isEnabled = true;
+    _gameSettingsMenuElements[1].subElementIndex = 1;
+    _gameSettingsMenuElements[1].subElementNames.emplace_back("OFF");
+    _gameSettingsMenuElements[1].subElementNames.emplace_back("ON");
+    _gameSettingsMenuElements[1].statusText.setString(_gameSettingsMenuElements[1].subElementNames[_gameSettingsMenuElements[1].subElementIndex]);
 
     _gameSettingsMenuElements[2].nameText.setString("Minimap");
     //_gameSettingsMenuElements[2].type = SettingsType::TOGGLE;
-    _gameSettingsMenuElements[2].statusText.setString("ON");
-    _gameSettingsMenuElements[2].isEnabled = true;
+    _gameSettingsMenuElements[2].subElementIndex = 1;
+    _gameSettingsMenuElements[2].subElementNames.emplace_back("OFF");
+    _gameSettingsMenuElements[2].subElementNames.emplace_back("ON");
+    _gameSettingsMenuElements[2].statusText.setString(_gameSettingsMenuElements[2].subElementNames[_gameSettingsMenuElements[2].subElementIndex]);
 
     _gameSettingsMenuElements[3].nameText.setString("Player Colour");
     //_gameSettingsMenuElements[3].type = SettingsType::COLOUR_PICKER;
-    _gameSettingsMenuElements[3].statusText.setString("LIGHTBLUE");
-    _gameSettingsMenuElements[3].isEnabled = false;
+    _gameSettingsMenuElements[3].numOfSubElements = 5;
+    _gameSettingsMenuElements[3].subElementNames.emplace_back("BLUE");
+    _gameSettingsMenuElements[3].subElementNames.emplace_back("RED");
+    _gameSettingsMenuElements[3].subElementNames.emplace_back("GREEN");
+    _gameSettingsMenuElements[3].subElementNames.emplace_back("ORANGE");
+    _gameSettingsMenuElements[3].subElementNames.emplace_back("PURPLE");
+    _gameSettingsMenuElements[3].statusText.setString(_gameSettingsMenuElements[3].subElementNames[_gameSettingsMenuElements[3].subElementIndex]);
 
     _gameSettingsMenuElements[4].nameText.setString("Enemy Colour");
     //_gameSettingsMenuElements[4].type = SettingsType::COLOUR_PICKER;
-    _gameSettingsMenuElements[4].statusText.setString("LIGHTGREEN");
-    _gameSettingsMenuElements[4].isEnabled = false;
+    _gameSettingsMenuElements[4].numOfSubElements = 5;
+    _gameSettingsMenuElements[4].subElementNames.emplace_back("GREEN");
+    _gameSettingsMenuElements[4].subElementNames.emplace_back("RED");
+    _gameSettingsMenuElements[4].subElementNames.emplace_back("BLUE");
+    _gameSettingsMenuElements[4].subElementNames.emplace_back("ORANGE");
+    _gameSettingsMenuElements[4].subElementNames.emplace_back("PURPLE");
+    _gameSettingsMenuElements[4].statusText.setString(_gameSettingsMenuElements[4].subElementNames[_gameSettingsMenuElements[4].subElementIndex]);
 
     _gameSettingsMenuElements[5].nameText.setString("Director Difficulty");
     //_gameSettingsMenuElements[5].type = SettingsType::COLOUR_PICKER;
-    _gameSettingsMenuElements[5].statusText.setString("EASY");
-    _gameSettingsMenuElements[5].isEnabled = false;
+    _gameSettingsMenuElements[5].numOfSubElements = 3;
+    _gameSettingsMenuElements[5].subElementNames.emplace_back("EASY");
+    _gameSettingsMenuElements[5].subElementNames.emplace_back("MEDIUM");
+    _gameSettingsMenuElements[5].subElementNames.emplace_back("HARD");
+    _gameSettingsMenuElements[5].statusText.setString(_gameSettingsMenuElements[5].subElementNames[_gameSettingsMenuElements[5].subElementIndex]);
 
     for (auto & _gameSettingsMenuElement : _gameSettingsMenuElements)
     {
@@ -143,6 +162,55 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
                 _menuTitleImgSprite.setPosition(Constants::WINDOW_WIDTH/2.0F - _menuTitleImgSprite.getGlobalBounds().width/2.0F, Constants::WINDOW_HEIGHT * 0.3F - _menuTitleImgSprite.getGlobalBounds().height/2.0F);
             }
         }
+
+        for (int i = 0; i < NUM_OF_SETTINGS_ELEMENTS; ++i)
+        {
+            if(Chilli::Vector::BoundsCheck(_cursor.GetPos(), _gameSettingsLeftArrowSprite[i].getGlobalBounds()))
+            {
+                if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
+                {
+                    _gameSettingsMenuElements[i].subElementIndex--;
+                    if(_gameSettingsMenuElements[i].subElementIndex <= 0)
+                    {
+                        //_gameSettingsLeftArrowSprite[i].setColor({_gameSettingsLeftArrowSprite[i].getColor().r, _gameSettingsLeftArrowSprite[i].getColor().g, _gameSettingsLeftArrowSprite[i].getColor().b, 125});
+                        _gameSettingsMenuElements[i].subElementIndex = 0;
+                    }
+                    _gameSettingsMenuElements[i].statusText.setString(_gameSettingsMenuElements[i].subElementNames[_gameSettingsMenuElements[i].subElementIndex]);
+
+
+                    //_gameSettingsMenuElements[i].statusText.setPosition({_gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getGlobalBounds().width  - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width -  35.0F - _gameSettingsRightArrowSprite[i].getGlobalBounds().width, _gameSettingsMenuElements[i].nameText.getPosition().y});
+
+                    auto statusTextXPos = _gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getGlobalBounds().width*0.725F - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width/2.0F;
+                    _gameSettingsMenuElements[i].statusText.setPosition({statusTextXPos, _gameSettingsMenuElements[i].nameText.getPosition().y});
+
+                    //_gameSettingsLeftArrowSprite[i].setPosition({_gameSettingsMenuElements[i].statusText.getPosition().x - _gameSettingsLeftArrowSprite[i].getGlobalBounds().width - 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
+                    //_gameSettingsRightArrowSprite[i].setPosition({_gameSettingsMenuElements[i].statusText.getPosition().x + _gameSettingsMenuElements[i].statusText.getGlobalBounds().width + 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
+
+                }
+            }
+            else if(Chilli::Vector::BoundsCheck(_cursor.GetPos(), _gameSettingsRightArrowSprite[i].getGlobalBounds()))
+            {
+                if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
+                {
+                    _gameSettingsMenuElements[i].subElementIndex++;
+                    if(_gameSettingsMenuElements[i].subElementIndex >= _gameSettingsMenuElements[i].numOfSubElements-1)
+                    {
+                        //_gameSettingsRightArrowSprite[i].setColor({_gameSettingsRightArrowSprite[i].getColor().r, _gameSettingsRightArrowSprite[i].getColor().g, _gameSettingsRightArrowSprite[i].getColor().b, 125});
+                        _gameSettingsMenuElements[i].subElementIndex = _gameSettingsMenuElements[i].numOfSubElements-1;
+                    }
+                    _gameSettingsMenuElements[i].statusText.setString(_gameSettingsMenuElements[i].subElementNames[_gameSettingsMenuElements[i].subElementIndex]);
+
+                    //_gameSettingsMenuElements[i].statusText.setPosition({_gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getGlobalBounds().width  - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width -  35.0F - _gameSettingsRightArrowSprite[i].getGlobalBounds().width, _gameSettingsMenuElements[i].nameText.getPosition().y});
+
+                    auto statusTextXPos = _gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getGlobalBounds().width*0.725F - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width/2.0F;
+                    _gameSettingsMenuElements[i].statusText.setPosition({statusTextXPos, _gameSettingsMenuElements[i].nameText.getPosition().y});
+
+                    //_gameSettingsLeftArrowSprite[i].setPosition({_gameSettingsMenuElements[i].statusText.getPosition().x - _gameSettingsLeftArrowSprite[i].getGlobalBounds().width - 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
+                    //_gameSettingsRightArrowSprite[i].setPosition({_gameSettingsMenuElements[i].statusText.getPosition().x + _gameSettingsMenuElements[i].statusText.getGlobalBounds().width + 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
+                }
+            }
+        }
+
         return;
     }
 
@@ -167,10 +235,15 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             for (int i = 0; i < NUM_OF_SETTINGS_ELEMENTS; ++i)
             {
                 _gameSettingsMenuElements[i].nameText.setPosition({_gameSettingsOverlayWindow.getPosition().x + 25.0F, _gameSettingsOverlayWindow.getPosition().y + 65.0F + (i * (_gameSettingsMenuElements[0].nameText.getGlobalBounds().height + 20.0F))});
-                _gameSettingsMenuElements[i].statusText.setPosition({_gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getGlobalBounds().width  - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width -  35.0F - _gameSettingsRightArrowSprite[i].getGlobalBounds().width, _gameSettingsMenuElements[i].nameText.getPosition().y});
 
-                _gameSettingsLeftArrowSprite[i].setPosition({_gameSettingsMenuElements[i].statusText.getPosition().x - _gameSettingsLeftArrowSprite[i].getGlobalBounds().width - 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
-                _gameSettingsRightArrowSprite[i].setPosition({_gameSettingsMenuElements[i].statusText.getPosition().x + _gameSettingsMenuElements[i].statusText.getGlobalBounds().width + 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
+                auto statusTextXPos = _gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getGlobalBounds().width*0.725F - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width/2.0F;
+                _gameSettingsMenuElements[i].statusText.setPosition({statusTextXPos, _gameSettingsMenuElements[i].nameText.getPosition().y});
+                //_gameSettingsMenuElements[i].statusText.setPosition({_gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getSize().x/1.75F - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width/2.0F, _gameSettingsMenuElements[i].nameText.getPosition().y});
+
+                //_gameSettingsLeftArrowSprite[i].setPosition({_gameSettingsMenuElements[i].statusText.getPosition().x - _gameSettingsLeftArrowSprite[i].getGlobalBounds().width - 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
+                _gameSettingsLeftArrowSprite[i].setPosition({_gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getSize().x/2.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
+
+                _gameSettingsRightArrowSprite[i].setPosition({statusTextXPos + _gameSettingsOverlayWindow.getGlobalBounds().width*0.225F + _gameSettingsMenuElements[i].statusText.getGlobalBounds().width/2.0F - 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
             }
         }
         else if(_buttonPanels[EXIT_BUTTON].IsClicked())
@@ -276,19 +349,27 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             _buttonPanels[BACK_BUTTON].SetText(_buttonPanels[BACK_BUTTON].GetText().getString(), sf::Color::White);
         }
 
-        /*for (int i = 0; i < _gameSettingsMenuElements.size(); ++i)
+
+        for (int i = 0; i < NUM_OF_SETTINGS_ELEMENTS; ++i)
         {
-            if(_gameSettingsMenuElements[i].isEnabled)
+            if(Chilli::Vector::BoundsCheck(_cursor.GetPos(), _gameSettingsLeftArrowSprite[i].getGlobalBounds()))
             {
-                //_gameSettingsMenuElements[i].statusText.setFillColor(sf::Color::Green);
-                //_gameSettingsMenuElements[i].statusText.setString("ON");
+                _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
+                _gameSettingsLeftArrowSprite[i].setColor(sf::Color::Cyan);
+                // isHoverOver = true?
+            }
+            else if(Chilli::Vector::BoundsCheck(_cursor.GetPos(), _gameSettingsRightArrowSprite[i].getGlobalBounds()))
+            {
+                _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
+                _gameSettingsRightArrowSprite[i].setColor(sf::Color::Cyan);
+                // isHoverOver = true?
             }
             else
             {
-                //_gameSettingsMenuElements[i].statusText.setFillColor(sf::Color::Red);
-                //_gameSettingsMenuElements[i].statusText.setString("OFF");
+                _gameSettingsLeftArrowSprite[i].setColor(_predefinedColours.LIGHTBLUE);
+                _gameSettingsRightArrowSprite[i].setColor(_predefinedColours.LIGHTBLUE);
             }
-        }*/
+        }
 
         return;
     }
@@ -401,16 +482,16 @@ bool MenuScene::InitBackground()
         _parallaxStars[i].circleShape.setFillColor(_predefinedColours.LIGHTBLUE);
     }
 
-    _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/planet07.png"); // 4 or 7
+    _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/spr_planet02.png"); // 4 or 7
     _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
-    /*_backgroundPlayerPlanetSprite.setScale(0.3F, 0.3F);
-    _backgroundPlayerPlanetSprite.setPosition(Constants::WINDOW_WIDTH - _backgroundPlayerPlanetSprite.getGlobalBounds().width, 100.0F);*/
-    //_backgroundPlayerPlanetSprite.setPosition(Constants::WINDOW_WIDTH - _backgroundPlayerPlanetSprite.getGlobalBounds().width, 300.0F);
-    _backgroundPlayerPlanetSprite.setPosition(Constants::WINDOW_WIDTH / 2.0F, Constants::WINDOW_HEIGHT / 4.0F);
+    /*_backgroundPlayerPlanetSprite.setScale(0.5F, 0.5F);
+    _backgroundPlayerPlanetSprite.setPosition(Constants::WINDOW_WIDTH/2.0F - _backgroundPlayerPlanetSprite.getGlobalBounds().width/2.0F, 25.0F);*/
+    //_backgroundPlayerPlanetSprite.setPosition(Constants::WINDOW_WIDTH/2.0F - _backgroundPlayerPlanetSprite.getGlobalBounds().width + 100.0F, 300.0F);
+    _backgroundPlayerPlanetSprite.setPosition(Constants::WINDOW_WIDTH / 1.6F, Constants::WINDOW_HEIGHT / 2.5F);
 
-    _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/planet04.png"); // 4 or 7
+    _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/spr_planet03.png"); // 4 or 7
     _backgroundEnemyPlanetSprite.setTexture(_backgroundEnemyPlanetTexture);
-    _backgroundEnemyPlanetSprite.setScale(0.2F, 0.2F);
+    _backgroundEnemyPlanetSprite.setScale(0.25F, 0.25F);
     _backgroundEnemyPlanetSprite.setPosition(50.0F, 50.0F);
 
     return true;

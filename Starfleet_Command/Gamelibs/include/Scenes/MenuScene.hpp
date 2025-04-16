@@ -76,7 +76,9 @@ class MenuScene : public Scene
     {
         sf::Text nameText;
         sf::Text statusText;
-        bool isEnabled{};
+        int numOfSubElements = 2;
+        int subElementIndex = 0;
+        std::vector<std::string> subElementNames;
         //SettingsType type;
     };
     std::array<SettingsElement, NUM_OF_SETTINGS_ELEMENTS> _gameSettingsMenuElements;

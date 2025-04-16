@@ -26,6 +26,8 @@ namespace Chilli
         void SetCursorType(Type type);
         void SetColour(sf::Color colour);
 
+        sf::Vector2<float> GetPos() { return _cursorSprite.getPosition(); }
+
     private:
         std::array<sf::Texture, Type::ENUM_LENGTH> _cursorTextures;
         sf::Sprite _cursorSprite;
