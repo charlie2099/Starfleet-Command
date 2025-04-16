@@ -71,10 +71,13 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/src/Scenes/DefeatScene.cpp
         Gamelibs/UpgradeScrapCollectionButton.cpp
         Gamelibs/UpgradeScrapCollectionButton.hpp
+        Gamelibs/src/Utility/JsonSaveSystem.cpp
+        Gamelibs/include/Utility/JsonSaveSystem.hpp
 )
 
 include_directories(Gamelibs/include)
 include_directories(Gamelibs/src)
+include_directories(ExternalPackages)
 
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR "C:/Libraries/SFML/lib/cmake/SFML")

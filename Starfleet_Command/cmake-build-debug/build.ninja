@@ -53,7 +53,7 @@ build CMakeFiles/Starfleet_Command.dir/main.cpp.obj: CXX_COMPILER__Starfleet_Com
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\main.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir
 
@@ -61,7 +61,7 @@ build CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj: CXX_COMPILER__Starflee
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Game\Game.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Game
 
@@ -69,7 +69,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/SceneManager.cpp.obj:
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes\SceneManager.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes
 
@@ -77,7 +77,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/MenuScene.cpp.obj: CX
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes\MenuScene.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes
 
@@ -85,7 +85,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Panel.cpp.obj: CX
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI\Panel.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI
 
@@ -93,7 +93,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/SpriteComponent.c
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\SpriteComponent.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components
 
@@ -101,7 +101,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/GUI/Button.cpp.ob
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI\GUI\Button.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI\GUI
 
@@ -109,7 +109,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projecti
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Projectiles\Projectile.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Projectiles
 
@@ -117,7 +117,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/GameScene.cpp.obj: CX
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes\GameScene.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes
 
@@ -125,7 +125,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj: CXX_
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility\Cursor.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility
 
@@ -133,7 +133,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Enemy/Enemy.cpp.obj:
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Enemy\Enemy.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Enemy
 
@@ -141,7 +141,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Player/Player.cpp.ob
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Player\Player.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Player
 
@@ -149,7 +149,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Vector.cpp.obj: CXX_
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility\Vector.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility
 
@@ -157,7 +157,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.obj
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI\HealthBar.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI
 
@@ -165,7 +165,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/SplashScene.cpp.obj: 
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes\SplashScene.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes
 
@@ -173,7 +173,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/PopupText
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI\Effects\PopupText.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI\Effects
 
@@ -181,7 +181,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFa
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipFactory.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships
 
@@ -189,7 +189,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipCl
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipClasses\LightFighter.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipClasses
 
@@ -197,7 +197,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.c
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components\HealthComponent.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Components
 
@@ -205,7 +205,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipCl
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipClasses\HeavyFighter.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipClasses
 
@@ -213,7 +213,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipCl
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipClasses\SupportFrigate.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipClasses
 
@@ -221,7 +221,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipCl
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipClasses\Dreadnought.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipClasses
 
@@ -229,7 +229,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipCl
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipClasses\Battleship.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipClasses
 
@@ -237,7 +237,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipCl
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipClasses\Mothership.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\Starships\StarshipClasses
 
@@ -245,7 +245,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/SpaceLane.cpp.obj: CXX_COMPI
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\SpaceLane.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src
 
@@ -253,7 +253,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/ProgressBar.cpp.o
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI\ProgressBar.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Sprites\UI
 
@@ -261,7 +261,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Minimap.cpp.obj: CXX_COMPILE
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Minimap.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src
 
@@ -269,7 +269,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/ScrapMetalManager.cpp.obj: C
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\ScrapMetalManager.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src
 
@@ -277,7 +277,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/ParallaxBackground.cpp.obj: 
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\ParallaxBackground.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src
 
@@ -285,7 +285,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/MothershipStatusDisplay.cpp.
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\MothershipStatusDisplay.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src
 
@@ -293,7 +293,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/CustomFonts.cpp.obj:
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility\CustomFonts.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility
 
@@ -301,7 +301,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/StarshipDeploymentButton.cpp
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\StarshipDeploymentButton.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src
 
@@ -309,7 +309,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/StarshipDeploymentManager.cp
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\StarshipDeploymentManager.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src
 
@@ -317,7 +317,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/RNG.cpp.obj: CXX_COM
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility\RNG.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility
 
@@ -325,7 +325,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/AiDirector.cpp.ob
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\AiDirector.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector
 
@@ -333,7 +333,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/RuleCalculator/Di
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\RuleCalculator\DirectorIntensityRulesCalculator.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\RuleCalculator
 
@@ -341,7 +341,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/RuleEngine/Direct
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\RuleEngine\DirectorIntensityRuleEngine.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\RuleEngine
 
@@ -349,7 +349,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRu
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\IntensityRules\EnemyMothershipHealthLow_IntensityRule.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\IntensityRules
 
@@ -357,7 +357,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/DirectorEventBus.
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\DirectorEventBus.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector
 
@@ -365,7 +365,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/StateMachine.cpp.obj
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility\StateMachine.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility
 
@@ -373,7 +373,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/States/DirectorRe
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\States\DirectorRespiteState.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\States
 
@@ -381,7 +381,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/States/DirectorBu
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\States\DirectorBuildUpState.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\States
 
@@ -389,7 +389,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/States/DirectorPe
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\States\DirectorPeakState.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\States
 
@@ -397,7 +397,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/States/DirectorPe
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\States\DirectorPeakFadeState.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\States
 
@@ -405,7 +405,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRu
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\IntensityRules\PlayerMothershipHealthLow_IntensityRule.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\IntensityRules
 
@@ -413,7 +413,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/RuleCalculator/Di
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\RuleCalculator\DirectorBehaviourRulesEvaluator.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\RuleCalculator
 
@@ -421,7 +421,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/RuleEngine/Direct
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\RuleEngine\DirectorBehaviourRuleEngine.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\RuleEngine
 
@@ -429,7 +429,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/BehaviourRu
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\BehaviourRules\SpawnWeakStarshipsAtStart_BehaviourRule.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\BehaviourRules
 
@@ -437,7 +437,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRu
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\IntensityRules\EnemyStarshipsInPlay_IntensityRule.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\IntensityRules
 
@@ -445,7 +445,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRu
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\IntensityRules\PlayerStarshipsInPlay_IntensityRule.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\IntensityRules
 
@@ -453,7 +453,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRu
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\IntensityRules\PlayerScrapSurplus_IntensityRule.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\IntensityRules
 
@@ -461,7 +461,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/BehaviourRu
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\BehaviourRules\CounterAttack_BehaviourRule.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\BehaviourRules
 
@@ -469,7 +469,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/BehaviourRu
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\BehaviourRules\PlayerSpacelaneDominance_BehaviourRule.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\AIDirector\Rules\BehaviourRules
 
@@ -477,7 +477,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/VictoryScene.cpp.obj:
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes\VictoryScene.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes
 
@@ -485,7 +485,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/DefeatScene.cpp.obj: 
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes\DefeatScene.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Scenes
 
@@ -493,9 +493,17 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/UpgradeScrapCollectionButton.cpp
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\UpgradeScrapCollectionButton.cpp.obj.d
   FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
-  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -isystem C:/Libraries/SFML/include
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
   OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs
+
+build CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/JsonSaveSystem.cpp.obj: CXX_COMPILER__Starfleet_Command_unscanned_Debug D$:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src/Utility/JsonSaveSystem.cpp || cmake_object_order_depends_target_Starfleet_Command
+  DEFINES = -DSFML_STATIC
+  DEP_FILE = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility\JsonSaveSystem.cpp.obj.d
+  FLAGS = -g -std=gnu++1z -fdiagnostics-color=always
+  INCLUDES = -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/include -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Gamelibs/src -ID:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/ExternalPackages -isystem C:/Libraries/SFML/include
+  OBJECT_DIR = CMakeFiles\Starfleet_Command.dir
+  OBJECT_FILE_DIR = CMakeFiles\Starfleet_Command.dir\Gamelibs\src\Utility
 
 
 # =============================================================================
@@ -505,7 +513,7 @@ build CMakeFiles/Starfleet_Command.dir/Gamelibs/UpgradeScrapCollectionButton.cpp
 #############################################
 # Link the executable D:\MyProjects\SFML_Projects\Starfleet-Command\Starfleet_Command\Starfleet_Command.exe
 
-build D$:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Starfleet_Command.exe: CXX_EXECUTABLE_LINKER__Starfleet_Command_Debug CMakeFiles/Starfleet_Command.dir/main.cpp.obj CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/SceneManager.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/MenuScene.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Panel.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/SpriteComponent.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/GUI/Button.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projectile.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/GameScene.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Enemy/Enemy.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Player/Player.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Vector.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/SplashScene.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/PopupText.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/SupportFrigate.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Dreadnought.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/SpaceLane.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/ProgressBar.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Minimap.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/ScrapMetalManager.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/ParallaxBackground.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/MothershipStatusDisplay.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/CustomFonts.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/StarshipDeploymentButton.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/StarshipDeploymentManager.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/RNG.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/AiDirector.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/RuleCalculator/DirectorIntensityRulesCalculator.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/RuleEngine/DirectorIntensityRuleEngine.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRules/EnemyMothershipHealthLow_IntensityRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/DirectorEventBus.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/StateMachine.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/States/DirectorRespiteState.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/States/DirectorBuildUpState.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/States/DirectorPeakState.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/States/DirectorPeakFadeState.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerMothershipHealthLow_IntensityRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/RuleCalculator/DirectorBehaviourRulesEvaluator.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStart_BehaviourRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRules/EnemyStarshipsInPlay_IntensityRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerStarshipsInPlay_IntensityRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerScrapSurplus_IntensityRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/BehaviourRules/CounterAttack_BehaviourRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/BehaviourRules/PlayerSpacelaneDominance_BehaviourRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/VictoryScene.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/DefeatScene.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/UpgradeScrapCollectionButton.cpp.obj | C$:/Libraries/SFML/lib/libsfml-graphics-s-d.a C$:/Libraries/SFML/lib/libsfml-window-s-d.a C$:/Libraries/SFML/lib/libsfml-system-s-d.a C$:/Libraries/SFML/lib/libsfml-audio-s-d.a C$:/Libraries/SFML/lib/libfreetype.a C$:/Libraries/SFML/lib/libsfml-system-s-d.a C$:/Libraries/SFML/lib/libopenal32.a C$:/Libraries/SFML/lib/libvorbisfile.a C$:/Libraries/SFML/lib/libvorbisenc.a C$:/Libraries/SFML/lib/libvorbis.a C$:/Libraries/SFML/lib/libogg.a C$:/Libraries/SFML/lib/libFLAC.a
+build D$:/MyProjects/SFML_Projects/Starfleet-Command/Starfleet_Command/Starfleet_Command.exe: CXX_EXECUTABLE_LINKER__Starfleet_Command_Debug CMakeFiles/Starfleet_Command.dir/main.cpp.obj CMakeFiles/Starfleet_Command.dir/Game/Game.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/SceneManager.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/MenuScene.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Panel.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/SpriteComponent.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/GUI/Button.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Projectiles/Projectile.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/GameScene.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Cursor.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Enemy/Enemy.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Player/Player.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/Vector.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/HealthBar.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/SplashScene.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/Effects/PopupText.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipFactory.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Components/HealthComponent.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/SupportFrigate.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Dreadnought.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/SpaceLane.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Sprites/UI/ProgressBar.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Minimap.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/ScrapMetalManager.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/ParallaxBackground.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/MothershipStatusDisplay.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/CustomFonts.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/StarshipDeploymentButton.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/StarshipDeploymentManager.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/RNG.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/AiDirector.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/RuleCalculator/DirectorIntensityRulesCalculator.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/RuleEngine/DirectorIntensityRuleEngine.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRules/EnemyMothershipHealthLow_IntensityRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/DirectorEventBus.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/StateMachine.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/States/DirectorRespiteState.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/States/DirectorBuildUpState.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/States/DirectorPeakState.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/States/DirectorPeakFadeState.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerMothershipHealthLow_IntensityRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/RuleCalculator/DirectorBehaviourRulesEvaluator.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStart_BehaviourRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRules/EnemyStarshipsInPlay_IntensityRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerStarshipsInPlay_IntensityRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerScrapSurplus_IntensityRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/BehaviourRules/CounterAttack_BehaviourRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/AIDirector/Rules/BehaviourRules/PlayerSpacelaneDominance_BehaviourRule.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/VictoryScene.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Scenes/DefeatScene.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/UpgradeScrapCollectionButton.cpp.obj CMakeFiles/Starfleet_Command.dir/Gamelibs/src/Utility/JsonSaveSystem.cpp.obj | C$:/Libraries/SFML/lib/libsfml-graphics-s-d.a C$:/Libraries/SFML/lib/libsfml-window-s-d.a C$:/Libraries/SFML/lib/libsfml-system-s-d.a C$:/Libraries/SFML/lib/libsfml-audio-s-d.a C$:/Libraries/SFML/lib/libfreetype.a C$:/Libraries/SFML/lib/libsfml-system-s-d.a C$:/Libraries/SFML/lib/libopenal32.a C$:/Libraries/SFML/lib/libvorbisfile.a C$:/Libraries/SFML/lib/libvorbisenc.a C$:/Libraries/SFML/lib/libvorbis.a C$:/Libraries/SFML/lib/libogg.a C$:/Libraries/SFML/lib/libFLAC.a
   FLAGS = -g
   LINK_LIBRARIES = C:/Libraries/SFML/lib/libsfml-graphics-s-d.a  C:/Libraries/SFML/lib/libsfml-window-s-d.a  C:/Libraries/SFML/lib/libsfml-system-s-d.a  C:/Libraries/SFML/lib/libsfml-audio-s-d.a  -lgdi32  -lOpenGL32  C:/Libraries/SFML/lib/libfreetype.a  C:/Libraries/SFML/lib/libsfml-system-s-d.a  -lwinmm  C:/Libraries/SFML/lib/libopenal32.a  C:/Libraries/SFML/lib/libvorbisfile.a  C:/Libraries/SFML/lib/libvorbisenc.a  C:/Libraries/SFML/lib/libvorbis.a  C:/Libraries/SFML/lib/libogg.a  C:/Libraries/SFML/lib/libFLAC.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Starfleet_Command.dir

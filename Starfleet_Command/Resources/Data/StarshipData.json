@@ -1,0 +1,46 @@
+{
+  "StarshipData": [
+    {
+      "Name": "Light Fighter",
+      "Health" : 0,
+      "Damage" : 0,
+      "Speed": 0,
+      "TimeToDeploy": 0
+    },
+    {
+      "Name": "Heavy Fighter",
+      "Health" : 0,
+      "Damage" : 0,
+      "Speed": 0,
+      "TimeToDeploy": 0
+    },
+    {
+      "Name": "Support Frigate",
+      "Health" : 0,
+      "Damage" : 0,
+      "Speed": 0,
+      "TimeToDeploy": 0
+    },
+    {
+      "Name": "Dreadnought",
+      "Health" : 0,
+      "Damage" : 0,
+      "Speed": 0,
+      "TimeToDeploy": 0
+    },
+    {
+      "Name": "Battleship",
+      "Health" : 0,
+      "Damage" : 0,
+      "Speed": 0,
+      "TimeToDeploy": 0
+    },
+    {
+      "Name": "Mothership",
+      "Health" : 0,
+      "Damage" : 0,
+      "Speed": 0,
+      "TimeToDeploy": 0
+    }
+  ]
+}

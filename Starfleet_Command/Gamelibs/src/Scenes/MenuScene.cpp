@@ -45,10 +45,26 @@ bool MenuScene::Init()
     // TODO: Create method CreateMenuElement("Music", false);
     _gameSettingsMenuElements[0].nameText.setString("Music"); // TODO: Pass in GameSettings.json data
     //_gameSettingsMenuElements[0].type = SettingsType::TOGGLE;
-    _gameSettingsMenuElements[0].subElementIndex = 1;
+    //_gameSettingsMenuElements[0].subElementIndex = 1;
     _gameSettingsMenuElements[0].subElementNames.emplace_back("OFF");
     _gameSettingsMenuElements[0].subElementNames.emplace_back("ON");
-    _gameSettingsMenuElements[0].statusText.setString(_gameSettingsMenuElements[0].subElementNames[_gameSettingsMenuElements[0].subElementIndex]);
+    //_gameSettingsMenuElements[0].statusText.setString(_gameSettingsMenuElements[0].subElementNames[_gameSettingsMenuElements[0].subElementIndex]);
+
+    auto path = "Resources/Data/GameSettings.json";
+    if(Chilli::JsonSaveSystem::CheckFileExists(path))
+    {
+        std::cout << "GameSettings file found!" << std::endl;
+        auto fileData = Chilli::JsonSaveSystem::LoadFile(path);
+
+        /// Music Setting Data
+        if(fileData.contains("IsMusicEnabled"))
+        {
+            std::string musicEnabled = fileData["IsMusicEnabled"];
+            _isMusicOn = (musicEnabled == "true");
+            _gameSettingsMenuElements[0].subElementIndex = _isMusicOn ? 1: 0;
+            _gameSettingsMenuElements[0].statusText.setString(_gameSettingsMenuElements[0].subElementNames[_gameSettingsMenuElements[0].subElementIndex]);
+        }
+    }
 
     _gameSettingsMenuElements[1].nameText.setString("Spacelanes");
     //_gameSettingsMenuElements[1].type = SettingsType::TOGGLE;
@@ -122,35 +138,11 @@ bool MenuScene::Init()
         _menuMusic.setLoop(true);
     }
 
-    _musicIconButtons[MUSIC_ON_BUTTON] = std::make_unique<Button>("Resources/Textures/musicOn.png");
-    _musicIconButtons[MUSIC_OFF_BUTTON] = std::make_unique<Button>("Resources/Textures/musicOff.png");
-    for (int i = 0; i < 2; ++i)
-    {
-        _musicIconButtons[i]->SetPos({20, 20});
-        _musicIconButtons[i]->SetColour(sf::Color(22, 155, 164, 100));
-    }
-
     return true;
 }
 
 void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
-    if(_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->IsCursorHoveredOver())
-    {
-        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
-        {
-            if (_isMusicOn)
-            {
-                _menuMusic.pause();
-            }
-            else
-            {
-                _menuMusic.play();
-            }
-            _isMusicOn = !_isMusicOn;
-        }
-    }
-
     if(_isGameSettingsEnabled)
     {
         _buttonPanels[BACK_BUTTON].EventHandler(window, event);
@@ -172,20 +164,26 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
                     _gameSettingsMenuElements[i].subElementIndex--;
                     if(_gameSettingsMenuElements[i].subElementIndex <= 0)
                     {
-                        //_gameSettingsLeftArrowSprite[i].setColor({_gameSettingsLeftArrowSprite[i].getColor().r, _gameSettingsLeftArrowSprite[i].getColor().g, _gameSettingsLeftArrowSprite[i].getColor().b, 125});
                         _gameSettingsMenuElements[i].subElementIndex = 0;
                     }
                     _gameSettingsMenuElements[i].statusText.setString(_gameSettingsMenuElements[i].subElementNames[_gameSettingsMenuElements[i].subElementIndex]);
-
-
-                    //_gameSettingsMenuElements[i].statusText.setPosition({_gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getGlobalBounds().width  - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width -  35.0F - _gameSettingsRightArrowSprite[i].getGlobalBounds().width, _gameSettingsMenuElements[i].nameText.getPosition().y});
-
                     auto statusTextXPos = _gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getGlobalBounds().width*0.725F - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width/2.0F;
                     _gameSettingsMenuElements[i].statusText.setPosition({statusTextXPos, _gameSettingsMenuElements[i].nameText.getPosition().y});
 
-                    //_gameSettingsLeftArrowSprite[i].setPosition({_gameSettingsMenuElements[i].statusText.getPosition().x - _gameSettingsLeftArrowSprite[i].getGlobalBounds().width - 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
-                    //_gameSettingsRightArrowSprite[i].setPosition({_gameSettingsMenuElements[i].statusText.getPosition().x + _gameSettingsMenuElements[i].statusText.getGlobalBounds().width + 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
-
+                    auto path = "Resources/Data/GameSettings.json";
+                    json gameSettingsData;
+                    gameSettingsData["IsMusicEnabled"] = _gameSettingsMenuElements[0].subElementIndex == 1 ? "true" : "false";
+                    Chilli::JsonSaveSystem::SaveFile(path, gameSettingsData);
+                    std::cout << "Settings saved to " << path << std::endl;
+                    _isMusicOn = _gameSettingsMenuElements[0].subElementIndex;
+                    if(_isMusicOn and _menuMusic.getStatus() not_eq sf::SoundSource::Playing)
+                    {
+                        _menuMusic.play();
+                    }
+                    else if(not _isMusicOn)
+                    {
+                        _menuMusic.stop();
+                    }
                 }
             }
             else if(Chilli::Vector::BoundsCheck(_cursor.GetPos(), _gameSettingsRightArrowSprite[i].getGlobalBounds()))
@@ -195,18 +193,26 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
                     _gameSettingsMenuElements[i].subElementIndex++;
                     if(_gameSettingsMenuElements[i].subElementIndex >= _gameSettingsMenuElements[i].numOfSubElements-1)
                     {
-                        //_gameSettingsRightArrowSprite[i].setColor({_gameSettingsRightArrowSprite[i].getColor().r, _gameSettingsRightArrowSprite[i].getColor().g, _gameSettingsRightArrowSprite[i].getColor().b, 125});
                         _gameSettingsMenuElements[i].subElementIndex = _gameSettingsMenuElements[i].numOfSubElements-1;
                     }
                     _gameSettingsMenuElements[i].statusText.setString(_gameSettingsMenuElements[i].subElementNames[_gameSettingsMenuElements[i].subElementIndex]);
-
-                    //_gameSettingsMenuElements[i].statusText.setPosition({_gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getGlobalBounds().width  - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width -  35.0F - _gameSettingsRightArrowSprite[i].getGlobalBounds().width, _gameSettingsMenuElements[i].nameText.getPosition().y});
-
                     auto statusTextXPos = _gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getGlobalBounds().width*0.725F - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width/2.0F;
                     _gameSettingsMenuElements[i].statusText.setPosition({statusTextXPos, _gameSettingsMenuElements[i].nameText.getPosition().y});
 
-                    //_gameSettingsLeftArrowSprite[i].setPosition({_gameSettingsMenuElements[i].statusText.getPosition().x - _gameSettingsLeftArrowSprite[i].getGlobalBounds().width - 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
-                    //_gameSettingsRightArrowSprite[i].setPosition({_gameSettingsMenuElements[i].statusText.getPosition().x + _gameSettingsMenuElements[i].statusText.getGlobalBounds().width + 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
+                    auto path = "Resources/Data/GameSettings.json";
+                    json gameSettingsData;
+                    gameSettingsData["IsMusicEnabled"] = _gameSettingsMenuElements[0].subElementIndex == 1 ? "true" : "false";
+                    Chilli::JsonSaveSystem::SaveFile(path, gameSettingsData);
+                    std::cout << "Settings saved to " << path << std::endl;
+                    _isMusicOn = _gameSettingsMenuElements[0].subElementIndex;
+                    if(_isMusicOn and _menuMusic.getStatus() not_eq sf::SoundSource::Playing)
+                    {
+                        _menuMusic.play();
+                    }
+                    else if(not _isMusicOn)
+                    {
+                        _menuMusic.stop();
+                    }
                 }
             }
         }
@@ -306,33 +312,6 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
     }
 
-    for (const auto & _musicIconButton : _musicIconButtons)
-    {
-        _musicIconButton->Update(window);
-    }
-
-    for (const auto & musicIconButton : _musicIconButtons)
-    {
-        if(musicIconButton->IsCursorHoveredOver())
-        {
-            musicIconButton->SetColour(_predefinedColours.LIGHTBLUE);
-        }
-        else
-        {
-            musicIconButton->SetColour(sf::Color(22, 155, 164, 100));
-        }
-    }
-
-    if(_musicIconButtons[_isMusicOn]->IsCursorHoveredOver())
-    {
-        _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
-    }
-    else if(not _musicIconButtons[_isMusicOn]->IsCursorHoveredOver())
-    {
-        _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
-    }
-
-
     if(_isGameSettingsEnabled)
     {
         _buttonPanels[BACK_BUTTON].Update(window);
@@ -347,8 +326,8 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         {
             _buttonPanels[BACK_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 100));
             _buttonPanels[BACK_BUTTON].SetText(_buttonPanels[BACK_BUTTON].GetText().getString(), sf::Color::White);
+            _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
         }
-
 
         for (int i = 0; i < NUM_OF_SETTINGS_ELEMENTS; ++i)
         {
@@ -396,6 +375,10 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         _buttonPanels[EXIT_BUTTON].SetPanelColour(sf::Color(242, 22, 22, 60));
         _buttonPanels[EXIT_BUTTON].SetText(_buttonPanels[EXIT_BUTTON].GetText().getString(), sf::Color::Red);
         _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
+    }
+    else
+    {
+        _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
     }
 
     for (int i = 0; i < NUM_OF_BUTTONS-1; ++i)
@@ -449,7 +432,6 @@ void MenuScene::Render(sf::RenderWindow& window)
     }
 
     window.draw(_gameVersionText);
-    _musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
     _cursor.Render(window);
 }
 
