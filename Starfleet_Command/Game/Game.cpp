@@ -71,6 +71,7 @@ void Game::InitWindow()
     }
     window.setIcon(image.getSize().x, image.getSize().y, image.getPixelsPtr());
     window.setMouseCursorVisible(false);
+    window.setMouseCursorGrabbed(true);
 }
 
 void Game::InitSceneManager()

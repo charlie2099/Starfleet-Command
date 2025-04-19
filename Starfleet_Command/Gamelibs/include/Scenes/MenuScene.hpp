@@ -54,10 +54,10 @@ class MenuScene : public Scene
     };
     std::vector<ParallaxStar> _parallaxStars;
     const int NUM_OF_STARS = 300;
-    sf::Texture _backgroundPlayerPlanetTexture;
-    sf::Sprite _backgroundPlayerPlanetSprite;
     sf::Texture _backgroundEnemyPlanetTexture;
     sf::Sprite _backgroundEnemyPlanetSprite;
+    sf::Texture _backgroundPlayerPlanetTexture;
+    sf::Sprite _backgroundPlayerPlanetSprite;
 
     sf::Sprite _menuTitleImgSprite;
     sf::Texture _menuTitleImgTexture;

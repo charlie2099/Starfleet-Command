@@ -36,6 +36,20 @@ bool GameScene::Init()
     _pauseText.setFillColor(_predefinedColours.LIGHTBLUE);
     _pauseText.setOutlineColor(sf::Color::Black);
 
+    _pauseResumeGameButton = std::make_unique<Panel>();
+    _pauseResumeGameButton->SetFont(Panel::TextFont::BOLD);
+    _pauseResumeGameButton->SetText("RESUME", _predefinedColours.LIGHTBLUE);
+    _pauseResumeGameButton->SetTextSize(14);
+    _pauseResumeGameButton->SetSize(20, 15);
+    _pauseResumeGameButton->SetPanelColour(sf::Color(22, 155, 164, 100));
+
+    _pauseExitGameButton = std::make_unique<Panel>();
+    _pauseExitGameButton->SetFont(Panel::TextFont::BOLD);
+    _pauseExitGameButton->SetText("EXIT GAME");
+    _pauseExitGameButton->SetTextSize(14);
+    _pauseExitGameButton->SetSize(20, 15);
+    _pauseExitGameButton->SetPanelColour(sf::Color(22, 155, 164, 100));
+
     _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spaceLanes, _gameplayView, true);
 
     auto& playerMothership = _player->GetMothership();
@@ -86,6 +100,25 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)
     {
         SetPaused(not IsPaused());
+    }
+
+    if(IsPaused())
+    {
+        _pauseResumeGameButton->EventHandler(window, event);
+        _pauseExitGameButton->EventHandler(window, event);
+
+        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
+        {
+            if (_pauseResumeGameButton->IsClicked())
+            {
+                SetPaused(false);
+            }
+
+            if (_pauseExitGameButton->IsClicked())
+            {
+                window.close();
+            }
+        }
     }
 
     _player->EventHandler(window, event);
@@ -189,10 +222,40 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     _pauseIconSprite.setPosition(_gameplayView.getCenter().x - _pauseIconSprite.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseIconSprite.getGlobalBounds().height/2.0F);
     _pauseText.setPosition(_gameplayView.getCenter().x - _pauseText.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseText.getGlobalBounds().height/2.0F + 40.0F);
+    _pauseResumeGameButton->SetPosition(_pauseText.getPosition().x + _pauseText.getGlobalBounds().width/2.0F - _pauseResumeGameButton->GetTextSize().width/2.0F, _pauseText.getPosition().y + 40.0F);
+    _pauseExitGameButton->SetPosition(_pauseResumeGameButton->GetTextPosition().x + _pauseResumeGameButton->GetTextSize().width/2.0F - _pauseExitGameButton->GetTextSize().width/2.0F, _pauseResumeGameButton->GetTextPosition().y + 35.0F);
 
     if(IsPaused())
     {
         _pauseOverlaySprite.setPosition(_gameplayView.getCenter().x - _pauseOverlaySprite.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseOverlaySprite.getGlobalBounds().height/2.0F);
+        _pauseResumeGameButton->Update(window);
+        _pauseExitGameButton->Update(window);
+
+        if(_pauseResumeGameButton->IsHoveredOver())
+        {
+            _pauseResumeGameButton->SetPanelColour(sf::Color(22, 155, 164, 65));
+            _pauseResumeGameButton->SetText(_pauseResumeGameButton->GetText().getString(), sf::Color::Cyan);
+            _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
+        }
+        else if(not _pauseResumeGameButton->IsHoveredOver())
+        {
+            _pauseResumeGameButton->SetPanelColour(sf::Color(22, 155, 164, 100));
+            _pauseResumeGameButton->SetText(_pauseResumeGameButton->GetText().getString(), _predefinedColours.LIGHTBLUE);
+            _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
+        }
+
+        if(_pauseExitGameButton->IsHoveredOver())
+        {
+            _pauseExitGameButton->SetPanelColour(sf::Color(242, 22, 22, 60));
+            _pauseExitGameButton->SetText(_pauseExitGameButton->GetText().getString(), sf::Color::Red);
+            _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
+        }
+        else if(not _pauseExitGameButton->IsHoveredOver())
+        {
+            _pauseExitGameButton->SetPanelColour(sf::Color(22, 155, 164, 100));
+            _pauseExitGameButton->SetText(_pauseExitGameButton->GetText().getString(), _predefinedColours.LIGHTBLUE);
+            _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
+        }
         return;
     }
 
@@ -552,6 +615,8 @@ void GameScene::Render(sf::RenderWindow& window)
         window.draw(_pauseOverlaySprite);
         window.draw(_pauseIconSprite);
         window.draw(_pauseText);
+        _pauseResumeGameButton->Render(window);
+        _pauseExitGameButton->Render(window);
     }
     _cursor.Render(window);
 }

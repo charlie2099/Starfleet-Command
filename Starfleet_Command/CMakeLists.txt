@@ -73,6 +73,8 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/UpgradeScrapCollectionButton.hpp
         Gamelibs/src/Utility/JsonSaveSystem.cpp
         Gamelibs/include/Utility/JsonSaveSystem.hpp
+        Gamelibs/GameSettings.cpp
+        Gamelibs/GameSettings.hpp
 )
 
 include_directories(Gamelibs/include)

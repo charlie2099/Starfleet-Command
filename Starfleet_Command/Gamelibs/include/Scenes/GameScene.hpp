@@ -99,6 +99,8 @@ private:
     sf::Texture _pauseOverlayTexture;
     sf::Sprite _pauseOverlaySprite;
     sf::Text _pauseText;
+    std::unique_ptr<Panel> _pauseResumeGameButton;
+    std::unique_ptr<Panel> _pauseExitGameButton;
 
     /// Space Lanes
     const float LANE_ROW_SPACING = 35.0F;

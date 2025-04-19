@@ -49,13 +49,13 @@ void VictoryScene::Update(sf::RenderWindow &window, sf::Time deltaTime)
     if(_buttonPanels[PLAY_BUTTON].IsHoveredOver())
     {
         _buttonPanels[PLAY_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
-        _buttonPanels[PLAY_BUTTON].SetText(_buttonPanels[PLAY_BUTTON].GetText().getString(), sf::Color(22, 155, 164));
+        _buttonPanels[PLAY_BUTTON].SetText(_buttonPanels[PLAY_BUTTON].GetText().getString(), sf::Color::Cyan);
         _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
     }
     else if(_buttonPanels[MENU_BUTTON].IsHoveredOver())
     {
         _buttonPanels[MENU_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
-        _buttonPanels[MENU_BUTTON].SetText(_buttonPanels[MENU_BUTTON].GetText().getString(), sf::Color(22, 155, 164));
+        _buttonPanels[MENU_BUTTON].SetText(_buttonPanels[MENU_BUTTON].GetText().getString(), sf::Color::Cyan);
         _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
     }
     else
@@ -68,7 +68,7 @@ void VictoryScene::Update(sf::RenderWindow &window, sf::Time deltaTime)
         if(!_buttonPanels[i].IsHoveredOver())
         {
             _buttonPanels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
-            _buttonPanels[i].SetText(_buttonPanels[i].GetText().getString(), sf::Color::White);
+            _buttonPanels[i].SetText(_buttonPanels[i].GetText().getString(), _predefinedColours.LIGHTBLUE);
         }
     }
 
@@ -169,9 +169,10 @@ void VictoryScene::InitButtonPanels()
 
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
+        _buttonPanels[i].SetFont(Panel::TextFont::BOLD);
         _buttonPanels[i].SetText(button_text[i]);
-        _buttonPanels[i].SetTextSize(20);
-        _buttonPanels[i].SetSize(25, 20);
+        _buttonPanels[i].SetTextSize(14);
+        _buttonPanels[i].SetSize(20, 15);
         _buttonPanels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
     }
 

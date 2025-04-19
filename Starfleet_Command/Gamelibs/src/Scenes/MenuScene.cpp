@@ -319,13 +319,13 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         if(_buttonPanels[BACK_BUTTON].IsHoveredOver())
         {
             _buttonPanels[BACK_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
-            _buttonPanels[BACK_BUTTON].SetText(_buttonPanels[BACK_BUTTON].GetText().getString(), sf::Color(22, 155, 164));
+            _buttonPanels[BACK_BUTTON].SetText(_buttonPanels[BACK_BUTTON].GetText().getString(), sf::Color::Cyan);
             _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
         }
         else if(not _buttonPanels[BACK_BUTTON].IsHoveredOver())
         {
             _buttonPanels[BACK_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 100));
-            _buttonPanels[BACK_BUTTON].SetText(_buttonPanels[BACK_BUTTON].GetText().getString(), sf::Color::White);
+            _buttonPanels[BACK_BUTTON].SetText(_buttonPanels[BACK_BUTTON].GetText().getString(), _predefinedColours.LIGHTBLUE);
             _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
         }
 
@@ -361,13 +361,13 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     if(_buttonPanels[PLAY_BUTTON].IsHoveredOver())
     {
         _buttonPanels[PLAY_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
-        _buttonPanels[PLAY_BUTTON].SetText(_buttonPanels[PLAY_BUTTON].GetText().getString(), sf::Color(22, 155, 164));
+        _buttonPanels[PLAY_BUTTON].SetText(_buttonPanels[PLAY_BUTTON].GetText().getString(), sf::Color::Cyan);
         _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
     }
     else if(_buttonPanels[OPTIONS_BUTTON].IsHoveredOver())
     {
         _buttonPanels[OPTIONS_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
-        _buttonPanels[OPTIONS_BUTTON].SetText(_buttonPanels[OPTIONS_BUTTON].GetText().getString(), sf::Color(22, 155, 164));
+        _buttonPanels[OPTIONS_BUTTON].SetText(_buttonPanels[OPTIONS_BUTTON].GetText().getString(), sf::Color::Cyan);
         _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
     }
     else if(_buttonPanels[EXIT_BUTTON].IsHoveredOver())
@@ -386,7 +386,7 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         if(not _buttonPanels[i].IsHoveredOver())
         {
             _buttonPanels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
-            _buttonPanels[i].SetText(_buttonPanels[i].GetText().getString(), sf::Color::White);
+            _buttonPanels[i].SetText(_buttonPanels[i].GetText().getString(), _predefinedColours.LIGHTBLUE);
         }
     }
 }
@@ -395,8 +395,8 @@ void MenuScene::Render(sf::RenderWindow& window)
 {
     window.setView(_worldView);
     window.draw(_backgroundSprite);
-    window.draw(_backgroundPlayerPlanetSprite);
     window.draw(_backgroundEnemyPlanetSprite);
+    window.draw(_backgroundPlayerPlanetSprite);
     for (auto& star : _parallaxStars)
     {
         window.draw(star.circleShape);
@@ -464,17 +464,17 @@ bool MenuScene::InitBackground()
         _parallaxStars[i].circleShape.setFillColor(_predefinedColours.LIGHTBLUE);
     }
 
-    _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/spr_planet02.png"); // 4 or 7
-    _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
-    /*_backgroundPlayerPlanetSprite.setScale(0.5F, 0.5F);
-    _backgroundPlayerPlanetSprite.setPosition(Constants::WINDOW_WIDTH/2.0F - _backgroundPlayerPlanetSprite.getGlobalBounds().width/2.0F, 25.0F);*/
-    //_backgroundPlayerPlanetSprite.setPosition(Constants::WINDOW_WIDTH/2.0F - _backgroundPlayerPlanetSprite.getGlobalBounds().width + 100.0F, 300.0F);
-    _backgroundPlayerPlanetSprite.setPosition(Constants::WINDOW_WIDTH / 1.6F, Constants::WINDOW_HEIGHT / 2.5F);
-
-    _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/spr_planet03.png"); // 4 or 7
+    _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/spr_planet02.png"); // 4 or 7
     _backgroundEnemyPlanetSprite.setTexture(_backgroundEnemyPlanetTexture);
-    _backgroundEnemyPlanetSprite.setScale(0.25F, 0.25F);
-    _backgroundEnemyPlanetSprite.setPosition(50.0F, 50.0F);
+    /*_backgroundEnemyPlanetSprite.setScale(0.5F, 0.5F);
+    _backgroundEnemyPlanetSprite.setPosition(Constants::WINDOW_WIDTH/2.0F - _backgroundEnemyPlanetSprite.getGlobalBounds().width/2.0F, 25.0F);*/
+    //_backgroundEnemyPlanetSprite.setPosition(Constants::WINDOW_WIDTH/2.0F - _backgroundEnemyPlanetSprite.getGlobalBounds().width + 100.0F, 300.0F);
+    _backgroundEnemyPlanetSprite.setPosition(Constants::WINDOW_WIDTH / 1.6F, Constants::WINDOW_HEIGHT / 2.5F);
+
+    _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/spr_planet03.png"); // 4 or 7
+    _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
+    _backgroundPlayerPlanetSprite.setScale(0.25F, 0.25F);
+    _backgroundPlayerPlanetSprite.setPosition(50.0F, 50.0F);
 
     return true;
 }
@@ -491,9 +491,10 @@ void MenuScene::InitButtonPanels()
 
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
+        _buttonPanels[i].SetFont(Panel::TextFont::BOLD);
         _buttonPanels[i].SetText(button_text[i]);
-        _buttonPanels[i].SetTextSize(20);
-        _buttonPanels[i].SetSize(25, 20);
+        _buttonPanels[i].SetTextSize(14);
+        _buttonPanels[i].SetSize(20, 15);
         _buttonPanels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
         _buttonPanels[i].SetPosition(Constants::WINDOW_WIDTH * 0.185F,(Constants::WINDOW_HEIGHT * 0.57F) + static_cast<float>((i * (_buttonPanels[i].GetPanelSize().height + 10))));
     }
