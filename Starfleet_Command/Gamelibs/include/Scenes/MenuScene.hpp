@@ -7,6 +7,7 @@
 #include "Utility/RNG.hpp"
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
+#include "../../GameSettings.hpp"
 #include <random>
 #include <chrono>
 
@@ -28,6 +29,7 @@ class MenuScene : public Scene
     bool InitMenuTitleIcon();
     void InitBackgroundShips();
     void InitGameVersionText();
+    void SaveGameSettingsData_OnSettingsUpdated();
 
     static const int PLAY_BUTTON = 0;
     static const int OPTIONS_BUTTON = 1;
@@ -63,30 +65,8 @@ class MenuScene : public Scene
     sf::Texture _menuTitleImgTexture;
 
     /// Game Settings
+    std::unique_ptr<GameSettings> _gameSettings;
     bool _isGameSettingsEnabled = false;
-    sf::RectangleShape _gameSettingsOverlayWindow;
-    sf::Text _gameSettingsTitleText;
-
-    const static int NUM_OF_SETTINGS_ELEMENTS = 6;
-    /*enum SettingsType
-    {
-        TOGGLE,
-        COLOUR_PICKER
-    };*/
-    struct SettingsElement
-    {
-        sf::Text nameText;
-        sf::Text statusText;
-        int numOfSubElements = 2;
-        int subElementIndex = 0;
-        std::vector<std::string> subElementNames;
-        //SettingsType type;
-    };
-    std::array<SettingsElement, NUM_OF_SETTINGS_ELEMENTS> _gameSettingsMenuElements;
-    std::array<sf::Sprite, NUM_OF_SETTINGS_ELEMENTS> _gameSettingsLeftArrowSprite;
-    std::array<sf::Sprite, NUM_OF_SETTINGS_ELEMENTS> _gameSettingsRightArrowSprite;
-    sf::Texture _gameSettingsLeftArrowTexture;
-    sf::Texture _gameSettingsRightArrowTexture;
 
     /// Game Version
     sf::Text _gameVersionText;

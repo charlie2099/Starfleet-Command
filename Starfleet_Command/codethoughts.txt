@@ -38,12 +38,12 @@ CounterAttack_BehaviourRule(DirectorState::PEAK, ...)
 
 array for options elements
 
-struct SettingsElement
+struct SettingsOption
 {
     text settingsItemName
     text settingsItemActive
 }
-std::pair<SettingsElement, bool> _settingsElementPair
+std::pair<SettingsOption, bool> _settingsElementPair
 
 
 MUSIC                                                 ON

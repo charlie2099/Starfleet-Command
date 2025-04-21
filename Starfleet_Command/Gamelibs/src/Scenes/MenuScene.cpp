@@ -17,38 +17,14 @@ bool MenuScene::Init()
     InitBackgroundShips();
     InitGameVersionText();
 
-    _gameSettingsOverlayWindow.setSize({400.0F, 260.0F});
-    _gameSettingsOverlayWindow.setFillColor(sf::Color(0, 0, 0, 125));
-    _gameSettingsOverlayWindow.setOutlineColor(_predefinedColours.LIGHTBLUE);
-    _gameSettingsOverlayWindow.setOutlineThickness(1.0F);
 
-    _gameSettingsTitleText.setString("GAME SETTINGS");
-    _gameSettingsTitleText.setFont(Chilli::CustomFonts::GetBoldFont());
-    _gameSettingsTitleText.setCharacterSize(16);
-    _gameSettingsTitleText.setFillColor(_predefinedColours.LIGHTBLUE);
-    _gameSettingsTitleText.setOutlineColor(sf::Color::Black);
-    _gameSettingsTitleText.setOutlineThickness(1.0F);
-
-    _gameSettingsLeftArrowTexture.loadFromFile("Resources/Textures/left.png");
-    _gameSettingsRightArrowTexture.loadFromFile("Resources/Textures/right.png");
-    for (int i = 0; i < NUM_OF_SETTINGS_ELEMENTS; ++i)
-    {
-        _gameSettingsLeftArrowSprite[i].setTexture(_gameSettingsLeftArrowTexture);
-        _gameSettingsLeftArrowSprite[i].scale(0.25F, 0.25F);
-        _gameSettingsLeftArrowSprite[i].setColor(_predefinedColours.LIGHTBLUE);
-
-        _gameSettingsRightArrowSprite[i].setTexture(_gameSettingsRightArrowTexture);
-        _gameSettingsRightArrowSprite[i].scale(0.25F, 0.25F);
-        _gameSettingsRightArrowSprite[i].setColor(_predefinedColours.LIGHTBLUE);
-    }
-
-    // TODO: Create method CreateMenuElement("Music", false);
-    _gameSettingsMenuElements[0].nameText.setString("Music"); // TODO: Pass in GameSettings.json data
-    //_gameSettingsMenuElements[0].type = SettingsType::TOGGLE;
-    //_gameSettingsMenuElements[0].subElementIndex = 1;
-    _gameSettingsMenuElements[0].subElementNames.emplace_back("OFF");
-    _gameSettingsMenuElements[0].subElementNames.emplace_back("ON");
-    //_gameSettingsMenuElements[0].statusText.setString(_gameSettingsMenuElements[0].subElementNames[_gameSettingsMenuElements[0].subElementIndex]);
+    _gameSettings = std::make_unique<GameSettings>();
+    _gameSettings->AddSettingOption("Music", std::vector<std::string>{"OFF", "ON"});
+    _gameSettings->AddSettingOption("Spacelanes", std::vector<std::string>{"OFF", "ON"});
+    _gameSettings->AddSettingOption("Minimap", std::vector<std::string>{"OFF", "ON"});
+    _gameSettings->AddSettingOption("Player Colour",std::vector<std::string>{"BLUE", "RED", "GREEN", "ORANGE", "PURPLE"});
+    //_gameSettings->AddSettingOption("Enemy Colour",std::vector<std::string>{"BLUE", "RED", "GREEN", "ORANGE", "PURPLE"});
+    //_gameSettings->AddSettingOption("Difficulty", std::vector<std::string>{"EASY", "MEDIUM", "HARD"});
 
     auto path = "Resources/Data/GameSettings.json";
     if(Chilli::JsonSaveSystem::CheckFileExists(path))
@@ -56,72 +32,121 @@ bool MenuScene::Init()
         std::cout << "GameSettings file found!" << std::endl;
         auto fileData = Chilli::JsonSaveSystem::LoadFile(path);
 
-        /// Music Setting Data
-        if(fileData.contains("IsMusicEnabled"))
+        if(fileData.contains("Music"))
         {
-            std::string musicEnabled = fileData["IsMusicEnabled"];
-            _isMusicOn = (musicEnabled == "true");
-            _gameSettingsMenuElements[0].subElementIndex = _isMusicOn ? 1: 0;
-            _gameSettingsMenuElements[0].statusText.setString(_gameSettingsMenuElements[0].subElementNames[_gameSettingsMenuElements[0].subElementIndex]);
+            std::cout << "[ Music ] data found!" << std::endl;
+
+            std::string musicData = fileData["Music"];
+            //_isMusicOn = (musicData == "true");
+            if(musicData == "true")
+            {
+                _isMusicOn = true;
+            }
+            else if(musicData == "false")
+            {
+                _isMusicOn = false;
+            }
+            else
+            {
+                std::cout << "Invalid JSON data entry for Music setting" << std::endl;
+            }
+
+            _gameSettings->UpdateSettingOptionValueText("Music", musicData == "true");
+        }
+
+        if(fileData.contains("Player Colour"))
+        {
+            std::cout << "[ Player Colour ] data found!" << std::endl;
+
+            std::string playerColourData = fileData["Player Colour"];
+
+            auto playerColourSetting = _gameSettings->GetSettingOption("Player Colour");
+            for (int i = 0; i < playerColourSetting.optionValues.size(); ++i)
+            {
+                if(playerColourData == "BLUE")
+                {
+                    _backgroundPlayerPlanetSprite.setColor(_predefinedColours.LIGHTBLUE);
+                    for (int i = 0; i < BACKGROUND_SHIPS/2; ++i)
+                    {
+                        _starship[i]->SetColour(_predefinedColours.LIGHTBLUE);
+                    }
+                    _gameSettings->UpdateSettingOptionValueText("Player Colour", 0);
+                }
+                else if(playerColourData == "RED")
+                {
+                    _backgroundPlayerPlanetSprite.setColor(_predefinedColours.LIGHTRED);
+                    for (int i = 0; i < BACKGROUND_SHIPS/2; ++i)
+                    {
+                        _starship[i]->SetColour(_predefinedColours.LIGHTRED);
+                    }
+                    _gameSettings->UpdateSettingOptionValueText("Player Colour", 1);
+                }
+                else if(playerColourData == "GREEN")
+                {
+                    _backgroundPlayerPlanetSprite.setColor(_predefinedColours.LIGHTGREEN);
+                    for (int i = 0; i < BACKGROUND_SHIPS/2; ++i)
+                    {
+                        _starship[i]->SetColour(_predefinedColours.LIGHTGREEN);
+                    }
+                    _gameSettings->UpdateSettingOptionValueText("Player Colour", 2);
+                }
+                else if(playerColourData == "ORANGE")
+                {
+                    _backgroundPlayerPlanetSprite.setColor(_predefinedColours.LIGHTORANGE);
+                    for (int i = 0; i < BACKGROUND_SHIPS/2; ++i)
+                    {
+                        _starship[i]->SetColour(_predefinedColours.LIGHTORANGE);
+                    }
+                    _gameSettings->UpdateSettingOptionValueText("Player Colour", 3);
+                }
+                else if(playerColourData == "PURPLE")
+                {
+                    _backgroundPlayerPlanetSprite.setColor(_predefinedColours.BLUEVIOLET);
+                    for (int i = 0; i < BACKGROUND_SHIPS/2; ++i)
+                    {
+                        _starship[i]->SetColour(_predefinedColours.BLUEVIOLET);
+                    }
+                    _gameSettings->UpdateSettingOptionValueText("Player Colour", 4);
+                }
+            }
         }
     }
 
-    _gameSettingsMenuElements[1].nameText.setString("Spacelanes");
-    //_gameSettingsMenuElements[1].type = SettingsType::TOGGLE;
-    _gameSettingsMenuElements[1].subElementIndex = 1;
-    _gameSettingsMenuElements[1].subElementNames.emplace_back("OFF");
-    _gameSettingsMenuElements[1].subElementNames.emplace_back("ON");
-    _gameSettingsMenuElements[1].statusText.setString(_gameSettingsMenuElements[1].subElementNames[_gameSettingsMenuElements[1].subElementIndex]);
-
-    _gameSettingsMenuElements[2].nameText.setString("Minimap");
-    //_gameSettingsMenuElements[2].type = SettingsType::TOGGLE;
-    _gameSettingsMenuElements[2].subElementIndex = 1;
-    _gameSettingsMenuElements[2].subElementNames.emplace_back("OFF");
-    _gameSettingsMenuElements[2].subElementNames.emplace_back("ON");
-    _gameSettingsMenuElements[2].statusText.setString(_gameSettingsMenuElements[2].subElementNames[_gameSettingsMenuElements[2].subElementIndex]);
-
-    _gameSettingsMenuElements[3].nameText.setString("Player Colour");
-    //_gameSettingsMenuElements[3].type = SettingsType::COLOUR_PICKER;
-    _gameSettingsMenuElements[3].numOfSubElements = 5;
-    _gameSettingsMenuElements[3].subElementNames.emplace_back("BLUE");
-    _gameSettingsMenuElements[3].subElementNames.emplace_back("RED");
-    _gameSettingsMenuElements[3].subElementNames.emplace_back("GREEN");
-    _gameSettingsMenuElements[3].subElementNames.emplace_back("ORANGE");
-    _gameSettingsMenuElements[3].subElementNames.emplace_back("PURPLE");
-    _gameSettingsMenuElements[3].statusText.setString(_gameSettingsMenuElements[3].subElementNames[_gameSettingsMenuElements[3].subElementIndex]);
-
-    _gameSettingsMenuElements[4].nameText.setString("Enemy Colour");
-    //_gameSettingsMenuElements[4].type = SettingsType::COLOUR_PICKER;
-    _gameSettingsMenuElements[4].numOfSubElements = 5;
-    _gameSettingsMenuElements[4].subElementNames.emplace_back("GREEN");
-    _gameSettingsMenuElements[4].subElementNames.emplace_back("RED");
-    _gameSettingsMenuElements[4].subElementNames.emplace_back("BLUE");
-    _gameSettingsMenuElements[4].subElementNames.emplace_back("ORANGE");
-    _gameSettingsMenuElements[4].subElementNames.emplace_back("PURPLE");
-    _gameSettingsMenuElements[4].statusText.setString(_gameSettingsMenuElements[4].subElementNames[_gameSettingsMenuElements[4].subElementIndex]);
-
-    _gameSettingsMenuElements[5].nameText.setString("Director Difficulty");
-    //_gameSettingsMenuElements[5].type = SettingsType::COLOUR_PICKER;
-    _gameSettingsMenuElements[5].numOfSubElements = 3;
-    _gameSettingsMenuElements[5].subElementNames.emplace_back("EASY");
-    _gameSettingsMenuElements[5].subElementNames.emplace_back("MEDIUM");
-    _gameSettingsMenuElements[5].subElementNames.emplace_back("HARD");
-    _gameSettingsMenuElements[5].statusText.setString(_gameSettingsMenuElements[5].subElementNames[_gameSettingsMenuElements[5].subElementIndex]);
-
-    for (auto & _gameSettingsMenuElement : _gameSettingsMenuElements)
+    /*auto path = "Resources/Data/GameSettings.json";
+    if(Chilli::JsonSaveSystem::CheckFileExists(path))
     {
-        _gameSettingsMenuElement.nameText.setFont(Chilli::CustomFonts::GetBoldFont());
-        _gameSettingsMenuElement.nameText.setCharacterSize(12);
-        _gameSettingsMenuElement.nameText.setFillColor(sf::Color::White);
-        _gameSettingsMenuElement.nameText.setOutlineColor(sf::Color::Black);
-        _gameSettingsMenuElement.nameText.setOutlineThickness(1.0F);
+        std::cout << "GameSettings file found!" << std::endl;
+        auto fileData = Chilli::JsonSaveSystem::LoadFile(path);
 
-        _gameSettingsMenuElement.statusText.setFont(Chilli::CustomFonts::GetBoldFont());
-        _gameSettingsMenuElement.statusText.setCharacterSize(12);
-        _gameSettingsMenuElement.statusText.setFillColor(sf::Color::White);
-        _gameSettingsMenuElement.statusText.setOutlineColor(sf::Color::Black);
-        _gameSettingsMenuElement.statusText.setOutlineThickness(1.0F);
-    }
+        for (int i = 0; i < _gameSettings->GetNumOfSettingOptions(); ++i)
+        {
+            std::string gameSettingOptionsLabelText = _gameSettings->GetSettingOptions()[i].labelText.getString();
+
+            if(fileData.contains(gameSettingOptionsLabelText))
+            {
+                std::cout << "[ " + gameSettingOptionsLabelText + "] data found!" << std::endl;
+
+                std::string gameSettingOptionsValueFileData = fileData[gameSettingOptionsLabelText];
+                if(gameSettingOptionsValueFileData == "true")
+                {
+                    _gameSettingsDictionary[gameSettingOptionsLabelText] = true;
+                    // TODO: Create a dictionary that maps GameSetting option names to bools i.e. std::map<SettingOption, bool> = { "Music", "_isMusicOn"}
+                    _isMusicOn = true;
+                }
+                else if(gameSettingOptionsValueFileData == "false")
+                {
+                    _gameSettingsDictionary[gameSettingOptionsLabelText] = false;
+                    _isMusicOn = false;
+                }
+                else
+                {
+                    std::cout << "Invalid JSON data entry for + " + gameSettingOptionsLabelText + " setting" << std::endl;
+                }
+
+                _gameSettings->UpdateSettingOptionValueText(gameSettingOptionsLabelText, gameSettingOptionsValueFileData == "true");
+            }
+        }
+    }*/
 
     if(!_menuMusic.openFromFile("Resources/Audio/MenuTheme/United_Against_Evil_175bpm_136s.wav"))
     {
@@ -138,7 +163,101 @@ bool MenuScene::Init()
         _menuMusic.setLoop(true);
     }
 
+    /// Observer to game settings event
+    auto gameSettingsCallback = std::bind(&MenuScene::SaveGameSettingsData_OnSettingsUpdated, this);
+    _gameSettings->AddBasicObserver({GameSettings::EventID::SETTINGS_UPDATED, gameSettingsCallback});
+
     return true;
+}
+
+void MenuScene::SaveGameSettingsData_OnSettingsUpdated()
+{
+    /// Model the data and save it to file
+    json gameSettingsData;
+    gameSettingsData["Music"] = _gameSettings->GetSettingOption("Music").selectedValueIndex == 1 ? "true" : "false";
+    gameSettingsData["Spacelanes"] = _gameSettings->GetSettingOption("Spacelanes").selectedValueIndex == 1 ? "true" : "false";
+    gameSettingsData["Minimap"] = _gameSettings->GetSettingOption("Minimap").selectedValueIndex == 1 ? "true" : "false";
+
+    if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 0)
+    {
+        gameSettingsData["Player Colour"] = "BLUE";
+    }
+    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 1)
+    {
+        gameSettingsData["Player Colour"] = "RED";
+    }
+    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 2)
+    {
+        gameSettingsData["Player Colour"] = "GREEN";
+    }
+    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 3)
+    {
+        gameSettingsData["Player Colour"] = "ORANGE";
+    }
+    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 4)
+    {
+        gameSettingsData["Player Colour"] = "PURPLE";
+    }
+
+    auto path = "Resources/Data/GameSettings.json";
+    Chilli::JsonSaveSystem::SaveFile(path, gameSettingsData);
+    std::cout << "Settings saved to " << path << std::endl;
+
+    /// Update the code that is affected by the game settings being changed
+    _isMusicOn = _gameSettings->GetSettingOption("Music").selectedValueIndex;
+    if(_isMusicOn and _menuMusic.getStatus() not_eq sf::SoundSource::Playing)
+    {
+        _menuMusic.play();
+    }
+    else if(not _isMusicOn)
+    {
+        _menuMusic.stop();
+    }
+
+    auto playerColourSetting = _gameSettings->GetSettingOption("Player Colour");
+    for (int i = 0; i < playerColourSetting.optionValues.size(); ++i)
+    {
+        if(playerColourSetting.valueText.getString() == "BLUE")
+        {
+            _backgroundPlayerPlanetSprite.setColor(_predefinedColours.LIGHTBLUE);
+            for (int i = 0; i < BACKGROUND_SHIPS/2; ++i)
+            {
+                _starship[i]->SetColour(_predefinedColours.LIGHTBLUE);
+            }
+        }
+        else if(playerColourSetting.valueText.getString() == "RED")
+        {
+            _backgroundPlayerPlanetSprite.setColor(_predefinedColours.LIGHTRED);
+            for (int i = 0; i < BACKGROUND_SHIPS/2; ++i)
+            {
+                _starship[i]->SetColour(_predefinedColours.LIGHTRED);
+            }
+        }
+        else if(playerColourSetting.valueText.getString() == "GREEN")
+        {
+            _backgroundPlayerPlanetSprite.setColor(_predefinedColours.LIGHTGREEN);
+            for (int i = 0; i < BACKGROUND_SHIPS/2; ++i)
+            {
+                _starship[i]->SetColour(_predefinedColours.LIGHTGREEN);
+            }
+        }
+        else if(playerColourSetting.valueText.getString() == "ORANGE")
+        {
+            _backgroundPlayerPlanetSprite.setColor(_predefinedColours.LIGHTORANGE);
+            for (int i = 0; i < BACKGROUND_SHIPS/2; ++i)
+            {
+                _starship[i]->SetColour(_predefinedColours.LIGHTORANGE);
+            }
+        }
+        else if(playerColourSetting.valueText.getString() == "PURPLE")
+        {
+            _backgroundPlayerPlanetSprite.setColor(_predefinedColours.BLUEVIOLET);
+            for (int i = 0; i < BACKGROUND_SHIPS/2; ++i)
+            {
+                _starship[i]->SetColour(_predefinedColours.BLUEVIOLET);
+            }
+        }
+    }
 }
 
 void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
@@ -155,67 +274,7 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             }
         }
 
-        for (int i = 0; i < NUM_OF_SETTINGS_ELEMENTS; ++i)
-        {
-            if(Chilli::Vector::BoundsCheck(_cursor.GetPos(), _gameSettingsLeftArrowSprite[i].getGlobalBounds()))
-            {
-                if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
-                {
-                    _gameSettingsMenuElements[i].subElementIndex--;
-                    if(_gameSettingsMenuElements[i].subElementIndex <= 0)
-                    {
-                        _gameSettingsMenuElements[i].subElementIndex = 0;
-                    }
-                    _gameSettingsMenuElements[i].statusText.setString(_gameSettingsMenuElements[i].subElementNames[_gameSettingsMenuElements[i].subElementIndex]);
-                    auto statusTextXPos = _gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getGlobalBounds().width*0.725F - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width/2.0F;
-                    _gameSettingsMenuElements[i].statusText.setPosition({statusTextXPos, _gameSettingsMenuElements[i].nameText.getPosition().y});
-
-                    auto path = "Resources/Data/GameSettings.json";
-                    json gameSettingsData;
-                    gameSettingsData["IsMusicEnabled"] = _gameSettingsMenuElements[0].subElementIndex == 1 ? "true" : "false";
-                    Chilli::JsonSaveSystem::SaveFile(path, gameSettingsData);
-                    std::cout << "Settings saved to " << path << std::endl;
-                    _isMusicOn = _gameSettingsMenuElements[0].subElementIndex;
-                    if(_isMusicOn and _menuMusic.getStatus() not_eq sf::SoundSource::Playing)
-                    {
-                        _menuMusic.play();
-                    }
-                    else if(not _isMusicOn)
-                    {
-                        _menuMusic.stop();
-                    }
-                }
-            }
-            else if(Chilli::Vector::BoundsCheck(_cursor.GetPos(), _gameSettingsRightArrowSprite[i].getGlobalBounds()))
-            {
-                if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
-                {
-                    _gameSettingsMenuElements[i].subElementIndex++;
-                    if(_gameSettingsMenuElements[i].subElementIndex >= _gameSettingsMenuElements[i].numOfSubElements-1)
-                    {
-                        _gameSettingsMenuElements[i].subElementIndex = _gameSettingsMenuElements[i].numOfSubElements-1;
-                    }
-                    _gameSettingsMenuElements[i].statusText.setString(_gameSettingsMenuElements[i].subElementNames[_gameSettingsMenuElements[i].subElementIndex]);
-                    auto statusTextXPos = _gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getGlobalBounds().width*0.725F - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width/2.0F;
-                    _gameSettingsMenuElements[i].statusText.setPosition({statusTextXPos, _gameSettingsMenuElements[i].nameText.getPosition().y});
-
-                    auto path = "Resources/Data/GameSettings.json";
-                    json gameSettingsData;
-                    gameSettingsData["IsMusicEnabled"] = _gameSettingsMenuElements[0].subElementIndex == 1 ? "true" : "false";
-                    Chilli::JsonSaveSystem::SaveFile(path, gameSettingsData);
-                    std::cout << "Settings saved to " << path << std::endl;
-                    _isMusicOn = _gameSettingsMenuElements[0].subElementIndex;
-                    if(_isMusicOn and _menuMusic.getStatus() not_eq sf::SoundSource::Playing)
-                    {
-                        _menuMusic.play();
-                    }
-                    else if(not _isMusicOn)
-                    {
-                        _menuMusic.stop();
-                    }
-                }
-            }
-        }
+        _gameSettings->EventHandler(window, event);
 
         return;
     }
@@ -235,22 +294,10 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         {
             _isGameSettingsEnabled = true;
             _menuTitleImgSprite.setPosition(Constants::WINDOW_WIDTH/2.0F - _menuTitleImgSprite.getGlobalBounds().width/2.0F, Constants::WINDOW_HEIGHT * 0.2F - _menuTitleImgSprite.getGlobalBounds().height/2.0F);
-            _gameSettingsOverlayWindow.setPosition({Constants::WINDOW_WIDTH / 2.0F - _gameSettingsOverlayWindow.getSize().x / 2.0F, _menuTitleImgSprite.getPosition().y + _menuTitleImgSprite.getGlobalBounds().height + 25.0F});
-            _gameSettingsTitleText.setPosition({_gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getSize().x / 2.0F - _gameSettingsTitleText.getGlobalBounds().width / 2.0F, _gameSettingsOverlayWindow.getPosition().y + 20.0F});
 
-            for (int i = 0; i < NUM_OF_SETTINGS_ELEMENTS; ++i)
-            {
-                _gameSettingsMenuElements[i].nameText.setPosition({_gameSettingsOverlayWindow.getPosition().x + 25.0F, _gameSettingsOverlayWindow.getPosition().y + 65.0F + (i * (_gameSettingsMenuElements[0].nameText.getGlobalBounds().height + 20.0F))});
-
-                auto statusTextXPos = _gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getGlobalBounds().width*0.725F - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width/2.0F;
-                _gameSettingsMenuElements[i].statusText.setPosition({statusTextXPos, _gameSettingsMenuElements[i].nameText.getPosition().y});
-                //_gameSettingsMenuElements[i].statusText.setPosition({_gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getSize().x/1.75F - _gameSettingsMenuElements[i].statusText.getGlobalBounds().width/2.0F, _gameSettingsMenuElements[i].nameText.getPosition().y});
-
-                //_gameSettingsLeftArrowSprite[i].setPosition({_gameSettingsMenuElements[i].statusText.getPosition().x - _gameSettingsLeftArrowSprite[i].getGlobalBounds().width - 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
-                _gameSettingsLeftArrowSprite[i].setPosition({_gameSettingsOverlayWindow.getPosition().x + _gameSettingsOverlayWindow.getSize().x/2.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
-
-                _gameSettingsRightArrowSprite[i].setPosition({statusTextXPos + _gameSettingsOverlayWindow.getGlobalBounds().width*0.225F + _gameSettingsMenuElements[i].statusText.getGlobalBounds().width/2.0F - 10.0F, _gameSettingsMenuElements[i].statusText.getPosition().y + 1.0F});
-            }
+            _gameSettings->RepositionPanel(
+                    Constants::WINDOW_WIDTH / 2.0F - _gameSettings->GetSettingsPanelSize().x / 2.0F,
+                    _menuTitleImgSprite.getPosition().y + _menuTitleImgSprite.getGlobalBounds().height + 25.0F);
         }
         else if(_buttonPanels[EXIT_BUTTON].IsClicked())
         {
@@ -329,26 +376,7 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
         }
 
-        for (int i = 0; i < NUM_OF_SETTINGS_ELEMENTS; ++i)
-        {
-            if(Chilli::Vector::BoundsCheck(_cursor.GetPos(), _gameSettingsLeftArrowSprite[i].getGlobalBounds()))
-            {
-                _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
-                _gameSettingsLeftArrowSprite[i].setColor(sf::Color::Cyan);
-                // isHoverOver = true?
-            }
-            else if(Chilli::Vector::BoundsCheck(_cursor.GetPos(), _gameSettingsRightArrowSprite[i].getGlobalBounds()))
-            {
-                _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
-                _gameSettingsRightArrowSprite[i].setColor(sf::Color::Cyan);
-                // isHoverOver = true?
-            }
-            else
-            {
-                _gameSettingsLeftArrowSprite[i].setColor(_predefinedColours.LIGHTBLUE);
-                _gameSettingsRightArrowSprite[i].setColor(_predefinedColours.LIGHTBLUE);
-            }
-        }
+        _gameSettings->Update(window, deltaTime);
 
         return;
     }
@@ -417,18 +445,7 @@ void MenuScene::Render(sf::RenderWindow& window)
     else
     {
         _buttonPanels[BACK_BUTTON].Render(window);
-        window.draw(_gameSettingsOverlayWindow);
-        window.draw(_gameSettingsTitleText);
-        for (auto & _gameSettingsMenuElement : _gameSettingsMenuElements)
-        {
-            window.draw(_gameSettingsMenuElement.nameText);
-            window.draw(_gameSettingsMenuElement.statusText);
-        }
-        for (int i = 0; i < NUM_OF_SETTINGS_ELEMENTS; ++i)
-        {
-            window.draw(_gameSettingsLeftArrowSprite[i]);
-            window.draw(_gameSettingsRightArrowSprite[i]);
-        }
+        _gameSettings->Render(window);
     }
 
     window.draw(_gameVersionText);

@@ -1,3 +1,6 @@
 {
-    "IsMusicEnabled": "false"
+    "Minimap": "false",
+    "Music": "true",
+    "Player Colour": "BLUE",
+    "Spacelanes": "false"
 }
