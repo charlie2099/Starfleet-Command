@@ -44,7 +44,7 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
     if(_button->IsCursorHoveredOver())
     {
         _isNameVisible = true;
-        _nameText.setFillColor(_isAffordable ? _teamColour : _predefinedColours.LIGHTRED);
+        _nameText.setFillColor(_isAffordable ? _teamColour : Chilli::PredefinedColours::LIGHTRED);
     }
 
     if(not _button->IsCursorHoveredOver())
@@ -71,7 +71,7 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
 
     if (not _button->IsCursorHoveredOver() and not _isAffordable)
     {
-        _button->SetColour(_predefinedColours.LIGHTRED);
+        _button->SetColour(Chilli::PredefinedColours::LIGHTRED);
     }
 
     auto mousePos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window

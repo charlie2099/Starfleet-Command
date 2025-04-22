@@ -75,6 +75,7 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/Utility/JsonSaveSystem.hpp
         Gamelibs/GameSettings.cpp
         Gamelibs/GameSettings.hpp
+        Gamelibs/include/Utility/JsonColourMapping.hpp
 )
 
 include_directories(Gamelibs/include)

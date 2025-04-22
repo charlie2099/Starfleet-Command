@@ -59,7 +59,6 @@ private:
     std::vector<sf::Sprite> _rightArrowSprite;
     sf::Texture _leftArrowTexture;
     sf::Texture _rightArrowTexture;
-    Chilli::PredefinedColours _predefinedColours;
 };
 
 #endif //STARFLEET_COMMAND_GAMESETTINGS_HPP

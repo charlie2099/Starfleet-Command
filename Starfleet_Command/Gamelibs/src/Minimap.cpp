@@ -20,7 +20,7 @@ Minimap::Minimap(float viewWidth, float viewHeight, float viewportLeft, float vi
 
     _minimapGameplayBoundary.setSize({Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT});
     _minimapGameplayBoundary.setOutlineThickness(5.0F);
-    _minimapGameplayBoundary.setOutlineColor(_predefinedColours.GRAY);
+    _minimapGameplayBoundary.setOutlineColor(Chilli::PredefinedColours::GRAY);
     _minimapGameplayBoundary.setFillColor(sf::Color::Transparent);
 
     _minimapGameplayBoundaryText.setFont(Chilli::CustomFonts::GetBoldFont());

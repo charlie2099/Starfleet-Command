@@ -4,8 +4,8 @@
 #include "Components/HealthComponent.hpp"
 #include "Sprites/Projectiles/Projectile.hpp"
 #include "Sprites/UI/HealthBar.hpp"
-#include "Utility/PredefinedColours.hpp"
 #include "Utility/Constants.hpp"
+#include "Utility/PredefinedColours.hpp"
 
 /*
  * Interface that all starships should inherit from
@@ -47,19 +47,19 @@ public:
     virtual void SetRotation(float rot) = 0;
     void SetProjectileColour(sf::Color colour)
     {
-        if(colour == sf::Color::Cyan or colour == sf::Color::Blue or colour == _predefinedColours.LIGHTBLUE or colour == _predefinedColours.BLUEVIOLET)
+        if(colour == sf::Color::Cyan or colour == sf::Color::Blue or colour == Chilli::PredefinedColours::LIGHTBLUE or colour == Chilli::PredefinedColours::BLUEVIOLET)
         {
             _projectileColour = Projectile::BLUE;
         }
-        else if(colour == sf::Color::Green or colour == _predefinedColours.LIGHTGREEN)
+        else if(colour == sf::Color::Green or colour == Chilli::PredefinedColours::LIGHTGREEN)
         {
             _projectileColour = Projectile::GREEN;
         }
-        else if(colour == sf::Color::Red or colour == _predefinedColours.LIGHTRED)
+        else if(colour == sf::Color::Red or colour == Chilli::PredefinedColours::LIGHTRED)
         {
             _projectileColour = Projectile::RED;
         }
-        else if(colour == _predefinedColours.ORANGE or colour == _predefinedColours.LIGHTORANGE)
+        else if(colour == Chilli::PredefinedColours::ORANGE or colour == Chilli::PredefinedColours::LIGHTORANGE)
         {
             _projectileColour = Projectile::ORANGE;
         }
@@ -122,7 +122,6 @@ protected:
     bool _isHealthBarVisible = false;
     float _damagingProjectileSpawnTimer = 0;
     sf::Clock _damagingProjectileSpawnTimerClock;
-    Chilli::PredefinedColours _predefinedColours;
     int _assignedLaneIndex;
     bool _isMouseOver = false;
     std::vector<int> _attackableLanes;

@@ -37,7 +37,6 @@ private:
     sf::Vector2<float> _position;
     bool _isNameVisible = false;
     bool _isAffordable = false;
-    Chilli::PredefinedColours _predefinedColours;
     sf::Color _teamColour;
     const sf::Color DEFAULT_BTN_COLOUR = {255, 255, 255, 100};
     const sf::Color HOVER_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 255};

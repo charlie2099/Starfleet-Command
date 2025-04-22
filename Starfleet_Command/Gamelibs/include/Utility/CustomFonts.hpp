@@ -12,8 +12,10 @@ namespace Chilli
         static const sf::Font& GetBoldFont();
 
     private:
-        static sf::Font orbitronRegularFont;
-        static sf::Font orbitronBoldFont;
+        static bool LoadFonts();
+        inline static bool _fontsLoaded = false;
+        inline static sf::Font orbitronRegularFont;
+        inline static sf::Font orbitronBoldFont;
     };
 }
 

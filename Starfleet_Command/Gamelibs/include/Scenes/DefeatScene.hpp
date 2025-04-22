@@ -21,7 +21,6 @@ private:
     bool InitMusic();
 
     Chilli::Cursor _cursor;
-    Chilli::PredefinedColours _predefinedColours;
 
     sf::View _worldView{};
 

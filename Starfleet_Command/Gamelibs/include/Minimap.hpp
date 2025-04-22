@@ -36,7 +36,6 @@ private:
     bool _canViewPan = false;
     sf::RectangleShape _minimapGameplayBoundary;
     sf::Text _minimapGameplayBoundaryText;
-    Chilli::PredefinedColours _predefinedColours;
 };
 
 #endif //STARFLEET_COMMAND_MINIMAP_HPP

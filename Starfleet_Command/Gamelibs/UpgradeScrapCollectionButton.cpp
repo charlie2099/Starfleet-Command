@@ -40,7 +40,7 @@ void UpgradeScrapCollectionButton::Update(sf::RenderWindow &window, sf::Time del
     if(_button->IsCursorHoveredOver())
     {
         _isNameVisible = true;
-        _nameText.setFillColor(_isAffordable ? _teamColour : _predefinedColours.LIGHTRED);
+        _nameText.setFillColor(_isAffordable ? _teamColour : Chilli::PredefinedColours::LIGHTRED);
     }
 
     if(not _button->IsCursorHoveredOver())
@@ -60,7 +60,7 @@ void UpgradeScrapCollectionButton::Update(sf::RenderWindow &window, sf::Time del
 
     if (not _button->IsCursorHoveredOver() and not _isAffordable)
     {
-        _button->SetColour(_predefinedColours.LIGHTRED);
+        _button->SetColour(Chilli::PredefinedColours::LIGHTRED);
     }
 
     _button->Update(window);

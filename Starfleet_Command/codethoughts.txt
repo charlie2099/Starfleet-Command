@@ -21,6 +21,32 @@
 ============================================
 
 
+ISettingType
+{
+    virtual void ApplySetting();
+}
+
+Toggle : ISettingType
+{
+    ApplySetting() override
+    {
+        _someBool = (data == "true")
+    }
+}
+Selection : ISettingType
+{
+    ApplySetting() override
+    {
+
+    }
+}
+
+
+
+_gameSettings->AddSettingOption("Fullscreen Mode", std::vector<std::string>{"OFF", "ON"});
+gameSettingsData["Fullscreen Mode"] = _gameSettings->GetSettingOption("Fullscreen Mode").selectedValueIndex == 1 ? "true" : "false";
+
+
 __AI Director Behaviour Rules__
 Build-up - MaxEnemyPop(10), MaxLightFighters(4), etc,
 Peak - MaxEnemyPop(20), etc

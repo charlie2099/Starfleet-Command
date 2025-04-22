@@ -1,6 +1,7 @@
 {
-    "Minimap": "false",
-    "Music": "true",
+    "Enemy Colour": "GREEN",
+    "Minimap": "true",
+    "Music": "false",
     "Player Colour": "BLUE",
-    "Spacelanes": "false"
+    "Spacelanes": "true"
 }

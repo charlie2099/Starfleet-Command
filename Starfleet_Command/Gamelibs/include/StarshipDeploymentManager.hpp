@@ -40,7 +40,6 @@ private:
     std::queue<int> _spacelaneStarshipDeploymentQueue;
     sf::Vector2<float> _deploymentBarPosition;
     int _maxQueueSize = 5;
-    Chilli::PredefinedColours _predefinedColours;
 
     sf::Texture _starshipQueueBoxTexture;
     std::array<sf::Sprite, 5> _starshipQueueBoxSprites; // TODO: Find a way to initialise size with max queue size variable set above

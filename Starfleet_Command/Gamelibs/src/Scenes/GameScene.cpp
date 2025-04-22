@@ -14,7 +14,7 @@ GameScene::~GameScene()
 
 bool GameScene::Init()
 {
-    _backgroundParallax = std::make_unique<ParallaxBackground>("Resources/Textures/space_nebula_2.png", sf::Color::Cyan, NUM_OF_STARS, _predefinedColours.LIGHTBLUE);
+    _backgroundParallax = std::make_unique<ParallaxBackground>("Resources/Textures/space_nebula_2.png", sf::Color::Cyan, NUM_OF_STARS, Chilli::PredefinedColours::LIGHTBLUE);
     InitPlayerMothership();
     InitSpaceLanes();
     InitEnemyMothership();
@@ -28,17 +28,17 @@ bool GameScene::Init()
     _pauseIconTexture.loadFromFile("Resources/Textures/pause.png");
     _pauseIconSprite.setTexture(_pauseIconTexture);
     _pauseIconSprite.setScale(0.8F, 0.8F);
-    _pauseIconSprite.setColor(_predefinedColours.LIGHTBLUE);
+    _pauseIconSprite.setColor(Chilli::PredefinedColours::LIGHTBLUE);
 
     _pauseText.setFont(Chilli::CustomFonts::GetBoldFont());
     _pauseText.setString("GAME PAUSED");
     _pauseText.setCharacterSize(14);
-    _pauseText.setFillColor(_predefinedColours.LIGHTBLUE);
+    _pauseText.setFillColor(Chilli::PredefinedColours::LIGHTBLUE);
     _pauseText.setOutlineColor(sf::Color::Black);
 
     _pauseResumeGameButton = std::make_unique<Panel>();
     _pauseResumeGameButton->SetFont(Panel::TextFont::BOLD);
-    _pauseResumeGameButton->SetText("RESUME", _predefinedColours.LIGHTBLUE);
+    _pauseResumeGameButton->SetText("RESUME", Chilli::PredefinedColours::LIGHTBLUE);
     _pauseResumeGameButton->SetTextSize(14);
     _pauseResumeGameButton->SetSize(20, 15);
     _pauseResumeGameButton->SetPanelColour(sf::Color(22, 155, 164, 100));
@@ -72,6 +72,13 @@ bool GameScene::Init()
     _gameMusic[1].openFromFile("Resources/Audio/GameThemes/Dangerous_Dark_Disaster_143bpm_148s.wav");
     _gameMusic[2].openFromFile("Resources/Audio/GameThemes/Future_Shock_Fears_155bpm_120s.wav");
     _gameMusic[3].openFromFile("Resources/Audio/GameThemes/Triumph_Over_Terror_125bpm_153s.wav");
+
+    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+    if(fileData.contains("Music"))
+    {
+        std::string musicData = fileData["Music"];
+        _isMusicOn = (musicData == "true");
+    }
 
     if(_isMusicOn)
     {
@@ -177,7 +184,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         {
             for (int j = 0; j < _player->GetStarships()[i]->GetAttackableLanes().size(); ++j)
             {
-                _spaceLanes[_player->GetStarships()[i]->GetAttackableLanes()[j]]->SetColour(sf::Color(_predefinedColours.LIGHTGREEN.r, _predefinedColours.LIGHTGREEN.g, _predefinedColours.LIGHTGREEN.b, 50.0F));
+                _spaceLanes[_player->GetStarships()[i]->GetAttackableLanes()[j]]->SetColour(sf::Color(Chilli::PredefinedColours::LIGHTGREEN.r, Chilli::PredefinedColours::LIGHTGREEN.g, Chilli::PredefinedColours::LIGHTGREEN.b, 50.0F));
             }
         }
     }
@@ -240,7 +247,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         else if(not _pauseResumeGameButton->IsHoveredOver())
         {
             _pauseResumeGameButton->SetPanelColour(sf::Color(22, 155, 164, 100));
-            _pauseResumeGameButton->SetText(_pauseResumeGameButton->GetText().getString(), _predefinedColours.LIGHTBLUE);
+            _pauseResumeGameButton->SetText(_pauseResumeGameButton->GetText().getString(), Chilli::PredefinedColours::LIGHTBLUE);
             _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
         }
 
@@ -253,7 +260,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         else if(not _pauseExitGameButton->IsHoveredOver())
         {
             _pauseExitGameButton->SetPanelColour(sf::Color(22, 155, 164, 100));
-            _pauseExitGameButton->SetText(_pauseExitGameButton->GetText().getString(), _predefinedColours.LIGHTBLUE);
+            _pauseExitGameButton->SetText(_pauseExitGameButton->GetText().getString(), Chilli::PredefinedColours::LIGHTBLUE);
             _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
         }
         return;
@@ -274,7 +281,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
         if(_starshipDeploymentManager->IsQueueFull())
         {
-            _starshipDeploymentButtons[i]->SetColour(_predefinedColours.LIGHTORANGE);
+            _starshipDeploymentButtons[i]->SetColour(Chilli::PredefinedColours::LIGHTORANGE);
         }
     }
 
@@ -534,7 +541,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         if(musicIconButton->IsCursorHoveredOver())
         {
-            musicIconButton->SetColour(_predefinedColours.LIGHTBLUE);
+            musicIconButton->SetColour(Chilli::PredefinedColours::LIGHTBLUE);
         }
         else
         {
@@ -558,7 +565,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     if(_nextMusicTrackButton->IsCursorHoveredOver())
     {
-        _nextMusicTrackButton->SetColour(_predefinedColours.LIGHTBLUE);
+        _nextMusicTrackButton->SetColour(Chilli::PredefinedColours::LIGHTBLUE);
     }
     else
     {
@@ -626,11 +633,26 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
     _backgroundParallax->Render(window);
     _player->RenderGameplaySprites(window);
     _enemy->RenderGameplaySprites(window);
-    _minimap->Render(window);
+    if(_isMinimapVisible)
+    {
+        _minimap->Render(window);
+    }
+
     for (const auto &lane : _spaceLanes)
     {
-        lane->Render(window);
+        if(_isSpacelanesVisible)
+        {
+            lane->Render(window);
+        }
+        else if(not _isSpacelanesVisible)
+        {
+            if(lane->IsCursorHoveredOver())
+            {
+                lane->Render(window);
+            }
+        }
     }
+
     _mothershipStatusDisplay->Render(window);
     _starshipDeploymentManager->Render(window);
     for (auto& deploymentButton : _starshipDeploymentButtons)
@@ -649,13 +671,16 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
 
 void GameScene::RenderMinimapSprites(sf::RenderWindow &window)
 {
-    _backgroundParallax->RenderBackground(window);
-    _minimap->RenderGameplayView(window);
-    _player->RenderMinimapSprites(window);
-    _enemy->RenderMinimapSprites(window);
-    for (const auto &lane : _spaceLanes)
+    if(_isMinimapVisible)
     {
-        lane->Render(window);
+        _backgroundParallax->RenderBackground(window);
+        _minimap->RenderGameplayView(window);
+        _player->RenderMinimapSprites(window);
+        _enemy->RenderMinimapSprites(window);
+        for (const auto &lane : _spaceLanes)
+        {
+            lane->Render(window);
+        }
     }
 }
 
@@ -757,14 +782,26 @@ void GameScene::UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &wi
 
 void GameScene::InitPlayerMothership()
 {
-    _player = std::make_unique<Player>(STARTING_SCRAP_METAL, _predefinedColours.LIGHTBLUE);
+    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+    if(fileData.contains("Player Colour"))
+    {
+        std::string playerColourData = fileData["Player Colour"];
+        _player = std::make_unique<Player>(STARTING_SCRAP_METAL, Chilli::JsonColourMapping::GetColourFromStringName(playerColourData));
+    }
+
     _player->CreateStarship(StarshipFactory::STARSHIP_TYPE::MOTHERSHIP, 2);
     _player->SetMothershipPosition({60.0F, Constants::LEVEL_HEIGHT / 2.0F});
 }
 
 void GameScene::InitEnemyMothership()
 {
-    _enemy = std::make_unique<Enemy>(STARTING_SCRAP_METAL, _predefinedColours.LIGHTGREEN);
+    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+    if(fileData.contains("Enemy Colour"))
+    {
+        std::string enemyColourData = fileData["Enemy Colour"];
+        _enemy = std::make_unique<Enemy>(STARTING_SCRAP_METAL, Chilli::JsonColourMapping::GetColourFromStringName(enemyColourData));
+    }
+
     _enemy->CreateStarship(StarshipFactory::MOTHERSHIP, 2);
     auto mothershipXpos = _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x + _enemy->GetMothershipBounds().width/2.25F;
     auto mothershipYpos = Constants::LEVEL_HEIGHT / 2.0F;
@@ -789,6 +826,13 @@ void GameScene::InitMinimapView()
             Constants::Minimap::VIEWPORT_WIDTH,
             Constants::Minimap::VIEWPORT_HEIGHT,
             _gameplayView);
+
+    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+    if(fileData.contains("Minimap"))
+    {
+        std::string minimapData = fileData["Minimap"];
+        _isMinimapVisible = (minimapData == "true");
+    }
 }
 
 void GameScene::InitSpaceLanes()
@@ -809,11 +853,18 @@ void GameScene::InitSpaceLanes()
         _spaceLanes[i]->Init();
     }
 
-    /*_spaceLanes[0]->SetColour(_predefinedColours.ORANGE);
-    _spaceLanes[1]->SetColour(_predefinedColours.LIGHTBLUE);
-    _spaceLanes[2]->SetColour(_predefinedColours.LIGHTGREEN);
-    _spaceLanes[3]->SetColour(_predefinedColours.BLUEVIOLET);
-    _spaceLanes[4]->SetColour(_predefinedColours.LIGHTRED);*/
+    /*_spaceLanes[0]->SetColour(Chilli::PredefinedColours::ORANGE);
+    _spaceLanes[1]->SetColour(Chilli::PredefinedColours::LIGHTBLUE);
+    _spaceLanes[2]->SetColour(Chilli::PredefinedColours::LIGHTGREEN);
+    _spaceLanes[3]->SetColour(Chilli::PredefinedColours::BLUEVIOLET);
+    _spaceLanes[4]->SetColour(Chilli::PredefinedColours::LIGHTRED);*/
+
+    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+    if(fileData.contains("Spacelanes"))
+    {
+        std::string spacelanesData = fileData["Spacelanes"];
+        _isSpacelanesVisible = (spacelanesData == "true");
+    }
 }
 
 void GameScene::InitEvents()

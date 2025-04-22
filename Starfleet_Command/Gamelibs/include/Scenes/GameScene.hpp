@@ -2,6 +2,9 @@
 #define STARFLEET_COMMAND_GAMESCENE_HPP
 #include "Scenes/Scene.hpp"
 #include "Utility/Cursor.hpp"
+#include "Utility/RNG.hpp"
+#include "Utility/JsonSaveSystem.hpp"
+#include "Utility/JsonColourMapping.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
 #include "Sprites/Player/Player.hpp"
 #include "Interfaces/IStarship.hpp"
@@ -17,7 +20,6 @@
 #include <random>
 #include <chrono>
 #include "queue"
-#include "Utility/RNG.hpp"
 #include "AIDirector/AiDirector.hpp"
 #include "../../UpgradeScrapCollectionButton.hpp"
 
@@ -59,7 +61,6 @@ private:
 
     /// Utility
     Chilli::Cursor _cursor;
-    Chilli::PredefinedColours _predefinedColours;
 
     /// HUD
     std::unique_ptr<MothershipStatusDisplay> _mothershipStatusDisplay;
@@ -88,6 +89,7 @@ private:
     const float VIEW_SCROLL_SPEED = 600.0F;
     sf::View _gameplayView{};
     std::unique_ptr<Minimap> _minimap;
+    bool _isMinimapVisible = true;
     sf::RectangleShape boundaryEdgeHighlighterBox;
     const float MOUSE_WINDOW_EDGE_OFFSET_PCT = 0.10F; // 10% of window size
     const float MOUSE_WINDOW_TOP_OFFSET_PCT = 0.20F;
@@ -108,6 +110,7 @@ private:
     const sf::Color HIGHLIGHT_LANE_COLOUR = sf::Color(100, 100, 100, 100.0F);
     const sf::Color DEFAULT_LANE_COLOUR = sf::Color(100, 100, 100, 25.0F);
     std::vector<std::unique_ptr<SpaceLane>> _spaceLanes;
+    bool _isSpacelanesVisible = true;
 
     /// Player Spawning
     const int STARSHIP_MAX_QUEUE_SIZE = 5;
@@ -128,6 +131,8 @@ private:
     RNG _starshipHealRNG {50, 100};
     RNG _enemyStarshipTypeRNG {0, StarshipFactory::STARSHIP_TYPE::ENUM_COUNT - 2};
     RNG _spacelaneSpawnRNG {0, NUM_OF_LANES - 1};
+
+    const std::string SETTINGS_FILE_PATH = "Resources/Data/GameSettings.json";
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP
