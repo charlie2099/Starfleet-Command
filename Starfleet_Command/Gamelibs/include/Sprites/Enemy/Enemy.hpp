@@ -2,7 +2,7 @@
 #define STARFLEET_COMMAND_ENEMY_HPP
 #include "Interfaces/IStarship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
-#include "Utility/PredefinedColours.hpp"
+#include "Utility/Colour.hpp"
 #include "ScrapMetalManager.hpp"
 #include <cmath>
 #include <functional>

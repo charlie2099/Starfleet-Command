@@ -21,7 +21,7 @@
 #include <chrono>
 #include "queue"
 #include "AIDirector/AiDirector.hpp"
-#include "../../UpgradeScrapCollectionButton.hpp"
+#include "../../ScrapCollectionUpgradeButton.hpp"
 
 class GameScene : public Scene
 {
@@ -35,12 +35,15 @@ public:
 
 private:
     /// Init functions
-    void InitPlayerMothership();
-    void InitSpaceLanes();
-    void InitEnemyMothership();
+    void InitBackground();
+    void InitPlayer();
+    void InitSpacelanes();
+    void InitEnemy();
     void InitGameplayView();
+    void InitPauseMenu();
     void InitMinimapView();
     void InitEvents();
+    void InitMusic();
 
     /// EventHandler functions
     void HandleViewScrollingKeyboardInput(const sf::Event &event);
@@ -75,7 +78,7 @@ private:
     const int STARTING_SCRAP_METAL = 500;
 
     /// Scrap Collector
-    std::unique_ptr<UpgradeScrapCollectionButton> _upgradePlayerScrapCollectionButton;
+    std::unique_ptr<ScrapCollectionUpgradeButton> _upgradePlayerScrapCollectionButton;
     const float PLAYER_SCRAP_ACCUMULATION_RATE = 5.0F;
     float _playerScrapAccumulationTimer = PLAYER_SCRAP_ACCUMULATION_RATE;
     sf::Clock _playerScrapAccumulationTimerClock;
@@ -95,7 +98,7 @@ private:
     const float MOUSE_WINDOW_TOP_OFFSET_PCT = 0.20F;
     const float MOUSE_WINDOW_BOTTOM_OFFSET_PCT = 0.21F;
 
-    /// Pause
+    /// Pause menu
     sf::Texture _pauseIconTexture;
     sf::Sprite _pauseIconSprite;
     sf::Texture _pauseOverlayTexture;
@@ -133,6 +136,10 @@ private:
     RNG _spacelaneSpawnRNG {0, NUM_OF_LANES - 1};
 
     const std::string SETTINGS_FILE_PATH = "Resources/Data/GameSettings.json";
+
+    void UpdatePauseMenu(sf::RenderWindow &window);
+
+    void UpdateMusicButtons(sf::RenderWindow &window);
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

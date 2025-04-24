@@ -2,7 +2,7 @@
 
 Player::Player(int startingScrapAmount, sf::Color teamColour)
 {
-    _scrapMetalManager = std::make_unique<ScrapMetalManager>(Chilli::PredefinedColours::GRAY, teamColour, startingScrapAmount);
+    _scrapMetalManager = std::make_unique<ScrapMetalManager>(Chilli::Colour::GRAY, teamColour, startingScrapAmount);
     _teamColour = teamColour;
 }
 

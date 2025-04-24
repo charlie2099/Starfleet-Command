@@ -5,7 +5,7 @@
 #include "Sprites/Projectiles/Projectile.hpp"
 #include "Sprites/UI/HealthBar.hpp"
 #include "Utility/Constants.hpp"
-#include "Utility/PredefinedColours.hpp"
+#include "Utility/Colour.hpp"
 
 /*
  * Interface that all starships should inherit from
@@ -47,19 +47,19 @@ public:
     virtual void SetRotation(float rot) = 0;
     void SetProjectileColour(sf::Color colour)
     {
-        if(colour == sf::Color::Cyan or colour == sf::Color::Blue or colour == Chilli::PredefinedColours::LIGHTBLUE or colour == Chilli::PredefinedColours::BLUEVIOLET)
+        if(colour == sf::Color::Cyan or colour == sf::Color::Blue or colour == Chilli::Colour::LIGHTBLUE or colour == Chilli::Colour::BLUEVIOLET)
         {
             _projectileColour = Projectile::BLUE;
         }
-        else if(colour == sf::Color::Green or colour == Chilli::PredefinedColours::LIGHTGREEN)
+        else if(colour == sf::Color::Green or colour == Chilli::Colour::LIGHTGREEN)
         {
             _projectileColour = Projectile::GREEN;
         }
-        else if(colour == sf::Color::Red or colour == Chilli::PredefinedColours::LIGHTRED)
+        else if(colour == sf::Color::Red or colour == Chilli::Colour::LIGHTRED)
         {
             _projectileColour = Projectile::RED;
         }
-        else if(colour == Chilli::PredefinedColours::ORANGE or colour == Chilli::PredefinedColours::LIGHTORANGE)
+        else if(colour == Chilli::Colour::ORANGE or colour == Chilli::Colour::LIGHTORANGE)
         {
             _projectileColour = Projectile::ORANGE;
         }

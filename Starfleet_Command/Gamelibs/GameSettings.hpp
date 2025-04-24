@@ -1,6 +1,6 @@
 #ifndef STARFLEET_COMMAND_GAMESETTINGS_HPP
 #define STARFLEET_COMMAND_GAMESETTINGS_HPP
-#include "Utility/PredefinedColours.hpp"
+#include "Utility/Colour.hpp"
 #include "Utility/CustomFonts.hpp"
 #include "Utility/Vector.hpp"
 #include "Utility/Cursor.hpp"

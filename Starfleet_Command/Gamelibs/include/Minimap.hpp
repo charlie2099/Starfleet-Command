@@ -7,7 +7,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include "Utility/Constants.hpp"
 #include "Utility/CustomFonts.hpp"
-#include "Utility/PredefinedColours.hpp"
+#include "Utility/Colour.hpp"
 
 class Minimap
 {

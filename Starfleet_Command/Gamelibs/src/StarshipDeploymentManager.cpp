@@ -36,10 +36,10 @@ void StarshipDeploymentManager::Update(sf::RenderWindow &window, sf::Time deltaT
 
         if(IsQueueFull())
         {
-            _starshipQueueBoxIconSprites[i].setColor(Chilli::PredefinedColours::LIGHTORANGE);
+            _starshipQueueBoxIconSprites[i].setColor(Chilli::Colour::LIGHTORANGE);
         }
 
-        _starshipQueueBoxIconSprites[i].setColor(IsQueueFull() ? Chilli::PredefinedColours::LIGHTORANGE : _starshipQueueBoxSprites[0].getColor());
+        _starshipQueueBoxIconSprites[i].setColor(IsQueueFull() ? Chilli::Colour::LIGHTORANGE : _starshipQueueBoxSprites[0].getColor());
     }
 }
 

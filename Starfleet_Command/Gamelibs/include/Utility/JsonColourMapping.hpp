@@ -1,6 +1,6 @@
 #ifndef STARFLEET_COMMAND_JSONCOLOURMAPPING_HPP
 #define STARFLEET_COMMAND_JSONCOLOURMAPPING_HPP
-#include "PredefinedColours.hpp"
+#include "Colour.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <unordered_map>
 #include <string>
@@ -14,16 +14,16 @@ namespace Chilli
         {
             static const std::unordered_map<std::string, sf::Color> colourMap =
             {
-                    {"BLUE",   Chilli::PredefinedColours::LIGHTBLUE},
-                    {"RED",    Chilli::PredefinedColours::LIGHTRED},
-                    {"GREEN",  Chilli::PredefinedColours::LIGHTGREEN},
-                    {"ORANGE", Chilli::PredefinedColours::LIGHTORANGE},
-                    {"YELLOW", Chilli::PredefinedColours::YELLOW}
+                    {"BLUE",   Chilli::Colour::LIGHTBLUE},
+                    {"RED",    Chilli::Colour::LIGHTRED},
+                    {"GREEN",  Chilli::Colour::LIGHTGREEN},
+                    {"ORANGE", Chilli::Colour::LIGHTORANGE},
+                    {"YELLOW", Chilli::Colour::YELLOW}
             };
 
             /// Return the queried colour if it exists, otherwise return LIGHTBLUE by default
             auto iter = colourMap.find(colourName);
-            return (iter != colourMap.end()) ? iter->second : Chilli::PredefinedColours::LIGHTBLUE;
+            return (iter != colourMap.end()) ? iter->second : Chilli::Colour::LIGHTBLUE;
         }
     };
 }

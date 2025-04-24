@@ -12,12 +12,12 @@ bool MenuScene::Init()
 {
     InitView();
     InitBackground();
-    InitButtonPanels();
-    InitMenuTitleIcon();
-    InitBackgroundShips();
+    InitButtons();
+    InitTitle();
+    InitBackgroundStarships();
     InitGameVersionText();
     InitGameSettings();
-    InitMenuMusic();
+    InitMusic();
     InitEvents();
 
     return true;
@@ -30,104 +30,31 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         HandleGameSettingsEvents(window, event);
         return;
     }
-
     HandleButtonEvents(window, event);
 }
 
 void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     _cursor.Update(window, deltaTime);
-    _cursor.SetCursorPos(window, _worldView);
-
+    _cursor.SetCursorPos(window, _menuView);
+    _backgroundParallax->Update(window, deltaTime);
     UpdateBackgroundStarshipsMovement(window, deltaTime);
-
-    _backgroundSprite.move(-25.0F * deltaTime.asSeconds(), 0);
-    if(_backgroundSprite.getPosition().x + _backgroundSprite.getGlobalBounds().width/2.0F < 0)
-    {
-        _backgroundSprite.setPosition(0, 0);
-    }
-
-    for (auto& star : _parallaxStars)
-    {
-        star.position.x -= star.speed * 100.0F * deltaTime.asSeconds();
-        star.circleShape.setPosition(star.position);
-        if (star.position.x < 0)
-        {
-            star.position.x = Constants::WINDOW_WIDTH;
-            star.position.y = std::rand() % (int)Constants::WINDOW_HEIGHT;
-        }
-    }
 
     if(_isGameSettingsEnabled)
     {
-        _buttonPanels[BACK_BUTTON].Update(window);
-
-        if(_buttonPanels[BACK_BUTTON].IsHoveredOver())
-        {
-            _buttonPanels[BACK_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
-            _buttonPanels[BACK_BUTTON].SetText(_buttonPanels[BACK_BUTTON].GetText().getString(), sf::Color::Cyan);
-            _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
-        }
-        else if(not _buttonPanels[BACK_BUTTON].IsHoveredOver())
-        {
-            _buttonPanels[BACK_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 100));
-            _buttonPanels[BACK_BUTTON].SetText(_buttonPanels[BACK_BUTTON].GetText().getString(), Chilli::PredefinedColours::LIGHTBLUE);
-            _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
-        }
-
-        _gameSettings->Update(window, deltaTime);
-
+        UpdateGameSettingsButtons(window, deltaTime);
         return;
     }
-
-    for (int i = 0; i < NUM_OF_BUTTONS-1; ++i)
-    {
-        _buttonPanels[i].Update(window);
-    }
-
-    if(_buttonPanels[PLAY_BUTTON].IsHoveredOver())
-    {
-        _buttonPanels[PLAY_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
-        _buttonPanels[PLAY_BUTTON].SetText(_buttonPanels[PLAY_BUTTON].GetText().getString(), sf::Color::Cyan);
-        _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
-    }
-    else if(_buttonPanels[OPTIONS_BUTTON].IsHoveredOver())
-    {
-        _buttonPanels[OPTIONS_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
-        _buttonPanels[OPTIONS_BUTTON].SetText(_buttonPanels[OPTIONS_BUTTON].GetText().getString(), sf::Color::Cyan);
-        _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
-    }
-    else if(_buttonPanels[EXIT_BUTTON].IsHoveredOver())
-    {
-        _buttonPanels[EXIT_BUTTON].SetPanelColour(sf::Color(242, 22, 22, 60));
-        _buttonPanels[EXIT_BUTTON].SetText(_buttonPanels[EXIT_BUTTON].GetText().getString(), sf::Color::Red);
-        _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
-    }
-    else
-    {
-        _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
-    }
-
-    for (int i = 0; i < NUM_OF_BUTTONS-1; ++i)
-    {
-        if(not _buttonPanels[i].IsHoveredOver())
-        {
-            _buttonPanels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
-            _buttonPanels[i].SetText(_buttonPanels[i].GetText().getString(), Chilli::PredefinedColours::LIGHTBLUE);
-        }
-    }
+    UpdateMenuButtons(window);
 }
 
 void MenuScene::Render(sf::RenderWindow& window)
 {
-    window.setView(_worldView);
-    window.draw(_backgroundSprite);
+    window.setView(_menuView);
+    _backgroundParallax->RenderBackground(window);
     window.draw(_backgroundEnemyPlanetSprite);
     window.draw(_backgroundPlayerPlanetSprite);
-    for (auto& star : _parallaxStars)
-    {
-        window.draw(star.circleShape);
-    }
+    _backgroundParallax->RenderStars(window);
     for (int i = 0; i < NUM_OF_SHIPS_PER_TEAM; ++i)
     {
         _player->RenderMinimapSprites(window);
@@ -152,7 +79,7 @@ void MenuScene::Render(sf::RenderWindow& window)
     _cursor.Render(window);
 }
 
-bool MenuScene::InitMenuMusic()
+bool MenuScene::InitMusic()
 {
     if(!_menuMusic.openFromFile("Resources/Audio/MenuTheme/United_Against_Evil_175bpm_136s.wav"))
     {
@@ -218,37 +145,32 @@ void MenuScene::InitGameSettings()
 
             if(playerColourData == "BLUE")
             {
-                _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/planet_blue.png");
-                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
-                _player->SetTeamColour(Chilli::PredefinedColours::LIGHTBLUE);
+                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[0]);
+                _player->SetTeamColour(Chilli::Colour::LIGHTBLUE);
                 _gameSettings->UpdateSettingOptionValueText("Player Colour", 0);
             }
             else if(playerColourData == "RED")
             {
-                _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/planet_red.png");
-                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
-                _player->SetTeamColour(Chilli::PredefinedColours::LIGHTRED);
+                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[1]);
+                _player->SetTeamColour(Chilli::Colour::LIGHTRED);
                 _gameSettings->UpdateSettingOptionValueText("Player Colour", 1);
             }
             else if(playerColourData == "GREEN")
             {
-                _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/planet_green.png");
-                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
-                _player->SetTeamColour(Chilli::PredefinedColours::LIGHTGREEN);
+                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[2]);
+                _player->SetTeamColour(Chilli::Colour::LIGHTGREEN);
                 _gameSettings->UpdateSettingOptionValueText("Player Colour", 2);
             }
             else if(playerColourData == "ORANGE")
             {
-                _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/planet_orange.png");
-                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
-                _player->SetTeamColour(Chilli::PredefinedColours::LIGHTORANGE);
+                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[3]);
+                _player->SetTeamColour(Chilli::Colour::LIGHTORANGE);
                 _gameSettings->UpdateSettingOptionValueText("Player Colour", 3);
             }
             else if(playerColourData == "YELLOW")
             {
-                _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/planet_yellow.png");
-                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
-                _player->SetTeamColour(Chilli::PredefinedColours::YELLOW);
+                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[4]);
+                _player->SetTeamColour(Chilli::Colour::YELLOW);
                 _gameSettings->UpdateSettingOptionValueText("Player Colour", 4);
             }
         }
@@ -259,37 +181,37 @@ void MenuScene::InitGameSettings()
 
             if(enemyColourData == "BLUE")
             {
-                _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/planet_blue.png");
-                _backgroundEnemyPlanetSprite.setTexture(_backgroundEnemyPlanetTexture);
-                _enemy->SetTeamColour(Chilli::PredefinedColours::LIGHTBLUE);
+                //_backgroundSprite.setColor(Chilli::Colour::LIGHTBLUE);
+                _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[0]);
+                _enemy->SetTeamColour(Chilli::Colour::LIGHTBLUE);
                 _gameSettings->UpdateSettingOptionValueText("Enemy Colour", 0);
             }
             else if(enemyColourData == "RED")
             {
-                _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/planet_red.png");
-                _backgroundEnemyPlanetSprite.setTexture(_backgroundEnemyPlanetTexture);
-                _enemy->SetTeamColour(Chilli::PredefinedColours::LIGHTRED);
+                //_backgroundSprite.setColor(Chilli::Colour::LIGHTRED);
+                _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[1]);
+                _enemy->SetTeamColour(Chilli::Colour::LIGHTRED);
                 _gameSettings->UpdateSettingOptionValueText("Enemy Colour", 1);
             }
             else if(enemyColourData == "GREEN")
             {
-                _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/planet_green.png");
-                _backgroundEnemyPlanetSprite.setTexture(_backgroundEnemyPlanetTexture);
-                _enemy->SetTeamColour(Chilli::PredefinedColours::LIGHTGREEN);
+                //_backgroundSprite.setColor(Chilli::Colour::LIGHTGREEN);
+                _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[2]);
+                _enemy->SetTeamColour(Chilli::Colour::LIGHTGREEN);
                 _gameSettings->UpdateSettingOptionValueText("Enemy Colour", 2);
             }
             else if(enemyColourData == "ORANGE")
             {
-                _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/planet_orange.png");
-                _backgroundEnemyPlanetSprite.setTexture(_backgroundEnemyPlanetTexture);
-                _enemy->SetTeamColour(Chilli::PredefinedColours::LIGHTORANGE);
+                //_backgroundSprite.setColor(Chilli::Colour::LIGHTORANGE);
+                _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[3]);
+                _enemy->SetTeamColour(Chilli::Colour::LIGHTORANGE);
                 _gameSettings->UpdateSettingOptionValueText("Enemy Colour", 3);
             }
             else if(enemyColourData == "YELLOW")
             {
-                _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/planet_yellow.png");
-                _backgroundEnemyPlanetSprite.setTexture(_backgroundEnemyPlanetTexture);
-                _enemy->SetTeamColour(Chilli::PredefinedColours::YELLOW);
+                //_backgroundSprite.setColor(Chilli::Colour::YELLOW);
+                _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[4]);
+                _enemy->SetTeamColour(Chilli::Colour::YELLOW);
                 _gameSettings->UpdateSettingOptionValueText("Enemy Colour", 4);
             }
         }
@@ -300,44 +222,37 @@ void MenuScene::InitView()
 {
     sf::Vector2f VIEW_SIZE = { Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT };
     sf::Vector2f WORLD_PERSPECTIVE = { Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F };
-    _worldView.setSize(VIEW_SIZE);
-    _worldView.setCenter(WORLD_PERSPECTIVE);
+    _menuView.setSize(VIEW_SIZE);
+    _menuView.setCenter(WORLD_PERSPECTIVE);
 }
 
 bool MenuScene::InitBackground()
 {
-    if (!_backgroundTexture.loadFromFile("Resources/Textures/space_nebula_2.png"))
-    {
-        return false;
-    }
-    _backgroundTexture.setRepeated(true);
-    _backgroundSprite.setTexture(_backgroundTexture);
-    _backgroundSprite.setTextureRect(sf::IntRect(0, 0, Constants::WINDOW_WIDTH * 2.0F, Constants::WINDOW_HEIGHT * 2.0F));
-    _backgroundSprite.setColor(sf::Color::Cyan);
+    _backgroundParallax = std::make_unique<ParallaxBackground>(
+            "Resources/Textures/space_nebula_2.png",
+            sf::Color::Cyan,
+            Constants::WINDOW_WIDTH,
+            Constants::WINDOW_HEIGHT,
+            300,
+            Chilli::Colour::LIGHTBLUE);
 
-    for (int i = 0; i < NUM_OF_STARS; ++i)
-    {
-        _parallaxStars.emplace_back();
-        _parallaxStars[i].position = sf::Vector2f(std::rand() % (int)Constants::WINDOW_WIDTH, std::rand() % (int)Constants::WINDOW_HEIGHT);
-        _parallaxStars[i].speed = 0.1f + static_cast<float>(std::rand() % 100) / 100.0f; // Speed between 0.1 and 1.0
-        _parallaxStars[i].size = 0.5f + static_cast<float>(std::rand() % 2); // Size between 1 and 3
-        _parallaxStars[i].circleShape.setRadius(_parallaxStars[i].size);
-        _parallaxStars[i].circleShape.setFillColor(Chilli::PredefinedColours::LIGHTBLUE);
-    }
+    _backgroundPlanetTextures[0].loadFromFile("Resources/Textures/planet_blue.png");
+    _backgroundPlanetTextures[1].loadFromFile("Resources/Textures/planet_red.png");
+    _backgroundPlanetTextures[2].loadFromFile("Resources/Textures/planet_green.png");
+    _backgroundPlanetTextures[3].loadFromFile("Resources/Textures/planet_orange.png");
+    _backgroundPlanetTextures[4].loadFromFile("Resources/Textures/planet_yellow.png");
 
-    _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/planet_green.png");
-    _backgroundEnemyPlanetSprite.setTexture(_backgroundEnemyPlanetTexture);
+    _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[2]);
     _backgroundEnemyPlanetSprite.setPosition(Constants::WINDOW_WIDTH / 1.6F, Constants::WINDOW_HEIGHT / 2.5F);
 
-    _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/planet_blue.png");
-    _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
+    _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[0]);
     _backgroundPlayerPlanetSprite.setScale(0.25F, 0.25F);
     _backgroundPlayerPlanetSprite.setPosition(50.0F, 50.0F);
 
     return true;
 }
 
-void MenuScene::InitButtonPanels()
+void MenuScene::InitButtons()
 {
     std::array<std::string, NUM_OF_BUTTONS> button_text
     {
@@ -358,7 +273,7 @@ void MenuScene::InitButtonPanels()
     }
 }
 
-bool MenuScene::InitMenuTitleIcon()
+bool MenuScene::InitTitle()
 {
     if (!_menuTitleImgTexture.loadFromFile("Resources/Textures/StarfleetCommandNewLogo3.png"))
     {
@@ -372,14 +287,14 @@ bool MenuScene::InitMenuTitleIcon()
     return true;
 }
 
-void MenuScene::InitBackgroundShips()
+void MenuScene::InitBackgroundStarships()
 {
     RNG starshipXPosRNG {0,static_cast<int>(Constants::WINDOW_WIDTH)};
     RNG starshipYPosRNG {45, 675};
     RNG starshipTypeRNG {0,4};
 
-    _player = std::make_unique<Player>(0, Chilli::PredefinedColours::LIGHTBLUE);
-    _enemy = std::make_unique<Enemy>(0, Chilli::PredefinedColours::LIGHTGREEN);
+    _player = std::make_unique<Player>(0, Chilli::Colour::LIGHTBLUE);
+    _enemy = std::make_unique<Enemy>(0, Chilli::Colour::LIGHTGREEN);
 
     for (int i = 0; i < NUM_OF_SHIPS_PER_TEAM; ++i)
     {
@@ -404,9 +319,9 @@ void MenuScene::InitBackgroundShips()
 void MenuScene::InitGameVersionText()
 {
     _gameVersionText.setFont(Chilli::CustomFonts::GetBoldFont());
-    _gameVersionText.setString("PRE-ALPHA BUILD v0.2.0"); // Early Alpha = v0.5.0, Early Beta = v0.8.0, Release = v1.0.0
+    _gameVersionText.setString("PRE-ALPHA BUILD v0.3.0"); // Early Alpha = v0.5.0, Early Beta = v0.8.0, Release = v1.0.0
     _gameVersionText.setCharacterSize(14);
-    _gameVersionText.setFillColor(Chilli::PredefinedColours::LIGHTBLUE);
+    _gameVersionText.setFillColor(Chilli::Colour::LIGHTBLUE);
     _gameVersionText.setOutlineColor(sf::Color::Black);
     //_gameVersionText.setPosition(Constants::WINDOW_WIDTH - (_gameVersionText.getGlobalBounds().width + 20.0F), Constants::WINDOW_HEIGHT - (_gameVersionText.getGlobalBounds().height + 20.0F));
     _gameVersionText.setPosition(20.0F, Constants::WINDOW_HEIGHT - (_gameVersionText.getGlobalBounds().height + 20.0F));
@@ -489,6 +404,66 @@ void MenuScene::UpdateBackgroundStarshipsMovement(sf::RenderWindow &window, sf::
     }
 }
 
+void MenuScene::UpdateGameSettingsButtons(sf::RenderWindow &window, sf::Time &deltaTime)
+{
+    _buttonPanels[BACK_BUTTON].Update(window);
+
+    if(_buttonPanels[BACK_BUTTON].IsHoveredOver())
+    {
+        _buttonPanels[BACK_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
+        _buttonPanels[BACK_BUTTON].SetText(_buttonPanels[BACK_BUTTON].GetText().getString(), sf::Color::Cyan);
+        _cursor.SetCursorType(Chilli::Cursor::HOVER);
+    }
+    else if(not _buttonPanels[BACK_BUTTON].IsHoveredOver())
+    {
+        _buttonPanels[BACK_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 100));
+        _buttonPanels[BACK_BUTTON].SetText(_buttonPanels[BACK_BUTTON].GetText().getString(), Chilli::Colour::LIGHTBLUE);
+        _cursor.SetCursorType(Chilli::Cursor::DEFAULT);
+    }
+
+    _gameSettings->Update(window, deltaTime);
+}
+
+void MenuScene::UpdateMenuButtons(sf::RenderWindow &window)
+{
+    for (int i = 0; i < NUM_OF_BUTTONS - 1; ++i)
+    {
+        _buttonPanels[i].Update(window);
+    }
+
+    if(_buttonPanels[PLAY_BUTTON].IsHoveredOver())
+    {
+        _buttonPanels[PLAY_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
+        _buttonPanels[PLAY_BUTTON].SetText(_buttonPanels[PLAY_BUTTON].GetText().getString(), sf::Color::Cyan);
+        _cursor.SetCursorType(Chilli::Cursor::HOVER);
+    }
+    else if(_buttonPanels[OPTIONS_BUTTON].IsHoveredOver())
+    {
+        _buttonPanels[OPTIONS_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
+        _buttonPanels[OPTIONS_BUTTON].SetText(_buttonPanels[OPTIONS_BUTTON].GetText().getString(), sf::Color::Cyan);
+        _cursor.SetCursorType(Chilli::Cursor::HOVER);
+    }
+    else if(_buttonPanels[EXIT_BUTTON].IsHoveredOver())
+    {
+        _buttonPanels[EXIT_BUTTON].SetPanelColour(sf::Color(242, 22, 22, 60));
+        _buttonPanels[EXIT_BUTTON].SetText(_buttonPanels[EXIT_BUTTON].GetText().getString(), sf::Color::Red);
+        _cursor.SetCursorType(Chilli::Cursor::HOVER);
+    }
+    else
+    {
+        _cursor.SetCursorType(Chilli::Cursor::DEFAULT);
+    }
+
+    for (int i = 0; i < NUM_OF_BUTTONS-1; ++i)
+    {
+        if(not _buttonPanels[i].IsHoveredOver())
+        {
+            _buttonPanels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
+            _buttonPanels[i].SetText(_buttonPanels[i].GetText().getString(), Chilli::Colour::LIGHTBLUE);
+        }
+    }
+}
+
 void MenuScene::SaveGameSettingsData_OnSettingsUpdated()
 {
     /// Model the data and save it to file
@@ -560,33 +535,28 @@ void MenuScene::SaveGameSettingsData_OnSettingsUpdated()
     {
         if(playerColourSetting.valueText.getString() == "BLUE")
         {
-            _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/planet_blue.png");
-            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
-            _player->SetTeamColour(Chilli::PredefinedColours::LIGHTBLUE);
+            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[0]);
+            _player->SetTeamColour(Chilli::Colour::LIGHTBLUE);
         }
         else if(playerColourSetting.valueText.getString() == "RED")
         {
-            _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/planet_red.png");
-            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
-            _player->SetTeamColour(Chilli::PredefinedColours::LIGHTRED);
+            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[1]);
+            _player->SetTeamColour(Chilli::Colour::LIGHTRED);
         }
         else if(playerColourSetting.valueText.getString() == "GREEN")
         {
-            _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/planet_green.png");
-            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
-            _player->SetTeamColour(Chilli::PredefinedColours::LIGHTGREEN);
+            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[2]);
+            _player->SetTeamColour(Chilli::Colour::LIGHTGREEN);
         }
         else if(playerColourSetting.valueText.getString() == "ORANGE")
         {
-            _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/planet_orange.png");
-            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
-            _player->SetTeamColour(Chilli::PredefinedColours::LIGHTORANGE);
+            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[3]);
+            _player->SetTeamColour(Chilli::Colour::LIGHTORANGE);
         }
         else if(playerColourSetting.valueText.getString() == "YELLOW")
         {
-            _backgroundPlayerPlanetTexture.loadFromFile("Resources/Textures/planet_yellow.png");
-            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlayerPlanetTexture);
-            _player->SetTeamColour(Chilli::PredefinedColours::YELLOW);
+            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[4]);
+            _player->SetTeamColour(Chilli::Colour::YELLOW);
         }
     }
 
@@ -595,33 +565,37 @@ void MenuScene::SaveGameSettingsData_OnSettingsUpdated()
     {
         if(enemyColourSetting.valueText.getString() == "BLUE")
         {
-            _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/planet_blue.png");
-            _backgroundEnemyPlanetSprite.setTexture(_backgroundEnemyPlanetTexture);
-            _enemy->SetTeamColour(Chilli::PredefinedColours::LIGHTBLUE);
+            //_backgroundSprite.setColor(Chilli::Colour::LIGHTBLUE);
+            _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[0]);
+            _enemy->SetTeamColour(Chilli::Colour::LIGHTBLUE);
         }
         else if(enemyColourSetting.valueText.getString() == "RED")
         {
-            _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/planet_red.png");
-            _backgroundEnemyPlanetSprite.setTexture(_backgroundEnemyPlanetTexture);
-            _enemy->SetTeamColour(Chilli::PredefinedColours::LIGHTRED);
+            //_backgroundSprite.setColor(Chilli::Colour::LIGHTRED);
+            _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[1]);
+            _enemy->SetTeamColour(Chilli::Colour::LIGHTRED);
         }
         else if(enemyColourSetting.valueText.getString() == "GREEN")
         {
-            _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/planet_green.png");
-            _backgroundEnemyPlanetSprite.setTexture(_backgroundEnemyPlanetTexture);
-            _enemy->SetTeamColour(Chilli::PredefinedColours::LIGHTGREEN);
+            //_backgroundSprite.setColor(Chilli::Colour::LIGHTGREEN);
+            _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[2]);
+            _enemy->SetTeamColour(Chilli::Colour::LIGHTGREEN);
         }
         else if(enemyColourSetting.valueText.getString() == "ORANGE")
         {
-            _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/planet_orange.png");
-            _backgroundEnemyPlanetSprite.setTexture(_backgroundEnemyPlanetTexture);
-            _enemy->SetTeamColour(Chilli::PredefinedColours::LIGHTORANGE);
+            /*for (int j = 0; j < _parallaxStars.size(); ++j)
+            {
+                _parallaxStars[j].circleShape.setFillColor(Chilli::Colour::ORANGE);
+            }*/
+            //_backgroundSprite.setColor(Chilli::Colour::LIGHTORANGE);
+            _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[3]);
+            _enemy->SetTeamColour(Chilli::Colour::LIGHTORANGE);
         }
         else if(enemyColourSetting.valueText.getString() == "YELLOW")
         {
-            _backgroundEnemyPlanetTexture.loadFromFile("Resources/Textures/planet_yellow.png");
-            _backgroundEnemyPlanetSprite.setTexture(_backgroundEnemyPlanetTexture);
-            _enemy->SetTeamColour(Chilli::PredefinedColours::YELLOW);
+            //_backgroundSprite.setColor(Chilli::Colour::YELLOW);
+            _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[4]);
+            _enemy->SetTeamColour(Chilli::Colour::YELLOW);
         }
     }
 }

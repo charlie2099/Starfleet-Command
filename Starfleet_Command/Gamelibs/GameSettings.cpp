@@ -4,13 +4,13 @@ GameSettings::GameSettings()
 {
     _settingsPanel.setSize({400.0F, 260.0F});
     _settingsPanel.setFillColor(sf::Color(0, 0, 0, 125));
-    _settingsPanel.setOutlineColor(Chilli::PredefinedColours::LIGHTBLUE);
+    _settingsPanel.setOutlineColor(Chilli::Colour::LIGHTBLUE);
     _settingsPanel.setOutlineThickness(1.0F);
 
     _settingsHeaderText.setString("GAME SETTINGS");
     _settingsHeaderText.setFont(Chilli::CustomFonts::GetBoldFont());
     _settingsHeaderText.setCharacterSize(16);
-    _settingsHeaderText.setFillColor(Chilli::PredefinedColours::LIGHTBLUE);
+    _settingsHeaderText.setFillColor(Chilli::Colour::LIGHTBLUE);
     _settingsHeaderText.setOutlineColor(sf::Color::Black);
     _settingsHeaderText.setOutlineThickness(1.0F);
 
@@ -81,8 +81,8 @@ void GameSettings::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
         else
         {
-            _leftArrowSprite[i].setColor(Chilli::PredefinedColours::LIGHTBLUE);
-            _rightArrowSprite[i].setColor(Chilli::PredefinedColours::LIGHTBLUE);
+            _leftArrowSprite[i].setColor(Chilli::Colour::LIGHTBLUE);
+            _rightArrowSprite[i].setColor(Chilli::Colour::LIGHTBLUE);
         }
     }
 }
@@ -141,13 +141,13 @@ void GameSettings::AddSettingOption(const std::string &settingName, const std::v
     sf::Sprite newLeftArrowSprite;
    newLeftArrowSprite.setTexture(_leftArrowTexture);
    newLeftArrowSprite.scale(0.25F, 0.25F);
-   newLeftArrowSprite.setColor(Chilli::PredefinedColours::LIGHTBLUE);
+   newLeftArrowSprite.setColor(Chilli::Colour::LIGHTBLUE);
    _leftArrowSprite.emplace_back(newLeftArrowSprite);
 
     sf::Sprite newRightArrowSprite;
     newRightArrowSprite.setTexture(_rightArrowTexture);
     newRightArrowSprite.scale(0.25F, 0.25F);
-    newRightArrowSprite.setColor(Chilli::PredefinedColours::LIGHTBLUE);
+    newRightArrowSprite.setColor(Chilli::Colour::LIGHTBLUE);
     _rightArrowSprite.emplace_back(newRightArrowSprite);
 }
 

@@ -68,7 +68,7 @@ void VictoryScene::Update(sf::RenderWindow &window, sf::Time deltaTime)
         if(!_buttonPanels[i].IsHoveredOver())
         {
             _buttonPanels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
-            _buttonPanels[i].SetText(_buttonPanels[i].GetText().getString(), Chilli::PredefinedColours::LIGHTBLUE);
+            _buttonPanels[i].SetText(_buttonPanels[i].GetText().getString(), Chilli::Colour::LIGHTBLUE);
         }
     }
 
@@ -134,7 +134,7 @@ bool VictoryScene::InitBackground()
         _parallaxStars[i].speed = 0.1f + static_cast<float>(std::rand() % 100) / 100.0f; // Speed between 0.1 and 1.0
         _parallaxStars[i].size = 0.5f + static_cast<float>(std::rand() % 2); // Size between 1 and 3
         _parallaxStars[i].circleShape.setRadius(_parallaxStars[i].size);
-        _parallaxStars[i].circleShape.setFillColor(Chilli::PredefinedColours::LIGHTGREEN);
+        _parallaxStars[i].circleShape.setFillColor(Chilli::Colour::LIGHTGREEN);
     }
 
     return true;

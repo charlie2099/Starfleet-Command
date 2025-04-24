@@ -18,7 +18,7 @@ struct ParallaxStar
 class ParallaxBackground // TODO: Needs to be repurposed so that it works for the menu scene as well
 {
 public:
-    explicit ParallaxBackground(const std::string& backgroundImagePath, sf::Color backgroundColour, int numParallaxStars, sf::Color parallaxStarColour);
+    ParallaxBackground(const std::string &backgroundImagePath, sf::Color backgroundColour, float parallaxWidth, float parallaxHeight, int numParallaxStars, sf::Color parallaxStarColour);
     ~ParallaxBackground() = default;
 
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
@@ -31,6 +31,8 @@ private:
     void UpdateBackgroundStarPositions(const sf::Time &deltaTime);
     sf::Texture _backgroundTexture;
     sf::Sprite _backgroundSprite;
+    float _parallaxWidth;
+    float _parallaxHeight;
     std::vector<ParallaxStar> _parallaxStars;
 };
 

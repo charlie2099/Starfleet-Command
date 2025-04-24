@@ -1,0 +1,38 @@
+{
+  "[PlayerMothershipHealthLow_IntensityRule]" : "ON",
+  "[EnemyStarshipsInPlay_IntensityRule]" : "OFF",
+  "[PlayerScrapSurplus_IntensityRule_IntensityRule]" : "ACTIVE",
+  "[EnemyMothershipHealthLow_IntensityRule]" : "ACTIVE",
+  "[PlayerStarshipsInPlay_IntensityRule]" : "ACTIVE",
+  "[SpawnWeakStarshipsAtStart_BehaviourRule]" : "ACTIVE",
+  "[CounterAttack_BehaviourRule]" : "ACTIVE, ",
+  "[PlayerSpacelaneDominance_BehaviourRule]" : "ACTIVE",
+
+  "IntensityRules" :
+  [
+    {
+      "PlayerMothershipHealthLow_IntensityRule" : "ON",
+      "MothershipHealth" : "0",
+      "IntensityRating" : "0"
+    },
+    {
+      "EnemyStarshipsInPlay_IntensityRule" : "ON",
+      "MothershipHealth" : "0",
+      "IntensityRating" : "0"
+    }
+  ],
+
+  "BehaviourRules" :
+  [
+    {
+      "SpawnWeakStarshipsAtStart_BehaviourRule" : "ON",
+      "MothershipHealth" : "0",
+      "IntensityRating" : "0"
+    },
+    {
+      "CounterAttack_BehaviourRule" : "ON",
+      "MothershipHealth" : "0",
+      "IntensityRating" : "0"
+    }
+  ]
+}
