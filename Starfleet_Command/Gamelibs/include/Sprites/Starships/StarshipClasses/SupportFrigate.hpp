@@ -1,11 +1,11 @@
 #ifndef STARFLEET_COMMAND_SUPPORTFRIGATE_HPP
 #define STARFLEET_COMMAND_SUPPORTFRIGATE_HPP
 #include <SFML/System/Vector2.hpp>
-#include "Interfaces/IStarship.hpp"
 #include "Sprites/UI/HealthBar.hpp"
 #include "Utility/Vector.hpp"
+#include "Interfaces/IHealer.hpp"
 
-class SupportFrigate : public IStarship
+class SupportFrigate : public IStarship, public IHealer
 {
 public:
     explicit SupportFrigate(int spacelane);
@@ -19,7 +19,7 @@ public:
     /// Behaviours
     void Move(float xOffset, float yOffset) override;
     void ShootAt(sf::Vector2f target) override;
-    void ShootHealAt(const std::unique_ptr<IStarship> &friendlyStarship);
+    void ShootHealAt(const std::unique_ptr<IStarship> &friendlyStarship) override;
     void DestroyProjectile(int projectileIndex) override;
     void TakeDamage(float damageAmount) override;
     void ReplenishHealth(float healthAmount) override;

@@ -50,8 +50,12 @@ private:
     void StartNextStarshipDeployment();
 
     /// Update functions
+    void UpdatePauseMenu(sf::RenderWindow &window);
     void UpdateGameplayViewMovement(const sf::RenderWindow &window, const sf::Time &deltaTime, const sf::Vector2i &mousePos);
     void UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &window, sf::Time &deltaTime);
+    void CheckGameEndConditions();
+    void UpdateMusicButtons(sf::RenderWindow &window);
+    void UpdateCursorType();
 
     /// Render functions
     void RenderGameplayViewSprites(sf::RenderWindow &window);
@@ -61,6 +65,16 @@ private:
     void SpawnStarshipFromShipyard_OnStarshipDeploymentComplete();
     void UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData);
     void UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData);
+
+    /// Constants
+    const std::string AUDIO_DIR_PATH = "Resources/Audio/";
+    const std::string DATA_DIR_PATH = "Resources/Data/";
+    const std::string FONTS_DIR_PATH = "Resources/Fonts/";
+    const std::string TEXTURES_DIR_PATH = "Resources/Textures/";
+    const std::string SETTINGS_FILE_PATH = (DATA_DIR_PATH + "GameSettings.json");
+    const sf::Color DEFAULT_BUTTON_COLOUR = {22, 155, 164, 100};
+    const sf::Color BUTTON_HIGHLIGHT_COLOUR = {22, 155, 164, 65};
+    const sf::Color EXIT_BUTTON_HIGHLIGHT_COLOUR = {Chilli::Colour::LIGHTRED.r, Chilli::Colour::LIGHTRED.g, Chilli::Colour::LIGHTRED.b, 60};
 
     /// Utility
     Chilli::Cursor _cursor;
@@ -75,7 +89,7 @@ private:
     /// Teams
     std::unique_ptr<Player> _player;
     std::unique_ptr<Enemy> _enemy;
-    const int STARTING_SCRAP_METAL = 500;
+    const int STARTING_SCRAP_METAL = 5000;
 
     /// Scrap Collector
     std::unique_ptr<ScrapCollectionUpgradeButton> _upgradePlayerScrapCollectionButton;
@@ -93,7 +107,8 @@ private:
     sf::View _gameplayView{};
     std::unique_ptr<Minimap> _minimap;
     bool _isMinimapVisible = true;
-    sf::RectangleShape boundaryEdgeHighlighterBox;
+    sf::RectangleShape _scrollZoneVisualiser;
+    const sf::Color SCROLL_ZONE_HIGHLIGHT_COLOUR = {100, 100, 100, 25};
     const float MOUSE_WINDOW_EDGE_OFFSET_PCT = 0.10F; // 10% of window size
     const float MOUSE_WINDOW_TOP_OFFSET_PCT = 0.20F;
     const float MOUSE_WINDOW_BOTTOM_OFFSET_PCT = 0.21F;
@@ -105,13 +120,15 @@ private:
     sf::Sprite _pauseOverlaySprite;
     sf::Text _pauseText;
     std::unique_ptr<Panel> _pauseResumeGameButton;
+    std::unique_ptr<Panel> _pauseMainMenuButton;
     std::unique_ptr<Panel> _pauseExitGameButton;
 
     /// Space Lanes
     const float LANE_ROW_SPACING = 35.0F;
     const int NUM_OF_LANES = 5;
-    const sf::Color HIGHLIGHT_LANE_COLOUR = sf::Color(100, 100, 100, 100.0F);
-    const sf::Color DEFAULT_LANE_COLOUR = sf::Color(100, 100, 100, 25.0F);
+    const sf::Color SPACELANE_HIGHLIGHT_COLOUR = sf::Color(100, 100, 100, 100.0F);
+    const sf::Color SPACELANE_DEFAULT_COLOUR = sf::Color(100, 100, 100, 25.0F);
+    const sf::Color ATTACKABLE_SPACELANES_HIGHLIGHT_COLOUR = {Chilli::Colour::LIGHTGREEN.r, Chilli::Colour::LIGHTGREEN.g, Chilli::Colour::LIGHTGREEN.b, 50};
     std::vector<std::unique_ptr<SpaceLane>> _spaceLanes;
     bool _isSpacelanesVisible = true;
 
@@ -134,12 +151,6 @@ private:
     RNG _starshipHealRNG {50, 100};
     RNG _enemyStarshipTypeRNG {0, StarshipFactory::STARSHIP_TYPE::ENUM_COUNT - 2};
     RNG _spacelaneSpawnRNG {0, NUM_OF_LANES - 1};
-
-    const std::string SETTINGS_FILE_PATH = "Resources/Data/GameSettings.json";
-
-    void UpdatePauseMenu(sf::RenderWindow &window);
-
-    void UpdateMusicButtons(sf::RenderWindow &window);
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

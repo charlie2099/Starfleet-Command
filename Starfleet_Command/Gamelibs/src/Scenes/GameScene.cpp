@@ -51,6 +51,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     if(IsPaused())
     {
         _pauseResumeGameButton->EventHandler(window, event);
+        _pauseMainMenuButton->EventHandler(window, event);
         _pauseExitGameButton->EventHandler(window, event);
 
         if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
@@ -58,6 +59,11 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             if (_pauseResumeGameButton->IsClicked())
             {
                 SetPaused(false);
+            }
+
+            if(_pauseMainMenuButton->IsClicked())
+            {
+                SetScene(Scene::ID::MENU);
             }
 
             if (_pauseExitGameButton->IsClicked())
@@ -143,11 +149,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _cursor.Update(window, deltaTime);
     _cursor.SetCursorPos(window, _gameplayView);
 
-    _pauseIconSprite.setPosition(_gameplayView.getCenter().x - _pauseIconSprite.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseIconSprite.getGlobalBounds().height/2.0F);
-    _pauseText.setPosition(_gameplayView.getCenter().x - _pauseText.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseText.getGlobalBounds().height/2.0F + 40.0F);
-    _pauseResumeGameButton->SetPosition(_pauseText.getPosition().x + _pauseText.getGlobalBounds().width/2.0F - _pauseResumeGameButton->GetTextSize().width/2.0F, _pauseText.getPosition().y + 40.0F);
-    _pauseExitGameButton->SetPosition(_pauseResumeGameButton->GetTextPosition().x + _pauseResumeGameButton->GetTextSize().width/2.0F - _pauseExitGameButton->GetTextSize().width/2.0F, _pauseResumeGameButton->GetTextPosition().y + 35.0F);
-
     if(IsPaused())
     {
         UpdatePauseMenu(window);
@@ -155,6 +156,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     }
 
     UpdateGameplayViewMovement(window, deltaTime, mousePos);
+    _cursor.SetCursorPos(window, _gameplayView);
 
     _mothershipStatusDisplay->Update(window, deltaTime);
 
@@ -202,7 +204,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     for (const auto & _spaceLane : _spaceLanes)
     {
-        _spaceLane->SetColour(_spaceLane->IsCursorHoveredOver() ? HIGHLIGHT_LANE_COLOUR : DEFAULT_LANE_COLOUR);
+        _spaceLane->SetColour(_spaceLane->IsCursorHoveredOver() ? SPACELANE_HIGHLIGHT_COLOUR : SPACELANE_DEFAULT_COLOUR);
     }
 
 
@@ -213,7 +215,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         {
             for (int j = 0; j < _player->GetStarships()[i]->GetAttackableLanes().size(); ++j)
             {
-                _spaceLanes[_player->GetStarships()[i]->GetAttackableLanes()[j]]->SetColour(sf::Color(Chilli::Colour::LIGHTGREEN.r, Chilli::Colour::LIGHTGREEN.g, Chilli::Colour::LIGHTGREEN.b, 50.0F));
+                _spaceLanes[_player->GetStarships()[i]->GetAttackableLanes()[j]]->SetColour(ATTACKABLE_SPACELANES_HIGHLIGHT_COLOUR);
             }
         }
     }
@@ -243,7 +245,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     /// Enemy starship movement and shooting
     for (int i = 1; i < _enemy->GetStarshipCount(); ++i)
     {
-        if(_enemy->GetStarships()[i] == nullptr) return;
+        if(_enemy->GetStarships()[i] == nullptr) continue;
 
         auto& enemyStarship = _enemy->GetStarships()[i];
         _enemy->MoveStarship(i, {enemyStarship->GetSpeed() * deltaTime.asSeconds() * -1, 0});
@@ -338,7 +340,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     /// Player starship movement and shooting
     for(int i = 1; i < _player->GetStarshipCount(); i++)
     {
-        if(_player->GetStarships()[i] == nullptr) return;
+        if(_player->GetStarships()[i] == nullptr) continue;
 
         auto& playerStarship = _player->GetStarships()[i];
         _player->MoveStarship(i, {playerStarship->GetSpeed() * deltaTime.asSeconds(), 0});
@@ -428,56 +430,423 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
 
 
-
-
-
     UpdateSpaceLanePositionsAndMouseHoverColour(window, deltaTime);
     _backgroundParallax->Update(window, deltaTime);
-
-
-    if (_enemy->GetMothership()->GetHealth() <= 0)
-    {
-        SetScene(Scene::ID::VICTORY);
-    }
-    else if (_player->GetMothership()->GetHealth() <= 0)
-    {
-        SetScene(Scene::ID::DEFEAT);
-    }
-
-
+    CheckGameEndConditions();
     UpdateMusicButtons(window);
+    UpdateCursorType();
+}
 
+void GameScene::Render(sf::RenderWindow& window)
+{
+    window.setView(_gameplayView);
+    RenderGameplayViewSprites(window);
 
-    if(_musicIconButtons[_isMusicOn]->IsCursorHoveredOver() ||
-       _nextMusicTrackButton->IsCursorHoveredOver() ||
-       _upgradePlayerScrapCollectionButton->IsCursorHoveredOver())
+    window.setView(_minimap->GetView());
+    RenderMinimapSprites(window);
+
+    window.setView(_gameplayView);
+    if(IsPaused())
     {
-        _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
+        window.draw(_pauseOverlaySprite);
+        window.draw(_pauseIconSprite);
+        window.draw(_pauseText);
+        _pauseResumeGameButton->Render(window);
+        _pauseMainMenuButton->Render(window);
+        _pauseExitGameButton->Render(window);
+    }
+    _cursor.Render(window);
+}
+
+void GameScene::InitBackground()
+{
+    _backgroundParallax = std::make_unique<ParallaxBackground>(
+            TEXTURES_DIR_PATH + "space_nebula_2.png",
+            sf::Color::Cyan,
+            Constants::LEVEL_WIDTH,
+            Constants::LEVEL_HEIGHT,
+            NUM_OF_STARS,
+            Chilli::Colour::LIGHTBLUE);
+}
+
+void GameScene::InitPlayer()
+{
+    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+    if(fileData.contains("Player Colour"))
+    {
+        std::string playerColourData = fileData["Player Colour"];
+        _player = std::make_unique<Player>(STARTING_SCRAP_METAL, Chilli::JsonColourMapping::GetColourFromStringName(playerColourData));
+    }
+
+    _player->CreateStarship(StarshipFactory::STARSHIP_TYPE::MOTHERSHIP, 2);
+    _player->SetMothershipPosition({60.0F, Constants::LEVEL_HEIGHT / 2.0F});
+}
+
+void GameScene::InitSpacelanes()
+{
+    for (int i = 0; i < NUM_OF_LANES; ++i)
+    {
+        _spaceLanes.emplace_back(std::make_unique<SpaceLane>());
+
+        float laneHeight = _spaceLanes[i]->GetSize().y;
+        float totalLanesHeight = (laneHeight * (float)NUM_OF_LANES) + (LANE_ROW_SPACING * ((float)NUM_OF_LANES - 1));
+        sf::Vector2f playerMothershipPos = _player->GetMothershipPos();
+        float spacelaneXPos = playerMothershipPos.x + _player->GetMothershipBounds().width/1.5F;
+        float spacelaneYPos = playerMothershipPos.y + ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
+        float spacelaneXSize = Constants::LEVEL_WIDTH*0.8F;
+        float spacelaneYSize = 50.0F;
+        _spaceLanes[i]->SetPos({spacelaneXPos, spacelaneYPos});
+        _spaceLanes[i]->SetSize({spacelaneXSize, spacelaneYSize});
+        _spaceLanes[i]->Init();
+    }
+
+    /*_spaceLanes[0]->SetColour(Chilli::Colour::ORANGE);
+    _spaceLanes[1]->SetColour(Chilli::Colour::LIGHTBLUE);
+    _spaceLanes[2]->SetColour(Chilli::Colour::LIGHTGREEN);
+    _spaceLanes[3]->SetColour(Chilli::Colour::BLUEVIOLET);
+    _spaceLanes[4]->SetColour(Chilli::Colour::LIGHTRED);*/
+
+    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+    if(fileData.contains("Spacelanes"))
+    {
+        std::string spacelanesData = fileData["Spacelanes"];
+        _isSpacelanesVisible = (spacelanesData == "true");
+    }
+}
+
+void GameScene::InitEnemy()
+{
+    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+    if(fileData.contains("Enemy Colour"))
+    {
+        std::string enemyColourData = fileData["Enemy Colour"];
+        _enemy = std::make_unique<Enemy>(STARTING_SCRAP_METAL, Chilli::JsonColourMapping::GetColourFromStringName(enemyColourData));
+    }
+
+    _enemy->CreateStarship(StarshipFactory::MOTHERSHIP, 2);
+    auto mothershipXpos = _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x + _enemy->GetMothershipBounds().width/2.25F;
+    auto mothershipYpos = Constants::LEVEL_HEIGHT / 2.0F;
+    _enemy->SetMothershipPosition({mothershipXpos, mothershipYpos});
+    _enemy->SetMothershipRotation(180);
+}
+
+void GameScene::InitGameplayView()
+{
+    _gameplayView.setSize(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT);
+    auto playerMothershipBounds = _player->GetMothershipBounds();
+    _gameplayView.setCenter(_player->GetMothershipPos().x + playerMothershipBounds.width - 60.0F, _player->GetMothershipPos().y);
+}
+
+void GameScene::InitPauseMenu()
+{
+    _pauseOverlayTexture.loadFromFile(TEXTURES_DIR_PATH + "square.png");
+    _pauseOverlaySprite.setTexture(_pauseOverlayTexture);
+    _pauseOverlaySprite.setScale(_gameplayView.getSize().x / _pauseOverlaySprite.getGlobalBounds().width, _gameplayView.getSize().y / _pauseOverlaySprite.getGlobalBounds().height);
+    _pauseOverlaySprite.setColor({sf::Color::Black.r, sf::Color::Black.g, sf::Color::Black.b, 125});
+
+    _pauseIconTexture.loadFromFile(TEXTURES_DIR_PATH + "pause.png");
+    _pauseIconSprite.setTexture(_pauseIconTexture);
+    _pauseIconSprite.setScale(0.8F, 0.8F);
+    _pauseIconSprite.setColor(Chilli::Colour::LIGHTBLUE);
+
+    _pauseText.setFont(Chilli::CustomFonts::GetBoldFont());
+    _pauseText.setString("GAME PAUSED");
+    _pauseText.setCharacterSize(14);
+    _pauseText.setFillColor(Chilli::Colour::LIGHTBLUE);
+    _pauseText.setOutlineColor(sf::Color::Black);
+
+    _pauseResumeGameButton = std::make_unique<Panel>();
+    _pauseResumeGameButton->SetFont(Panel::TextFont::BOLD);
+    _pauseResumeGameButton->SetText("RESUME", Chilli::Colour::LIGHTBLUE);
+    _pauseResumeGameButton->SetTextSize(14);
+    _pauseResumeGameButton->SetSize(20, 15);
+    _pauseResumeGameButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
+
+    _pauseMainMenuButton = std::make_unique<Panel>();
+    _pauseMainMenuButton->SetFont(Panel::TextFont::BOLD);
+    _pauseMainMenuButton->SetText("MAIN MENU", Chilli::Colour::LIGHTBLUE);
+    _pauseMainMenuButton->SetTextSize(14);
+    _pauseMainMenuButton->SetSize(20, 15);
+    _pauseMainMenuButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
+
+    _pauseExitGameButton = std::make_unique<Panel>();
+    _pauseExitGameButton->SetFont(Panel::TextFont::BOLD);
+    _pauseExitGameButton->SetText("EXIT GAME");
+    _pauseExitGameButton->SetTextSize(14);
+    _pauseExitGameButton->SetSize(20, 15);
+    _pauseExitGameButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
+}
+
+void GameScene::InitMinimapView()
+{
+    _minimap = std::make_unique<Minimap>(
+            Constants::LEVEL_WIDTH,
+            Constants::LEVEL_HEIGHT,
+            Constants::Minimap::VIEWPORT_LEFT,
+            Constants::Minimap::VIEWPORT_TOP,
+            Constants::Minimap::VIEWPORT_WIDTH,
+            Constants::Minimap::VIEWPORT_HEIGHT,
+            _gameplayView);
+
+    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+    if(fileData.contains("Minimap"))
+    {
+        std::string minimapData = fileData["Minimap"];
+        _isMinimapVisible = (minimapData == "true");
+    }
+}
+
+void GameScene::InitEvents()
+{
+    /// Observer to starship deployment bar event
+    auto starshipDeploymentBarCallback = std::bind(&GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete, this);
+    _starshipDeploymentManager->AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentBarCallback});
+
+    /// Agnostic observer to enemy starships destroyed event
+    auto enemyStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed, this, std::placeholders::_1);
+    _enemy->AddAgnosticObserver({Enemy::EventID::STARSHIP_DESTROYED, enemyStarshipsDestroyedCallback});
+
+    /// Agnostic observer to player starships destroyed event
+    auto playerStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed, this, std::placeholders::_1);
+    _player->AddAgnosticObserver({Player::EventID::STARSHIP_DESTROYED, playerStarshipsDestroyedCallback});
+}
+
+void GameScene::InitMusic()
+{
+    _gameMusic[0].openFromFile(AUDIO_DIR_PATH +"GameThemes/Rise_Above_Darkness_225bpm_131s.wav");
+    _gameMusic[1].openFromFile(AUDIO_DIR_PATH +"GameThemes/Dangerous_Dark_Disaster_143bpm_148s.wav");
+    _gameMusic[2].openFromFile(AUDIO_DIR_PATH +"GameThemes/Future_Shock_Fears_155bpm_120s.wav");
+    _gameMusic[3].openFromFile(AUDIO_DIR_PATH +"GameThemes/Triumph_Over_Terror_125bpm_153s.wav");
+
+    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+    if(fileData.contains("Music"))
+    {
+        std::string musicData = fileData["Music"];
+        _isMusicOn = (musicData == "true");
+    }
+
+    if(_isMusicOn)
+    {
+        _gameMusic[_currentMusicTrackIndex].play();
+    }
+    //_gameMusic.setPlayingOffset(sf::seconds(2.0F));
+
+    _musicIconButtons[MUSIC_ON_BUTTON] = std::make_unique<Button>(TEXTURES_DIR_PATH + "musicOn.png");
+    _musicIconButtons[MUSIC_OFF_BUTTON] = std::make_unique<Button>(TEXTURES_DIR_PATH + "musicOff.png");
+    for (int i = 0; i < 2; ++i)
+    {
+        _musicIconButtons[i]->SetColour(DEFAULT_BUTTON_COLOUR);
+    }
+
+    _nextMusicTrackButton = std::make_unique<Button>(TEXTURES_DIR_PATH + "next.png");
+    _nextMusicTrackButton->SetColour(DEFAULT_BUTTON_COLOUR);
+    _nextMusicTrackButton->SetScale({0.80F, 0.80F});
+}
+
+void GameScene::HandleViewScrollingKeyboardInput(const sf::Event &event)
+{
+    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::A)
+    {
+        _scrollViewLeft = true;
+    }
+    else if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::A)
+    {
+        _scrollViewLeft = false;
+    }
+    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::D)
+    {
+        _scrollViewRight = true;
+    }
+    else  if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::D)
+    {
+        _scrollViewRight = false;
+    }
+}
+
+void GameScene::StartNextStarshipDeployment()
+{
+    if(_starshipDeploymentManager->IsQueueEmpty())
+        return;
+
+    _starshipDeploymentManager->SetDeploymentBarText("Deploying " + _starshipDeploymentButtons[static_cast<int>(_starshipDeploymentManager->GetNextStarshipTypeInQueue())]->GetStarshipName() + "...");
+    _starshipDeploymentManager->SetDeploymentTime(_starshipDeploymentButtons[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipDeploymentSpeed());
+    _starshipDeploymentManager->SetDeploymentStatus(true);
+}
+
+void GameScene::UpdatePauseMenu(sf::RenderWindow &window)
+{
+    _pauseIconSprite.setPosition(_gameplayView.getCenter().x - _pauseIconSprite.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseIconSprite.getGlobalBounds().height/2.0F);
+    _pauseText.setPosition(_gameplayView.getCenter().x - _pauseText.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseText.getGlobalBounds().height/2.0F + 40.0F);
+    _pauseResumeGameButton->SetPosition(_pauseText.getPosition().x + _pauseText.getGlobalBounds().width/2.0F - _pauseResumeGameButton->GetTextSize().width/2.0F, _pauseText.getPosition().y + 40.0F);
+    _pauseMainMenuButton->SetPosition(_pauseResumeGameButton->GetTextPosition().x + _pauseResumeGameButton->GetTextSize().width/2.0F - _pauseMainMenuButton->GetTextSize().width/2.0F, _pauseResumeGameButton->GetTextPosition().y + 35.0F);
+    _pauseExitGameButton->SetPosition(_pauseMainMenuButton->GetTextPosition().x + _pauseMainMenuButton->GetTextSize().width/2.0F - _pauseExitGameButton->GetTextSize().width/2.0F, _pauseMainMenuButton->GetTextPosition().y + 35.0F);
+
+    _pauseOverlaySprite.setPosition(_gameplayView.getCenter().x - _pauseOverlaySprite.getGlobalBounds().width / 2.0F, _gameplayView.getCenter().y - _pauseOverlaySprite.getGlobalBounds().height / 2.0F);
+    _pauseResumeGameButton->Update(window);
+    _pauseMainMenuButton->Update(window);
+    _pauseExitGameButton->Update(window);
+
+    if(_pauseResumeGameButton->IsHoveredOver())
+    {
+        _pauseResumeGameButton->SetPanelColour(BUTTON_HIGHLIGHT_COLOUR);
+        _pauseResumeGameButton->SetText(_pauseResumeGameButton->GetText().getString(), sf::Color::Cyan);
+        _cursor.SetCursorType(Chilli::Cursor::HOVER);
+    }
+    else if(not _pauseResumeGameButton->IsHoveredOver())
+    {
+        _pauseResumeGameButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
+        _pauseResumeGameButton->SetText(_pauseResumeGameButton->GetText().getString(), Chilli::Colour::LIGHTBLUE);
+        _cursor.SetCursorType(Chilli::Cursor::DEFAULT);
+    }
+
+    if(_pauseMainMenuButton->IsHoveredOver())
+    {
+        _pauseMainMenuButton->SetPanelColour(BUTTON_HIGHLIGHT_COLOUR);
+        _pauseMainMenuButton->SetText(_pauseMainMenuButton->GetText().getString(), sf::Color::Cyan);
+        _cursor.SetCursorType(Chilli::Cursor::HOVER);
+    }
+    else if(not _pauseMainMenuButton->IsHoveredOver())
+    {
+        _pauseMainMenuButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
+        _pauseMainMenuButton->SetText(_pauseMainMenuButton->GetText().getString(), Chilli::Colour::LIGHTBLUE);
+        _cursor.SetCursorType(Chilli::Cursor::DEFAULT);
+    }
+
+    if(_pauseExitGameButton->IsHoveredOver())
+    {
+        _pauseExitGameButton->SetPanelColour(EXIT_BUTTON_HIGHLIGHT_COLOUR);
+        _pauseExitGameButton->SetText(_pauseExitGameButton->GetText().getString(), sf::Color::Red);
+        _cursor.SetCursorType(Chilli::Cursor::HOVER);
+    }
+    else if(not _pauseExitGameButton->IsHoveredOver())
+    {
+        _pauseExitGameButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
+        _pauseExitGameButton->SetText(_pauseExitGameButton->GetText().getString(), Chilli::Colour::LIGHTBLUE);
+        _cursor.SetCursorType(Chilli::Cursor::DEFAULT);
+    }
+}
+
+void GameScene::UpdateGameplayViewMovement(const sf::RenderWindow &window, const sf::Time &deltaTime, const sf::Vector2i &mousePos)
+{
+    /*for (int i = 0; i < _starshipDeploymentButtons.size(); ++i)
+    {
+        if(_starshipDeploymentButtons[i]->IsPlacingStarship())
+        {
+            return;
+        }
+    }*/
+
+    float windowWidth = static_cast<float>(window.getSize().x);
+    float windowHeight = static_cast<float>(window.getSize().y);
+
+    // Calculate edge offsets based on window size
+    float edgeOffset = windowWidth * MOUSE_WINDOW_EDGE_OFFSET_PCT;
+    float topOffset = windowHeight * MOUSE_WINDOW_TOP_OFFSET_PCT;
+    float bottomOffset = windowHeight * MOUSE_WINDOW_BOTTOM_OFFSET_PCT;
+
+    // Calculate the view-to-window ratios
+    float viewToWindowRatioX = _gameplayView.getSize().x / windowWidth;
+    float viewToWindowRatioY = _gameplayView.getSize().y / windowHeight;
+
+    // Convert to view coordinates
+    float edgeOffsetInViewCoords = edgeOffset * viewToWindowRatioX;
+    float topOffsetInViewCoords = topOffset * viewToWindowRatioY;
+    float bottomOffsetInViewCoords = bottomOffset * viewToWindowRatioY;
+
+    // Set the highlighter box size in view coordinates
+    _scrollZoneVisualiser.setSize({edgeOffsetInViewCoords, _gameplayView.getSize().y - topOffsetInViewCoords - bottomOffsetInViewCoords});
+
+    // Thresholds for detecting mouse proximity to window borders (in window coordinates)
+    float mouseProximityToLeftWindowEdge = edgeOffset;
+    float mouseProximityToRightWindowEdge = windowWidth - edgeOffset;
+
+    // Current boundaries of the view in world coordinates
+    float viewportLeftBoundary = _gameplayView.getCenter().x - _gameplayView.getSize().x / 2.0F;
+    float viewportRightBoundary = _gameplayView.getCenter().x + _gameplayView.getSize().x / 2.0F;
+
+    // Viewport movement conditions
+    bool isMouseNearLeftEdge = static_cast<float>(mousePos.x) <= mouseProximityToLeftWindowEdge and mousePos.x >= 0;
+    bool isMouseNearRightEdge = static_cast<float>(mousePos.x) >= mouseProximityToRightWindowEdge and mousePos.x < windowWidth;
+    bool isViewportLeftEdgeWithinMothershipFocus = viewportLeftBoundary > 0;
+    bool isViewportRightEdgeWithinRightSideOfEnemyMothership = viewportRightBoundary < _enemy->GetMothership()->GetPos().x + 60.0F;
+    bool isMouseYposWithinWindowBounds = static_cast<float>(mousePos.y) >= topOffset and static_cast<float>(mousePos.y) <= windowHeight - bottomOffset;
+
+    if(viewportLeftBoundary >= 0 and _scrollViewLeft)
+    {
+        _gameplayView.move(-VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
+    }
+    else if(_scrollViewRight and isViewportRightEdgeWithinRightSideOfEnemyMothership)
+    {
+        _gameplayView.move(VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
+    }
+
+    // For the left edge highlight
+    if(isMouseNearLeftEdge and isViewportLeftEdgeWithinMothershipFocus and isMouseYposWithinWindowBounds)
+    {
+        // Calculate movement speed
+        float distanceToLeftEdge = mousePos.x;
+        float speedFactor = 1.0F - (distanceToLeftEdge / edgeOffset);
+        speedFactor = std::max(0.0F, std::min(1.0F, speedFactor));
+        float adjustedScrollSpeed = VIEW_SCROLL_SPEED * speedFactor;
+
+        // Move the view
+        _gameplayView.move(-adjustedScrollSpeed * deltaTime.asSeconds(), 0.0F);
+
+        // Position the highlight box at the left edge of the view
+        _scrollZoneVisualiser.setPosition(
+                _gameplayView.getCenter().x - (_gameplayView.getSize().x / 2.0F),
+                _gameplayView.getCenter().y - (_gameplayView.getSize().y / 2.0F) + topOffsetInViewCoords
+        );
+        _scrollZoneVisualiser.setFillColor(SCROLL_ZONE_HIGHLIGHT_COLOUR);
+    }
+    // For the right edge highlight
+    else if(isMouseNearRightEdge and isViewportRightEdgeWithinRightSideOfEnemyMothership and isMouseYposWithinWindowBounds)
+    {
+        // Calculate movement speed
+        float distanceToRightEdge = windowWidth - mousePos.x;
+        float speedFactor = 1.0F - (distanceToRightEdge / edgeOffset);
+        speedFactor = std::max(0.0F, std::min(1.0F, speedFactor));
+        float adjustedScrollSpeed = VIEW_SCROLL_SPEED * speedFactor;
+
+        // Move the view
+        _gameplayView.move(adjustedScrollSpeed * deltaTime.asSeconds(), 0.0F);
+
+        // Position the highlight box at the right edge of the view
+        _scrollZoneVisualiser.setPosition(
+                _gameplayView.getCenter().x + (_gameplayView.getSize().x / 2.0F) - _scrollZoneVisualiser.getSize().x,
+                _gameplayView.getCenter().y - (_gameplayView.getSize().y / 2.0F) + topOffsetInViewCoords
+        );
+        _scrollZoneVisualiser.setFillColor(SCROLL_ZONE_HIGHLIGHT_COLOUR);
     }
     else
     {
-        bool buttonHoveredOver = false;
+        _scrollZoneVisualiser.setFillColor(sf::Color::Transparent);
+    }
+}
 
-        for(int i = 0; i < NUM_OF_BUTTONS; i++)
-        {
-            if(_starshipDeploymentButtons[i]->IsCursorHoveredOver())
-            {
-                _cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
-                buttonHoveredOver = true;
-                break;
-            }
-            else if(_starshipDeploymentButtons[i]->IsPlacingStarship())
-            {
-                _cursor.SetCursorType(Chilli::Cursor::Type::SELECTED);
-                buttonHoveredOver = true;
-                break;
-            }
-        }
+void GameScene::UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &window, sf::Time &deltaTime)
+{
+    for (int i = 0; i < NUM_OF_LANES; ++i)
+    {
+        float laneHeight = _spaceLanes[i]->GetSize().y;
+        float totalLanesHeight = (laneHeight * (float)NUM_OF_LANES) + (LANE_ROW_SPACING * ((float)NUM_OF_LANES - 1));
+        sf::Vector2f playerMothershipPos = _player->GetMothershipPos();
+        float spacelaneXPos = playerMothershipPos.x + _player->GetMothershipBounds().width/1.8F;
+        float spacelaneYPos = playerMothershipPos.y + ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
+        _spaceLanes[i]->SetPos({spacelaneXPos, spacelaneYPos});
+        _spaceLanes[i]->Update(window, deltaTime);
+    }
+}
 
-        if(not buttonHoveredOver)
-        {
-            _cursor.SetCursorType(Chilli::Cursor::Type::DEFAULT);
-        }
+void GameScene::CheckGameEndConditions()
+{
+    if (_enemy->GetMothership()->GetHealth() <= 0)
+    {
+        SetScene(ID::VICTORY);
+    }
+    else if (_player->GetMothership()->GetHealth() <= 0)
+    {
+        SetScene(ID::DEFEAT);
     }
 }
 
@@ -497,7 +866,7 @@ void GameScene::UpdateMusicButtons(sf::RenderWindow &window)
         }
         else
         {
-            musicIconButton->SetColour(sf::Color(22, 155, 164, 100));
+            musicIconButton->SetColour(DEFAULT_BUTTON_COLOUR);
         }
     }
 
@@ -511,61 +880,43 @@ void GameScene::UpdateMusicButtons(sf::RenderWindow &window)
     }
     else
     {
-        _nextMusicTrackButton->SetColour(sf::Color(22, 155, 164, 100));
+        _nextMusicTrackButton->SetColour(DEFAULT_BUTTON_COLOUR);
     }
 }
 
-void GameScene::UpdatePauseMenu(sf::RenderWindow &window)
+void GameScene::UpdateCursorType()
 {
-    _pauseOverlaySprite.setPosition(_gameplayView.getCenter().x - _pauseOverlaySprite.getGlobalBounds().width / 2.0F, _gameplayView.getCenter().y - _pauseOverlaySprite.getGlobalBounds().height / 2.0F);
-    _pauseResumeGameButton->Update(window);
-    _pauseExitGameButton->Update(window);
-
-    if(_pauseResumeGameButton->IsHoveredOver())
+    if(_musicIconButtons[_isMusicOn]->IsCursorHoveredOver() ||
+       _nextMusicTrackButton->IsCursorHoveredOver() ||
+       _upgradePlayerScrapCollectionButton->IsCursorHoveredOver())
     {
-        _pauseResumeGameButton->SetPanelColour(sf::Color(22, 155, 164, 65));
-        _pauseResumeGameButton->SetText(_pauseResumeGameButton->GetText().getString(), sf::Color::Cyan);
         _cursor.SetCursorType(Chilli::Cursor::HOVER);
     }
-    else if(not _pauseResumeGameButton->IsHoveredOver())
+    else
     {
-        _pauseResumeGameButton->SetPanelColour(sf::Color(22, 155, 164, 100));
-        _pauseResumeGameButton->SetText(_pauseResumeGameButton->GetText().getString(), Chilli::Colour::LIGHTBLUE);
-        _cursor.SetCursorType(Chilli::Cursor::DEFAULT);
-    }
+        bool buttonHoveredOver = false;
 
-    if(_pauseExitGameButton->IsHoveredOver())
-    {
-        _pauseExitGameButton->SetPanelColour(sf::Color(242, 22, 22, 60));
-        _pauseExitGameButton->SetText(_pauseExitGameButton->GetText().getString(), sf::Color::Red);
-        _cursor.SetCursorType(Chilli::Cursor::HOVER);
-    }
-    else if(not _pauseExitGameButton->IsHoveredOver())
-    {
-        _pauseExitGameButton->SetPanelColour(sf::Color(22, 155, 164, 100));
-        _pauseExitGameButton->SetText(_pauseExitGameButton->GetText().getString(), Chilli::Colour::LIGHTBLUE);
-        _cursor.SetCursorType(Chilli::Cursor::DEFAULT);
-    }
-}
+        for(int i = 0; i < NUM_OF_BUTTONS; i++)
+        {
+            if(_starshipDeploymentButtons[i]->IsCursorHoveredOver())
+            {
+                _cursor.SetCursorType(Chilli::Cursor::HOVER);
+                buttonHoveredOver = true;
+                break;
+            }
+            else if(_starshipDeploymentButtons[i]->IsPlacingStarship())
+            {
+                _cursor.SetCursorType(Chilli::Cursor::SELECTED);
+                buttonHoveredOver = true;
+                break;
+            }
+        }
 
-void GameScene::Render(sf::RenderWindow& window)
-{
-    window.setView(_gameplayView);
-    RenderGameplayViewSprites(window);
-
-    window.setView(_minimap->GetView());
-    RenderMinimapSprites(window);
-
-    window.setView(_gameplayView);
-    if(IsPaused())
-    {
-        window.draw(_pauseOverlaySprite);
-        window.draw(_pauseIconSprite);
-        window.draw(_pauseText);
-        _pauseResumeGameButton->Render(window);
-        _pauseExitGameButton->Render(window);
+        if(not buttonHoveredOver)
+        {
+            _cursor.SetCursorType(Chilli::Cursor::DEFAULT);
+        }
     }
-    _cursor.Render(window);
 }
 
 void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
@@ -602,7 +953,7 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
     _upgradePlayerScrapCollectionButton->Render(window);
     _musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
     _aiDirector->Render(window);
-    window.draw(boundaryEdgeHighlighterBox);
+    window.draw(_scrollZoneVisualiser);
     if(_isMusicOn)
     {
         _nextMusicTrackButton->Render(window);
@@ -624,280 +975,6 @@ void GameScene::RenderMinimapSprites(sf::RenderWindow &window)
     }
 }
 
-void GameScene::InitBackground()
-{
-    _backgroundParallax = std::make_unique<ParallaxBackground>(
-            "Resources/Textures/space_nebula_2.png",
-            sf::Color::Cyan,
-            Constants::LEVEL_WIDTH,
-            Constants::LEVEL_HEIGHT,
-            NUM_OF_STARS,
-            Chilli::Colour::LIGHTBLUE);
-}
-
-void GameScene::UpdateGameplayViewMovement(const sf::RenderWindow &window, const sf::Time &deltaTime, const sf::Vector2i &mousePos)
-{
-    /*for (int i = 0; i < _starshipDeploymentButtons.size(); ++i)
-    {
-        if(_starshipDeploymentButtons[i]->IsPlacingStarship())
-        {
-            return;
-        }
-    }*/
-
-    float windowWidth = static_cast<float>(window.getSize().x);
-    float windowHeight = static_cast<float>(window.getSize().y);
-
-    // Calculate edge offsets based on window size
-    float edgeOffset = windowWidth * MOUSE_WINDOW_EDGE_OFFSET_PCT;
-    float topOffset = windowHeight * MOUSE_WINDOW_TOP_OFFSET_PCT;
-    float bottomOffset = windowHeight * MOUSE_WINDOW_BOTTOM_OFFSET_PCT;
-
-    // Calculate the view-to-window ratios
-    float viewToWindowRatioX = _gameplayView.getSize().x / windowWidth;
-    float viewToWindowRatioY = _gameplayView.getSize().y / windowHeight;
-
-    // Convert to view coordinates
-    float edgeOffsetInViewCoords = edgeOffset * viewToWindowRatioX;
-    float topOffsetInViewCoords = topOffset * viewToWindowRatioY;
-    float bottomOffsetInViewCoords = bottomOffset * viewToWindowRatioY;
-
-    // Set the highlighter box size in view coordinates
-    boundaryEdgeHighlighterBox.setSize({edgeOffsetInViewCoords,_gameplayView.getSize().y - topOffsetInViewCoords - bottomOffsetInViewCoords});
-
-    // Thresholds for detecting mouse proximity to window borders (in window coordinates)
-    float mouseProximityToLeftWindowEdge = edgeOffset;
-    float mouseProximityToRightWindowEdge = windowWidth - edgeOffset;
-
-    // Current boundaries of the view in world coordinates
-    float viewportLeftBoundary = _gameplayView.getCenter().x - _gameplayView.getSize().x / 2.0F;
-    float viewportRightBoundary = _gameplayView.getCenter().x + _gameplayView.getSize().x / 2.0F;
-
-    // Viewport movement conditions
-    bool isMouseNearLeftEdge = static_cast<float>(mousePos.x) <= mouseProximityToLeftWindowEdge and mousePos.x > 0;
-    bool isMouseNearRightEdge = static_cast<float>(mousePos.x) >= mouseProximityToRightWindowEdge and mousePos.x < windowWidth;
-    bool isViewportLeftEdgeWithinMothershipFocus = viewportLeftBoundary > 0;
-    bool isViewportRightEdgeWithinRightSideOfEnemyMothership = viewportRightBoundary < _enemy->GetMothership()->GetPos().x + 60.0F;
-    bool isMouseYposWithinWindowBounds = static_cast<float>(mousePos.y) >= topOffset and static_cast<float>(mousePos.y) <= windowHeight - bottomOffset;
-
-    if(viewportLeftBoundary >= 0 and _scrollViewLeft)
-    {
-        _gameplayView.move(-VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
-    }
-    else if(_scrollViewRight and isViewportRightEdgeWithinRightSideOfEnemyMothership)
-    {
-        _gameplayView.move(VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
-    }
-
-    if(isMouseNearLeftEdge and isViewportLeftEdgeWithinMothershipFocus and isMouseYposWithinWindowBounds)
-    {
-        float distanceToLeftEdge = mousePos.x;
-        float speedFactor = 1.0F - (distanceToLeftEdge / edgeOffset);
-        speedFactor = std::max(0.0F, std::min(1.0F, speedFactor));
-        float adjustedScrollSpeed = VIEW_SCROLL_SPEED * speedFactor;
-        _gameplayView.move(-adjustedScrollSpeed * deltaTime.asSeconds(), 0.0F);
-
-        boundaryEdgeHighlighterBox.setPosition({viewportLeftBoundary,_gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
-        boundaryEdgeHighlighterBox.setFillColor({100, 100, 100, 25});
-    }
-    else if(isMouseNearRightEdge and isViewportRightEdgeWithinRightSideOfEnemyMothership and isMouseYposWithinWindowBounds)
-    {
-        float distanceToRightEdge = windowWidth - mousePos.x;
-        float speedFactor = 1.0F - (distanceToRightEdge / edgeOffset);
-        speedFactor = std::max(0.0F, std::min(1.0F, speedFactor));
-        float adjustedScrollSpeed = VIEW_SCROLL_SPEED * speedFactor;
-        _gameplayView.move(adjustedScrollSpeed * deltaTime.asSeconds(), 0.0F);
-
-        boundaryEdgeHighlighterBox.setPosition({viewportRightBoundary - boundaryEdgeHighlighterBox.getSize().x,_gameplayView.getCenter().y - _gameplayView.getSize().y/2.0F + topOffsetInViewCoords});
-        boundaryEdgeHighlighterBox.setFillColor({100, 100, 100, 25});
-    }
-    else
-    {
-        boundaryEdgeHighlighterBox.setFillColor(sf::Color::Transparent);
-    }
-}
-
-void GameScene::UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &window, sf::Time &deltaTime)
-{
-    for (int i = 0; i < NUM_OF_LANES; ++i)
-    {
-        float laneHeight = _spaceLanes[i]->GetSize().y;
-        float totalLanesHeight = (laneHeight * (float)NUM_OF_LANES) + (LANE_ROW_SPACING * ((float)NUM_OF_LANES - 1));
-        sf::Vector2f playerMothershipPos = _player->GetMothershipPos();
-        float spacelaneXPos = playerMothershipPos.x + _player->GetMothershipBounds().width/1.8F;
-        float spacelaneYPos = playerMothershipPos.y + ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
-        _spaceLanes[i]->SetPos({spacelaneXPos, spacelaneYPos});
-        _spaceLanes[i]->Update(window, deltaTime);
-    }
-}
-
-void GameScene::InitPlayer()
-{
-    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
-    if(fileData.contains("Player Colour"))
-    {
-        std::string playerColourData = fileData["Player Colour"];
-        _player = std::make_unique<Player>(STARTING_SCRAP_METAL, Chilli::JsonColourMapping::GetColourFromStringName(playerColourData));
-    }
-
-    _player->CreateStarship(StarshipFactory::STARSHIP_TYPE::MOTHERSHIP, 2);
-    _player->SetMothershipPosition({60.0F, Constants::LEVEL_HEIGHT / 2.0F});
-}
-
-void GameScene::InitEnemy()
-{
-    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
-    if(fileData.contains("Enemy Colour"))
-    {
-        std::string enemyColourData = fileData["Enemy Colour"];
-        _enemy = std::make_unique<Enemy>(STARTING_SCRAP_METAL, Chilli::JsonColourMapping::GetColourFromStringName(enemyColourData));
-    }
-
-    _enemy->CreateStarship(StarshipFactory::MOTHERSHIP, 2);
-    auto mothershipXpos = _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x + _enemy->GetMothershipBounds().width/2.25F;
-    auto mothershipYpos = Constants::LEVEL_HEIGHT / 2.0F;
-    _enemy->SetMothershipPosition({mothershipXpos, mothershipYpos});
-    _enemy->SetMothershipRotation(180);
-}
-
-void GameScene::InitGameplayView()
-{
-    _gameplayView.setSize(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT);
-    auto playerMothershipBounds = _player->GetMothershipBounds();
-    _gameplayView.setCenter(_player->GetMothershipPos().x + playerMothershipBounds.width - 60.0F, _player->GetMothershipPos().y);
-}
-
-void GameScene::InitPauseMenu()
-{
-    _pauseOverlayTexture.loadFromFile("Resources/Textures/square.png");
-    _pauseOverlaySprite.setTexture(_pauseOverlayTexture);
-    _pauseOverlaySprite.setScale(_gameplayView.getSize().x / _pauseOverlaySprite.getGlobalBounds().width, _gameplayView.getSize().y / _pauseOverlaySprite.getGlobalBounds().height);
-    _pauseOverlaySprite.setColor({sf::Color::Black.r, sf::Color::Black.g, sf::Color::Black.b, 125});
-
-    _pauseIconTexture.loadFromFile("Resources/Textures/pause.png");
-    _pauseIconSprite.setTexture(_pauseIconTexture);
-    _pauseIconSprite.setScale(0.8F, 0.8F);
-    _pauseIconSprite.setColor(Chilli::Colour::LIGHTBLUE);
-
-    _pauseText.setFont(Chilli::CustomFonts::GetBoldFont());
-    _pauseText.setString("GAME PAUSED");
-    _pauseText.setCharacterSize(14);
-    _pauseText.setFillColor(Chilli::Colour::LIGHTBLUE);
-    _pauseText.setOutlineColor(sf::Color::Black);
-
-    _pauseResumeGameButton = std::make_unique<Panel>();
-    _pauseResumeGameButton->SetFont(Panel::TextFont::BOLD);
-    _pauseResumeGameButton->SetText("RESUME", Chilli::Colour::LIGHTBLUE);
-    _pauseResumeGameButton->SetTextSize(14);
-    _pauseResumeGameButton->SetSize(20, 15);
-    _pauseResumeGameButton->SetPanelColour(sf::Color(22, 155, 164, 100));
-
-    _pauseExitGameButton = std::make_unique<Panel>();
-    _pauseExitGameButton->SetFont(Panel::TextFont::BOLD);
-    _pauseExitGameButton->SetText("EXIT GAME");
-    _pauseExitGameButton->SetTextSize(14);
-    _pauseExitGameButton->SetSize(20, 15);
-    _pauseExitGameButton->SetPanelColour(sf::Color(22, 155, 164, 100));
-}
-
-void GameScene::InitMinimapView()
-{
-    _minimap = std::make_unique<Minimap>(
-            Constants::LEVEL_WIDTH,
-            Constants::LEVEL_HEIGHT,
-            Constants::Minimap::VIEWPORT_LEFT,
-            Constants::Minimap::VIEWPORT_TOP,
-            Constants::Minimap::VIEWPORT_WIDTH,
-            Constants::Minimap::VIEWPORT_HEIGHT,
-            _gameplayView);
-
-    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
-    if(fileData.contains("Minimap"))
-    {
-        std::string minimapData = fileData["Minimap"];
-        _isMinimapVisible = (minimapData == "true");
-    }
-}
-
-void GameScene::InitSpacelanes()
-{
-    for (int i = 0; i < NUM_OF_LANES; ++i)
-    {
-        _spaceLanes.emplace_back(std::make_unique<SpaceLane>());
-
-        float laneHeight = _spaceLanes[i]->GetSize().y;
-        float totalLanesHeight = (laneHeight * (float)NUM_OF_LANES) + (LANE_ROW_SPACING * ((float)NUM_OF_LANES - 1));
-        sf::Vector2f playerMothershipPos = _player->GetMothershipPos();
-        float spacelaneXPos = playerMothershipPos.x + _player->GetMothershipBounds().width/1.5F;
-        float spacelaneYPos = playerMothershipPos.y + ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
-        float spacelaneXSize = Constants::LEVEL_WIDTH*0.8F;
-        float spacelaneYSize = 50.0F;
-        _spaceLanes[i]->SetPos({spacelaneXPos, spacelaneYPos});
-        _spaceLanes[i]->SetSize({spacelaneXSize, spacelaneYSize});
-        _spaceLanes[i]->Init();
-    }
-
-    /*_spaceLanes[0]->SetColour(Chilli::Colour::ORANGE);
-    _spaceLanes[1]->SetColour(Chilli::Colour::LIGHTBLUE);
-    _spaceLanes[2]->SetColour(Chilli::Colour::LIGHTGREEN);
-    _spaceLanes[3]->SetColour(Chilli::Colour::BLUEVIOLET);
-    _spaceLanes[4]->SetColour(Chilli::Colour::LIGHTRED);*/
-
-    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
-    if(fileData.contains("Spacelanes"))
-    {
-        std::string spacelanesData = fileData["Spacelanes"];
-        _isSpacelanesVisible = (spacelanesData == "true");
-    }
-}
-
-void GameScene::InitEvents()
-{
-    /// Observer to starship deployment bar event
-    auto starshipDeploymentBarCallback = std::bind(&GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete, this);
-    _starshipDeploymentManager->AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentBarCallback});
-
-    /// Agnostic observer to enemy starships destroyed event
-    auto enemyStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed, this, std::placeholders::_1);
-    _enemy->AddAgnosticObserver({Enemy::EventID::STARSHIP_DESTROYED, enemyStarshipsDestroyedCallback});
-
-    /// Agnostic observer to player starships destroyed event
-    auto playerStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed, this, std::placeholders::_1);
-    _player->AddAgnosticObserver({Player::EventID::STARSHIP_DESTROYED, playerStarshipsDestroyedCallback});
-}
-
-void GameScene::InitMusic()
-{
-    _gameMusic[0].openFromFile("Resources/Audio/GameThemes/Rise_Above_Darkness_225bpm_131s.wav");
-    _gameMusic[1].openFromFile("Resources/Audio/GameThemes/Dangerous_Dark_Disaster_143bpm_148s.wav");
-    _gameMusic[2].openFromFile("Resources/Audio/GameThemes/Future_Shock_Fears_155bpm_120s.wav");
-    _gameMusic[3].openFromFile("Resources/Audio/GameThemes/Triumph_Over_Terror_125bpm_153s.wav");
-
-    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
-    if(fileData.contains("Music"))
-    {
-        std::string musicData = fileData["Music"];
-        _isMusicOn = (musicData == "true");
-    }
-
-    if(_isMusicOn)
-    {
-        _gameMusic[_currentMusicTrackIndex].play();
-    }
-    //_gameMusic.setPlayingOffset(sf::seconds(2.0F));
-
-    _musicIconButtons[MUSIC_ON_BUTTON] = std::make_unique<Button>("Resources/Textures/musicOn.png");
-    _musicIconButtons[MUSIC_OFF_BUTTON] = std::make_unique<Button>("Resources/Textures/musicOff.png");
-    for (int i = 0; i < 2; ++i)
-    {
-        _musicIconButtons[i]->SetColour(sf::Color(22, 155, 164, 100));
-    }
-
-    _nextMusicTrackButton = std::make_unique<Button>("Resources/Textures/next.png");
-    _nextMusicTrackButton->SetColour(sf::Color(22, 155, 164, 100));
-    _nextMusicTrackButton->SetScale({0.80F, 0.80F});
-}
-
 void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()
 {
     if(_starshipDeploymentManager->IsQueueEmpty())
@@ -917,36 +994,6 @@ void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()
     {
         StartNextStarshipDeployment();
     }
-}
-
-void GameScene::HandleViewScrollingKeyboardInput(const sf::Event &event)
-{
-    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::A)
-    {
-        _scrollViewLeft = true;
-    }
-    else if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::A)
-    {
-        _scrollViewLeft = false;
-    }
-    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::D)
-    {
-        _scrollViewRight = true;
-    }
-    else  if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::D)
-    {
-        _scrollViewRight = false;
-    }
-}
-
-void GameScene::StartNextStarshipDeployment()
-{
-    if(_starshipDeploymentManager->IsQueueEmpty())
-        return;
-
-    _starshipDeploymentManager->SetDeploymentBarText("Deploying " + _starshipDeploymentButtons[static_cast<int>(_starshipDeploymentManager->GetNextStarshipTypeInQueue())]->GetStarshipName() + "...");
-    _starshipDeploymentManager->SetDeploymentTime(_starshipDeploymentButtons[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipDeploymentSpeed());
-    _starshipDeploymentManager->SetDeploymentStatus(true);
 }
 
 void GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData)
@@ -982,6 +1029,7 @@ void GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData)
         }
     }
 }
+
 
 
 
