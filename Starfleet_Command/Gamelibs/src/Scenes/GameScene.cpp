@@ -6,7 +6,7 @@ GameScene::~GameScene()
     {
         _gameMusic[_currentMusicTrackIndex].stop();
     }
-    _spaceLanes.clear();
+    _spacelanes.clear();
     DirectorEventBus::ClearAllSubscribers();
 }
 
@@ -19,7 +19,7 @@ bool GameScene::Init()
     InitGameplayView();
     InitPauseMenu();
 
-    _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spaceLanes, _gameplayView, true);
+    _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spacelanes, _gameplayView, true);
 
     _mothershipStatusDisplay = std::make_unique<MothershipStatusDisplay>(_player->GetMothership(), _enemy->GetMothership(), _gameplayView);
 
@@ -31,6 +31,11 @@ bool GameScene::Init()
     }
 
     _upgradePlayerScrapCollectionButton = std::make_unique<ScrapCollectionUpgradeButton>(_player->GetScrapMetalManager(), _player->GetTeamColour());
+
+    _playerSpawnLaneIndicatorTexture.loadFromFile(TEXTURES_DIR_PATH + "right.png");
+    _playerSpawnLaneIndicatorSprite.setTexture(_playerSpawnLaneIndicatorTexture);
+    _playerSpawnLaneIndicatorSprite.setColor(_player->GetTeamColour());
+    //_playerSpawnLaneIndicatorSprite.setColor(sf::Color::Green);
 
     InitMinimapView();
     InitEvents();
@@ -91,9 +96,9 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     {
         if (event.type == sf::Event::MouseButtonReleased and event.mouseButton.button == sf::Mouse::Left and _starshipDeploymentButtons[i]->IsPlacingStarship())
         {
-            for (int j = 0; j < _spaceLanes.size(); ++j)
+            for (int j = 0; j < _spacelanes.size(); ++j)
             {
-                if(_spaceLanes[j]->IsCursorHoveredOver())
+                if(_spacelanes[j]->IsCursorHoveredOver())
                 {
                     _player->SpendScrap(_starshipDeploymentButtons[i]->GetBuildCost());
                     _player->SetScrapText("Scrap Metal: " + std::to_string(_player->GetCurrentScrapAmount()));
@@ -202,7 +207,47 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
 
 
-    for (const auto & _spaceLane : _spaceLanes)
+
+    if(not _starshipDeploymentManager->IsQueueEmpty())
+    {
+        auto startOfLanePos = _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetPos().x - 60.0F;
+        auto xPos = 0;
+        float yPos = _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetCentreYPos();
+        if(_gameplayView.getCenter().x - _gameplayView.getSize().x/2.0F >= startOfLanePos)
+        {
+            xPos = _gameplayView.getCenter().x - _gameplayView.getSize().x/2.0F + 25.0F; // padding from right
+        }
+        else
+        {
+            xPos = _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetPos().x - 15.0F;
+        }
+        _playerSpawnLaneIndicatorSprite.setPosition(xPos, yPos);
+
+        float time = _gameClock.getElapsedTime().asSeconds();
+
+        // Sine wave from 0 to 1
+        float pulse = (std::sin(time * 6.0F) + 1.0F) / 2.0F; // 3.0F = speed
+
+        sf::Uint8 alpha = static_cast<sf::Uint8>(100 + pulse * 155);
+
+        sf::Color colour = _playerSpawnLaneIndicatorSprite.getColor();
+        colour.a = alpha;
+        _playerSpawnLaneIndicatorSprite.setColor(colour);
+
+        // --- Scale (size pulsation) ---
+        float scale = 0.40F + pulse * 0.10f; // 1.0 → 1.10
+        _playerSpawnLaneIndicatorSprite.setScale(scale, scale);
+
+        // Optional: make sure origin is centered so scaling pulses evenly
+        sf::FloatRect bounds = _playerSpawnLaneIndicatorSprite.getLocalBounds();
+        _playerSpawnLaneIndicatorSprite.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
+    }
+
+
+
+
+
+    for (const auto & _spaceLane : _spacelanes)
     {
         _spaceLane->SetColour(_spaceLane->IsCursorHoveredOver() ? SPACELANE_HIGHLIGHT_COLOUR : SPACELANE_DEFAULT_COLOUR);
     }
@@ -215,7 +260,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         {
             for (int j = 0; j < _player->GetStarships()[i]->GetAttackableLanes().size(); ++j)
             {
-                _spaceLanes[_player->GetStarships()[i]->GetAttackableLanes()[j]]->SetColour(ATTACKABLE_SPACELANES_HIGHLIGHT_COLOUR);
+                _spacelanes[_player->GetStarships()[i]->GetAttackableLanes()[j]]->SetColour(ATTACKABLE_SPACELANES_HIGHLIGHT_COLOUR);
             }
         }
     }
@@ -265,7 +310,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
 
         /// Enemy starship self-destruction when reaching end of it's lane
-        if(enemyStarship->GetPos().x < _spaceLanes[0]->GetPos().x) // NOTE: Doesn't matter which lane as they all have the same xPos
+        if(enemyStarship->GetPos().x < _spacelanes[0]->GetPos().x) // NOTE: Doesn't matter which lane as they all have the same xPos
         {
             enemyStarship->TakeDamage(enemyStarship->GetMaxHealth());
             _player->GetMothership()->TakeDamage(enemyStarship->GetMaxHealth());
@@ -360,7 +405,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
 
         /// Player starship self-destruction when reaching end of it's lane
-        if(playerStarship->GetPos().x > _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x) // NOTE: Doesn't matter which lane as they all have the same xPos
+        if(playerStarship->GetPos().x > _spacelanes[0]->GetPos().x + _spacelanes[0]->GetSize().x) // NOTE: Doesn't matter which lane as they all have the same xPos
         {
             playerStarship->TakeDamage(playerStarship->GetMaxHealth());
             _enemy->GetMothership()->TakeDamage(playerStarship->GetMaxHealth());
@@ -486,25 +531,25 @@ void GameScene::InitSpacelanes()
 {
     for (int i = 0; i < NUM_OF_LANES; ++i)
     {
-        _spaceLanes.emplace_back(std::make_unique<SpaceLane>());
+        _spacelanes.emplace_back(std::make_unique<SpaceLane>());
 
-        float laneHeight = _spaceLanes[i]->GetSize().y;
+        float laneHeight = _spacelanes[i]->GetSize().y;
         float totalLanesHeight = (laneHeight * (float)NUM_OF_LANES) + (LANE_ROW_SPACING * ((float)NUM_OF_LANES - 1));
         sf::Vector2f playerMothershipPos = _player->GetMothershipPos();
         float spacelaneXPos = playerMothershipPos.x + _player->GetMothershipBounds().width/1.5F;
         float spacelaneYPos = playerMothershipPos.y + ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
         float spacelaneXSize = Constants::LEVEL_WIDTH*0.8F;
         float spacelaneYSize = 50.0F;
-        _spaceLanes[i]->SetPos({spacelaneXPos, spacelaneYPos});
-        _spaceLanes[i]->SetSize({spacelaneXSize, spacelaneYSize});
-        _spaceLanes[i]->Init();
+        _spacelanes[i]->SetPos({spacelaneXPos, spacelaneYPos});
+        _spacelanes[i]->SetSize({spacelaneXSize, spacelaneYSize});
+        _spacelanes[i]->Init();
     }
 
-    /*_spaceLanes[0]->SetColour(Chilli::Colour::ORANGE);
-    _spaceLanes[1]->SetColour(Chilli::Colour::LIGHTBLUE);
-    _spaceLanes[2]->SetColour(Chilli::Colour::LIGHTGREEN);
-    _spaceLanes[3]->SetColour(Chilli::Colour::BLUEVIOLET);
-    _spaceLanes[4]->SetColour(Chilli::Colour::LIGHTRED);*/
+    /*_spacelanes[0]->SetColour(Chilli::Colour::ORANGE);
+    _spacelanes[1]->SetColour(Chilli::Colour::LIGHTBLUE);
+    _spacelanes[2]->SetColour(Chilli::Colour::LIGHTGREEN);
+    _spacelanes[3]->SetColour(Chilli::Colour::BLUEVIOLET);
+    _spacelanes[4]->SetColour(Chilli::Colour::LIGHTRED);*/
 
     auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
     if(fileData.contains("Spacelanes"))
@@ -524,7 +569,7 @@ void GameScene::InitEnemy()
     }
 
     _enemy->CreateStarship(StarshipFactory::MOTHERSHIP, 2);
-    auto mothershipXpos = _spaceLanes[0]->GetPos().x + _spaceLanes[0]->GetSize().x + _enemy->GetMothershipBounds().width/2.25F;
+    auto mothershipXpos = _spacelanes[0]->GetPos().x + _spacelanes[0]->GetSize().x + _enemy->GetMothershipBounds().width / 2.25F;
     auto mothershipYpos = Constants::LEVEL_HEIGHT / 2.0F;
     _enemy->SetMothershipPosition({mothershipXpos, mothershipYpos});
     _enemy->SetMothershipRotation(180);
@@ -828,13 +873,13 @@ void GameScene::UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &wi
 {
     for (int i = 0; i < NUM_OF_LANES; ++i)
     {
-        float laneHeight = _spaceLanes[i]->GetSize().y;
+        float laneHeight = _spacelanes[i]->GetSize().y;
         float totalLanesHeight = (laneHeight * (float)NUM_OF_LANES) + (LANE_ROW_SPACING * ((float)NUM_OF_LANES - 1));
         sf::Vector2f playerMothershipPos = _player->GetMothershipPos();
         float spacelaneXPos = playerMothershipPos.x + _player->GetMothershipBounds().width/1.8F;
         float spacelaneYPos = playerMothershipPos.y + ((float)i * (laneHeight + LANE_ROW_SPACING)) - (totalLanesHeight / 2.0F);
-        _spaceLanes[i]->SetPos({spacelaneXPos, spacelaneYPos});
-        _spaceLanes[i]->Update(window, deltaTime);
+        _spacelanes[i]->SetPos({spacelaneXPos, spacelaneYPos});
+        _spacelanes[i]->Update(window, deltaTime);
     }
 }
 
@@ -929,7 +974,7 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
         _minimap->Render(window);
     }
 
-    for (const auto &lane : _spaceLanes)
+    for (const auto &lane : _spacelanes)
     {
         if(_isSpacelanesVisible)
         {
@@ -951,6 +996,11 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
         deploymentButton->Render(window);
     }
     _upgradePlayerScrapCollectionButton->Render(window);
+    if(not _starshipDeploymentManager->IsQueueEmpty())
+    {
+        window.draw(_playerSpawnLaneIndicatorSprite);
+        //window.draw(_enemySpawnLaneIndicatorText);
+    }
     _musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
     _aiDirector->Render(window);
     window.draw(_scrollZoneVisualiser);
@@ -968,7 +1018,7 @@ void GameScene::RenderMinimapSprites(sf::RenderWindow &window)
         _minimap->RenderGameplayView(window);
         _player->RenderMinimapSprites(window);
         _enemy->RenderMinimapSprites(window);
-        for (const auto &lane : _spaceLanes)
+        for (const auto &lane : _spacelanes)
         {
             lane->Render(window);
         }
@@ -983,8 +1033,8 @@ void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()
     int nextSpacelaneInQueue = _starshipDeploymentManager->GetNextSpacelaneInQueue();
     _player->CreateStarship(_starshipDeploymentManager->GetNextStarshipTypeInQueue(), nextSpacelaneInQueue);
 
-    auto starshipXPos = _spaceLanes[nextSpacelaneInQueue]->GetPos().x + 25.0F;
-    auto starshipYPos = _spaceLanes[nextSpacelaneInQueue]->GetPos().y + _spaceLanes[nextSpacelaneInQueue]->GetSize().y / 2.0F;
+    auto starshipXPos = _spacelanes[nextSpacelaneInQueue]->GetPos().x + 25.0F;
+    auto starshipYPos = _spacelanes[nextSpacelaneInQueue]->GetPos().y + _spacelanes[nextSpacelaneInQueue]->GetSize().y / 2.0F;
     _player->SetStarshipPosition(_player->GetStarships().back(), {starshipXPos, starshipYPos});
 
     _starshipDeploymentManager->RemoveFirstStarshipInQueue();

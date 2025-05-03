@@ -21,6 +21,24 @@
 ============================================
 
 
+
+
+__Director Idle Dialog__
+- Whilst the director is not currently performing an action (before the next
+behaviour check update), it should continually update the dialog according
+to the most likely rule to be performed next. Each rule class should have it's own
+director rule text? Or each rule in the directors rule list should be mapped to it's own
+director idle text.
+- I.e. If the next rule to be run is "CounterAttack_BehaviourRule", then the idle dialog
+text could be "The Director is preparing a counter attack...".
+- If the next rule to be run is " SpawnWeakStarshipsAtStart_BehaviourRule", then the
+idle dialog text could "The Director is testing the waters...".
+
+
+
+
+
+
 ISettingType
 {
     virtual void ApplySetting();

@@ -78,6 +78,7 @@ private:
 
     /// Utility
     Chilli::Cursor _cursor;
+    sf::Clock _gameClock;
 
     /// HUD
     std::unique_ptr<MothershipStatusDisplay> _mothershipStatusDisplay;
@@ -89,16 +90,18 @@ private:
     /// Teams
     std::unique_ptr<Player> _player;
     std::unique_ptr<Enemy> _enemy;
-    const int STARTING_SCRAP_METAL = 5000;
-
-    /// Scrap Collector
-    std::unique_ptr<ScrapCollectionUpgradeButton> _upgradePlayerScrapCollectionButton;
-    const float PLAYER_SCRAP_ACCUMULATION_RATE = 5.0F;
-    float _playerScrapAccumulationTimer = PLAYER_SCRAP_ACCUMULATION_RATE;
-    sf::Clock _playerScrapAccumulationTimerClock;
+    sf::Texture _playerSpawnLaneIndicatorTexture;
+    sf::Sprite _playerSpawnLaneIndicatorSprite;
 
     /// Ai Director
     std::unique_ptr<AiDirector> _aiDirector;
+
+    /// Scrap Collector
+    std::unique_ptr<ScrapCollectionUpgradeButton> _upgradePlayerScrapCollectionButton;
+    const int STARTING_SCRAP_METAL = 5000;
+    const float PLAYER_SCRAP_ACCUMULATION_RATE = 5.0F;
+    float _playerScrapAccumulationTimer = PLAYER_SCRAP_ACCUMULATION_RATE;
+    sf::Clock _playerScrapAccumulationTimerClock;
 
     /// Views (Main view & Minimap)
     bool _scrollViewLeft = false;
@@ -129,7 +132,7 @@ private:
     const sf::Color SPACELANE_HIGHLIGHT_COLOUR = sf::Color(100, 100, 100, 100.0F);
     const sf::Color SPACELANE_DEFAULT_COLOUR = sf::Color(100, 100, 100, 25.0F);
     const sf::Color ATTACKABLE_SPACELANES_HIGHLIGHT_COLOUR = {Chilli::Colour::LIGHTGREEN.r, Chilli::Colour::LIGHTGREEN.g, Chilli::Colour::LIGHTGREEN.b, 50};
-    std::vector<std::unique_ptr<SpaceLane>> _spaceLanes;
+    std::vector<std::unique_ptr<SpaceLane>> _spacelanes;
     bool _isSpacelanesVisible = true;
 
     /// Player Spawning

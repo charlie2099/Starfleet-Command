@@ -17,7 +17,7 @@ AiDirector::AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& 
     DirectorEventBus::Subscribe(DirectorEventBus::DirectorEvent::EnteredNewState, [this]() { DoSomething_OnDirectorStateChange(); });
 
     _starshipDeploymentManager = std::make_unique<StarshipDeploymentManager>(5/*STARSHIP_MAX_QUEUE_SIZE*/, _enemy->GetMothership()->GetColour());
-    _starshipDeploymentManager->SetDeploymentBarWaitingText("The Director is analysing...");
+    _starshipDeploymentManager->SetDeploymentBarWaitingText("The Director is analysing..."); // Analysing, thinking, observing, surveying, contemplating
 
     /// Observer to starship deployment bar event
     auto starshipDeploymentBegunCallback = [this] { UpdateDeploymentStatus_OnDeploymentBegun(); };
@@ -42,7 +42,8 @@ AiDirector::AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& 
 
     _enemySpawnLaneIndicatorTexture.loadFromFile("Resources/Textures/left.png");
     _enemySpawnLaneIndicatorSprite.setTexture(_enemySpawnLaneIndicatorTexture);
-    _enemySpawnLaneIndicatorSprite.setColor(sf::Color(253, 103, 100));
+    _enemySpawnLaneIndicatorSprite.setColor(_enemy->GetTeamColour());
+    //_enemySpawnLaneIndicatorSprite.setColor(sf::Color(253, 103, 100));
 
     /*_enemySpawnLaneIndicatorText.setFont(Chilli::CustomFonts::GetBoldFont());
     _enemySpawnLaneIndicatorText.setCharacterSize(7);
@@ -80,7 +81,7 @@ void AiDirector::Update(sf::RenderWindow& window, sf::Time deltaTime)
         _enemySpawnLaneIndicatorSprite.setPosition(xPos, yPos);
 
         //_enemySpawnLaneIndicatorText.setString(_starshipTemplateToBeDeployed[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipAbbreviation());
-        //_enemySpawnLaneIndicatorText.setPosition(_enemySpawnLaneIndicatorSprite.getPosition().x - _enemySpawnLaneIndicatorText.getGlobalBounds().width/4.0F, _enemySpawnLaneIndicatorSprite.getPosition().y - _enemySpawnLaneIndicatorText.getGlobalBounds().height/2.0F);
+        //_enemySpawnLaneIndicatorText.setPosition(_playerSpawnLaneIndicatorSprite.getPosition().x - _enemySpawnLaneIndicatorText.getGlobalBounds().width/4.0F, _playerSpawnLaneIndicatorSprite.getPosition().y - _enemySpawnLaneIndicatorText.getGlobalBounds().height/2.0F);
 
 
         float time = _gameClock.getElapsedTime().asSeconds();
@@ -161,7 +162,7 @@ void AiDirector::UpdateDeploymentStatus_OnDeploymentBegun()
     _enemy->SpendScrap(_starshipTemplateToBeDeployed[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetBuildCost());
     _enemy->SetScrapText("Scrap Metal: " + std::to_string(_enemy->GetCurrentScrapAmount()));
 
-    /*_enemySpawnLaneIndicatorSprite.setPosition(
+    /*_playerSpawnLaneIndicatorSprite.setPosition(
             _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetPos().x + _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetSize().x - 10.0F,
             _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetPos().y);*/
 }

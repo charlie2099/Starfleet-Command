@@ -81,7 +81,7 @@ void MenuScene::Render(sf::RenderWindow& window)
 
 bool MenuScene::InitMusic()
 {
-    if(!_menuMusic.openFromFile("Resources/Audio/MenuTheme/United_Against_Evil_175bpm_136s.wav"))
+    if(!_menuMusic.openFromFile(AUDIO_DIR_PATH + "MenuTheme/United_Against_Evil_175bpm_136s.wav"))
     {
         std::cout << "Failed to to load menu soundtrack (United_Against_Evil_175bpm_136s)" << std::endl;
         return false;
@@ -229,18 +229,18 @@ void MenuScene::InitView()
 bool MenuScene::InitBackground()
 {
     _backgroundParallax = std::make_unique<ParallaxBackground>(
-            "Resources/Textures/space_nebula_2.png",
+            TEXTURES_DIR_PATH + "space_nebula_2.png",
             sf::Color::Cyan,
             Constants::WINDOW_WIDTH,
             Constants::WINDOW_HEIGHT,
             300,
             Chilli::Colour::LIGHTBLUE);
 
-    _backgroundPlanetTextures[0].loadFromFile("Resources/Textures/planet_blue.png");
-    _backgroundPlanetTextures[1].loadFromFile("Resources/Textures/planet_red.png");
-    _backgroundPlanetTextures[2].loadFromFile("Resources/Textures/planet_green.png");
-    _backgroundPlanetTextures[3].loadFromFile("Resources/Textures/planet_orange.png");
-    _backgroundPlanetTextures[4].loadFromFile("Resources/Textures/planet_yellow.png");
+    _backgroundPlanetTextures[0].loadFromFile(TEXTURES_DIR_PATH + "planet_blue.png");
+    _backgroundPlanetTextures[1].loadFromFile(TEXTURES_DIR_PATH + "planet_red.png");
+    _backgroundPlanetTextures[2].loadFromFile(TEXTURES_DIR_PATH + "planet_green.png");
+    _backgroundPlanetTextures[3].loadFromFile(TEXTURES_DIR_PATH + "planet_orange.png");
+    _backgroundPlanetTextures[4].loadFromFile(TEXTURES_DIR_PATH + "planet_yellow.png");
 
     _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[2]);
     _backgroundEnemyPlanetSprite.setPosition(Constants::WINDOW_WIDTH / 1.6F, Constants::WINDOW_HEIGHT / 2.5F);
@@ -275,7 +275,7 @@ void MenuScene::InitButtons()
 
 bool MenuScene::InitTitle()
 {
-    if (!_menuTitleImgTexture.loadFromFile("Resources/Textures/StarfleetCommandNewLogo3.png"))
+    if (!_menuTitleImgTexture.loadFromFile(TEXTURES_DIR_PATH + "/StarfleetCommandNewLogo3.png"))
     {
         return false;
     }
@@ -319,7 +319,7 @@ void MenuScene::InitBackgroundStarships()
 void MenuScene::InitGameVersionText()
 {
     _gameVersionText.setFont(Chilli::CustomFonts::GetBoldFont());
-    _gameVersionText.setString("PRE-ALPHA BUILD v0.3.0"); // Early Alpha = v0.5.0, Early Beta = v0.8.0, Release = v1.0.0
+    _gameVersionText.setString(GAME_VERSION); // Early Alpha = v0.5.0, Early Beta = v0.8.0, Release = v1.0.0
     _gameVersionText.setCharacterSize(14);
     _gameVersionText.setFillColor(Chilli::Colour::LIGHTBLUE);
     _gameVersionText.setOutlineColor(sf::Color::Black);
