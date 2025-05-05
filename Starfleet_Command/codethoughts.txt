@@ -20,25 +20,6 @@
 =================PSEUDOCODE==================
 ============================================
 
-
-
-
-__Director Idle Dialog__
-- Whilst the director is not currently performing an action (before the next
-behaviour check update), it should continually update the dialog according
-to the most likely rule to be performed next. Each rule class should have it's own
-director rule text? Or each rule in the directors rule list should be mapped to it's own
-director idle text.
-- I.e. If the next rule to be run is "CounterAttack_BehaviourRule", then the idle dialog
-text could be "The Director is preparing a counter attack...".
-- If the next rule to be run is " SpawnWeakStarshipsAtStart_BehaviourRule", then the
-idle dialog text could "The Director is testing the waters...".
-
-
-
-
-
-
 ISettingType
 {
     virtual void ApplySetting();
@@ -59,28 +40,8 @@ Selection : ISettingType
     }
 }
 
-
-
 _gameSettings->AddSettingOption("Fullscreen Mode", std::vector<std::string>{"OFF", "ON"});
 gameSettingsData["Fullscreen Mode"] = _gameSettings->GetSettingOption("Fullscreen Mode").selectedValueIndex == 1 ? "true" : "false";
-
-
-__AI Director Behaviour Rules__
-Build-up - MaxEnemyPop(10), MaxLightFighters(4), etc,
-Peak - MaxEnemyPop(20), etc
-PeakFade - MaxEnemyPop(5), etc
-Respite - MaxEnemyPop(0), etc
-
-Build-up - Max enemy population, restricted starship type spawns, default director calculation speed
-Peak - Sustain max enemy population, unrestricted starship type spawns, special events?, enhanced director calculation speed (director at it's most analytic, and reactive state. Faster decision-making abilities.)
-PeakFade - Minimum enemy population
-Respite - Redundant state, remove entirely?
-
-CounterAttack_BehaviourRule(DirectorState::BUILD_UP, ...)
-CounterAttack_BehaviourRule(DirectorState::PEAK, ...)
-
-
-array for options elements
 
 struct SettingsOption
 {
@@ -101,6 +62,8 @@ DIRECTOR DIFFICULTY                     EASY                        (modifies ca
 
 
 
+
+
 __BUTTON INTERFACES__
 IInteractable
 IButton
@@ -114,6 +77,28 @@ UpgradeScrapDronesButton
 __STARSHIP INTERFACES__
 ICanHeal
 ICanDamage
+
+
+
+
+
+
+__AI DIRECTOR BEHAVIOUR RULES__
+Build-up - MaxEnemyPop(10), MaxLightFighters(4), etc,
+Peak - MaxEnemyPop(20), etc
+PeakFade - MaxEnemyPop(5), etc
+Respite - MaxEnemyPop(0), etc
+
+Build-up - Max enemy population, restricted starship type spawns, default director calculation speed
+Peak - Sustain max enemy population, unrestricted starship type spawns, special events?, enhanced director calculation speed (director at it's most analytic, and reactive state. Faster decision-making abilities.)
+PeakFade - Minimum enemy population
+Respite - Redundant state, remove entirely?
+
+CounterAttack_BehaviourRule(DirectorState::BUILD_UP, ...)
+CounterAttack_BehaviourRule(DirectorState::PEAK, ...)
+
+
+
 
 
 ___AI DIRECTOR___

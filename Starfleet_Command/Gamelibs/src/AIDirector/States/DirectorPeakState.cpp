@@ -8,7 +8,8 @@ void DirectorPeakState::OnStateEnter()
 {
     DirectorEventBus::Publish(DirectorEventBus::DirectorEvent::EnteredPeakState);
     DirectorEventBus::Publish(DirectorEventBus::DirectorEvent::EnteredNewState);
-    std::cout << "PEAK STATE" << std::endl;
+    //_aiDirector.SetMaxEnemyPopulation(15);
+    //_aiDirector.SetBehaviourUpdateRate(1.0F);
 }
 
 void DirectorPeakState::OnStateUpdate(sf::Time deltaTime)

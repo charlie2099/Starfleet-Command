@@ -4,7 +4,6 @@
 SpawnWeakStarshipsAtStart_BehaviourRule::SpawnWeakStarshipsAtStart_BehaviourRule(float timePassedUntilSpawn, int maxSpawnCount)
 : _timePassedUntilSpawn(timePassedUntilSpawn), _maxSpawnCount(maxSpawnCount)
 {
-    std::cout << "[SpawnWeakStarshipsAtStart_BehaviourRule]: ACTIVE" << std::endl;
     RNG _randomSpawnCount {1, maxSpawnCount };
     _maxSpawnCount = _randomSpawnCount.GenerateNumber();
 }

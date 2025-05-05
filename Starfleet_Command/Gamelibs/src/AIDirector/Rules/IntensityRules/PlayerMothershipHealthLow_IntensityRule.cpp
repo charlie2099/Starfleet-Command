@@ -3,9 +3,7 @@
 
 PlayerMothershipHealthLow_IntensityRule::PlayerMothershipHealthLow_IntensityRule(float lowHealthThreshold, float intensityRating)
         : _lowHealthThreshold(lowHealthThreshold), _intensityOutput(intensityRating)
-{
-    std::cout << "[PlayerMothershipHealthLow_IntensityRule]: ACTIVE" << std::endl;
-}
+{}
 
 bool PlayerMothershipHealthLow_IntensityRule::IsValid(AiDirector &director)
 {

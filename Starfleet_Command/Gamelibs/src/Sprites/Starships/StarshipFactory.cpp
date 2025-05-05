@@ -53,3 +53,31 @@ StarshipFactory::STARSHIP_TYPE StarshipFactory::GetStarshipType(std::unique_ptr<
         return STARSHIP_TYPE::MOTHERSHIP;
     }
 }
+
+StarshipFactory::STARSHIP_TYPE StarshipFactory::GetStarshipTypeFromString(const std::string& starshipTypeName)
+{
+    if(starshipTypeName == "LIGHTFIGHTER")
+    {
+        return STARSHIP_TYPE::LIGHTFIGHTER;
+    }
+    else if(starshipTypeName == "HEAVYFIGHTER")
+    {
+        return STARSHIP_TYPE::HEAVYFIGHTER;
+    }
+    else if(starshipTypeName == "SUPPORT_FRIGATE")
+    {
+        return STARSHIP_TYPE::SUPPORT_FRIGATE;
+    }
+    else if(starshipTypeName == "DREADNOUGHT")
+    {
+        return STARSHIP_TYPE::DREADNOUGHT;
+    }
+    else if(starshipTypeName == "BATTLESHIP")
+    {
+        return STARSHIP_TYPE::BATTLESHIP;
+    }
+    else if(starshipTypeName == "MOTHERSHIP")
+    {
+        return STARSHIP_TYPE::MOTHERSHIP;
+    }
+}

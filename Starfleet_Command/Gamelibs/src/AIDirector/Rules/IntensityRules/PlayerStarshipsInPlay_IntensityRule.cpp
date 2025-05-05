@@ -3,9 +3,7 @@
 
 PlayerStarshipsInPlay_IntensityRule::PlayerStarshipsInPlay_IntensityRule(float intensityRatingPerStarship)
         : _intensityOutput(intensityRatingPerStarship)
-{
-    std::cout << "[PlayerStarshipsInPlay_IntensityRule]: ACTIVE" << std::endl;
-}
+{}
 
 bool PlayerStarshipsInPlay_IntensityRule::IsValid(AiDirector &director)
 {

@@ -3,9 +3,7 @@
 
 EnemyMothershipHealthLow_IntensityRule::EnemyMothershipHealthLow_IntensityRule(float lowHealthThreshold, float intensityRating)
 : _lowHealthThreshold(lowHealthThreshold), _intensityOutput(intensityRating)
-{
-    std::cout << "[EnemyMothershipHealthLow_IntensityRule]: ACTIVE" << std::endl;
-}
+{}
 
 bool EnemyMothershipHealthLow_IntensityRule::IsValid(AiDirector &director)
 {

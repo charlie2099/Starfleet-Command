@@ -8,7 +8,7 @@ void DirectorPeakFadeState::OnStateEnter()
 {
     DirectorEventBus::Publish(DirectorEventBus::DirectorEvent::EnteredPeakFadeState);
     DirectorEventBus::Publish(DirectorEventBus::DirectorEvent::EnteredNewState);
-    std::cout << "PEAK FADE STATE" << std::endl;
+    _aiDirector.SetMaxEnemyPopulation(5);
 }
 
 void DirectorPeakFadeState::OnStateUpdate(sf::Time deltaTime) {}

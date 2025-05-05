@@ -1,24 +1,15 @@
 {
-  "[PlayerMothershipHealthLow_IntensityRule]" : "ON",
-  "[EnemyStarshipsInPlay_IntensityRule]" : "OFF",
-  "[PlayerScrapSurplus_IntensityRule_IntensityRule]" : "ACTIVE",
-  "[EnemyMothershipHealthLow_IntensityRule]" : "ACTIVE",
-  "[PlayerStarshipsInPlay_IntensityRule]" : "ACTIVE",
-  "[SpawnWeakStarshipsAtStart_BehaviourRule]" : "ACTIVE",
-  "[CounterAttack_BehaviourRule]" : "ACTIVE, ",
-  "[PlayerSpacelaneDominance_BehaviourRule]" : "ACTIVE",
-
   "IntensityRules" :
   [
     {
       "PlayerMothershipHealthLow_IntensityRule" : "ON",
-      "MothershipHealth" : "0",
-      "IntensityRating" : "0"
+      "MothershipHealth" : 0,
+      "IntensityRating" : 0
     },
     {
       "EnemyStarshipsInPlay_IntensityRule" : "ON",
-      "MothershipHealth" : "0",
-      "IntensityRating" : "0"
+      "MothershipHealth" : 0,
+      "IntensityRating" : 0
     }
   ],
 
@@ -26,13 +17,14 @@
   [
     {
       "SpawnWeakStarshipsAtStart_BehaviourRule" : "ON",
-      "MothershipHealth" : "0",
-      "IntensityRating" : "0"
+      "TimePassedUntilSpawn" : 10.0,
+      "MaxEnemySpawnCount" : 3
     },
     {
       "CounterAttack_BehaviourRule" : "ON",
-      "MothershipHealth" : "0",
-      "IntensityRating" : "0"
+      "Rule_Count" : 0,
+      "StarshipToCounter" : "BATTLESHIP",
+      "StarshipsToCounterWith" : ["BATTLESHIP", "SUPPORT_FRIGATE", "LIGHTFIGHTER"]
     }
   ]
 }

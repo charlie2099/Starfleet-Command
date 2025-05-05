@@ -13,33 +13,49 @@
 #include "StarshipDeploymentManager.hpp"
 #include <queue>
 
+/**
+ * @brief Controls game difficulty and enemy behavior based on dynamic intensity rules
+ */
 class AiDirector
 {
 public:
-    AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes, sf::View &displayView, bool isDebugOn = false);
+    AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes, sf::View &gameplayView, bool isDebugOn = false);
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
+    /// Behavioural Actions
     void QueueEnemy(StarshipFactory::STARSHIP_TYPE starshipType, int spawnLane);
     void UpdatePerceivedIntensity(sf::Time deltaTime);
 
+    /// Setters
+    void SetMaxEnemyPopulation(int maxPopulation);
+    void SetBehaviourUpdateRate(float seconds);
+
+    /// Getters - Game State Info
     float GetPerceivedIntensity() const  { return _perceivedIntensity; }
     float GetPeakIntensityThreshold() const { return PEAK_INTENSITY_MAX; }
-    float GetPlayerMothershipHealth() { return _player->GetMothership()->GetHealth(); }
-    float GetEnemyMothershipHealth() { return _enemy->GetMothership()->GetHealth(); }
-    int GetPlayerPopulation() { return _player->GetStarshipCount(); }
-    int GetEnemyPopulation() { return _enemy->GetStarshipCount(); }
-    int GetPlayerScrapAmount() { return _player->GetCurrentScrapAmount(); }
-    int GetEnemyScrapAmount() { return _enemy->GetCurrentScrapAmount(); }
     float GetElapsedGameTime() { return _gameClock.getElapsedTime().asSeconds(); }
+
+    /// Getters - Player State Info
+    float GetPlayerMothershipHealth() { return _player->GetMothership()->GetHealth(); }
+    int GetPlayerPopulation() { return _player->GetStarshipCount(); }
+    int GetPlayerScrapAmount() { return _player->GetCurrentScrapAmount(); }
     std::unique_ptr<Player>& GetPlayer() { return _player; }
+
+    /// Getters - Enemy State Info
+    float GetEnemyMothershipHealth() { return _enemy->GetMothership()->GetHealth(); }
+    int GetEnemyPopulation() { return _enemy->GetStarshipCount(); }
+    int GetEnemyScrapAmount() { return _enemy->GetCurrentScrapAmount(); }
     std::unique_ptr<Enemy>& GetEnemy() { return _enemy; }
+
+    /// Getters - Spacelane Info
     int GetSpacelaneCount() { return _spacelanes.size(); }
     int GetNumOfPlayerUnitsInSpacelane(int spacelaneIndex);
     int GetNumOfEnemyUnitsInSpacelane(int spacelaneIndex);
     int GetNumOfPlayerUnitTypesInSpacelane(int spacelaneIndex, StarshipFactory::STARSHIP_TYPE starshipType);
     int GetNumOfEnemyUnitTypesInSpacelane(int spacelaneIndex, StarshipFactory::STARSHIP_TYPE starshipType);
 
+    /// Getters - Deployment Queue Status Info
     bool IsQueueFull() { return _starshipDeploymentManager->IsQueueFull(); }
     bool IsQueueEmpty() { return _starshipDeploymentManager->IsQueueEmpty(); }
     bool IsEnemyStarshipTypeInQueue(StarshipFactory::STARSHIP_TYPE starshipType);
@@ -49,6 +65,10 @@ private:
     void UpdateDeploymentStatus_OnDeploymentBegun();
     void SpawnEnemy_OnDeploymentCompleted();
     void DoSomething_OnDirectorStateChange();
+
+    /// Constants
+    const float PEAK_INTENSITY_MAX = 100.0F;
+
     std::unique_ptr<DirectorIntensityRulesCalculator> _intensityCalculator;
     std::unique_ptr<DirectorBehaviourRulesEvaluator> _behaviourCalculator;
     StateMachine _stateMachine;
@@ -58,14 +78,18 @@ private:
     std::unique_ptr<StarshipDeploymentManager> _starshipDeploymentManager;
     std::array<std::unique_ptr<IStarship>, 5> _starshipTemplateToBeDeployed;
     sf::Clock _gameClock;
+    float _behaviourUpdateRate = 5.0F;
     float _behaviourUpdateTimer = 5.0F;
-    const float BEHAVIOUR_UPDATE_RATE = 5.0F; // NOTE: Periodically runs the behaviour calculator to see if any behavioural conditions have been met TODO: pick behaviours based on priority instead?
     float _perceivedIntensity = 0;
-    const float PEAK_INTENSITY_MAX = 100.0F;
-    sf::View& _displayView;
+    int _maxEnemyPopulation = 10;
+
+    /// View and Debug Visualisation
+    sf::View& _gameplayView;
     bool _isDebugOn = false;
     sf::Text _debugDirectorStateText;
     sf::Text _debugPerceivedIntensityText;
+    sf::Text _debugDirectorBehaviourUpdateRateText;
+    sf::Text _debugEnemyMaxPopulationText;
     sf::Texture _enemySpawnLaneIndicatorTexture;
     sf::Sprite _enemySpawnLaneIndicatorSprite;
     //sf::Text _enemySpawnLaneIndicatorText;

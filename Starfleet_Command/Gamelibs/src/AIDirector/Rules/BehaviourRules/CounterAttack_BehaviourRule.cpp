@@ -3,9 +3,7 @@
 
 CounterAttack_BehaviourRule::CounterAttack_BehaviourRule(StarshipFactory::STARSHIP_TYPE starshipTypeToCounter, const std::vector<StarshipFactory::STARSHIP_TYPE>& counterStarshipTypes)
 : _starshipTypeToCounter(starshipTypeToCounter), _counterStarshipTypes(counterStarshipTypes)
-{
-    std::cout << "[CounterAttack_BehaviourRule]: ACTIVE" << std::endl;
-}
+{}
 
 bool CounterAttack_BehaviourRule::IsValid(AiDirector &director)
 {

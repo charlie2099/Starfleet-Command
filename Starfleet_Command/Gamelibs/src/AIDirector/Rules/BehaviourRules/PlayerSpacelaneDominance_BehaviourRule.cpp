@@ -3,9 +3,7 @@
 
 PlayerSpacelaneDominance_BehaviourRule::PlayerSpacelaneDominance_BehaviourRule(int maxPlayerStarshipsInLane, int maxSpawnCount)
 : _numOfPlayerStarshipsInLaneThreshold(maxPlayerStarshipsInLane), _maxSpawnCount(maxSpawnCount)
-{
-    std::cout << "[PlayerSpacelaneDominance_BehaviourRule]: ACTIVE" << std::endl;
-}
+{}
 
 bool PlayerSpacelaneDominance_BehaviourRule::IsValid(AiDirector &director)
 {

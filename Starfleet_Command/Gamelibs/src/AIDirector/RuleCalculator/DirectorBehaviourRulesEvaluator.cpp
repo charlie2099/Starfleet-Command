@@ -7,11 +7,52 @@ DirectorBehaviourRulesEvaluator::~DirectorBehaviourRulesEvaluator()
 
 DirectorBehaviourRulesEvaluator::DirectorBehaviourRulesEvaluator()
 {
-    AddRule(std::make_shared<SpawnWeakStarshipsAtStart_BehaviourRule>(10, 3));
+    auto rulesData = Chilli::JsonSaveSystem::LoadFile(DIRECTOR_RULES_FILE_PATH);
+    if(rulesData.contains("BehaviourRules"))
+    {
+        auto behaviourRules = rulesData["BehaviourRules"];
+        for(const auto& rule : behaviourRules)
+        {
+            if(rule.contains("SpawnWeakStarshipsAtStart_BehaviourRule"))
+            {
+                std::string ruleStatus = rule["SpawnWeakStarshipsAtStart_BehaviourRule"];
+                float timePassedUntilSpawn = rule["TimePassedUntilSpawn"];
+                int maxEnemySpawnCount = rule["MaxEnemySpawnCount"];
 
-    auto starshipToCounter = StarshipFactory::BATTLESHIP;
-    auto counterStarships = std::vector<StarshipFactory::STARSHIP_TYPE> { StarshipFactory::BATTLESHIP, StarshipFactory::SUPPORT_FRIGATE, StarshipFactory::LIGHTFIGHTER };
-    AddRule(std::make_shared<CounterAttack_BehaviourRule>(starshipToCounter, counterStarships));
+                if(ruleStatus == "ON")
+                {
+                    AddRule(std::make_shared<SpawnWeakStarshipsAtStart_BehaviourRule>(timePassedUntilSpawn, maxEnemySpawnCount));
+                    std::cout << "SpawnWeakStarshipsAtStart_BehaviourRule is ACTIVE" << std::endl;
+                }
+                else
+                {
+                    std::cout << "SpawnWeakStarshipsAtStart_BehaviourRule is INACTIVE" << std::endl;
+                }
+            }
+
+            if(rule.contains("CounterAttack_BehaviourRule"))
+            {
+                std::string ruleStatus = rule["CounterAttack_BehaviourRule"];
+                if(ruleStatus == "ON")
+                {
+                    StarshipFactory::STARSHIP_TYPE starshipToCounter = StarshipFactory::GetStarshipTypeFromString(rule["StarshipToCounter"]);
+
+                    std::vector<StarshipFactory::STARSHIP_TYPE> starshipsToCounterWith;
+                    for(const auto& counterStarship : rule["StarshipsToCounterWith"])
+                    {
+                        starshipsToCounterWith.push_back(StarshipFactory::GetStarshipTypeFromString(counterStarship));
+                    }
+
+                    AddRule(std::make_shared<CounterAttack_BehaviourRule>(starshipToCounter, starshipsToCounterWith));
+                    std::cout << "CounterAttack_BehaviourRule is ACTIVE" << std::endl;
+                }
+                else
+                {
+                    std::cout << "CounterAttack_BehaviourRule is INACTIVE" << std::endl;
+                }
+            }
+        }
+    }
 
     auto starshipToCounter2 = StarshipFactory::DREADNOUGHT;
     auto counterStarships2 = std::vector<StarshipFactory::STARSHIP_TYPE> { StarshipFactory::DREADNOUGHT, StarshipFactory::SUPPORT_FRIGATE };

@@ -8,7 +8,7 @@ void DirectorRespiteState::OnStateEnter()
 {
     DirectorEventBus::Publish(DirectorEventBus::DirectorEvent::EnteredRespiteState);
     DirectorEventBus::Publish(DirectorEventBus::DirectorEvent::EnteredNewState);
-    std::cout << "RESPITE STATE" << std::endl;
+    _aiDirector.SetMaxEnemyPopulation(0);
 }
 
 void DirectorRespiteState::OnStateUpdate(sf::Time deltaTime) {}

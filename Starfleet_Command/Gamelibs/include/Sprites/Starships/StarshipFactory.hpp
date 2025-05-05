@@ -26,6 +26,7 @@ public:
     static std::unique_ptr<IStarship> CreateShip(STARSHIP_TYPE shipType);
     static std::unique_ptr<IStarship> CreateShip(STARSHIP_TYPE shipType, int spacelane);
     static STARSHIP_TYPE GetStarshipType(std::unique_ptr<IStarship>& starship);
+    static STARSHIP_TYPE GetStarshipTypeFromString(const std::string& starshipTypeName);
 };
 
 #endif //STARFLEET_COMMAND_STARSHIPFACTORY_HPP

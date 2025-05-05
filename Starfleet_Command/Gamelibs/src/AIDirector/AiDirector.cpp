@@ -1,7 +1,7 @@
 #include "AIDirector/AiDirector.hpp"
 
-AiDirector::AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes, sf::View &displayView, bool isDebugOn)
-: _player(player), _enemy(enemy), _spacelanes(spacelanes), _displayView(displayView), _isDebugOn(isDebugOn), _intensityCalculator(std::make_unique<DirectorIntensityRulesCalculator>()), _behaviourCalculator(std::make_unique<DirectorBehaviourRulesEvaluator>())
+AiDirector::AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& enemy, std::vector<std::unique_ptr<SpaceLane>>& spacelanes, sf::View &gameplayView, bool isDebugOn)
+: _player(player), _enemy(enemy), _spacelanes(spacelanes), _gameplayView(gameplayView), _isDebugOn(isDebugOn), _intensityCalculator(std::make_unique<DirectorIntensityRulesCalculator>()), _behaviourCalculator(std::make_unique<DirectorBehaviourRulesEvaluator>())
 {
     std::unordered_map<std::type_index, std::shared_ptr<IState>> cachedStates =
     {
@@ -40,6 +40,15 @@ AiDirector::AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& 
     _debugPerceivedIntensityText.setFont(Chilli::CustomFonts::GetBoldFont());
     _debugPerceivedIntensityText.setCharacterSize(11);
 
+    _debugDirectorBehaviourUpdateRateText.setString("Director Calc Rate: " + std::to_string(static_cast<int>(_behaviourUpdateRate)));
+    _debugDirectorBehaviourUpdateRateText.setFont(Chilli::CustomFonts::GetBoldFont());
+    _debugDirectorBehaviourUpdateRateText.setCharacterSize(11);
+
+    _debugEnemyMaxPopulationText.setString("Max Enemy Pop: " + std::to_string(static_cast<int>(_maxEnemyPopulation)));
+    _debugEnemyMaxPopulationText.setFont(Chilli::CustomFonts::GetBoldFont());
+    _debugEnemyMaxPopulationText.setCharacterSize(11);
+
+
     _enemySpawnLaneIndicatorTexture.loadFromFile("Resources/Textures/left.png");
     _enemySpawnLaneIndicatorSprite.setTexture(_enemySpawnLaneIndicatorTexture);
     _enemySpawnLaneIndicatorSprite.setColor(_enemy->GetTeamColour());
@@ -56,13 +65,13 @@ void AiDirector::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     _stateMachine.Update(deltaTime);
 
-    _starshipDeploymentManager->SetDeploymentBarPos({_displayView.getCenter().x + 272.0F, _displayView.getCenter().y + 312.5F}); // TODO: Use a setter method to set this relative to the enemy mothership health bar and player deployment bar position
+    _starshipDeploymentManager->SetDeploymentBarPos({_gameplayView.getCenter().x + 272.0F, _gameplayView.getCenter().y + 312.5F}); // TODO: Use a setter method to set this relative to the enemy mothership health bar and player deployment bar position
     _starshipDeploymentManager->Update(window, deltaTime);
 
     if(_gameClock.getElapsedTime().asSeconds() >= _behaviourUpdateTimer)
     {
         _behaviourCalculator->EvaluateBehaviourOutput(*this);
-        _behaviourUpdateTimer += BEHAVIOUR_UPDATE_RATE;
+        _behaviourUpdateTimer += _behaviourUpdateRate;
     }
 
     if(not _starshipDeploymentManager->IsQueueEmpty())
@@ -70,9 +79,9 @@ void AiDirector::Update(sf::RenderWindow& window, sf::Time deltaTime)
         auto endOfLanePos = _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetPos().x + _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetSize().x + 60.0F;
         auto xPos = 0;
         float yPos = _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetCentreYPos();
-        if(_displayView.getCenter().x + _displayView.getSize().x/2.0F <= endOfLanePos)
+        if(_gameplayView.getCenter().x + _gameplayView.getSize().x / 2.0F <= endOfLanePos)
         {
-            xPos = _displayView.getCenter().x + _displayView.getSize().x / 2.0F - 25.0F; // padding from right
+            xPos = _gameplayView.getCenter().x + _gameplayView.getSize().x / 2.0F - 25.0F; // padding from right
         }
         else
         {
@@ -106,9 +115,17 @@ void AiDirector::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     if(not _isDebugOn)
         return;
-    _debugDirectorStateText.setPosition({_starshipDeploymentManager->GetDeploymentBarPos().x, _starshipDeploymentManager->GetDeploymentBarPos().y - 17.5F});
+    _debugDirectorStateText.setPosition({_starshipDeploymentManager->GetDeploymentBarPos().x, _starshipDeploymentManager->GetDeploymentBarPos().y - 35.0F});
+
     _debugPerceivedIntensityText.setString("Perceived Intensity: " + std::to_string(static_cast<int>(_perceivedIntensity)));
     _debugPerceivedIntensityText.setPosition({_debugDirectorStateText.getPosition().x + _debugDirectorStateText.getGlobalBounds().width + 20.0F, _debugDirectorStateText.getPosition().y});
+
+    _debugDirectorBehaviourUpdateRateText.setString("Director Calc Rate: " + std::to_string(static_cast<int>(_behaviourUpdateRate)));
+    _debugDirectorBehaviourUpdateRateText.setPosition({_debugDirectorStateText.getPosition().x, _debugDirectorStateText.getPosition().y + 17.5F});
+
+    _debugEnemyMaxPopulationText.setString("Max Enemy Pop: " + std::to_string(static_cast<int>(_maxEnemyPopulation)));
+    _debugEnemyMaxPopulationText.setPosition({_debugPerceivedIntensityText.getPosition().x, _debugDirectorBehaviourUpdateRateText.getPosition().y});
+
 }
 
 void AiDirector::Render(sf::RenderWindow &window)
@@ -119,6 +136,8 @@ void AiDirector::Render(sf::RenderWindow &window)
     {
         window.draw(_debugDirectorStateText);
         window.draw(_debugPerceivedIntensityText);
+        window.draw(_debugDirectorBehaviourUpdateRateText);
+        window.draw(_debugEnemyMaxPopulationText);
     }
 
     if(not _starshipDeploymentManager->IsQueueEmpty())
@@ -130,13 +149,20 @@ void AiDirector::Render(sf::RenderWindow &window)
 
 void AiDirector::QueueEnemy(StarshipFactory::STARSHIP_TYPE starshipType, int spawnLane)
 {
+    if(_enemy->GetStarshipCount() > _maxEnemyPopulation)
+    {
+        std::cout << "Maximum enemy population reached. Enemy starship will not be queued." << std::endl;
+        return;
+    }
+
+    if(_starshipDeploymentManager->IsQueueFull())
+    {
+        std::cout << "Queue is full. Enemy starship will not be queued" << std::endl;
+        return;
+    }
+
     _starshipDeploymentManager->AddStarshipToQueue(starshipType, spawnLane);
     _starshipDeploymentManager->SetDeploymentStatus(true);
-}
-
-bool AiDirector::IsEnemyStarshipTypeInQueue(StarshipFactory::STARSHIP_TYPE starshipType)
-{
-    return _starshipDeploymentManager->IsStarshipTypeInQueue(starshipType);
 }
 
 void AiDirector::UpdatePerceivedIntensity(sf::Time deltaTime)
@@ -152,6 +178,21 @@ void AiDirector::UpdatePerceivedIntensity(sf::Time deltaTime)
     {
         _perceivedIntensity = 0;
     }
+}
+
+void AiDirector::SetMaxEnemyPopulation(int maxPopulation)
+{
+    _maxEnemyPopulation = maxPopulation;
+}
+
+void AiDirector::SetBehaviourUpdateRate(float timeInSeconds)
+{
+    _behaviourUpdateRate = timeInSeconds;
+}
+
+bool AiDirector::IsEnemyStarshipTypeInQueue(StarshipFactory::STARSHIP_TYPE starshipType)
+{
+    return _starshipDeploymentManager->IsStarshipTypeInQueue(starshipType);
 }
 
 void AiDirector::UpdateDeploymentStatus_OnDeploymentBegun()
@@ -247,5 +288,6 @@ int AiDirector::GetNumOfEnemyUnitTypesInSpacelane(int spacelaneIndex, StarshipFa
     }
     return unitTypesInLane;
 }
+
 
 
