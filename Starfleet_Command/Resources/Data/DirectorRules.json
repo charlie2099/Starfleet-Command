@@ -2,29 +2,90 @@
   "IntensityRules" :
   [
     {
-      "PlayerMothershipHealthLow_IntensityRule" : "ON",
-      "MothershipHealth" : 0,
-      "IntensityRating" : 0
+      "Name" : "PlayerMothershipHealthLow",
+      "Type" : "PlayerMothershipHealthLow_IntensityRule",
+      "Enabled" : true,
+      "LowHealthThreshold" : 2000,
+      "IntensityRating" : 25.0
     },
     {
-      "EnemyStarshipsInPlay_IntensityRule" : "ON",
-      "MothershipHealth" : 0,
-      "IntensityRating" : 0
+      "Name" : "EnemyStarshipsInPlay",
+      "Type" : "EnemyStarshipsInPlay_IntensityRule",
+      "Enabled" : true,
+      "IntensityRatingPerStarship" : 0.25
+    },
+    {
+      "Name" : "PlayerScrapSurplus",
+      "Type" : "PlayerScrapSurplus_IntensityRule",
+      "Enabled" : true,
+      "ScrapAmount" : 5000,
+      "IntensityRating" : 10.0
+    },
+    {
+      "Name" : "EnemyMothershipHealthLow",
+      "Type" : "EnemyMothershipHealthLow_IntensityRule",
+      "Enabled" : true,
+      "LowHealthThreshold" : 2000,
+      "IntensityRating" : -25.0
+    },
+    {
+      "Name" : "PlayerStarshipsInPlay",
+      "Type" : "PlayerStarshipsInPlay_IntensityRule",
+      "Enabled" : true,
+      "IntensityRatingPerStarship" : -0.25
     }
   ],
 
   "BehaviourRules" :
   [
     {
-      "SpawnWeakStarshipsAtStart_BehaviourRule" : "ON",
+      "Name" : "SpawnWeakStarshipsAtStart",
+      "Type" : "SpawnWeakStarshipsAtStart_BehaviourRule",
+      "Enabled" : true,
       "TimePassedUntilSpawn" : 10.0,
       "MaxEnemySpawnCount" : 3
     },
     {
-      "CounterAttack_BehaviourRule" : "ON",
-      "Rule_Count" : 0,
+      "Name" : "PlayerSpacelaneDominance",
+      "Type" : "PlayerSpacelaneDominance_BehaviourRule",
+      "Enabled" : true,
+      "MaxPlayerStarshipsInLane" : 2,
+      "MaxSpawnAmount" : 1
+    },
+    {
+      "Name" : "LightFighter CounterAttack",
+      "Type" : "CounterAttack_BehaviourRule",
+      "Enabled" : true,
+      "StarshipToCounter" : "LIGHTFIGHTER",
+      "StarshipsToCounterWith" : ["LIGHTFIGHTER"]
+    },
+    {
+      "Name" : "HeavyFighter CounterAttack",
+      "Type" : "CounterAttack_BehaviourRule",
+      "Enabled" : true,
+      "StarshipToCounter" : "HEAVYFIGHTER",
+      "StarshipsToCounterWith" : ["HEAVYFIGHTER", "LIGHTFIGHTER"]
+    },
+    {
+      "Name" : "SupportFrigate CounterAttack",
+      "Type" : "CounterAttack_BehaviourRule",
+      "Enabled" : true,
+      "StarshipToCounter" : "SUPPORT_FRIGATE",
+      "StarshipsToCounterWith" : ["HEAVYFIGHTER", "LIGHTFIGHTER"]
+    },
+    {
+      "Name" : "Battleship CounterAttack",
+      "Type" : "CounterAttack_BehaviourRule",
+      "Enabled" : true,
       "StarshipToCounter" : "BATTLESHIP",
       "StarshipsToCounterWith" : ["BATTLESHIP", "SUPPORT_FRIGATE", "LIGHTFIGHTER"]
+    },
+    {
+      "Name" : "Dreadnought CounterAttack",
+      "Type" : "CounterAttack_BehaviourRule",
+      "Enabled" : true,
+      "StarshipToCounter": "DREADNOUGHT",
+      "StarshipsToCounterWith": ["DREADNOUGHT", "SUPPORT_FRIGATE"]
     }
   ]
 }

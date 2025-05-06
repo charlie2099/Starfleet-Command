@@ -98,7 +98,7 @@ private:
 
     /// Scrap Collector
     std::unique_ptr<ScrapCollectionUpgradeButton> _upgradePlayerScrapCollectionButton;
-    const int STARTING_SCRAP_METAL = 5000;
+    const int STARTING_SCRAP_METAL = 4000;
     const float PLAYER_SCRAP_ACCUMULATION_RATE = 5.0F;
     float _playerScrapAccumulationTimer = PLAYER_SCRAP_ACCUMULATION_RATE;
     sf::Clock _playerScrapAccumulationTimerClock;

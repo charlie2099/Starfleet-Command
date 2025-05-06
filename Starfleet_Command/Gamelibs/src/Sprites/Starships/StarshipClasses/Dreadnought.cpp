@@ -7,7 +7,7 @@ Dreadnought::Dreadnought(int spacelane)
     _healthComponent.SetHealth(1500);
     _speed = 40;
     _startSpeed = _speed;
-    _deployTimeSpeed = 10.0F;
+    _deployTimeSpeed = 8.0F;
     _maximumDamage = 500;
     _damageScaleFactor = 1.0F;
     _fireRate = 3.0f;

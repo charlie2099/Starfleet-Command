@@ -6,6 +6,7 @@
 #include "AIDirector/Rules/IntensityRules/EnemyStarshipsInPlay_IntensityRule.hpp"
 #include "AIDirector/Rules/IntensityRules/PlayerStarshipsInPlay_IntensityRule.hpp"
 #include "AIDirector/Rules/IntensityRules/PlayerScrapSurplus_IntensityRule.hpp"
+#include "Utility/JsonSaveSystem.hpp"
 #include <memory>
 #include <vector>
 
@@ -20,6 +21,9 @@ public:
 private:
     void AddRule(const std::shared_ptr<IDirectorIntensityRule>& rule);
     std::vector<std::shared_ptr<IDirectorIntensityRule>> _rules;
+
+    const std::string DATA_DIR_PATH = "Resources/Data/";
+    const std::string DIRECTOR_RULES_FILE_PATH = (DATA_DIR_PATH + "DirectorRules.json");
 };
 
 #endif //STARFLEET_COMMAND_DIRECTORINTENSITYRULESCALCULATOR_HPP

@@ -11,54 +11,41 @@ DirectorBehaviourRulesEvaluator::DirectorBehaviourRulesEvaluator()
     if(rulesData.contains("BehaviourRules"))
     {
         auto behaviourRules = rulesData["BehaviourRules"];
-        for(const auto& rule : behaviourRules)
+        for(const auto& behaviourRule : behaviourRules)
         {
-            if(rule.contains("SpawnWeakStarshipsAtStart_BehaviourRule"))
+            if(behaviourRule.contains("Enabled") && behaviourRule["Enabled"] == true)
             {
-                std::string ruleStatus = rule["SpawnWeakStarshipsAtStart_BehaviourRule"];
-                float timePassedUntilSpawn = rule["TimePassedUntilSpawn"];
-                int maxEnemySpawnCount = rule["MaxEnemySpawnCount"];
-
-                if(ruleStatus == "ON")
+                /// Parse SpawnWeakStarshipsAtStart rule
+                if(behaviourRule.contains("Type") && behaviourRule["Type"] == "SpawnWeakStarshipsAtStart_BehaviourRule")
                 {
+                    float timePassedUntilSpawn = behaviourRule["TimePassedUntilSpawn"];
+                    int maxEnemySpawnCount = behaviourRule["MaxEnemySpawnCount"];
                     AddRule(std::make_shared<SpawnWeakStarshipsAtStart_BehaviourRule>(timePassedUntilSpawn, maxEnemySpawnCount));
-                    std::cout << "SpawnWeakStarshipsAtStart_BehaviourRule is ACTIVE" << std::endl;
                 }
-                else
+
+                /// Parse PlayerSpacelaneDominance rule
+                if(behaviourRule.contains("Type") && behaviourRule["Type"] == "PlayerSpacelaneDominance_BehaviourRule")
                 {
-                    std::cout << "SpawnWeakStarshipsAtStart_BehaviourRule is INACTIVE" << std::endl;
+                    int maxPlayerStarshipsInLane = behaviourRule["MaxPlayerStarshipsInLane"];
+                    int maxSpawnAmount = behaviourRule["MaxSpawnAmount"];
+                    AddRule(std::make_shared<PlayerSpacelaneDominance_BehaviourRule>(maxPlayerStarshipsInLane, maxSpawnAmount));
                 }
-            }
 
-            if(rule.contains("CounterAttack_BehaviourRule"))
-            {
-                std::string ruleStatus = rule["CounterAttack_BehaviourRule"];
-                if(ruleStatus == "ON")
+                /// Parse CounterAttack rules
+                if(behaviourRule.contains("Type") && behaviourRule["Type"] == "CounterAttack_BehaviourRule")
                 {
-                    StarshipFactory::STARSHIP_TYPE starshipToCounter = StarshipFactory::GetStarshipTypeFromString(rule["StarshipToCounter"]);
-
+                    StarshipFactory::STARSHIP_TYPE starshipToCounter = StarshipFactory::GetStarshipTypeFromString(behaviourRule["StarshipToCounter"]);
                     std::vector<StarshipFactory::STARSHIP_TYPE> starshipsToCounterWith;
-                    for(const auto& counterStarship : rule["StarshipsToCounterWith"])
+                    for(const auto& counterStarship : behaviourRule["StarshipsToCounterWith"])
                     {
                         starshipsToCounterWith.push_back(StarshipFactory::GetStarshipTypeFromString(counterStarship));
                     }
-
                     AddRule(std::make_shared<CounterAttack_BehaviourRule>(starshipToCounter, starshipsToCounterWith));
-                    std::cout << "CounterAttack_BehaviourRule is ACTIVE" << std::endl;
-                }
-                else
-                {
-                    std::cout << "CounterAttack_BehaviourRule is INACTIVE" << std::endl;
                 }
             }
+            std::cout << behaviourRule["Name"] << ": " << behaviourRule["Enabled"] << std::endl;
         }
     }
-
-    auto starshipToCounter2 = StarshipFactory::DREADNOUGHT;
-    auto counterStarships2 = std::vector<StarshipFactory::STARSHIP_TYPE> { StarshipFactory::DREADNOUGHT, StarshipFactory::SUPPORT_FRIGATE };
-    AddRule(std::make_shared<CounterAttack_BehaviourRule>(starshipToCounter2, counterStarships2));
-
-    AddRule(std::make_shared<PlayerSpacelaneDominance_BehaviourRule>(2, 1));
 }
 
 void DirectorBehaviourRulesEvaluator::EvaluateBehaviourOutput(AiDirector &director)
