@@ -2,21 +2,33 @@
 
 Dreadnought::Dreadnought(int spacelane)
 {
+    auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
+    if(starshipData.contains("StarshipData"))
+    {
+        for(const auto& shipData : starshipData["StarshipData"])
+        {
+            if(shipData.contains("Name") && shipData["Name"] == "Dreadnought")
+            {
+                _starshipName = shipData["Name"];
+                _starshipAbbreviation = shipData["Abbreviation"];
+                _healthComponent.SetHealth(shipData["Health"]);
+                _maximumDamage = shipData["MaxDamage"];
+                _damageScaleFactor = shipData["DamageScaleFactor"];
+                _speed = shipData["Speed"];
+                _startSpeed = _speed;
+                _deployTimeSpeed = shipData["DeployTime"];
+                _fireRate = shipData["FireRate"];
+                _attackRange = shipData["AttackRange"];
+                _buildCost = shipData["BuildCost"];
+                break;
+            }
+        }
+    }
+
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_3.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-    _healthComponent.SetHealth(1500);
-    _speed = 40;
-    _startSpeed = _speed;
-    _deployTimeSpeed = 8.0F;
-    _maximumDamage = 500;
-    _damageScaleFactor = 1.0F;
-    _fireRate = 3.0f;
-    _attackRange = 800.0F;
-    _buildCost = 2000;
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
-    _starshipName = "Dreadnought";
-    _starshipAbbreviation = "DRN";
     _assignedLaneIndex = spacelane;
     _starshipIndex = 3;
 

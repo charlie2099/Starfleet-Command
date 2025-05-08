@@ -2,21 +2,33 @@
 
 SupportFrigate::SupportFrigate(int spacelane)
 {
+    auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
+    if(starshipData.contains("StarshipData"))
+    {
+        for(const auto& shipData : starshipData["StarshipData"])
+        {
+            if(shipData.contains("Name") && shipData["Name"] == "Support Frigate")
+            {
+                _starshipName = shipData["Name"];
+                _starshipAbbreviation = shipData["Abbreviation"];
+                _healthComponent.SetHealth(shipData["Health"]);
+                _maximumDamage = shipData["MaxDamage"];
+                _damageScaleFactor = shipData["DamageScaleFactor"];
+                _speed = shipData["Speed"];
+                _startSpeed = _speed;
+                _deployTimeSpeed = shipData["DeployTime"];
+                _fireRate = shipData["FireRate"];
+                _attackRange = shipData["AttackRange"];
+                _buildCost = shipData["BuildCost"];
+                break;
+            }
+        }
+    }
+
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_2.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-    _healthComponent.SetHealth(500);
-    _speed = 70;
-    _startSpeed = _speed;
-    _deployTimeSpeed = 3.0F;
-    _maximumDamage = 30;
-    _damageScaleFactor = 1.0F;
-    _fireRate = 2.0f;
-    _attackRange = 400.0F;
-    _buildCost = 500;
     _projectileSize = Projectile::SMALL;
     _projectileColour = Projectile::BLUE;
-    _starshipName = "Support Frigate";
-    _starshipAbbreviation = "SF";
     _assignedLaneIndex = spacelane;
     _starshipIndex = 2;
 

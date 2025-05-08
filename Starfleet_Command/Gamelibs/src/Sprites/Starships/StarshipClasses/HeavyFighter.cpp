@@ -2,21 +2,33 @@
 
 HeavyFighter::HeavyFighter(int spacelane)
 {
+    auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
+    if(starshipData.contains("StarshipData"))
+    {
+        for(const auto& shipData : starshipData["StarshipData"])
+        {
+            if(shipData.contains("Name") && shipData["Name"] == "Heavy Fighter")
+            {
+                _starshipName = shipData["Name"];
+                _starshipAbbreviation = shipData["Abbreviation"];
+                _healthComponent.SetHealth(shipData["Health"]);
+                _maximumDamage = shipData["MaxDamage"];
+                _damageScaleFactor = shipData["DamageScaleFactor"];
+                _speed = shipData["Speed"];
+                _startSpeed = _speed;
+                _deployTimeSpeed = shipData["DeployTime"];
+                _fireRate = shipData["FireRate"];
+                _attackRange = shipData["AttackRange"];
+                _buildCost = shipData["BuildCost"];
+                break;
+            }
+        }
+    }
+
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_1.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-    _healthComponent.SetHealth(300);
-    _speed = 80;
-    _startSpeed = _speed;
-    _deployTimeSpeed = 3.0F;
-    _maximumDamage = 20;
-    _damageScaleFactor = 1.0F;
-    _fireRate = 0.25f;
-    _attackRange = 300.0F;
-    _buildCost = 250;
     _projectileSize = Projectile::REGULAR;
     _projectileColour = Projectile::BLUE;
-    _starshipName = "Heavy Fighter";
-    _starshipAbbreviation = "HF";
     _assignedLaneIndex = spacelane;
     _starshipIndex = 1;
 

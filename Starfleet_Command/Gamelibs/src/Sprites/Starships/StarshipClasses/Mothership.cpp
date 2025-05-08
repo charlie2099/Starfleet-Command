@@ -2,18 +2,33 @@
 
 Mothership::Mothership(int spacelane)
 {
+    auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
+    if(starshipData.contains("StarshipData"))
+    {
+        for(const auto& shipData : starshipData["StarshipData"])
+        {
+            if(shipData.contains("Name") && shipData["Name"] == "Mothership")
+            {
+                _starshipName = shipData["Name"];
+                _starshipAbbreviation = shipData["Abbreviation"];
+                _healthComponent.SetHealth(shipData["Health"]);
+                _maximumDamage = shipData["MaxDamage"];
+                _damageScaleFactor = shipData["DamageScaleFactor"];
+                _speed = shipData["Speed"];
+                _startSpeed = _speed;
+                _deployTimeSpeed = shipData["DeployTime"];
+                _fireRate = shipData["FireRate"];
+                _attackRange = shipData["AttackRange"];
+                _buildCost = shipData["BuildCost"];
+                break;
+            }
+        }
+    }
+
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_5.png");
     _spriteComponent.GetSprite().scale({0.5F, 0.5F});
-    _healthComponent.SetHealth(10000);
-    _speed = 10;
-    _startSpeed = _speed;
-    _maximumDamage = 50;
-    _fireRate = 1.0f;
-    _attackRange = 400.0F;
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
-    _starshipName = "Mothership";
-    _starshipAbbreviation = "MS";
     _assignedLaneIndex = spacelane;
     _starshipIndex = 5;
 

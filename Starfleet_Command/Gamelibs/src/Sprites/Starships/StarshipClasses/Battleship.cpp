@@ -2,21 +2,33 @@
 
 Battleship::Battleship(int spacelane)
 {
+    auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
+    if(starshipData.contains("StarshipData"))
+    {
+        for(const auto& shipData : starshipData["StarshipData"])
+        {
+            if(shipData.contains("Name") && shipData["Name"] == "Battleship")
+            {
+                _starshipName = shipData["Name"];
+                _starshipAbbreviation = shipData["Abbreviation"];
+                _healthComponent.SetHealth(shipData["Health"]);
+                _maximumDamage = shipData["MaxDamage"];
+                _damageScaleFactor = shipData["DamageScaleFactor"];
+                _speed = shipData["Speed"];
+                _startSpeed = _speed;
+                _deployTimeSpeed = shipData["DeployTime"];
+                _fireRate = shipData["FireRate"];
+                _attackRange = shipData["AttackRange"];
+                _buildCost = shipData["BuildCost"];
+                break;
+            }
+        }
+    }
+
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_4.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-    _healthComponent.SetHealth(2500);
-    _speed = 30;
-    _startSpeed = _speed;
-    _deployTimeSpeed = 5.0F;
-    _maximumDamage = 100;
-    _damageScaleFactor = 1.0F;
-    _fireRate = 3.0f;
-    _attackRange = 600.0F;
-    _buildCost = 3000;
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
-    _starshipName = "Battleship";
-    _starshipAbbreviation = "BS";
     _assignedLaneIndex = spacelane;
     _starshipIndex = 4;
 

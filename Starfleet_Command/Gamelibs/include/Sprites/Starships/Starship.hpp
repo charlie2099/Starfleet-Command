@@ -4,6 +4,7 @@
 #include "Components/HealthComponent.hpp"
 #include "Sprites/Projectiles/Projectile.hpp"
 #include "Sprites/UI/HealthBar.hpp"
+#include "Utility/JsonSaveSystem.hpp"
 #include "Utility/Constants.hpp"
 #include "Utility/Colour.hpp"
 #include "Utility/Vector.hpp"
@@ -103,6 +104,8 @@ protected:
     bool _isMouseOver = false;
     std::vector<int> _attackableLanes;
     int _starshipIndex;
+    const std::string DATA_DIR_PATH = "Resources/Data/";
+    const std::string STARSHIP_DATA_FILE_PATH = (DATA_DIR_PATH + "StarshipData.json");
 };
 
 #endif //STARFLEET_COMMAND_STARSHIP_HPP

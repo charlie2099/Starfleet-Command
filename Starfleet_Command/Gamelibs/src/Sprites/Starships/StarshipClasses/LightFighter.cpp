@@ -2,21 +2,33 @@
 
 LightFighter::LightFighter(int spacelane)
 {
+    auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
+    if(starshipData.contains("StarshipData"))
+    {
+        for(const auto& shipData : starshipData["StarshipData"])
+        {
+            if(shipData.contains("Name") && shipData["Name"] == "Light Fighter")
+            {
+                _starshipName = shipData["Name"];
+                _starshipAbbreviation = shipData["Abbreviation"];
+                _healthComponent.SetHealth(shipData["Health"]);
+                _maximumDamage = shipData["MaxDamage"];
+                _damageScaleFactor = shipData["DamageScaleFactor"];
+                _speed = shipData["Speed"];
+                _startSpeed = _speed;
+                _deployTimeSpeed = shipData["DeployTime"];
+                _fireRate = shipData["FireRate"];
+                _attackRange = shipData["AttackRange"];
+                _buildCost = shipData["BuildCost"];
+                break;
+            }
+        }
+    }
+
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_0.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
-    _healthComponent.SetHealth(150);
-    _speed = 160;
-    _startSpeed = _speed;
-    _deployTimeSpeed = 2.0F;
-    _maximumDamage = 25;
-    _damageScaleFactor = 1.0F;
-    _fireRate = 0.5f;
-    _attackRange = 400.0F;
-    _buildCost = 50;
     _projectileSize = Projectile::SMALL;
     _projectileColour = Projectile::BLUE;
-    _starshipName = "Light Fighter";
-    _starshipAbbreviation = "LF";
     _assignedLaneIndex = spacelane;
     _starshipIndex = 0;
 
