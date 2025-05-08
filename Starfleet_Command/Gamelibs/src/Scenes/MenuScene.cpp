@@ -100,9 +100,13 @@ bool MenuScene::InitMusic()
 
 void MenuScene::InitEvents()
 {
-    /// Observer to game settings event
-    auto gameSettingsCallback = std::bind(&MenuScene::SaveGameSettingsData_OnSettingsUpdated, this);
-    _gameSettings->AddBasicObserver({GameSettings::SETTINGS_UPDATED, gameSettingsCallback});
+    /// Observer to game settings updated event
+    auto gameSettingsUpdatedCallback = std::bind(&MenuScene::ApplyGameSettings_OnSettingsUpdated, this);
+    _gameSettings->AddBasicObserver({GameSettings::SETTINGS_UPDATED, gameSettingsUpdatedCallback});
+
+    /// Observer to game settings saved event
+    auto gameSettingsSavedCallback = std::bind(&MenuScene::SaveGameSettingsData_OnSettingsSaved, this);
+    _gameSettings->AddBasicObserver({GameSettings::SETTINGS_SAVED, gameSettingsSavedCallback});
 }
 
 void MenuScene::InitGameSettings()
@@ -117,31 +121,30 @@ void MenuScene::InitGameSettings()
 
     if(Chilli::JsonSaveSystem::CheckFileExists(SETTINGS_FILE_PATH))
     {
-        std::cout << "GameSettings file found!" << std::endl;
-        auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+        auto gameSettingsData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
 
-        if(fileData.contains("Music"))
+        if(gameSettingsData.contains("Music"))
         {
-            std::string musicData = fileData["Music"];
+            std::string musicData = gameSettingsData["Music"];
             _isMusicOn = (musicData == "true");
             _gameSettings->UpdateSettingOptionValueText("Music", musicData == "true");
         }
 
-        if(fileData.contains("Spacelanes"))
+        if(gameSettingsData.contains("Spacelanes"))
         {
-            std::string spacelanesData = fileData["Spacelanes"];
+            std::string spacelanesData = gameSettingsData["Spacelanes"];
             _gameSettings->UpdateSettingOptionValueText("Spacelanes", spacelanesData == "true");
         }
 
-        if(fileData.contains("Minimap"))
+        if(gameSettingsData.contains("Minimap"))
         {
-            std::string minimapData = fileData["Minimap"];
+            std::string minimapData = gameSettingsData["Minimap"];
             _gameSettings->UpdateSettingOptionValueText("Minimap", minimapData == "true");
         }
 
-        if(fileData.contains("Player Colour"))
+        if(gameSettingsData.contains("Player Colour"))
         {
-            std::string playerColourData = fileData["Player Colour"];
+            std::string playerColourData = gameSettingsData["Player Colour"];
 
             if(playerColourData == "BLUE")
             {
@@ -175,9 +178,9 @@ void MenuScene::InitGameSettings()
             }
         }
 
-        if(fileData.contains("Enemy Colour"))
+        if(gameSettingsData.contains("Enemy Colour"))
         {
-            std::string enemyColourData = fileData["Enemy Colour"];
+            std::string enemyColourData = gameSettingsData["Enemy Colour"];
 
             if(enemyColourData == "BLUE")
             {
@@ -360,9 +363,7 @@ void MenuScene::HandleButtonEvents(sf::RenderWindow &window, sf::Event &event)
         {
             _isGameSettingsEnabled = true;
             _menuTitleImgSprite.setPosition(Constants::WINDOW_WIDTH / 2.0F - _menuTitleImgSprite.getGlobalBounds().width / 2.0F, Constants::WINDOW_HEIGHT * 0.2F - _menuTitleImgSprite.getGlobalBounds().height / 2.0F);
-
-            _gameSettings->RepositionPanel(Constants::WINDOW_WIDTH / 2.0F - _gameSettings->GetSettingsPanelSize().x / 2.0F,
-                                           _menuTitleImgSprite.getPosition().y + _menuTitleImgSprite.getGlobalBounds().height + 25.0F);
+            _gameSettings->RepositionPanel(Constants::WINDOW_WIDTH / 2.0F - _gameSettings->GetSettingsPanelSize().x / 2.0F, _menuTitleImgSprite.getPosition().y + _menuTitleImgSprite.getGlobalBounds().height + 25.0F);
         }
         else if(_buttonPanels[EXIT_BUTTON].IsClicked())
         {
@@ -464,62 +465,8 @@ void MenuScene::UpdateMenuButtons(sf::RenderWindow &window)
     }
 }
 
-void MenuScene::SaveGameSettingsData_OnSettingsUpdated()
+void MenuScene::ApplyGameSettings_OnSettingsUpdated()
 {
-    /// Model the data and save it to file
-    json gameSettingsData;
-    gameSettingsData["Music"] = _gameSettings->GetSettingOption("Music").selectedValueIndex == 1 ? "true" : "false";
-    gameSettingsData["Spacelanes"] = _gameSettings->GetSettingOption("Spacelanes").selectedValueIndex == 1 ? "true" : "false";
-    gameSettingsData["Minimap"] = _gameSettings->GetSettingOption("Minimap").selectedValueIndex == 1 ? "true" : "false";
-
-    /// Player Colour
-    if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 0)
-    {
-        gameSettingsData["Player Colour"] = "BLUE";
-    }
-    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 1)
-    {
-        gameSettingsData["Player Colour"] = "RED";
-    }
-    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 2)
-    {
-        gameSettingsData["Player Colour"] = "GREEN";
-    }
-    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 3)
-    {
-        gameSettingsData["Player Colour"] = "ORANGE";
-    }
-    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 4)
-    {
-        gameSettingsData["Player Colour"] = "YELLOW";
-    }
-
-    /// Enemy Colour
-    if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 0)
-    {
-        gameSettingsData["Enemy Colour"] = "BLUE";
-    }
-    else if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 1)
-    {
-        gameSettingsData["Enemy Colour"] = "RED";
-    }
-    else if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 2)
-    {
-        gameSettingsData["Enemy Colour"] = "GREEN";
-    }
-    else if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 3)
-    {
-        gameSettingsData["Enemy Colour"] = "ORANGE";
-    }
-    else if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 4)
-    {
-        gameSettingsData["Enemy Colour"] = "YELLOW";
-    }
-
-    Chilli::JsonSaveSystem::SaveFile(SETTINGS_FILE_PATH, gameSettingsData);
-    std::cout << "Settings saved to " << SETTINGS_FILE_PATH << std::endl;
-
-    /// Apply game settings
     _isMusicOn = _gameSettings->GetSettingOption("Music").selectedValueIndex;
     if(_isMusicOn and _menuMusic.getStatus() not_eq sf::SoundSource::Playing)
     {
@@ -598,4 +545,60 @@ void MenuScene::SaveGameSettingsData_OnSettingsUpdated()
             _enemy->SetTeamColour(Chilli::Colour::YELLOW);
         }
     }
+}
+
+void MenuScene::SaveGameSettingsData_OnSettingsSaved()
+{
+    /// Model the data and write it to file
+    json gameSettingsData;
+    gameSettingsData["Music"] = _gameSettings->GetSettingOption("Music").selectedValueIndex == 1 ? "true" : "false";
+    gameSettingsData["Spacelanes"] = _gameSettings->GetSettingOption("Spacelanes").selectedValueIndex == 1 ? "true" : "false";
+    gameSettingsData["Minimap"] = _gameSettings->GetSettingOption("Minimap").selectedValueIndex == 1 ? "true" : "false";
+
+    /// Player Colour
+    if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 0)
+    {
+        gameSettingsData["Player Colour"] = "BLUE";
+    }
+    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 1)
+    {
+        gameSettingsData["Player Colour"] = "RED";
+    }
+    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 2)
+    {
+        gameSettingsData["Player Colour"] = "GREEN";
+    }
+    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 3)
+    {
+        gameSettingsData["Player Colour"] = "ORANGE";
+    }
+    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 4)
+    {
+        gameSettingsData["Player Colour"] = "YELLOW";
+    }
+
+    /// Enemy Colour
+    if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 0)
+    {
+        gameSettingsData["Enemy Colour"] = "BLUE";
+    }
+    else if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 1)
+    {
+        gameSettingsData["Enemy Colour"] = "RED";
+    }
+    else if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 2)
+    {
+        gameSettingsData["Enemy Colour"] = "GREEN";
+    }
+    else if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 3)
+    {
+        gameSettingsData["Enemy Colour"] = "ORANGE";
+    }
+    else if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 4)
+    {
+        gameSettingsData["Enemy Colour"] = "YELLOW";
+    }
+
+    Chilli::JsonSaveSystem::SaveFile(SETTINGS_FILE_PATH, gameSettingsData);
+    std::cout << "Settings saved to " << SETTINGS_FILE_PATH << std::endl;
 }

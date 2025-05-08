@@ -6,7 +6,7 @@
 #include "Utility/JsonSaveSystem.hpp"
 #include "Utility/JsonColourMapping.hpp"
 #include "Utility/RNG.hpp"
-#include "Interfaces/IStarship.hpp"
+#include "Sprites/Starships/Starship.hpp"
 #include "../../GameSettings.hpp"
 #include "Sprites/Player/Player.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
@@ -45,7 +45,10 @@ class MenuScene : public Scene
     void UpdateBackgroundStarshipsMovement(sf::RenderWindow &window, sf::Time &deltaTime);
     void UpdateGameSettingsButtons(sf::RenderWindow &window, sf::Time &deltaTime);
     void UpdateMenuButtons(sf::RenderWindow &window);
-    void SaveGameSettingsData_OnSettingsUpdated();
+
+    /// Event functions
+    void ApplyGameSettings_OnSettingsUpdated();
+    void SaveGameSettingsData_OnSettingsSaved();
 
     /// Constants
     const std::string GAME_VERSION = "PRE-ALPHA BUILD v0.3.0"; // Early Alpha = v0.5.0, Early Beta = v0.8.0, Release = v1.0.0

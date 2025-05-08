@@ -6,7 +6,7 @@
 class MothershipStatusDisplay
 {
 public:
-    MothershipStatusDisplay(std::unique_ptr<IStarship> &playerMothership, std::unique_ptr<IStarship> &enemyMothership, sf::View &displayView);
+    MothershipStatusDisplay(std::unique_ptr<Starship> &playerMothership, std::unique_ptr<Starship> &enemyMothership, sf::View &displayView);
     ~MothershipStatusDisplay() = default;
 
     void Update(sf::RenderWindow& window, sf::Time deltaTime);

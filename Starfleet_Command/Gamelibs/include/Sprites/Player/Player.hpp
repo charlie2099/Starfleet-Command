@@ -1,6 +1,6 @@
 #ifndef STARFLEET_COMMAND_PLAYER_HPP
 #define STARFLEET_COMMAND_PLAYER_HPP
-#include "Interfaces/IStarship.hpp"
+#include "Sprites/Starships/Starship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 #include "ScrapMetalManager.hpp"
 #include <functional>
@@ -35,7 +35,7 @@ public:
 
     /// Modifiers
     void SetMothershipPosition(sf::Vector2f pos);
-    void SetStarshipPosition(std::unique_ptr<IStarship>& ship, sf::Vector2f pos);
+    void SetStarshipPosition(std::unique_ptr<Starship>& ship, sf::Vector2f pos);
     void SetTeamColour(sf::Color colour);
     void SpendScrap(int buildCost);
     void CollectScrap(int scrapAmount);
@@ -43,8 +43,8 @@ public:
     void SetScrapTextPosition(sf::Vector2<float> pos);
 
     /// Accessors
-    std::vector<std::unique_ptr<IStarship>> &GetStarships() { return starships; }
-    std::unique_ptr<IStarship> &GetMothership() { return starships[0]; }
+    std::vector<std::unique_ptr<Starship>> &GetStarships() { return starships; }
+    std::unique_ptr<Starship> &GetMothership() { return starships[0]; }
     sf::FloatRect  GetMothershipBounds() const { return starships[0]->GetSpriteComponent().GetSprite().getGlobalBounds(); }
     sf::Vector2<float> GetMothershipPos() { return starships[0]->GetPos(); }
     int GetStarshipCount() { return starships.size(); }
@@ -61,7 +61,7 @@ public:
 private:
     void InvokeBasicEvent(EventID eventId);
     void InvokeAgnosticEvent(EventID eventId, const std::any& anyData);
-    std::vector<std::unique_ptr<IStarship>> starships{};
+    std::vector<std::unique_ptr<Starship>> starships{};
     std::unique_ptr<ScrapMetalManager> _scrapMetalManager;
     sf::Vector2<float> _scrapTextPos;
     sf::Color _teamColour;

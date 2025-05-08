@@ -7,7 +7,7 @@
 #include "Utility/JsonColourMapping.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
 #include "Sprites/Player/Player.hpp"
-#include "Interfaces/IStarship.hpp"
+#include "Sprites/Starships/Starship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 #include "SpaceLane.hpp"
 #include "Sprites/UI/ProgressBar.hpp"

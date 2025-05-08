@@ -4,6 +4,7 @@
 #include "Utility/CustomFonts.hpp"
 #include "Utility/Vector.hpp"
 #include "Utility/Cursor.hpp"
+#include "Sprites/UI/Panel.hpp"
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -18,7 +19,8 @@ class GameSettings
 public:
     enum EventID
     {
-        SETTINGS_UPDATED = 0
+        SETTINGS_UPDATED = 0,
+        SETTINGS_SAVED = 1
     };
 
     /*enum SettingsType { TOGGLE, COLOUR_PICKER };*/
@@ -59,6 +61,8 @@ private:
     std::vector<sf::Sprite> _rightArrowSprite;
     sf::Texture _leftArrowTexture;
     sf::Texture _rightArrowTexture;
+    Panel _saveButtonPanel;
+    //bool _isSaveButtonVisible = false;
 };
 
 #endif //STARFLEET_COMMAND_GAMESETTINGS_HPP

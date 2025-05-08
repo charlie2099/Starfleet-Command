@@ -1,6 +1,6 @@
 #include "Sprites/Starships/StarshipFactory.hpp"
 
-std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP_TYPE shipType)
+std::unique_ptr<Starship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP_TYPE shipType)
 {
     switch (shipType)
     {
@@ -13,7 +13,7 @@ std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP
     }
 }
 
-std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP_TYPE shipType, int spacelane)
+std::unique_ptr<Starship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP_TYPE shipType, int spacelane)
 {
     switch (shipType)
     {
@@ -26,58 +26,28 @@ std::unique_ptr<IStarship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP
     }
 }
 
-StarshipFactory::STARSHIP_TYPE StarshipFactory::GetStarshipType(std::unique_ptr<IStarship>& starship)
+StarshipFactory::STARSHIP_TYPE StarshipFactory::GetStarshipType(std::unique_ptr<Starship>& starship)
 {
-    if(starship.get() == dynamic_cast<LightFighter*>(starship.get()))
-    {
-        return STARSHIP_TYPE::LIGHTFIGHTER;
-    }
-    else if(starship.get() == dynamic_cast<HeavyFighter*>(starship.get()))
-    {
-        return STARSHIP_TYPE::HEAVYFIGHTER;
-    }
-    else if(starship.get() == dynamic_cast<SupportFrigate*>(starship.get()))
-    {
-        return STARSHIP_TYPE::SUPPORT_FRIGATE;
-    }
-    else if(starship.get() == dynamic_cast<Dreadnought*>(starship.get()))
-    {
-        return STARSHIP_TYPE::DREADNOUGHT;
-    }
-    else if(starship.get() == dynamic_cast<Battleship*>(starship.get()))
-    {
-        return STARSHIP_TYPE::BATTLESHIP;
-    }
-    else if(starship.get() == dynamic_cast<Mothership*>(starship.get()))
-    {
-        return STARSHIP_TYPE::MOTHERSHIP;
-    }
+    std::string name = starship->GetStarshipName();
+
+    if (name == "Light Fighter") return STARSHIP_TYPE::LIGHTFIGHTER;
+    if (name == "Heavy Fighter") return STARSHIP_TYPE::HEAVYFIGHTER;
+    if (name == "Support Frigate") return STARSHIP_TYPE::SUPPORT_FRIGATE;
+    if (name == "Dreadnought") return STARSHIP_TYPE::DREADNOUGHT;
+    if (name == "Battleship") return STARSHIP_TYPE::BATTLESHIP;
+    if (name == "Mothership") return STARSHIP_TYPE::MOTHERSHIP;
+
+    throw std::runtime_error("Unknown starship type");
 }
 
 StarshipFactory::STARSHIP_TYPE StarshipFactory::GetStarshipTypeFromString(const std::string& starshipTypeName)
 {
-    if(starshipTypeName == "LIGHTFIGHTER")
-    {
-        return STARSHIP_TYPE::LIGHTFIGHTER;
-    }
-    else if(starshipTypeName == "HEAVYFIGHTER")
-    {
-        return STARSHIP_TYPE::HEAVYFIGHTER;
-    }
-    else if(starshipTypeName == "SUPPORT_FRIGATE")
-    {
-        return STARSHIP_TYPE::SUPPORT_FRIGATE;
-    }
-    else if(starshipTypeName == "DREADNOUGHT")
-    {
-        return STARSHIP_TYPE::DREADNOUGHT;
-    }
-    else if(starshipTypeName == "BATTLESHIP")
-    {
-        return STARSHIP_TYPE::BATTLESHIP;
-    }
-    else if(starshipTypeName == "MOTHERSHIP")
-    {
-        return STARSHIP_TYPE::MOTHERSHIP;
-    }
+    if(starshipTypeName == "LIGHTFIGHTER") return STARSHIP_TYPE::LIGHTFIGHTER;
+    if(starshipTypeName == "HEAVYFIGHTER") return STARSHIP_TYPE::HEAVYFIGHTER;
+    if(starshipTypeName == "SUPPORT_FRIGATE") return STARSHIP_TYPE::SUPPORT_FRIGATE;
+    if(starshipTypeName == "DREADNOUGHT") return STARSHIP_TYPE::DREADNOUGHT;
+    if(starshipTypeName == "BATTLESHIP") return STARSHIP_TYPE::BATTLESHIP;
+    if(starshipTypeName == "MOTHERSHIP") return STARSHIP_TYPE::MOTHERSHIP;
+
+    throw std::runtime_error("Unknown starship type name: " + starshipTypeName);
 }

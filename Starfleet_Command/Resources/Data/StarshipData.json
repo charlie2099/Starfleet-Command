@@ -5,7 +5,10 @@
       "Health" : 0,
       "Damage" : 0,
       "Speed": 0,
-      "TimeToDeploy": 0
+      "DeployTime": 0,
+      "AttackLanes" : [0, 0],
+      "AttackRange" : 100,
+      "AttackSpeed" : 10
     },
     {
       "Name": "Heavy Fighter",
@@ -19,28 +22,33 @@
       "Health" : 0,
       "Damage" : 0,
       "Speed": 0,
-      "TimeToDeploy": 0
+      "TimeToDeploy": 0,
+      "AttackLanes" : [0]
     },
     {
       "Name": "Dreadnought",
       "Health" : 0,
       "Damage" : 0,
       "Speed": 0,
-      "TimeToDeploy": 0
+      "TimeToDeploy": 0,
+      "AttackLanes" : [-2, -1, 0, 1, 2]
     },
     {
       "Name": "Battleship",
       "Health" : 0,
       "Damage" : 0,
       "Speed": 0,
-      "TimeToDeploy": 0
+      "Cost" : 0,
+      "TimeToDeploy": 0,
+      "AttackLanes" : [-1, 0, 1]
     },
     {
       "Name": "Mothership",
-      "Health" : 0,
-      "Damage" : 0,
-      "Speed": 0,
-      "TimeToDeploy": 0
+      "Health" : 10000,
+      "StartingScrap" : 5000,
+      "ScrapCollectionService_ScrapAccumulationFrequencyInSeconds" : 5,
+      "ScrapCollectionService_ScrapIncreasePerUpgrade" : 50,
+      "ScrapCollectionService_CostIncreasePerUpgrade" : 5000
     }
   ]
 }

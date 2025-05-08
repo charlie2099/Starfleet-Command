@@ -125,7 +125,6 @@ void AiDirector::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     _debugEnemyMaxPopulationText.setString("Max Enemy Pop: " + std::to_string(static_cast<int>(_maxEnemyPopulation)));
     _debugEnemyMaxPopulationText.setPosition({_debugPerceivedIntensityText.getPosition().x, _debugDirectorBehaviourUpdateRateText.getPosition().y});
-
 }
 
 void AiDirector::Render(sf::RenderWindow &window)

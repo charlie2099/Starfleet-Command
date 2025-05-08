@@ -1,6 +1,6 @@
 #include "MothershipStatusDisplay.hpp"
 
-MothershipStatusDisplay::MothershipStatusDisplay(std::unique_ptr<IStarship> &playerMothership, std::unique_ptr<IStarship> &enemyMothership, sf::View &displayView)
+MothershipStatusDisplay::MothershipStatusDisplay(std::unique_ptr<Starship> &playerMothership, std::unique_ptr<Starship> &enemyMothership, sf::View &displayView)
 : _displayView(displayView)
 {
     _mothershipHealthBar[0] = std::make_unique<HealthBar>(playerMothership->GetHealthComponent(), true);

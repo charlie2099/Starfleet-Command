@@ -37,51 +37,9 @@ Mothership::Mothership(int spacelane)
     _attackableLanes.emplace_back(4);
 }
 
-void Mothership::EventHandler(sf::RenderWindow &window, sf::Event &event)
-{
-    auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-    auto worldPositionOfMouse = window.mapPixelToCoords(mouse_pos, window.getView()); // Mouse position translated into world coordinates
-
-    if(Chilli::Vector::BoundsCheck(worldPositionOfMouse, _spriteComponent.GetSprite().getGlobalBounds()))
-    {
-        //_isAttackRangeCircleVisible = true;
-        _isMouseOver = true;
-    }
-    else
-    {
-        //_isAttackRangeCircleVisible = false;
-        _isMouseOver = false;
-    }
-}
-
 void Mothership::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    for(auto& projectiles : _projectile)
-    {
-        projectiles->Update(window, deltaTime);
-    }
-
-    for (int i = 0; i < _projectile.size(); ++i)
-    {
-        if(Chilli::Vector::Distance(GetPos(), _projectile[i]->GetPos()) > Constants::WINDOW_WIDTH)
-        {
-            _projectile.erase(_projectile.begin() + i);
-        }
-    }
-
-    _healthComponent.Update(window, deltaTime);
-
-    auto ship_bounds = _spriteComponent.GetSprite().getGlobalBounds();
-    auto bar_bounds = _healthBar->GetSpriteComponent().GetSprite().getGlobalBounds();
-    auto xPos = (_spriteComponent.GetPos().x) - (ship_bounds.width/2.0f + bar_bounds.width/2.0f);
-    auto yPos = (_spriteComponent.GetPos().y + ship_bounds.height/2.0f) - (ship_bounds.height + bar_bounds.height*4);
-    _healthBar->Update(window, deltaTime);
-    _healthBar->SetPos({xPos, yPos});
-
-    if(_healthBar->GetHealth() < _maximumHealth/* and _healthBar->GetHealth() > 0*/)
-    {
-        _isHealthBarVisible = true;
-    }
+    Starship::Update(window, deltaTime);
 
     if(_isDamaged)
     {
@@ -95,46 +53,9 @@ void Mothership::Update(sf::RenderWindow &window, sf::Time deltaTime)
     }
 }
 
-void Mothership::Render(sf::RenderWindow &window)
+bool Mothership::CanEngageWith(const std::unique_ptr<Starship> &starship)
 {
-    for(auto& projectiles : _projectile)
-    {
-        projectiles->Render(window);
-    }
-
-    _spriteComponent.Render(window);
-    _healthComponent.Render(window);
-
-    if(_isHealthBarVisible)
-    {
-        _healthBar->Render(window);
-    }
-}
-
-void Mothership::Move(float xOffset, float yOffset)
-{
-    _spriteComponent.Move(xOffset,  yOffset);
-}
-
-void Mothership::ShootAt(sf::Vector2f target)
-{
-    if(_damagingProjectileSpawnTimer < _damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds())
-    {
-        _damagingProjectileSpawnTimer = _damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds();
-    }
-
-    if(_damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds() >= _damagingProjectileSpawnTimer)
-    {
-        auto spawnPos = _spriteComponent.GetPos();
-        _projectile.emplace_back(std::make_unique<Projectile>(_projectileSize, _projectileColour, spawnPos, target));
-
-        _damagingProjectileSpawnTimer += _fireRate;
-    }
-}
-
-void Mothership::DestroyProjectile(int projectileIndex)
-{
-    _projectile.erase(_projectile.begin() + projectileIndex);
+    return this->GetLaneIndex() == starship->GetLaneIndex();
 }
 
 void Mothership::TakeDamage(float damageAmount)
@@ -143,93 +64,4 @@ void Mothership::TakeDamage(float damageAmount)
     _spriteComponent.GetSprite().setColor(sf::Color::Red);
     _isDamaged = true;
     _damageTimer = 0.05F;
-}
-
-void Mothership::ReplenishHealth(float healthAmount)
-{
-    _healthComponent.ReplenishHealth(_maximumHealth, healthAmount, GetPos());
-}
-
-void Mothership::SetHealth(float health)
-{
-    _healthComponent.SetHealth(health);
-}
-
-void Mothership::SetHealthBarVisibility(bool visible)
-{
-    _isHealthBarVisible = visible;
-}
-
-void Mothership::SetDamage(float damage)
-{
-    _maximumDamage = damage;
-}
-
-void Mothership::SetSpeed(float speed)
-{
-    _speed = speed;
-}
-
-void Mothership::SetAcceleration(float acceleration)
-{
-    _acceleration = acceleration;
-}
-
-void Mothership::SetAttackRange(float range)
-{
-    _attackRange = range;
-}
-
-void Mothership::SetColour(sf::Color &colour)
-{
-    _spriteComponent.GetSprite().setColor(colour);
-    _starshipColour = colour;
-}
-
-void Mothership::SetPosition(sf::Vector2f pos)
-{
-    _spriteComponent.SetPos(pos);
-}
-
-void Mothership::SetRotation(float rot)
-{
-    _spriteComponent.GetSprite().setRotation(rot);
-    _rotation = rot;
-}
-
-bool Mothership::IsEnemyInRange(const std::unique_ptr<IStarship> &starship)
-{
-    return Chilli::Vector::Distance(GetPos(), starship->GetPos()) <= GetAttackRange();
-}
-
-bool Mothership::IsFriendlyStarshipAhead(const std::unique_ptr<IStarship> &starship)
-{
-    bool isAhead;
-
-    if(starship->GetRotation() == 180) // Starships traveling left
-    {
-        isAhead = starship->GetPos().x < this->GetPos().x;
-    }
-    else // Starships traveling right
-    {
-        isAhead = starship->GetPos().x > this->GetPos().x;
-    }
-
-    float distance = std::abs(starship->GetPos().x - this->GetPos().x);
-    return isAhead and distance < 100.0F;
-}
-
-bool Mothership::IsEnemyStarshipAhead(const std::unique_ptr<IStarship> &enemyStarship)
-{
-    return Chilli::Vector::Distance(this->GetPos(), enemyStarship->GetPos()) < 100;
-}
-
-bool Mothership::CollidesWith(sf::Rect<float> spriteBounds)
-{
-    return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
-}
-
-bool Mothership::CanEngageWith(const std::unique_ptr<IStarship> &starship)
-{
-    return this->GetLaneIndex() == starship->GetLaneIndex();
 }

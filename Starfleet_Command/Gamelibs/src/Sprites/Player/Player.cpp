@@ -61,7 +61,7 @@ void Player::MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset)
 
 void Player::CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spacelane)
 {
-    std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(starshipType, spacelane);
+    std::unique_ptr<Starship> newStarship = StarshipFactory::CreateShip(starshipType, spacelane);
     newStarship->SetColour(_teamColour);
     newStarship->SetProjectileColour(_teamColour);
     starships.emplace_back(std::move(newStarship));
@@ -78,7 +78,7 @@ void Player::SetMothershipPosition(sf::Vector2f pos)
     starships[0]->SetPosition(pos);
 }
 
-void Player::SetStarshipPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f pos)
+void Player::SetStarshipPosition(std::unique_ptr<Starship> &ship, sf::Vector2f pos)
 {
     ship->SetPosition(pos);
 }

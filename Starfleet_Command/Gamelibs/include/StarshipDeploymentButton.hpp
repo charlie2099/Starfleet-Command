@@ -2,7 +2,7 @@
 #define STARFLEET_COMMAND_STARSHIPDEPLOYMENTBUTTON_HPP
 #include "Sprites/UI/GUI/Button.hpp"
 #include "Utility/CustomFonts.hpp"
-#include "Interfaces/IStarship.hpp"
+#include "Sprites/Starships/Starship.hpp"
 #include "ScrapMetalManager.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 
@@ -37,7 +37,7 @@ private:
     std::unique_ptr<Button> _button;
     sf::Text _nameText;
     sf::Vector2<float> _position;
-    std::unique_ptr<IStarship> _starshipTemplateToBeDeployed;
+    std::unique_ptr<Starship> _starshipTemplateToBeDeployed;
     SpriteComponent _previewStarshipSprite;
     bool _isStarshipPreviewSpriteVisible = false;
     bool _isPlacingStarship = false;

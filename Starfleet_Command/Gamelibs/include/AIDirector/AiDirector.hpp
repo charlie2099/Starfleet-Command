@@ -76,7 +76,7 @@ private:
     std::unique_ptr<Enemy>& _enemy;
     std::vector<std::unique_ptr<SpaceLane>>& _spacelanes;
     std::unique_ptr<StarshipDeploymentManager> _starshipDeploymentManager;
-    std::array<std::unique_ptr<IStarship>, 5> _starshipTemplateToBeDeployed;
+    std::array<std::unique_ptr<Starship>, 5> _starshipTemplateToBeDeployed;
     sf::Clock _gameClock;
     float _behaviourUpdateRate = 5.0F;
     float _behaviourUpdateTimer = 5.0F;

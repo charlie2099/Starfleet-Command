@@ -53,7 +53,7 @@ void Enemy::MoveStarship(int starshipIndex, sf::Vector2<float> positionOffset)
 
 void Enemy::CreateStarship(StarshipFactory::STARSHIP_TYPE starshipType, int spacelane)
 {
-    std::unique_ptr<IStarship> newStarship = StarshipFactory::CreateShip(starshipType, spacelane);
+    std::unique_ptr<Starship> newStarship = StarshipFactory::CreateShip(starshipType, spacelane);
     newStarship->SetColour(_teamColour);
     newStarship->SetProjectileColour(_teamColour);
     starships.emplace_back(std::move(newStarship));
@@ -75,12 +75,12 @@ void Enemy::SetMothershipRotation(float rot)
     starships[0]->SetRotation(rot);
 }
 
-void Enemy::SetStarshipPosition(std::unique_ptr<IStarship> &ship, sf::Vector2f pos)
+void Enemy::SetStarshipPosition(std::unique_ptr<Starship> &ship, sf::Vector2f pos)
 {
     ship->SetPosition(pos);
 }
 
-void Enemy::SetStarshipRotation(std::unique_ptr<IStarship> &ship, float rot)
+void Enemy::SetStarshipRotation(std::unique_ptr<Starship> &ship, float rot)
 {
     ship->SetRotation(rot);
 }

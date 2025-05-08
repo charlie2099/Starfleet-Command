@@ -16,6 +16,12 @@ GameSettings::GameSettings()
 
     _leftArrowTexture.loadFromFile("Resources/Textures/left.png");
     _rightArrowTexture.loadFromFile("Resources/Textures/right.png");
+
+    _saveButtonPanel.SetFont(Panel::TextFont::BOLD);
+    _saveButtonPanel.SetText("APPLY");
+    _saveButtonPanel.SetTextSize(14);
+    _saveButtonPanel.SetSize(20, 15);
+    _saveButtonPanel.SetPanelColour(sf::Color(22, 155, 164, 100));
 }
 
 void GameSettings::EventHandler(sf::RenderWindow &window, sf::Event &event)
@@ -37,7 +43,7 @@ void GameSettings::EventHandler(sf::RenderWindow &window, sf::Event &event)
                 _settingsOptions[i].valueText.setString(_settingsOptions[i].optionValues[_settingsOptions[i].selectedValueIndex]);
                 auto statusTextXPos = _settingsPanel.getPosition().x + _settingsPanel.getGlobalBounds().width * 0.725F - _settingsOptions[i].valueText.getGlobalBounds().width / 2.0F;
                 _settingsOptions[i].valueText.setPosition({statusTextXPos, _settingsOptions[i].labelText.getPosition().y});
-
+                //_isSaveButtonVisible = true;
                 InvokeBasicEvent(SETTINGS_UPDATED);
             }
         }
@@ -53,9 +59,25 @@ void GameSettings::EventHandler(sf::RenderWindow &window, sf::Event &event)
                 _settingsOptions[i].valueText.setString(_settingsOptions[i].optionValues[_settingsOptions[i].selectedValueIndex]);
                 auto statusTextXPos = _settingsPanel.getPosition().x + _settingsPanel.getGlobalBounds().width * 0.725F - _settingsOptions[i].valueText.getGlobalBounds().width / 2.0F;
                 _settingsOptions[i].valueText.setPosition({statusTextXPos, _settingsOptions[i].labelText.getPosition().y});
-
+                //_isSaveButtonVisible = true;
                 InvokeBasicEvent(SETTINGS_UPDATED);
             }
+        }
+    }
+
+    /*if(not _isSaveButtonVisible)
+    {
+        return;
+    }*/
+
+    _saveButtonPanel.EventHandler(window, event);
+
+    if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
+    {
+        if(_saveButtonPanel.IsClicked())
+        {
+            InvokeBasicEvent(SETTINGS_SAVED);
+            //_isSaveButtonVisible = false;
         }
     }
 }
@@ -85,6 +107,24 @@ void GameSettings::Update(sf::RenderWindow& window, sf::Time deltaTime)
             _rightArrowSprite[i].setColor(Chilli::Colour::LIGHTBLUE);
         }
     }
+
+    /*if(not _isSaveButtonVisible)
+    {
+        return;
+    }*/
+
+    _saveButtonPanel.Update(window);
+
+    if(_saveButtonPanel.IsHoveredOver())
+    {
+        _saveButtonPanel.SetPanelColour(sf::Color(22, 155, 164, 65));
+        _saveButtonPanel.SetText(_saveButtonPanel.GetText().getString(), sf::Color::Cyan);
+    }
+    else if(not _saveButtonPanel.IsHoveredOver())
+    {
+        _saveButtonPanel.SetPanelColour(sf::Color(22, 155, 164, 100));
+        _saveButtonPanel.SetText(_saveButtonPanel.GetText().getString(), Chilli::Colour::LIGHTBLUE);
+    }
 }
 
 void GameSettings::Render(sf::RenderWindow& window)
@@ -98,6 +138,8 @@ void GameSettings::Render(sf::RenderWindow& window)
         window.draw(_leftArrowSprite[i]);
         window.draw(_rightArrowSprite[i]);
     }
+
+    _saveButtonPanel.Render(window);
 }
 
 void GameSettings::RepositionPanel(float xPos, float yPos)
@@ -113,6 +155,8 @@ void GameSettings::RepositionPanel(float xPos, float yPos)
         _leftArrowSprite[i].setPosition({_settingsPanel.getPosition().x + _settingsPanel.getSize().x / 2.0F, _settingsOptions[i].valueText.getPosition().y + 1.0F});
         _rightArrowSprite[i].setPosition({statusTextXPos + _settingsPanel.getGlobalBounds().width * 0.225F + _settingsOptions[i].valueText.getGlobalBounds().width / 2.0F - 10.0F, _settingsOptions[i].valueText.getPosition().y + 1.0F});
     }
+
+    _saveButtonPanel.SetPosition(_settingsPanel.getPosition().x + _settingsPanel.getSize().x/2.0F - _saveButtonPanel.GetTextSize().width/2.0F, _settingsPanel.getPosition().y + _settingsPanel.getSize().y - _saveButtonPanel.GetPanelSize().height - 7.5F);
 }
 
 void GameSettings::AddSettingOption(const std::string &settingName, const std::vector<std::string>& settingOptions)
