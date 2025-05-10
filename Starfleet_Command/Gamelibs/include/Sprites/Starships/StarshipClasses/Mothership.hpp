@@ -7,9 +7,8 @@
 class Mothership : public Starship
 {
 public:
-    explicit Mothership(int spacelane);
+    explicit Mothership(int spawnSpacelane, const std::string& starshipTypeName);
     void Update(sf::RenderWindow& window, sf::Time deltaTime) override;
-    bool CanEngageWith(const std::unique_ptr<Starship> &starship) override;
     void TakeDamage(float damageAmount) override;
     void SetDamageLocation(sf::Vector2<float> location) { _damageLocation = location; }; /// Make this a virtual method in Starship?
 

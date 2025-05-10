@@ -7,8 +7,7 @@
 class Dreadnought : public Starship
 {
 public:
-    explicit Dreadnought(int spacelane);
-    bool CanEngageWith(const std::unique_ptr<Starship> &starship) override;
+    explicit Dreadnought(int spawnSpacelane, const std::string& starshipTypeName);
 };
 
 #endif //STARFLEET_COMMAND_DREADNOUGHT_HPP

@@ -1,5 +1,48 @@
 #include "Sprites/Starships/Starship.hpp"
 
+Starship::Starship(int spawnSpacelane, const std::string& starshipTypeName)
+{
+    auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
+    if(starshipData.contains("StarshipData"))
+    {
+        for(const auto& shipData : starshipData["StarshipData"])
+        {
+            if(shipData.contains("Name") && shipData["Name"] == starshipTypeName)
+            {
+                _starshipName = shipData["Name"];
+                _starshipAbbreviation = shipData["Abbreviation"];
+                _healthComponent.SetHealth(shipData["Health"]);
+                _maximumDamage = shipData["MaxDamage"];
+                _damageScaleFactor = shipData["DamageScaleFactor"];
+                _speed = shipData["Speed"];
+                _startSpeed = _speed;
+                _deployTimeSpeed = shipData["DeployTime"];
+                _fireRate = shipData["FireRate"];
+                _attackRange = shipData["AttackRange"];
+                _buildCost = shipData["BuildCost"];
+
+                std::vector<int> attackLanes = shipData["AttackLanes"];
+                for (const auto& laneOffset : attackLanes)
+                {
+                    int attackableLane = spawnSpacelane + laneOffset;
+
+                    const int SPACELANE_COUNT = 4;
+                    if(attackableLane >= 0 && attackableLane <= SPACELANE_COUNT)
+                    {
+                        _attackableLanes.emplace_back(attackableLane);
+                    }
+                }
+
+                break;
+            }
+        }
+    }
+
+    _healthBar = std::make_unique<HealthBar>(_healthComponent, false);
+    _healthBar->SetMaxHealth(_healthComponent.GetHealth());
+    _maximumHealth = _healthComponent.GetHealth();
+}
+
 void Starship::EventHandler(sf::RenderWindow &window, sf::Event &event)
 {
     auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
@@ -124,6 +167,21 @@ bool Starship::IsEnemyStarshipAhead(const std::unique_ptr<Starship> &enemyStarsh
     return Chilli::Vector::Distance(this->GetPos(), enemyStarship->GetPos()) < 100;
 }
 
+bool Starship::CanEngageWith(const std::unique_ptr<Starship> &enemyStarship)
+{
+    int enemyLane = enemyStarship->GetLaneIndex();
+
+    for(const auto& lane : _attackableLanes)
+    {
+        if (lane == enemyLane)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 bool Starship::CollidesWith(sf::Rect<float> spriteBounds)
 {
     return _spriteComponent.GetSprite().getGlobalBounds().intersects(spriteBounds);
@@ -200,3 +258,5 @@ void Starship::SetProjectileColour(sf::Color colour)
         _projectileColour = Projectile::WHITE;
     }
 }
+
+

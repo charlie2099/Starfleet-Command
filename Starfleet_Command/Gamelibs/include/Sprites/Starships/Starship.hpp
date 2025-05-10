@@ -15,6 +15,7 @@
 class Starship
 {
 public:
+    explicit Starship(int spawnSpacelane, const std::string& starshipTypeName);
     virtual ~Starship() = default;
 
     virtual void EventHandler(sf::RenderWindow& window, sf::Event& event);
@@ -31,7 +32,7 @@ public:
     virtual bool IsFriendlyStarshipAhead(const std::unique_ptr<Starship> &starship);
     virtual bool IsEnemyStarshipAhead(const std::unique_ptr<Starship> &enemyStarship);
     bool IsInSameLaneAs(const std::unique_ptr<Starship> &starship) { return this->GetLaneIndex() == starship->GetLaneIndex(); }
-    virtual bool CanEngageWith(const std::unique_ptr<Starship> &starship)  = 0;
+    virtual bool CanEngageWith(const std::unique_ptr<Starship> &enemyStarship);
     virtual bool CollidesWith(sf::Rect<float> spriteBounds);
     bool IsHealthBarVisible() const { return _isHealthBarVisible; }
     bool IsMouseOver() const { return _isMouseOver; };
@@ -86,7 +87,7 @@ protected:
     std::string _starshipName;
     std::string _starshipAbbreviation;
     sf::Color _starshipColour;
-    float _rotation;
+    float _rotation{};
     float _maximumHealth;
     float _maximumDamage;
     float _damageScaleFactor = 1.0F;
@@ -100,10 +101,10 @@ protected:
     bool _isHealthBarVisible = false;
     float _damagingProjectileSpawnTimer = 0;
     sf::Clock _damagingProjectileSpawnTimerClock;
-    int _assignedLaneIndex;
+    int _assignedLaneIndex{};
     bool _isMouseOver = false;
     std::vector<int> _attackableLanes;
-    int _starshipIndex;
+    int _starshipIndex{};
     const std::string DATA_DIR_PATH = "Resources/Data/";
     const std::string STARSHIP_DATA_FILE_PATH = (DATA_DIR_PATH + "StarshipData.json");
 };

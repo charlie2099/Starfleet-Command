@@ -7,8 +7,7 @@
 class LightFighter : public Starship
 {
 public:
-    explicit LightFighter(int spacelane);
-    bool CanEngageWith(const std::unique_ptr<Starship> &starship) override;
+    explicit LightFighter(int spawnSpacelane, const std::string& starshipTypeName);
 };
 
 #endif //STARFLEET_COMMAND_LIGHTFIGHTER_HPP

@@ -7,8 +7,7 @@
 class Battleship : public Starship
 {
 public:
-    explicit Battleship(int spacelane);
-    bool CanEngageWith(const std::unique_ptr<Starship> &starship) override;
+    explicit Battleship(int spawnSpacelane, const std::string& starshipTypeName);
 };
 
 #endif //STARFLEET_COMMAND_BATTLESHIP_HPP

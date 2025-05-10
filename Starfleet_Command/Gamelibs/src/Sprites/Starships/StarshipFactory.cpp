@@ -4,25 +4,25 @@ std::unique_ptr<Starship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP_
 {
     switch (shipType)
     {
-        case LIGHTFIGHTER: return std::make_unique<LightFighter>(0);
-        case HEAVYFIGHTER: return std::make_unique<HeavyFighter>(0);
-        case SUPPORT_FRIGATE: return std::make_unique<SupportFrigate>(0);
-        case DREADNOUGHT: return std::make_unique<Dreadnought>(0);
-        case BATTLESHIP: return std::make_unique<Battleship>(0);
-        case MOTHERSHIP: return std::make_unique<Mothership>(0);
+        case LIGHTFIGHTER: return std::make_unique<LightFighter>(0, "Light Fighter");
+        case HEAVYFIGHTER: return std::make_unique<HeavyFighter>(0, "Heavy Fighter");
+        case SUPPORT_FRIGATE: return std::make_unique<SupportFrigate>(0, "Support Frigate");
+        case DREADNOUGHT: return std::make_unique<Dreadnought>(0, "Dreadnought");
+        case BATTLESHIP: return std::make_unique<Battleship>(0, "Battleship");
+        case MOTHERSHIP: return std::make_unique<Mothership>(0, "Mothership");
     }
 }
 
-std::unique_ptr<Starship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP_TYPE shipType, int spacelane)
+std::unique_ptr<Starship> StarshipFactory::CreateShip(StarshipFactory::STARSHIP_TYPE shipType, int spawnSpacelane)
 {
     switch (shipType)
     {
-        case LIGHTFIGHTER: return std::make_unique<LightFighter>(spacelane);
-        case HEAVYFIGHTER: return std::make_unique<HeavyFighter>(spacelane);
-        case SUPPORT_FRIGATE: return std::make_unique<SupportFrigate>(spacelane);
-        case DREADNOUGHT: return std::make_unique<Dreadnought>(spacelane);
-        case BATTLESHIP: return std::make_unique<Battleship>(spacelane);
-        case MOTHERSHIP: return std::make_unique<Mothership>(spacelane);
+        case LIGHTFIGHTER: return std::make_unique<LightFighter>(spawnSpacelane, "Light Fighter");
+        case HEAVYFIGHTER: return std::make_unique<HeavyFighter>(spawnSpacelane, "Heavy Fighter");
+        case SUPPORT_FRIGATE: return std::make_unique<SupportFrigate>(spawnSpacelane, "Support Frigate");
+        case DREADNOUGHT: return std::make_unique<Dreadnought>(spawnSpacelane, "Dreadnought");
+        case BATTLESHIP: return std::make_unique<Battleship>(spawnSpacelane, "Battleship");
+        case MOTHERSHIP: return std::make_unique<Mothership>(spawnSpacelane, "Mothership");
     }
 }
 
@@ -50,4 +50,16 @@ StarshipFactory::STARSHIP_TYPE StarshipFactory::GetStarshipTypeFromString(const 
     if(starshipTypeName == "MOTHERSHIP") return STARSHIP_TYPE::MOTHERSHIP;
 
     throw std::runtime_error("Unknown starship type name: " + starshipTypeName);
+}
+
+std::string StarshipFactory::GetStarshipNameFromType(const StarshipFactory::STARSHIP_TYPE starshipType)
+{
+    if(starshipType == STARSHIP_TYPE::LIGHTFIGHTER) return "LIGHTFIGHTER";
+    if(starshipType == STARSHIP_TYPE::HEAVYFIGHTER) return "HEAVYFIGHTER";
+    if(starshipType == STARSHIP_TYPE::SUPPORT_FRIGATE) return "SUPPORT_FRIGATE";
+    if(starshipType == STARSHIP_TYPE::DREADNOUGHT) return "DREADNOUGHT";
+    if(starshipType == STARSHIP_TYPE::BATTLESHIP) return "BATTLESHIP";
+    if(starshipType == STARSHIP_TYPE::MOTHERSHIP) return "MOTHERSHIP";
+
+    throw std::runtime_error("Unknown starship type name");
 }

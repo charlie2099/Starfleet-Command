@@ -8,8 +8,7 @@
 class SupportFrigate : public Starship, public IHealer
 {
 public:
-    explicit SupportFrigate(int spacelane);
-    bool CanEngageWith(const std::unique_ptr<Starship> &starship) override;
+    explicit SupportFrigate(int spawnSpacelane, const std::string& starshipTypeName);
     void ShootHealAt(const std::unique_ptr<Starship> &friendlyStarship) override;
 
 private:

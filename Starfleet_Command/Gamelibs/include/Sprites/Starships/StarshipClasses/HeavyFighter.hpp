@@ -7,8 +7,7 @@
 class HeavyFighter : public Starship
 {
 public:
-    explicit HeavyFighter(int spacelane);
-    bool CanEngageWith(const std::unique_ptr<Starship> &starship) override;
+    explicit HeavyFighter(int spawnSpacelane, const std::string& starshipTypeName);
 };
 
 #endif //STARFLEET_COMMAND_HEAVYFIGHTER_HPP

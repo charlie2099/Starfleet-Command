@@ -1,40 +1,13 @@
 #include "Sprites/Starships/StarshipClasses/HeavyFighter.hpp"
 
-HeavyFighter::HeavyFighter(int spacelane)
+HeavyFighter::HeavyFighter(int spawnSpacelane, const std::string& starshipTypeName) : Starship(spawnSpacelane, starshipTypeName)
 {
-    auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
-    if(starshipData.contains("StarshipData"))
-    {
-        for(const auto& shipData : starshipData["StarshipData"])
-        {
-            if(shipData.contains("Name") && shipData["Name"] == "Heavy Fighter")
-            {
-                _starshipName = shipData["Name"];
-                _starshipAbbreviation = shipData["Abbreviation"];
-                _healthComponent.SetHealth(shipData["Health"]);
-                _maximumDamage = shipData["MaxDamage"];
-                _damageScaleFactor = shipData["DamageScaleFactor"];
-                _speed = shipData["Speed"];
-                _startSpeed = _speed;
-                _deployTimeSpeed = shipData["DeployTime"];
-                _fireRate = shipData["FireRate"];
-                _attackRange = shipData["AttackRange"];
-                _buildCost = shipData["BuildCost"];
-                break;
-            }
-        }
-    }
-
     _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_1.png");
     _spriteComponent.GetSprite().scale({0.05F, 0.05F});
     _projectileSize = Projectile::REGULAR;
     _projectileColour = Projectile::BLUE;
-    _assignedLaneIndex = spacelane;
+    _assignedLaneIndex = spawnSpacelane;
     _starshipIndex = 1;
-
-    _healthBar = std::make_unique<HealthBar>(_healthComponent, false);
-    _healthBar->SetMaxHealth(_healthComponent.GetHealth());
-    _maximumHealth = _healthComponent.GetHealth();
 
     /// Change default origin to center
     sf::Vector2<float> centered_origin;
@@ -43,15 +16,9 @@ HeavyFighter::HeavyFighter(int spacelane)
     _spriteComponent.GetSprite().setOrigin(centered_origin);
 
     //auto callbackFnc1 = std::bind(&TestClass::TestFncForObserverToCall, testClass);
-    //_healthComponent.AddBasicObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc1});
-
-    _attackableLanes.emplace_back(spacelane);
+    //_healthComponent.AddBasicObserver({HealthComponent::HEALTH_DEPLETED, callbackFnc1}););
 }
 
-bool HeavyFighter::CanEngageWith(const std::unique_ptr<Starship> &starship)
-{
-    return this->GetLaneIndex() == starship->GetLaneIndex();
-}
 
 
 

@@ -9,19 +9,6 @@
       "IntensityRating" : 25.0
     },
     {
-      "Name" : "EnemyStarshipsInPlay",
-      "Type" : "EnemyStarshipsInPlay_IntensityRule",
-      "Enabled" : true,
-      "IntensityRatingPerStarship" : 0.25
-    },
-    {
-      "Name" : "PlayerScrapSurplus",
-      "Type" : "PlayerScrapSurplus_IntensityRule",
-      "Enabled" : true,
-      "ScrapAmount" : 5000,
-      "IntensityRating" : 10.0
-    },
-    {
       "Name" : "EnemyMothershipHealthLow",
       "Type" : "EnemyMothershipHealthLow_IntensityRule",
       "Enabled" : true,
@@ -33,6 +20,19 @@
       "Type" : "PlayerStarshipsInPlay_IntensityRule",
       "Enabled" : true,
       "IntensityRatingPerStarship" : -0.25
+    },
+    {
+      "Name" : "EnemyStarshipsInPlay",
+      "Type" : "EnemyStarshipsInPlay_IntensityRule",
+      "Enabled" : true,
+      "IntensityRatingPerStarship" : 0.25
+    },
+    {
+      "Name" : "PlayerScrapSurplus",
+      "Type" : "PlayerScrapSurplus_IntensityRule",
+      "Enabled" : true,
+      "ScrapAmount" : 5000,
+      "IntensityRating" : 10.0
     }
   ],
 
