@@ -72,6 +72,7 @@ private:
     const std::string FONTS_DIR_PATH = "Resources/Fonts/";
     const std::string TEXTURES_DIR_PATH = "Resources/Textures/";
     const std::string SETTINGS_FILE_PATH = (DATA_DIR_PATH + "GameSettings.json");
+    const std::string STARSHIP_DATA_FILE_PATH = (DATA_DIR_PATH + "StarshipData.json");
     const sf::Color DEFAULT_BUTTON_COLOUR = {22, 155, 164, 100};
     const sf::Color BUTTON_HIGHLIGHT_COLOUR = {22, 155, 164, 65};
     const sf::Color EXIT_BUTTON_HIGHLIGHT_COLOUR = {Chilli::Colour::LIGHTRED.r, Chilli::Colour::LIGHTRED.g, Chilli::Colour::LIGHTRED.b, 60};
@@ -98,9 +99,9 @@ private:
 
     /// Scrap Collector
     std::unique_ptr<ScrapCollectionUpgradeButton> _upgradePlayerScrapCollectionButton;
-    const int STARTING_SCRAP_METAL = 4000;
-    const float PLAYER_SCRAP_ACCUMULATION_RATE = 5.0F;
-    float _playerScrapAccumulationTimer = PLAYER_SCRAP_ACCUMULATION_RATE;
+    int startingScrapMetal;
+    float playerScrapAccumulationRate;
+    float _playerScrapAccumulationTimer;
     sf::Clock _playerScrapAccumulationTimerClock;
 
     /// Views (Main view & Minimap)

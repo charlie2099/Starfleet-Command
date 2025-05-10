@@ -62,7 +62,9 @@ private:
     sf::Texture _leftArrowTexture;
     sf::Texture _rightArrowTexture;
     Panel _saveButtonPanel;
-    //bool _isSaveButtonVisible = false;
+    sf::Text _settingsSavedText;
+    bool _isSettingsSavedTextVisible = false;
+    bool _isSaveButtonVisible = false;
 };
 
 #endif //STARFLEET_COMMAND_GAMESETTINGS_HPP

@@ -112,6 +112,7 @@ void MenuScene::InitEvents()
 void MenuScene::InitGameSettings()
 {
     _gameSettings = std::make_unique<GameSettings>();
+    _gameSettings->AddSettingOption("Fullscreen Mode", std::vector<std::string>{"OFF", "ON"});
     _gameSettings->AddSettingOption("Music", std::vector<std::string>{"OFF", "ON"});
     _gameSettings->AddSettingOption("Spacelanes", std::vector<std::string>{"OFF", "ON"});
     _gameSettings->AddSettingOption("Minimap", std::vector<std::string>{"OFF", "ON"});
@@ -122,6 +123,12 @@ void MenuScene::InitGameSettings()
     if(Chilli::JsonSaveSystem::CheckFileExists(SETTINGS_FILE_PATH))
     {
         auto gameSettingsData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+
+        if(gameSettingsData.contains("Fullscreen Mode"))
+        {
+            std::string fullscreenModeData = gameSettingsData["Fullscreen Mode"];
+            _gameSettings->UpdateSettingOptionValueText("Fullscreen Mode", fullscreenModeData == "true");
+        }
 
         if(gameSettingsData.contains("Music"))
         {
@@ -551,6 +558,7 @@ void MenuScene::SaveGameSettingsData_OnSettingsSaved()
 {
     /// Model the data and write it to file
     json gameSettingsData;
+    gameSettingsData["Fullscreen Mode"] = _gameSettings->GetSettingOption("Fullscreen Mode").selectedValueIndex == 1 ? "true" : "false";
     gameSettingsData["Music"] = _gameSettings->GetSettingOption("Music").selectedValueIndex == 1 ? "true" : "false";
     gameSettingsData["Spacelanes"] = _gameSettings->GetSettingOption("Spacelanes").selectedValueIndex == 1 ? "true" : "false";
     gameSettingsData["Minimap"] = _gameSettings->GetSettingOption("Minimap").selectedValueIndex == 1 ? "true" : "false";

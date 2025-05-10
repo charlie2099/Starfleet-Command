@@ -8,7 +8,7 @@
 class ScrapCollectionUpgradeButton
 {
 public:
-    explicit ScrapCollectionUpgradeButton(std::unique_ptr<ScrapMetalManager>& scrapMetalManager, sf::Color hoverColour);
+    explicit ScrapCollectionUpgradeButton(int startingCost, std::unique_ptr<ScrapMetalManager>& scrapMetalManager, sf::Color hoverColour);
     ~ScrapCollectionUpgradeButton() = default;
 
     // TODO: Extract into IRenderable interface?

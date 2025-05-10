@@ -1,9 +1,9 @@
 #include "ScrapCollectionUpgradeButton.hpp"
 
-ScrapCollectionUpgradeButton::ScrapCollectionUpgradeButton(std::unique_ptr<ScrapMetalManager>& scrapMetalManager, sf::Color hoverColour)
+ScrapCollectionUpgradeButton::ScrapCollectionUpgradeButton(int startingCost, std::unique_ptr<ScrapMetalManager>& scrapMetalManager, sf::Color hoverColour)
 : _scrapMetalManager(scrapMetalManager), _teamColour(hoverColour)
 {
-    _upgradeCost = 5000;
+    _upgradeCost = startingCost;
 
     _button = std::make_unique<Button>("Resources/Textures/scrap_drone_button.png");
     _button->SetColour(DEFAULT_BTN_COLOUR);

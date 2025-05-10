@@ -30,7 +30,24 @@ bool GameScene::Init()
         _starshipDeploymentButtons[i] = std::make_unique<StarshipDeploymentButton>(static_cast<StarshipFactory::STARSHIP_TYPE>(i), _player->GetTeamColour());
     }
 
-    _upgradePlayerScrapCollectionButton = std::make_unique<ScrapCollectionUpgradeButton>(_player->GetScrapMetalManager(), _player->GetTeamColour());
+
+    auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
+    if(starshipData.contains("StarshipData"))
+    {
+        for(const auto& shipData : starshipData["StarshipData"])
+        {
+            if(shipData.contains("Name") && shipData["Name"] == "Mothership")
+            {
+                int startingCost = shipData["ScrapCollectionService_CostIncreasePerUpgrade"];
+                _upgradePlayerScrapCollectionButton = std::make_unique<ScrapCollectionUpgradeButton>(startingCost, _player->GetScrapMetalManager(), _player->GetTeamColour());
+
+                float accumulationRate = shipData["ScrapCollectionService_ScrapAccumulationFrequencyInSeconds"];
+                playerScrapAccumulationRate = accumulationRate;
+                _playerScrapAccumulationTimer = accumulationRate;
+                break;
+            }
+        }
+    }
 
     _playerSpawnLaneIndicatorTexture.loadFromFile(TEXTURES_DIR_PATH + "right.png");
     _playerSpawnLaneIndicatorSprite.setTexture(_playerSpawnLaneIndicatorTexture);
@@ -199,9 +216,25 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     /// Passive scrap metal accumulation
     if(_playerScrapAccumulationTimerClock.getElapsedTime().asSeconds() >= _playerScrapAccumulationTimer)
     {
-        _player->CollectScrap(25 * _upgradePlayerScrapCollectionButton->GetUpgradeLevel());
+        /// TODO: Just load this data once at initialisation. Unnecessary performance overhead loading from file every time!
+        auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
+        if(starshipData.contains("StarshipData"))
+        {
+            for(const auto& shipData : starshipData["StarshipData"])
+            {
+                if(shipData.contains("Name") && shipData["Name"] == "Mothership")
+                {
+                    int scrapIncreasePerUpgrade = shipData["ScrapCollectionService_ScrapIncreasePerUpgrade"];
+                    _player->CollectScrap(scrapIncreasePerUpgrade * _upgradePlayerScrapCollectionButton->GetUpgradeLevel());
+
+
+                    break;
+                }
+            }
+        }
+
         _player->SetScrapText("Scrap Metal: " + std::to_string(_player->GetCurrentScrapAmount()));
-        _playerScrapAccumulationTimer += PLAYER_SCRAP_ACCUMULATION_RATE;
+        _playerScrapAccumulationTimer += playerScrapAccumulationRate;
     }
 
 
@@ -516,11 +549,25 @@ void GameScene::InitBackground()
 
 void GameScene::InitPlayer()
 {
+    auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
+    if(starshipData.contains("StarshipData"))
+    {
+        for(const auto& shipData : starshipData["StarshipData"])
+        {
+            if(shipData.contains("Name") && shipData["Name"] == "Mothership")
+            {
+                int startingScrapAmount = shipData["StartingScrap"];
+                startingScrapMetal = startingScrapAmount;
+                break;
+            }
+        }
+    }
+
     auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
     if(fileData.contains("Player Colour"))
     {
         std::string playerColourData = fileData["Player Colour"];
-        _player = std::make_unique<Player>(STARTING_SCRAP_METAL, Chilli::JsonColourMapping::GetColourFromStringName(playerColourData));
+        _player = std::make_unique<Player>(startingScrapMetal, Chilli::JsonColourMapping::GetColourFromStringName(playerColourData));
     }
 
     _player->CreateStarship(StarshipFactory::STARSHIP_TYPE::MOTHERSHIP, 2);
@@ -565,7 +612,7 @@ void GameScene::InitEnemy()
     if(fileData.contains("Enemy Colour"))
     {
         std::string enemyColourData = fileData["Enemy Colour"];
-        _enemy = std::make_unique<Enemy>(STARTING_SCRAP_METAL, Chilli::JsonColourMapping::GetColourFromStringName(enemyColourData));
+        _enemy = std::make_unique<Enemy>(startingScrapMetal, Chilli::JsonColourMapping::GetColourFromStringName(enemyColourData));
     }
 
     _enemy->CreateStarship(StarshipFactory::MOTHERSHIP, 2);

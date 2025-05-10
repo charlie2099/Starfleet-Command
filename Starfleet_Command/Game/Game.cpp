@@ -60,9 +60,25 @@ void Game::InitWindow()
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
 
-    window.create(sf::VideoMode(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT), "Starfleet Command", sf::Style::Default, settings);
-    //window.create(sf::VideoMode(2560, 1440), "Starfleet Command", sf::Style::Fullscreen, settings);
-    window.setPosition(sf::Vector2i(Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F));
+
+    const std::string GAME_SETTINGS_PATH = "Resources/Data/GameSettings.json";
+    auto gameSettingsData = Chilli::JsonSaveSystem::LoadFile(GAME_SETTINGS_PATH);
+
+    if(gameSettingsData.contains("Fullscreen Mode"))
+    {
+        std::string fullscreenModeData = gameSettingsData["Fullscreen Mode"];
+
+        if(fullscreenModeData == "true")
+        {
+            window.create(sf::VideoMode(2560, 1440), "Starfleet Command", sf::Style::Fullscreen, settings);
+        }
+        else
+        {
+            window.create(sf::VideoMode(Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT), "Starfleet Command", sf::Style::Default, settings);
+        }
+    }
+
+    //window.setPosition(sf::Vector2i(Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F));
 
     auto image = sf::Image{};
     if (!image.loadFromFile("Resources/Textures/starfleet_ship_1.png"))
