@@ -68,7 +68,7 @@
     {
       "Name": "Mothership",
       "Abbreviation": "MS",
-      "Health" : 10000,
+      "Health" : 1,
       "MaxDamage" : 50,
       "DamageScaleFactor": 1.0,
       "Speed": 10.0,

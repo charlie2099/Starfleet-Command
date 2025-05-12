@@ -19,7 +19,12 @@ bool GameScene::Init()
     InitGameplayView();
     InitPauseMenu();
 
-    _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spacelanes, _gameplayView, true);
+    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+    if(fileData.contains("Director Debug"))
+    {
+        std::string directorDebugData = fileData["Director Debug"];
+        _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spacelanes, _gameplayView, directorDebugData == "true");
+    }
 
     _mothershipStatusDisplay = std::make_unique<MothershipStatusDisplay>(_player->GetMothership(), _enemy->GetMothership(), _gameplayView);
 
@@ -136,7 +141,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 
 
-    if(_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->IsCursorHoveredOver())
+    /*if(_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->IsMouseOver())
     {
         if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
         {
@@ -145,7 +150,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         }
     }
 
-    if(_nextMusicTrackButton->IsCursorHoveredOver())
+    if(_nextMusicTrackButton->IsMouseOver())
     {
         if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
         {
@@ -161,7 +166,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
             }
             _gameMusic[_currentMusicTrackIndex].play();
         }
-    }
+    }*/
 }
 
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
@@ -511,7 +516,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     UpdateSpaceLanePositionsAndMouseHoverColour(window, deltaTime);
     _backgroundParallax->Update(window, deltaTime);
     CheckGameEndConditions();
-    UpdateMusicButtons(window);
+    //UpdateMusicButtons(window);
     UpdateCursorType();
 }
 
@@ -647,22 +652,19 @@ void GameScene::InitPauseMenu()
     _pauseText.setFillColor(Chilli::Colour::LIGHTBLUE);
     _pauseText.setOutlineColor(sf::Color::Black);
 
-    _pauseResumeGameButton = std::make_unique<Panel>();
-    _pauseResumeGameButton->SetFont(Panel::TextFont::BOLD);
+    _pauseResumeGameButton = std::make_unique<TextButton>();
     _pauseResumeGameButton->SetText("RESUME", Chilli::Colour::LIGHTBLUE);
     _pauseResumeGameButton->SetTextSize(14);
     _pauseResumeGameButton->SetSize(20, 15);
     _pauseResumeGameButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
 
-    _pauseMainMenuButton = std::make_unique<Panel>();
-    _pauseMainMenuButton->SetFont(Panel::TextFont::BOLD);
+    _pauseMainMenuButton = std::make_unique<TextButton>();
     _pauseMainMenuButton->SetText("MAIN MENU", Chilli::Colour::LIGHTBLUE);
     _pauseMainMenuButton->SetTextSize(14);
     _pauseMainMenuButton->SetSize(20, 15);
     _pauseMainMenuButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
 
-    _pauseExitGameButton = std::make_unique<Panel>();
-    _pauseExitGameButton->SetFont(Panel::TextFont::BOLD);
+    _pauseExitGameButton = std::make_unique<TextButton>();
     _pauseExitGameButton->SetText("EXIT GAME");
     _pauseExitGameButton->SetTextSize(14);
     _pauseExitGameButton->SetSize(20, 15);
@@ -723,14 +725,14 @@ void GameScene::InitMusic()
     }
     //_gameMusic.setPlayingOffset(sf::seconds(2.0F));
 
-    _musicIconButtons[MUSIC_ON_BUTTON] = std::make_unique<Button>(TEXTURES_DIR_PATH + "musicOn.png");
-    _musicIconButtons[MUSIC_OFF_BUTTON] = std::make_unique<Button>(TEXTURES_DIR_PATH + "musicOff.png");
+    _musicIconButtons[MUSIC_ON_BUTTON] = std::make_unique<ImageButton>(TEXTURES_DIR_PATH + "musicOn.png");
+    _musicIconButtons[MUSIC_OFF_BUTTON] = std::make_unique<ImageButton>(TEXTURES_DIR_PATH + "musicOff.png");
     for (int i = 0; i < 2; ++i)
     {
         _musicIconButtons[i]->SetColour(DEFAULT_BUTTON_COLOUR);
     }
 
-    _nextMusicTrackButton = std::make_unique<Button>(TEXTURES_DIR_PATH + "next.png");
+    _nextMusicTrackButton = std::make_unique<ImageButton>(TEXTURES_DIR_PATH + "next.png");
     _nextMusicTrackButton->SetColour(DEFAULT_BUTTON_COLOUR);
     _nextMusicTrackButton->SetScale({0.80F, 0.80F});
 }
@@ -778,39 +780,39 @@ void GameScene::UpdatePauseMenu(sf::RenderWindow &window)
     _pauseMainMenuButton->Update(window);
     _pauseExitGameButton->Update(window);
 
-    if(_pauseResumeGameButton->IsHoveredOver())
+    if(_pauseResumeGameButton->IsMouseOver())
     {
         _pauseResumeGameButton->SetPanelColour(BUTTON_HIGHLIGHT_COLOUR);
         _pauseResumeGameButton->SetText(_pauseResumeGameButton->GetText().getString(), sf::Color::Cyan);
         _cursor.SetCursorType(Chilli::Cursor::HOVER);
     }
-    else if(not _pauseResumeGameButton->IsHoveredOver())
+    else if(not _pauseResumeGameButton->IsMouseOver())
     {
         _pauseResumeGameButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
         _pauseResumeGameButton->SetText(_pauseResumeGameButton->GetText().getString(), Chilli::Colour::LIGHTBLUE);
         _cursor.SetCursorType(Chilli::Cursor::DEFAULT);
     }
 
-    if(_pauseMainMenuButton->IsHoveredOver())
+    if(_pauseMainMenuButton->IsMouseOver())
     {
         _pauseMainMenuButton->SetPanelColour(BUTTON_HIGHLIGHT_COLOUR);
         _pauseMainMenuButton->SetText(_pauseMainMenuButton->GetText().getString(), sf::Color::Cyan);
         _cursor.SetCursorType(Chilli::Cursor::HOVER);
     }
-    else if(not _pauseMainMenuButton->IsHoveredOver())
+    else if(not _pauseMainMenuButton->IsMouseOver())
     {
         _pauseMainMenuButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
         _pauseMainMenuButton->SetText(_pauseMainMenuButton->GetText().getString(), Chilli::Colour::LIGHTBLUE);
         _cursor.SetCursorType(Chilli::Cursor::DEFAULT);
     }
 
-    if(_pauseExitGameButton->IsHoveredOver())
+    if(_pauseExitGameButton->IsMouseOver())
     {
         _pauseExitGameButton->SetPanelColour(EXIT_BUTTON_HIGHLIGHT_COLOUR);
         _pauseExitGameButton->SetText(_pauseExitGameButton->GetText().getString(), sf::Color::Red);
         _cursor.SetCursorType(Chilli::Cursor::HOVER);
     }
-    else if(not _pauseExitGameButton->IsHoveredOver())
+    else if(not _pauseExitGameButton->IsMouseOver())
     {
         _pauseExitGameButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
         _pauseExitGameButton->SetText(_pauseExitGameButton->GetText().getString(), Chilli::Colour::LIGHTBLUE);
@@ -952,7 +954,7 @@ void GameScene::UpdateMusicButtons(sf::RenderWindow &window)
 
     for (const auto & musicIconButton : _musicIconButtons)
     {
-        if(musicIconButton->IsCursorHoveredOver())
+        if(musicIconButton->IsMouseOver())
         {
             musicIconButton->SetColour(Chilli::Colour::LIGHTBLUE);
         }
@@ -966,7 +968,7 @@ void GameScene::UpdateMusicButtons(sf::RenderWindow &window)
     _nextMusicTrackButton->SetPos({_musicIconButtons[MUSIC_ON_BUTTON]->GetPos().x +
                                    _nextMusicTrackButton->GetBounds().width + 20.0F, _musicIconButtons[MUSIC_ON_BUTTON]->GetPos().y + 2.5F});
 
-    if(_nextMusicTrackButton->IsCursorHoveredOver())
+    if(_nextMusicTrackButton->IsMouseOver())
     {
         _nextMusicTrackButton->SetColour(Chilli::Colour::LIGHTBLUE);
     }
@@ -978,9 +980,9 @@ void GameScene::UpdateMusicButtons(sf::RenderWindow &window)
 
 void GameScene::UpdateCursorType()
 {
-    if(_musicIconButtons[_isMusicOn]->IsCursorHoveredOver() ||
-       _nextMusicTrackButton->IsCursorHoveredOver() ||
-       _upgradePlayerScrapCollectionButton->IsCursorHoveredOver())
+    if(_musicIconButtons[_isMusicOn]->IsMouseOver() ||
+       _nextMusicTrackButton->IsMouseOver() ||
+       _upgradePlayerScrapCollectionButton->IsMouseOver())
     {
         _cursor.SetCursorType(Chilli::Cursor::HOVER);
     }
@@ -1048,13 +1050,13 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
         window.draw(_playerSpawnLaneIndicatorSprite);
         //window.draw(_enemySpawnLaneIndicatorText);
     }
-    _musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
+    //_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
     _aiDirector->Render(window);
     window.draw(_scrollZoneVisualiser);
-    if(_isMusicOn)
+    /*if(_isMusicOn)
     {
         _nextMusicTrackButton->Render(window);
-    }
+    }*/
 }
 
 void GameScene::RenderMinimapSprites(sf::RenderWindow &window)

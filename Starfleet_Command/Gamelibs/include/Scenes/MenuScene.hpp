@@ -7,10 +7,10 @@
 #include "Utility/JsonColourMapping.hpp"
 #include "Utility/RNG.hpp"
 #include "Sprites/Starships/Starship.hpp"
-#include "../../GameSettings.hpp"
+#include "GameSettings.hpp"
 #include "Sprites/Player/Player.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
-#include "ParallaxBackground.hpp"
+#include "Sprites/UI/ParallaxBackground.hpp"
 #include <random>
 #include <chrono>
 
@@ -71,7 +71,7 @@ class MenuScene : public Scene
     sf::View _menuView{};
 
     /// Buttons
-    std::array<Panel, NUM_OF_BUTTONS> _buttonPanels; // TODO: Utilize button class.
+    std::array<TextButton, NUM_OF_BUTTONS> _menuButtons;
 
     ///Teams
     std::unique_ptr<Player> _player;

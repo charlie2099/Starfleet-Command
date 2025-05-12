@@ -42,7 +42,7 @@ private:
     int _maxQueueSize = 5;
 
     sf::Texture _starshipQueueBoxTexture;
-    std::array<sf::Sprite, 5> _starshipQueueBoxSprites; // TODO: Find a way to initialise size with max queue size variable set above
+    std::vector<sf::Sprite> _starshipQueueBoxSprites;
     sf::Texture _starshipQueueBoxIconTexture;
     std::vector<sf::Sprite> _starshipQueueBoxIconSprites;
 };

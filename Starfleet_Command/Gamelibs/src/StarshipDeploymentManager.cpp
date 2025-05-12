@@ -10,6 +10,7 @@ StarshipDeploymentManager::StarshipDeploymentManager(int maxQueueSize, sf::Color
 
     for (int i = 0; i < _maxQueueSize; ++i)
     {
+        _starshipQueueBoxSprites.emplace_back();
         _starshipQueueBoxSprites[i].setTexture(_starshipQueueBoxTexture);
         _starshipQueueBoxSprites[i].setScale(0.09F, 0.09F);
         _starshipQueueBoxSprites[i].setColor(deploymentBarColour);

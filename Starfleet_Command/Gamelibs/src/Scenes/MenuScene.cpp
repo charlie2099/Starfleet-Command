@@ -64,14 +64,14 @@ void MenuScene::Render(sf::RenderWindow& window)
 
     if(not _isGameSettingsEnabled)
     {
-        for (int i = 0; i < _buttonPanels.size()-1; ++i)
+        for (int i = 0; i < _menuButtons.size() - 1; ++i)
         {
-            _buttonPanels[i].Render(window);
+            _menuButtons[i].Render(window);
         }
     }
     else
     {
-        _buttonPanels[BACK_BUTTON].Render(window);
+        _menuButtons[BACK_BUTTON].Render(window);
         _gameSettings->Render(window);
     }
 
@@ -114,6 +114,7 @@ void MenuScene::InitGameSettings()
     _gameSettings = std::make_unique<GameSettings>();
     _gameSettings->AddSettingOption("Fullscreen Mode", std::vector<std::string>{"OFF", "ON"});
     _gameSettings->AddSettingOption("Music", std::vector<std::string>{"OFF", "ON"});
+    _gameSettings->AddSettingOption("Director Debug", std::vector<std::string>{"OFF", "ON"});
     _gameSettings->AddSettingOption("Spacelanes", std::vector<std::string>{"OFF", "ON"});
     _gameSettings->AddSettingOption("Minimap", std::vector<std::string>{"OFF", "ON"});
     _gameSettings->AddSettingOption("Player Colour", std::vector<std::string>{"BLUE", "RED", "GREEN", "ORANGE", "YELLOW"});
@@ -135,6 +136,12 @@ void MenuScene::InitGameSettings()
             std::string musicData = gameSettingsData["Music"];
             _isMusicOn = (musicData == "true");
             _gameSettings->UpdateSettingOptionValueText("Music", musicData == "true");
+        }
+
+        if(gameSettingsData.contains("Director Debug"))
+        {
+            std::string directorDebugData = gameSettingsData["Director Debug"];
+            _gameSettings->UpdateSettingOptionValueText("Director Debug", directorDebugData == "true");
         }
 
         if(gameSettingsData.contains("Spacelanes"))
@@ -274,12 +281,11 @@ void MenuScene::InitButtons()
 
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
-        _buttonPanels[i].SetFont(Panel::TextFont::BOLD);
-        _buttonPanels[i].SetText(button_text[i]);
-        _buttonPanels[i].SetTextSize(14);
-        _buttonPanels[i].SetSize(20, 15);
-        _buttonPanels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
-        _buttonPanels[i].SetPosition(Constants::WINDOW_WIDTH * 0.185F,(Constants::WINDOW_HEIGHT * 0.57F) + static_cast<float>((i * (_buttonPanels[i].GetPanelSize().height + 10))));
+        _menuButtons[i].SetText(button_text[i]);
+        _menuButtons[i].SetTextSize(14);
+        _menuButtons[i].SetSize(20, 15);
+        _menuButtons[i].SetPanelColour(sf::Color(22, 155, 164, 100));
+        _menuButtons[i].SetPosition(Constants::WINDOW_WIDTH * 0.185F, (Constants::WINDOW_HEIGHT * 0.57F) + static_cast<float>((i * (_menuButtons[i].GetPanelSize().height + 10))));
     }
 }
 
@@ -340,10 +346,10 @@ void MenuScene::InitGameVersionText()
 
 void MenuScene::HandleGameSettingsEvents(sf::RenderWindow &window, sf::Event &event)
 {
-    _buttonPanels[BACK_BUTTON].EventHandler(window, event);
+    _menuButtons[BACK_BUTTON].EventHandler(window, event);
     if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
     {
-        if(_buttonPanels[BACK_BUTTON].IsClicked())
+        if(_menuButtons[BACK_BUTTON].IsClicked())
         {
             _isGameSettingsEnabled = false;
             _menuTitleImgSprite.setPosition(Constants::WINDOW_WIDTH / 2.0F - _menuTitleImgSprite.getGlobalBounds().width / 2.0F, Constants::WINDOW_HEIGHT * 0.3F - _menuTitleImgSprite.getGlobalBounds().height / 2.0F);
@@ -357,22 +363,22 @@ void MenuScene::HandleButtonEvents(sf::RenderWindow &window, sf::Event &event)
 {
     for (int i = 0; i < NUM_OF_BUTTONS - 1; ++i)
     {
-        _buttonPanels[i].EventHandler(window, event);
+        _menuButtons[i].EventHandler(window, event);
     }
 
     if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
     {
-        if(_buttonPanels[PLAY_BUTTON].IsClicked())
+        if(_menuButtons[PLAY_BUTTON].IsClicked())
         {
             SetScene(ID::GAME);
         }
-        else if(_buttonPanels[OPTIONS_BUTTON].IsClicked())
+        else if(_menuButtons[OPTIONS_BUTTON].IsClicked())
         {
             _isGameSettingsEnabled = true;
             _menuTitleImgSprite.setPosition(Constants::WINDOW_WIDTH / 2.0F - _menuTitleImgSprite.getGlobalBounds().width / 2.0F, Constants::WINDOW_HEIGHT * 0.2F - _menuTitleImgSprite.getGlobalBounds().height / 2.0F);
             _gameSettings->RepositionPanel(Constants::WINDOW_WIDTH / 2.0F - _gameSettings->GetSettingsPanelSize().x / 2.0F, _menuTitleImgSprite.getPosition().y + _menuTitleImgSprite.getGlobalBounds().height + 25.0F);
         }
-        else if(_buttonPanels[EXIT_BUTTON].IsClicked())
+        else if(_menuButtons[EXIT_BUTTON].IsClicked())
         {
             window.close();
         }
@@ -414,18 +420,18 @@ void MenuScene::UpdateBackgroundStarshipsMovement(sf::RenderWindow &window, sf::
 
 void MenuScene::UpdateGameSettingsButtons(sf::RenderWindow &window, sf::Time &deltaTime)
 {
-    _buttonPanels[BACK_BUTTON].Update(window);
+    _menuButtons[BACK_BUTTON].Update(window);
 
-    if(_buttonPanels[BACK_BUTTON].IsHoveredOver())
+    if(_menuButtons[BACK_BUTTON].IsMouseOver())
     {
-        _buttonPanels[BACK_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
-        _buttonPanels[BACK_BUTTON].SetText(_buttonPanels[BACK_BUTTON].GetText().getString(), sf::Color::Cyan);
+        _menuButtons[BACK_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
+        _menuButtons[BACK_BUTTON].SetText(_menuButtons[BACK_BUTTON].GetText().getString(), sf::Color::Cyan);
         _cursor.SetCursorType(Chilli::Cursor::HOVER);
     }
-    else if(not _buttonPanels[BACK_BUTTON].IsHoveredOver())
+    else if(not _menuButtons[BACK_BUTTON].IsMouseOver())
     {
-        _buttonPanels[BACK_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 100));
-        _buttonPanels[BACK_BUTTON].SetText(_buttonPanels[BACK_BUTTON].GetText().getString(), Chilli::Colour::LIGHTBLUE);
+        _menuButtons[BACK_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 100));
+        _menuButtons[BACK_BUTTON].SetText(_menuButtons[BACK_BUTTON].GetText().getString(), Chilli::Colour::LIGHTBLUE);
         _cursor.SetCursorType(Chilli::Cursor::DEFAULT);
     }
 
@@ -436,25 +442,25 @@ void MenuScene::UpdateMenuButtons(sf::RenderWindow &window)
 {
     for (int i = 0; i < NUM_OF_BUTTONS - 1; ++i)
     {
-        _buttonPanels[i].Update(window);
+        _menuButtons[i].Update(window);
     }
 
-    if(_buttonPanels[PLAY_BUTTON].IsHoveredOver())
+    if(_menuButtons[PLAY_BUTTON].IsMouseOver())
     {
-        _buttonPanels[PLAY_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
-        _buttonPanels[PLAY_BUTTON].SetText(_buttonPanels[PLAY_BUTTON].GetText().getString(), sf::Color::Cyan);
+        _menuButtons[PLAY_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
+        _menuButtons[PLAY_BUTTON].SetText(_menuButtons[PLAY_BUTTON].GetText().getString(), sf::Color::Cyan);
         _cursor.SetCursorType(Chilli::Cursor::HOVER);
     }
-    else if(_buttonPanels[OPTIONS_BUTTON].IsHoveredOver())
+    else if(_menuButtons[OPTIONS_BUTTON].IsMouseOver())
     {
-        _buttonPanels[OPTIONS_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
-        _buttonPanels[OPTIONS_BUTTON].SetText(_buttonPanels[OPTIONS_BUTTON].GetText().getString(), sf::Color::Cyan);
+        _menuButtons[OPTIONS_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 65));
+        _menuButtons[OPTIONS_BUTTON].SetText(_menuButtons[OPTIONS_BUTTON].GetText().getString(), sf::Color::Cyan);
         _cursor.SetCursorType(Chilli::Cursor::HOVER);
     }
-    else if(_buttonPanels[EXIT_BUTTON].IsHoveredOver())
+    else if(_menuButtons[EXIT_BUTTON].IsMouseOver())
     {
-        _buttonPanels[EXIT_BUTTON].SetPanelColour(sf::Color(242, 22, 22, 60));
-        _buttonPanels[EXIT_BUTTON].SetText(_buttonPanels[EXIT_BUTTON].GetText().getString(), sf::Color::Red);
+        _menuButtons[EXIT_BUTTON].SetPanelColour(sf::Color(242, 22, 22, 60));
+        _menuButtons[EXIT_BUTTON].SetText(_menuButtons[EXIT_BUTTON].GetText().getString(), sf::Color::Red);
         _cursor.SetCursorType(Chilli::Cursor::HOVER);
     }
     else
@@ -464,10 +470,10 @@ void MenuScene::UpdateMenuButtons(sf::RenderWindow &window)
 
     for (int i = 0; i < NUM_OF_BUTTONS-1; ++i)
     {
-        if(not _buttonPanels[i].IsHoveredOver())
+        if(not _menuButtons[i].IsMouseOver())
         {
-            _buttonPanels[i].SetPanelColour(sf::Color(22, 155, 164, 100));
-            _buttonPanels[i].SetText(_buttonPanels[i].GetText().getString(), Chilli::Colour::LIGHTBLUE);
+            _menuButtons[i].SetPanelColour(sf::Color(22, 155, 164, 100));
+            _menuButtons[i].SetText(_menuButtons[i].GetText().getString(), Chilli::Colour::LIGHTBLUE);
         }
     }
 }
@@ -560,52 +566,11 @@ void MenuScene::SaveGameSettingsData_OnSettingsSaved()
     json gameSettingsData;
     gameSettingsData["Fullscreen Mode"] = _gameSettings->GetSettingOption("Fullscreen Mode").selectedValueIndex == 1 ? "true" : "false";
     gameSettingsData["Music"] = _gameSettings->GetSettingOption("Music").selectedValueIndex == 1 ? "true" : "false";
+    gameSettingsData["Director Debug"] = _gameSettings->GetSettingOption("Director Debug").selectedValueIndex == 1 ? "true" : "false";
     gameSettingsData["Spacelanes"] = _gameSettings->GetSettingOption("Spacelanes").selectedValueIndex == 1 ? "true" : "false";
     gameSettingsData["Minimap"] = _gameSettings->GetSettingOption("Minimap").selectedValueIndex == 1 ? "true" : "false";
-
-    /// Player Colour
-    if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 0)
-    {
-        gameSettingsData["Player Colour"] = "BLUE";
-    }
-    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 1)
-    {
-        gameSettingsData["Player Colour"] = "RED";
-    }
-    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 2)
-    {
-        gameSettingsData["Player Colour"] = "GREEN";
-    }
-    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 3)
-    {
-        gameSettingsData["Player Colour"] = "ORANGE";
-    }
-    else if(_gameSettings->GetSettingOption("Player Colour").selectedValueIndex == 4)
-    {
-        gameSettingsData["Player Colour"] = "YELLOW";
-    }
-
-    /// Enemy Colour
-    if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 0)
-    {
-        gameSettingsData["Enemy Colour"] = "BLUE";
-    }
-    else if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 1)
-    {
-        gameSettingsData["Enemy Colour"] = "RED";
-    }
-    else if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 2)
-    {
-        gameSettingsData["Enemy Colour"] = "GREEN";
-    }
-    else if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 3)
-    {
-        gameSettingsData["Enemy Colour"] = "ORANGE";
-    }
-    else if(_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex == 4)
-    {
-        gameSettingsData["Enemy Colour"] = "YELLOW";
-    }
+    gameSettingsData["Player Colour"] = _gameSettings->GetSettingOption("Player Colour").optionValues[_gameSettings->GetSettingOption("Player Colour").selectedValueIndex];
+    gameSettingsData["Enemy Colour"] = _gameSettings->GetSettingOption("Enemy Colour").optionValues[_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex];
 
     Chilli::JsonSaveSystem::SaveFile(SETTINGS_FILE_PATH, gameSettingsData);
     std::cout << "Settings saved to " << SETTINGS_FILE_PATH << std::endl;

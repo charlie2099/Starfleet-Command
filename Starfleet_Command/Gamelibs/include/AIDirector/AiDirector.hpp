@@ -9,7 +9,7 @@
 #include "AIDirector/States/DirectorRespiteState.hpp"
 #include "Sprites/Player/Player.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
-#include "SpaceLane.hpp"
+#include "Sprites/SpaceLane.hpp"
 #include "StarshipDeploymentManager.hpp"
 #include <queue>
 

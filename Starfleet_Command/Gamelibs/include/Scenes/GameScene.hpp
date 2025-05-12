@@ -9,19 +9,19 @@
 #include "Sprites/Player/Player.hpp"
 #include "Sprites/Starships/Starship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
-#include "SpaceLane.hpp"
+#include "Sprites/SpaceLane.hpp"
 #include "Sprites/UI/ProgressBar.hpp"
-#include "Minimap.hpp"
+#include "Sprites/UI/Minimap.hpp"
 #include "ScrapMetalManager.hpp"
-#include "ParallaxBackground.hpp"
-#include "StarshipDeploymentButton.hpp"
+#include "Sprites/UI/ParallaxBackground.hpp"
+#include "Sprites/UI/GUI/StarshipDeploymentButton.hpp"
 #include "StarshipDeploymentManager.hpp"
-#include "MothershipStatusDisplay.hpp"
+#include "Sprites/UI/MothershipStatusDisplay.hpp"
 #include <random>
 #include <chrono>
 #include "queue"
 #include "AIDirector/AiDirector.hpp"
-#include "../../ScrapCollectionUpgradeButton.hpp"
+#include "Sprites/UI/GUI/ScrapCollectionUpgradeButton.hpp"
 
 class GameScene : public Scene
 {
@@ -123,9 +123,9 @@ private:
     sf::Texture _pauseOverlayTexture;
     sf::Sprite _pauseOverlaySprite;
     sf::Text _pauseText;
-    std::unique_ptr<Panel> _pauseResumeGameButton;
-    std::unique_ptr<Panel> _pauseMainMenuButton;
-    std::unique_ptr<Panel> _pauseExitGameButton;
+    std::unique_ptr<TextButton> _pauseResumeGameButton;
+    std::unique_ptr<TextButton> _pauseMainMenuButton;
+    std::unique_ptr<TextButton> _pauseExitGameButton;
 
     /// Space Lanes
     const float LANE_ROW_SPACING = 35.0F;
@@ -147,8 +147,8 @@ private:
     static const int MUSIC_ON_BUTTON = 0;
     static const int MUSIC_OFF_BUTTON = 1;
     std::array<sf::Music, 4> _gameMusic;
-    std::array<std::unique_ptr<Button>, 2> _musicIconButtons;
-    std::unique_ptr<Button> _nextMusicTrackButton;
+    std::array<std::unique_ptr<ImageButton>, 2> _musicIconButtons;
+    std::unique_ptr<ImageButton> _nextMusicTrackButton;
     int _currentMusicTrackIndex = 0;
 
     /// Random Distributions

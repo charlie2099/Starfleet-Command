@@ -1,6 +1,7 @@
 #ifndef STARFLEET_COMMAND_DEFEATSCENE_HPP
 #define STARFLEET_COMMAND_DEFEATSCENE_HPP
 #include "Scenes/Scene.hpp"
+#include "Sprites/UI/ParallaxBackground.hpp"
 #include "Utility/Cursor.hpp"
 
 class DefeatScene : public Scene
@@ -17,7 +18,7 @@ private:
     void InitView();
     bool InitBackground();
     void InitLoseText();
-    void InitButtonPanels();
+    void InitButtons();
     bool InitMusic();
 
     Chilli::Cursor _cursor;
@@ -27,25 +28,16 @@ private:
     static const int PLAY_BUTTON = 0;
     static const int MENU_BUTTON = 1;
     static const int NUM_OF_BUTTONS = 2;
-    std::array<Panel, NUM_OF_BUTTONS> _buttonPanels;
+    std::array<TextButton, NUM_OF_BUTTONS> _buttons;
 
     sf::Text _loseTitleText;
     sf::Text _loseSubHeadingText;
 
-    ///TODO: Replace with ParallaxBackground class
-    sf::Sprite _backgroundSprite;
-    sf::Texture _backgroundTexture;
-    struct ParallaxStar
-    {
-        sf::CircleShape circleShape;
-        sf::Vector2f position;
-        float speed{};
-        float size{};
-    };
-    std::vector<ParallaxStar> _parallaxStars;
-    const int NUM_OF_STARS = 300;
+    std::unique_ptr<ParallaxBackground> _backgroundParallax;
 
     sf::Music _loseMusic;
+
+    const std::string TEXTURES_DIR_PATH = "Resources/Textures/";
 };
 
 #endif //STARFLEET_COMMAND_DEFEATSCENE_HPP

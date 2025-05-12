@@ -70,7 +70,8 @@ void Game::InitWindow()
 
         if(fullscreenModeData == "true")
         {
-            window.create(sf::VideoMode(2560, 1440), "Starfleet Command", sf::Style::Fullscreen, settings);
+            sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
+            window.create(desktopMode, "Starfleet Command", sf::Style::Fullscreen, settings);
         }
         else
         {
