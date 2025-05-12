@@ -94,8 +94,10 @@ class MenuScene : public Scene
     /// Game Version
     sf::Text _gameVersionText;
 
-    /// Music
+    /// Audio
     sf::Music _menuMusic;
     bool _isMusicOn = false;
+    sf::SoundBuffer _buttonClickSoundBuffer;
+    sf::Sound _buttonClickSound;
 };
 #endif //STARFLEET_COMMAND_MENUSCENE_HPP

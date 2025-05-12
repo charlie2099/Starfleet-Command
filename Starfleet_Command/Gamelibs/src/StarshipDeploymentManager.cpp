@@ -34,13 +34,6 @@ void StarshipDeploymentManager::Update(sf::RenderWindow &window, sf::Time deltaT
         _starshipQueueBoxIconSprites[i].setPosition(
                 _starshipQueueBoxSprites[i].getPosition().x + _starshipQueueBoxSprites[i].getGlobalBounds().width/2.0F - _starshipQueueBoxIconSprites[i].getGlobalBounds().width/2.0F,
                 _starshipQueueBoxSprites[i].getPosition().y + _starshipQueueBoxSprites[i].getGlobalBounds().height/2.0F - _starshipQueueBoxIconSprites[i].getGlobalBounds().height/2.0F);
-
-        if(IsQueueFull())
-        {
-            _starshipQueueBoxIconSprites[i].setColor(Chilli::Colour::LIGHTORANGE);
-        }
-
-        _starshipQueueBoxIconSprites[i].setColor(IsQueueFull() ? Chilli::Colour::LIGHTORANGE : _starshipQueueBoxSprites[0].getColor());
     }
 }
 

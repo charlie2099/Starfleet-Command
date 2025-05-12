@@ -45,9 +45,8 @@ private:
     bool _isAffordable = false;
     StarshipFactory::STARSHIP_TYPE _starshipType;
     sf::Color _teamColour;
-    const sf::Color DEFAULT_BTN_COLOUR = {255, 255, 255, 100};
     const sf::Color HOVER_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 255};
-    const sf::Color SELECTED_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 150};
+    const sf::Color SELECTED_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 175};
 };
 
 #endif //STARFLEET_COMMAND_STARSHIPDEPLOYMENTBUTTON_HPP

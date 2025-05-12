@@ -25,9 +25,12 @@ GameSettings::GameSettings()
     _settingsSavedText.setString("Settings saved.\nRESTART to apply fullscreen mode.");
     _settingsSavedText.setFont(Chilli::CustomFonts::GetBoldFont());
     _settingsSavedText.setCharacterSize(10);
-    _settingsSavedText.setFillColor(sf::Color(22, 155, 164));
+    _settingsSavedText.setFillColor(Chilli::Colour::TURQUOISE);
     _settingsSavedText.setOutlineColor(sf::Color::Black);
     _settingsSavedText.setOutlineThickness(1.0F);
+
+    _buttonClickSoundBuffer.loadFromFile("Resources/Audio/click5.ogg");
+    _buttonClickSound.setBuffer(_buttonClickSoundBuffer);
 }
 
 void GameSettings::EventHandler(sf::RenderWindow &window, sf::Event &event)
@@ -41,6 +44,7 @@ void GameSettings::EventHandler(sf::RenderWindow &window, sf::Event &event)
 
         if(_saveButtonPanel.IsClicked())
         {
+            _buttonClickSound.play();
             InvokeBasicEvent(SETTINGS_SAVED);
             _isSettingsSavedTextVisible = true;
             _isSaveButtonVisible = false;
@@ -71,6 +75,8 @@ void GameSettings::EventHandler(sf::RenderWindow &window, sf::Event &event)
             if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _leftArrowSprite[i].getGlobalBounds()) or
                Chilli::Vector::BoundsCheck(mousePosWorldCoords, _rightArrowSprite[i].getGlobalBounds()))
             {
+                _buttonClickSound.play();
+
                 _isSettingsSavedTextVisible = false;
                 _isSaveButtonVisible = true;
 
@@ -104,8 +110,8 @@ void GameSettings::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
         else
         {
-            _leftArrowSprite[i].setColor(Chilli::Colour::LIGHTBLUE);
-            _rightArrowSprite[i].setColor(Chilli::Colour::LIGHTBLUE);
+            _leftArrowSprite[i].setColor(Chilli::Colour::DARKGRAY);
+            _rightArrowSprite[i].setColor(Chilli::Colour::DARKGRAY);
         }
     }
 
@@ -224,10 +230,10 @@ void GameSettings::UpdateSettingOptionValueText(const std::string &settingName, 
     }
 }
 
-const GameSettings::SettingsOption &GameSettings::GetSettingOption(const std::string &settingName)
+GameSettings::SettingsOption &GameSettings::GetSettingOption(const std::string &settingName)
 {
     // TODO: Use std::map instead?
-    for (const auto& option : _settingsOptions)
+    for (auto& option : _settingsOptions)
     {
         if (option.labelText.getString() == settingName)
         {

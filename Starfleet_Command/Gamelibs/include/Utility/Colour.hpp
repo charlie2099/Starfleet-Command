@@ -13,7 +13,9 @@ namespace Chilli
         inline static sf::Color ORANGE {252, 162, 66};
         inline static sf::Color LIGHTORANGE {253, 172, 101};
         inline static sf::Color YELLOW {255, 249, 77};
+        inline static sf::Color TURQUOISE {22, 155, 164};
         inline static sf::Color GRAY {180, 180, 180};
+        inline static sf::Color DARKGRAY {90, 90, 90};
     };
 }
 

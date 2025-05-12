@@ -9,7 +9,7 @@ StarshipDeploymentButton::StarshipDeploymentButton(StarshipFactory::STARSHIP_TYP
     _starshipType = starshipTypeToBeDeployed;
 
     _button = std::make_unique<ImageButton>("Resources/Textures/command_button_" + std::to_string(_starshipTemplateToBeDeployed->GetStarshipIndex()) + ".png");
-    _button->SetColour(DEFAULT_BTN_COLOUR);
+    _button->SetColour(_teamColour);
     _button->SetScale({0.15F, 0.15F});
 
     _nameText.setString(static_cast<std::string>(_starshipTemplateToBeDeployed->GetStarshipName() + " - " + std::to_string(_starshipTemplateToBeDeployed->GetBuildCost())));
@@ -44,7 +44,7 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
     if(_button->IsMouseOver())
     {
         _isNameVisible = true;
-        _nameText.setFillColor(_isAffordable ? _teamColour : Chilli::Colour::LIGHTRED);
+        _nameText.setFillColor(_isAffordable ? _teamColour : sf::Color {_teamColour.r, _teamColour.g, _teamColour.b, 100});
     }
 
     if(not _button->IsMouseOver())
@@ -66,12 +66,12 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
 
     if (not _button->IsMouseOver() and _isAffordable)
     {
-        _button->SetColour(DEFAULT_BTN_COLOUR);
+        _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 125 });
     }
 
     if (not _button->IsMouseOver() and not _isAffordable)
     {
-        _button->SetColour(Chilli::Colour::LIGHTRED);
+        _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 50});
     }
 
     auto mousePos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
@@ -105,7 +105,7 @@ void StarshipDeploymentButton::Render(sf::RenderWindow &window)
 
 void StarshipDeploymentButton::ResetAfterStarshipPlacement()
 {
-    _button->SetColour(DEFAULT_BTN_COLOUR);
+    _button->SetColour(_teamColour);
     _previewStarshipSprite.SetPos(_button->GetPos());
     _isStarshipPreviewSpriteVisible = false;
     _isPlacingStarship = false;

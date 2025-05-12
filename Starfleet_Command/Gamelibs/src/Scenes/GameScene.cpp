@@ -72,6 +72,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
     if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)
     {
+        _buttonClickSound.play();
         SetPaused(not IsPaused());
     }
 
@@ -85,6 +86,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
         {
             if (_pauseResumeGameButton->IsClicked())
             {
+                _buttonClickSound.play();
                 SetPaused(false);
             }
 
@@ -198,7 +200,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
         if(_starshipDeploymentManager->IsQueueFull())
         {
-            _starshipDeploymentButtons[i]->SetColour(Chilli::Colour::LIGHTORANGE);
+            _starshipDeploymentButtons[i]->SetColour({_player->GetTeamColour().r, _player->GetTeamColour().g, _player->GetTeamColour().b, 50});
         }
     }
 
@@ -707,6 +709,9 @@ void GameScene::InitEvents()
 
 void GameScene::InitMusic()
 {
+    _buttonClickSoundBuffer.loadFromFile("Resources/Audio/click5.ogg");
+    _buttonClickSound.setBuffer(_buttonClickSoundBuffer);
+
     _gameMusic[0].openFromFile(AUDIO_DIR_PATH +"GameThemes/Rise_Above_Darkness_225bpm_131s.wav");
     _gameMusic[1].openFromFile(AUDIO_DIR_PATH +"GameThemes/Dangerous_Dark_Disaster_143bpm_148s.wav");
     _gameMusic[2].openFromFile(AUDIO_DIR_PATH +"GameThemes/Future_Shock_Fears_155bpm_120s.wav");

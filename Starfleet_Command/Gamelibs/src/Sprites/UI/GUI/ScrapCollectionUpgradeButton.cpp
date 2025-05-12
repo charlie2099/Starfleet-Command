@@ -6,7 +6,7 @@ ScrapCollectionUpgradeButton::ScrapCollectionUpgradeButton(int startingCost, std
     _upgradeCost = startingCost;
 
     _button = std::make_unique<ImageButton>("Resources/Textures/scrap_drone_button.png");
-    _button->SetColour(DEFAULT_BTN_COLOUR);
+    _button->SetColour(_teamColour);
     _button->SetScale({0.15F, 0.15F});
 
     _nameText.setString("Upgrade Scrap Collection Service? - " + std::to_string(_upgradeCost));
@@ -42,7 +42,7 @@ void ScrapCollectionUpgradeButton::Update(sf::RenderWindow &window, sf::Time del
     if(_button->IsMouseOver())
     {
         _isNameVisible = true;
-        _nameText.setFillColor(_isAffordable ? _teamColour : Chilli::Colour::LIGHTRED);
+        _nameText.setFillColor(_isAffordable ? _teamColour : sf::Color {_teamColour.r, _teamColour.g, _teamColour.b, 100});
     }
 
     if(not _button->IsMouseOver())
@@ -57,12 +57,12 @@ void ScrapCollectionUpgradeButton::Update(sf::RenderWindow &window, sf::Time del
 
     if (not _button->IsMouseOver() and _isAffordable)
     {
-        _button->SetColour(DEFAULT_BTN_COLOUR);
+        _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 125 });
     }
 
     if (not _button->IsMouseOver() and not _isAffordable)
     {
-        _button->SetColour(Chilli::Colour::LIGHTRED);
+        _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 50});
     }
 
     _button->Update(window);

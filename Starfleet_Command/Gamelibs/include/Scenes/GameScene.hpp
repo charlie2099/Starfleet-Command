@@ -142,7 +142,7 @@ private:
     std::unique_ptr<StarshipDeploymentManager> _starshipDeploymentManager;
     std::array<std::unique_ptr<StarshipDeploymentButton>, NUM_OF_BUTTONS> _starshipDeploymentButtons;
 
-    /// Music & Sound Effects
+    /// Audio
     bool _isMusicOn = false;
     static const int MUSIC_ON_BUTTON = 0;
     static const int MUSIC_OFF_BUTTON = 1;
@@ -150,6 +150,8 @@ private:
     std::array<std::unique_ptr<ImageButton>, 2> _musicIconButtons;
     std::unique_ptr<ImageButton> _nextMusicTrackButton;
     int _currentMusicTrackIndex = 0;
+    sf::SoundBuffer _buttonClickSoundBuffer;
+    sf::Sound _buttonClickSound;
 
     /// Random Distributions
     RNG _starshipHealRNG {50, 100};

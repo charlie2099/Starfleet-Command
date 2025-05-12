@@ -10,6 +10,8 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 #include <vector>
 #include <array>
 #include <functional>
@@ -42,7 +44,7 @@ public:
 
     sf::Vector2f GetSettingsPanelSize() { return _settingsPanel.getSize(); }
     //int GetNumOfSettingOptions() { return _settingsOptions.size(); }
-    const SettingsOption& GetSettingOption(const std::string& settingName);
+    SettingsOption& GetSettingOption(const std::string& settingName);
     std::vector<SettingsOption> GetSettingOptions() { return _settingsOptions; }
 
     void AddSettingOption(const std::string& settingName, const std::vector<std::string>& settingOptions);
@@ -65,6 +67,8 @@ private:
     sf::Text _settingsSavedText;
     bool _isSettingsSavedTextVisible = false;
     bool _isSaveButtonVisible = false;
+    sf::SoundBuffer _buttonClickSoundBuffer;
+    sf::Sound _buttonClickSound;
 };
 
 #endif //STARFLEET_COMMAND_GAMESETTINGS_HPP

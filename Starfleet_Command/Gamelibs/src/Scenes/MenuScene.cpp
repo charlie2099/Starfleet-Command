@@ -81,6 +81,9 @@ void MenuScene::Render(sf::RenderWindow& window)
 
 bool MenuScene::InitMusic()
 {
+    _buttonClickSoundBuffer.loadFromFile("Resources/Audio/click5.ogg");
+    _buttonClickSound.setBuffer(_buttonClickSoundBuffer);
+
     if(!_menuMusic.openFromFile(AUDIO_DIR_PATH + "MenuTheme/United_Against_Evil_175bpm_136s.wav"))
     {
         std::cout << "Failed to to load menu soundtrack (United_Against_Evil_175bpm_136s)" << std::endl;
@@ -190,6 +193,8 @@ void MenuScene::InitGameSettings()
                 _player->SetTeamColour(Chilli::Colour::YELLOW);
                 _gameSettings->UpdateSettingOptionValueText("Player Colour", 4);
             }
+
+            _gameSettings->GetSettingOption("Player Colour").valueText.setFillColor(Chilli::JsonColourMapping::GetColourFromStringName(playerColourData));
         }
 
         if(gameSettingsData.contains("Enemy Colour"))
@@ -231,6 +236,8 @@ void MenuScene::InitGameSettings()
                 _enemy->SetTeamColour(Chilli::Colour::YELLOW);
                 _gameSettings->UpdateSettingOptionValueText("Enemy Colour", 4);
             }
+
+            _gameSettings->GetSettingOption("Enemy Colour").valueText.setFillColor(Chilli::JsonColourMapping::GetColourFromStringName(enemyColourData));
         }
     }
 }
@@ -353,6 +360,7 @@ void MenuScene::HandleGameSettingsEvents(sf::RenderWindow &window, sf::Event &ev
         {
             _isGameSettingsEnabled = false;
             _menuTitleImgSprite.setPosition(Constants::WINDOW_WIDTH / 2.0F - _menuTitleImgSprite.getGlobalBounds().width / 2.0F, Constants::WINDOW_HEIGHT * 0.3F - _menuTitleImgSprite.getGlobalBounds().height / 2.0F);
+            _buttonClickSound.play();
         }
     }
 
@@ -374,6 +382,7 @@ void MenuScene::HandleButtonEvents(sf::RenderWindow &window, sf::Event &event)
         }
         else if(_menuButtons[OPTIONS_BUTTON].IsClicked())
         {
+            _buttonClickSound.play();
             _isGameSettingsEnabled = true;
             _menuTitleImgSprite.setPosition(Constants::WINDOW_WIDTH / 2.0F - _menuTitleImgSprite.getGlobalBounds().width / 2.0F, Constants::WINDOW_HEIGHT * 0.2F - _menuTitleImgSprite.getGlobalBounds().height / 2.0F);
             _gameSettings->RepositionPanel(Constants::WINDOW_WIDTH / 2.0F - _gameSettings->GetSettingsPanelSize().x / 2.0F, _menuTitleImgSprite.getPosition().y + _menuTitleImgSprite.getGlobalBounds().height + 25.0F);
@@ -518,6 +527,8 @@ void MenuScene::ApplyGameSettings_OnSettingsUpdated()
             _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[4]);
             _player->SetTeamColour(Chilli::Colour::YELLOW);
         }
+
+        _gameSettings->GetSettingOption("Player Colour").valueText.setFillColor(Chilli::JsonColourMapping::GetColourFromStringName(playerColourSetting.valueText.getString()));
     }
 
     auto enemyColourSetting = _gameSettings->GetSettingOption("Enemy Colour");
@@ -557,6 +568,7 @@ void MenuScene::ApplyGameSettings_OnSettingsUpdated()
             _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[4]);
             _enemy->SetTeamColour(Chilli::Colour::YELLOW);
         }
+        _gameSettings->GetSettingOption("Enemy Colour").valueText.setFillColor(Chilli::JsonColourMapping::GetColourFromStringName(enemyColourSetting.valueText.getString()));
     }
 }
 
