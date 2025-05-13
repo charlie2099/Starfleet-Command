@@ -73,7 +73,7 @@ class MenuScene : public Scene
     /// Buttons
     std::array<TextButton, NUM_OF_BUTTONS> _menuButtons;
 
-    ///Teams
+    /// Teams
     std::unique_ptr<Player> _player;
     std::unique_ptr<Enemy> _enemy;
 

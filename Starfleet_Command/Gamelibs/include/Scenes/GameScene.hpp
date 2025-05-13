@@ -22,6 +22,7 @@
 #include "queue"
 #include "AIDirector/AiDirector.hpp"
 #include "Sprites/UI/GUI/ScrapCollectionUpgradeButton.hpp"
+#include "../../ButtonInfoWidget.hpp"
 
 class GameScene : public Scene
 {
@@ -103,6 +104,11 @@ private:
     float playerScrapAccumulationRate;
     float _playerScrapAccumulationTimer;
     sf::Clock _playerScrapAccumulationTimerClock;
+    std::unique_ptr<ButtonInfoWidget> _buttonInfoWidget;
+    bool _isButtonInfoWidgetVisible = false;
+    sf::Clock _mouseOverClock;
+    float _mouseOverTimer = 0.0F;
+    float _mouseOverCheckRate = 1.0F;
 
     /// Views (Main view & Minimap)
     bool _scrollViewLeft = false;

@@ -54,6 +54,31 @@ bool GameScene::Init()
         }
     }
 
+
+    std::vector<std::pair<sf::Text, sf::Text>> textValuePairsVector;
+
+    std::pair<sf::Text, sf::Text> test;
+    test.first.setString("INFO:");
+    test.second.setString("Autonomous drones scour the depths of\nspace in search of valuable debris, derelict\nships, and abandoned technology, bringing\nback a steady supply of scrap metal to\nbolster your fleet's development.\n\nEach upgrade enhances the efficiency and\nnumber of drones dispatched, increasing\nthe passive income of scrap returned to\nyour mothership over time.");
+
+    // Invest wisely - every bit of scrap strengthens your command.
+
+    textValuePairsVector.emplace_back(test);
+
+    /*std::pair<sf::Text, sf::Text> test;
+    test.first.setString("Name");
+    test.second.setString("Value");
+
+    std::pair<sf::Text, sf::Text> test2;
+    test2.first.setString("Name");
+    test2.second.setString("Value");
+
+    textValuePairsVector.emplace_back(test);
+    textValuePairsVector.emplace_back(test2);*/
+
+    sf::Vector2<float> widgetSize = {270.0F, 130.0F};
+    _buttonInfoWidget = std::make_unique<ButtonInfoWidget>(widgetSize, Chilli::Colour::LIGHTBLUE, "Scrap Collection Service", textValuePairsVector);
+
     _playerSpawnLaneIndicatorTexture.loadFromFile(TEXTURES_DIR_PATH + "right.png");
     _playerSpawnLaneIndicatorSprite.setTexture(_playerSpawnLaneIndicatorTexture);
     _playerSpawnLaneIndicatorSprite.setColor(_player->GetTeamColour());
@@ -141,7 +166,7 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     }
 
 
-
+    _buttonInfoWidget->EventHandler(window, event);
 
     /*if(_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->IsMouseOver())
     {
@@ -219,6 +244,28 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _upgradePlayerScrapCollectionButton->SetPos({_starshipDeploymentButtons[4]->GetPos().x + _starshipDeploymentButtons[4]->GetBounds().width + 96.0F, _starshipDeploymentButtons[0]->GetPos().y});
     _upgradePlayerScrapCollectionButton->SetAffordable(_player->GetCurrentScrapAmount() >= _upgradePlayerScrapCollectionButton->GetUpgradeCost()); // NOTE: Unsure about this
     _upgradePlayerScrapCollectionButton->Update(window, deltaTime);
+
+    _buttonInfoWidget->Update(window, deltaTime);
+
+    if(_upgradePlayerScrapCollectionButton->IsMouseOver())
+    {
+        _mouseOverTimer = _mouseOverClock.getElapsedTime().asSeconds();
+        if(_mouseOverTimer >= _mouseOverCheckRate)
+        {
+            _isButtonInfoWidgetVisible = true;
+            _buttonInfoWidget->SetPos({_upgradePlayerScrapCollectionButton->GetPos().x, _upgradePlayerScrapCollectionButton->GetPos().y - _buttonInfoWidget->GetSize().y - 2.5F});
+        }
+    }
+    else
+    {
+        _mouseOverClock.restart();
+        _isButtonInfoWidgetVisible = false;
+    }
+
+
+
+
+
 
     /// Passive scrap metal accumulation
     if(_playerScrapAccumulationTimerClock.getElapsedTime().asSeconds() >= _playerScrapAccumulationTimer)
@@ -1050,6 +1097,10 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
         deploymentButton->Render(window);
     }
     _upgradePlayerScrapCollectionButton->Render(window);
+    if(_isButtonInfoWidgetVisible)
+    {
+        _buttonInfoWidget->Render(window);
+    }
     if(not _starshipDeploymentManager->IsQueueEmpty())
     {
         window.draw(_playerSpawnLaneIndicatorSprite);

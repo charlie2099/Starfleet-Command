@@ -41,12 +41,22 @@ void ScrapCollectionUpgradeButton::Update(sf::RenderWindow &window, sf::Time del
 {
     if(_button->IsMouseOver())
     {
-        _isNameVisible = true;
+        if(_mouseOverTimer < _mouseOverCheckRate)
+        {
+            _isNameVisible = true;
+        }
         _nameText.setFillColor(_isAffordable ? _teamColour : sf::Color {_teamColour.r, _teamColour.g, _teamColour.b, 100});
+
+        _mouseOverTimer = _mouseOverClock.getElapsedTime().asSeconds();
+        if(_mouseOverTimer >= _mouseOverCheckRate)
+        {
+            _isNameVisible = false;
+        }
     }
 
     if(not _button->IsMouseOver())
     {
+        _mouseOverClock.restart();
         _isNameVisible = false;
     }
 
