@@ -4,6 +4,7 @@
 #include "AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStart_BehaviourRule.hpp"
 #include "AIDirector/Rules/BehaviourRules/CounterAttack_BehaviourRule.hpp"
 #include "AIDirector/Rules/BehaviourRules/PlayerSpacelaneDominance_BehaviourRule.hpp"
+#include "AIDirector/Rules/BehaviourRules/Diversion_BehaviourRule.hpp"
 #include "Utility/JsonSaveSystem.hpp"
 #include <memory>
 #include <vector>

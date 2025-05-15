@@ -53,7 +53,7 @@ DirectorIntensityRulesCalculator::DirectorIntensityRulesCalculator()
                 AddRule(std::make_shared<PlayerStarshipsInPlay_IntensityRule>(intensityRating));
             }
 
-            std::cout << intensityRule["Name"] << ": " << intensityRule["Enabled"] << std::endl;
+            //std::cout << intensityRule["Name"] << ": " << intensityRule["Enabled"] << std::endl;
         }
     }
 }

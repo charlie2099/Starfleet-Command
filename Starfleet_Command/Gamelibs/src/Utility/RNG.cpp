@@ -1,9 +1,23 @@
 #include "Utility/RNG.hpp"
-#include <iostream>
 
 RNG::RNG()
 : _randomGenerator(GetEngine()), _uniformRealDistribution(0.0, 1.0)
-{}
+{
+    auto rngData = Chilli::JsonSaveSystem::LoadFile(RNG_DATA_PATH);
+
+    if(rngData.contains("Perfect Roll Chance"))
+    {
+        float perfectRollChanceData = rngData["Perfect Roll Chance"];
+        _perfectRollChance = perfectRollChanceData;
+        _perfectRollThreshold = _perfectRollChance;
+    }
+    if(rngData.contains("Common Roll Chance"))
+    {
+        float commonRollChanceData = rngData["Common Roll Chance"];
+        _commonRollChance = commonRollChanceData;
+        _commonRollThreshold = _perfectRollChance + _commonRollChance;
+    }
+}
 
 RNG::RNG(int min, int max)
 : _randomGenerator(GetEngine()), _uniformIntDistribution(min, max)
@@ -18,12 +32,12 @@ RNG::RollQuality RNG::GenerateRandomRoll()
 {
     double roll = _uniformRealDistribution(_randomGenerator);
 
-    if(roll < PERFECT_THRESHOLD)
+    if(roll < _perfectRollThreshold)
     {
         std::cout << "PERFECT ROLL" << std::endl;
         return PERFECT_ROLL;
     }
-    else if(roll < COMMON_THRESHOLD)
+    else if(roll < _commonRollThreshold)
     {
         std::cout << "COMMON ROLL" << std::endl;
         return COMMON_ROLL;

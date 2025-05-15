@@ -1,5 +1,6 @@
 #ifndef STARFLEET_COMMAND_RNG_HPP
 #define STARFLEET_COMMAND_RNG_HPP
+#include "Utility/JsonSaveSystem.hpp"
 #include <random>
 #include <chrono>
 
@@ -23,11 +24,14 @@ private:
     std::mt19937 _randomGenerator;
     std::uniform_int_distribution<int> _uniformIntDistribution;
     std::uniform_real_distribution<double> _uniformRealDistribution;
-    const double PERFECT_CHANCE = 0.10; // 10%
-    const double COMMON_CHANCE = 0.60; // 60%
-    const double POOR_CHANCE = 1.00 - (PERFECT_CHANCE + COMMON_CHANCE); // 30%
-    const double PERFECT_THRESHOLD = PERFECT_CHANCE;
-    const double COMMON_THRESHOLD = PERFECT_CHANCE + COMMON_CHANCE;
+    double _perfectRollChance = 0.10; // 10%
+    double _commonRollChance = 0.60; // 60%
+    //const double POOR_ROLL_CHANCE = 1.00 - (_perfectRollChance + _commonRollChance); // 30%
+    double _perfectRollThreshold = _perfectRollChance;
+    double _commonRollThreshold = _perfectRollChance + _commonRollChance;
+
+    const std::string DATA_DIR_PATH = "Resources/Data/";
+    const std::string RNG_DATA_PATH = (DATA_DIR_PATH + "RNGData.json");
 };
 
 #endif //STARFLEET_COMMAND_RNG_HPP

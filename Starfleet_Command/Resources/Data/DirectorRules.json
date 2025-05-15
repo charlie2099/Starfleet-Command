@@ -39,35 +39,43 @@
   "BehaviourRules" :
   [
     {
-      "Name" : "SpawnWeakStarshipsAtStart",
+      "Name" : "Initial Assault",
       "Type" : "SpawnWeakStarshipsAtStart_BehaviourRule",
       "Enabled" : true,
       "TimePassedUntilSpawn" : 10.0,
       "MaxEnemySpawnCount" : 3
     },
     {
-      "Name" : "PlayerSpacelaneDominance",
+      "Name" : "Player Spacelane Dominance",
       "Type" : "PlayerSpacelaneDominance_BehaviourRule",
       "Enabled" : true,
       "MaxPlayerStarshipsInLane" : 2,
       "MaxSpawnAmount" : 1
     },
     {
-      "Name" : "LightFighter CounterAttack",
+      "Name" : "Dreadnought Diversion",
+      "Type" : "Diversion_BehaviourRule",
+      "Enabled" : true,
+      "RulePriority" : 0,
+      "StarshipToCounter" : "DREADNOUGHT",
+      "StarshipsToCounterWith" : ["LIGHTFIGHTER", "LIGHTFIGHTER"]
+    },
+    {
+      "Name" : "Light Fighter CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
       "StarshipToCounter" : "LIGHTFIGHTER",
       "StarshipsToCounterWith" : ["LIGHTFIGHTER"]
     },
     {
-      "Name" : "HeavyFighter CounterAttack",
+      "Name" : "Heavy Fighter CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
       "StarshipToCounter" : "HEAVYFIGHTER",
       "StarshipsToCounterWith" : ["HEAVYFIGHTER", "LIGHTFIGHTER"]
     },
     {
-      "Name" : "SupportFrigate CounterAttack",
+      "Name" : "Support Frigate CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
       "StarshipToCounter" : "SUPPORT_FRIGATE",

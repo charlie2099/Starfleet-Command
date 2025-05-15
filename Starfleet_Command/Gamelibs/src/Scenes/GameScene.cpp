@@ -555,6 +555,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         auto& friendlyProjectile = supportFrigate->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
+                            RNG _starshipHealRNG {static_cast<int>(supportFrigate->GetMaxHeal() * 0.75F), static_cast<int>(supportFrigate->GetMaxHeal())};
                             int randHealAmount = _starshipHealRNG.GenerateNumber();
                             friendlyStarship->ReplenishHealth(randHealAmount);
                             supportFrigate->DestroyProjectile(k);
@@ -650,6 +651,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         auto& friendlyProjectile = supportFrigate->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
+                            RNG _starshipHealRNG {static_cast<int>(supportFrigate->GetMaxHeal() * 0.75F), static_cast<int>(supportFrigate->GetMaxHeal())};
                             int randHealAmount = _starshipHealRNG.GenerateNumber();
                             friendlyStarship->ReplenishHealth(randHealAmount);
                             supportFrigate->DestroyProjectile(k);

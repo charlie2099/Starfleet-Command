@@ -9,6 +9,19 @@ SupportFrigate::SupportFrigate(int spawnSpacelane, const std::string& starshipTy
     _assignedLaneIndex = spawnSpacelane;
     _starshipIndex = 2;
 
+    auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
+    if(starshipData.contains("StarshipData"))
+    {
+        for(const auto& shipData : starshipData["StarshipData"])
+        {
+            if(shipData.contains("Name") && shipData["Name"] == starshipTypeName)
+            {
+                _maxHealAmount = shipData["MaxHeal"];
+                break;
+            }
+        }
+    }
+
     /// Change default origin to center
     sf::Vector2<float> centered_origin;
     centered_origin.x = _spriteComponent.GetSprite().getLocalBounds().width / 2;

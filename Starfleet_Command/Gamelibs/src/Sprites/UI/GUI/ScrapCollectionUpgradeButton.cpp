@@ -67,7 +67,7 @@ void ScrapCollectionUpgradeButton::Update(sf::RenderWindow &window, sf::Time del
 
     if (not _button->IsMouseOver() and _isAffordable)
     {
-        _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 125 });
+        _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 175 });
     }
 
     if (not _button->IsMouseOver() and not _isAffordable)

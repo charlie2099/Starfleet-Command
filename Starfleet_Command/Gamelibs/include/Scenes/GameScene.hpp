@@ -23,7 +23,7 @@
 #include "queue"
 #include "AIDirector/AiDirector.hpp"
 #include "Sprites/UI/GUI/ScrapCollectionUpgradeButton.hpp"
-#include "../../InfoTooltip.hpp"
+#include "Sprites/UI/InfoTooltip.hpp"
 
 class GameScene : public Scene
 {
@@ -170,7 +170,6 @@ private:
     sf::Sound _buttonClickSound;
 
     /// Random Distributions
-    RNG _starshipHealRNG {50, 100};
     RNG _enemyStarshipTypeRNG {0, StarshipFactory::STARSHIP_TYPE::ENUM_COUNT - 2};
     RNG _spacelaneSpawnRNG {0, NUM_OF_LANES - 1};
 };

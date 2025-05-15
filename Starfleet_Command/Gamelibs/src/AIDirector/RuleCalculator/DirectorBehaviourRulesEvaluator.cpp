@@ -31,6 +31,18 @@ DirectorBehaviourRulesEvaluator::DirectorBehaviourRulesEvaluator()
                     AddRule(std::make_shared<PlayerSpacelaneDominance_BehaviourRule>(maxPlayerStarshipsInLane, maxSpawnAmount));
                 }
 
+                /// Parse Diversion rule
+                if(behaviourRule.contains("Type") && behaviourRule["Type"] == "Diversion_BehaviourRule")
+                {
+                    StarshipFactory::STARSHIP_TYPE starshipToCounter = StarshipFactory::GetStarshipTypeFromString(behaviourRule["StarshipToCounter"]);
+                    std::vector<StarshipFactory::STARSHIP_TYPE> starshipsToCounterWith;
+                    for(const auto& counterStarship : behaviourRule["StarshipsToCounterWith"])
+                    {
+                        starshipsToCounterWith.push_back(StarshipFactory::GetStarshipTypeFromString(counterStarship));
+                    }
+                    AddRule(std::make_shared<Diversion_BehaviourRule>(starshipToCounter, starshipsToCounterWith));
+                }
+
                 /// Parse CounterAttack rules
                 if(behaviourRule.contains("Type") && behaviourRule["Type"] == "CounterAttack_BehaviourRule")
                 {
@@ -43,7 +55,7 @@ DirectorBehaviourRulesEvaluator::DirectorBehaviourRulesEvaluator()
                     AddRule(std::make_shared<CounterAttack_BehaviourRule>(starshipToCounter, starshipsToCounterWith));
                 }
             }
-            std::cout << behaviourRule["Name"] << ": " << behaviourRule["Enabled"] << std::endl;
+            //std::cout << behaviourRule["Name"] << ": " << behaviourRule["Enabled"] << std::endl;
         }
     }
 }
