@@ -78,6 +78,9 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/Utility/JsonColourMapping.hpp
         Gamelibs/include/Interfaces/IHealer.hpp
         Gamelibs/src/Sprites/Starships/Starship.cpp
+        Gamelibs/InfoTooltip.cpp
+        Gamelibs/InfoTooltip.hpp
+        Gamelibs/include/Utility/StringFormatter.hpp
 )
 
 include_directories(Gamelibs/include)

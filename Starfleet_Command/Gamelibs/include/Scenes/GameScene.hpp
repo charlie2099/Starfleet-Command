@@ -5,6 +5,7 @@
 #include "Utility/RNG.hpp"
 #include "Utility/JsonSaveSystem.hpp"
 #include "Utility/JsonColourMapping.hpp"
+#include "Utility/StringFormatter.hpp"
 #include "Sprites/Enemy/Enemy.hpp"
 #include "Sprites/Player/Player.hpp"
 #include "Sprites/Starships/Starship.hpp"
@@ -22,6 +23,7 @@
 #include "queue"
 #include "AIDirector/AiDirector.hpp"
 #include "Sprites/UI/GUI/ScrapCollectionUpgradeButton.hpp"
+#include "../../InfoTooltip.hpp"
 
 class GameScene : public Scene
 {
@@ -60,6 +62,7 @@ private:
     /// Render functions
     void RenderGameplayViewSprites(sf::RenderWindow &window);
     void RenderMinimapSprites(sf::RenderWindow &window);
+    void RenderPauseMenuSprites(sf::RenderWindow &window);
 
     /// Event callback functions
     void SpawnStarshipFromShipyard_OnStarshipDeploymentComplete();
@@ -103,6 +106,19 @@ private:
     float playerScrapAccumulationRate;
     float _playerScrapAccumulationTimer;
     sf::Clock _playerScrapAccumulationTimerClock;
+
+    /// Tooltips
+    std::unique_ptr<InfoTooltip> _playerScrapCollectionTooltip;
+    sf::Clock _scrapCollectionTooltipClock;
+    bool _isScrapCollectionTooltipVisible = false;
+
+    std::unique_ptr<InfoTooltip> _starshipDeploymentButtonTooltip;
+    sf::Clock _starshipDeploymentButtonTooltipClock;
+    bool _isStarshipDeploymentButtonTooltipVisible = false;
+    int _selectedStarshipDeploymentButtonIndex = 0;
+
+    float _mouseOverTooltipTimer = 0.0F;
+    float _mouseOverTooltipTimeUntilDisplay = 1.0F;
 
     /// Views (Main view & Minimap)
     bool _scrollViewLeft = false;
