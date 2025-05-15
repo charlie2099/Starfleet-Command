@@ -3,6 +3,7 @@
     {
       "Name": "Light Fighter",
       "Abbreviation": "LF",
+      "Description" : "Fast and cheap, but fragile and low damage. Great for\nearly pressure and diverting the enemies attacks.",
       "Health" : 150,
       "MaxDamage" : 25,
       "DamageScaleFactor": 1.0,
@@ -16,6 +17,7 @@
     {
       "Name": "Heavy Fighter",
       "Abbreviation": "HF",
+      "Description" : "Durable frontliner. Absorbs damage well, fast-firing,\nbut moves slower than the Light Fighter",
       "Health" : 300,
       "MaxDamage" : 20,
       "DamageScaleFactor": 1.0,
@@ -29,6 +31,7 @@
     {
       "Name": "Support Frigate",
       "Abbreviation": "SF",
+      "Description" : "Fair health and damage, but slow to fire. Provides\nhealing to unit's in front of them.",
       "Health" : 500,
       "MaxDamage" : 30,
       "DamageScaleFactor": 1.0,
@@ -42,6 +45,7 @@
     {
       "Name": "Dreadnought",
       "Abbreviation": "DRN",
+      "Description" : "Long-range, very high damage units. Dominates all\nlanes, but very slow and expensive.",
       "Health" : 1500,
       "MaxDamage" : 500,
       "DamageScaleFactor": 1.0,
@@ -55,6 +59,7 @@
     {
       "Name": "Battleship",
       "Abbreviation": "BS",
+      "Description" : "Extremely durable, with multi-lane coverage. More\nhealth than the dreadnought, but moderate damage.",
       "Health" : 2500,
       "MaxDamage" : 100,
       "DamageScaleFactor": 1.0,
@@ -68,7 +73,8 @@
     {
       "Name": "Mothership",
       "Abbreviation": "MS",
-      "Health" : 1,
+      "Description" : "Your base and resource hub. Stationary, heavily armoured.",
+      "Health" : 10000,
       "MaxDamage" : 50,
       "DamageScaleFactor": 1.0,
       "Speed": 10.0,

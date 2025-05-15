@@ -31,7 +31,7 @@ public:
     bool IsPlacingStarship() const { return _isPlacingStarship; }
     bool IsAffordable() const { return _isAffordable; }
 
-    bool IsCursorHoveredOver() const { return _button->IsMouseOver(); }
+    bool IsMouseOver() const { return _button->IsMouseOver(); }
 
 private:
     std::unique_ptr<ImageButton> _button;
@@ -45,6 +45,11 @@ private:
     bool _isAffordable = false;
     StarshipFactory::STARSHIP_TYPE _starshipType;
     sf::Color _teamColour;
+
+    sf::Clock _mouseOverClock;
+    float _mouseOverTimer = 0.0F;
+    float _mouseOverCheckRate = 1.0F;
+
     const sf::Color HOVER_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 255};
     const sf::Color SELECTED_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 175};
 };
