@@ -1,8 +1,8 @@
 #include "AIDirector/Rules/BehaviourRules/Diversion_BehaviourRule.hpp"
 #include "AIDirector/AiDirector.hpp"
 
-Diversion_BehaviourRule::Diversion_BehaviourRule(StarshipFactory::STARSHIP_TYPE starshipTypeToCounter, const std::vector<StarshipFactory::STARSHIP_TYPE> &counterStarshipTypes)
-: _starshipTypeToCounter(starshipTypeToCounter), _counterStarshipTypes(counterStarshipTypes)
+Diversion_BehaviourRule::Diversion_BehaviourRule(StarshipFactory::STARSHIP_TYPE starshipTypeToCounter, const std::vector<StarshipFactory::STARSHIP_TYPE> &counterStarshipTypes, std::string ruleID, int rulePriority)
+: _starshipTypeToCounter(starshipTypeToCounter), _counterStarshipTypes(counterStarshipTypes), _id(std::move(ruleID)), _priority(rulePriority)
 {}
 
 bool Diversion_BehaviourRule::IsValid(AiDirector &director)

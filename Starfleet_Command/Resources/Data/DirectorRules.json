@@ -42,6 +42,7 @@
       "Name" : "Initial Assault",
       "Type" : "SpawnWeakStarshipsAtStart_BehaviourRule",
       "Enabled" : true,
+      "RulePriority" : 2,
       "TimePassedUntilSpawn" : 10.0,
       "MaxEnemySpawnCount" : 3
     },
@@ -49,6 +50,7 @@
       "Name" : "Player Spacelane Dominance",
       "Type" : "PlayerSpacelaneDominance_BehaviourRule",
       "Enabled" : true,
+      "RulePriority" : 1,
       "MaxPlayerStarshipsInLane" : 2,
       "MaxSpawnAmount" : 1
     },
@@ -56,7 +58,7 @@
       "Name" : "Dreadnought Diversion",
       "Type" : "Diversion_BehaviourRule",
       "Enabled" : true,
-      "RulePriority" : 0,
+      "RulePriority" : 1,
       "StarshipToCounter" : "DREADNOUGHT",
       "StarshipsToCounterWith" : ["LIGHTFIGHTER", "LIGHTFIGHTER"]
     },
@@ -64,6 +66,7 @@
       "Name" : "Light Fighter CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
+      "RulePriority" : 1,
       "StarshipToCounter" : "LIGHTFIGHTER",
       "StarshipsToCounterWith" : ["LIGHTFIGHTER"]
     },
@@ -71,6 +74,7 @@
       "Name" : "Heavy Fighter CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
+      "RulePriority" : 1,
       "StarshipToCounter" : "HEAVYFIGHTER",
       "StarshipsToCounterWith" : ["HEAVYFIGHTER", "LIGHTFIGHTER"]
     },
@@ -78,6 +82,7 @@
       "Name" : "Support Frigate CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
+      "RulePriority" : 1,
       "StarshipToCounter" : "SUPPORT_FRIGATE",
       "StarshipsToCounterWith" : ["HEAVYFIGHTER", "LIGHTFIGHTER"]
     },
@@ -85,6 +90,7 @@
       "Name" : "Battleship CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
+      "RulePriority" : 1,
       "StarshipToCounter" : "BATTLESHIP",
       "StarshipsToCounterWith" : ["BATTLESHIP", "SUPPORT_FRIGATE", "LIGHTFIGHTER"]
     },
@@ -92,6 +98,7 @@
       "Name" : "Dreadnought CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
+      "RulePriority" : 0,
       "StarshipToCounter": "DREADNOUGHT",
       "StarshipsToCounterWith": ["DREADNOUGHT", "SUPPORT_FRIGATE"]
     }

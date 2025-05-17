@@ -1,8 +1,8 @@
 #include "AIDirector/Rules/BehaviourRules/PlayerSpacelaneDominance_BehaviourRule.hpp"
 #include "AIDirector/AiDirector.hpp"
 
-PlayerSpacelaneDominance_BehaviourRule::PlayerSpacelaneDominance_BehaviourRule(int maxPlayerStarshipsInLane, int maxSpawnCount)
-: _numOfPlayerStarshipsInLaneThreshold(maxPlayerStarshipsInLane), _maxSpawnCount(maxSpawnCount)
+PlayerSpacelaneDominance_BehaviourRule::PlayerSpacelaneDominance_BehaviourRule(int maxPlayerStarshipsInLane, int maxSpawnCount, std::string ruleID, int rulePriority)
+: _numOfPlayerStarshipsInLaneThreshold(maxPlayerStarshipsInLane), _maxSpawnCount(maxSpawnCount), _id(std::move(ruleID)), _priority(rulePriority)
 {}
 
 bool PlayerSpacelaneDominance_BehaviourRule::IsValid(AiDirector &director)

@@ -1,8 +1,10 @@
+#include <utility>
+
 #include "AIDirector/Rules/BehaviourRules/CounterAttack_BehaviourRule.hpp"
 #include "AIDirector/AiDirector.hpp"
 
-CounterAttack_BehaviourRule::CounterAttack_BehaviourRule(StarshipFactory::STARSHIP_TYPE starshipTypeToCounter, const std::vector<StarshipFactory::STARSHIP_TYPE>& counterStarshipTypes)
-: _starshipTypeToCounter(starshipTypeToCounter), _counterStarshipTypes(counterStarshipTypes)
+CounterAttack_BehaviourRule::CounterAttack_BehaviourRule(StarshipFactory::STARSHIP_TYPE starshipTypeToCounter, const std::vector<StarshipFactory::STARSHIP_TYPE>& counterStarshipTypes, std::string ruleID, int rulePriority)
+: _starshipTypeToCounter(starshipTypeToCounter), _counterStarshipTypes(counterStarshipTypes), _id(std::move(ruleID)), _priority(rulePriority)
 {}
 
 bool CounterAttack_BehaviourRule::IsValid(AiDirector &director)
@@ -75,4 +77,3 @@ void CounterAttack_BehaviourRule::Execute(AiDirector &director)
         break;
     }
 }
-

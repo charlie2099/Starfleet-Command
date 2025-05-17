@@ -18,41 +18,49 @@ DirectorBehaviourRulesEvaluator::DirectorBehaviourRulesEvaluator()
                 /// Parse SpawnWeakStarshipsAtStart rule
                 if(behaviourRule.contains("Type") && behaviourRule["Type"] == "SpawnWeakStarshipsAtStart_BehaviourRule")
                 {
+                    std::string ruleID = behaviourRule["Name"];
+                    int rulePriority = behaviourRule["RulePriority"];
                     float timePassedUntilSpawn = behaviourRule["TimePassedUntilSpawn"];
                     int maxEnemySpawnCount = behaviourRule["MaxEnemySpawnCount"];
-                    AddRule(std::make_shared<SpawnWeakStarshipsAtStart_BehaviourRule>(timePassedUntilSpawn, maxEnemySpawnCount));
+                    AddRule(std::make_shared<SpawnWeakStarshipsAtStart_BehaviourRule>(timePassedUntilSpawn, maxEnemySpawnCount, ruleID, rulePriority));
                 }
 
                 /// Parse PlayerSpacelaneDominance rule
                 if(behaviourRule.contains("Type") && behaviourRule["Type"] == "PlayerSpacelaneDominance_BehaviourRule")
                 {
+                    std::string ruleID = behaviourRule["Name"];
+                    int rulePriority = behaviourRule["RulePriority"];
                     int maxPlayerStarshipsInLane = behaviourRule["MaxPlayerStarshipsInLane"];
                     int maxSpawnAmount = behaviourRule["MaxSpawnAmount"];
-                    AddRule(std::make_shared<PlayerSpacelaneDominance_BehaviourRule>(maxPlayerStarshipsInLane, maxSpawnAmount));
+                    AddRule(std::make_shared<PlayerSpacelaneDominance_BehaviourRule>(maxPlayerStarshipsInLane, maxSpawnAmount, ruleID, rulePriority));
                 }
 
                 /// Parse Diversion rule
                 if(behaviourRule.contains("Type") && behaviourRule["Type"] == "Diversion_BehaviourRule")
                 {
+                    std::string ruleID = behaviourRule["Name"];
+                    int rulePriority = behaviourRule["RulePriority"];
                     StarshipFactory::STARSHIP_TYPE starshipToCounter = StarshipFactory::GetStarshipTypeFromString(behaviourRule["StarshipToCounter"]);
                     std::vector<StarshipFactory::STARSHIP_TYPE> starshipsToCounterWith;
                     for(const auto& counterStarship : behaviourRule["StarshipsToCounterWith"])
                     {
                         starshipsToCounterWith.push_back(StarshipFactory::GetStarshipTypeFromString(counterStarship));
                     }
-                    AddRule(std::make_shared<Diversion_BehaviourRule>(starshipToCounter, starshipsToCounterWith));
+                    AddRule(std::make_shared<Diversion_BehaviourRule>(starshipToCounter, starshipsToCounterWith, ruleID, rulePriority));
                 }
 
                 /// Parse CounterAttack rules
                 if(behaviourRule.contains("Type") && behaviourRule["Type"] == "CounterAttack_BehaviourRule")
                 {
+                    std::string ruleID = behaviourRule["Name"];
+                    int rulePriority = behaviourRule["RulePriority"];
                     StarshipFactory::STARSHIP_TYPE starshipToCounter = StarshipFactory::GetStarshipTypeFromString(behaviourRule["StarshipToCounter"]);
                     std::vector<StarshipFactory::STARSHIP_TYPE> starshipsToCounterWith;
                     for(const auto& counterStarship : behaviourRule["StarshipsToCounterWith"])
                     {
                         starshipsToCounterWith.push_back(StarshipFactory::GetStarshipTypeFromString(counterStarship));
                     }
-                    AddRule(std::make_shared<CounterAttack_BehaviourRule>(starshipToCounter, starshipsToCounterWith));
+                    AddRule(std::make_shared<CounterAttack_BehaviourRule>(starshipToCounter, starshipsToCounterWith, ruleID, rulePriority));
                 }
             }
             //std::cout << behaviourRule["Name"] << ": " << behaviourRule["Enabled"] << std::endl;

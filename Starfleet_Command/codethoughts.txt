@@ -20,6 +20,35 @@
 =================PSEUDOCODE==================
 ============================================
 
+
+___Perk & Upgrades System___
+
+HOW IT WORKS
+- When the player achieves enough XP (from destroying starships),
+the game is auto-paused and the player is provided with a choice of
+THREE perk and/or upgrade cards. After selecting a card, the game
+shall resume, with the perk/upgrade now in effect. This process
+repeats when the player meets/exceeds another XP threshold.
+
+EXAMPLE UPGRADE CARDS
+- Dreadnought_UpgradeCard
+
+EXAMPLE PERK CARDS
+- IncreasedScrapCollectionOnStarshipDestruction_PerkCard
+- ReducedStarshipCosts_PerkCard
+- ScrapBoost_PerkCard (i.e. displays a card named Scrap Booster,
+with a PERK label top right, with a short description of the perk and
+it's effects like +25 scrap every collection)
+
+PerkData.json
+UpgradeData.json
+
+Decorator pattern?
+
+
+
+
+
 ISettingType
 {
     virtual void ApplySetting();
@@ -40,26 +69,6 @@ Selection : ISettingType
     }
 }
 
-_gameSettings->AddSettingOption("Fullscreen Mode", std::vector<std::string>{"OFF", "ON"});
-gameSettingsData["Fullscreen Mode"] = _gameSettings->GetSettingOption("Fullscreen Mode").selectedValueIndex == 1 ? "true" : "false";
-
-struct SettingsOption
-{
-    text settingsItemName
-    text settingsItemActive
-}
-std::pair<SettingsOption, bool> _settingsElementPair
-
-
-MUSIC                                                 ON
-SPACELANES                                      ON
-BACKGROUND COLOUR                  CYAN
-BACKGROUND STARS COLOUR     LIGHTBLUE
-PLAYER TEAM COLOUR                   LIGHTBLUE
-ENEMY TEAM COLOUR                    LIGHTGREEN
-DIRECTOR DIFFICULTY                     EASY                        (modifies calculation rate, max enemy pop, etc)
-
-
 
 
 
@@ -78,6 +87,21 @@ __STARSHIP INTERFACES__
 ICanHeal
 ICanDamage
 
+
+
+
+
+___ENEMY AI- BEHAVIOUR___
+- Start of the game, deploy a random selection of weak units, to taunt
+the player/get the battle going. (i.e. RandomUnitSpawnStartofGame_BehaviourRule(UNITS, SPAWN TIME) )
+- Spontanously spawn random enemy units through the game, in
+random intervals of 30-90 seconds, picking stronger units when the
+ enemy exceeds certain scrap thresholds (RandomUnitSpawnIntervals_BehaviourRule(UNITS, SPAWN INTERVALS) )
+- Counter the players attacks/strategies, prioritising the most
+dangerous threats first (CounterAttack_BehaviourRule(THREAT UNIT, COUNTER UNITS) ).
+- Spawn random units in undefended/unguarded lanes (UnguardedLaneAttack_BehaviourRule) )
+- Spawn more or fewer units depending on how much scrap the
+ player has (PlayerScrapLow_BehaviourRule(), PlayerScrapHigh_BehaviourRule() )
 
 
 
@@ -183,14 +207,3 @@ Combat Rules
 - SupportFrigate have low range, low heal rate, low heal, and low health
 - Dreadnoughts have high range, low attack rate, high damage, and medium health
 - Battleships have medium range, low attack rate, medium damage, and high health
-
-============================================
-================ENEMY SPAWNING===============
-============================================
-- Spawn a random enemy type every x amount of seconds
-- Stronger enemies have less chance of spawning
-- Spawn specific enemy types based on various conditions
-- Create a Director Ai system that defines spawning rules
-- Conditions:
-   - If enemy in lane was spawned x amount of time ago, spawn enemy in lane
-   - If player has x amount of specific unit types, spawn enemy type

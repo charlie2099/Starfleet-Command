@@ -76,7 +76,7 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
 
     if (not _button->IsMouseOver() and _isAffordable)
     {
-        _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 175 });
+        _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 160 });
     }
 
     if (not _button->IsMouseOver() and not _isAffordable)

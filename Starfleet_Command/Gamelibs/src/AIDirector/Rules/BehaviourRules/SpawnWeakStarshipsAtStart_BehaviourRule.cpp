@@ -1,8 +1,8 @@
 #include "AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStart_BehaviourRule.hpp"
 #include "AIDirector/AiDirector.hpp"
 
-SpawnWeakStarshipsAtStart_BehaviourRule::SpawnWeakStarshipsAtStart_BehaviourRule(float timePassedUntilSpawn, int maxSpawnCount)
-: _timePassedUntilSpawn(timePassedUntilSpawn), _maxSpawnCount(maxSpawnCount)
+SpawnWeakStarshipsAtStart_BehaviourRule::SpawnWeakStarshipsAtStart_BehaviourRule(float timePassedUntilSpawn, int maxSpawnCount, std::string ruleID, int rulePriority)
+: _timePassedUntilSpawn(timePassedUntilSpawn), _maxSpawnCount(maxSpawnCount), _id(std::move(ruleID)), _priority(rulePriority)
 {
     RNG _randomSpawnCount {1, maxSpawnCount };
     _maxSpawnCount = _randomSpawnCount.GenerateNumber();
