@@ -13,7 +13,7 @@ void DirectorBehaviourRuleEngine::EvaluateBehaviourOutput(AiDirector &director)
         if(rule->IsValid(director))
         {
             rule->Execute(director);
-            std::cout << rule->GetID() << " rule was executed successfully! Priority: " << rule->GetPriority() << std::endl;
+            std::cout << rule->GetID() << " rule was executed successfully! | Rule Priority: " << rule->GetPriority() << " | Total Rules Executed So Far: " << ++_numOfRulesSuccessfullyExecuted << std::endl;
             break;
         }
     }

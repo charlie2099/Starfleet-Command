@@ -196,7 +196,7 @@ bool AiDirector::IsEnemyStarshipTypeInQueue(StarshipFactory::STARSHIP_TYPE stars
 
 void AiDirector::UpdateDeploymentStatus_OnDeploymentBegun()
 {
-    _starshipDeploymentManager->SetDeploymentBarText("Deploying " + _starshipTemplateToBeDeployed[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipName());
+    _starshipDeploymentManager->SetDeploymentBarText("Deploying " + _starshipTemplateToBeDeployed[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipName() + "...");
     _starshipDeploymentManager->SetDeploymentTime(_starshipTemplateToBeDeployed[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetDeploymentTime());
 
     _enemy->SpendScrap(_starshipTemplateToBeDeployed[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetBuildCost());

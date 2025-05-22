@@ -38,6 +38,7 @@ private:
     SpriteComponent _outsideBarSpriteComponent;
     SpriteComponent _insideBarSpriteComponent;
     sf::Text _text;
+    std::string _progressBarText;
     sf::Text _waitingForNextTaskText;
     sf::Vector2f _innerPosition;
     sf::Vector2f _outerPosition;

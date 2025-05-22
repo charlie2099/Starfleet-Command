@@ -16,6 +16,7 @@ public:
 
 private:
     std::vector<std::shared_ptr<IDirectorBehaviourRule>> _rules;
+    int _numOfRulesSuccessfullyExecuted = 0;
 };
 
 #endif //STARFLEET_COMMAND_DIRECTORBEHAVIOURRULEENGINE_HPP

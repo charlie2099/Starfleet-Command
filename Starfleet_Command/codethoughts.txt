@@ -89,6 +89,29 @@ ICanDamage
 
 
 
+___XP SYSTEM___
+- Modify ProgressBar class to NOT apply progress based on time. It
+should just apply a progress amount through a method, and then if
+the user wants to apply it over time then they can just call that
+method every x amount of seconds.
+
+___REWARD SYSTEM___
+- Trigger: Random intervals OR fixed intervals OR after each level up?
+- Rewards: The better you play, and the more involved you are, the
+better your chances are of receiving better perk choices. Perk choices may
+be given based on the way you play? (or may be just one PLAYSTYLE perk?).
+So if the player deploys a lot of lightfighters, then they may be offered
+a perk that reinforces lightfighter units.
+
+
+
+___FUN FACTORS___
+- An adaptable and challenging enemy
+- Roguelike reward system (choose 1 of 3 random perks that affect starship stats etc)
+- Unlockable starships? (levels system where, after completing a 'mission', the player unlocks a new starship type to use in the next level)
+- Story & Free-play modes (progress through story levels unlocking new starship types, free-play mode play with everything unlocked)
+
+
 
 
 ___ENEMY AI- BEHAVIOUR___

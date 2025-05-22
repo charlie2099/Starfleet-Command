@@ -39,6 +39,8 @@ void ProgressBar::Update(sf::RenderWindow& window, sf::Time time)
             InvokeSimpleEvent(EventID::TASK_STARTED);
         }
 
+        _text.setString(_progressBarText + " (" + std::to_string((int)(_timeToCompleteTask - (_elapsedTime-1))) + ")");
+
         _elapsedTime += time.asSeconds();
 
         // Calculate progress based on elapsed time and total deployment time
@@ -62,12 +64,9 @@ void ProgressBar::Update(sf::RenderWindow& window, sf::Time time)
 
 void ProgressBar::Render(sf::RenderWindow &window)
 {
-    window.draw(_outsideBarSpriteComponent.GetSprite()); // QUESTION: Better with or without outer bar?
+    window.draw(_outsideBarSpriteComponent.GetSprite());
     window.draw(_insideBarSpriteComponent.GetSprite());
     window.draw(_text);
-    if(_taskIsProgressing)
-    {
-    }
 }
 
 void ProgressBar::SetColour(sf::Color colour)
@@ -95,7 +94,8 @@ void ProgressBar::SetTimeToCompleteTask(float timeInSeconds)
 
 void ProgressBar::SetProgressBarText(const std::string& text)
 {
-    _text.setString(text);
+    _progressBarText = text;
+    _text.setString(_progressBarText);
 }
 
 void ProgressBar::SetProgressBarWaitingText(const std::string &text)

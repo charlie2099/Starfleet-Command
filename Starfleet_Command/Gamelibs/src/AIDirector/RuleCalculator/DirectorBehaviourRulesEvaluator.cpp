@@ -63,16 +63,15 @@ DirectorBehaviourRulesEvaluator::DirectorBehaviourRulesEvaluator()
                     AddRule(std::make_shared<CounterAttack_BehaviourRule>(starshipToCounter, starshipsToCounterWith, ruleID, rulePriority));
                 }
             }
-            //std::cout << behaviourRule["Name"] << ": " << behaviourRule["Enabled"] << std::endl;
         }
     }
+
+    _behaviourRuleEngine = std::make_unique<DirectorBehaviourRuleEngine>(_rules);
 }
 
 void DirectorBehaviourRulesEvaluator::EvaluateBehaviourOutput(AiDirector &director)
 {
-    //DirectorBehaviourRuleEngine engine((std::vector<std::shared_ptr<IDirectorBehaviourRule>>(_rules)));
-    DirectorBehaviourRuleEngine engine(_rules);
-    engine.EvaluateBehaviourOutput(director);
+    _behaviourRuleEngine->EvaluateBehaviourOutput(director);
 }
 
 void DirectorBehaviourRulesEvaluator::AddRule(const std::shared_ptr<IDirectorBehaviourRule>& rule)

@@ -172,6 +172,9 @@ private:
     /// Random Distributions
     RNG _enemyStarshipTypeRNG {0, StarshipFactory::STARSHIP_TYPE::ENUM_COUNT - 2};
     RNG _spacelaneSpawnRNG {0, NUM_OF_LANES - 1};
+
+    /// XP System
+    ProgressBar _rewardProgressBar;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

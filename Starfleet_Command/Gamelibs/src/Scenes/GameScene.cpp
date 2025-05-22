@@ -79,6 +79,11 @@ bool GameScene::Init()
 
     _cursor.SetColour(_player->GetTeamColour());
 
+    _rewardProgressBar.SetColour(_player->GetTeamColour());
+    _rewardProgressBar.SetProgressBarText("Next Perk Reward");
+    _rewardProgressBar.SetTimeToCompleteTask(60.0F);
+    _rewardProgressBar.SetProgressBarStatus(true);
+
     return true;
 }
 
@@ -118,7 +123,6 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
     _player->EventHandler(window, event);
     HandleViewScrollingKeyboardInput(event);
-    _minimap->EventHandler(window, event);
 
     for (auto& deploymentButton : _starshipDeploymentButtons)
     {
@@ -236,6 +240,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _upgradePlayerScrapCollectionButton->Update(window, deltaTime);
 
     _starshipDeploymentButtonTooltip->Update(window, deltaTime);
+
+    //_rewardProgressBar.SetPosition({_gameplayView.getCenter().x - _rewardProgressBar.GetSize().width / 2.0F, _gameplayView.getCenter().y - 220.0F});
+    //_rewardProgressBar.SetPosition({_gameplayView.getCenter().x - _rewardProgressBar.GetSize().width / 2.0F, _upgradePlayerScrapCollectionButton->GetPos().y + _upgradePlayerScrapCollectionButton->GetBounds().height});
+    _rewardProgressBar.SetPosition({_gameplayView.getCenter().x - _rewardProgressBar.GetSize().width / 2.0F, _gameplayView.getCenter().y - _gameplayView.getSize().y / 2.0F + 110.0F});
+    _rewardProgressBar.Update(window, deltaTime);
 
     for (int i = 0; i < _starshipDeploymentButtons.size(); ++i)
     {
@@ -821,12 +830,13 @@ void GameScene::InitMinimapView()
 {
     _minimap = std::make_unique<Minimap>(
             Constants::LEVEL_WIDTH,
-            Constants::LEVEL_HEIGHT,
+            Constants::WINDOW_HEIGHT,
             Constants::Minimap::VIEWPORT_LEFT,
             Constants::Minimap::VIEWPORT_TOP,
             Constants::Minimap::VIEWPORT_WIDTH,
             Constants::Minimap::VIEWPORT_HEIGHT,
-            _gameplayView);
+            _gameplayView,
+            _player->GetTeamColour());
 
     auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
     if(fileData.contains("Minimap"))
@@ -1207,7 +1217,6 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
     if(not _starshipDeploymentManager->IsQueueEmpty())
     {
         window.draw(_playerSpawnLaneIndicatorSprite);
-        //window.draw(_enemySpawnLaneIndicatorText);
     }
     //_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->Render(window);
     _aiDirector->Render(window);
@@ -1216,6 +1225,7 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
     {
         _nextMusicTrackButton->Render(window);
     }*/
+    _rewardProgressBar.Render(window);
 }
 
 void GameScene::RenderMinimapSprites(sf::RenderWindow &window)

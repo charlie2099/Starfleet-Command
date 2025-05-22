@@ -12,28 +12,17 @@
 class Minimap
 {
 public:
-    Minimap(float viewWidth, float viewHeight, float viewportLeft, float viewportTop, float viewportWidth, float viewportHeight, sf::View& gameplayView);
+    Minimap(float viewWidth, float viewHeight, float viewportLeft, float viewportTop, float viewportWidth, float viewportHeight, sf::View& gameplayView, sf::Color borderColour);
     ~Minimap() = default;
-    void EventHandler(sf::RenderWindow& window, sf::Event& event);
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
     void RenderGameplayView(sf::RenderWindow& window);
     const sf::View& GetView() const { return _minimapView; }
 
 private:
-    void HandleMinimapZooming(const sf::RenderWindow &window, const sf::Event &event, const sf::Vector2i &mouse_pos);
-    void HandleMinimapPanning(const sf::RenderWindow &window, const sf::Event &event, const sf::Vector2i &mouse_pos);
-    void UpdateMinimapPanPosition(const sf::RenderWindow &window);
-    void ResetMinimapView();
-    sf::Vector2f ClampViewCentreBounds(const sf::Vector2f& proposedCenter) const;
     sf::View _minimapView{};
     sf::View& _gameplayView;
     sf::RectangleShape _minimapBorder;
-    sf::Vector2i _initialMousePosition;
-    sf::Vector2f _originalViewCenter;
-    float _originalZoomLevel = 1.0f;
-    float _currentZoomLevel = 1.0f;
-    bool _canViewPan = false;
     sf::RectangleShape _minimapGameplayBoundary;
     sf::Text _minimapGameplayBoundaryText;
 };

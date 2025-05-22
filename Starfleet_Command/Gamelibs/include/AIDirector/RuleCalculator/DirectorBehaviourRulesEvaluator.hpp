@@ -21,6 +21,7 @@ public:
 private:
     void AddRule(const std::shared_ptr<IDirectorBehaviourRule>& rule);
     std::vector<std::shared_ptr<IDirectorBehaviourRule>> _rules;
+    std::unique_ptr<DirectorBehaviourRuleEngine> _behaviourRuleEngine;
 
     const std::string DATA_DIR_PATH = "Resources/Data/";
     const std::string DIRECTOR_RULES_FILE_PATH = (DATA_DIR_PATH + "DirectorRules.json");
