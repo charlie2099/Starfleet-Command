@@ -88,6 +88,14 @@ ICanHeal
 ICanDamage
 
 
+Replace Player and Enemy class with
+- StarfleetCommander
+- FleetCommander
+- StarshipCommander
+- Team
+- Player
+- PlayerController & EnemyController (with Controller interface)
+
 
 ___XP SYSTEM___
 - Modify ProgressBar class to NOT apply progress based on time. It

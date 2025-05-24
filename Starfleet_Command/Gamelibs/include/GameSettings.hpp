@@ -43,12 +43,13 @@ public:
     void RepositionPanel(float xPos, float yPos);
 
     sf::Vector2f GetSettingsPanelSize() { return _settingsPanel.getSize(); }
-    //int GetNumOfSettingOptions() { return _settingsOptions.size(); }
     SettingsOption& GetSettingOption(const std::string& settingName);
-    std::vector<SettingsOption> GetSettingOptions() { return _settingsOptions; }
+    std::string GetSettingOptionCurrentValue(const std::string& settingName) { return GetSettingOption(settingName).valueText.getString(); }
+    int GetSettingOptionCurrentValueIndex(const std::string& settingName) { return GetSettingOption(settingName).selectedValueIndex; }
 
     void AddSettingOption(const std::string& settingName, const std::vector<std::string>& settingOptions);
-    void UpdateSettingOptionValueText(const std::string& settingName, int selectedSettingsOptionValueIndex);
+    void SetSettingOptionValueText(const std::string& settingName, int selectedSettingsOptionValueIndex);
+    void SetSettingOptionValueColour(const std::string& settingName, sf::Color colour);
 
     using BasicEvent = std::pair<EventID, std::function<void()>>;
     void AddBasicObserver(BasicEvent observer);

@@ -26,6 +26,9 @@ class MenuScene : public Scene
     void Render(sf::RenderWindow& window) override;
 
  private:
+    /// Destructor functions
+    void StopMusic();
+
     /// Init functions
     void InitView();
     bool InitBackground();
@@ -42,13 +45,23 @@ class MenuScene : public Scene
     void HandleButtonEvents(sf::RenderWindow &window, sf::Event &event);
 
     /// Update functions
-    void UpdateBackgroundStarshipsMovement(sf::RenderWindow &window, sf::Time &deltaTime);
+    void UpdateCursor(sf::RenderWindow &window, sf::Time &deltaTime);
+    void UpdateStarshipAnimations(sf::RenderWindow &window, sf::Time &deltaTime);
     void UpdateGameSettingsButtons(sf::RenderWindow &window, sf::Time &deltaTime);
     void UpdateMenuButtons(sf::RenderWindow &window);
+
+    /// Render functions
+    void RenderBackground(sf::RenderWindow &window);
+    void RenderStarships(sf::RenderWindow &window);
+    void RenderGameSettings(sf::RenderWindow &window);
+    void RenderButtons(sf::RenderWindow &window);
 
     /// Event functions
     void ApplyGameSettings_OnSettingsUpdated();
     void SaveGameSettingsData_OnSettingsSaved();
+
+    /// Other functions
+    void ApplyTeamColourSettings(const json &gameSettingsData, const std::string& teamColourSettingName);
 
     /// Constants
     const std::string GAME_VERSION = "PRE-ALPHA BUILD v0.3.0"; // Early Alpha = v0.5.0, Early Beta = v0.8.0, Release = v1.0.0
@@ -79,12 +92,12 @@ class MenuScene : public Scene
 
     /// Background
     std::unique_ptr<ParallaxBackground> _backgroundParallax;
-    std::array<sf::Texture, 5> _backgroundPlanetTextures;
+    std::array<sf::Texture, 7> _backgroundPlanetTextures;
     sf::Sprite _backgroundEnemyPlanetSprite;
     sf::Sprite _backgroundPlayerPlanetSprite;
 
     /// Menu Title
-    sf::Sprite _menuTitleImgSprite;
+    sf::Sprite _titleSprite;
     sf::Texture _menuTitleImgTexture;
 
     /// Game Settings

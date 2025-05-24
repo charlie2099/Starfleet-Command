@@ -35,7 +35,7 @@ public:
     virtual bool CanEngageWith(const std::unique_ptr<Starship> &enemyStarship);
     virtual bool CollidesWith(sf::Rect<float> spriteBounds);
     bool IsHealthBarVisible() const { return _isHealthBarVisible; }
-    bool IsMouseOver() const { return _isMouseOver; };
+    bool IsMouseOver() const { return _isMouseOver; }
 
     /// Modifiers
     virtual void SetHealth(float health);

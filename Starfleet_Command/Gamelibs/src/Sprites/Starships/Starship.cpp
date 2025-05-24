@@ -236,21 +236,33 @@ void Starship::SetRotation(float rot)
 
 void Starship::SetProjectileColour(sf::Color colour)
 {
-    if(colour == sf::Color::Cyan or colour == sf::Color::Blue or colour == Chilli::Colour::LIGHTBLUE or colour == Chilli::Colour::BLUEVIOLET)
+    if(colour == sf::Color::Cyan or colour == sf::Color::Blue or colour == Chilli::Colour::LIGHTBLUE)
     {
         _projectileColour = Projectile::BLUE;
-    }
-    else if(colour == sf::Color::Green or colour == Chilli::Colour::LIGHTGREEN)
-    {
-        _projectileColour = Projectile::GREEN;
     }
     else if(colour == sf::Color::Red or colour == Chilli::Colour::LIGHTRED)
     {
         _projectileColour = Projectile::RED;
     }
+    else if(colour == sf::Color::Green or colour == Chilli::Colour::LIGHTGREEN)
+    {
+        _projectileColour = Projectile::GREEN;
+    }
     else if(colour == Chilli::Colour::ORANGE or colour == Chilli::Colour::LIGHTORANGE)
     {
         _projectileColour = Projectile::ORANGE;
+    }
+    else if(colour == Chilli::Colour::YELLOW)
+    {
+        _projectileColour = Projectile::YELLOW;
+    }
+    else if(colour == Chilli::Colour::LIGHTPURPLE)
+    {
+        _projectileColour = Projectile::PURPLE;
+    }
+    else if(colour == Chilli::Colour::LIGHTPINK)
+    {
+        _projectileColour = Projectile::PINK;
     }
     else
     {

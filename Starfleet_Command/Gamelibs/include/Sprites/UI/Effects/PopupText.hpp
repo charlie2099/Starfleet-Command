@@ -14,7 +14,7 @@ public:
     ~PopupText() = default;
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
-    bool IsFaded() const { return _isFaded; };
+    bool IsFaded() const { return _isFaded; }
     void SetColour(sf::Color color);
     void SetCharSize(int size);
     void SetIconImage(const std::string& iconImageFileName);

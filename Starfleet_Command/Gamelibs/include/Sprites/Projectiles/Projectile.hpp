@@ -16,9 +16,12 @@ class Projectile
     enum Colour
     {
         BLUE,
-        GREEN,
         RED,
+        GREEN,
         ORANGE,
+        YELLOW,
+        PURPLE,
+        PINK,
         WHITE
     };
 
@@ -29,7 +32,7 @@ class Projectile
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
-    SpriteComponent& GetSpriteComponent();
+    SpriteComponent& GetSpriteComponent() { return _spriteComponent; }
     Size GetSize() { return _size; }
     Colour GetColour() { return _colour; }
     sf::Vector2<float> GetPos() { return _spriteComponent.GetPos(); }

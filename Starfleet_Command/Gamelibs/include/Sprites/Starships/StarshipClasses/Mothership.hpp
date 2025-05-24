@@ -10,7 +10,7 @@ public:
     explicit Mothership(int spawnSpacelane, const std::string& starshipTypeName);
     void Update(sf::RenderWindow& window, sf::Time deltaTime) override;
     void TakeDamage(float damageAmount) override;
-    void SetDamageLocation(sf::Vector2<float> location) { _damageLocation = location; }; /// Make this a virtual method in Starship?
+    void SetDamageLocation(sf::Vector2<float> location) { _damageLocation = location; }
 
 private:
     sf::Vector2<float> _damageLocation;

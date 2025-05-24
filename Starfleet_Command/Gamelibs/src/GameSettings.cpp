@@ -217,7 +217,7 @@ void GameSettings::AddSettingOption(const std::string &settingName, const std::v
     _rightArrowSprite.emplace_back(newRightArrowSprite);
 }
 
-void GameSettings::UpdateSettingOptionValueText(const std::string &settingName, int selectedSettingsOptionValueIndex)
+void GameSettings::SetSettingOptionValueText(const std::string &settingName, int selectedSettingsOptionValueIndex)
 {
     // TODO: Create and utilise a dictionary instead?
     for (auto & _settingsOption : _settingsOptions)
@@ -228,6 +228,11 @@ void GameSettings::UpdateSettingOptionValueText(const std::string &settingName, 
             _settingsOption.valueText.setString(_settingsOption.optionValues[_settingsOption.selectedValueIndex]);
         }
     }
+}
+
+void GameSettings::SetSettingOptionValueColour(const std::string& settingName, sf::Color colour)
+{
+    GetSettingOption(settingName).valueText.setFillColor(colour);
 }
 
 GameSettings::SettingsOption &GameSettings::GetSettingOption(const std::string &settingName)

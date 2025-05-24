@@ -11,7 +11,7 @@ MothershipStatusDisplay::MothershipStatusDisplay(std::unique_ptr<Starship> &play
     _mothershipHealthBar[1]->SetMaxHealth(enemyMothership->GetHealth());
     _mothershipHealthBar[1]->SetScale(0.4F, 0.15F);
 
-    _mothershipNameText[0].setString("Player Mothership");
+    _mothershipNameText[0].setString("Your Mothership");
     _mothershipNameText[0].setFillColor(playerMothership->GetColour());
 
     _mothershipNameText[1].setString("Enemy Mothership");

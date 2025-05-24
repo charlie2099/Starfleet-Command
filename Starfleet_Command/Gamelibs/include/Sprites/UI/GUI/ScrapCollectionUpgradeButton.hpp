@@ -43,6 +43,8 @@ private:
     float _mouseOverTimer = 0.0F;
     float _mouseOverCheckRate = 1.0F;
 
+    bool _isMousePressed = false;
+
     const sf::Color HOVER_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 255};
     const sf::Color SELECTED_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 175};
 };

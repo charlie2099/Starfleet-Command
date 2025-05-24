@@ -1,72 +1,51 @@
 #include "Sprites/Projectiles/Projectile.hpp"
+#include "Utility/Colour.hpp"
 
 Projectile::Projectile(Projectile::Size size, Projectile::Colour colour, sf::Vector2f spawnPos, sf::Vector2f targetPos)
 {
+    _spriteComponent.LoadSprite("Resources/Textures/laser.png");
+
     switch (size)
     {
         case SMALL:
-            switch (colour)
-            {
-                case BLUE:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_blue.png");
-                    break;
-                case GREEN:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_green.png");
-                    break;
-                case RED:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_red.png");
-                    break;
-                case ORANGE:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_orange.png");
-                    break;
-                case WHITE:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_white.png");
-                    break;
-            }
             _spriteComponent.GetSprite().setScale(0.35F, 0.35F);
             break;
         case REGULAR:
-            switch (colour)
-            {
-                case BLUE:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_blue.png");
-                    break;
-                case GREEN:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_green.png");
-                    break;
-                case RED:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_red.png");
-                    break;
-                case ORANGE:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_orange.png");
-                    break;
-                case WHITE:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_white.png");
-                    break;
-            }
             _spriteComponent.GetSprite().setScale(0.5F, 0.5F);
             break;
         case LARGE:
-            switch (colour)
-            {
-                case BLUE:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_blue.png");
-                    break;
-                case GREEN:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_green.png");
-                    break;
-                case RED:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_red.png");
-                    break;
-                case ORANGE:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_orange.png");
-                    break;
-                case WHITE:
-                    _spriteComponent.LoadSprite("Resources/Textures/laser_white.png");
-                    break;
-            }
             _spriteComponent.GetSprite().setScale(0.75F, 0.75F);
             break;
+    }
+
+    switch (colour)
+    {
+        case BLUE:
+            _spriteComponent.GetSprite().setColor(Chilli::Colour::LIGHTBLUE);
+            break;
+        case RED:
+            _spriteComponent.GetSprite().setColor(Chilli::Colour::LIGHTRED);
+            break;
+        case GREEN:
+            _spriteComponent.GetSprite().setColor(Chilli::Colour::LIGHTGREEN);
+            break;
+        case ORANGE:
+            _spriteComponent.GetSprite().setColor(Chilli::Colour::LIGHTORANGE);
+            break;
+        case YELLOW:
+            _spriteComponent.GetSprite().setColor(Chilli::Colour::YELLOW);
+            break;
+        case PURPLE:
+            _spriteComponent.GetSprite().setColor(Chilli::Colour::LIGHTPURPLE);
+            break;
+        case PINK:
+            _spriteComponent.GetSprite().setColor(Chilli::Colour::LIGHTPINK);
+            break;
+        case WHITE:
+            _spriteComponent.GetSprite().setColor(sf::Color::White);
+            break;
+        default:
+            _spriteComponent.GetSprite().setColor(sf::Color::White);
     }
 
     _spriteComponent.SetPos(spawnPos);
@@ -102,7 +81,3 @@ void Projectile::Render(sf::RenderWindow& window)
     _spriteComponent.Render(window);
 }
 
-SpriteComponent &Projectile::GetSpriteComponent()
-{
-    return _spriteComponent;
-}

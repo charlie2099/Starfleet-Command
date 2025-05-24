@@ -1,7 +1,7 @@
 {
     "Director Debug": "true",
     "Enemy Colour": "GREEN",
-    "Fullscreen Mode": "true",
+    "Fullscreen Mode": "false",
     "Minimap": "true",
     "Music": "false",
     "Player Colour": "BLUE",

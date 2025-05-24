@@ -2,10 +2,7 @@
 
 MenuScene::~MenuScene()
 {
-    if(_menuMusic.getStatus() == sf::Music::Playing)
-    {
-        _menuMusic.stop();
-    }
+    StopMusic();
 }
 
 bool MenuScene::Init()
@@ -35,10 +32,9 @@ void MenuScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 
 void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
-    _cursor.Update(window, deltaTime);
-    _cursor.SetCursorPos(window, _menuView);
     _backgroundParallax->Update(window, deltaTime);
-    UpdateBackgroundStarshipsMovement(window, deltaTime);
+    UpdateCursor(window, deltaTime);
+    UpdateStarshipAnimations(window, deltaTime);
 
     if(_isGameSettingsEnabled)
     {
@@ -51,32 +47,21 @@ void MenuScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 void MenuScene::Render(sf::RenderWindow& window)
 {
     window.setView(_menuView);
-    _backgroundParallax->RenderBackground(window);
-    window.draw(_backgroundEnemyPlanetSprite);
-    window.draw(_backgroundPlayerPlanetSprite);
-    _backgroundParallax->RenderStars(window);
-    for (int i = 0; i < NUM_OF_SHIPS_PER_TEAM; ++i)
-    {
-        _player->RenderMinimapSprites(window);
-        _enemy->RenderMinimapSprites(window);
-    }
-    window.draw(_menuTitleImgSprite);
-
-    if(not _isGameSettingsEnabled)
-    {
-        for (int i = 0; i < _menuButtons.size() - 1; ++i)
-        {
-            _menuButtons[i].Render(window);
-        }
-    }
-    else
-    {
-        _menuButtons[BACK_BUTTON].Render(window);
-        _gameSettings->Render(window);
-    }
-
+    RenderBackground(window);
+    RenderStarships(window);
+    window.draw(_titleSprite);
+    RenderGameSettings(window);
+    RenderButtons(window);
     window.draw(_gameVersionText);
     _cursor.Render(window);
+}
+
+void MenuScene::StopMusic()
+{
+    if(_menuMusic.getStatus() == sf::Music::Playing)
+    {
+        _menuMusic.stop();
+    }
 }
 
 bool MenuScene::InitMusic()
@@ -120,9 +105,8 @@ void MenuScene::InitGameSettings()
     _gameSettings->AddSettingOption("Director Debug", std::vector<std::string>{"OFF", "ON"});
     _gameSettings->AddSettingOption("Spacelanes", std::vector<std::string>{"OFF", "ON"});
     _gameSettings->AddSettingOption("Minimap", std::vector<std::string>{"OFF", "ON"});
-    _gameSettings->AddSettingOption("Player Colour", std::vector<std::string>{"BLUE", "RED", "GREEN", "ORANGE", "YELLOW"});
-    _gameSettings->AddSettingOption("Enemy Colour",std::vector<std::string>{"BLUE", "RED", "GREEN", "ORANGE", "YELLOW"});
-    //_gameSettings->AddSettingOption("Difficulty", std::vector<std::string>{"EASY", "MEDIUM", "HARD"});
+    _gameSettings->AddSettingOption("Player Colour", std::vector<std::string>{"BLUE", "RED", "GREEN", "ORANGE", "YELLOW", "PURPLE", "PINK"});
+    _gameSettings->AddSettingOption("Enemy Colour",std::vector<std::string>{"BLUE", "RED", "GREEN", "ORANGE", "YELLOW", "PURPLE", "PINK"});
 
     if(Chilli::JsonSaveSystem::CheckFileExists(SETTINGS_FILE_PATH))
     {
@@ -131,113 +115,46 @@ void MenuScene::InitGameSettings()
         if(gameSettingsData.contains("Fullscreen Mode"))
         {
             std::string fullscreenModeData = gameSettingsData["Fullscreen Mode"];
-            _gameSettings->UpdateSettingOptionValueText("Fullscreen Mode", fullscreenModeData == "true");
+            _gameSettings->SetSettingOptionValueText("Fullscreen Mode", fullscreenModeData == "true");
         }
 
         if(gameSettingsData.contains("Music"))
         {
             std::string musicData = gameSettingsData["Music"];
             _isMusicOn = (musicData == "true");
-            _gameSettings->UpdateSettingOptionValueText("Music", musicData == "true");
+            _gameSettings->SetSettingOptionValueText("Music", musicData == "true");
         }
 
         if(gameSettingsData.contains("Director Debug"))
         {
             std::string directorDebugData = gameSettingsData["Director Debug"];
-            _gameSettings->UpdateSettingOptionValueText("Director Debug", directorDebugData == "true");
+            _gameSettings->SetSettingOptionValueText("Director Debug", directorDebugData == "true");
         }
 
         if(gameSettingsData.contains("Spacelanes"))
         {
             std::string spacelanesData = gameSettingsData["Spacelanes"];
-            _gameSettings->UpdateSettingOptionValueText("Spacelanes", spacelanesData == "true");
+            _gameSettings->SetSettingOptionValueText("Spacelanes", spacelanesData == "true");
         }
 
         if(gameSettingsData.contains("Minimap"))
         {
             std::string minimapData = gameSettingsData["Minimap"];
-            _gameSettings->UpdateSettingOptionValueText("Minimap", minimapData == "true");
+            _gameSettings->SetSettingOptionValueText("Minimap", minimapData == "true");
         }
 
         if(gameSettingsData.contains("Player Colour"))
         {
-            std::string playerColourData = gameSettingsData["Player Colour"];
-
-            if(playerColourData == "BLUE")
-            {
-                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[0]);
-                _player->SetTeamColour(Chilli::Colour::LIGHTBLUE);
-                _gameSettings->UpdateSettingOptionValueText("Player Colour", 0);
-            }
-            else if(playerColourData == "RED")
-            {
-                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[1]);
-                _player->SetTeamColour(Chilli::Colour::LIGHTRED);
-                _gameSettings->UpdateSettingOptionValueText("Player Colour", 1);
-            }
-            else if(playerColourData == "GREEN")
-            {
-                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[2]);
-                _player->SetTeamColour(Chilli::Colour::LIGHTGREEN);
-                _gameSettings->UpdateSettingOptionValueText("Player Colour", 2);
-            }
-            else if(playerColourData == "ORANGE")
-            {
-                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[3]);
-                _player->SetTeamColour(Chilli::Colour::LIGHTORANGE);
-                _gameSettings->UpdateSettingOptionValueText("Player Colour", 3);
-            }
-            else if(playerColourData == "YELLOW")
-            {
-                _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[4]);
-                _player->SetTeamColour(Chilli::Colour::YELLOW);
-                _gameSettings->UpdateSettingOptionValueText("Player Colour", 4);
-            }
-
-            _gameSettings->GetSettingOption("Player Colour").valueText.setFillColor(Chilli::JsonColourMapping::GetColourFromStringName(playerColourData));
+            ApplyTeamColourSettings(gameSettingsData, "Player Colour");
+            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[_gameSettings->GetSettingOptionCurrentValueIndex("Player Colour")]);
+            _player->SetTeamColour(Chilli::JsonColourMapping::GetColourFromStringName(gameSettingsData["Player Colour"]));
         }
 
         if(gameSettingsData.contains("Enemy Colour"))
         {
-            std::string enemyColourData = gameSettingsData["Enemy Colour"];
-
-            if(enemyColourData == "BLUE")
-            {
-                //_backgroundSprite.setColor(Chilli::Colour::LIGHTBLUE);
-                _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[0]);
-                _enemy->SetTeamColour(Chilli::Colour::LIGHTBLUE);
-                _gameSettings->UpdateSettingOptionValueText("Enemy Colour", 0);
-            }
-            else if(enemyColourData == "RED")
-            {
-                //_backgroundSprite.setColor(Chilli::Colour::LIGHTRED);
-                _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[1]);
-                _enemy->SetTeamColour(Chilli::Colour::LIGHTRED);
-                _gameSettings->UpdateSettingOptionValueText("Enemy Colour", 1);
-            }
-            else if(enemyColourData == "GREEN")
-            {
-                //_backgroundSprite.setColor(Chilli::Colour::LIGHTGREEN);
-                _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[2]);
-                _enemy->SetTeamColour(Chilli::Colour::LIGHTGREEN);
-                _gameSettings->UpdateSettingOptionValueText("Enemy Colour", 2);
-            }
-            else if(enemyColourData == "ORANGE")
-            {
-                //_backgroundSprite.setColor(Chilli::Colour::LIGHTORANGE);
-                _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[3]);
-                _enemy->SetTeamColour(Chilli::Colour::LIGHTORANGE);
-                _gameSettings->UpdateSettingOptionValueText("Enemy Colour", 3);
-            }
-            else if(enemyColourData == "YELLOW")
-            {
-                //_backgroundSprite.setColor(Chilli::Colour::YELLOW);
-                _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[4]);
-                _enemy->SetTeamColour(Chilli::Colour::YELLOW);
-                _gameSettings->UpdateSettingOptionValueText("Enemy Colour", 4);
-            }
-
-            _gameSettings->GetSettingOption("Enemy Colour").valueText.setFillColor(Chilli::JsonColourMapping::GetColourFromStringName(enemyColourData));
+            ApplyTeamColourSettings(gameSettingsData, "Enemy Colour");
+            _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[_gameSettings->GetSettingOptionCurrentValueIndex("Enemy Colour")]);
+            _enemy->SetTeamColour(Chilli::JsonColourMapping::GetColourFromStringName(gameSettingsData["Enemy Colour"]));
         }
     }
 }
@@ -245,9 +162,9 @@ void MenuScene::InitGameSettings()
 void MenuScene::InitView()
 {
     sf::Vector2f VIEW_SIZE = { Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT };
-    sf::Vector2f WORLD_PERSPECTIVE = { Constants::WINDOW_WIDTH/2.0F, Constants::WINDOW_HEIGHT/2.0F };
+    sf::Vector2f VIEW_CENTER = {Constants::WINDOW_WIDTH / 2.0F, Constants::WINDOW_HEIGHT / 2.0F };
     _menuView.setSize(VIEW_SIZE);
-    _menuView.setCenter(WORLD_PERSPECTIVE);
+    _menuView.setCenter(VIEW_CENTER);
 }
 
 bool MenuScene::InitBackground()
@@ -265,6 +182,8 @@ bool MenuScene::InitBackground()
     _backgroundPlanetTextures[2].loadFromFile(TEXTURES_DIR_PATH + "planet_green.png");
     _backgroundPlanetTextures[3].loadFromFile(TEXTURES_DIR_PATH + "planet_orange.png");
     _backgroundPlanetTextures[4].loadFromFile(TEXTURES_DIR_PATH + "planet_yellow.png");
+    _backgroundPlanetTextures[5].loadFromFile(TEXTURES_DIR_PATH + "planet_blue.png");
+    _backgroundPlanetTextures[6].loadFromFile(TEXTURES_DIR_PATH + "planet_red.png");
 
     _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[2]);
     _backgroundEnemyPlanetSprite.setPosition(Constants::WINDOW_WIDTH / 1.6F, Constants::WINDOW_HEIGHT / 2.5F);
@@ -303,9 +222,9 @@ bool MenuScene::InitTitle()
         return false;
     }
     _menuTitleImgTexture.setSmooth(true);
-    _menuTitleImgSprite.setTexture(_menuTitleImgTexture);
-    _menuTitleImgSprite.setScale(0.15F, 0.15F);
-    _menuTitleImgSprite.setPosition(Constants::WINDOW_WIDTH/2.0F - _menuTitleImgSprite.getGlobalBounds().width/2.0F, Constants::WINDOW_HEIGHT * 0.3F - _menuTitleImgSprite.getGlobalBounds().height/2.0F);
+    _titleSprite.setTexture(_menuTitleImgTexture);
+    _titleSprite.setScale(0.15F, 0.15F);
+    _titleSprite.setPosition(Constants::WINDOW_WIDTH / 2.0F - _titleSprite.getGlobalBounds().width / 2.0F, Constants::WINDOW_HEIGHT * 0.3F - _titleSprite.getGlobalBounds().height / 2.0F);
 
     return true;
 }
@@ -325,7 +244,7 @@ void MenuScene::InitBackgroundStarships()
         int rand_y = starshipYPosRNG.GenerateNumber();
         int rand_ship = starshipTypeRNG.GenerateNumber();
         _player->CreateStarship(static_cast<StarshipFactory::STARSHIP_TYPE>(rand_ship), 0);
-        _player->SetStarshipPosition(_player->GetStarships().back() , {static_cast<float>(rand_x), static_cast<float>(rand_y)});
+        _player->SetStarshipPosition(_player->GetStarships().back(), {static_cast<float>(rand_x), static_cast<float>(rand_y)});
     }
 
     for (int i = 0; i < NUM_OF_SHIPS_PER_TEAM; ++i)
@@ -348,7 +267,7 @@ void MenuScene::InitGameVersionText()
     _gameVersionText.setOutlineColor(sf::Color::Black);
     //_gameVersionText.setPosition(Constants::WINDOW_WIDTH - (_gameVersionText.getGlobalBounds().width + 20.0F), Constants::WINDOW_HEIGHT - (_gameVersionText.getGlobalBounds().height + 20.0F));
     _gameVersionText.setPosition(20.0F, Constants::WINDOW_HEIGHT - (_gameVersionText.getGlobalBounds().height + 20.0F));
-    //_gameVersionText.setPosition(_menuTitleImgSprite.getPosition().x + _menuTitleImgSprite.getGlobalBounds().width/2.0F - _gameVersionText.getGlobalBounds().width/2.0F, _menuTitleImgSprite.getPosition().y + _menuTitleImgSprite.getGlobalBounds().height + 10.0F);
+    //_gameVersionText.setPosition(_titleSprite.getPosition().x + _titleSprite.getGlobalBounds().width/2.0F - _gameVersionText.getGlobalBounds().width/2.0F, _titleSprite.getPosition().y + _titleSprite.getGlobalBounds().height + 10.0F);
 }
 
 void MenuScene::HandleGameSettingsEvents(sf::RenderWindow &window, sf::Event &event)
@@ -359,7 +278,7 @@ void MenuScene::HandleGameSettingsEvents(sf::RenderWindow &window, sf::Event &ev
         if(_menuButtons[BACK_BUTTON].IsClicked())
         {
             _isGameSettingsEnabled = false;
-            _menuTitleImgSprite.setPosition(Constants::WINDOW_WIDTH / 2.0F - _menuTitleImgSprite.getGlobalBounds().width / 2.0F, Constants::WINDOW_HEIGHT * 0.3F - _menuTitleImgSprite.getGlobalBounds().height / 2.0F);
+            _titleSprite.setPosition(Constants::WINDOW_WIDTH / 2.0F - _titleSprite.getGlobalBounds().width / 2.0F, Constants::WINDOW_HEIGHT * 0.3F - _titleSprite.getGlobalBounds().height / 2.0F);
             _buttonClickSound.play();
         }
     }
@@ -384,8 +303,8 @@ void MenuScene::HandleButtonEvents(sf::RenderWindow &window, sf::Event &event)
         {
             _buttonClickSound.play();
             _isGameSettingsEnabled = true;
-            _menuTitleImgSprite.setPosition(Constants::WINDOW_WIDTH / 2.0F - _menuTitleImgSprite.getGlobalBounds().width / 2.0F, Constants::WINDOW_HEIGHT * 0.2F - _menuTitleImgSprite.getGlobalBounds().height / 2.0F);
-            _gameSettings->RepositionPanel(Constants::WINDOW_WIDTH / 2.0F - _gameSettings->GetSettingsPanelSize().x / 2.0F, _menuTitleImgSprite.getPosition().y + _menuTitleImgSprite.getGlobalBounds().height + 25.0F);
+            _titleSprite.setPosition(Constants::WINDOW_WIDTH / 2.0F - _titleSprite.getGlobalBounds().width / 2.0F, Constants::WINDOW_HEIGHT * 0.2F - _titleSprite.getGlobalBounds().height / 2.0F);
+            _gameSettings->RepositionPanel(Constants::WINDOW_WIDTH / 2.0F - _gameSettings->GetSettingsPanelSize().x / 2.0F, _titleSprite.getPosition().y + _titleSprite.getGlobalBounds().height + 25.0F);
         }
         else if(_menuButtons[EXIT_BUTTON].IsClicked())
         {
@@ -394,7 +313,13 @@ void MenuScene::HandleButtonEvents(sf::RenderWindow &window, sf::Event &event)
     }
 }
 
-void MenuScene::UpdateBackgroundStarshipsMovement(sf::RenderWindow &window, sf::Time &deltaTime)
+void MenuScene::UpdateCursor(sf::RenderWindow &window, sf::Time &deltaTime)
+{
+    _cursor.Update(window, deltaTime);
+    _cursor.SetCursorPos(window, _menuView);
+}
+
+void MenuScene::UpdateStarshipAnimations(sf::RenderWindow &window, sf::Time &deltaTime)
 {
     for (int i = 0; i < NUM_OF_SHIPS_PER_TEAM; ++i)
     {
@@ -449,9 +374,15 @@ void MenuScene::UpdateGameSettingsButtons(sf::RenderWindow &window, sf::Time &de
 
 void MenuScene::UpdateMenuButtons(sf::RenderWindow &window)
 {
-    for (int i = 0; i < NUM_OF_BUTTONS - 1; ++i)
+    for (int i = 0; i < NUM_OF_BUTTONS-1; ++i)
     {
         _menuButtons[i].Update(window);
+
+        if(not _menuButtons[i].IsMouseOver())
+        {
+            _menuButtons[i].SetPanelColour(sf::Color(22, 155, 164, 100));
+            _menuButtons[i].SetText(_menuButtons[i].GetText().getString(), Chilli::Colour::LIGHTBLUE);
+        }
     }
 
     if(_menuButtons[PLAY_BUTTON].IsMouseOver())
@@ -476,20 +407,51 @@ void MenuScene::UpdateMenuButtons(sf::RenderWindow &window)
     {
         _cursor.SetCursorType(Chilli::Cursor::DEFAULT);
     }
+}
 
-    for (int i = 0; i < NUM_OF_BUTTONS-1; ++i)
+void MenuScene::RenderButtons(sf::RenderWindow &window)
+{
+    if(_isGameSettingsEnabled)
     {
-        if(not _menuButtons[i].IsMouseOver())
+        _menuButtons[BACK_BUTTON].Render(window);
+    }
+    else
+    {
+        for (int i = 0; i < _menuButtons.size() - 1; ++i)
         {
-            _menuButtons[i].SetPanelColour(sf::Color(22, 155, 164, 100));
-            _menuButtons[i].SetText(_menuButtons[i].GetText().getString(), Chilli::Colour::LIGHTBLUE);
+            _menuButtons[i].Render(window);
         }
     }
 }
 
+void MenuScene::RenderGameSettings(sf::RenderWindow &window)
+{
+    if(_isGameSettingsEnabled)
+    {
+        _gameSettings->Render(window);
+    }
+}
+
+void MenuScene::RenderStarships(sf::RenderWindow &window)
+{
+    for (int i = 0; i < NUM_OF_SHIPS_PER_TEAM; ++i)
+    {
+        _player->RenderMinimapSprites(window);
+        _enemy->RenderMinimapSprites(window);
+    }
+}
+
+void MenuScene::RenderBackground(sf::RenderWindow &window)
+{
+    _backgroundParallax->RenderBackground(window);
+    window.draw(_backgroundEnemyPlanetSprite);
+    window.draw(_backgroundPlayerPlanetSprite);
+    _backgroundParallax->RenderStars(window);
+}
+
 void MenuScene::ApplyGameSettings_OnSettingsUpdated()
 {
-    _isMusicOn = _gameSettings->GetSettingOption("Music").selectedValueIndex;
+    _isMusicOn = _gameSettings->GetSettingOptionCurrentValueIndex("Music");
     if(_isMusicOn and _menuMusic.getStatus() not_eq sf::SoundSource::Playing)
     {
         _menuMusic.play();
@@ -500,90 +462,46 @@ void MenuScene::ApplyGameSettings_OnSettingsUpdated()
     }
 
     auto playerColourSetting = _gameSettings->GetSettingOption("Player Colour");
-    for (int i = 0; i < playerColourSetting.optionValues.size(); ++i)
-    {
-        if(playerColourSetting.valueText.getString() == "BLUE")
-        {
-            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[0]);
-            _player->SetTeamColour(Chilli::Colour::LIGHTBLUE);
-        }
-        else if(playerColourSetting.valueText.getString() == "RED")
-        {
-            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[1]);
-            _player->SetTeamColour(Chilli::Colour::LIGHTRED);
-        }
-        else if(playerColourSetting.valueText.getString() == "GREEN")
-        {
-            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[2]);
-            _player->SetTeamColour(Chilli::Colour::LIGHTGREEN);
-        }
-        else if(playerColourSetting.valueText.getString() == "ORANGE")
-        {
-            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[3]);
-            _player->SetTeamColour(Chilli::Colour::LIGHTORANGE);
-        }
-        else if(playerColourSetting.valueText.getString() == "YELLOW")
-        {
-            _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[4]);
-            _player->SetTeamColour(Chilli::Colour::YELLOW);
-        }
-
-        _gameSettings->GetSettingOption("Player Colour").valueText.setFillColor(Chilli::JsonColourMapping::GetColourFromStringName(playerColourSetting.valueText.getString()));
-    }
+    _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[playerColourSetting.selectedValueIndex]);
+    _player->SetTeamColour(Chilli::JsonColourMapping::GetColourFromStringName(playerColourSetting.valueText.getString()));
+    _gameSettings->SetSettingOptionValueColour("Player Colour", Chilli::JsonColourMapping::GetColourFromStringName(playerColourSetting.valueText.getString()));
 
     auto enemyColourSetting = _gameSettings->GetSettingOption("Enemy Colour");
-    for (int i = 0; i < enemyColourSetting.optionValues.size(); ++i)
-    {
-        if(enemyColourSetting.valueText.getString() == "BLUE")
-        {
-            //_backgroundSprite.setColor(Chilli::Colour::LIGHTBLUE);
-            _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[0]);
-            _enemy->SetTeamColour(Chilli::Colour::LIGHTBLUE);
-        }
-        else if(enemyColourSetting.valueText.getString() == "RED")
-        {
-            //_backgroundSprite.setColor(Chilli::Colour::LIGHTRED);
-            _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[1]);
-            _enemy->SetTeamColour(Chilli::Colour::LIGHTRED);
-        }
-        else if(enemyColourSetting.valueText.getString() == "GREEN")
-        {
-            //_backgroundSprite.setColor(Chilli::Colour::LIGHTGREEN);
-            _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[2]);
-            _enemy->SetTeamColour(Chilli::Colour::LIGHTGREEN);
-        }
-        else if(enemyColourSetting.valueText.getString() == "ORANGE")
-        {
-            /*for (int j = 0; j < _parallaxStars.size(); ++j)
-            {
-                _parallaxStars[j].circleShape.setFillColor(Chilli::Colour::ORANGE);
-            }*/
-            //_backgroundSprite.setColor(Chilli::Colour::LIGHTORANGE);
-            _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[3]);
-            _enemy->SetTeamColour(Chilli::Colour::LIGHTORANGE);
-        }
-        else if(enemyColourSetting.valueText.getString() == "YELLOW")
-        {
-            //_backgroundSprite.setColor(Chilli::Colour::YELLOW);
-            _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[4]);
-            _enemy->SetTeamColour(Chilli::Colour::YELLOW);
-        }
-        _gameSettings->GetSettingOption("Enemy Colour").valueText.setFillColor(Chilli::JsonColourMapping::GetColourFromStringName(enemyColourSetting.valueText.getString()));
-    }
+    _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[enemyColourSetting.selectedValueIndex]);
+    _enemy->SetTeamColour(Chilli::JsonColourMapping::GetColourFromStringName(enemyColourSetting.valueText.getString()));
+    _gameSettings->SetSettingOptionValueColour("Enemy Colour", Chilli::JsonColourMapping::GetColourFromStringName(enemyColourSetting.valueText.getString()));
 }
 
 void MenuScene::SaveGameSettingsData_OnSettingsSaved()
 {
     /// Model the data and write it to file
     json gameSettingsData;
-    gameSettingsData["Fullscreen Mode"] = _gameSettings->GetSettingOption("Fullscreen Mode").selectedValueIndex == 1 ? "true" : "false";
-    gameSettingsData["Music"] = _gameSettings->GetSettingOption("Music").selectedValueIndex == 1 ? "true" : "false";
-    gameSettingsData["Director Debug"] = _gameSettings->GetSettingOption("Director Debug").selectedValueIndex == 1 ? "true" : "false";
-    gameSettingsData["Spacelanes"] = _gameSettings->GetSettingOption("Spacelanes").selectedValueIndex == 1 ? "true" : "false";
-    gameSettingsData["Minimap"] = _gameSettings->GetSettingOption("Minimap").selectedValueIndex == 1 ? "true" : "false";
-    gameSettingsData["Player Colour"] = _gameSettings->GetSettingOption("Player Colour").optionValues[_gameSettings->GetSettingOption("Player Colour").selectedValueIndex];
-    gameSettingsData["Enemy Colour"] = _gameSettings->GetSettingOption("Enemy Colour").optionValues[_gameSettings->GetSettingOption("Enemy Colour").selectedValueIndex];
+    gameSettingsData["Fullscreen Mode"] = _gameSettings->GetSettingOptionCurrentValueIndex("Fullscreen Mode") == 1 ? "true" : "false";
+    gameSettingsData["Music"] = _gameSettings->GetSettingOptionCurrentValueIndex("Music") == 1 ? "true" : "false";
+    gameSettingsData["Director Debug"] = _gameSettings->GetSettingOptionCurrentValueIndex("Director Debug") == 1 ? "true" : "false";
+    gameSettingsData["Spacelanes"] = _gameSettings->GetSettingOptionCurrentValueIndex("Spacelanes") == 1 ? "true" : "false";
+    gameSettingsData["Minimap"] = _gameSettings->GetSettingOptionCurrentValueIndex("Minimap") == 1 ? "true" : "false";
+    gameSettingsData["Player Colour"] = _gameSettings->GetSettingOptionCurrentValue("Player Colour");
+    gameSettingsData["Enemy Colour"] =_gameSettings->GetSettingOptionCurrentValue("Enemy Colour");
 
     Chilli::JsonSaveSystem::SaveFile(SETTINGS_FILE_PATH, gameSettingsData);
     std::cout << "Settings saved to " << SETTINGS_FILE_PATH << std::endl;
+}
+
+void MenuScene::ApplyTeamColourSettings(const json &gameSettingsData, const std::string& teamColourSettingName)
+{
+    std::string teamColourSettings = gameSettingsData[teamColourSettingName];
+    auto teamColourSettingOptionValues = _gameSettings->GetSettingOption(teamColourSettingName).optionValues;
+
+    for (int i = 0; i < teamColourSettingOptionValues.size(); ++i)
+    {
+        if (teamColourSettings == teamColourSettingOptionValues[i])
+        {
+            _gameSettings->GetSettingOption(teamColourSettingName).selectedValueIndex = i;
+            break;
+        }
+    }
+
+    _gameSettings->SetSettingOptionValueText(teamColourSettingName, _gameSettings->GetSettingOptionCurrentValueIndex(teamColourSettingName));
+    _gameSettings->SetSettingOptionValueColour(teamColourSettingName, Chilli::JsonColourMapping::GetColourFromStringName(teamColourSettings));
 }

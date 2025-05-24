@@ -17,8 +17,11 @@ namespace Chilli
                     {"BLUE",   Chilli::Colour::LIGHTBLUE},
                     {"RED",    Chilli::Colour::LIGHTRED},
                     {"GREEN",  Chilli::Colour::LIGHTGREEN},
+                    {"LIGHTERGREEN",  Chilli::Colour::LIGHTERGREEN},
                     {"ORANGE", Chilli::Colour::LIGHTORANGE},
-                    {"YELLOW", Chilli::Colour::YELLOW}
+                    {"YELLOW", Chilli::Colour::YELLOW},
+                    {"PURPLE", Chilli::Colour::LIGHTPURPLE},
+                    {"PINK", Chilli::Colour::LIGHTPINK}
             };
 
             /// Return the queried colour if it exists, otherwise return LIGHTBLUE by default
