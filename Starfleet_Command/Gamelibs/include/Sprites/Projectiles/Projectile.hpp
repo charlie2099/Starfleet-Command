@@ -32,6 +32,8 @@ class Projectile
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
+    void SetPos(sf::Vector2<float> pos);
+
     SpriteComponent& GetSpriteComponent() { return _spriteComponent; }
     Size GetSize() { return _size; }
     Colour GetColour() { return _colour; }

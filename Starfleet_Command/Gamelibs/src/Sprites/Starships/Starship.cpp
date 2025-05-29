@@ -60,16 +60,16 @@ void Starship::EventHandler(sf::RenderWindow &window, sf::Event &event)
 
 void Starship::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    for(auto& projectiles : _projectile)
+    for(auto& projectiles : _projectiles)
     {
         projectiles->Update(window, deltaTime);
     }
 
-    for (int i = 0; i < _projectile.size(); ++i)
+    for (int i = 0; i < _projectiles.size(); ++i)
     {
-        if(Chilli::Vector::Distance(GetPos(), _projectile[i]->GetPos()) > Constants::WINDOW_WIDTH)
+        if(Chilli::Vector::Distance(GetPos(), _projectiles[i]->GetPos()) > Constants::WINDOW_WIDTH)
         {
-            _projectile.erase(_projectile.begin() + i);
+            _projectiles.erase(_projectiles.begin() + i);
         }
     }
 
@@ -90,7 +90,7 @@ void Starship::Update(sf::RenderWindow &window, sf::Time deltaTime)
 
 void Starship::Render(sf::RenderWindow &window)
 {
-    for(auto& projectiles : _projectile)
+    for(auto& projectiles : _projectiles)
     {
         projectiles->Render(window);
     }
@@ -118,8 +118,8 @@ void Starship::ShootAt(sf::Vector2f target)
 
     if(_damagingProjectileSpawnTimerClock.getElapsedTime().asSeconds() >= _damagingProjectileSpawnTimer)
     {
-        auto spawnPos = _spriteComponent.GetPos();
-        _projectile.emplace_back(std::make_unique<Projectile>(_projectileSize, _projectileColour, spawnPos, target));
+        _projectiles.emplace_back(std::make_unique<Projectile>(_projectileSize, _projectileColour,  _spriteComponent.GetPos(), target));
+        _projectiles.back()->SetPos({_spriteComponent.GetPos().x, _spriteComponent.GetPos().y - _projectiles.back()->GetSpriteComponent().GetSprite().getGlobalBounds().height/2.0F});
 
         _damagingProjectileSpawnTimer += _fireRate;
     }
@@ -127,7 +127,7 @@ void Starship::ShootAt(sf::Vector2f target)
 
 void Starship::DestroyProjectile(int projectileIndex)
 {
-    _projectile.erase(_projectile.begin() + projectileIndex);
+    _projectiles.erase(_projectiles.begin() + projectileIndex);
 }
 
 void Starship::TakeDamage(float damageAmount)

@@ -53,10 +53,10 @@ public:
     virtual SpriteComponent& GetSpriteComponent() { return _spriteComponent; }
     virtual HealthComponent& GetHealthComponent() { return _healthComponent; }
     virtual std::unique_ptr<HealthBar>& GetHealthBar() { return _healthBar; }
-    virtual std::vector<std::unique_ptr<Projectile>>& GetProjectile() { return _projectile; }
+    virtual std::vector<std::unique_ptr<Projectile>>& GetProjectile() { return _projectiles; }
     virtual Projectile::Size GetProjectileSize() { return _projectileSize; }
     virtual Projectile::Colour GetProjectileColour() { return _projectileColour; }
-    virtual int GetProjectileCount() { return _projectile.size(); }
+    virtual int GetProjectileCount() { return _projectiles.size(); }
     virtual std::string& GetStarshipName() { return _starshipName; }
     virtual std::string& GetStarshipAbbreviation() { return _starshipAbbreviation; }
     virtual sf::Color& GetColour() { return _starshipColour; }
@@ -81,7 +81,7 @@ protected:
     SpriteComponent _spriteComponent;
     HealthComponent _healthComponent;
     std::unique_ptr<HealthBar> _healthBar;
-    std::vector<std::unique_ptr<Projectile>> _projectile;
+    std::vector<std::unique_ptr<Projectile>> _projectiles;
     Projectile::Size _projectileSize;
     Projectile::Colour _projectileColour;
     std::string _starshipName;

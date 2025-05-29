@@ -1,9 +1,9 @@
 {
     "Director Debug": "true",
     "Enemy Colour": "GREEN",
-    "Fullscreen Mode": "false",
+    "Fullscreen Mode": "true",
     "Minimap": "true",
     "Music": "false",
-    "Player Colour": "BLUE",
+    "Player Colour": "PURPLE",
     "Spacelanes": "true"
 }

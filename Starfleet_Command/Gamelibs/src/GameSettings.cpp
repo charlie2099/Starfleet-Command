@@ -35,8 +35,8 @@ GameSettings::GameSettings()
 
 void GameSettings::EventHandler(sf::RenderWindow &window, sf::Event &event)
 {
-    auto mouse_pos = sf::Mouse::getPosition(window);
-    auto mousePosWorldCoords = window.mapPixelToCoords(mouse_pos);
+    auto mousePos = sf::Mouse::getPosition(window);
+    auto mousePosWorldCoords = window.mapPixelToCoords(mousePos);
 
     if(_isSaveButtonVisible)
     {
@@ -55,34 +55,34 @@ void GameSettings::EventHandler(sf::RenderWindow &window, sf::Event &event)
     {
         for (int i = 0; i < _settingsOptions.size(); ++i)
         {
-            if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _leftArrowSprite[i].getGlobalBounds()))
+            if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _leftArrowSprites[i].getGlobalBounds()))
             {
-                _settingsOptions[i].selectedValueIndex--;
-                if(_settingsOptions[i].selectedValueIndex <= 0)
+                _settingsOptions[i].selectedOptionIndex--;
+                if(_settingsOptions[i].selectedOptionIndex <= 0)
                 {
-                    _settingsOptions[i].selectedValueIndex = 0;
+                    _settingsOptions[i].selectedOptionIndex = 0;
                 }
             }
-            else if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _rightArrowSprite[i].getGlobalBounds()))
+            else if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _rightArrowSprites[i].getGlobalBounds()))
             {
-                _settingsOptions[i].selectedValueIndex++;
-                if(_settingsOptions[i].selectedValueIndex >= _settingsOptions[i].optionValues.size() - 1)
+                _settingsOptions[i].selectedOptionIndex++;
+                if(_settingsOptions[i].selectedOptionIndex >= _settingsOptions[i].availableValues.size() - 1)
                 {
-                    _settingsOptions[i].selectedValueIndex = _settingsOptions[i].optionValues.size() - 1;
+                    _settingsOptions[i].selectedOptionIndex = _settingsOptions[i].availableValues.size() - 1;
                 }
             }
 
-            if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _leftArrowSprite[i].getGlobalBounds()) or
-               Chilli::Vector::BoundsCheck(mousePosWorldCoords, _rightArrowSprite[i].getGlobalBounds()))
+            if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _leftArrowSprites[i].getGlobalBounds()) or
+               Chilli::Vector::BoundsCheck(mousePosWorldCoords, _rightArrowSprites[i].getGlobalBounds()))
             {
                 _buttonClickSound.play();
 
                 _isSettingsSavedTextVisible = false;
                 _isSaveButtonVisible = true;
 
-                _settingsOptions[i].valueText.setString(_settingsOptions[i].optionValues[_settingsOptions[i].selectedValueIndex]);
-                auto statusTextXPos = _settingsPanel.getPosition().x + _settingsPanel.getGlobalBounds().width * 0.725F - _settingsOptions[i].valueText.getGlobalBounds().width / 2.0F;
-                _settingsOptions[i].valueText.setPosition({statusTextXPos, _settingsOptions[i].labelText.getPosition().y});
+                _settingsOptions[i].currentValueText.setString(_settingsOptions[i].availableValues[_settingsOptions[i].selectedOptionIndex]);
+                auto statusTextXPos = _settingsPanel.getPosition().x + _settingsPanel.getGlobalBounds().width * 0.725F - _settingsOptions[i].currentValueText.getGlobalBounds().width / 2.0F;
+                _settingsOptions[i].currentValueText.setPosition({statusTextXPos, _settingsOptions[i].nameText.getPosition().y});
                 InvokeBasicEvent(SETTINGS_UPDATED);
             }
         }
@@ -96,22 +96,22 @@ void GameSettings::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     for (int i = 0; i < _settingsOptions.size(); ++i)
     {
-        if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _leftArrowSprite[i].getGlobalBounds()))
+        if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _leftArrowSprites[i].getGlobalBounds()))
         {
             //_cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
-            _leftArrowSprite[i].setColor(sf::Color::Cyan);
+            _leftArrowSprites[i].setColor(sf::Color::Cyan);
             // isHoverOver = true?
         }
-        else if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _rightArrowSprite[i].getGlobalBounds()))
+        else if(Chilli::Vector::BoundsCheck(mousePosWorldCoords, _rightArrowSprites[i].getGlobalBounds()))
         {
             //_cursor.SetCursorType(Chilli::Cursor::Type::HOVER);
-            _rightArrowSprite[i].setColor(sf::Color::Cyan);
+            _rightArrowSprites[i].setColor(sf::Color::Cyan);
             // isHoverOver = true?
         }
         else
         {
-            _leftArrowSprite[i].setColor(Chilli::Colour::DARKGRAY);
-            _rightArrowSprite[i].setColor(Chilli::Colour::DARKGRAY);
+            _leftArrowSprites[i].setColor(Chilli::Colour::DARKGRAY);
+            _rightArrowSprites[i].setColor(Chilli::Colour::DARKGRAY);
         }
     }
 
@@ -140,10 +140,10 @@ void GameSettings::Render(sf::RenderWindow& window)
     window.draw(_settingsHeaderText);
     for (int i = 0; i < _settingsOptions.size(); ++i)
     {
-        window.draw(_settingsOptions[i].labelText);
-        window.draw(_settingsOptions[i].valueText);
-        window.draw(_leftArrowSprite[i]);
-        window.draw(_rightArrowSprite[i]);
+        window.draw(_settingsOptions[i].nameText);
+        window.draw(_settingsOptions[i].currentValueText);
+        window.draw(_leftArrowSprites[i]);
+        window.draw(_rightArrowSprites[i]);
     }
 
     if(_isSaveButtonVisible)
@@ -166,15 +166,15 @@ void GameSettings::RepositionPanel(float xPos, float yPos)
 
     for (int i = 0; i < _settingsOptions.size(); ++i)
     {
-        _settingsOptions[i].labelText.setPosition({_settingsPanel.getPosition().x + 25.0F, _settingsPanel.getPosition().y + 65.0F + (i * (_settingsOptions[0].labelText.getGlobalBounds().height + 20.0F))});
-        auto statusTextXPos = _settingsPanel.getPosition().x + _settingsPanel.getGlobalBounds().width * 0.725F - _settingsOptions[i].valueText.getGlobalBounds().width / 2.0F;
-        _settingsOptions[i].valueText.setPosition({statusTextXPos, _settingsOptions[i].labelText.getPosition().y});
-        _leftArrowSprite[i].setPosition({_settingsPanel.getPosition().x + _settingsPanel.getSize().x / 2.0F, _settingsOptions[i].valueText.getPosition().y + 1.0F});
-        _rightArrowSprite[i].setPosition({statusTextXPos + _settingsPanel.getGlobalBounds().width * 0.225F + _settingsOptions[i].valueText.getGlobalBounds().width / 2.0F - 10.0F, _settingsOptions[i].valueText.getPosition().y + 1.0F});
+        _settingsOptions[i].nameText.setPosition({_settingsPanel.getPosition().x + 25.0F, _settingsPanel.getPosition().y + 65.0F + (i * (_settingsOptions[0].nameText.getGlobalBounds().height + 20.0F))});
+        auto statusTextXPos = _settingsPanel.getPosition().x + _settingsPanel.getGlobalBounds().width * 0.725F - _settingsOptions[i].currentValueText.getGlobalBounds().width / 2.0F;
+        _settingsOptions[i].currentValueText.setPosition({statusTextXPos, _settingsOptions[i].nameText.getPosition().y});
+        _leftArrowSprites[i].setPosition({_settingsPanel.getPosition().x + _settingsPanel.getSize().x / 2.0F, _settingsOptions[i].currentValueText.getPosition().y + 1.0F});
+        _rightArrowSprites[i].setPosition({statusTextXPos + _settingsPanel.getGlobalBounds().width * 0.225F + _settingsOptions[i].currentValueText.getGlobalBounds().width / 2.0F - 10.0F, _settingsOptions[i].currentValueText.getPosition().y + 1.0F});
     }
 
     //_saveButtonPanel.SetPosition(_settingsPanel.getPosition().x + _settingsPanel.getSize().x/2.0F - _saveButtonPanel.GetTextSize().width/2.0F, _settingsPanel.getPosition().y + _settingsPanel.getSize().y - _saveButtonPanel.GetPanelSize().height - 7.5F);
-    _saveButtonPanel.SetPosition(_settingsOptions[0].labelText.getPosition().x + 12.5F, _settingsPanel.getPosition().y + _settingsPanel.getSize().y - _saveButtonPanel.GetPanelSize().height - 10.0F);
+    _saveButtonPanel.SetPosition(_settingsOptions[0].nameText.getPosition().x + 12.5F, _settingsPanel.getPosition().y + _settingsPanel.getSize().y - _saveButtonPanel.GetPanelSize().height - 10.0F);
 
     //_settingsSavedText.setPosition(_settingsPanel.getPosition().x + _settingsPanel.getSize().x - _settingsSavedText.getGlobalBounds().width - 20.0F, _saveButtonPanel.GetTextPosition().y + _saveButtonPanel.GetTextSize().height/4.0F);
     //_settingsSavedText.setPosition(_settingsPanel.getPosition().x + _settingsPanel.getSize().x - _settingsSavedText.getGlobalBounds().width - 15.0F, _saveButtonPanel.GetPanelPosition().y + 1.0F);
@@ -184,37 +184,37 @@ void GameSettings::RepositionPanel(float xPos, float yPos)
 void GameSettings::AddSettingOption(const std::string &settingName, const std::vector<std::string>& settingOptions)
 {
     SettingsOption newSetting;
-    newSetting.labelText.setString(settingName);
+    newSetting.nameText.setString(settingName);
     //newSetting.type = SettingsType::TOGGLE;
-    //newSetting.selectedValueIndex = 1;
+    //newSetting.selectedOptionIndex = 1;
     for (auto & settingElement : settingOptions)
     {
-        newSetting.optionValues.emplace_back(settingElement);
+        newSetting.availableValues.emplace_back(settingElement);
     }
-    newSetting.labelText.setFont(Chilli::CustomFonts::GetBoldFont());
-    newSetting.labelText.setCharacterSize(12);
-    newSetting.labelText.setFillColor(sf::Color::White);
-    newSetting.labelText.setOutlineColor(sf::Color::Black);
-    newSetting.labelText.setOutlineThickness(1.0F);
-    newSetting.valueText.setString(newSetting.optionValues[newSetting.selectedValueIndex]);
-    newSetting.valueText.setFont(Chilli::CustomFonts::GetBoldFont());
-    newSetting.valueText.setCharacterSize(12);
-    newSetting.valueText.setFillColor(sf::Color::White);
-    newSetting.valueText.setOutlineColor(sf::Color::Black);
-    newSetting.valueText.setOutlineThickness(1.0F);
+    newSetting.nameText.setFont(Chilli::CustomFonts::GetBoldFont());
+    newSetting.nameText.setCharacterSize(12);
+    newSetting.nameText.setFillColor(sf::Color::White);
+    newSetting.nameText.setOutlineColor(sf::Color::Black);
+    newSetting.nameText.setOutlineThickness(1.0F);
+    newSetting.currentValueText.setString(newSetting.availableValues[newSetting.selectedOptionIndex]);
+    newSetting.currentValueText.setFont(Chilli::CustomFonts::GetBoldFont());
+    newSetting.currentValueText.setCharacterSize(12);
+    newSetting.currentValueText.setFillColor(sf::Color::White);
+    newSetting.currentValueText.setOutlineColor(sf::Color::Black);
+    newSetting.currentValueText.setOutlineThickness(1.0F);
     _settingsOptions.emplace_back(newSetting);
 
     sf::Sprite newLeftArrowSprite;
    newLeftArrowSprite.setTexture(_leftArrowTexture);
    newLeftArrowSprite.scale(0.25F, 0.25F);
    newLeftArrowSprite.setColor(Chilli::Colour::LIGHTBLUE);
-   _leftArrowSprite.emplace_back(newLeftArrowSprite);
+   _leftArrowSprites.emplace_back(newLeftArrowSprite);
 
     sf::Sprite newRightArrowSprite;
     newRightArrowSprite.setTexture(_rightArrowTexture);
     newRightArrowSprite.scale(0.25F, 0.25F);
     newRightArrowSprite.setColor(Chilli::Colour::LIGHTBLUE);
-    _rightArrowSprite.emplace_back(newRightArrowSprite);
+    _rightArrowSprites.emplace_back(newRightArrowSprite);
 }
 
 void GameSettings::SetSettingOptionValueText(const std::string &settingName, int selectedSettingsOptionValueIndex)
@@ -222,17 +222,17 @@ void GameSettings::SetSettingOptionValueText(const std::string &settingName, int
     // TODO: Create and utilise a dictionary instead?
     for (auto & _settingsOption : _settingsOptions)
     {
-        if(_settingsOption.labelText.getString() == settingName)
+        if(_settingsOption.nameText.getString() == settingName)
         {
-            _settingsOption.selectedValueIndex = selectedSettingsOptionValueIndex;
-            _settingsOption.valueText.setString(_settingsOption.optionValues[_settingsOption.selectedValueIndex]);
+            _settingsOption.selectedOptionIndex = selectedSettingsOptionValueIndex;
+            _settingsOption.currentValueText.setString(_settingsOption.availableValues[_settingsOption.selectedOptionIndex]);
         }
     }
 }
 
 void GameSettings::SetSettingOptionValueColour(const std::string& settingName, sf::Color colour)
 {
-    GetSettingOption(settingName).valueText.setFillColor(colour);
+    GetSettingOption(settingName).currentValueText.setFillColor(colour);
 }
 
 GameSettings::SettingsOption &GameSettings::GetSettingOption(const std::string &settingName)
@@ -240,7 +240,7 @@ GameSettings::SettingsOption &GameSettings::GetSettingOption(const std::string &
     // TODO: Use std::map instead?
     for (auto& option : _settingsOptions)
     {
-        if (option.labelText.getString() == settingName)
+        if (option.nameText.getString() == settingName)
         {
             return option;
         }

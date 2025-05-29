@@ -9,7 +9,7 @@ ScrapCollectionUpgradeButton::ScrapCollectionUpgradeButton(int startingCost, std
     _button->SetColour(_teamColour);
     _button->SetScale({0.15F, 0.15F});
 
-    _nameText.setString("Upgrade Scrap Collection Service? - " + std::to_string(_upgradeCost));
+    _nameText.setString("Scrap Collection Service (Lvl 1) - " + std::to_string(_upgradeCost));
     _nameText.setFillColor(hoverColour);
     _nameText.setOutlineColor(sf::Color::Black);
     _nameText.setOutlineThickness(1);
@@ -30,46 +30,54 @@ void ScrapCollectionUpgradeButton::EventHandler(sf::RenderWindow &window, sf::Ev
 
             _upgradeLevel++;
             _upgradeCost *= 2;
-            _nameText.setString("Upgrade Scrap Collection Service? - " + std::to_string(_upgradeCost));
+            _nameText.setString("Scrap Collection Service (Lvl " + std::to_string(_upgradeLevel) + ") - " + std::to_string(_upgradeCost));
             // invoke upgrade purchase valid event?
 
-            _isMousePressed = true;
+            _isMouseLeftClicked = true;
         }
         else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
         {
-            _isMousePressed = false;
+            _isMouseLeftClicked = false;
+        }
+    }
+
+    if(_button->IsMouseOver())
+    {
+        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Right)
+        {
+            _isMouseRightClicked = true;
+        }
+        else if (event.type == sf::Event::MouseButtonReleased and event.mouseButton.button == sf::Mouse::Right)
+        {
+            _isMouseRightClicked = false;
         }
     }
 }
 
 void ScrapCollectionUpgradeButton::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    if(_button->IsMouseOver())
+    if(_button->IsMouseOver() and not _isMouseRightClicked)
     {
-        if(_mouseOverTimer < _mouseOverCheckRate)
-        {
-            _isNameVisible = true;
-        }
+        _isNameVisible = true;
         _nameText.setFillColor(_isAffordable ? _teamColour : sf::Color {_teamColour.r, _teamColour.g, _teamColour.b, 100});
-
-        _mouseOverTimer = _mouseOverClock.getElapsedTime().asSeconds();
-        if(_mouseOverTimer >= _mouseOverCheckRate)
-        {
-            _isNameVisible = false;
-        }
     }
-
-    if(not _button->IsMouseOver())
+    else if(_button->IsMouseOver() and _isMouseRightClicked)
     {
-        _mouseOverClock.restart();
         _isNameVisible = false;
+        _nameText.setFillColor(_isAffordable ? _teamColour : sf::Color {_teamColour.r, _teamColour.g, _teamColour.b, 100});
+    }
+    else
+    {
+        _isNameVisible = false;
+        _isMouseRightClicked = false;
     }
 
-    if (_button->IsMouseOver() and _isAffordable && not _isMousePressed)
+
+    if (_button->IsMouseOver() and _isAffordable && not _isMouseLeftClicked)
     {
         _button->SetColour(HOVER_BTN_COLOR);
     }
-    else if (_button->IsMouseOver() and _isAffordable && _isMousePressed)
+    else if (_button->IsMouseOver() and _isAffordable && _isMouseLeftClicked)
     {
         _button->SetColour(SELECTED_BTN_COLOR);
     }

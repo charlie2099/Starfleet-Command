@@ -81,3 +81,8 @@ void Projectile::Render(sf::RenderWindow& window)
     _spriteComponent.Render(window);
 }
 
+void Projectile::SetPos(sf::Vector2<float> pos)
+{
+    _spriteComponent.SetPos(pos);
+}
+

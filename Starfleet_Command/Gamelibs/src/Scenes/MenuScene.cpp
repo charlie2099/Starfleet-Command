@@ -462,14 +462,14 @@ void MenuScene::ApplyGameSettings_OnSettingsUpdated()
     }
 
     auto playerColourSetting = _gameSettings->GetSettingOption("Player Colour");
-    _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[playerColourSetting.selectedValueIndex]);
-    _player->SetTeamColour(Chilli::JsonColourMapping::GetColourFromStringName(playerColourSetting.valueText.getString()));
-    _gameSettings->SetSettingOptionValueColour("Player Colour", Chilli::JsonColourMapping::GetColourFromStringName(playerColourSetting.valueText.getString()));
+    _backgroundPlayerPlanetSprite.setTexture(_backgroundPlanetTextures[playerColourSetting.selectedOptionIndex]);
+    _player->SetTeamColour(Chilli::JsonColourMapping::GetColourFromStringName(playerColourSetting.currentValueText.getString()));
+    _gameSettings->SetSettingOptionValueColour("Player Colour", Chilli::JsonColourMapping::GetColourFromStringName(playerColourSetting.currentValueText.getString()));
 
     auto enemyColourSetting = _gameSettings->GetSettingOption("Enemy Colour");
-    _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[enemyColourSetting.selectedValueIndex]);
-    _enemy->SetTeamColour(Chilli::JsonColourMapping::GetColourFromStringName(enemyColourSetting.valueText.getString()));
-    _gameSettings->SetSettingOptionValueColour("Enemy Colour", Chilli::JsonColourMapping::GetColourFromStringName(enemyColourSetting.valueText.getString()));
+    _backgroundEnemyPlanetSprite.setTexture(_backgroundPlanetTextures[enemyColourSetting.selectedOptionIndex]);
+    _enemy->SetTeamColour(Chilli::JsonColourMapping::GetColourFromStringName(enemyColourSetting.currentValueText.getString()));
+    _gameSettings->SetSettingOptionValueColour("Enemy Colour", Chilli::JsonColourMapping::GetColourFromStringName(enemyColourSetting.currentValueText.getString()));
 }
 
 void MenuScene::SaveGameSettingsData_OnSettingsSaved()
@@ -491,13 +491,13 @@ void MenuScene::SaveGameSettingsData_OnSettingsSaved()
 void MenuScene::ApplyTeamColourSettings(const json &gameSettingsData, const std::string& teamColourSettingName)
 {
     std::string teamColourSettings = gameSettingsData[teamColourSettingName];
-    auto teamColourSettingOptionValues = _gameSettings->GetSettingOption(teamColourSettingName).optionValues;
+    auto teamColourSettingOptionValues = _gameSettings->GetSettingOption(teamColourSettingName).availableValues;
 
     for (int i = 0; i < teamColourSettingOptionValues.size(); ++i)
     {
         if (teamColourSettings == teamColourSettingOptionValues[i])
         {
-            _gameSettings->GetSettingOption(teamColourSettingName).selectedValueIndex = i;
+            _gameSettings->GetSettingOption(teamColourSettingName).selectedOptionIndex = i;
             break;
         }
     }

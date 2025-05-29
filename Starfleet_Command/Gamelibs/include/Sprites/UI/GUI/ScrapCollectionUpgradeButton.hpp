@@ -26,6 +26,7 @@ public:
     int GetUpgradeCost() { return _upgradeCost; }
     int GetUpgradeLevel(){ return _upgradeLevel; }
 
+    bool IsClicked() const { return _button->IsClicked(); }
     bool IsMouseOver() const { return _button->IsMouseOver(); }
 
 private:
@@ -39,11 +40,8 @@ private:
     bool _isAffordable = false;
     sf::Color _teamColour;
 
-    sf::Clock _mouseOverClock;
-    float _mouseOverTimer = 0.0F;
-    float _mouseOverCheckRate = 1.0F;
-
-    bool _isMousePressed = false;
+    bool _isMouseLeftClicked = false;
+    bool _isMouseRightClicked = false;
 
     const sf::Color HOVER_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 255};
     const sf::Color SELECTED_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 175};

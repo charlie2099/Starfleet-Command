@@ -65,6 +65,7 @@ private:
     void RenderPauseMenuSprites(sf::RenderWindow &window);
 
     /// Event callback functions
+    void DisplayPerkChoices_OnPerkRewardTimerComplete();
     void SpawnStarshipFromShipyard_OnStarshipDeploymentComplete();
     void UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData);
     void UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData);
@@ -103,13 +104,13 @@ private:
     /// Scrap Collector
     std::unique_ptr<ScrapCollectionUpgradeButton> _upgradePlayerScrapCollectionButton;
     int startingScrapMetal;
+    int _scrapIncreasePerUpgrade;
     float playerScrapAccumulationRate;
     float _playerScrapAccumulationTimer;
     sf::Clock _playerScrapAccumulationTimerClock;
 
     /// Tooltips
     std::unique_ptr<InfoTooltip> _playerScrapCollectionTooltip;
-    sf::Clock _scrapCollectionTooltipClock;
     bool _isScrapCollectionTooltipVisible = false;
 
     std::unique_ptr<InfoTooltip> _starshipDeploymentButtonTooltip;
@@ -142,6 +143,7 @@ private:
     std::unique_ptr<TextButton> _pauseResumeGameButton;
     std::unique_ptr<TextButton> _pauseMainMenuButton;
     std::unique_ptr<TextButton> _pauseExitGameButton;
+    bool _isPauseKeyPressed = false;
 
     /// Space Lanes
     const float LANE_ROW_SPACING = 35.0F;

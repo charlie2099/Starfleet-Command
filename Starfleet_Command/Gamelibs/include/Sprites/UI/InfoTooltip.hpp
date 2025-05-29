@@ -16,8 +16,9 @@ public:
     void Update(sf::RenderWindow& window, sf::Time deltaTime);
     void Render(sf::RenderWindow& window);
 
-    void SetTooltipTitle(std::string title);
-    void SetTooltipItems(std::vector<std::pair<sf::Text, sf::Text>> tooltipItems);
+    void SetTitle(const std::string& title);
+    void SetDescription(const std::string& description);
+    void SetItems(std::vector<std::pair<sf::Text, sf::Text>> items);
     void SetPos(sf::Vector2<float> pos);
 
     sf::Vector2f GetSize() { return _panel.getSize(); }
@@ -25,6 +26,7 @@ public:
 private:
     sf::RectangleShape _panel;
     sf::Text _title;
+    sf::Text _description;
     std::vector<std::pair<sf::Text, sf::Text>> _descriptionItems;
 };
 

@@ -54,19 +54,51 @@ bool GameScene::Init()
         }
     }
 
-    std::vector<std::pair<sf::Text, sf::Text>> starshipStats; /// Intentionally empty
-    sf::Vector2<float> starshipTooltipSize = {270.0F, 105.0F};
-    _starshipDeploymentButtonTooltip = std::make_unique<InfoTooltip>(starshipTooltipSize, _player->GetTeamColour(), "PLACEHOLDER", starshipStats);
+    std::vector<std::pair<sf::Text, sf::Text>> starshipTooltipItems; /// Intentionally empty
+    sf::Vector2<float> starshipTooltipSize = {270.0F, 107.5F};
+    _starshipDeploymentButtonTooltip = std::make_unique<InfoTooltip>(starshipTooltipSize, _player->GetTeamColour(), "PLACEHOLDER", starshipTooltipItems);
 
-    std::vector<std::pair<sf::Text, sf::Text>> serviceDescription;
-    std::pair<sf::Text, sf::Text> serviceDescriptionItem;
-    serviceDescriptionItem.first.setString("INFO:");
-    serviceDescriptionItem.second.setString("Autonomous drones scour the depths of\nspace in search of valuable debris, derelict\nships, and abandoned technology, bringing\nback a steady supply of scrap metal to\nbolster your fleet's development.\n\nEach upgrade enhances the efficiency and\nnumber of drones dispatched, increasing\nthe passive income of scrap returned to\nyour mothership over time.");
-    // Invest wisely - every bit of scrap strengthens your command.
-    serviceDescription.emplace_back(serviceDescriptionItem);
 
-    sf::Vector2<float> serviceTooltipSize = {270.0F, 130.0F};
-    _playerScrapCollectionTooltip = std::make_unique<InfoTooltip>(serviceTooltipSize, _player->GetTeamColour(), "Scrap Collection Service", serviceDescription);
+
+    std::vector<std::pair<sf::Text, sf::Text>> scrapCollectionTooltipItems; /// Intentionally empty
+    sf::Vector2<float> serviceTooltipSize = {317.5F, 127.5F};
+    _playerScrapCollectionTooltip = std::make_unique<InfoTooltip>(serviceTooltipSize, _player->GetTeamColour(), "Scrap Collection Service (Lvl " + std::to_string(_upgradePlayerScrapCollectionButton->GetUpgradeLevel()) + ")", scrapCollectionTooltipItems);
+    _playerScrapCollectionTooltip->SetDescription("Autonomous drones scour the depths of space in search of\nvaluable debris, derelict ships, and abandoned technology,\nbringing back a steady supply of scrap metal to bolster your\nfleet's development.\n\nEach upgrade enhances the efficiency and number of drones\ndispatched, increasing the passive income of scrap returned\nto your mothership over time.");
+
+    std::pair<sf::Text, sf::Text> scrapIncreasePerUpgradeTooltipItem;
+    /*std::pair<sf::Text, sf::Text> costIncreasePerUpgradeTooltipItem;*/
+    std::pair<sf::Text, sf::Text> scrapAccumulationRateTooltipItem;
+
+    if(starshipData.contains("StarshipData"))
+    {
+        for(const auto& shipData : starshipData["StarshipData"])
+        {
+            if(shipData.contains("Name") && shipData["Name"] == "Mothership")
+            {
+                int scrapIncreasePerUpgrade = shipData["ScrapCollectionService_ScrapIncreasePerUpgrade"];
+                scrapIncreasePerUpgradeTooltipItem.first.setString("SCRAP PER COLLECTION:");
+                scrapIncreasePerUpgradeTooltipItem.second.setString(std::to_string(scrapIncreasePerUpgrade));
+                _scrapIncreasePerUpgrade = scrapIncreasePerUpgrade;
+
+                /*int costIncreasePerUpgrade = shipData["ScrapCollectionService_CostIncreasePerUpgrade"];
+                costIncreasePerUpgradeTooltipItem.first.setString("UPGRADE COST:");
+                costIncreasePerUpgradeTooltipItem.second.setString(std::to_string(costIncreasePerUpgrade));*/
+
+                float accumulationRate = shipData["ScrapCollectionService_ScrapAccumulationFrequencyInSeconds"];
+                scrapAccumulationRateTooltipItem.first.setString("COLLECTION RATE:");
+                scrapAccumulationRateTooltipItem.second.setString(Chilli::StringFormatter::FormatFloat(accumulationRate) + "s");
+
+                break;
+            }
+        }
+    }
+
+    scrapCollectionTooltipItems.emplace_back(scrapIncreasePerUpgradeTooltipItem);
+    scrapCollectionTooltipItems.emplace_back(scrapAccumulationRateTooltipItem);
+
+    _playerScrapCollectionTooltip->SetItems(scrapCollectionTooltipItems);
+
+
 
     _playerSpawnLaneIndicatorTexture.loadFromFile(TEXTURES_DIR_PATH + "right.png");
     _playerSpawnLaneIndicatorSprite.setTexture(_playerSpawnLaneIndicatorTexture);
@@ -89,10 +121,15 @@ bool GameScene::Init()
 
 void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
-    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape)
+    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape && not _isPauseKeyPressed)
     {
         _buttonClickSound.play();
         SetPaused(not IsPaused());
+        _isPauseKeyPressed = true;
+    }
+    else if (event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Escape && _isPauseKeyPressed)
+    {
+        _isPauseKeyPressed = false;
     }
 
     if(IsPaused())
@@ -133,6 +170,49 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     }
 
     _upgradePlayerScrapCollectionButton->EventHandler(window, event);
+
+    if(_upgradePlayerScrapCollectionButton->IsMouseOver())
+    {
+        _playerScrapCollectionTooltip->SetTitle("Scrap Collection Service (Lvl " + std::to_string(_upgradePlayerScrapCollectionButton->GetUpgradeLevel()) + ")");
+
+
+
+        std::vector<std::pair<sf::Text, sf::Text>> scrapCollectionTooltipItems; /// Intentionally empty
+
+        std::pair<sf::Text, sf::Text> scrapIncreasePerUpgradeTooltipItem;
+        std::pair<sf::Text, sf::Text> scrapAccumulationRateTooltipItem;
+
+        scrapIncreasePerUpgradeTooltipItem.first.setString("SCRAP PER COLLECTION:");
+        scrapIncreasePerUpgradeTooltipItem.second.setString(std::to_string(_scrapIncreasePerUpgrade * _upgradePlayerScrapCollectionButton->GetUpgradeLevel()));
+        scrapAccumulationRateTooltipItem.first.setString("COLLECTION RATE:");
+        scrapAccumulationRateTooltipItem.second.setString(Chilli::StringFormatter::FormatFloat(playerScrapAccumulationRate) + "s");
+
+        scrapCollectionTooltipItems.emplace_back(scrapIncreasePerUpgradeTooltipItem);
+        scrapCollectionTooltipItems.emplace_back(scrapAccumulationRateTooltipItem);
+
+        _playerScrapCollectionTooltip->SetItems(scrapCollectionTooltipItems);
+
+
+
+
+
+
+
+
+        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Right)
+        {
+            _isScrapCollectionTooltipVisible = true;
+        }
+        else if (event.type == sf::Event::MouseButtonReleased and event.mouseButton.button == sf::Mouse::Right)
+        {
+            _isScrapCollectionTooltipVisible = false;
+        }
+    }
+    else
+    {
+        _isScrapCollectionTooltipVisible = false;
+    }
+
 
     for (int i = 0; i < NUM_OF_BUTTONS; ++i)
     {
@@ -262,8 +342,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
             if(!_isStarshipDeploymentButtonTooltipVisible)
             {
                 std::vector<std::pair<sf::Text, sf::Text>> starshipStats;
-                std::pair<sf::Text, sf::Text> starshipDescriptionItem;
-                std::pair<sf::Text, sf::Text> emptySpaceItem;
                 std::pair<sf::Text, sf::Text> starshipHealthStatItem;
                 std::pair<sf::Text, sf::Text> starshipDamageStatItem;
                 std::pair<sf::Text, sf::Text> starshipSpeedStatItem;
@@ -281,9 +359,11 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                     {
                         if(shipData.contains("Name") && shipData["Name"] == _starshipDeploymentButtons[_selectedStarshipDeploymentButtonIndex]->GetStarshipName())
                         {
+                            std::string nameData = shipData["Name"];
+                            _starshipDeploymentButtonTooltip->SetTitle(nameData);
+
                             std::string descriptionData = shipData["Description"];
-                            starshipDescriptionItem.first.setString(descriptionData);
-                            starshipDescriptionItem.second.setString("");
+                            _starshipDeploymentButtonTooltip->SetDescription(descriptionData);
 
                             int healthData = shipData["Health"];
                             starshipHealthStatItem.first.setString("HEALTH:");
@@ -299,7 +379,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
                             float fireRateData = shipData["FireRate"];
                             starshipFireRateStatItem.first.setString("FIRE RATE:");
-                            starshipFireRateStatItem.second.setString(Chilli::StringFormatter::FormatFloat(fireRateData));
+                            starshipFireRateStatItem.second.setString(Chilli::StringFormatter::FormatFloat(fireRateData) + "s");
 
                             float attackRangeData = shipData["AttackRange"];
                             starshipAttackRangeStatItem.first.setString("ATTACK RANGE:");
@@ -314,7 +394,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
                             float deployTimeData = shipData["DeployTime"];
                             starshipDeployTimeStatItem.first.setString("DEPLOY TIME:");
-                            starshipDeployTimeStatItem.second.setString(Chilli::StringFormatter::FormatFloat(deployTimeData));
+                            starshipDeployTimeStatItem.second.setString(Chilli::StringFormatter::FormatFloat(deployTimeData) + "s");
 
                             int buildCostData = shipData["BuildCost"];
                             starshipBuildCostStatItem.first.setString("BUILD COST:");
@@ -325,8 +405,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                     }
                 }
 
-                starshipStats.emplace_back(starshipDescriptionItem);
-                starshipStats.emplace_back(emptySpaceItem);
                 starshipStats.emplace_back(starshipHealthStatItem);
                 starshipStats.emplace_back(starshipDamageStatItem);
                 starshipStats.emplace_back(starshipSpeedStatItem);
@@ -336,8 +414,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 starshipStats.emplace_back(starshipDeployTimeStatItem);
                 starshipStats.emplace_back(starshipBuildCostStatItem);
 
-                _starshipDeploymentButtonTooltip->SetTooltipTitle(_starshipDeploymentButtons[_selectedStarshipDeploymentButtonIndex]->GetStarshipName());
-                _starshipDeploymentButtonTooltip->SetTooltipItems(starshipStats);
+                _starshipDeploymentButtonTooltip->SetItems(starshipStats);
 
                 _isStarshipDeploymentButtonTooltipVisible = true;
             }
@@ -353,25 +430,12 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
 
 
-
     _playerScrapCollectionTooltip->Update(window, deltaTime);
 
     if(_upgradePlayerScrapCollectionButton->IsMouseOver())
     {
-        _mouseOverTooltipTimer = _scrapCollectionTooltipClock.getElapsedTime().asSeconds();
-        if(_mouseOverTooltipTimer >= _mouseOverTooltipTimeUntilDisplay)
-        {
-            _isScrapCollectionTooltipVisible = true;
-            _playerScrapCollectionTooltip->SetPos({_upgradePlayerScrapCollectionButton->GetPos().x, _upgradePlayerScrapCollectionButton->GetPos().y - _playerScrapCollectionTooltip->GetSize().y - 5.0F});
-        }
+        _playerScrapCollectionTooltip->SetPos({_upgradePlayerScrapCollectionButton->GetPos().x,_upgradePlayerScrapCollectionButton->GetPos().y - _playerScrapCollectionTooltip->GetSize().y - 5.0F});
     }
-    else
-    {
-        _scrapCollectionTooltipClock.restart();
-        _isScrapCollectionTooltipVisible = false;
-    }
-
-
 
 
 
@@ -794,7 +858,7 @@ void GameScene::InitPauseMenu()
     _pauseOverlayTexture.loadFromFile(TEXTURES_DIR_PATH + "square.png");
     _pauseOverlaySprite.setTexture(_pauseOverlayTexture);
     _pauseOverlaySprite.setScale(_gameplayView.getSize().x / _pauseOverlaySprite.getGlobalBounds().width, _gameplayView.getSize().y / _pauseOverlaySprite.getGlobalBounds().height);
-    _pauseOverlaySprite.setColor({sf::Color::Black.r, sf::Color::Black.g, sf::Color::Black.b, 125});
+    _pauseOverlaySprite.setColor({sf::Color::Black.r, sf::Color::Black.g, sf::Color::Black.b, 200});
 
     _pauseIconTexture.loadFromFile(TEXTURES_DIR_PATH + "pause.png");
     _pauseIconSprite.setTexture(_pauseIconTexture);
@@ -803,7 +867,7 @@ void GameScene::InitPauseMenu()
 
     _pauseText.setFont(Chilli::CustomFonts::GetBoldFont());
     _pauseText.setString("GAME PAUSED");
-    _pauseText.setCharacterSize(14);
+    _pauseText.setCharacterSize(16);
     _pauseText.setFillColor(Chilli::Colour::LIGHTBLUE);
     _pauseText.setOutlineColor(sf::Color::Black);
 
@@ -848,6 +912,10 @@ void GameScene::InitMinimapView()
 
 void GameScene::InitEvents()
 {
+    /// Observer to reward progress bar event
+    auto rewardProgressBarCallback = std::bind(&GameScene::DisplayPerkChoices_OnPerkRewardTimerComplete, this);
+    _rewardProgressBar.AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, rewardProgressBarCallback});
+
     /// Observer to starship deployment bar event
     auto starshipDeploymentBarCallback = std::bind(&GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete, this);
     _starshipDeploymentManager->AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentBarCallback});
@@ -928,13 +996,15 @@ void GameScene::StartNextStarshipDeployment()
 
 void GameScene::UpdatePauseMenu(sf::RenderWindow &window)
 {
-    _pauseIconSprite.setPosition(_gameplayView.getCenter().x - _pauseIconSprite.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseIconSprite.getGlobalBounds().height/2.0F);
-    _pauseText.setPosition(_gameplayView.getCenter().x - _pauseText.getGlobalBounds().width/2.0F, _gameplayView.getCenter().y - _pauseText.getGlobalBounds().height/2.0F + 40.0F);
-    _pauseResumeGameButton->SetPosition(_pauseText.getPosition().x + _pauseText.getGlobalBounds().width/2.0F - _pauseResumeGameButton->GetTextSize().width/2.0F, _pauseText.getPosition().y + 40.0F);
+    _pauseIconSprite.setPosition(_gameplayView.getCenter().x - _pauseIconSprite.getGlobalBounds().width/2.0F, Constants::LEVEL_HEIGHT/2.0F - _pauseIconSprite.getGlobalBounds().height/2.0F - 100.0F);
+    _pauseText.setPosition(_gameplayView.getCenter().x - _pauseText.getGlobalBounds().width/2.0F, _pauseIconSprite.getPosition().y + 40.0F);
+
+    _pauseResumeGameButton->SetPosition(_pauseText.getPosition().x + _pauseText.getGlobalBounds().width/2.0F - _pauseResumeGameButton->GetTextSize().width/2.0F, Constants::LEVEL_HEIGHT/2.0F - _pauseResumeGameButton->GetTextSize().height/2.0F);
     _pauseMainMenuButton->SetPosition(_pauseResumeGameButton->GetTextPosition().x + _pauseResumeGameButton->GetTextSize().width/2.0F - _pauseMainMenuButton->GetTextSize().width/2.0F, _pauseResumeGameButton->GetTextPosition().y + 35.0F);
     _pauseExitGameButton->SetPosition(_pauseMainMenuButton->GetTextPosition().x + _pauseMainMenuButton->GetTextSize().width/2.0F - _pauseExitGameButton->GetTextSize().width/2.0F, _pauseMainMenuButton->GetTextPosition().y + 35.0F);
 
     _pauseOverlaySprite.setPosition(_gameplayView.getCenter().x - _pauseOverlaySprite.getGlobalBounds().width / 2.0F, _gameplayView.getCenter().y - _pauseOverlaySprite.getGlobalBounds().height / 2.0F);
+
     _pauseResumeGameButton->Update(window);
     _pauseMainMenuButton->Update(window);
     _pauseExitGameButton->Update(window);
@@ -1251,6 +1321,11 @@ void GameScene::RenderPauseMenuSprites(sf::RenderWindow &window)
     _pauseResumeGameButton->Render(window);
     _pauseMainMenuButton->Render(window);
     _pauseExitGameButton->Render(window);
+}
+
+void GameScene::DisplayPerkChoices_OnPerkRewardTimerComplete()
+{
+    SetPaused(true);
 }
 
 void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()

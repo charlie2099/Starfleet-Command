@@ -42,7 +42,7 @@ void SupportFrigate::ShootHealAt(const std::unique_ptr<Starship> &friendlyStarsh
     if(_healingProjectileSpawnTimerClock.getElapsedTime().asSeconds() >= _healingProjectileSpawnTimer)
     {
         auto spawnPos = _spriteComponent.GetPos();
-        _projectile.emplace_back(std::make_unique<Projectile>(_projectileSize, Projectile::Colour::GREEN, spawnPos, friendlyStarship->GetPos()));
+        _projectiles.emplace_back(std::make_unique<Projectile>(_projectileSize, Projectile::Colour::GREEN, spawnPos, friendlyStarship->GetPos()));
         _healingProjectileSpawnTimer += (_fireRate/2.0F);
     }
 }
