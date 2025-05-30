@@ -82,7 +82,7 @@ void Starship::Update(sf::RenderWindow &window, sf::Time deltaTime)
     _healthBar->Update(window, deltaTime);
     _healthBar->SetPos({xPos, yPos});
 
-    if(_healthBar->GetHealth() < _maximumHealth/* and _healthBar->GetHealth() > 0*/)
+    if(_healthBar->GetHealth() < _maximumHealth/* && _healthBar->GetHealth() > 0*/)
     {
         _isHealthBarVisible = true;
     }
@@ -159,7 +159,7 @@ bool Starship::IsFriendlyStarshipAhead(const std::unique_ptr<Starship> &starship
     }
 
     float distance = std::abs(starship->GetPos().x - this->GetPos().x);
-    return isAhead and distance < 100.0F;
+    return isAhead && distance < 100.0F;
 }
 
 bool Starship::IsEnemyStarshipAhead(const std::unique_ptr<Starship> &enemyStarship)

@@ -29,7 +29,7 @@ bool PlayerSpacelaneDominance_BehaviourRule::IsValid(AiDirector &director)
         }
     }
 
-    return not _validLanes.empty();
+    return ! _validLanes.empty();
 }
 
 void PlayerSpacelaneDominance_BehaviourRule::Execute(AiDirector &director)

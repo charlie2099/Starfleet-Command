@@ -26,11 +26,11 @@ StarshipDeploymentButton::StarshipDeploymentButton(StarshipFactory::STARSHIP_TYP
 
 void StarshipDeploymentButton::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
-    if (_button->IsMouseOver() and _isAffordable)
+    if (_button->IsMouseOver() && _isAffordable)
     {
-        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
         {
-            if(not _isPlacingStarship)
+            if(!_isPlacingStarship)
             {
                 _isStarshipPreviewSpriteVisible = true;
                 _isPlacingStarship = true;
@@ -56,13 +56,13 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
         }
     }
 
-    if(not _button->IsMouseOver())
+    if(!_button->IsMouseOver())
     {
         _mouseOverClock.restart();
         _isNameVisible = false;
     }
 
-    if (_button->IsMouseOver() and _isAffordable)
+    if (_button->IsMouseOver() && _isAffordable)
     {
         if (_isPlacingStarship)
         {
@@ -74,12 +74,12 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
         }
     }
 
-    if (not _button->IsMouseOver() and _isAffordable)
+    if (! _button->IsMouseOver() && _isAffordable)
     {
         _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 160 });
     }
 
-    if (not _button->IsMouseOver() and not _isAffordable)
+    if (! _button->IsMouseOver() && ! _isAffordable)
     {
         _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 50});
     }

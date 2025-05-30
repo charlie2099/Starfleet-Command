@@ -36,20 +36,41 @@ public:
     void Render(sf::RenderWindow& window) override;
 
 private:
+    /// Destructor functions
+    void Cleanup();
+
     /// Init functions
+    bool ExtractJsonData();
     void InitBackground();
     void InitPlayer();
     void InitSpacelanes();
     void InitEnemy();
     void InitGameplayView();
     void InitPauseMenu();
+    void InitAiDirector();
+    void InitStarshipDeploymentManager();
+    void InitStarshipDeploymentButtons();
+    void InitMothershipStatusDisplay();
+    void InitScrapCollectionServiceUpgradeButton();
+    void InitStarshipDeploymentButtonTooltip();
+    void InitPlayerScrapCollectionTooltip();
+    void InitPlayerSpawnLaneIndicator();
     void InitMinimapView();
-    void InitEvents();
     void InitMusic();
+    void InitCursor();
+    void InitEventObservers();
 
     /// EventHandler functions
+    void HandlePauseButtonInput(const sf::Event &event);
+    void HandlePauseMenuInput(sf::RenderWindow &window, sf::Event &event);
     void HandleViewScrollingKeyboardInput(const sf::Event &event);
+    void HandleStarshipDeploymentButtons(sf::RenderWindow &window, sf::Event &event);
+    void HandleScrapCollectionUpgradeButton(sf::RenderWindow &window, sf::Event &event);
+    void UpdateScrapCollectionTooltip();
+    void HandleScrapCollectionTooltipVisibilityInput(const sf::Event &event);
+    void HandleStarshipPlacement(const sf::Event &event);
     void StartNextStarshipDeployment();
+    void HandleMusicTrackButtonsInput(const sf::Event &event);
 
     /// Update functions
     void UpdatePauseMenu(sf::RenderWindow &window);
@@ -97,15 +118,19 @@ private:
     std::unique_ptr<Enemy> _enemy;
     sf::Texture _playerSpawnLaneIndicatorTexture;
     sf::Sprite _playerSpawnLaneIndicatorSprite;
+    std::string _playerColourData;
+    std::string _enemyColourData;
 
     /// Ai Director
     std::unique_ptr<AiDirector> _aiDirector;
+    std::string _isDirectorDebugEnabled = "false";
 
     /// Scrap Collector
     std::unique_ptr<ScrapCollectionUpgradeButton> _upgradePlayerScrapCollectionButton;
-    int startingScrapMetal;
-    int _scrapIncreasePerUpgrade;
-    float playerScrapAccumulationRate;
+    int _startingScrapMetalAmount;
+    int _scrapCollectionServiceScrapIncreasePerUpgrade;
+    int _scrapCollectionServiceCostIncreasePerUpgrade;
+    float _playerScrapAccumulationRate;
     float _playerScrapAccumulationTimer;
     sf::Clock _playerScrapAccumulationTimerClock;
 
@@ -175,8 +200,12 @@ private:
     RNG _enemyStarshipTypeRNG {0, StarshipFactory::STARSHIP_TYPE::ENUM_COUNT - 2};
     RNG _spacelaneSpawnRNG {0, NUM_OF_LANES - 1};
 
-    /// XP System
+    /// Reward System
     ProgressBar _rewardProgressBar;
+
+    void UpdateCursorPos(sf::RenderWindow &window, sf::Time &deltaTime);
+
+    void UpdateStarshipDeploymentButtons(sf::RenderWindow &window, sf::Time &deltaTime);
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP

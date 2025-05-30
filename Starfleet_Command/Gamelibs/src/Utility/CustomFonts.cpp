@@ -22,7 +22,7 @@ bool Chilli::CustomFonts::LoadFonts()
 
 const sf::Font& Chilli::CustomFonts::GetRegularFont()
 {
-    if(not _fontsLoaded)
+    if(! _fontsLoaded)
     {
         LoadFonts();
     }
@@ -31,7 +31,7 @@ const sf::Font& Chilli::CustomFonts::GetRegularFont()
 
 const sf::Font& Chilli::CustomFonts::GetBoldFont()
 {
-    if(not _fontsLoaded)
+    if(! _fontsLoaded)
     {
         LoadFonts();
     }

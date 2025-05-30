@@ -74,7 +74,7 @@ void AiDirector::Update(sf::RenderWindow& window, sf::Time deltaTime)
         _behaviourUpdateTimer += _behaviourUpdateRate;
     }
 
-    if(not _starshipDeploymentManager->IsQueueEmpty())
+    if(! _starshipDeploymentManager->IsQueueEmpty())
     {
         auto endOfLanePos = _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetPos().x + _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetSize().x + 60.0F;
         auto xPos = 0;
@@ -139,7 +139,7 @@ void AiDirector::Render(sf::RenderWindow &window)
         window.draw(_debugEnemyMaxPopulationText);
     }
 
-    if(not _starshipDeploymentManager->IsQueueEmpty())
+    if(! _starshipDeploymentManager->IsQueueEmpty())
     {
         window.draw(_enemySpawnLaneIndicatorSprite);
         //window.draw(_enemySpawnLaneIndicatorText);
@@ -218,7 +218,7 @@ void AiDirector::SpawnEnemy_OnDeploymentCompleted()
     _starshipDeploymentManager->RemoveFirstStarshipInQueue();
     _starshipDeploymentManager->ResetDeploymentBar();
 
-    if(not _starshipDeploymentManager->IsQueueEmpty())
+    if(! _starshipDeploymentManager->IsQueueEmpty())
     {
         _starshipDeploymentManager->SetDeploymentStatus(true);
     }

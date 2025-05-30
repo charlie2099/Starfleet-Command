@@ -51,7 +51,7 @@ void GameSettings::EventHandler(sf::RenderWindow &window, sf::Event &event)
         }
     }
 
-    if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
         for (int i = 0; i < _settingsOptions.size(); ++i)
         {
@@ -115,7 +115,7 @@ void GameSettings::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
     }
 
-    if(not _isSaveButtonVisible)
+    if(! _isSaveButtonVisible)
     {
         return;
     }
@@ -127,7 +127,7 @@ void GameSettings::Update(sf::RenderWindow& window, sf::Time deltaTime)
         _saveButtonPanel.SetPanelColour(sf::Color(22, 155, 164, 65));
         _saveButtonPanel.SetText(_saveButtonPanel.GetText().getString(), sf::Color::Cyan);
     }
-    else if(not _saveButtonPanel.IsMouseOver())
+    else if(! _saveButtonPanel.IsMouseOver())
     {
         _saveButtonPanel.SetPanelColour(sf::Color(22, 155, 164, 100));
         _saveButtonPanel.SetText(_saveButtonPanel.GetText().getString(), Chilli::Colour::LIGHTBLUE);

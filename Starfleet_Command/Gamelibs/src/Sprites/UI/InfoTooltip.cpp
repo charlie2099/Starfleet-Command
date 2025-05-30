@@ -96,6 +96,12 @@ void InfoTooltip::SetItems(std::vector<std::pair<sf::Text, sf::Text>> tooltipIte
     }
 }
 
+void InfoTooltip::UpdateItem(int itemIndex, std::string label, std::string value)
+{
+    _descriptionItems[itemIndex].first.setString(label);
+    _descriptionItems[itemIndex].second.setString(value);
+}
+
 void InfoTooltip::SetPos(sf::Vector2<float> pos)
 {
     _panel.setPosition(pos);

@@ -273,7 +273,7 @@ void MenuScene::InitGameVersionText()
 void MenuScene::HandleGameSettingsEvents(sf::RenderWindow &window, sf::Event &event)
 {
     _menuButtons[BACK_BUTTON].EventHandler(window, event);
-    if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
         if(_menuButtons[BACK_BUTTON].IsClicked())
         {
@@ -293,7 +293,7 @@ void MenuScene::HandleButtonEvents(sf::RenderWindow &window, sf::Event &event)
         _menuButtons[i].EventHandler(window, event);
     }
 
-    if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
         if(_menuButtons[PLAY_BUTTON].IsClicked())
         {
@@ -362,7 +362,7 @@ void MenuScene::UpdateGameSettingsButtons(sf::RenderWindow &window, sf::Time &de
         _menuButtons[BACK_BUTTON].SetText(_menuButtons[BACK_BUTTON].GetText().getString(), sf::Color::Cyan);
         _cursor.SetCursorType(Chilli::Cursor::HOVER);
     }
-    else if(not _menuButtons[BACK_BUTTON].IsMouseOver())
+    else if(! _menuButtons[BACK_BUTTON].IsMouseOver())
     {
         _menuButtons[BACK_BUTTON].SetPanelColour(sf::Color(22, 155, 164, 100));
         _menuButtons[BACK_BUTTON].SetText(_menuButtons[BACK_BUTTON].GetText().getString(), Chilli::Colour::LIGHTBLUE);
@@ -378,7 +378,7 @@ void MenuScene::UpdateMenuButtons(sf::RenderWindow &window)
     {
         _menuButtons[i].Update(window);
 
-        if(not _menuButtons[i].IsMouseOver())
+        if(! _menuButtons[i].IsMouseOver())
         {
             _menuButtons[i].SetPanelColour(sf::Color(22, 155, 164, 100));
             _menuButtons[i].SetText(_menuButtons[i].GetText().getString(), Chilli::Colour::LIGHTBLUE);
@@ -452,11 +452,11 @@ void MenuScene::RenderBackground(sf::RenderWindow &window)
 void MenuScene::ApplyGameSettings_OnSettingsUpdated()
 {
     _isMusicOn = _gameSettings->GetSettingOptionCurrentValueIndex("Music");
-    if(_isMusicOn and _menuMusic.getStatus() not_eq sf::SoundSource::Playing)
+    if(_isMusicOn && _menuMusic.getStatus() not_eq sf::SoundSource::Playing)
     {
         _menuMusic.play();
     }
-    else if(not _isMusicOn)
+    else if(! _isMusicOn)
     {
         _menuMusic.stop();
     }

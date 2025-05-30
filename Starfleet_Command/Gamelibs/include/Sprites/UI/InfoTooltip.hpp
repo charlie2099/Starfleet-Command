@@ -20,6 +20,7 @@ public:
     void SetDescription(const std::string& description);
     void SetItems(std::vector<std::pair<sf::Text, sf::Text>> items);
     void SetPos(sf::Vector2<float> pos);
+    void UpdateItem(int itemIndex, std::string label, std::string value);
 
     sf::Vector2f GetSize() { return _panel.getSize(); }
 

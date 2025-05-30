@@ -21,9 +21,9 @@ void ScrapCollectionUpgradeButton::EventHandler(sf::RenderWindow &window, sf::Ev
 {
     _button->EventHandler(window, event);
 
-    if (_button->IsMouseOver() and _isAffordable)
+    if (_button->IsMouseOver() && _isAffordable)
     {
-        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
         {
             _scrapMetalManager->SpendScrap(_upgradeCost);
             _scrapMetalManager->SetScrapText("Scrap Metal: " + std::to_string(_scrapMetalManager->GetCurrentScrapAmount()));
@@ -43,11 +43,11 @@ void ScrapCollectionUpgradeButton::EventHandler(sf::RenderWindow &window, sf::Ev
 
     if(_button->IsMouseOver())
     {
-        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Right)
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Right)
         {
             _isMouseRightClicked = true;
         }
-        else if (event.type == sf::Event::MouseButtonReleased and event.mouseButton.button == sf::Mouse::Right)
+        else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Right)
         {
             _isMouseRightClicked = false;
         }
@@ -56,12 +56,12 @@ void ScrapCollectionUpgradeButton::EventHandler(sf::RenderWindow &window, sf::Ev
 
 void ScrapCollectionUpgradeButton::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    if(_button->IsMouseOver() and not _isMouseRightClicked)
+    if(_button->IsMouseOver() &&  !_isMouseRightClicked)
     {
         _isNameVisible = true;
         _nameText.setFillColor(_isAffordable ? _teamColour : sf::Color {_teamColour.r, _teamColour.g, _teamColour.b, 100});
     }
-    else if(_button->IsMouseOver() and _isMouseRightClicked)
+    else if(_button->IsMouseOver() && _isMouseRightClicked)
     {
         _isNameVisible = false;
         _nameText.setFillColor(_isAffordable ? _teamColour : sf::Color {_teamColour.r, _teamColour.g, _teamColour.b, 100});
@@ -73,26 +73,26 @@ void ScrapCollectionUpgradeButton::Update(sf::RenderWindow &window, sf::Time del
     }
 
 
-    if (_button->IsMouseOver() and _isAffordable && not _isMouseLeftClicked)
+    if (_button->IsMouseOver() && _isAffordable && !_isMouseLeftClicked)
     {
         _button->SetColour(HOVER_BTN_COLOR);
     }
-    else if (_button->IsMouseOver() and _isAffordable && _isMouseLeftClicked)
+    else if (_button->IsMouseOver() && _isAffordable && _isMouseLeftClicked)
     {
         _button->SetColour(SELECTED_BTN_COLOR);
     }
 
-    if(_button->IsMouseOver() and not _isAffordable)
+    if(_button->IsMouseOver() && !_isAffordable)
     {
         _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 50});
     }
 
-    if (not _button->IsMouseOver() and _isAffordable)
+    if (!_button->IsMouseOver() && _isAffordable)
     {
         _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 160 });
     }
 
-    if (not _button->IsMouseOver() and not _isAffordable)
+    if (!_button->IsMouseOver() && !_isAffordable)
     {
         _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 50});
     }

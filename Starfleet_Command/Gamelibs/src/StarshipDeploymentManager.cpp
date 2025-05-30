@@ -41,7 +41,7 @@ void StarshipDeploymentManager::Render(sf::RenderWindow &window)
 {
     _starshipDeploymentBar.Render(window);
 
-    /*if(not _starshipDeploymentBar.InProgress())
+    /*if(! _starshipDeploymentBar.InProgress())
         return;*/
 
     for (int i = 0; i < _maxQueueSize; ++i)
@@ -77,7 +77,7 @@ bool StarshipDeploymentManager::IsStarshipTypeInQueue(StarshipFactory::STARSHIP_
     std::queue<StarshipFactory::STARSHIP_TYPE> tempStarshipQueue = _starshipTypeDeploymentQueue;
     std::vector<StarshipFactory::STARSHIP_TYPE> starshipVector;
 
-    while (not tempStarshipQueue.empty())
+    while (! tempStarshipQueue.empty())
     {
         starshipVector.push_back(tempStarshipQueue.front());
         tempStarshipQueue.pop();

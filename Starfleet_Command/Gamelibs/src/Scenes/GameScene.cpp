@@ -2,280 +2,66 @@
 
 GameScene::~GameScene()
 {
-    if(_gameMusic[_currentMusicTrackIndex].getStatus() == sf::Music::Playing)
-    {
-        _gameMusic[_currentMusicTrackIndex].stop();
-    }
-    _spacelanes.clear();
-    DirectorEventBus::ClearAllSubscribers();
+    Cleanup();
 }
 
 bool GameScene::Init()
 {
+    ExtractJsonData();
     InitBackground();
     InitPlayer();
     InitSpacelanes();
     InitEnemy();
     InitGameplayView();
     InitPauseMenu();
-
-    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
-    if(fileData.contains("Director Debug"))
-    {
-        std::string directorDebugData = fileData["Director Debug"];
-        _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spacelanes, _gameplayView, directorDebugData == "true");
-    }
-
-    _mothershipStatusDisplay = std::make_unique<MothershipStatusDisplay>(_player->GetMothership(), _enemy->GetMothership(), _gameplayView);
-
-    _starshipDeploymentManager = std::make_unique<StarshipDeploymentManager>(STARSHIP_MAX_QUEUE_SIZE, _player->GetTeamColour());
-
-    for (int i = 0; i < NUM_OF_BUTTONS; ++i)
-    {
-        _starshipDeploymentButtons[i] = std::make_unique<StarshipDeploymentButton>(static_cast<StarshipFactory::STARSHIP_TYPE>(i), _player->GetTeamColour());
-    }
-
-
-    auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
-    if(starshipData.contains("StarshipData"))
-    {
-        for(const auto& shipData : starshipData["StarshipData"])
-        {
-            if(shipData.contains("Name") && shipData["Name"] == "Mothership")
-            {
-                int startingCost = shipData["ScrapCollectionService_CostIncreasePerUpgrade"];
-                _upgradePlayerScrapCollectionButton = std::make_unique<ScrapCollectionUpgradeButton>(startingCost, _player->GetScrapMetalManager(), _player->GetTeamColour());
-
-                float accumulationRate = shipData["ScrapCollectionService_ScrapAccumulationFrequencyInSeconds"];
-                playerScrapAccumulationRate = accumulationRate;
-                _playerScrapAccumulationTimer = accumulationRate;
-                break;
-            }
-        }
-    }
-
-    std::vector<std::pair<sf::Text, sf::Text>> starshipTooltipItems; /// Intentionally empty
-    sf::Vector2<float> starshipTooltipSize = {270.0F, 107.5F};
-    _starshipDeploymentButtonTooltip = std::make_unique<InfoTooltip>(starshipTooltipSize, _player->GetTeamColour(), "PLACEHOLDER", starshipTooltipItems);
-
-
-
-    std::vector<std::pair<sf::Text, sf::Text>> scrapCollectionTooltipItems; /// Intentionally empty
-    sf::Vector2<float> serviceTooltipSize = {317.5F, 127.5F};
-    _playerScrapCollectionTooltip = std::make_unique<InfoTooltip>(serviceTooltipSize, _player->GetTeamColour(), "Scrap Collection Service (Lvl " + std::to_string(_upgradePlayerScrapCollectionButton->GetUpgradeLevel()) + ")", scrapCollectionTooltipItems);
-    _playerScrapCollectionTooltip->SetDescription("Autonomous drones scour the depths of space in search of\nvaluable debris, derelict ships, and abandoned technology,\nbringing back a steady supply of scrap metal to bolster your\nfleet's development.\n\nEach upgrade enhances the efficiency and number of drones\ndispatched, increasing the passive income of scrap returned\nto your mothership over time.");
-
-    std::pair<sf::Text, sf::Text> scrapIncreasePerUpgradeTooltipItem;
-    /*std::pair<sf::Text, sf::Text> costIncreasePerUpgradeTooltipItem;*/
-    std::pair<sf::Text, sf::Text> scrapAccumulationRateTooltipItem;
-
-    if(starshipData.contains("StarshipData"))
-    {
-        for(const auto& shipData : starshipData["StarshipData"])
-        {
-            if(shipData.contains("Name") && shipData["Name"] == "Mothership")
-            {
-                int scrapIncreasePerUpgrade = shipData["ScrapCollectionService_ScrapIncreasePerUpgrade"];
-                scrapIncreasePerUpgradeTooltipItem.first.setString("SCRAP PER COLLECTION:");
-                scrapIncreasePerUpgradeTooltipItem.second.setString(std::to_string(scrapIncreasePerUpgrade));
-                _scrapIncreasePerUpgrade = scrapIncreasePerUpgrade;
-
-                /*int costIncreasePerUpgrade = shipData["ScrapCollectionService_CostIncreasePerUpgrade"];
-                costIncreasePerUpgradeTooltipItem.first.setString("UPGRADE COST:");
-                costIncreasePerUpgradeTooltipItem.second.setString(std::to_string(costIncreasePerUpgrade));*/
-
-                float accumulationRate = shipData["ScrapCollectionService_ScrapAccumulationFrequencyInSeconds"];
-                scrapAccumulationRateTooltipItem.first.setString("COLLECTION RATE:");
-                scrapAccumulationRateTooltipItem.second.setString(Chilli::StringFormatter::FormatFloat(accumulationRate) + "s");
-
-                break;
-            }
-        }
-    }
-
-    scrapCollectionTooltipItems.emplace_back(scrapIncreasePerUpgradeTooltipItem);
-    scrapCollectionTooltipItems.emplace_back(scrapAccumulationRateTooltipItem);
-
-    _playerScrapCollectionTooltip->SetItems(scrapCollectionTooltipItems);
-
-
-
-    _playerSpawnLaneIndicatorTexture.loadFromFile(TEXTURES_DIR_PATH + "right.png");
-    _playerSpawnLaneIndicatorSprite.setTexture(_playerSpawnLaneIndicatorTexture);
-    _playerSpawnLaneIndicatorSprite.setColor(_player->GetTeamColour());
-    //_playerSpawnLaneIndicatorSprite.setColor(sf::Color::Green);
-
+    InitAiDirector();
+    InitStarshipDeploymentManager();
+    InitStarshipDeploymentButtons();
+    InitMothershipStatusDisplay();
+    InitScrapCollectionServiceUpgradeButton();
+    InitStarshipDeploymentButtonTooltip();
+    InitPlayerScrapCollectionTooltip();
+    InitPlayerSpawnLaneIndicator();
     InitMinimapView();
-    InitEvents();
     InitMusic();
+    InitCursor();
 
-    _cursor.SetColour(_player->GetTeamColour());
-
+    // NOTE: InitRewardProgressBar() OR // TODO: Integrate into a wider RewardSystem class
     _rewardProgressBar.SetColour(_player->GetTeamColour());
     _rewardProgressBar.SetProgressBarText("Next Perk Reward");
     _rewardProgressBar.SetTimeToCompleteTask(60.0F);
     _rewardProgressBar.SetProgressBarStatus(true);
+
+    InitEventObservers();
 
     return true;
 }
 
 void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
 {
-    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::Escape && not _isPauseKeyPressed)
-    {
-        _buttonClickSound.play();
-        SetPaused(not IsPaused());
-        _isPauseKeyPressed = true;
-    }
-    else if (event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Escape && _isPauseKeyPressed)
-    {
-        _isPauseKeyPressed = false;
-    }
+    HandlePauseButtonInput(event);
 
     if(IsPaused())
     {
-        _pauseResumeGameButton->EventHandler(window, event);
-        _pauseMainMenuButton->EventHandler(window, event);
-        _pauseExitGameButton->EventHandler(window, event);
-
-        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
-        {
-            if (_pauseResumeGameButton->IsClicked())
-            {
-                _buttonClickSound.play();
-                SetPaused(false);
-            }
-
-            if(_pauseMainMenuButton->IsClicked())
-            {
-                SetScene(Scene::ID::MENU);
-            }
-
-            if (_pauseExitGameButton->IsClicked())
-            {
-                window.close();
-            }
-        }
+        HandlePauseMenuInput(window, event);
+        return;
     }
 
     _player->EventHandler(window, event);
     HandleViewScrollingKeyboardInput(event);
-
-    for (auto& deploymentButton : _starshipDeploymentButtons)
-    {
-        if(_starshipDeploymentManager->IsQueueFull())
-            return;
-
-        deploymentButton->EventHandler(window, event);
-    }
-
-    _upgradePlayerScrapCollectionButton->EventHandler(window, event);
-
-    if(_upgradePlayerScrapCollectionButton->IsMouseOver())
-    {
-        _playerScrapCollectionTooltip->SetTitle("Scrap Collection Service (Lvl " + std::to_string(_upgradePlayerScrapCollectionButton->GetUpgradeLevel()) + ")");
-
-
-
-        std::vector<std::pair<sf::Text, sf::Text>> scrapCollectionTooltipItems; /// Intentionally empty
-
-        std::pair<sf::Text, sf::Text> scrapIncreasePerUpgradeTooltipItem;
-        std::pair<sf::Text, sf::Text> scrapAccumulationRateTooltipItem;
-
-        scrapIncreasePerUpgradeTooltipItem.first.setString("SCRAP PER COLLECTION:");
-        scrapIncreasePerUpgradeTooltipItem.second.setString(std::to_string(_scrapIncreasePerUpgrade * _upgradePlayerScrapCollectionButton->GetUpgradeLevel()));
-        scrapAccumulationRateTooltipItem.first.setString("COLLECTION RATE:");
-        scrapAccumulationRateTooltipItem.second.setString(Chilli::StringFormatter::FormatFloat(playerScrapAccumulationRate) + "s");
-
-        scrapCollectionTooltipItems.emplace_back(scrapIncreasePerUpgradeTooltipItem);
-        scrapCollectionTooltipItems.emplace_back(scrapAccumulationRateTooltipItem);
-
-        _playerScrapCollectionTooltip->SetItems(scrapCollectionTooltipItems);
-
-
-
-
-
-
-
-
-        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Right)
-        {
-            _isScrapCollectionTooltipVisible = true;
-        }
-        else if (event.type == sf::Event::MouseButtonReleased and event.mouseButton.button == sf::Mouse::Right)
-        {
-            _isScrapCollectionTooltipVisible = false;
-        }
-    }
-    else
-    {
-        _isScrapCollectionTooltipVisible = false;
-    }
-
-
-    for (int i = 0; i < NUM_OF_BUTTONS; ++i)
-    {
-        if (event.type == sf::Event::MouseButtonReleased and event.mouseButton.button == sf::Mouse::Left and _starshipDeploymentButtons[i]->IsPlacingStarship())
-        {
-            for (int j = 0; j < _spacelanes.size(); ++j)
-            {
-                if(_spacelanes[j]->IsCursorHoveredOver())
-                {
-                    _player->SpendScrap(_starshipDeploymentButtons[i]->GetBuildCost());
-                    _player->SetScrapText("Scrap Metal: " + std::to_string(_player->GetCurrentScrapAmount()));
-
-                    _starshipDeploymentManager->AddStarshipToQueue(_starshipDeploymentButtons[i]->GetStarshipType(), j);
-
-                    if(not _starshipDeploymentManager->IsCurrentlyDeploying())
-                    {
-                        StartNextStarshipDeployment();
-                    }
-                }
-            }
-
-            _starshipDeploymentButtons[i]->ResetAfterStarshipPlacement();
-        }
-    }
-
-
+    HandleStarshipDeploymentButtons(window, event);
+    HandleScrapCollectionUpgradeButton(window, event);
+    HandleStarshipPlacement(event);
     _starshipDeploymentButtonTooltip->EventHandler(window, event);
     _playerScrapCollectionTooltip->EventHandler(window, event);
-
-    /*if(_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->IsMouseOver())
-    {
-        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
-        {
-            _isMusicOn ? _gameMusic[_currentMusicTrackIndex].pause() : _gameMusic[_currentMusicTrackIndex].play();
-            _isMusicOn = !_isMusicOn;
-        }
-    }
-
-    if(_nextMusicTrackButton->IsMouseOver())
-    {
-        if (event.type == sf::Event::MouseButtonPressed and event.mouseButton.button == sf::Mouse::Left)
-        {
-            _gameMusic[_currentMusicTrackIndex].stop();
-
-            if(_currentMusicTrackIndex < 3)
-            {
-                _currentMusicTrackIndex++;
-            }
-            else
-            {
-                _currentMusicTrackIndex = 0;
-            }
-            _gameMusic[_currentMusicTrackIndex].play();
-        }
-    }*/
+    //HandleMusicTrackButtonsInput(event);
 }
 
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     auto mousePos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
 
-    _cursor.Update(window, deltaTime);
-    _cursor.SetCursorPos(window, _gameplayView);
+    UpdateCursorPos(window, deltaTime);
 
     if(IsPaused())
     {
@@ -284,25 +70,9 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     }
 
     UpdateGameplayViewMovement(window, deltaTime, mousePos);
-    _cursor.SetCursorPos(window, _gameplayView);
-
+    UpdateCursorPos(window, deltaTime);
     _mothershipStatusDisplay->Update(window, deltaTime);
-
-    for (int i = 0; i < NUM_OF_BUTTONS; ++i)
-    {
-        auto column_spacing = 5.0F;
-        auto xPos = _mothershipStatusDisplay->GetPlayerMothershipTextPos().x + (i * (_starshipDeploymentButtons[0]->GetBounds().width + column_spacing));
-        auto yPos = _mothershipStatusDisplay->GetPlayerMothershipTextPos().y + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().height*3.75F;
-        _starshipDeploymentButtons[i]->SetPos({xPos, yPos});
-        _starshipDeploymentButtons[i]->SetAffordable(_player->GetCurrentScrapAmount() >= _starshipDeploymentButtons[i]->GetBuildCost()); // NOTE: Unsure about this
-        _starshipDeploymentButtons[i]->Update(window, deltaTime);
-
-        if(_starshipDeploymentManager->IsQueueFull())
-        {
-            _starshipDeploymentButtons[i]->SetColour({_player->GetTeamColour().r, _player->GetTeamColour().g, _player->GetTeamColour().b, 50});
-        }
-    }
-
+    UpdateStarshipDeploymentButtons(window, deltaTime);
     _starshipDeploymentManager->SetDeploymentBarPos({_starshipDeploymentButtons[0]->GetPos().x, _starshipDeploymentButtons[0]->GetPos().y + 45.0F});
     _starshipDeploymentManager->Update(window, deltaTime);
     _enemy->SetScrapTextPosition({_mothershipStatusDisplay->GetEnemyMothershipTextPos().x + 15.0F, _mothershipStatusDisplay->GetEnemyMothershipTextPos().y + _mothershipStatusDisplay->GetEnemyMothershipTextBounds().height + 5.0F});
@@ -313,16 +83,14 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _aiDirector->Update(window, deltaTime);
 
 
-
-
     _upgradePlayerScrapCollectionButton->SetPos({_starshipDeploymentButtons[4]->GetPos().x + _starshipDeploymentButtons[4]->GetBounds().width + 96.0F, _starshipDeploymentButtons[0]->GetPos().y});
     _upgradePlayerScrapCollectionButton->SetAffordable(_player->GetCurrentScrapAmount() >= _upgradePlayerScrapCollectionButton->GetUpgradeCost()); // NOTE: Unsure about this
     _upgradePlayerScrapCollectionButton->Update(window, deltaTime);
 
+
     _starshipDeploymentButtonTooltip->Update(window, deltaTime);
 
-    //_rewardProgressBar.SetPosition({_gameplayView.getCenter().x - _rewardProgressBar.GetSize().width / 2.0F, _gameplayView.getCenter().y - 220.0F});
-    //_rewardProgressBar.SetPosition({_gameplayView.getCenter().x - _rewardProgressBar.GetSize().width / 2.0F, _upgradePlayerScrapCollectionButton->GetPos().y + _upgradePlayerScrapCollectionButton->GetBounds().height});
+
     _rewardProgressBar.SetPosition({_gameplayView.getCenter().x - _rewardProgressBar.GetSize().width / 2.0F, _gameplayView.getCenter().y - _gameplayView.getSize().y / 2.0F + 110.0F});
     _rewardProgressBar.Update(window, deltaTime);
 
@@ -443,32 +211,16 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     /// Passive scrap metal accumulation
     if(_playerScrapAccumulationTimerClock.getElapsedTime().asSeconds() >= _playerScrapAccumulationTimer)
     {
-        /// TODO: Just load this data once at initialisation. Unnecessary performance overhead loading from file every time!
-        auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
-        if(starshipData.contains("StarshipData"))
-        {
-            for(const auto& shipData : starshipData["StarshipData"])
-            {
-                if(shipData.contains("Name") && shipData["Name"] == "Mothership")
-                {
-                    int scrapIncreasePerUpgrade = shipData["ScrapCollectionService_ScrapIncreasePerUpgrade"];
-                    _player->CollectScrap(scrapIncreasePerUpgrade * _upgradePlayerScrapCollectionButton->GetUpgradeLevel());
-
-
-                    break;
-                }
-            }
-        }
-
+        _player->CollectScrap(_scrapCollectionServiceScrapIncreasePerUpgrade * _upgradePlayerScrapCollectionButton->GetUpgradeLevel());
         _player->SetScrapText("Scrap Metal: " + std::to_string(_player->GetCurrentScrapAmount()));
-        _playerScrapAccumulationTimer += playerScrapAccumulationRate;
+        _playerScrapAccumulationTimer += _playerScrapAccumulationRate;
     }
 
 
 
 
 
-    if(not _starshipDeploymentManager->IsQueueEmpty())
+    if(! _starshipDeploymentManager->IsQueueEmpty())
     {
         auto startOfLanePos = _spacelanes[_starshipDeploymentManager->GetNextSpacelaneInQueue()]->GetPos().x - 60.0F;
         auto xPos = 0;
@@ -744,6 +496,29 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     UpdateCursorType();
 }
 
+void GameScene::UpdateStarshipDeploymentButtons(sf::RenderWindow &window, sf::Time &deltaTime)
+{
+    for (int i = 0; i < NUM_OF_BUTTONS; ++i)
+    {
+        auto column_spacing = 5.0F;
+        auto xPos = _mothershipStatusDisplay->GetPlayerMothershipTextPos().x + (i * (_starshipDeploymentButtons[0]->GetBounds().width + column_spacing));
+        auto yPos = _mothershipStatusDisplay->GetPlayerMothershipTextPos().y + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().height * 3.75F;
+        _starshipDeploymentButtons[i]->SetPos({xPos, yPos});
+        _starshipDeploymentButtons[i]->SetAffordable(_player->GetCurrentScrapAmount() >= _starshipDeploymentButtons[i]->GetBuildCost()); // NOTE: Unsure about this
+        _starshipDeploymentButtons[i]->Update(window, deltaTime);
+
+        if(_starshipDeploymentManager->IsQueueFull())
+        {
+            _starshipDeploymentButtons[i]->SetColour({_player->GetTeamColour().r, _player->GetTeamColour().g, _player->GetTeamColour().b, 50});
+        }
+    }
+}
+
+void GameScene::UpdateCursorPos(sf::RenderWindow &window, sf::Time &deltaTime)
+{
+    _cursor.SetCursorPos(window, _gameplayView);
+}
+
 void GameScene::Render(sf::RenderWindow& window)
 {
     window.setView(_gameplayView);
@@ -760,6 +535,94 @@ void GameScene::Render(sf::RenderWindow& window)
     _cursor.Render(window);
 }
 
+void GameScene::Cleanup()
+{
+    if(_gameMusic[_currentMusicTrackIndex].getStatus() == sf::Music::Playing)
+    {
+        _gameMusic[_currentMusicTrackIndex].stop();
+    }
+    _spacelanes.clear();
+    DirectorEventBus::ClearAllSubscribers();
+}
+
+bool GameScene::ExtractJsonData()
+{
+    if(Chilli::JsonSaveSystem::CheckFileExists(SETTINGS_FILE_PATH))
+    {
+        auto settingsData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
+        if(settingsData.contains("Director Debug"))
+        {
+            std::string directorDebugData = settingsData["Director Debug"];
+            _isDirectorDebugEnabled = directorDebugData;
+        }
+        if(settingsData.contains("Player Colour"))
+        {
+            std::string playerColourData = settingsData["Player Colour"];
+            _playerColourData = playerColourData;
+        }
+        if(settingsData.contains("Enemy Colour"))
+        {
+            std::string enemyColourData = settingsData["Enemy Colour"];
+            _enemyColourData = enemyColourData;
+        }
+        if(settingsData.contains("Minimap"))
+        {
+            std::string minimapData = settingsData["Minimap"];
+            _isMinimapVisible = (minimapData == "true");
+        }
+        if(settingsData.contains("Music"))
+        {
+            std::string musicData = settingsData["Music"];
+            _isMusicOn = (musicData == "true");
+        }
+        if(settingsData.contains("Spacelanes"))
+        {
+            std::string spacelanesData = settingsData["Spacelanes"];
+            _isSpacelanesVisible = (spacelanesData == "true");
+        }
+    }
+    else
+    {
+        std::cout << "Settings file not found at given path: " << SETTINGS_FILE_PATH << std::endl;
+        return false;
+    }
+
+    if(Chilli::JsonSaveSystem::CheckFileExists(STARSHIP_DATA_FILE_PATH))
+    {
+        auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
+        if(starshipData.contains("StarshipData"))
+        {
+            for(const auto& shipData : starshipData["StarshipData"])
+            {
+                if(shipData.contains("Name") && shipData["Name"] == "Mothership")
+                {
+                    int scrapIncreasePerUpgrade = shipData["ScrapCollectionService_ScrapIncreasePerUpgrade"];
+                    _scrapCollectionServiceScrapIncreasePerUpgrade = scrapIncreasePerUpgrade;
+
+                    int startingCost = shipData["ScrapCollectionService_CostIncreasePerUpgrade"];
+                    _scrapCollectionServiceCostIncreasePerUpgrade = startingCost;
+
+                    float accumulationRate = shipData["ScrapCollectionService_ScrapAccumulationFrequencyInSeconds"];
+                    _playerScrapAccumulationRate = accumulationRate;
+                    _playerScrapAccumulationTimer = accumulationRate;
+
+                    int startingScrapAmount = shipData["StartingScrap"];
+                    _startingScrapMetalAmount = startingScrapAmount;
+
+                    break;
+                }
+            }
+        }
+    }
+    else
+    {
+        std::cout << "starship data file not found at given path: " << STARSHIP_DATA_FILE_PATH << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
 void GameScene::InitBackground()
 {
     _backgroundParallax = std::make_unique<ParallaxBackground>(
@@ -773,27 +636,7 @@ void GameScene::InitBackground()
 
 void GameScene::InitPlayer()
 {
-    auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
-    if(starshipData.contains("StarshipData"))
-    {
-        for(const auto& shipData : starshipData["StarshipData"])
-        {
-            if(shipData.contains("Name") && shipData["Name"] == "Mothership")
-            {
-                int startingScrapAmount = shipData["StartingScrap"];
-                startingScrapMetal = startingScrapAmount;
-                break;
-            }
-        }
-    }
-
-    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
-    if(fileData.contains("Player Colour"))
-    {
-        std::string playerColourData = fileData["Player Colour"];
-        _player = std::make_unique<Player>(startingScrapMetal, Chilli::JsonColourMapping::GetColourFromStringName(playerColourData));
-    }
-
+    _player = std::make_unique<Player>(_startingScrapMetalAmount, Chilli::JsonColourMapping::GetColourFromStringName(_playerColourData));
     _player->CreateStarship(StarshipFactory::STARSHIP_TYPE::MOTHERSHIP, 2);
     _player->SetMothershipPosition({60.0F, Constants::LEVEL_HEIGHT / 2.0F});
 }
@@ -815,30 +658,11 @@ void GameScene::InitSpacelanes()
         _spacelanes[i]->SetSize({spacelaneXSize, spacelaneYSize});
         _spacelanes[i]->Init();
     }
-
-    /*_spacelanes[0]->SetColour(Chilli::Colour::ORANGE);
-    _spacelanes[1]->SetColour(Chilli::Colour::LIGHTBLUE);
-    _spacelanes[2]->SetColour(Chilli::Colour::LIGHTGREEN);
-    _spacelanes[3]->SetColour(Chilli::Colour::BLUEVIOLET);
-    _spacelanes[4]->SetColour(Chilli::Colour::LIGHTRED);*/
-
-    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
-    if(fileData.contains("Spacelanes"))
-    {
-        std::string spacelanesData = fileData["Spacelanes"];
-        _isSpacelanesVisible = (spacelanesData == "true");
-    }
 }
 
 void GameScene::InitEnemy()
 {
-    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
-    if(fileData.contains("Enemy Colour"))
-    {
-        std::string enemyColourData = fileData["Enemy Colour"];
-        _enemy = std::make_unique<Enemy>(startingScrapMetal, Chilli::JsonColourMapping::GetColourFromStringName(enemyColourData));
-    }
-
+    _enemy = std::make_unique<Enemy>(_startingScrapMetalAmount, Chilli::JsonColourMapping::GetColourFromStringName(_enemyColourData));
     _enemy->CreateStarship(StarshipFactory::MOTHERSHIP, 2);
     auto mothershipXpos = _spacelanes[0]->GetPos().x + _spacelanes[0]->GetSize().x + _enemy->GetMothershipBounds().width / 2.25F;
     auto mothershipYpos = Constants::LEVEL_HEIGHT / 2.0F;
@@ -890,6 +714,69 @@ void GameScene::InitPauseMenu()
     _pauseExitGameButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
 }
 
+void GameScene::InitAiDirector()
+{
+    _aiDirector = std::make_unique<AiDirector>(_player, _enemy, _spacelanes, _gameplayView, _isDirectorDebugEnabled == "true");
+}
+
+void GameScene::InitStarshipDeploymentManager()
+{
+    _starshipDeploymentManager = std::make_unique<StarshipDeploymentManager>(STARSHIP_MAX_QUEUE_SIZE, _player->GetTeamColour());
+}
+
+void GameScene::InitStarshipDeploymentButtons()
+{
+    for (int i = 0; i < NUM_OF_BUTTONS; ++i)
+    {
+        _starshipDeploymentButtons[i] = std::make_unique<StarshipDeploymentButton>(static_cast<StarshipFactory::STARSHIP_TYPE>(i), _player->GetTeamColour());
+    }
+}
+
+void GameScene::InitMothershipStatusDisplay()
+{
+    _mothershipStatusDisplay = std::make_unique<MothershipStatusDisplay>(_player->GetMothership(), _enemy->GetMothership(),_gameplayView); }
+
+void GameScene::InitScrapCollectionServiceUpgradeButton()
+{
+    _upgradePlayerScrapCollectionButton = std::make_unique<ScrapCollectionUpgradeButton>(_scrapCollectionServiceCostIncreasePerUpgrade, _player->GetScrapMetalManager(), _player->GetTeamColour());
+}
+
+void GameScene::InitStarshipDeploymentButtonTooltip()
+{
+    std::vector<std::pair<sf::Text, sf::Text>> starshipTooltipItems; /// Intentionally empty
+    sf::Vector2<float> starshipTooltipSize = {270.0F, 107.5F};
+    _starshipDeploymentButtonTooltip = std::make_unique<InfoTooltip>(starshipTooltipSize, _player->GetTeamColour(), "PLACEHOLDER", starshipTooltipItems);
+}
+
+void GameScene::InitPlayerScrapCollectionTooltip()
+{
+    std::vector<std::pair<sf::Text, sf::Text>> scrapCollectionTooltipItems; /// Intentionally empty
+    sf::Vector2<float> serviceTooltipSize = {317.5F, 127.5F};
+    _playerScrapCollectionTooltip = std::make_unique<InfoTooltip>(serviceTooltipSize, _player->GetTeamColour(), "Scrap Collection Service (Lvl " + std::to_string(_upgradePlayerScrapCollectionButton->GetUpgradeLevel()) + ")", scrapCollectionTooltipItems);
+    _playerScrapCollectionTooltip->SetDescription("Autonomous drones scour the depths of space in search of\nvaluable debris, derelict ships, and abandoned technology,\nbringing back a steady supply of scrap metal to bolster your\nfleet's development.\n\nEach upgrade enhances the efficiency and number of drones\ndispatched, increasing the passive income of scrap returned\nto your mothership over time.");
+
+    std::pair<sf::Text, sf::Text> scrapIncreasePerUpgradeTooltipItem;
+    std::pair<sf::Text, sf::Text> scrapAccumulationRateTooltipItem;
+
+    scrapIncreasePerUpgradeTooltipItem.first.setString("SCRAP PER COLLECTION:");
+    scrapIncreasePerUpgradeTooltipItem.second.setString(std::to_string(_scrapCollectionServiceScrapIncreasePerUpgrade));
+
+    scrapAccumulationRateTooltipItem.first.setString("COLLECTION RATE:");
+    scrapAccumulationRateTooltipItem.second.setString(Chilli::StringFormatter::FormatFloat(_playerScrapAccumulationRate) + "s");
+
+    scrapCollectionTooltipItems.emplace_back(scrapIncreasePerUpgradeTooltipItem);
+    scrapCollectionTooltipItems.emplace_back(scrapAccumulationRateTooltipItem);
+
+    _playerScrapCollectionTooltip->SetItems(scrapCollectionTooltipItems);
+}
+
+void GameScene::InitPlayerSpawnLaneIndicator()
+{
+    _playerSpawnLaneIndicatorTexture.loadFromFile(TEXTURES_DIR_PATH + "right.png");
+    _playerSpawnLaneIndicatorSprite.setTexture(_playerSpawnLaneIndicatorTexture);
+    _playerSpawnLaneIndicatorSprite.setColor(_player->GetTeamColour());
+}
+
 void GameScene::InitMinimapView()
 {
     _minimap = std::make_unique<Minimap>(
@@ -901,32 +788,6 @@ void GameScene::InitMinimapView()
             Constants::Minimap::VIEWPORT_HEIGHT,
             _gameplayView,
             _player->GetTeamColour());
-
-    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
-    if(fileData.contains("Minimap"))
-    {
-        std::string minimapData = fileData["Minimap"];
-        _isMinimapVisible = (minimapData == "true");
-    }
-}
-
-void GameScene::InitEvents()
-{
-    /// Observer to reward progress bar event
-    auto rewardProgressBarCallback = std::bind(&GameScene::DisplayPerkChoices_OnPerkRewardTimerComplete, this);
-    _rewardProgressBar.AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, rewardProgressBarCallback});
-
-    /// Observer to starship deployment bar event
-    auto starshipDeploymentBarCallback = std::bind(&GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete, this);
-    _starshipDeploymentManager->AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentBarCallback});
-
-    /// Agnostic observer to enemy starships destroyed event
-    auto enemyStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed, this, std::placeholders::_1);
-    _enemy->AddAgnosticObserver({Enemy::EventID::STARSHIP_DESTROYED, enemyStarshipsDestroyedCallback});
-
-    /// Agnostic observer to player starships destroyed event
-    auto playerStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed, this, std::placeholders::_1);
-    _player->AddAgnosticObserver({Player::EventID::STARSHIP_DESTROYED, playerStarshipsDestroyedCallback});
 }
 
 void GameScene::InitMusic()
@@ -938,13 +799,6 @@ void GameScene::InitMusic()
     _gameMusic[1].openFromFile(AUDIO_DIR_PATH +"GameThemes/Dangerous_Dark_Disaster_143bpm_148s.wav");
     _gameMusic[2].openFromFile(AUDIO_DIR_PATH +"GameThemes/Future_Shock_Fears_155bpm_120s.wav");
     _gameMusic[3].openFromFile(AUDIO_DIR_PATH +"GameThemes/Triumph_Over_Terror_125bpm_153s.wav");
-
-    auto fileData = Chilli::JsonSaveSystem::LoadFile(SETTINGS_FILE_PATH);
-    if(fileData.contains("Music"))
-    {
-        std::string musicData = fileData["Music"];
-        _isMusicOn = (musicData == "true");
-    }
 
     if(_isMusicOn)
     {
@@ -964,23 +818,164 @@ void GameScene::InitMusic()
     _nextMusicTrackButton->SetScale({0.80F, 0.80F});
 }
 
+void GameScene::InitCursor()
+{
+    _cursor.SetColour(_player->GetTeamColour());
+}
+
+void GameScene::InitEventObservers()
+{
+    /// Observer to reward progress bar event
+    auto rewardProgressBarCallback = std::bind(&GameScene::DisplayPerkChoices_OnPerkRewardTimerComplete, this);
+    _rewardProgressBar.AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, rewardProgressBarCallback});
+
+    /// Observer to starship deployment bar event
+    auto starshipDeploymentBarCallback = std::bind(&GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete, this);
+    _starshipDeploymentManager->AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentBarCallback});
+
+    /// Agnostic observer to enemy starships destroyed event
+    auto enemyStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed, this, std::placeholders::_1);
+    _enemy->AddAgnosticObserver({Enemy::EventID::STARSHIP_DESTROYED, enemyStarshipsDestroyedCallback});
+
+    /// Agnostic observer to player starships destroyed event
+    auto playerStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed, this, std::placeholders::_1);
+    _player->AddAgnosticObserver({Player::EventID::STARSHIP_DESTROYED, playerStarshipsDestroyedCallback});
+}
+
+void GameScene::HandlePauseButtonInput(const sf::Event &event)
+{
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape && !_isPauseKeyPressed)
+    {
+        _buttonClickSound.play();
+        SetPaused(! IsPaused());
+        _isPauseKeyPressed = true;
+    }
+    else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape && _isPauseKeyPressed)
+    {
+        _isPauseKeyPressed = false;
+    }
+}
+
+void GameScene::HandlePauseMenuInput(sf::RenderWindow &window, sf::Event &event)
+{
+    _pauseResumeGameButton->EventHandler(window, event);
+    _pauseMainMenuButton->EventHandler(window, event);
+    _pauseExitGameButton->EventHandler(window, event);
+
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    {
+        if (_pauseResumeGameButton->IsClicked())
+        {
+            _buttonClickSound.play();
+            SetPaused(false);
+        }
+
+        if(_pauseMainMenuButton->IsClicked())
+        {
+            SetScene(ID::MENU);
+        }
+
+        if (_pauseExitGameButton->IsClicked())
+        {
+            window.close();
+        }
+    }
+}
+
 void GameScene::HandleViewScrollingKeyboardInput(const sf::Event &event)
 {
-    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::A)
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
     {
         _scrollViewLeft = true;
     }
-    else if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::A)
+    else if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::A)
     {
         _scrollViewLeft = false;
     }
-    if(event.type == sf::Event::KeyPressed and event.key.code == sf::Keyboard::D)
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::D)
     {
         _scrollViewRight = true;
     }
-    else  if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::D)
+    else  if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::D)
     {
         _scrollViewRight = false;
+    }
+}
+
+void GameScene::HandleStarshipDeploymentButtons(sf::RenderWindow &window, sf::Event &event)
+{
+    for (auto& deploymentButton : _starshipDeploymentButtons)
+    {
+        if(_starshipDeploymentManager->IsQueueFull())
+            continue;
+
+        deploymentButton->EventHandler(window, event);
+    }
+}
+
+void GameScene::HandleScrapCollectionUpgradeButton(sf::RenderWindow &window, sf::Event &event)
+{
+    _upgradePlayerScrapCollectionButton->EventHandler(window, event);
+
+    if(_upgradePlayerScrapCollectionButton->IsMouseOver())
+    {
+        UpdateScrapCollectionTooltip();
+        HandleScrapCollectionTooltipVisibilityInput(event);
+    }
+    else
+    {
+        _isScrapCollectionTooltipVisible = false;
+    }
+}
+
+void GameScene::UpdateScrapCollectionTooltip()
+{
+    _playerScrapCollectionTooltip->SetTitle("Scrap Collection Service (Lvl " + std::to_string(
+            _upgradePlayerScrapCollectionButton->GetUpgradeLevel()) + ")");
+
+    int scrapPerCollectionIndex = 0;
+    std::string scrapPerCollectionItemLabel = "SCRAP PER COLLECTION:";
+    std::string scrapPerCollectionItemValue = std::to_string(
+            _scrapCollectionServiceScrapIncreasePerUpgrade * _upgradePlayerScrapCollectionButton->GetUpgradeLevel());
+    _playerScrapCollectionTooltip->UpdateItem(scrapPerCollectionIndex, scrapPerCollectionItemLabel, scrapPerCollectionItemValue);
+}
+
+void GameScene::HandleScrapCollectionTooltipVisibilityInput(const sf::Event &event)
+{
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Right)
+    {
+        _isScrapCollectionTooltipVisible = true;
+    }
+    else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Right)
+    {
+        _isScrapCollectionTooltipVisible = false;
+    }
+}
+
+void GameScene::HandleStarshipPlacement(const sf::Event &event)
+{
+    for (int i = 0; i < NUM_OF_BUTTONS; ++i)
+    {
+        if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left && _starshipDeploymentButtons[i]->IsPlacingStarship())
+        {
+            for (int j = 0; j < _spacelanes.size(); ++j)
+            {
+                if(_spacelanes[j]->IsCursorHoveredOver())
+                {
+                    _player->SpendScrap(_starshipDeploymentButtons[i]->GetBuildCost());
+                    _player->SetScrapText("Scrap Metal: " + std::to_string(_player->GetCurrentScrapAmount()));
+
+                    _starshipDeploymentManager->AddStarshipToQueue(_starshipDeploymentButtons[i]->GetStarshipType(), j);
+
+                    if(! _starshipDeploymentManager->IsCurrentlyDeploying())
+                    {
+                        StartNextStarshipDeployment();
+                    }
+                }
+            }
+
+            _starshipDeploymentButtons[i]->ResetAfterStarshipPlacement();
+        }
     }
 }
 
@@ -992,6 +987,36 @@ void GameScene::StartNextStarshipDeployment()
     _starshipDeploymentManager->SetDeploymentBarText("Deploying " + _starshipDeploymentButtons[static_cast<int>(_starshipDeploymentManager->GetNextStarshipTypeInQueue())]->GetStarshipName() + "...");
     _starshipDeploymentManager->SetDeploymentTime(_starshipDeploymentButtons[_starshipDeploymentManager->GetNextStarshipTypeInQueue()]->GetStarshipDeploymentSpeed());
     _starshipDeploymentManager->SetDeploymentStatus(true);
+}
+
+void GameScene::HandleMusicTrackButtonsInput(const sf::Event &event)
+{
+    if(_musicIconButtons[_isMusicOn ? MUSIC_ON_BUTTON : MUSIC_OFF_BUTTON]->IsMouseOver())
+    {
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        {
+            _isMusicOn ? _gameMusic[_currentMusicTrackIndex].pause() : _gameMusic[_currentMusicTrackIndex].play();
+            _isMusicOn = !_isMusicOn;
+        }
+    }
+
+    if(_nextMusicTrackButton->IsMouseOver())
+    {
+        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+        {
+            _gameMusic[_currentMusicTrackIndex].stop();
+
+            if(_currentMusicTrackIndex < 3)
+            {
+                _currentMusicTrackIndex++;
+            }
+            else
+            {
+                _currentMusicTrackIndex = 0;
+            }
+            _gameMusic[_currentMusicTrackIndex].play();
+        }
+    }
 }
 
 void GameScene::UpdatePauseMenu(sf::RenderWindow &window)
@@ -1015,7 +1040,7 @@ void GameScene::UpdatePauseMenu(sf::RenderWindow &window)
         _pauseResumeGameButton->SetText(_pauseResumeGameButton->GetText().getString(), sf::Color::Cyan);
         _cursor.SetCursorType(Chilli::Cursor::HOVER);
     }
-    else if(not _pauseResumeGameButton->IsMouseOver())
+    else if(! _pauseResumeGameButton->IsMouseOver())
     {
         _pauseResumeGameButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
         _pauseResumeGameButton->SetText(_pauseResumeGameButton->GetText().getString(), Chilli::Colour::LIGHTBLUE);
@@ -1028,7 +1053,7 @@ void GameScene::UpdatePauseMenu(sf::RenderWindow &window)
         _pauseMainMenuButton->SetText(_pauseMainMenuButton->GetText().getString(), sf::Color::Cyan);
         _cursor.SetCursorType(Chilli::Cursor::HOVER);
     }
-    else if(not _pauseMainMenuButton->IsMouseOver())
+    else if(! _pauseMainMenuButton->IsMouseOver())
     {
         _pauseMainMenuButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
         _pauseMainMenuButton->SetText(_pauseMainMenuButton->GetText().getString(), Chilli::Colour::LIGHTBLUE);
@@ -1041,7 +1066,7 @@ void GameScene::UpdatePauseMenu(sf::RenderWindow &window)
         _pauseExitGameButton->SetText(_pauseExitGameButton->GetText().getString(), sf::Color::Red);
         _cursor.SetCursorType(Chilli::Cursor::HOVER);
     }
-    else if(not _pauseExitGameButton->IsMouseOver())
+    else if(! _pauseExitGameButton->IsMouseOver())
     {
         _pauseExitGameButton->SetPanelColour(DEFAULT_BUTTON_COLOUR);
         _pauseExitGameButton->SetText(_pauseExitGameButton->GetText().getString(), Chilli::Colour::LIGHTBLUE);
@@ -1088,23 +1113,23 @@ void GameScene::UpdateGameplayViewMovement(const sf::RenderWindow &window, const
     float viewportRightBoundary = _gameplayView.getCenter().x + _gameplayView.getSize().x / 2.0F;
 
     // Viewport movement conditions
-    bool isMouseNearLeftEdge = static_cast<float>(mousePos.x) <= mouseProximityToLeftWindowEdge and mousePos.x >= 0;
-    bool isMouseNearRightEdge = static_cast<float>(mousePos.x) >= mouseProximityToRightWindowEdge and mousePos.x < windowWidth;
+    bool isMouseNearLeftEdge = static_cast<float>(mousePos.x) <= mouseProximityToLeftWindowEdge && mousePos.x >= 0;
+    bool isMouseNearRightEdge = static_cast<float>(mousePos.x) >= mouseProximityToRightWindowEdge && mousePos.x < windowWidth;
     bool isViewportLeftEdgeWithinMothershipFocus = viewportLeftBoundary > 0;
     bool isViewportRightEdgeWithinRightSideOfEnemyMothership = viewportRightBoundary < _enemy->GetMothership()->GetPos().x + 60.0F;
-    bool isMouseYposWithinWindowBounds = static_cast<float>(mousePos.y) >= topOffset and static_cast<float>(mousePos.y) <= windowHeight - bottomOffset;
+    bool isMouseYposWithinWindowBounds = static_cast<float>(mousePos.y) >= topOffset && static_cast<float>(mousePos.y) <= windowHeight - bottomOffset;
 
-    if(viewportLeftBoundary >= 0 and _scrollViewLeft)
+    if(viewportLeftBoundary >= 0 && _scrollViewLeft)
     {
         _gameplayView.move(-VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
     }
-    else if(_scrollViewRight and isViewportRightEdgeWithinRightSideOfEnemyMothership)
+    else if(_scrollViewRight && isViewportRightEdgeWithinRightSideOfEnemyMothership)
     {
         _gameplayView.move(VIEW_SCROLL_SPEED * deltaTime.asSeconds(), 0.0F);
     }
 
     // For the left edge highlight
-    if(isMouseNearLeftEdge and isViewportLeftEdgeWithinMothershipFocus and isMouseYposWithinWindowBounds)
+    if(isMouseNearLeftEdge && isViewportLeftEdgeWithinMothershipFocus && isMouseYposWithinWindowBounds)
     {
         // Calculate movement speed
         float distanceToLeftEdge = mousePos.x;
@@ -1123,7 +1148,7 @@ void GameScene::UpdateGameplayViewMovement(const sf::RenderWindow &window, const
         _scrollZoneVisualiser.setFillColor(SCROLL_ZONE_HIGHLIGHT_COLOUR);
     }
     // For the right edge highlight
-    else if(isMouseNearRightEdge and isViewportRightEdgeWithinRightSideOfEnemyMothership and isMouseYposWithinWindowBounds)
+    else if(isMouseNearRightEdge && isViewportRightEdgeWithinRightSideOfEnemyMothership && isMouseYposWithinWindowBounds)
     {
         // Calculate movement speed
         float distanceToRightEdge = windowWidth - mousePos.x;
@@ -1235,7 +1260,7 @@ void GameScene::UpdateCursorType()
             }
         }
 
-        if(not buttonHoveredOver)
+        if(! buttonHoveredOver)
         {
             _cursor.SetCursorType(Chilli::Cursor::DEFAULT);
         }
@@ -1258,7 +1283,7 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
         {
             lane->Render(window);
         }
-        else if(not _isSpacelanesVisible)
+        else if(! _isSpacelanesVisible)
         {
             if(lane->IsCursorHoveredOver())
             {
@@ -1284,7 +1309,7 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
     {
         _playerScrapCollectionTooltip->Render(window);
     }
-    if(not _starshipDeploymentManager->IsQueueEmpty())
+    if(! _starshipDeploymentManager->IsQueueEmpty())
     {
         window.draw(_playerSpawnLaneIndicatorSprite);
     }
@@ -1343,7 +1368,7 @@ void GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete()
     _starshipDeploymentManager->RemoveFirstStarshipInQueue();
     _starshipDeploymentManager->ResetDeploymentBar();
 
-    if(not _starshipDeploymentManager->IsQueueEmpty())
+    if(! _starshipDeploymentManager->IsQueueEmpty())
     {
         StartNextStarshipDeployment();
     }

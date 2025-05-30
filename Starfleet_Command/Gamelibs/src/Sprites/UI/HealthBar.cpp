@@ -31,7 +31,7 @@ void HealthBar::Update(sf::RenderWindow& window, sf::Time deltaTime)
     {
         _healthBar.GetSprite().setColor(sf::Color::Green);
     }
-    else if(_health <= _maxHealth/2 and _health >= _maxHealth/3)
+    else if(_health <= _maxHealth/2 && _health >= _maxHealth/3)
     {
         _healthBar.GetSprite().setColor(sf::Color(255, 215, 0));
     }
