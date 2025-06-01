@@ -1,0 +1,1 @@
+#include "AIDirector/Rules/BehaviourRules/PlayerStarshipTypePreference_BehaviourRule.hpp"

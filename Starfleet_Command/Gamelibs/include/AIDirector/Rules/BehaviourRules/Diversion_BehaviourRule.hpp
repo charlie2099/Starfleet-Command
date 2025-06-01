@@ -3,6 +3,11 @@
 #include "IDirectorBehaviourRule.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 
+/**
+ * @brief Deploys starships into the lanes directly above and/or below that of the specified player starship type.
+ *
+ * Example: If starshipTypeToCounter is set to DREADNOUGHT, and the counterStarshipTypes contains LIGHTFIGHTER and HEAVYFIGHTER, the rule will deploy the latter mentioned starships into the lanes above and/or below lanes containing player dreadnoughts.
+ */
 class Diversion_BehaviourRule : public IDirectorBehaviourRule
 {
 public:

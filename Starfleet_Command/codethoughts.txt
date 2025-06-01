@@ -135,6 +135,9 @@ dangerous threats first (CounterAttack_BehaviourRule(THREAT UNIT, COUNTER UNITS)
 
 
 
+1. Increase transparency of selected deployment button when _isPlacing is true
+2. After deploying the starship and _isPlacing is set to false again, return the colour of the selected button to it's default colour
+
 
 
 __AI DIRECTOR BEHAVIOUR RULES__

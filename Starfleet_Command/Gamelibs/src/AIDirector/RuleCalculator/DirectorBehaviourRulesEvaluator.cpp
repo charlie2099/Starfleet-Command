@@ -15,14 +15,24 @@ DirectorBehaviourRulesEvaluator::DirectorBehaviourRulesEvaluator()
         {
             if(behaviourRule.contains("Enabled") && behaviourRule["Enabled"] == true)
             {
-                /// Parse SpawnWeakStarshipsAtStart rule
-                if(behaviourRule.contains("Type") && behaviourRule["Type"] == "SpawnWeakStarshipsAtStart_BehaviourRule")
+                /// Parse DeployStarshipsAtStart rule
+                if(behaviourRule.contains("Type") && behaviourRule["Type"] == "DeployStarshipsAtStart_BehaviourRule")
                 {
                     std::string ruleID = behaviourRule["Name"];
                     int rulePriority = behaviourRule["RulePriority"];
-                    float timePassedUntilSpawn = behaviourRule["TimePassedUntilSpawn"];
                     int maxEnemySpawnCount = behaviourRule["MaxEnemySpawnCount"];
-                    AddRule(std::make_shared<SpawnWeakStarshipsAtStart_BehaviourRule>(timePassedUntilSpawn, maxEnemySpawnCount, ruleID, rulePriority));
+                    StarshipFactory::STARSHIP_TYPE starshipTypeToSpawn = StarshipFactory::GetStarshipTypeFromString(behaviourRule["StarshipTypeToSpawn"]);
+                    AddRule(std::make_shared<DeployStarshipsAtStart_BehaviourRule>(maxEnemySpawnCount, starshipTypeToSpawn, ruleID, rulePriority));
+                }
+
+                /// Parse DeployRandomStarshipsPeriodically rule
+                if(behaviourRule.contains("Type") && behaviourRule["Type"] == "DeployRandomStarshipsPeriodically_BehaviourRule")
+                {
+                    std::string ruleID = behaviourRule["Name"];
+                    int rulePriority = behaviourRule["RulePriority"];
+                    int behaviourUpdateChecksToWait = behaviourRule["BehaviourUpdateChecksToWaitBeforeExecution"];
+                    StarshipFactory::STARSHIP_TYPE starshipTypeToSpawn = StarshipFactory::GetStarshipTypeFromString(behaviourRule["StarshipTypeToSpawn"]);
+                    AddRule(std::make_shared<DeployRandomStarshipsPeriodically_BehaviourRule>(starshipTypeToSpawn, behaviourUpdateChecksToWait, ruleID, rulePriority));
                 }
 
                 /// Parse PlayerSpacelaneDominance rule
@@ -31,8 +41,7 @@ DirectorBehaviourRulesEvaluator::DirectorBehaviourRulesEvaluator()
                     std::string ruleID = behaviourRule["Name"];
                     int rulePriority = behaviourRule["RulePriority"];
                     int maxPlayerStarshipsInLane = behaviourRule["MaxPlayerStarshipsInLane"];
-                    int maxSpawnAmount = behaviourRule["MaxSpawnAmount"];
-                    AddRule(std::make_shared<PlayerSpacelaneDominance_BehaviourRule>(maxPlayerStarshipsInLane, maxSpawnAmount, ruleID, rulePriority));
+                    AddRule(std::make_shared<PlayerSpacelaneDominance_BehaviourRule>(maxPlayerStarshipsInLane, ruleID, rulePriority));
                 }
 
                 /// Parse Diversion rule

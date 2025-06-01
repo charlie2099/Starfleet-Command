@@ -31,6 +31,9 @@ public:
     void SetMaxEnemyPopulation(int maxPopulation);
     void SetBehaviourUpdateRate(float seconds);
 
+    /// Getters
+    float GetBehaviourUpdateRate() { return _behaviourUpdateRate; }
+
     /// Getters - Game State Info
     float GetPerceivedIntensity() const  { return _perceivedIntensity; }
     float GetPeakIntensityThreshold() const { return PEAK_INTENSITY_MAX; }

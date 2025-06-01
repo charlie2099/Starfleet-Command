@@ -47,7 +47,7 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
         {
             _isNameVisible = true;
         }
-        _nameText.setFillColor(_isAffordable ? _teamColour : sf::Color {_teamColour.r, _teamColour.g, _teamColour.b, 100});
+        _nameText.setFillColor(_isAffordable ? _teamColour : INACTIVE_TEXT_COLOUR);
 
         _mouseOverTimer = _mouseOverClock.getElapsedTime().asSeconds();
         if(_mouseOverTimer >= _mouseOverCheckRate)
@@ -62,26 +62,19 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
         _isNameVisible = false;
     }
 
-    if (_button->IsMouseOver() && _isAffordable)
+    if(!_isPlacingStarship && _isAffordable && !_button->IsMouseOver())
     {
-        if (_isPlacingStarship)
-        {
-            _button->SetColour(SELECTED_BTN_COLOR);
-        }
-        else
-        {
-            _button->SetColour(HOVER_BTN_COLOR);
-        }
+        _button->SetColour(DEFAULT_BTN_COLOUR);
     }
 
-    if (! _button->IsMouseOver() && _isAffordable)
+    if(!_isPlacingStarship && !_isAffordable)
     {
-        _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 160 });
+        _button->SetColour(INACTIVE_BTN_COLOUR);
     }
 
-    if (! _button->IsMouseOver() && ! _isAffordable)
+    if(_button->IsMouseOver() && _isAffordable || _isPlacingStarship)
     {
-        _button->SetColour({_teamColour.r, _teamColour.g, _teamColour.b, 50});
+        _button->SetColour(HOVER_BTN_COLOUR);
     }
 
     auto mousePos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window

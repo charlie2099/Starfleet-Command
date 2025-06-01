@@ -30,23 +30,6 @@ bool Diversion_BehaviourRule::IsValid(AiDirector &director)
 
         _targetSpacelane = spacelane;
         return true;
-
-
-        /*int numOfPlayerUnitTypesInLane = director.GetNumOfPlayerUnitTypesInSpacelane(spacelane, _starshipTypeToCounter);
-        int numOfEnemyUnitTypesInLane = director.GetNumOfEnemyUnitTypesInSpacelane(spacelane, _counterStarshipTypes[0]);
-
-        bool isTargetShipsToCounter = numOfPlayerUnitTypesInLane > 0;
-        if(! isTargetShipsToCounter)
-        {
-            continue; // Skip to next iteration in loop
-        }
-
-        bool isNumOfEnemyUnitTypesLessThanPlayersInLane = numOfEnemyUnitTypesInLane < numOfPlayerUnitTypesInLane;
-        if(isNumOfEnemyUnitTypesLessThanPlayersInLane)
-        {
-            _targetSpacelane = spacelane;
-            return true;
-        }*/
     }
 
     return false;

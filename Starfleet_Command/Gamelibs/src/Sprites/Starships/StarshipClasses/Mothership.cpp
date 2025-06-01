@@ -2,12 +2,12 @@
 
 Mothership::Mothership(int spawnSpacelane, const std::string& starshipTypeName) : Starship(spawnSpacelane, starshipTypeName)
 {
-    _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_5.png");
+    _spriteComponent.LoadSprite("Resources/Textures/starfleet_ship_6.png");
     _spriteComponent.GetSprite().scale({0.5F, 0.5F});
     _projectileSize = Projectile::LARGE;
     _projectileColour = Projectile::BLUE;
     _assignedLaneIndex = spawnSpacelane;
-    _starshipIndex = 5;
+    _starshipIndex = 6;
 
     /// Change default origin to center
     sf::Vector2<float> centered_origin;

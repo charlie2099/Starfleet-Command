@@ -3,6 +3,11 @@
 #include "IDirectorBehaviourRule.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 
+/**
+ * @brief Counters a specified starship type that the player spawns with the specified starship(s) in response.
+ *
+ * Example: If starshipTypeToCounter is set to DREADNOUGHT, and the counterStarshipTypes contains LIGHTFIGHTER and HEAVYFIGHTER, the rule will deploy the latter mentioned starships in response to whenever the player deploys a dreadnought.
+ */
 class CounterAttack_BehaviourRule : public IDirectorBehaviourRule
 {
 public:

@@ -53,8 +53,8 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/AIDirector/RuleCalculator/DirectorBehaviourRulesEvaluator.hpp
         Gamelibs/src/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.cpp
         Gamelibs/include/AIDirector/RuleEngine/DirectorBehaviourRuleEngine.hpp
-        Gamelibs/src/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStart_BehaviourRule.cpp
-        Gamelibs/include/AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStart_BehaviourRule.hpp
+        Gamelibs/src/AIDirector/Rules/BehaviourRules/DeployStarshipsAtStart_BehaviourRule.cpp
+        Gamelibs/include/AIDirector/Rules/BehaviourRules/DeployStarshipsAtStart_BehaviourRule.hpp
         Gamelibs/src/AIDirector/Rules/IntensityRules/EnemyStarshipsInPlay_IntensityRule.cpp
         Gamelibs/include/AIDirector/Rules/IntensityRules/EnemyStarshipsInPlay_IntensityRule.hpp
         Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerStarshipsInPlay_IntensityRule.cpp
@@ -83,6 +83,14 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/Utility/StringFormatter.hpp
         Gamelibs/src/AIDirector/Rules/BehaviourRules/Diversion_BehaviourRule.cpp
         Gamelibs/include/AIDirector/Rules/BehaviourRules/Diversion_BehaviourRule.hpp
+        Gamelibs/src/AIDirector/Rules/BehaviourRules/DeployRandomStarshipsPeriodically_BehaviourRule.cpp
+        Gamelibs/include/AIDirector/Rules/BehaviourRules/DeployRandomStarshipsPeriodically_BehaviourRule.hpp
+        Gamelibs/src/AIDirector/Rules/BehaviourRules/PlayerSpacelanePreference_BehaviourRule.cpp
+        Gamelibs/include/AIDirector/Rules/BehaviourRules/PlayerSpacelanePreference_BehaviourRule.hpp
+        Gamelibs/src/AIDirector/Rules/BehaviourRules/PlayerStarshipTypePreference_BehaviourRule.cpp
+        Gamelibs/include/AIDirector/Rules/BehaviourRules/PlayerStarshipTypePreference_BehaviourRule.hpp
+        Gamelibs/src/Sprites/Starships/StarshipClasses/Reaper.cpp
+        Gamelibs/include/Sprites/Starships/StarshipClasses/Reaper.hpp
 )
 
 include_directories(Gamelibs/include)

@@ -6,6 +6,7 @@
 #include "Sprites/Starships/StarshipClasses/SupportFrigate.hpp"
 #include "Sprites/Starships/StarshipClasses/Dreadnought.hpp"
 #include "Sprites/Starships/StarshipClasses/Battleship.hpp"
+#include "Sprites/Starships/StarshipClasses/Reaper.hpp"
 #include "Sprites/Starships/StarshipClasses/Mothership.hpp"
 #include <memory>
 
@@ -19,6 +20,7 @@ public:
         SUPPORT_FRIGATE,
         DREADNOUGHT,
         BATTLESHIP,
+        REAPER,
         MOTHERSHIP,
         ENUM_COUNT
     };

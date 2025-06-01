@@ -50,8 +50,10 @@ private:
     float _mouseOverTimer = 0.0F;
     float _mouseOverCheckRate = 1.0F;
 
-    const sf::Color HOVER_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 255};
-    const sf::Color SELECTED_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 175};
+    const sf::Color HOVER_BTN_COLOUR = {_teamColour.r, _teamColour.g, _teamColour.b, 255};
+    const sf::Color DEFAULT_BTN_COLOUR = {_teamColour.r, _teamColour.g, _teamColour.b, 160};
+    const sf::Color INACTIVE_BTN_COLOUR = {_teamColour.r, _teamColour.g, _teamColour.b, 50};
+    const sf::Color INACTIVE_TEXT_COLOUR = {_teamColour.r, _teamColour.g, _teamColour.b, 100};
 };
 
 #endif //STARFLEET_COMMAND_STARSHIPDEPLOYMENTBUTTON_HPP

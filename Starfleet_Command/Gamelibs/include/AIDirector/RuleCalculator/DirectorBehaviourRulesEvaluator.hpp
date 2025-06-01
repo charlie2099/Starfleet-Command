@@ -1,7 +1,8 @@
 #ifndef STARFLEET_COMMAND_DIRECTORBEHAVIOURRULESEVALUATOR_HPP
 #define STARFLEET_COMMAND_DIRECTORBEHAVIOURRULESEVALUATOR_HPP
 #include "AIDirector/RuleEngine/DirectorBehaviourRuleEngine.hpp"
-#include "AIDirector/Rules/BehaviourRules/SpawnWeakStarshipsAtStart_BehaviourRule.hpp"
+#include "AIDirector/Rules/BehaviourRules/DeployStarshipsAtStart_BehaviourRule.hpp"
+#include "AIDirector/Rules/BehaviourRules/DeployRandomStarshipsPeriodically_BehaviourRule.hpp."
 #include "AIDirector/Rules/BehaviourRules/CounterAttack_BehaviourRule.hpp"
 #include "AIDirector/Rules/BehaviourRules/PlayerSpacelaneDominance_BehaviourRule.hpp"
 #include "AIDirector/Rules/BehaviourRules/Diversion_BehaviourRule.hpp"
