@@ -49,6 +49,9 @@ void ProgressBar::Update(sf::RenderWindow& window, sf::Time time)
         _insideBarSpriteComponent.SetPos({_innerPosition.x, _innerPosition.y});
         _insideBarSpriteComponent.GetSprite().setScale(progress, 0.125f);
 
+//Possible way to handle spawning too close?
+//check if too close while checking if time is complete
+//if too close  don't go through with it but check again in less time
         if(_elapsedTime >= _timeToCompleteTask)
         {
             _insideBarSpriteComponent.GetSprite().setScale(1.175F, 0.125F);

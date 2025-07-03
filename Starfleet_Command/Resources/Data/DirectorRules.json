@@ -70,6 +70,14 @@
       "StarshipsToCounterWith" : ["LIGHTFIGHTER", "LIGHTFIGHTER"]
     },
     {
+      "Name" : "Battleship Diversion",
+      "Type" : "Diversion_BehaviourRule",
+      "Enabled" : true,
+      "RulePriority" : 1,
+      "StarshipToCounter" : "BATTLESHIP",
+      "StarshipsToCounterWith" : ["HEAVYFIGHTER", "LIGHTFIGHTER"]
+    },
+    {
       "Name" : "Light Fighter CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
@@ -108,6 +116,14 @@
       "RulePriority" : 0,
       "StarshipToCounter": "DREADNOUGHT",
       "StarshipsToCounterWith": ["DREADNOUGHT", "SUPPORT_FRIGATE"]
+    },
+    {
+      "Name" : "Heavy Fighter CounterAttack 2",
+      "Type" : "CounterAttack_BehaviourRule",
+      "Enabled" : true,
+      "RulePriority" : 2,
+      "StarshipToCounter" : "HEAVYFIGHTER",
+      "StarshipsToCounterWith" : ["HEAVYFIGHTER", "SUPPORT_FRIGATE"]
     }
   ]
 }

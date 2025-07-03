@@ -5,7 +5,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-
+#include "Utility/RNG.hpp"
 class AiDirector;
 
 class DirectorBehaviourRuleEngine
@@ -17,6 +17,7 @@ public:
 private:
     std::vector<std::shared_ptr<IDirectorBehaviourRule>> _rules;
     int _numOfRulesSuccessfullyExecuted = 0;
+    RNG rnd = RNG(0, 5);
 };
 
 #endif //STARFLEET_COMMAND_DIRECTORBEHAVIOURRULEENGINE_HPP

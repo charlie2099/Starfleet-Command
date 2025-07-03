@@ -3,7 +3,7 @@
     "Enemy Colour": "GREEN",
     "Fullscreen Mode": "true",
     "Minimap": "true",
-    "Music": "true",
+    "Music": "false",
     "Player Colour": "PURPLE",
     "Spacelanes": "true"
 }
