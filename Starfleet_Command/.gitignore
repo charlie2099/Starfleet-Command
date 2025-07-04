@@ -1,0 +1,251 @@
+# =============================================
+# C++ SFML Project .gitignore for CLion
+# =============================================
+
+# Build Directories
+cmake-build-*/
+cmake-build-debug/
+build/
+Build/
+BUILD/
+out/
+
+# CMake Generated Files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.make
+CTestTestfile.cmake
+install_manifest.txt
+
+# Compiled Object Files
+*.o
+*.obj
+*.elf
+*.ko
+*.mod*
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug Files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Static Analysis
+*.sarif
+
+# =============================================
+# CLion IDE Files
+# =============================================
+
+# CLion
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# User-specific files
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# Generated files
+.idea/**/contentModel.xml
+
+# Sensitive or high-churn files
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+
+# =============================================
+# Compiler and Toolchain Specific
+# =============================================
+
+# MinGW
+*.o
+*.exe
+*.dll
+*.a
+
+# MSVC
+*.vcxproj*
+*.sln
+*.user
+*.suo
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+Debug/
+Release/
+x64/
+x86/
+Win32/
+.vs/
+
+# GCC
+*.gcda
+*.gcno
+*.gcov
+
+# Clang
+*.profdata
+*.profraw
+
+# =============================================
+# SFML Specific (if building SFML from source)
+# =============================================
+
+# SFML build artifacts (if building SFML yourself)
+sfml-build/
+SFML-build/
+
+# =============================================
+# Package Managers
+# =============================================
+
+# vcpkg
+vcpkg_installed/
+.vcpkg-root
+
+# Conan
+conandata.yml
+conanfile.txt.orig
+conanbuildinfo.*
+conaninfo.txt
+
+# =============================================
+# Version Control
+# =============================================
+
+# Git
+*.orig
+*.rej
+*.patch
+
+# SVN
+.svn/
+
+# =============================================
+# Operating System
+# =============================================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# =============================================
+# Logs and Temporary Files
+# =============================================
+
+# Logs
+*.log
+logs/
+*.tmp
+*.temp
+
+# Crash reports
+crash_*.txt
+crash_*.dmp
+
+# =============================================
+# Documentation Build
+# =============================================
+
+# Doxygen
+html/
+latex/
+
+# =============================================
+# Testing
+# =============================================
+
+# Google Test
+gtest/
+googletest/
+
+# Catch2
+catch2/
+
+# Test results
+test_results/
+*.xml
+
+# =============================================
+# Assets (Uncomment if you want to ignore)
+# =============================================
+
+# Uncomment these if you don't want to track large assets
+# *.png
+# *.jpg
+# *.jpeg
+# *.gif
+# *.bmp
+# *.tga
+# *.wav
+# *.mp3
+# *.ogg
+# *.flac
+# *.ttf
+# *.otf
+
+# =============================================
+# Custom Project Files (Add your own)
+# =============================================
+
+# Add any project-specific files to ignore here
