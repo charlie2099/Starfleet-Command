@@ -91,6 +91,11 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/include/AIDirector/Rules/BehaviourRules/PlayerStarshipTypePreference_BehaviourRule.hpp
         Gamelibs/src/Sprites/Starships/StarshipClasses/Reaper.cpp
         Gamelibs/include/Sprites/Starships/StarshipClasses/Reaper.hpp
+        Gamelibs/EffectManager.cpp
+        Gamelibs/EffectManager.hpp
+        Gamelibs/IEffect.hpp
+        Gamelibs/ExplosionEffect.cpp
+        Gamelibs/ExplosionEffect.hpp
 )
 
 include_directories(Gamelibs/include)

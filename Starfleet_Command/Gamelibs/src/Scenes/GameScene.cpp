@@ -83,6 +83,9 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     _aiDirector->Update(window, deltaTime);
 
 
+    _effectManager.Update(window, deltaTime);
+
+
     _upgradePlayerScrapCollectionButton->SetPos({_starshipDeploymentButtons[4]->GetPos().x + _starshipDeploymentButtons[4]->GetBounds().width + 96.0F, _starshipDeploymentButtons[0]->GetPos().y});
     _upgradePlayerScrapCollectionButton->SetAffordable(_player->GetCurrentScrapAmount() >= _upgradePlayerScrapCollectionButton->GetUpgradeCost()); // NOTE: Unsure about this
     _upgradePlayerScrapCollectionButton->Update(window, deltaTime);
@@ -435,6 +438,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 if(playerStarship->IsInSameLaneAs(enemyStarship) and
                     playerStarship->IsEnemyStarshipAhead(enemyStarship))
                 {
+                    // TODO: Decelerate gradually before coming to a halt
                     playerStarship->SetSpeed(0);
                 }
             }
@@ -494,29 +498,6 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
     CheckGameEndConditions();
     //UpdateMusicButtons(window);
     UpdateCursorType();
-}
-
-void GameScene::UpdateStarshipDeploymentButtons(sf::RenderWindow &window, sf::Time &deltaTime)
-{
-    for (int i = 0; i < NUM_OF_BUTTONS; ++i)
-    {
-        auto column_spacing = 5.0F;
-        auto xPos = _mothershipStatusDisplay->GetPlayerMothershipTextPos().x + (i * (_starshipDeploymentButtons[0]->GetBounds().width + column_spacing));
-        auto yPos = _mothershipStatusDisplay->GetPlayerMothershipTextPos().y + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().height * 3.75F;
-        _starshipDeploymentButtons[i]->SetPos({xPos, yPos});
-        _starshipDeploymentButtons[i]->SetAffordable(_player->GetCurrentScrapAmount() >= _starshipDeploymentButtons[i]->GetBuildCost()); // NOTE: Unsure about this
-        _starshipDeploymentButtons[i]->Update(window, deltaTime);
-
-        if(_starshipDeploymentManager->IsQueueFull())
-        {
-            _starshipDeploymentButtons[i]->SetColour({_player->GetTeamColour().r, _player->GetTeamColour().g, _player->GetTeamColour().b, 50});
-        }
-    }
-}
-
-void GameScene::UpdateCursorPos(sf::RenderWindow &window, sf::Time &deltaTime)
-{
-    _cursor.SetCursorPos(window, _gameplayView);
 }
 
 void GameScene::Render(sf::RenderWindow& window)
@@ -1186,6 +1167,29 @@ void GameScene::UpdateSpaceLanePositionsAndMouseHoverColour(sf::RenderWindow &wi
     }
 }
 
+void GameScene::UpdateStarshipDeploymentButtons(sf::RenderWindow &window, sf::Time &deltaTime)
+{
+    for (int i = 0; i < NUM_OF_BUTTONS; ++i)
+    {
+        auto column_spacing = 5.0F;
+        auto xPos = _mothershipStatusDisplay->GetPlayerMothershipTextPos().x + (i * (_starshipDeploymentButtons[0]->GetBounds().width + column_spacing));
+        auto yPos = _mothershipStatusDisplay->GetPlayerMothershipTextPos().y + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().height * 3.75F;
+        _starshipDeploymentButtons[i]->SetPos({xPos, yPos});
+        _starshipDeploymentButtons[i]->SetAffordable(_player->GetCurrentScrapAmount() >= _starshipDeploymentButtons[i]->GetBuildCost()); // NOTE: Unsure about this
+        _starshipDeploymentButtons[i]->Update(window, deltaTime);
+
+        if(_starshipDeploymentManager->IsQueueFull())
+        {
+            _starshipDeploymentButtons[i]->SetColour({_player->GetTeamColour().r, _player->GetTeamColour().g, _player->GetTeamColour().b, 50});
+        }
+    }
+}
+
+void GameScene::UpdateCursorPos(sf::RenderWindow &window, sf::Time &deltaTime)
+{
+    _cursor.SetCursorPos(window, _gameplayView);
+}
+
 void GameScene::CheckGameEndConditions()
 {
     if (_enemy->GetMothership()->GetHealth() <= 0)
@@ -1321,6 +1325,7 @@ void GameScene::RenderGameplayViewSprites(sf::RenderWindow &window)
         _nextMusicTrackButton->Render(window);
     }*/
     _rewardProgressBar.Render(window);
+    _effectManager.Render(window);
 }
 
 void GameScene::RenderMinimapSprites(sf::RenderWindow &window)
@@ -1335,6 +1340,7 @@ void GameScene::RenderMinimapSprites(sf::RenderWindow &window)
         {
             lane->Render(window);
         }
+        _effectManager.Render(window);
     }
 }
 
@@ -1389,6 +1395,8 @@ void GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData)
             playerStarship->SetSpeed(playerStarship->GetStartingSpeed());
         }
     }
+
+    _effectManager.AddExplosion(destroyedEnemyStarshipData.DeathLocation);
 }
 
 void GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData)
@@ -1406,8 +1414,6 @@ void GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData)
             enemyStarship->SetSpeed(enemyStarship->GetStartingSpeed());
         }
     }
+
+    _effectManager.AddExplosion(destroyedPlayerStarshipData.DeathLocation);
 }
-
-
-
-

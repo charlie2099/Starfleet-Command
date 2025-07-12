@@ -42,7 +42,7 @@
       "Name" : "Initial Assault",
       "Type" : "DeployStarshipsAtStart_BehaviourRule",
       "Enabled" : true,
-      "RulePriority" : 2,
+      "RulePriority" : 0,
       "MaxEnemySpawnCount" : 3,
       "StarshipTypeToSpawn" : "LIGHTFIGHTER"
     },
@@ -89,7 +89,7 @@
       "Name" : "Support Frigate CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
-      "RulePriority" :0,
+      "RulePriority" : 0,
       "StarshipToCounter" : "SUPPORT_FRIGATE",
       "StarshipsToCounterWith" : ["HEAVYFIGHTER", "HEAVYFIGHTER"]
     },

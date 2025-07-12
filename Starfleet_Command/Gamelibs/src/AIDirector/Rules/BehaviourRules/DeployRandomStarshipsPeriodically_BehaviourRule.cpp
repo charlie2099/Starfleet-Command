@@ -4,11 +4,14 @@
 DeployRandomStarshipsPeriodically_BehaviourRule::DeployRandomStarshipsPeriodically_BehaviourRule(StarshipFactory::STARSHIP_TYPE starshipType, int behaviourUpdateChecksToWait, std::string ruleID, int rulePriority)
 : _starshipType(starshipType), _behaviourUpdateChecksToWait(behaviourUpdateChecksToWait), _id(std::move(ruleID)), _priority(rulePriority)
 {
-
 }
 
 bool DeployRandomStarshipsPeriodically_BehaviourRule::IsValid(AiDirector &director)
 {
+    if(_nextSpawnTime == 0)
+    {
+        _nextSpawnTime += (director.GetBehaviourUpdateRate() * _behaviourUpdateChecksToWait);
+    }
     return director.GetElapsedGameTime() >= _nextSpawnTime;
 }
 

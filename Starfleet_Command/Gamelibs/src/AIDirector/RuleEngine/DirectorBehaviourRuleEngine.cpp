@@ -5,10 +5,10 @@ DirectorBehaviourRuleEngine::DirectorBehaviourRuleEngine(const std::vector<std::
 
 void DirectorBehaviourRuleEngine::EvaluateBehaviourOutput(AiDirector &director)
 {
-    auto sortedRulesByPriority = _rules;
-    std::sort(sortedRulesByPriority.begin(), sortedRulesByPriority.end(), [](const std::shared_ptr<IDirectorBehaviourRule>& a, const std::shared_ptr<IDirectorBehaviourRule>& b){ return a->GetPriority() < b->GetPriority(); });
+    auto sortedRulesByHighestPriorityValueFirst = _rules;
+    std::sort(sortedRulesByHighestPriorityValueFirst.begin(), sortedRulesByHighestPriorityValueFirst.end(), [](const std::shared_ptr<IDirectorBehaviourRule>& a, const std::shared_ptr<IDirectorBehaviourRule>& b){ return a->GetPriority() > b->GetPriority(); });
 
-    for (auto & rule : sortedRulesByPriority)
+    for (auto & rule : sortedRulesByHighestPriorityValueFirst)
     {
         if(rule->IsValid(director))
         {

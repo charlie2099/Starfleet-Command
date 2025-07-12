@@ -24,6 +24,7 @@
 #include "AIDirector/AiDirector.hpp"
 #include "Sprites/UI/GUI/ScrapCollectionUpgradeButton.hpp"
 #include "Sprites/UI/InfoTooltip.hpp"
+#include "../../EffectManager.hpp"
 
 class GameScene : public Scene
 {
@@ -79,6 +80,8 @@ private:
     void CheckGameEndConditions();
     void UpdateMusicButtons(sf::RenderWindow &window);
     void UpdateCursorType();
+    void UpdateCursorPos(sf::RenderWindow &window, sf::Time &deltaTime);
+    void UpdateStarshipDeploymentButtons(sf::RenderWindow &window, sf::Time &deltaTime);
 
     /// Render functions
     void RenderGameplayViewSprites(sf::RenderWindow &window);
@@ -203,9 +206,8 @@ private:
     /// Reward System
     ProgressBar _rewardProgressBar;
 
-    void UpdateCursorPos(sf::RenderWindow &window, sf::Time &deltaTime);
-
-    void UpdateStarshipDeploymentButtons(sf::RenderWindow &window, sf::Time &deltaTime);
+    /// Visual Effects
+    EffectManager _effectManager;
 };
 
 #endif //STARFLEET_COMMAND_GAMESCENE_HPP
