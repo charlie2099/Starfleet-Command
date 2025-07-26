@@ -1,5 +1,7 @@
 #include "Sprites/Player/Player.hpp"
 
+#include "Utility/RNG.hpp"
+
 Player::Player(int startingScrapAmount, sf::Color teamColour)
 {
     _scrapMetalManager = std::make_unique<ScrapMetalManager>(Chilli::Colour::GRAY, teamColour, startingScrapAmount);
@@ -30,7 +32,9 @@ void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
         {
             StarshipDestroyedData destroyedStarshipData;
             destroyedStarshipData.DeathLocation = starships[i]->GetPos();
-            destroyedStarshipData.BuildCost = starships[i]->GetBuildCost();
+            RNG _starshipScrapRNG {static_cast<int>(starships[i]->GetBuildCost() * 0.5F), static_cast<int>(starships[i]->GetBuildCost() * 0.8F)};
+            int randScrap =  _starshipScrapRNG.GenerateNumber();
+            destroyedStarshipData.BuildCost = randScrap;
             InvokeAgnosticEvent(STARSHIP_DESTROYED, destroyedStarshipData);
             starships.erase(starships.begin() + i);
         }

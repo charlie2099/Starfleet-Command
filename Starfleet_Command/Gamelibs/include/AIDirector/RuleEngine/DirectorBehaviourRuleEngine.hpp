@@ -5,6 +5,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include "Utility/RNG.hpp"
 
 class AiDirector;
 
@@ -15,6 +16,7 @@ public:
     void EvaluateBehaviourOutput(AiDirector& director);
 
 private:
+    RNG rnd = RNG(0, 7);
     std::vector<std::shared_ptr<IDirectorBehaviourRule>> _rules;
     int _numOfRulesSuccessfullyExecuted = 0;
 };

@@ -10,7 +10,7 @@ DeployStarshipsAtStart_BehaviourRule::DeployStarshipsAtStart_BehaviourRule(int m
 
 bool DeployStarshipsAtStart_BehaviourRule::IsValid(AiDirector &director)
 {
-    return !_hasRuleBeenExecuted;
+    return _hasRuleBeenExecuted == false;
 }
 
 void DeployStarshipsAtStart_BehaviourRule::Execute(AiDirector &director)
