@@ -12,8 +12,14 @@ void DirectorBehaviourRuleEngine::EvaluateBehaviourOutput(AiDirector &director)
 
     for (auto & rule : sortedRulesByHighestPriorityValueFirst)
     {
+        if (!rule->IsValid(director))
+        {
+            continue;
+        }
 
-        if (rule->GetID() == "Initial Assault") {
+
+        if (rule->GetID() == "Initial Assault")
+        {
             rule->Execute(director);
             std::cout << rule->GetID() << " rule was executed successfully! | Rule Priority: " << rule->GetPriority() << " | Total Rules Executed So Far: " << ++_numOfRulesSuccessfullyExecuted << std::endl;
             break;

@@ -43,7 +43,7 @@ void PlayerSpacelaneDominance_BehaviourRule::Execute(AiDirector &director)
         {
             for (int _validLane : _validLanes)
             {
-                director.QueueEnemy(StarshipFactory::LIGHTFIGHTER, _validLane);
+                director.QueueEnemy(StarshipFactory::HEAVYFIGHTER, _validLane);
             }
         }
         break;
@@ -59,7 +59,7 @@ void PlayerSpacelaneDominance_BehaviourRule::Execute(AiDirector &director)
         {
             for (int _validLane : _validLanes)
             {
-                director.QueueEnemy(StarshipFactory::LIGHTFIGHTER, _validLane);
+                director.QueueEnemy(StarshipFactory::SUPPORT_FRIGATE, _validLane);
             }
         }
         break;
