@@ -15,16 +15,28 @@ bool GameScene::Init()
     InitGameplayView();
     InitPauseMenu();
     InitAiDirector();
+    std::cout << "ai" << std::endl;
     InitStarshipDeploymentManager();
+    std::cout << "deploy" << std::endl;
     InitStarshipDeploymentButtons();
+    std::cout << "dep button" << std::endl;
     InitMothershipStatusDisplay();
+    std::cout << "status" << std::endl;
     InitScrapCollectionServiceUpgradeButton();
+    std::cout << "collection button" << std::endl;
     InitStarshipDeploymentButtonTooltip();
+    std::cout << "ship tips" << std::endl;
     InitPlayerScrapCollectionTooltip();
+    std::cout << "scrap tips" << std::endl;
     InitPlayerSpawnLaneIndicator();
+    std::cout << "indicator" << std::endl;
     InitMinimapView();
+    std::cout << "mini map" << std::endl;
     InitMusic();
+    std::cout << "music" << std::endl;
     InitCursor();
+    std::cout << "cursor" << std::endl;
+
 
     // NOTE: InitRewardProgressBar() OR // TODO: Integrate into a wider RewardSystem class
     _rewardProgressBar.SetColour(_player->GetTeamColour());
@@ -352,7 +364,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& enemyBullet = enemyStarship->GetProjectile()[k]->GetSpriteComponent();
                 if(playerStarship->CollidesWith(enemyBullet.GetSprite().getGlobalBounds()))
                 {
-                    RNG _starshipDamageRNG {static_cast<int>(enemyStarship->GetMaxDamage() * 0.9F), static_cast<int>(enemyStarship->GetMaxDamage())};
+                    RNG _starshipDamageRNG {static_cast<int>(enemyStarship->GetMaxDamage() * 0.85F), static_cast<int>(enemyStarship->GetMaxDamage())};
                     int randDamage = _starshipDamageRNG.GenerateNumber();
                     int scaledDamage = randDamage * enemyStarship->GetDamageScaleFactor();
                     playerStarship->TakeDamage(scaledDamage);
@@ -383,10 +395,14 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         auto& friendlyProjectile = supportFrigate->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
-                            RNG _starshipHealRNG {static_cast<int>(supportFrigate->GetMaxHeal() * 0.75F), static_cast<int>(supportFrigate->GetMaxHeal())};
-                            int randHealAmount = _starshipHealRNG.GenerateNumber();
-                            friendlyStarship->ReplenishHealth(randHealAmount);
-                            supportFrigate->DestroyProjectile(k);
+                            RNG tf {0,2};
+                            if (tf.GenerateNumber() == 1)
+                            {
+                                RNG _starshipHealRNG {static_cast<int>(supportFrigate->GetMaxHeal() * 0.5F), static_cast<int>(supportFrigate->GetMaxHeal())};
+                                int randHealAmount = _starshipHealRNG.GenerateNumber();
+                                friendlyStarship->ReplenishHealth(randHealAmount);
+                                supportFrigate->DestroyProjectile(k);
+                            }
                         }
                     }
                 }
@@ -449,7 +465,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& playerBulletSprite = playerStarship->GetProjectile()[k]->GetSpriteComponent().GetSprite();
                 if(enemyStarship->CollidesWith(playerBulletSprite.getGlobalBounds()))
                 {
-                    RNG _starshipDamageRNG {static_cast<int>(playerStarship->GetMaxDamage() * 0.9F), static_cast<int>(playerStarship->GetMaxDamage())};
+                    RNG _starshipDamageRNG {static_cast<int>(playerStarship->GetMaxDamage() * 0.85F), static_cast<int>(playerStarship->GetMaxDamage())};
                     int randDamage =  _starshipDamageRNG.GenerateNumber();
                     int scaledDamage = randDamage * playerStarship->GetDamageScaleFactor();
                     enemyStarship->TakeDamage(scaledDamage);

@@ -24,8 +24,8 @@ private:
     std::mt19937 _randomGenerator;
     std::uniform_int_distribution<int> _uniformIntDistribution;
     std::uniform_real_distribution<double> _uniformRealDistribution;
-    double _perfectRollChance = 0.10; // 10%
-    double _commonRollChance = 0.60; // 60%
+    double _perfectRollChance = 0.15; // 10%
+    double _commonRollChance = 0.55; // 60%
     //const double POOR_ROLL_CHANCE = 1.00 - (_perfectRollChance + _commonRollChance); // 30%
     double _perfectRollThreshold = _perfectRollChance;
     double _commonRollThreshold = _perfectRollChance + _commonRollChance;

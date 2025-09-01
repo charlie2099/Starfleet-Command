@@ -12,10 +12,6 @@ void DirectorBehaviourRuleEngine::EvaluateBehaviourOutput(AiDirector &director)
 
     for (auto & rule : sortedRulesByHighestPriorityValueFirst)
     {
-        if (!rule->IsValid(director))
-        {
-            continue;
-        }
 
         if (rule->GetID() == "Initial Assault") {
             rule->Execute(director);

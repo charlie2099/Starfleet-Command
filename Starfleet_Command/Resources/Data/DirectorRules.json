@@ -42,15 +42,15 @@
       "Name" : "Initial Assault",
       "Type" : "DeployStarshipsAtStart_BehaviourRule",
       "Enabled" : true,
-      "RulePriority" : 5,
-      "MaxEnemySpawnCount" : 3,
+      "RulePriority" : 3,
+      "MaxEnemySpawnCount" : 4,
       "StarshipTypeToSpawn" : "LIGHTFIGHTER"
     },
     {
       "Name" : "Deploy LightFighter Every 6 Behaviour Update Checks",
       "Type" : "DeployRandomStarshipsPeriodically_BehaviourRule",
       "Enabled" : true,
-      "RulePriority" : 3,
+      "RulePriority" : 2,
       "BehaviourUpdateChecksToWaitBeforeExecution" : 6,
       "StarshipTypeToSpawn" : "LIGHTFIGHTER"
     },
@@ -63,11 +63,11 @@
       "StarshipTypeToSpawn" : "HEAVYFIGHTER"
     },
     {
-      "Name" : "Deploy Battleship Every 30 Behaviour Update Checks",
+      "Name" : "Deploy Battleship Every 24 Behaviour Update Checks",
       "Type" : "DeployRandomStarshipsPeriodically_BehaviourRule",
       "Enabled" : true,
       "RulePriority" : 1,
-      "BehaviourUpdateChecksToWaitBeforeExecution" : 30,
+      "BehaviourUpdateChecksToWaitBeforeExecution" : 24,
       "StarshipTypeToSpawn" : "BATTLESHIP"
     },
     {
@@ -97,7 +97,7 @@
       "Name" : "Light Fighter CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
-      "RulePriority" : 4,
+      "RulePriority" : 3,
       "StarshipToCounter" : "LIGHTFIGHTER",
       "StarshipsToCounterWith" : ["LIGHTFIGHTER"]
     },
@@ -105,7 +105,7 @@
       "Name" : "Heavy Fighter CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
-      "RulePriority" : 4,
+      "RulePriority" : 3,
       "StarshipToCounter" : "HEAVYFIGHTER",
       "StarshipsToCounterWith" : ["HEAVYFIGHTER", "LIGHTFIGHTER"]
     },
@@ -113,7 +113,7 @@
       "Name" : "Heavy Fighter CounterAttack 2",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
-      "RulePriority" : 4,
+      "RulePriority" : 3,
       "StarshipToCounter" : "HEAVYFIGHTER",
       "StarshipsToCounterWith" : ["HEAVYFIGHTER", "HEAVYFIGHTER", "SUPPORT_FRIGATE"]
     },
@@ -137,7 +137,7 @@
       "Name" : "Dreadnought CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
-      "RulePriority" : 2,
+      "RulePriority" : 3,
       "StarshipToCounter": "DREADNOUGHT",
       "StarshipsToCounterWith": ["DREADNOUGHT", "SUPPORT_FRIGATE"]
     }

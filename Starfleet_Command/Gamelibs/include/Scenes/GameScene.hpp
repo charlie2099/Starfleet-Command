@@ -21,6 +21,7 @@
 #include <random>
 #include <chrono>
 #include "queue"
+#include "utility"
 #include "AIDirector/AiDirector.hpp"
 #include "Sprites/UI/GUI/ScrapCollectionUpgradeButton.hpp"
 #include "Sprites/UI/InfoTooltip.hpp"

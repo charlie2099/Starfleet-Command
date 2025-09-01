@@ -62,6 +62,7 @@ void CounterAttack_BehaviourRule::Execute(AiDirector &director)
             int shipsToSpawn = std::max(0, static_cast<int>(_counterStarshipTypes.size() * 0.75F));
             if (shipsToSpawn == 0)
             {
+                std::cout << "HUH" << std::endl;
                 shipsToSpawn = 1;
             }
             for (int i = 0; i < shipsToSpawn; ++i)
