@@ -33,6 +33,12 @@
       "Enabled" : true,
       "ScrapAmount" : 5000,
       "IntensityRating" : 10.0
+    },
+    {
+      "Name" : "PlayerLaneDominated",
+      "Type" : "PlayerLaneDominated_IntensityRule",
+      "Enabled" : true,
+      "IntensityRating" : 30.0
     }
   ],
 
@@ -63,11 +69,11 @@
       "StarshipTypeToSpawn" : "HEAVYFIGHTER"
     },
     {
-      "Name" : "Deploy Battleship Every 24 Behaviour Update Checks",
+      "Name" : "Deploy Battleship Every 32 Behaviour Update Checks",
       "Type" : "DeployRandomStarshipsPeriodically_BehaviourRule",
       "Enabled" : true,
       "RulePriority" : 1,
-      "BehaviourUpdateChecksToWaitBeforeExecution" : 24,
+      "BehaviourUpdateChecksToWaitBeforeExecution" : 32,
       "StarshipTypeToSpawn" : "BATTLESHIP"
     },
     {

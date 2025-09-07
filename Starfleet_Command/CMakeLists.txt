@@ -96,6 +96,8 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/IEffect.hpp
         Gamelibs/ExplosionEffect.cpp
         Gamelibs/ExplosionEffect.hpp
+        Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerLaneDominatedIntensityRule.cpp
+        Gamelibs/include/AIDirector/Rules/IntensityRules/PlayerLaneDominatedIntensityRule.hpp
 )
 
 include_directories(Gamelibs/include)

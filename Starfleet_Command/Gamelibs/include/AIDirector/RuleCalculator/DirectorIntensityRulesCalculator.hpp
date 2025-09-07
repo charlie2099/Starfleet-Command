@@ -6,6 +6,7 @@
 #include "AIDirector/Rules/IntensityRules/EnemyStarshipsInPlay_IntensityRule.hpp"
 #include "AIDirector/Rules/IntensityRules/PlayerStarshipsInPlay_IntensityRule.hpp"
 #include "AIDirector/Rules/IntensityRules/PlayerScrapSurplus_IntensityRule.hpp"
+#include "AIDirector/Rules/IntensityRules/PlayerLaneDominatedIntensityRule.hpp"
 #include "Utility/JsonSaveSystem.hpp"
 #include <memory>
 #include <vector>

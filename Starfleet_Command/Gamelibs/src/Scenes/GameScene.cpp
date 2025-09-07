@@ -15,27 +15,16 @@ bool GameScene::Init()
     InitGameplayView();
     InitPauseMenu();
     InitAiDirector();
-    std::cout << "ai" << std::endl;
     InitStarshipDeploymentManager();
-    std::cout << "deploy" << std::endl;
     InitStarshipDeploymentButtons();
-    std::cout << "dep button" << std::endl;
     InitMothershipStatusDisplay();
-    std::cout << "status" << std::endl;
     InitScrapCollectionServiceUpgradeButton();
-    std::cout << "collection button" << std::endl;
     InitStarshipDeploymentButtonTooltip();
-    std::cout << "ship tips" << std::endl;
     InitPlayerScrapCollectionTooltip();
-    std::cout << "scrap tips" << std::endl;
     InitPlayerSpawnLaneIndicator();
-    std::cout << "indicator" << std::endl;
     InitMinimapView();
-    std::cout << "mini map" << std::endl;
     InitMusic();
-    std::cout << "music" << std::endl;
     InitCursor();
-    std::cout << "cursor" << std::endl;
 
 
     // NOTE: InitRewardProgressBar() OR // TODO: Integrate into a wider RewardSystem class
@@ -69,6 +58,8 @@ void GameScene::EventHandler(sf::RenderWindow& window, sf::Event& event)
     //HandleMusicTrackButtonsInput(event);
 }
 
+float time_spent_paused = 0;
+
 void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 {
     auto mousePos = sf::Mouse::getPosition(window); // Mouse _innerPosition relative to the window
@@ -77,6 +68,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
     if(IsPaused())
     {
+        time_spent_paused += deltaTime.asSeconds();
         UpdatePauseMenu(window);
         return;
     }
@@ -222,13 +214,13 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
 
 
 
-
     /// Passive scrap metal accumulation
-    if(_playerScrapAccumulationTimerClock.getElapsedTime().asSeconds() >= _playerScrapAccumulationTimer)
+    if(_playerScrapAccumulationTimerClock.getElapsedTime().asSeconds() >= (_playerScrapAccumulationTimer + time_spent_paused))
     {
         _player->CollectScrap(_scrapCollectionServiceScrapIncreasePerUpgrade * _upgradePlayerScrapCollectionButton->GetUpgradeLevel());
         _player->SetScrapText("Scrap Metal: " + std::to_string(_player->GetCurrentScrapAmount()));
         _playerScrapAccumulationTimer += _playerScrapAccumulationRate;
+        time_spent_paused = 0;
     }
 
 
