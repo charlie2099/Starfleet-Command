@@ -7,8 +7,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/src/Scenes/SceneManager.cpp Gamelibs/include/Scenes/SceneManager.hpp Gamelibs/include/Scenes/Scene.hpp Gamelibs/src/Scenes/MenuScene.cpp Gamelibs/include/Scenes/MenuScene.hpp Gamelibs/include/Utility/Constants.hpp Gamelibs/src/Sprites/UI/GUI/TextButton.cpp Gamelibs/include/Sprites/UI/GUI/TextButton.hpp Gamelibs/src/Components/SpriteComponent.cpp Gamelibs/include/Components/SpriteComponent.hpp Gamelibs/include/Utility/Colour.hpp Gamelibs/src/Sprites/UI/GUI/ImageButton.cpp Gamelibs/include/Sprites/UI/GUI/ImageButton.hpp Gamelibs/src/Sprites/Projectiles/Projectile.cpp Gamelibs/include/Sprites/Projectiles/Projectile.hpp Gamelibs/src/Scenes/GameScene.cpp Gamelibs/include/Scenes/GameScene.hpp Gamelibs/src/Utility/Cursor.cpp Gamelibs/include/Utility/Cursor.hpp Gamelibs/src/Sprites/Enemy/Enemy.cpp Gamelibs/include/Sprites/Enemy/Enemy.hpp Gamelibs/src/Sprites/Player/Player.cpp Gamelibs/include/Sprites/Player/Player.hpp Gamelibs/src/Utility/Vector.cpp Gamelibs/include/Utility/Vector.hpp Gamelibs/src/Sprites/UI/HealthBar.cpp Gamelibs/include/Sprites/UI/HealthBar.hpp Gamelibs/src/Scenes/SplashScene.cpp Gamelibs/include/Scenes/SplashScene.hpp Gamelibs/src/Sprites/UI/Effects/PopupText.cpp Gamelibs/include/Sprites/UI/Effects/PopupText.hpp Gamelibs/include/Sprites/Starships/Starship.hpp Gamelibs/src/Sprites/Starships/StarshipFactory.cpp Gamelibs/include/Sprites/Starships/StarshipFactory.hpp Gamelibs/src/Sprites/Starships/StarshipClasses/LightFighter.cpp Gamelibs/include/Sprites/Starships/StarshipClasses/LightFighter.hpp Gamelibs/src/Components/HealthComponent.cpp Gamelibs/include/Components/HealthComponent.hpp Gamelibs/include/Sprites/Starships/StarshipClasses/HeavyFighter.hpp Gamelibs/src/Sprites/Starships/StarshipClasses/HeavyFighter.cpp Gamelibs/include/Sprites/Starships/StarshipClasses/SupportFrigate.hpp Gamelibs/include/Sprites/Starships/StarshipClasses/Dreadnought.hpp Gamelibs/include/Sprites/Starships/StarshipClasses/Mothership.hpp Gamelibs/include/Sprites/Starships/StarshipClasses/Battleship.hpp Gamelibs/src/Sprites/Starships/StarshipClasses/SupportFrigate.cpp Gamelibs/src/Sprites/Starships/StarshipClasses/Dreadnought.cpp Gamelibs/src/Sprites/Starships/StarshipClasses/Battleship.cpp Gamelibs/src/Sprites/Starships/StarshipClasses/Mothership.cpp
         Gamelibs/src/Sprites/SpaceLane.cpp
         Gamelibs/include/Sprites/SpaceLane.hpp
-        Gamelibs/src/Sprites/UI/ProgressBar.cpp
-        Gamelibs/include/Sprites/UI/ProgressBar.hpp
+        Gamelibs/src/Sprites/UI/TimeBasedProgressBar.cpp
+        Gamelibs/include/Sprites/UI/TimeBasedProgressBar.hpp
         Gamelibs/src/Sprites/UI/Minimap.cpp
         Gamelibs/include/Sprites/UI/Minimap.hpp
         Gamelibs/src/ScrapMetalManager.cpp
@@ -96,6 +96,8 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/IEffect.hpp
         Gamelibs/ExplosionEffect.cpp
         Gamelibs/ExplosionEffect.hpp
+        Gamelibs/src/Sprites/UI/XPBasedProgressBar.cpp
+        Gamelibs/include/Sprites/UI/XPBasedProgressBar.hpp
 )
 
 include_directories(Gamelibs/include)

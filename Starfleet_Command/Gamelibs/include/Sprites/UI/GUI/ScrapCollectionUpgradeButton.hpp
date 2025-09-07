@@ -41,7 +41,7 @@ private:
     sf::Color _teamColour;
 
     bool _isMouseLeftClicked = false;
-    bool _isMouseRightClicked = false;
+    bool _isCtrlButtonDown = false;
 
     const sf::Color HOVER_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 255};
     const sf::Color SELECTED_BTN_COLOR = {_teamColour.r, _teamColour.g, _teamColour.b, 175};

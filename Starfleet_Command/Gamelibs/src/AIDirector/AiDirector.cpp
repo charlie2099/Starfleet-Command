@@ -21,11 +21,11 @@ AiDirector::AiDirector(std::unique_ptr<Player>& player, std::unique_ptr<Enemy>& 
 
     /// Observer to starship deployment bar event
     auto starshipDeploymentBegunCallback = [this] { UpdateDeploymentStatus_OnDeploymentBegun(); };
-    _starshipDeploymentManager->AddBasicObserver({ProgressBar::TASK_STARTED, starshipDeploymentBegunCallback});
+    _starshipDeploymentManager->AddBasicObserver({TimeBasedProgressBar::TASK_STARTED, starshipDeploymentBegunCallback});
 
     /// Observer to starship deployment bar event
     auto starshipDeploymentCompletedCallback = [this] { SpawnEnemy_OnDeploymentCompleted(); };
-    _starshipDeploymentManager->AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentCompletedCallback});
+    _starshipDeploymentManager->AddBasicObserver({TimeBasedProgressBar::EventID::TASK_COMPLETED, starshipDeploymentCompletedCallback});
 
     for (int i = 0; i < _starshipTemplateToBeDeployed.size(); ++i)
     {

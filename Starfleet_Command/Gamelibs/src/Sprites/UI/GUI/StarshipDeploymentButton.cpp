@@ -37,20 +37,31 @@ void StarshipDeploymentButton::EventHandler(sf::RenderWindow& window, sf::Event&
             }
         }
     }
+
+    if(_button->IsMouseOver())
+    {
+        if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::LControl)
+        {
+            _isCtrlButtonDown = true;
+        }
+        else if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::LControl)
+        {
+            _isCtrlButtonDown = false;
+        }
+    }
 }
 
 void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
     if(_button->IsMouseOver())
     {
-        if(_mouseOverTimer < _mouseOverCheckRate)
+        if(!_isCtrlButtonDown)
         {
             _isNameVisible = true;
         }
         _nameText.setFillColor(_isAffordable ? _teamColour : INACTIVE_TEXT_COLOUR);
 
-        _mouseOverTimer = _mouseOverClock.getElapsedTime().asSeconds();
-        if(_mouseOverTimer >= _mouseOverCheckRate)
+        if(_isCtrlButtonDown)
         {
             _isNameVisible = false;
         }
@@ -58,7 +69,6 @@ void StarshipDeploymentButton::Update(sf::RenderWindow &window, sf::Time deltaTi
 
     if(!_button->IsMouseOver())
     {
-        _mouseOverClock.restart();
         _isNameVisible = false;
     }
 

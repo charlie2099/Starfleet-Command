@@ -20,6 +20,23 @@
 =================PSEUDOCODE==================
 ============================================
 
+XPBasedProgressBar xpRewardBar;
+
+xpRewardBar.AddBasicObserver();
+
+IF enemy ship DESTROYED
+    xpRewardBar.AddXP(enemy health or scrap amount);
+
+
+
+
+PROJECT SETUP
+
+INSTALL SFML 2.5.1 (Put in a standard location like C:/Program Files/SFML/)
+INSTALL MinGW 7.3.0 64 bit (Same as above)
+
+
+
 ___Perk & Upgrades System___
 
 HOW IT WORKS
@@ -97,7 +114,7 @@ Replace Player and Enemy class with
 
 
 ___XP SYSTEM___
-- Modify ProgressBar class to NOT apply progress based on time. It
+- Modify TimeBasedProgressBar class to NOT apply progress based on time. It
 should just apply a progress amount through a method, and then if
 the user wants to apply it over time then they can just call that
 method every x amount of seconds.

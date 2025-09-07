@@ -1,7 +1,7 @@
 #ifndef STARFLEET_COMMAND_STARSHIPDEPLOYMENTMANAGER_HPP
 #define STARFLEET_COMMAND_STARSHIPDEPLOYMENTMANAGER_HPP
 #include "Sprites/Starships/StarshipFactory.hpp"
-#include "Sprites/UI/ProgressBar.hpp"
+#include "Sprites/UI/TimeBasedProgressBar.hpp"
 #include <queue>
 
 class StarshipDeploymentManager
@@ -32,10 +32,10 @@ public:
     bool IsQueueEmpty() { return _starshipTypeDeploymentQueue.empty(); }
     bool IsStarshipTypeInQueue(StarshipFactory::STARSHIP_TYPE starshipType);
 
-    void AddBasicObserver(const std::pair<ProgressBar::EventID, std::function<void()>>& observer);
+    void AddBasicObserver(const std::pair<TimeBasedProgressBar::EventID, std::function<void()>>& observer);
 
 private:
-    ProgressBar _starshipDeploymentBar;
+    TimeBasedProgressBar _starshipDeploymentBar;
     std::queue<StarshipFactory::STARSHIP_TYPE> _starshipTypeDeploymentQueue;
     std::queue<int> _spacelaneStarshipDeploymentQueue;
     sf::Vector2<float> _deploymentBarPosition;

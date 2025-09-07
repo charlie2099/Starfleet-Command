@@ -117,7 +117,7 @@ void StarshipDeploymentManager::SetDeploymentStatus(bool status)
     _starshipDeploymentBar.SetProgressBarStatus(status);
 }
 
-void StarshipDeploymentManager::AddBasicObserver(const std::pair<ProgressBar::EventID, std::function<void()>>& observer)
+void StarshipDeploymentManager::AddBasicObserver(const std::pair<TimeBasedProgressBar::EventID, std::function<void()>>& observer)
 {
     _starshipDeploymentBar.AddBasicObserver(observer);
 }

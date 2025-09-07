@@ -11,7 +11,7 @@
 #include "Sprites/Starships/Starship.hpp"
 #include "Sprites/Starships/StarshipFactory.hpp"
 #include "Sprites/SpaceLane.hpp"
-#include "Sprites/UI/ProgressBar.hpp"
+#include "Sprites/UI/XPBasedProgressBar.hpp"
 #include "Sprites/UI/Minimap.hpp"
 #include "ScrapMetalManager.hpp"
 #include "Sprites/UI/ParallaxBackground.hpp"
@@ -142,12 +142,9 @@ private:
     bool _isScrapCollectionTooltipVisible = false;
 
     std::unique_ptr<InfoTooltip> _starshipDeploymentButtonTooltip;
-    sf::Clock _starshipDeploymentButtonTooltipClock;
     bool _isStarshipDeploymentButtonTooltipVisible = false;
     int _selectedStarshipDeploymentButtonIndex = 0;
-
-    float _mouseOverTooltipTimer = 0.0F;
-    float _mouseOverTooltipTimeUntilDisplay = 1.0F;
+    bool _isCtrlKeyDown = false;
 
     /// Views (Main view & Minimap)
     bool _scrollViewLeft = false;
@@ -204,7 +201,7 @@ private:
     RNG _spacelaneSpawnRNG {0, NUM_OF_LANES - 1};
 
     /// Reward System
-    ProgressBar _rewardProgressBar;
+    XPBasedProgressBar _rewardProgressBar;
 
     /// Visual Effects
     EffectManager _effectManager;

@@ -98,7 +98,7 @@
       "AttackRange": 400.0,
       "BuildCost": 10000,
       "AttackLanes" : [0],
-      "StartingScrap" : 1000,
+      "StartingScrap" : 0,
       "ScrapCollectionService_ScrapAccumulationFrequencyInSeconds" : 5.0,
       "ScrapCollectionService_CostIncreasePerUpgrade" : 500,
       "ScrapCollectionService_ScrapIncreasePerUpgrade" : 50

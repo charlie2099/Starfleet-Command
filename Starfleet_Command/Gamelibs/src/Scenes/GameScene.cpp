@@ -28,9 +28,8 @@ bool GameScene::Init()
 
     // NOTE: InitRewardProgressBar() OR // TODO: Integrate into a wider RewardSystem class
     _rewardProgressBar.SetColour(_player->GetTeamColour());
-    _rewardProgressBar.SetProgressBarText("Next Perk Reward");
-    _rewardProgressBar.SetTimeToCompleteTask(60.0F);
-    _rewardProgressBar.SetProgressBarStatus(true);
+    //_rewardProgressBar.SetProgressBarText("XP to next reward:");
+    //_rewardProgressBar.SetTimeToCompleteTask(60.0F); // TODO: Create a SetAmountToCompleteTask method
 
     InitEventObservers();
 
@@ -105,97 +104,92 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
         }
     }
 
-    if(_starshipDeploymentButtons[_selectedStarshipDeploymentButtonIndex]->IsMouseOver())
+    if(_starshipDeploymentButtons[_selectedStarshipDeploymentButtonIndex]->IsMouseOver() && _isCtrlKeyDown)
     {
-        _mouseOverTooltipTimer = _starshipDeploymentButtonTooltipClock.getElapsedTime().asSeconds();
-        if(_mouseOverTooltipTimer >= _mouseOverTooltipTimeUntilDisplay)
+        if(!_isStarshipDeploymentButtonTooltipVisible)
         {
-            if(!_isStarshipDeploymentButtonTooltipVisible)
+            std::vector<std::pair<sf::Text, sf::Text>> starshipStats;
+            std::pair<sf::Text, sf::Text> starshipHealthStatItem;
+            std::pair<sf::Text, sf::Text> starshipDamageStatItem;
+            std::pair<sf::Text, sf::Text> starshipSpeedStatItem;
+            std::pair<sf::Text, sf::Text> starshipFireRateStatItem;
+            std::pair<sf::Text, sf::Text> starshipAttackRangeStatItem;
+            std::pair<sf::Text, sf::Text> starshipAttackLanesStatItem;
+            std::pair<sf::Text, sf::Text> starshipDeployTimeStatItem;
+            std::pair<sf::Text, sf::Text> starshipBuildCostStatItem;
+
+            /// TODO: Instead of retrieving the data from file, fetch it from the StarshipDeploymentButton?
+            auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
+            if(starshipData.contains("StarshipData"))
             {
-                std::vector<std::pair<sf::Text, sf::Text>> starshipStats;
-                std::pair<sf::Text, sf::Text> starshipHealthStatItem;
-                std::pair<sf::Text, sf::Text> starshipDamageStatItem;
-                std::pair<sf::Text, sf::Text> starshipSpeedStatItem;
-                std::pair<sf::Text, sf::Text> starshipFireRateStatItem;
-                std::pair<sf::Text, sf::Text> starshipAttackRangeStatItem;
-                std::pair<sf::Text, sf::Text> starshipAttackLanesStatItem;
-                std::pair<sf::Text, sf::Text> starshipDeployTimeStatItem;
-                std::pair<sf::Text, sf::Text> starshipBuildCostStatItem;
-
-                /// TODO: Instead of retrieving the data from file, fetch it from the StarshipDeploymentButton?
-                auto starshipData = Chilli::JsonSaveSystem::LoadFile(STARSHIP_DATA_FILE_PATH);
-                if(starshipData.contains("StarshipData"))
+                for(const auto& shipData : starshipData["StarshipData"])
                 {
-                    for(const auto& shipData : starshipData["StarshipData"])
+                    if(shipData.contains("Name") && shipData["Name"] == _starshipDeploymentButtons[_selectedStarshipDeploymentButtonIndex]->GetStarshipName())
                     {
-                        if(shipData.contains("Name") && shipData["Name"] == _starshipDeploymentButtons[_selectedStarshipDeploymentButtonIndex]->GetStarshipName())
+                        std::string nameData = shipData["Name"];
+                        _starshipDeploymentButtonTooltip->SetTitle(nameData);
+
+                        std::string descriptionData = shipData["Description"];
+                        _starshipDeploymentButtonTooltip->SetDescription(descriptionData);
+
+                        int healthData = shipData["Health"];
+                        starshipHealthStatItem.first.setString("HEALTH:");
+                        starshipHealthStatItem.second.setString(std::to_string(healthData));
+
+                        int damageData = shipData["MaxDamage"];
+                        starshipDamageStatItem.first.setString("DAMAGE:");
+                        starshipDamageStatItem.second.setString(std::to_string(damageData));
+
+                        float speedData = shipData["Speed"];
+                        starshipSpeedStatItem.first.setString("SPEED:");
+                        starshipSpeedStatItem.second.setString(Chilli::StringFormatter::FormatFloat(speedData));
+
+                        float fireRateData = shipData["FireRate"];
+                        starshipFireRateStatItem.first.setString("FIRE RATE:");
+                        starshipFireRateStatItem.second.setString(Chilli::StringFormatter::FormatFloat(fireRateData) + "s");
+
+                        float attackRangeData = shipData["AttackRange"];
+                        starshipAttackRangeStatItem.first.setString("ATTACK RANGE:");
+                        starshipAttackRangeStatItem.second.setString(Chilli::StringFormatter::FormatFloat(attackRangeData));
+
+                        std::vector<int> attackLanesData = shipData["AttackLanes"];
+                        starshipAttackLanesStatItem.first.setString("ATTACK LANES:");
+                        for (int i = 0; i < attackLanesData.size(); ++i)
                         {
-                            std::string nameData = shipData["Name"];
-                            _starshipDeploymentButtonTooltip->SetTitle(nameData);
-
-                            std::string descriptionData = shipData["Description"];
-                            _starshipDeploymentButtonTooltip->SetDescription(descriptionData);
-
-                            int healthData = shipData["Health"];
-                            starshipHealthStatItem.first.setString("HEALTH:");
-                            starshipHealthStatItem.second.setString(std::to_string(healthData));
-
-                            int damageData = shipData["MaxDamage"];
-                            starshipDamageStatItem.first.setString("DAMAGE:");
-                            starshipDamageStatItem.second.setString(std::to_string(damageData));
-
-                            float speedData = shipData["Speed"];
-                            starshipSpeedStatItem.first.setString("SPEED:");
-                            starshipSpeedStatItem.second.setString(Chilli::StringFormatter::FormatFloat(speedData));
-
-                            float fireRateData = shipData["FireRate"];
-                            starshipFireRateStatItem.first.setString("FIRE RATE:");
-                            starshipFireRateStatItem.second.setString(Chilli::StringFormatter::FormatFloat(fireRateData) + "s");
-
-                            float attackRangeData = shipData["AttackRange"];
-                            starshipAttackRangeStatItem.first.setString("ATTACK RANGE:");
-                            starshipAttackRangeStatItem.second.setString(Chilli::StringFormatter::FormatFloat(attackRangeData));
-
-                            std::vector<int> attackLanesData = shipData["AttackLanes"];
-                            starshipAttackLanesStatItem.first.setString("ATTACK LANES:");
-                            for (int i = 0; i < attackLanesData.size(); ++i)
-                            {
-                                starshipAttackLanesStatItem.second.setString(starshipAttackLanesStatItem.second.getString() + std::to_string(attackLanesData[i]) + ", ");
-                            }
-
-                            float deployTimeData = shipData["DeployTime"];
-                            starshipDeployTimeStatItem.first.setString("DEPLOY TIME:");
-                            starshipDeployTimeStatItem.second.setString(Chilli::StringFormatter::FormatFloat(deployTimeData) + "s");
-
-                            int buildCostData = shipData["BuildCost"];
-                            starshipBuildCostStatItem.first.setString("BUILD COST:");
-                            starshipBuildCostStatItem.second.setString(std::to_string(buildCostData));
-
-                            break;
+                            starshipAttackLanesStatItem.second.setString(starshipAttackLanesStatItem.second.getString() + std::to_string(attackLanesData[i]) + ", ");
                         }
+
+                        float deployTimeData = shipData["DeployTime"];
+                        starshipDeployTimeStatItem.first.setString("DEPLOY TIME:");
+                        starshipDeployTimeStatItem.second.setString(Chilli::StringFormatter::FormatFloat(deployTimeData) + "s");
+
+                        int buildCostData = shipData["BuildCost"];
+                        starshipBuildCostStatItem.first.setString("BUILD COST:");
+                        starshipBuildCostStatItem.second.setString(std::to_string(buildCostData));
+
+                        break;
                     }
                 }
-
-                starshipStats.emplace_back(starshipHealthStatItem);
-                starshipStats.emplace_back(starshipDamageStatItem);
-                starshipStats.emplace_back(starshipSpeedStatItem);
-                starshipStats.emplace_back(starshipFireRateStatItem);
-                starshipStats.emplace_back(starshipAttackRangeStatItem);
-                starshipStats.emplace_back(starshipAttackLanesStatItem);
-                starshipStats.emplace_back(starshipDeployTimeStatItem);
-                starshipStats.emplace_back(starshipBuildCostStatItem);
-
-                _starshipDeploymentButtonTooltip->SetItems(starshipStats);
-
-                _isStarshipDeploymentButtonTooltipVisible = true;
             }
-            //_starshipDeploymentButtonTooltip->SetPos({_starshipDeploymentButtons[_selectedStarshipDeploymentButtonIndex]->GetPos().x, _starshipDeploymentButtons[_selectedStarshipDeploymentButtonIndex]->GetPos().y - _starshipDeploymentButtonTooltip->GetSize().y - 2.5F});
-            _starshipDeploymentButtonTooltip->SetPos({_mothershipStatusDisplay->GetPlayerMothershipTextPos().x + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().width + 10.0F, _starshipDeploymentButtons[_selectedStarshipDeploymentButtonIndex]->GetPos().y - _starshipDeploymentButtonTooltip->GetSize().y - 5.0F});
+
+            starshipStats.emplace_back(starshipHealthStatItem);
+            starshipStats.emplace_back(starshipDamageStatItem);
+            starshipStats.emplace_back(starshipSpeedStatItem);
+            starshipStats.emplace_back(starshipFireRateStatItem);
+            starshipStats.emplace_back(starshipAttackRangeStatItem);
+            starshipStats.emplace_back(starshipAttackLanesStatItem);
+            starshipStats.emplace_back(starshipDeployTimeStatItem);
+            starshipStats.emplace_back(starshipBuildCostStatItem);
+
+            _starshipDeploymentButtonTooltip->SetItems(starshipStats);
+
+            _isStarshipDeploymentButtonTooltipVisible = true;
         }
+        //_starshipDeploymentButtonTooltip->SetPos({_starshipDeploymentButtons[_selectedStarshipDeploymentButtonIndex]->GetPos().x, _starshipDeploymentButtons[_selectedStarshipDeploymentButtonIndex]->GetPos().y - _starshipDeploymentButtonTooltip->GetSize().y - 2.5F});
+        _starshipDeploymentButtonTooltip->SetPos({_mothershipStatusDisplay->GetPlayerMothershipTextPos().x + _mothershipStatusDisplay->GetPlayerMothershipTextBounds().width + 10.0F, _starshipDeploymentButtons[_selectedStarshipDeploymentButtonIndex]->GetPos().y - _starshipDeploymentButtonTooltip->GetSize().y - 5.0F});
     }
     else
     {
-        _starshipDeploymentButtonTooltipClock.restart();
         _isStarshipDeploymentButtonTooltipVisible = false;
     }
 
@@ -808,11 +802,11 @@ void GameScene::InitEventObservers()
 {
     /// Observer to reward progress bar event
     auto rewardProgressBarCallback = std::bind(&GameScene::DisplayPerkChoices_OnPerkRewardTimerComplete, this);
-    _rewardProgressBar.AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, rewardProgressBarCallback});
+    _rewardProgressBar.AddBasicObserver({XPBasedProgressBar::EventID::TASK_COMPLETED, rewardProgressBarCallback});
 
     /// Observer to starship deployment bar event
     auto starshipDeploymentBarCallback = std::bind(&GameScene::SpawnStarshipFromShipyard_OnStarshipDeploymentComplete, this);
-    _starshipDeploymentManager->AddBasicObserver({ProgressBar::EventID::TASK_COMPLETED, starshipDeploymentBarCallback});
+    _starshipDeploymentManager->AddBasicObserver({TimeBasedProgressBar::EventID::TASK_COMPLETED, starshipDeploymentBarCallback});
 
     /// Agnostic observer to enemy starships destroyed event
     auto enemyStarshipsDestroyedCallback = std::bind(&GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed, this, std::placeholders::_1);
@@ -885,6 +879,15 @@ void GameScene::HandleViewScrollingKeyboardInput(const sf::Event &event)
 
 void GameScene::HandleStarshipDeploymentButtons(sf::RenderWindow &window, sf::Event &event)
 {
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::LControl)
+    {
+        _isCtrlKeyDown = true;
+    }
+    else if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::LControl)
+    {
+        _isCtrlKeyDown = false;
+    }
+
     for (auto& deploymentButton : _starshipDeploymentButtons)
     {
         if(_starshipDeploymentManager->IsQueueFull())
@@ -923,11 +926,11 @@ void GameScene::UpdateScrapCollectionTooltip()
 
 void GameScene::HandleScrapCollectionTooltipVisibilityInput(const sf::Event &event)
 {
-    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Right)
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::LControl)
     {
         _isScrapCollectionTooltipVisible = true;
     }
-    else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Right)
+    else if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::LControl)
     {
         _isScrapCollectionTooltipVisible = false;
     }
@@ -1397,6 +1400,8 @@ void GameScene::UpdateScrapMetal_OnEnemyStarshipDestroyed(std::any eventData)
     }
 
     _effectManager.AddExplosion(destroyedEnemyStarshipData.DeathLocation);
+
+    _rewardProgressBar.AddProgress(destroyedEnemyStarshipData.BuildCost);
 }
 
 void GameScene::UpdateScrapMetal_OnPlayerStarshipDestroyed(std::any eventData)

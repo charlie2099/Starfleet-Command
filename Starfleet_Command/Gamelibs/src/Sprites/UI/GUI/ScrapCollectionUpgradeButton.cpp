@@ -43,25 +43,25 @@ void ScrapCollectionUpgradeButton::EventHandler(sf::RenderWindow &window, sf::Ev
 
     if(_button->IsMouseOver())
     {
-        if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Right)
+        if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::LControl)
         {
-            _isMouseRightClicked = true;
+            _isCtrlButtonDown = true;
         }
-        else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Right)
+        else if(event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::LControl)
         {
-            _isMouseRightClicked = false;
+            _isCtrlButtonDown = false;
         }
     }
 }
 
 void ScrapCollectionUpgradeButton::Update(sf::RenderWindow &window, sf::Time deltaTime)
 {
-    if(_button->IsMouseOver() &&  !_isMouseRightClicked)
+    if(_button->IsMouseOver() &&  !_isCtrlButtonDown)
     {
         _isNameVisible = true;
         _nameText.setFillColor(_isAffordable ? _teamColour : sf::Color {_teamColour.r, _teamColour.g, _teamColour.b, 100});
     }
-    else if(_button->IsMouseOver() && _isMouseRightClicked)
+    else if(_button->IsMouseOver() && _isCtrlButtonDown)
     {
         _isNameVisible = false;
         _nameText.setFillColor(_isAffordable ? _teamColour : sf::Color {_teamColour.r, _teamColour.g, _teamColour.b, 100});
@@ -69,7 +69,7 @@ void ScrapCollectionUpgradeButton::Update(sf::RenderWindow &window, sf::Time del
     else
     {
         _isNameVisible = false;
-        _isMouseRightClicked = false;
+        _isCtrlButtonDown = false;
     }
 
 

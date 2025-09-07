@@ -46,9 +46,7 @@ private:
     StarshipFactory::STARSHIP_TYPE _starshipType;
     sf::Color _teamColour;
 
-    sf::Clock _mouseOverClock;
-    float _mouseOverTimer = 0.0F;
-    float _mouseOverCheckRate = 1.0F;
+    bool _isCtrlButtonDown = false;
 
     const sf::Color HOVER_BTN_COLOUR = {_teamColour.r, _teamColour.g, _teamColour.b, 255};
     const sf::Color DEFAULT_BTN_COLOUR = {_teamColour.r, _teamColour.g, _teamColour.b, 160};
