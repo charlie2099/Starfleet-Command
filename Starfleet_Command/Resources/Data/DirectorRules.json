@@ -92,6 +92,14 @@
       "StarshipsToCounterWith" : ["LIGHTFIGHTER", "LIGHTFIGHTER", "LIGHTFIGHTER", "LIGHTFIGHTER"]
     },
     {
+      "Name" : "Dreadnought Diversion 2",
+      "Type" : "Diversion_BehaviourRule",
+      "Enabled" : true,
+      "RulePriority" : 2,
+      "StarshipToCounter" : "DREADNOUGHT",
+      "StarshipsToCounterWith" : ["HEAVYFIGHTER", "HEAVYFIGHTER", "LIGHTFIGHTER"]
+    },
+    {
       "Name" : "Battleship Diversion",
       "Type" : "Diversion_BehaviourRule",
       "Enabled" : true,
@@ -100,12 +108,28 @@
       "StarshipsToCounterWith" : ["LIGHTFIGHTER", "LIGHTFIGHTER", "HEAVYFIGHTER"]
     },
     {
+      "Name" : "Battleship Diversion 2",
+      "Type" : "Diversion_BehaviourRule",
+      "Enabled" : true,
+      "RulePriority" : 3,
+      "StarshipToCounter" : "BATTLESHIP",
+      "StarshipsToCounterWith" : ["HEAVYFIGHTER", "SUPPORT_FRIGATE", "HEAVYFIGHTER"]
+    },
+    {
       "Name" : "Light Fighter CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
       "RulePriority" : 3,
       "StarshipToCounter" : "LIGHTFIGHTER",
       "StarshipsToCounterWith" : ["LIGHTFIGHTER"]
+    },
+    {
+      "Name" : "Light Fighter CounterAttack 2",
+      "Type" : "CounterAttack_BehaviourRule",
+      "Enabled" : true,
+      "RulePriority" : 2,
+      "StarshipToCounter" : "LIGHTFIGHTER",
+      "StarshipsToCounterWith" : ["HEAVYFIGHTER"]
     },
     {
       "Name" : "Heavy Fighter CounterAttack",
@@ -140,12 +164,28 @@
       "StarshipsToCounterWith" : ["BATTLESHIP", "SUPPORT_FRIGATE", "LIGHTFIGHTER"]
     },
     {
+      "Name" : "Battleship CounterAttack 2",
+      "Type" : "CounterAttack_BehaviourRule",
+      "Enabled" : true,
+      "RulePriority" : 2,
+      "StarshipToCounter" : "BATTLESHIP",
+      "StarshipsToCounterWith" : ["DREADNOUGHT", "BATTLESHIP"]
+    },
+    {
       "Name" : "Dreadnought CounterAttack",
       "Type" : "CounterAttack_BehaviourRule",
       "Enabled" : true,
       "RulePriority" : 3,
       "StarshipToCounter": "DREADNOUGHT",
       "StarshipsToCounterWith": ["DREADNOUGHT", "SUPPORT_FRIGATE"]
+    },
+    {
+      "Name" : "Dreadnought CounterAttack 2",
+      "Type" : "CounterAttack_BehaviourRule",
+      "Enabled" : true,
+      "RulePriority" : 1,
+      "StarshipToCounter": "DREADNOUGHT",
+      "StarshipsToCounterWith": ["HEAVYFIGHTER", "LIGHTFIGHTER", "LIGHTFIGHTER", "LIGHTFIGHTER"]
     }
   ]
 }

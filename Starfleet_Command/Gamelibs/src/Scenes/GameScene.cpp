@@ -356,7 +356,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& enemyBullet = enemyStarship->GetProjectile()[k]->GetSpriteComponent();
                 if(playerStarship->CollidesWith(enemyBullet.GetSprite().getGlobalBounds()))
                 {
-                    RNG _starshipDamageRNG {static_cast<int>(enemyStarship->GetMaxDamage() * 0.85F), static_cast<int>(enemyStarship->GetMaxDamage())};
+                    RNG _starshipDamageRNG {static_cast<int>(enemyStarship->GetMaxDamage() * 0.8F), static_cast<int>(enemyStarship->GetMaxDamage())};
                     int randDamage = _starshipDamageRNG.GenerateNumber();
                     int scaledDamage = randDamage * enemyStarship->GetDamageScaleFactor();
                     playerStarship->TakeDamage(scaledDamage);
@@ -387,10 +387,10 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         auto& friendlyProjectile = supportFrigate->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
-                            RNG tf {0,2};
+                            RNG tf {0,3};
                             if (tf.GenerateNumber() == 1)
                             {
-                                RNG _starshipHealRNG {static_cast<int>(supportFrigate->GetMaxHeal() * 0.5F), static_cast<int>(supportFrigate->GetMaxHeal())};
+                                RNG _starshipHealRNG {static_cast<int>(supportFrigate->GetMaxHeal() * 0.60F), static_cast<int>(supportFrigate->GetMaxHeal())};
                                 int randHealAmount = _starshipHealRNG.GenerateNumber();
                                 friendlyStarship->ReplenishHealth(randHealAmount);
                                 supportFrigate->DestroyProjectile(k);
@@ -457,7 +457,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                 auto& playerBulletSprite = playerStarship->GetProjectile()[k]->GetSpriteComponent().GetSprite();
                 if(enemyStarship->CollidesWith(playerBulletSprite.getGlobalBounds()))
                 {
-                    RNG _starshipDamageRNG {static_cast<int>(playerStarship->GetMaxDamage() * 0.85F), static_cast<int>(playerStarship->GetMaxDamage())};
+                    RNG _starshipDamageRNG {static_cast<int>(playerStarship->GetMaxDamage() * 0.82F), static_cast<int>(playerStarship->GetMaxDamage())};
                     int randDamage =  _starshipDamageRNG.GenerateNumber();
                     int scaledDamage = randDamage * playerStarship->GetDamageScaleFactor();
                     enemyStarship->TakeDamage(scaledDamage);
@@ -488,7 +488,7 @@ void GameScene::Update(sf::RenderWindow& window, sf::Time deltaTime)
                         auto& friendlyProjectile = supportFrigate->GetProjectile()[k]->GetSpriteComponent();
                         if(friendlyStarship->CollidesWith(friendlyProjectile.GetSprite().getGlobalBounds()))
                         {
-                            RNG _starshipHealRNG {static_cast<int>(supportFrigate->GetMaxHeal() * 0.75F), static_cast<int>(supportFrigate->GetMaxHeal())};
+                            RNG _starshipHealRNG {static_cast<int>(supportFrigate->GetMaxHeal() * 0.65F), static_cast<int>(supportFrigate->GetMaxHeal())};
                             int randHealAmount = _starshipHealRNG.GenerateNumber();
                             friendlyStarship->ReplenishHealth(randHealAmount);
                             supportFrigate->DestroyProjectile(k);

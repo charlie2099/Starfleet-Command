@@ -13,7 +13,11 @@ bool PlayerLaneDominatedIntensityRule::IsValid(AiDirector &director)
 {
     for(int lane = 0; lane <= director.GetSpacelaneCount(); lane ++)
     {
-        if (director.GetNumOfEnemyUnitsInSpacelane(lane) > 2)
+        if (director.GetPerceivedIntensity() > 250) {
+            return false;
+        }
+
+        if (director.GetNumOfEnemyUnitsInSpacelane(lane) > 3 && director.GetNumOfPlayerUnitsInSpacelane(lane) <= 3)
         {
             return true;
         }

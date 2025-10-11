@@ -32,7 +32,7 @@ void Player::Update(sf::RenderWindow &window, sf::Time deltaTime)
         {
             StarshipDestroyedData destroyedStarshipData;
             destroyedStarshipData.DeathLocation = starships[i]->GetPos();
-            RNG _starshipScrapRNG {static_cast<int>(starships[i]->GetBuildCost() * 0.5F), static_cast<int>(starships[i]->GetBuildCost() * 0.8F)};
+            RNG _starshipScrapRNG {static_cast<int>(starships[i]->GetBuildCost() * 0.65F), static_cast<int>(starships[i]->GetBuildCost() * 0.85F)};
             int randScrap =  _starshipScrapRNG.GenerateNumber();
             destroyedStarshipData.BuildCost = randScrap;
             InvokeAgnosticEvent(STARSHIP_DESTROYED, destroyedStarshipData);

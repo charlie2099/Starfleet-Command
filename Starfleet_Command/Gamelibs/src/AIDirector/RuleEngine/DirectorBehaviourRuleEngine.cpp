@@ -14,6 +14,7 @@ void DirectorBehaviourRuleEngine::EvaluateBehaviourOutput(AiDirector &director)
     {
         if (!rule->IsValid(director))
         {
+            std::cout << "Skip rule: " + rule->GetID() << std::endl;
             continue;
         }
 
@@ -33,9 +34,9 @@ void DirectorBehaviourRuleEngine::EvaluateBehaviourOutput(AiDirector &director)
         auto priority_chance_picker = rule->GetPriority();
         auto rand_ = rnd.GenerateNumber();
 
-        std::cout << std::to_string((rand_ + priority_chance_picker + 2)) + " / " + std::to_string(6) << std::endl;
+        std::cout << std::to_string((rand_ + priority_chance_picker + 2)) + " /6" << std::endl;
 
-        if ((rand_ + priority_chance_picker + 2) >= 7)
+        if ((rand_ + priority_chance_picker + 2) >= 6)
         {
             rule->Execute(director);
             std::cout << rule->GetID() << " rule was executed successfully! | Rule Priority: " << rule->GetPriority() << " | Total Rules Executed So Far: " << ++_numOfRulesSuccessfullyExecuted << std::endl;
