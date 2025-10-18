@@ -15,7 +15,7 @@ Starship::Starship(int spawnSpacelane, const std::string& starshipTypeName)
                 _maximumDamage = shipData["MaxDamage"];
                 _damageScaleFactor = shipData["DamageScaleFactor"];
                 _speed = shipData["Speed"];
-                _startSpeed = _speed;
+                _startSpeed = _speed/2.0F;
                 _deployTimeSpeed = shipData["DeployTime"];
                 _fireRate = shipData["FireRate"];
                 _attackRange = shipData["AttackRange"];
@@ -85,6 +85,11 @@ void Starship::Update(sf::RenderWindow &window, sf::Time deltaTime)
     if(_healthBar->GetHealth() < _maximumHealth/* && _healthBar->GetHealth() > 0*/)
     {
         _isHealthBarVisible = true;
+    }
+
+    if(_startSpeed < _speed)
+    {
+        _startSpeed += 0.05F;
     }
 }
 

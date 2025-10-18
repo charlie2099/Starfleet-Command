@@ -98,6 +98,8 @@ add_executable(Starfleet_Command main.cpp Game/Game.cpp Game/Game.hpp Gamelibs/s
         Gamelibs/ExplosionEffect.hpp
         Gamelibs/src/Sprites/UI/XPBasedProgressBar.cpp
         Gamelibs/include/Sprites/UI/XPBasedProgressBar.hpp
+        Gamelibs/src/AIDirector/Rules/IntensityRules/PlayerLaneDominatedIntensityRule.cpp
+        Gamelibs/include/AIDirector/Rules/IntensityRules/PlayerLaneDominatedIntensityRule.hpp
 )
 
 include_directories(Gamelibs/include)

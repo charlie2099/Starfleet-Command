@@ -53,6 +53,12 @@ DirectorIntensityRulesCalculator::DirectorIntensityRulesCalculator()
                 AddRule(std::make_shared<PlayerStarshipsInPlay_IntensityRule>(intensityRating));
             }
 
+            if(intensityRule.contains("Type") && intensityRule["Type"] == "PlayerLaneDominated_IntensityRule")
+            {
+                float intensityRating = intensityRule["IntensityRating"];
+                AddRule(std::make_shared<PlayerLaneDominatedIntensityRule>(intensityRating));
+            }
+
             //std::cout << intensityRule["Name"] << ": " << intensityRule["Enabled"] << std::endl;
         }
     }
